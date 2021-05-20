@@ -25,8 +25,8 @@
 \DeclareStringOption{Grade}
 \DeclareStringOption{StudentID}
 \DeclareStringOption{StudentName}
-\DeclareStringOption{Supervisor}
-\DeclareStringOption{SupervisorTitle}
+\DeclareStringOption{Mentor}
+\DeclareStringOption{MentorTitle}
 \DeclareStringOption{SubmitDate}
 
 \ProcessKeyvalOptions*

@@ -1,0 +1,62 @@
+\newenvironment{abstract}{%
+  \pagestyle{plain}
+  \pagenumbering{Roman}
+%   \pdfbookmark[0]{\njut@cap@abstract}{abstract}
+  \begin{center}
+    \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文(设计、作品)中文摘要}}}
+  \end{center}
+  {\bgroup
+    \kaishu\zihao{-4}
+    \def\tabcolsep{0pt}
+    \def\arraystretch{0.8}
+    \noindent
+    题目： \Title \\
+    院系： \Department \\
+    专业： \Major \\
+    本科生姓名： \StudentName \\
+    指导教师（姓名、职称）： \Mentor\ \MentorTitle \\
+    摘要：
+    \egroup
+  }
+  \kaishu\zihao{-4}\par%
+}{%
+\newpage
+}
+\newcommand{\keywords}[1]{%
+  \renewcommand*{\njut@value@abstract@keywords}{#1}%
+  \par\vspace{2ex}\noindent%
+  {\kaishu\zihao{-4}\makebox[4em][s]{关键词{：}}}~{#1}%
+}
+% \newcommand*{\englishabstracttitlea}[1]{%
+%   \renewcommand{\njut@value@abstract@en@titlea}{#1}%
+% }
+% \newcommand*{\englishabstracttitleb}[1]{%
+%   \renewcommand{\njut@value@abstract@en@titleb}{#1}%
+% }
+% 英文摘要
+\newenvironment{englishabstract}{%
+  \pagestyle{plain}
+%   \pdfbookmark[0]{\njut@cap@abstract@en}{englishabstract}
+  \begin{center}
+      \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文(设计、作品)英文摘要}}}
+  \end{center}
+  {
+    \bgroup
+    THESIS: \Title \\
+    DEPARTMENT: \Department \\
+    SPECIALIZATION: \Major \\
+    UNDERGRADUATE: \StudentName \\
+    MENTOR: \Mentor \\
+    ABSTRACT:
+    \egroup
+  }
+  \zihao{-4}\par%
+}{%
+\cleardoublepage
+\newpage
+}
+\newcommand{\englishkeywords}[1]{%
+  \renewcommand*{\njut@value@abstract@en@keywords}{#1}%
+  \par\vspace{2ex}\noindent%
+  {KEYWORDS{:}}~~{#1}%
+}
