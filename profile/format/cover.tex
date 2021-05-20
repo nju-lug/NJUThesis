@@ -1,0 +1,83 @@
+\newcommand*{\njut@covertable@onelinetitle}{
+  \begin{tabular}{p{4.2em}c}
+    \makebox[4.2em][s]{院系}
+    & \coverunderline[250pt]{\songti\Department}\\
+    \makebox[4.2em][s]{专业}
+    & \coverunderline[250pt]{\songti\Major}\\
+    \makebox[4.2em][s]{题目}
+    & \coverunderline[250pt]{\textbf{\songti\Title}} 
+  \end{tabular} \\
+  \begin{tabular}{p{4.2em}cp{4.2em}c}
+    \makebox[4.2em][s]{年级}
+    & \coverunderline[90pt]{\Grade}
+    & \makebox[4.2em][s]{学号}
+    & \coverunderline[90pt]{\songti\StudentID}\\
+  \end{tabular}\\
+  \begin{tabular}{p{4.2em}c}
+    \makebox[4.2em][s]{学生姓名}
+    & \coverunderline[250pt]{\StudentName}
+  \end{tabular}\\
+  \begin{tabular}{p{4.2em}cp{4.2em}c}
+    \makebox[4.2em][s]{导师}
+    & \coverunderline[90pt]{\Supervisor}
+    & \makebox[4.2em][s]{职称}
+    & \coverunderline[90pt]{\SupervisorTitle}\\
+  \end{tabular}\\
+%   % 第二导师
+%   \ifnjut@title@twosupervisors
+%     \begin{tabular}{p{4.2em}cp{4.2em}c}
+%       \makebox[4.2em][s]{\njut@cap@cover@secondsupervisor}
+%       & \njutunderline[90pt]{\songti\njut@value@secondsupervisor}
+%       & \makebox[4.2em][s]{\njut@cap@cover@secondsupervisortitle}
+%       & \njutunderline[90pt]{\songti\njut@value@secondsupervisortitle}\\
+%     \end{tabular}
+%   \fi
+  \begin{tabular}{p{4.2em}c}
+    \makebox[4.2em][s]{提交日期}
+    & \coverunderline[250pt]{\SubmitDate}\\
+  \end{tabular}
+}
+
+\renewcommand*{\maketitle}{%
+  \thispagestyle{empty}
+  \pagenumbering{Roman}
+%   \pdfbookmark[0]{\njut@cap@cover}{cover}
+  % Start 
+  \begin{spacing}{1.25}
+  \vskip 0mm  
+  \hskip -10mm \includegraphics[width=2.55cm]{figure/njulogo.eps}\\
+  \begin{center}
+    \includegraphics[height=3.35cm]{figure/njuname.eps}\\
+    \vskip 10mm
+    {\zihao{1}\makebox[9em][s]{\textbf{\songti\typename}}}\\
+    % 三行标题 + 第二导师可能会导致溢出
+    % 数字可以再调
+    % \ifnjut@title@threelinetitle
+    %   \ifnjut@title@twosupervisors
+    %     \vskip 18mm
+    %   \else
+    %     \vskip 22mm
+    %   \fi
+    % \else
+      \vskip 26mm
+    % \fi
+    \vskip\stretch{0}
+    {\bgroup
+    \kaishu\zihao{3}
+    \def\tabcolsep{1pt}
+    \def\arraystretch{1.5}
+    % \ifnjut@title@twolinetitle
+    %   \njut@covertable@twolinetitle
+    % \else
+    %   \ifnjut@title@threelinetitle
+        % \njut@covertable@threelinetitle
+    %   \else
+        \njut@covertable@onelinetitle
+    %   \fi
+    % \fi
+    \egroup}\\
+    \vskip 8mm
+  \end{center}
+  \end{spacing}
+%   \cleardoublepage
+}

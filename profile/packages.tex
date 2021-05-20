@@ -1,0 +1,17 @@
+\RequirePackage{ifxetex}
+\RequirePackage{lastpage}
+\RequirePackage{geometry}
+\RequirePackage{ifthen}
+\RequirePackage{expl3}
+\RequirePackage{titlesec} 
+\RequirePackage{graphicx}
+\RequirePackage{ulem}
+\RequirePackage{setspace}
+
+\DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
+\graphicspath{{./}{./img/}{./fig/}{./image/}{./figure/}{./picture/}{./imgs/}{./figs/}{./images/}{./figures/}{./pictures/}}
+\RequirePackage[
+    style=gb7714-2015,
+    % gbpub=false,         % Uncomment if you do NOT want '[S.l. : s.n.]' in reference entries, GitHub Issue (#47)
+    % gbnamefmt=lowercase, % Uncomment if you do NOT want uppercase author names in reference entries, GitHub Issue (#23)
+]{biblatex}

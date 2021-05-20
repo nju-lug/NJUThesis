@@ -1,0 +1,20 @@
+% 覆盖Ctex字体设置
+\sys_if_platform_windows:TF
+{
+    % \setCJKfamilyfont{zhfs}   {FangSong} [AutoFakeBold={\FakeBoldSize}]
+    % \setCJKfamilyfont{zhhei}  {SimHei}   [AutoFakeBold={\FakeBoldSize}]
+    % \setCJKfamilyfont{zhkai}  {KaiTi}    [AutoFakeBold={\FakeBoldSize}]
+    \setCJKfamilyfont{zhsong} {SimSun}   [AutoFakeBold=2.17]
+
+    % \setCJKmainfont[AutoFakeBold={2.17}]{SimSun}
+}
+{
+    \ctex_if_platform_macos:TF 
+    {
+
+    }
+    {
+
+    }
+    
+}
