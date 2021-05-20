@@ -28,15 +28,16 @@
 \DeclareStringOption{Mentor}
 \DeclareStringOption{MentorTitle}
 \DeclareStringOption{SubmitDate}
+\DeclareStringOption[本科]{Degree}
 
 \ProcessKeyvalOptions*
 
 \ifthenelse{\equal{\Type}{thesis}}
 {
-  \newcommand{\typename}{本科毕业论文}
+  \newcommand{\typename}{\Degree 毕业论文}
 }
 {
-  \newcommand{\typename}{本科毕业设计}
+  \newcommand{\typename}{\Degree 本科毕业设计}
 }
 
 
