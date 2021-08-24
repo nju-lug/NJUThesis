@@ -14,19 +14,24 @@
 
 % 输入配置文件
 \input{profile/profile.cls}
-% \input{profile/packages.tex}
 \input{njuthesis.cfg}
 
 
 \DeclareStringOption[thesis]{Type}
 \DeclareStringOption{Department}
+\DeclareStringOption{Department_EN}
 \DeclareStringOption{Major}
+\DeclareStringOption{Major_EN}
 \DeclareStringOption{Title}
+\DeclareStringOption{Title_EN}
 \DeclareStringOption{Grade}
 \DeclareStringOption{StudentID}
 \DeclareStringOption{StudentName}
+\DeclareStringOption{StudentName_EN}
 \DeclareStringOption{Mentor}
+\DeclareStringOption{Mentor_EN}
 \DeclareStringOption{MentorTitle}
+\DeclareStringOption{MentorTitle_EN}
 \DeclareStringOption{SubmitDate}
 \DeclareStringOption[本科]{Degree}
 
@@ -37,10 +42,5 @@
   \newcommand{\typename}{\Degree 毕业论文}
 }
 {
-  \newcommand{\typename}{\Degree 本科毕业设计}
+  \newcommand{\typename}{\Degree 毕业设计}
 }
-
-
-
-
-% \input{njuthesis.cfg}
