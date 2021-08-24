@@ -12,7 +12,7 @@ jobs:
         with:
           root_file: njuthesis.tex
           latexmk_use_xelatex: true
-          args: '-bibtex'
+          args: '-biber'
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
