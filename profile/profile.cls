@@ -1,7 +1,11 @@
-\newcommand{\profileinput}[1]{
+\ExplSyntaxOn
+
+\cs_new_protected:Npn \profile_input #1 {
     \input{profile/#1}
 }
 
-\profileinput{command.tex}
-\profileinput{packages.tex}
-\profileinput{format.tex}
+\profile_input{command.tex}
+\profile_input{packages.tex}
+\profile_input{format.tex}
+
+\ExplSyntaxOff

@@ -1,3 +1,7 @@
 % 封面下划线
-\newcommand{\coverunderline}[2][\textwidth]%
-           {\uline{\makebox[#1]{#2}}}
+\cs_new:Npn \cover_underline:nn #1 #2 {
+    \tl_if_empty:nTF {#1}
+    {\tl_set:Nn #1 {\textwidth}}
+    {}
+    \uline{\makebox[#1]{#2}}
+}

@@ -1,27 +1,28 @@
-\newcommand*{\njut@covertable@onelinetitle}{
+\tl_new:N \cover_oneline_title
+\tl_set:Nn \cover_oneline_title {
   \begin{tabular}{p{4.2em}c}
     \makebox[4.2em][s]{院系}
-    & \coverunderline[250pt]{\songti\Department}\\
+    & \cover_underline:nn {250pt}{\songti\Department}\\
     \makebox[4.2em][s]{专业}
-    & \coverunderline[250pt]{\songti\Major}\\
+    & \cover_underline:nn {250pt}{\songti\Major}\\
     \makebox[4.2em][s]{题目}
-    & \coverunderline[250pt]{\textbf{\songti\Title}} 
+    & \cover_underline:nn {250pt}{\textbf{\songti\Title}} 
   \end{tabular} \\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \makebox[4.2em][s]{年级}
-    & \coverunderline[90pt]{\Grade}
+    & \cover_underline:nn {90pt}{\Grade}
     & \makebox[4.2em][s]{学号}
-    & \coverunderline[90pt]{\songti\StudentID}\\
+    & \cover_underline:nn {90pt}{\songti\StudentID}\\
   \end{tabular}\\
   \begin{tabular}{p{4.2em}c}
     \makebox[4.2em][s]{学生姓名}
-    & \coverunderline[250pt]{\StudentName}
+    & \cover_underline:nn {250pt}{\StudentName}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \makebox[4.2em][s]{导师}
-    & \coverunderline[90pt]{\Mentor}
+    & \cover_underline:nn {90pt}{\Mentor}
     & \makebox[4.2em][s]{职称}
-    & \coverunderline[90pt]{\MentorTitle}\\
+    & \cover_underline:nn {90pt}{\MentorTitle}\\
   \end{tabular}\\
 %   % 第二导师
 %   \ifnjut@title@twosupervisors
@@ -34,11 +35,11 @@
 %   \fi
   \begin{tabular}{p{4.2em}c}
     \makebox[4.2em][s]{提交日期}
-    & \coverunderline[250pt]{\SubmitDate}\\
+    & \cover_underline:nn {250pt}{\SubmitDate}\\
   \end{tabular}
 }
 
-\renewcommand*{\maketitle}{%
+\tl_set:Nn \maketitle {%
   \thispagestyle{empty}
   \pagenumbering{Roman}
 %   \pdfbookmark[0]{\njut@cap@cover}{cover}
@@ -72,7 +73,7 @@
     %   \ifnjut@title@threelinetitle
         % \njut@covertable@threelinetitle
     %   \else
-        \njut@covertable@onelinetitle
+          \cover_oneline_title
     %   \fi
     % \fi
     \egroup}\\

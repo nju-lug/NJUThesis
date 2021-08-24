@@ -28,6 +28,13 @@
             ]
         },
         {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "%DOCFILE%"
+            ]
+        },
+        {
             "name": "lualatex",
             "command": "lualatex",
             "args": [
@@ -58,7 +65,7 @@
             "name": "xe->bib->xe->xe",
             "tools": [
                 "xelatex",
-                "bibtex",
+                "biber",
                 "xelatex",
                 "xelatex"
             ]
