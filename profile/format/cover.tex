@@ -1,3 +1,9 @@
+% 封面下划线
+\cs_new:Npn \cover_underline:nn #1 #2 {
+    \uline{\makebox[#1]{#2}}
+}
+
+% 封面标题
 \tl_new:N \cover_oneline_title
 \tl_set:Nn \cover_oneline_title {
   \begin{tabular}{p{4.2em}c}
@@ -39,10 +45,10 @@
   \end{tabular}
 }
 
-\tl_set:Nn \maketitle {%
+% 重定义maketitle生成封面
+\RenewDocumentCommand \maketitle {} {%
   \thispagestyle{empty}
   \pagenumbering{Roman}
-%   \pdfbookmark[0]{\njut@cap@cover}{cover}
   % Start 
   \begin{spacing}{1.25}
   \vskip 0mm  

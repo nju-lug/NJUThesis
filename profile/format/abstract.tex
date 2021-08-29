@@ -1,4 +1,5 @@
-\newenvironment{abstract}{%
+\NewDocumentEnvironment{abstract} {}
+{%
   \pagestyle{plain}
   \pagenumbering{Roman}
   \begin{center}
@@ -23,13 +24,14 @@
 }
 
 % 中文关键词
-\cs_new:Npn \keywords #1 {%
+\NewDocumentCommand \keywords {m} {%
   \par\vspace{2ex}\noindent%
   {\kaishu\zihao{-4}\makebox[4em][s]{关键词{：}}}~{#1}%
 }
 
 % 英文摘要
-\newenvironment{englishabstract}{%
+\NewDocumentEnvironment{englishabstract} {}
+{%
   \pagestyle{plain}
   \begin{center}
       \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文(设计、作品)英文摘要}}}
@@ -51,7 +53,7 @@
 }
 
 % 英文关键词
-\cs_new:Npn \englishkeywords #1 {%
+\NewDocumentCommand \englishkeywords {m} {%
   \par\vspace{2ex}\noindent%
   {KEYWORDS{:}}~~{#1}%
 }

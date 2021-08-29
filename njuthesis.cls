@@ -39,8 +39,8 @@
 
 \ifthenelse{\equal{\Type}{thesis}}
 {
-  \newcommand{\typename}{\Degree 毕业论文}
+  \NewDocumentCommand \typename {} {\Degree 毕业论文}
 }
 {
-  \newcommand{\typename}{\Degree 毕业设计}
+  \NewDocumentCommand \typename {} {\Degree 毕业设计}
 }

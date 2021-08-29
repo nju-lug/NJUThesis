@@ -4,7 +4,6 @@
     \input{profile/#1}
 }
 
-\profile_input{command.tex}
 \profile_input{packages.tex}
 \profile_input{format.tex}
 
