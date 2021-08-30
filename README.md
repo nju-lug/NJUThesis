@@ -8,6 +8,20 @@
 
 相关文档请参见[本项目wiki](https://github.com/nju-lug/NJUThesisUndergraduate/wiki)。
 
+## 快速开始
+
+### 本地编译
+
+1. 安装TexLive或者MikTex最新版
+2. 下载[模板全部文件](https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip)
+3. 根据需要更改`njuthesis.tex`文件中的内容
+4. 在模板根目录下运行`latexmk -xelatex`编译文件，得到对应的PDF
+
+> **关于编译**
+> - 模板支持`latexmk`、`XeLaTex`、`LuaLaTex`三种编译方式
+> - 如果使用`latexmk`，请务必使用完整的命令`latexmk -xelatex`以免产生不必要的问题
+> - 如果使用`XeLaTex`或`LuaLaTex`，需要按照`XeLaTex/LuaLaTex` -> `biber` -> `XeLaTex/LuaLaTex` -> `XeLaTex/LuaLaTex`的顺序编译四次
+
 ## TODO
 
 - [x] 主要代码转为Latex3，使用expl3宏包
