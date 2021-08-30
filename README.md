@@ -17,10 +17,12 @@
 3. 根据需要更改`njuthesis.tex`文件中的内容
 4. 在模板根目录下运行`latexmk -xelatex`编译文件，得到对应的PDF
 
-> **关于编译**
-> - 模板支持`latexmk`、`XeLaTex`、`LuaLaTex`三种编译方式
-> - 如果使用`latexmk`，请务必使用完整的命令`latexmk -xelatex`以免产生不必要的问题
-> - 如果使用`XeLaTex`或`LuaLaTex`，需要按照`XeLaTex/LuaLaTex` -> `biber` -> `XeLaTex/LuaLaTex` -> `XeLaTex/LuaLaTex`的顺序编译四次
+#### **关于本地编译**
+
+- 模板支持`latexmk`、`XeLaTex`、`LuaLaTex`三种编译方式
+- 如果使用`latexmk`，请务必使用完整的命令`latexmk -xelatex`以免产生不必要的问题
+- 如果使用`XeLaTex`或`LuaLaTex`，需要按照`XeLaTex/LuaLaTex` -> `biber` -> `XeLaTex/LuaLaTex` -> `XeLaTex/LuaLaTex`的顺序编译四次
+- 仓库中.vscode附带一份VScode的Latex WorkShop的配置文件，可根据需要使用
 
 ## TODO
 

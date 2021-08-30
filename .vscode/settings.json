@@ -11,20 +11,10 @@
             ]
         },
         {
-            "name": "pdflatex",
-            "command": "pdflatex",
+            "name": "latexmk",
+            "command": "latexmk",
             "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "%DOCFILE%"
-            ]
-        },
-        {
-            "name": "bibtex",
-            "command": "bibtex",
-            "args": [
-                "%DOCFILE%"
+                "-xelatex"
             ]
         },
         {
@@ -44,6 +34,12 @@
     ],
     "latex-workshop.latex.recipes": [
         {
+            "name": "latexmk 🔃",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
             "name": "xelatex",
             "tools": [
                 "xelatex"
@@ -53,12 +49,6 @@
             "name": "lualatex",
             "tools": [
                 "lualatex"
-            ]
-        },
-        {
-            "name": "pdflatex",
-            "tools": [
-                "pdflatex"
             ]
         },
         {

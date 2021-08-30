@@ -14,7 +14,6 @@
 
 % 输入配置文件
 \input{profile/profile.cls}
-\input{njuthesis.cfg}
 
 
 \DeclareStringOption[thesis]{Type}
