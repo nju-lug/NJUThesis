@@ -15,6 +15,22 @@
 	floatwidth=\textwidth%
 }
 
+% 代码样式
+\lstset{
+    basicstyle=\ttfamily,% basic font
+    keywordstyle=\bfseries,% use bold style for keywords
+    commentstyle=\rmfamily\itshape,% use italic style for comments
+    stringstyle=\ttfamily,% 字符串风格
+    flexiblecolumns,% ?
+    numbers=left,% left-aligned numbering
+    showspaces=false,% hide markers for spaces
+    showstringspaces=false,
+    captionpos=t,% place the caption at the top
+	frame=lrtb,% show all four sides of the frame
+	%linewidth=.8\textwidth,
+	xleftmargin=2em,xrightmargin=2em,% set the width of the code environment
+	}
+
 % 图表标题样式
 \DeclareCaptionFont{songtibf}{\bf\songti}
 \captionsetup{
@@ -37,3 +53,11 @@
     textfont=songtibf,
     labelfont=songtibf
 }
+
+% list configuration
+\renewcommand{\labelitemi}{\small$\blacktriangleright$}
+\renewcommand{\labelitemii}{\textbullet}
+
+\setlist[itemize]{noitemsep}
+\setlist[enumerate]{noitemsep}
+\setlist[description]{noitemsep}

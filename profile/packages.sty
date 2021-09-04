@@ -11,16 +11,24 @@
 \RequirePackage{expl3}
 \RequirePackage{xparse}
 \RequirePackage{titlesec} 
+\RequirePackage[hyphens]{url} % generate better linebreaks in the url
 \RequirePackage{graphicx}
+\RequirePackage{wrapfig} % Wrap text around figures
 \RequirePackage{ulem}
 \RequirePackage{setspace}
 \RequirePackage{fontspec}
 \RequirePackage{listings}
+\RequirePackage{enumitem} % 用于修改列表环境
 \RequirePackage{caption}
-\RequirePackage{floatrow}% 用于图表等页面元素的定位
-\RequirePackage{booktabs}% 用于绘制三线表
-\RequirePackage{siunitx}% 用于书写单位符号
-\RequirePackage[version=4]{mhchem}% 用于绘制分子式
+\RequirePackage{floatrow} % 用于图表等页面元素的定位
+\RequirePackage{booktabs} % 用于绘制三线表
+\RequirePackage{siunitx} % 用于书写单位符号
+\RequirePackage[version=4]{mhchem} % 用于绘制分子式
+
+\RequirePackage{wrapfig} % Wrap text around figures
+
+\RequirePackage{amssymb} % Must be loaded before unicode-math
+\RequirePackage{unicode-math} % Math fonts in xetexorluatex
 
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
 \graphicspath{{./}{./img/}{./fig/}{./image/}{./figure/}{./picture/}{./imgs/}{./figs/}{./images/}{./figures/}{./pictures/}}
