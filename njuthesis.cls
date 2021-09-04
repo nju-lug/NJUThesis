@@ -15,6 +15,8 @@
 % 输入配置文件
 \input{profile/profile.cls}
 
+\DeclareStringOption[1]{TitleLength}
+
 \ProcessKeyvalOptions*
 
 \ifthenelse{\equal{\Type}{thesis}}
