@@ -5,7 +5,7 @@
 }
 
 \input{coverinfo.sty}
-\profile_input{packages.tex}
-\profile_input{format.tex}
+\profile_input{packages.sty}
+\profile_input{format.sty}
 
 \ExplSyntaxOff

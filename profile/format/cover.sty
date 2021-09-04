@@ -9,8 +9,7 @@
 }
 
 % 将三行标题拼接为一行
-\tl_new:N \Title
-\tl_set:Nn \Title {\TitleOne\TitleTwo\TitleThree}
+\tl_const:Nn \Title {\TitleOne\TitleTwo\TitleThree}
 
 % 封面标题
 \tl_new:N \cover_oneline_title
