@@ -1,6 +1,6 @@
 \ExplSyntaxOn
 
-\input{coverinfo.sty}
+\input{coverinfo.sty} 
 \input{profile/packages.sty}
 \input{profile/font.sty}
 \input{profile/cover.sty}

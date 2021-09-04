@@ -1,3 +1,5 @@
+% \ProvidesExplPackage{profile/cover}{2021-9-4}{0.1}{Some things I wrote} 
+
 % 封面下划线
 \cs_new:Npn \cover_underline:nn #1 #2 {
   \uline{\makebox[#1]{#2}}
@@ -20,17 +22,17 @@
     \coverbox:n {题目}
     & \cover_underline:nn {250pt}{\textbf{\songti\TitleOne}} \\
 
-    \ifnum\TitleLength=2 % 标题行数选择
+    \int_compare:nNnTF { \TitleLength } = { 2 }  { 
       \coverbox:n {}
       & \cover_underline:nn {250pt}{\textbf{\songti\TitleTwo}} \\
-    \fi 
-
-    \ifnum\TitleLength=3
+    }{}
+    
+    \int_compare:nNnTF { \TitleLength } = { 3 }  { 
       \coverbox:n {}
       & \cover_underline:nn {250pt}{\textbf{\songti\TitleTwo}} \\
       \coverbox:n {}
       & \cover_underline:nn {250pt}{\textbf{\songti\TitleThree}} \\
-    \fi
+    }{}
   \end{tabular} \\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
