@@ -1,46 +1,69 @@
 % 封面下划线
 \cs_new:Npn \cover_underline:nn #1 #2 {
-    \uline{\makebox[#1]{#2}}
+  \uline{\makebox[#1]{#2}}
 }
+
+% 封面表格边框
+\cs_new:Npn \coverbox:n #1 {
+  \makebox[4.2em][s]{#1}
+}
+
+% 将三行标题拼接为一行
+\tl_new:N \Title
+\tl_set:Nn \Title {\TitleOne\TitleTwo\TitleThree}
 
 % 封面标题
 \tl_new:N \cover_oneline_title
 \tl_set:Nn \cover_oneline_title {
   \begin{tabular}{p{4.2em}c}
-    \makebox[4.2em][s]{院系}
+    \coverbox:n {院系}
     & \cover_underline:nn {250pt}{\songti\Department}\\
-    \makebox[4.2em][s]{专业}
+    \coverbox:n {专业}
     & \cover_underline:nn {250pt}{\songti\Major}\\
-    \makebox[4.2em][s]{题目}
-    & \cover_underline:nn {250pt}{\textbf{\songti\Title}} 
+
+    \coverbox:n {题目}
+    & \cover_underline:nn {250pt}{\textbf{\songti\TitleOne}} \\
+
+    \ifnum\TitleLength=2 % 标题行数选择
+      \coverbox:n {}
+      & \cover_underline:nn {250pt}{\textbf{\songti\TitleTwo}} \\
+    \fi 
+
+    \ifnum\TitleLength=3
+      \coverbox:n {}
+      & \cover_underline:nn {250pt}{\textbf{\songti\TitleTwo}} \\
+      \coverbox:n {}
+      & \cover_underline:nn {250pt}{\textbf{\songti\TitleThree}} \\
+    \fi
   \end{tabular} \\
+
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \makebox[4.2em][s]{年级}
+    \coverbox:n {年级}
     & \cover_underline:nn {90pt}{\Grade}
-    & \makebox[4.2em][s]{学号}
+    & \coverbox:n {学号}
     & \cover_underline:nn {90pt}{\songti\StudentID}\\
   \end{tabular}\\
   \begin{tabular}{p{4.2em}c}
-    \makebox[4.2em][s]{学生姓名}
+    \coverbox:n {学生姓名}
     & \cover_underline:nn {250pt}{\StudentName}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \makebox[4.2em][s]{导师}
+    \coverbox:n {导师}
     & \cover_underline:nn {90pt}{\Mentor}
-    & \makebox[4.2em][s]{职称}
+    & \coverbox:n {职称}
     & \cover_underline:nn {90pt}{\MentorTitle}\\
   \end{tabular}\\
 %   % 第二导师
 %   \ifnjut@title@twosupervisors
 %     \begin{tabular}{p{4.2em}cp{4.2em}c}
-%       \makebox[4.2em][s]{\njut@cap@cover@secondsupervisor}
+%       \coverbox:n {\njut@cap@cover@secondsupervisor}
 %       & \njutunderline[90pt]{\songti\njut@value@secondsupervisor}
-%       & \makebox[4.2em][s]{\njut@cap@cover@secondsupervisortitle}
+%       & \coverbox:n {\njut@cap@cover@secondsupervisortitle}
 %       & \njutunderline[90pt]{\songti\njut@value@secondsupervisortitle}\\
 %     \end{tabular}
 %   \fi
   \begin{tabular}{p{4.2em}c}
-    \makebox[4.2em][s]{提交日期}
+    \coverbox:n {提交日期}
     & \cover_underline:nn {250pt}{\SubmitDate}\\
   \end{tabular}
 }
