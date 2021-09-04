@@ -1,5 +1,39 @@
+% 图表位置调整
+\floatsetup[lstlisting]{ % Captions for lstlistings
+	capposition=above,%
+	margins=centering,%
+	floatwidth=\textwidth%
+}
+\floatsetup[figure]{ % Captions for figures
+	capposition=bottom,%
+	margins=centering,%
+	floatwidth=\textwidth%
+}
+\floatsetup[table]{ % Captions for tables
+	capposition=above,%
+	margins=centering,%
+	floatwidth=\textwidth%
+}
+
 % 图表标题样式
 \DeclareCaptionFont{songtibf}{\bf\songti}
-\captionsetup{font=small}
-\captionsetup[table]{position=top,textfont=songtibf, labelfont=songtibf}
-\captionsetup[figure]{position=below,textfont=songtibf, labelfont=songtibf}
+\captionsetup{
+    font=small,%
+    labelfont=bf,
+	strut=no,%
+	hypcap=true, % Links point to the top of the figure
+	% indention=0pt, % Suppress indentation
+	% % parindent=0pt, % Suppress space between paragraphs
+	aboveskip=6pt, % Increase the space between the figure and the caption
+	belowskip=6pt, % Increase the space between the caption and the table
+}
+\captionsetup[table]{
+    position=top,
+    textfont=songtibf,
+    labelfont=songtibf
+}
+\captionsetup[figure]{
+    position=below,
+    textfont=songtibf,
+    labelfont=songtibf
+}
