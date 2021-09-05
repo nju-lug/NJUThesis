@@ -14,3 +14,24 @@
 % 所以1.5/1.2*1.3 = 1.625
 % 该内容已作为参数传入ctexbook类
 % \linespread{1.625}
+
+% ctex格式设置
+\ctexset{
+    contentsname = \songti\bfseries\zihao{3}目录,
+    chapter/format = \zihao{4}\bfseries\heiti\centering,
+    section/format = \zihao{4}\bfseries\heiti\raggedright,
+    subsection/format = \zihao{4}\bfseries\heiti\raggedright,
+    subsubsection/format = \zihao{4}\bfseries\heiti\raggedright
+}
+
+% 重定义目录中章节标题样式
+\titlecontents{chapter}[5em]{\bfseries\heiti\zihao{4} \vspace{10pt}}{\contentslabel{4em}}{}{~\titlerule*[0.6pc]{$.$}~\contentspage}
+\titlecontents{section}[5em]{\vspace{0pt}}{\contentslabel{2em}}{}{~\titlerule*[0.6pc]{$.$}~\contentspage}
+\titlecontents{subsection}[6em]{\vspace{0pt}}{\contentslabel{2em}}{}{~\titlerule*[0.6pc]{$.$}~\contentspage}
+\titlecontents{subsubsection}[6em]{\vspace{0pt}}{\contentslabel{2em}}{}{~\titlerule*[0.6pc]{$.$}~\contentspage}
+% 1.{section}:标题级别
+% 2.[5em]:标题位置 (左间距)
+% 3.{\bfseries \zihao{5} \vspace{10pt}}:标题格式 (设置标题的整体格式，如字体尺寸、粗细、与上一个标题的垂直距离等，可空置)
+% 4.{\contentslabel{4em}}:标题标志 (设置标题标志的格式，如序号格式、序号宽度、序号与标题内容之间的间距等，不可空置)
+% 5.{\hspace*{0em}}:无序号标题 (设置无序号标题的格式，如字体、字体尺寸、位置等。该参数可以空置)
+% 6.{~\titlerule*[0.6pc]{$.$}~\contentspage}:指引线与页码 (设置标题与页码之间的指引线样式以及页码的格式，该参数如果空置，标题将无指引线和页码)

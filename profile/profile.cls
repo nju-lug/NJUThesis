@@ -11,10 +11,10 @@
 % ctex格式设置
 \ctexset{
     contentsname = \songti\bfseries\zihao{3}目录,
-    chapter/format = \zihao{4}\bfseries\centering,
-    section/format = \zihao{4}\bfseries\raggedright,
-    subsection/format = \zihao{4}\bfseries\raggedright,
-    subsubsection/format = \zihao{4}\bfseries\raggedright
+    chapter/format = \zihao{4}\bfseries\heiti\centering,
+    section/format = \zihao{4}\bfseries\heiti\raggedright,
+    subsection/format = \zihao{4}\bfseries\heiti\raggedright,
+    subsubsection/format = \zihao{4}\bfseries\heiti\raggedright
 }
 
 \ExplSyntaxOff
