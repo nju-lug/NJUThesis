@@ -1,6 +1,6 @@
 % \ProvidesExplPackage{profile/page}{2021-9-4}{0.1}{Some things I wrote} 
 
-\fancypagestyle{plain}{%
+\fancypagestyle{njuplain}{%
    \fancyhead{}               
    \fancyfoot[C]{\zihao{5}\thepage}        
 }
@@ -9,7 +9,7 @@
 % the footer line
 \tl_set:Nn \footrulewidth {0pt}
 
-\AtBeginDocument{\pagestyle{plain}} % 无页眉页脚
+\AtBeginDocument{\pagestyle{njuplain}} % 无页眉页脚
 
 % ctex格式设置
 \ctexset{

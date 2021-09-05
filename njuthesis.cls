@@ -12,6 +12,7 @@
 % \PassOptionsToPackage{AutoFakeBold=2.17}{xeCJK}
 \LoadClass[
   a4paper,
+  twoside,
   UTF8,
   scheme=chinese,
   linespread=1.625,% laTex默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故1.5/1.2*1.3 = 1.625
