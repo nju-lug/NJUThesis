@@ -20,12 +20,12 @@
   zihao=-4
   ]{ctexbook}[2018/04/01]
 
-% 输入配置文件
-\input{profile/profile.cls}
-
 \DeclareStringOption[1]{TitleLength}
 
-\ProcessKeyvalOptions*
+\ProcessKeyvalOptions*\relax
+
+% 输入配置文件
+\input{profile/profile.cls}
 
 \ifthenelse{\equal{\Type}{thesis}}
 {

@@ -1,5 +1,5 @@
 \documentclass[
-    TitleLength=1,% 选择标题行数，范围是1~3
+    % TitleLength=1,% 选择标题行数，范围是1~3
 ]{njuthesis}
 
 \addbibresource{njuthesis.bib}
@@ -33,7 +33,7 @@
 \section{表格示例}
 你可以使用\lstinline|table|环境插入标准三线表，代码如下:
 \begin{lstlisting}[language=TeX]
-\begin{table}[h]
+\begin{table}[htbp]
     \caption{经过测试的环境}
     \begin{tabular}{ccc}
         \toprule
@@ -48,7 +48,7 @@
     \end{tabular}
 \end{table}}
 \end{lstlisting}
-\begin{table}[h]
+\begin{table}[htbp]
     \caption{经过测试的环境}
     % \label{tab:1}
     \begin{tabular}{ccc}
