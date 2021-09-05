@@ -1,10 +1,10 @@
-# NJU Thesis
+# NJU Thesis Undergraduate
 
 [![njuthesis](https://img.shields.io/badge/njuthesis-latex-blue)](https://git.nju.edu.cn/nju-lug/nju-latex-templates)
 [![overleaf](https://img.shields.io/badge/overleaf-supported-brightgreen)](https://tex.nju.edu.cn)
 ![build status](https://github.com/nju-lug/NJUThesisUndergraduate/actions/workflows/build.yml/badge.svg)
 
-> 此项目是基于[NJU thesis 2021](https://github.com/FengChendian/NJUThesis2021)的重构版本，目前**已经基本重构完成**。
+> 此项目是基于[NJU thesis 2021](https://github.com/FengChendian/NJUThesis2021)的重构版本，目前本科生版本**已经基本重构完成**。
 
 原来的[NJU thesis 2021](https://github.com/FengChendian/NJUThesis2021)模板太过古老并且不支持硕士、博士论文，目前难以维护，因此为了模板的可持续发展，现在将对该项目进行重构，项目将被挂载于[NJU-LUG](https://github.com/nju-lug)组织仓库下。
 
