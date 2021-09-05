@@ -27,37 +27,52 @@
 \mainmatter
 
 \chapter{绪论}
-    \section{简介}
-    南京大学学士学位论文\LaTeX 模板\cite{njuthesis}基于本科生院的论文撰写规范修改，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文。
+\section{简介}
+南京大学学士学位论文\LaTeX 模板\cite{njuthesis}基于本科生院的论文撰写规范修改，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文。
 
-    此模板旨在为同学提供毕业论文书写的方便，如有模板问题或者版权问题，请于Github上提出issue。
-\chapter{使用方法}
-    \section{表格}
-    \begin{table}[htbp]
-        \centering
-        \caption{表格样例}
-        \begin{tabular}{|c|c|c|}
-            \hline
-            1 & 2 & 3 \\
-            \hline
-            4 &  5 & 6 \\
-            \hline
-        \end{tabular}
-    \end{table}
-    \section{图片}
-    你可以使用figure命令插入图片，代码如下:
-    \begin{lstlisting}[language=TeX]
+此模板旨在为同学提供毕业论文书写的方便，如有模板问题或者版权问题，请于Github上提出issue。
+
+\section{表格}
+\begin{table}[htbp]
+    \centering
+    \caption{表格样例}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        1 & 2 & 3 \\
+        \hline
+        4 &  5 & 6 \\
+        \hline
+    \end{tabular}
+\end{table}
+\section{图片}
+你可以使用figure命令插入图片，代码如下:
+\begin{lstlisting}[language=TeX]
 \begin{figure}
     \centering
-    \includegraphics[width=0.25\textwidth]{njulogo}
-    \caption{南京大学校徽}
+    \includegraphics[width=0.5\textwidth]{njuname}
+    \caption{南京大学名称}
 \end{figure}
-    \end{lstlisting}
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=0.25\textwidth]{njulogo}
-        \caption{南京大学校徽}
-    \end{figure}
+\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{njuname}
+\caption{南京大学名称}
+\end{figure}
+
+\chapter{段落格式测试}
+项羽本纪
+\section{二级标题}
+\zhlipsum[1][name=xiangyu]
+\subsection{三级标题}
+% wrapfigure后面不能有空行
+\begin{wrapfigure}{r}{0cm}
+    % \label{fig:njulogo}
+    \includegraphics[width=.3\textwidth]{njulogo}
+    \caption{环绕图像测试}
+\end{wrapfigure}
+\zhlipsum[2][name=xiangyu]
+\subsubsection{四级标题}
+\zhlipsum[3][name=xiangyu]
 
 \printbibliography
 \end{document}
