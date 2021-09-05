@@ -32,20 +32,42 @@
 
 此模板旨在为同学提供毕业论文书写的方便，如有模板问题或者版权问题，请于Github上提出issue。
 
-\section{表格}
-\begin{table}[htbp]
-    \centering
-    \caption{表格样例}
-    \begin{tabular}{|c|c|c|}
-        \hline
-        1 & 2 & 3 \\
-        \hline
-        4 &  5 & 6 \\
-        \hline
+\section{表格示例}
+你可以使用\lstinline|table|环境插入标准三线表，代码如下:
+\begin{lstlisting}[language=TeX]
+\begin{table}[h]
+    \caption{经过测试的环境}
+    \begin{tabular}{ccc}
+        \toprule
+        OS & Tex & 测试情况 \\
+        \midrule
+        Windows 10 & TexLive 2021 & ✔ \\
+        Windows 10 & MikTex & ✔ \\
+        Windows 10 & TexLive 2020 & ✔  \\
+        Ubuntu 20.04 & TexLive 2021 & ✔ \\
+        南大Tex & Overleaf & ✔ \\
+        \bottomrule
+    \end{tabular}
+\end{table}}
+\end{lstlisting}
+\begin{table}[h]
+    \caption{经过测试的环境}
+    % \label{tab:1}
+    \begin{tabular}{ccc}
+        \toprule
+        OS & Tex & 测试情况 \\
+        \midrule
+        Windows 10 & TexLive 2021 & ✔ \\
+        Windows 10 & MikTex & ✔ \\
+        Windows 10 & TexLive 2020 & ✔  \\
+        Ubuntu 20.04 & TexLive 2021 & ✔ \\
+        南大Tex & Overleaf & ✔ \\
+        \bottomrule
     \end{tabular}
 \end{table}
-\section{图片}
-你可以使用figure命令插入图片，代码如下:
+
+\section{图片示例}
+你可以使用\lstinline|figure|环境插入图片，代码如下:
 \begin{lstlisting}[language=TeX]
 \begin{figure}
     \centering
@@ -59,11 +81,7 @@
 \caption{南京大学名称}
 \end{figure}
 
-\chapter{段落格式测试}
-项羽本纪
-\section{二级标题}
-\zhlipsum[1][name=xiangyu]
-\subsection{三级标题}
+\subsection{文字环绕图像}
 % wrapfigure后面不能有空行
 \begin{wrapfigure}{r}{0cm}
     % \label{fig:njulogo}
@@ -71,8 +89,13 @@
     \caption{环绕图像测试}
 \end{wrapfigure}
 \zhlipsum[2][name=xiangyu]
-\subsubsection{四级标题}
-\zhlipsum[3][name=xiangyu]
 
-\printbibliography
+\backmatter
+\setcounter{secnumdepth}{-2}
+\chapter*{致谢}
+感谢\href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU LUG}。
+
+\printbibliography[heading=bibintoc, title=参考文献]
+% \printindex
+
 \end{document}
