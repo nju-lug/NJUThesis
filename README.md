@@ -32,6 +32,7 @@
 2. 解压后将所有文件按照原目录结构上传至[南大Tex](https://tex.nju.edu.cn)（GitHub相关文件可不上传），上传后`njuthesis.tex`、`njuthesis.cls`等文件应在根目录，目录结构如下所示：
 
     ```bash
+    │  coverinfo.sty
     │  njuthesis.bib
     │  njuthesis.cls
     │  njuthesis.tex
@@ -41,16 +42,13 @@
     │      njuname.pdf
     │
     └─profile
-        │  format.tex
-        │  packages.tex
-        │  profile.cls
-        │
-        └─format
-                abstract.tex
-                caption.tex
-                cover.tex
-                font.tex
-                page.tex
+            abstract.sty
+            components.sty
+            cover.sty
+            font.sty
+            packages.sty
+            page.sty
+            profile.cls
     ```
 
 3. 在南大Tex项目内页面左上角的`Menu`中，将编译器改为`LuaLatex`
