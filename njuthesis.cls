@@ -14,7 +14,7 @@
   a4paper,
   UTF8,
   scheme=chinese,
-  linespread=1.625,
+  linespread=1.625,% laTex默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故1.5/1.2*1.3 = 1.625
   fontset=none,
   zihao=-4
   ]{ctexbook}[2018/04/01]
