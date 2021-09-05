@@ -37,9 +37,7 @@
     │  njuthesis.tex
     │
     ├─figure
-    │      njulogo-eps-converted-to.pdf
     │      njulogo.eps
-    │      njuname-eps-converted-to.pdf
     │      njuname.eps
     │
     └─profile
