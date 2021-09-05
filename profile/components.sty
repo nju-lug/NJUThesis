@@ -30,8 +30,11 @@
     captionpos=t,% place the caption at the top
 	frame=lrtb,% show all four sides of the frame
 	%linewidth=.8\textwidth,
+	breakatwhitespace=true,
+	breaklines=true,
 	xleftmargin=2em,xrightmargin=2em,% set the width of the code environment
-	}
+}
+\AtBeginEnvironment{lstlisting}{\linespread{1}\selectfont} % 调整代码环境行距
 
 % 图表标题样式
 \DeclareCaptionFont{songtibf}{\bf\songti}
