@@ -15,6 +15,7 @@
   UTF8,
   scheme=chinese,
   linespread=1.625,
+  fontset=none,
   zihao=-4
   ]{ctexbook}[2018/04/01]
 
