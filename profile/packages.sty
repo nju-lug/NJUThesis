@@ -1,8 +1,7 @@
 % \ProvidesExplPackage{profile/packages}{2021-9-4}{0.1}{Some things I wrote} 
 
 \RequirePackage{ifxetex}
-\RequirePackage{lastpage}
-\RequirePackage{fancyhdr}
+\RequirePackage{fontspec}
 \RequirePackage[    
     top=2.5cm,
     bottom=2.5cm,
@@ -15,25 +14,25 @@
 % \RequirePackage{etoolbox}
 \RequirePackage{titlesec} % 修改章节标题功能由CTeX提供
 \RequirePackage{titletoc}
+\RequirePackage{fancyhdr} % 调整页眉页脚
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
 \RequirePackage{ulem} % 绘制下划线
 \RequirePackage{setspace}
+\RequirePackage{lastpage}
 \RequirePackage{emptypage} % 清除空白页的页码
-\RequirePackage{fontspec}
-\RequirePackage{listings}
+\RequirePackage{listings} % 代码环境
 \RequirePackage{enumitem} % 用于修改列表环境
 \RequirePackage{caption}
 \RequirePackage{floatrow} % 用于图表等页面元素的定位
 \RequirePackage{booktabs} % 用于绘制三线表
 \RequirePackage{siunitx} % 用于书写单位符号
 \RequirePackage[version=4]{mhchem} % 用于绘制分子式
-
-\RequirePackage{hologo} % 用于生成带书签的LaTeX logo
+\RequirePackage{hologo} % 用于生成可以被插入书签的LaTeX logo
 \RequirePackage{needspace} % Required to prevent page break right after a sectioning command
 % \RequirePackage{xspace} % Better print trailing whitespace
 
-\RequirePackage{lipsum} % 生成用于测试样式的大段无意义英文文字
-\RequirePackage{zhlipsum} % 生成用于测试样式的大段无意义中文文字
+\RequirePackage{lipsum} % 生成用于测试的大段无意义英文文字
+\RequirePackage{zhlipsum} % 生成用于测试的大段无意义中文文字
 % \RequirePackage{showframe} % 加载以后展示内容边界
 
 \RequirePackage{amssymb} % Must be loaded before unicode-math
@@ -68,6 +67,5 @@
     % gbpub=false,         % Uncomment if you do NOT want '[S.l. : s.n.]' in reference entries, GitHub Issue (#47)
     % gbnamefmt=lowercase, % Uncomment if you do NOT want uppercase author names in reference entries, GitHub Issue (#23)
 ]{biblatex}
-
 
 \RequirePackage[hidelinks,bookmarksnumbered=true]{hyperref}
