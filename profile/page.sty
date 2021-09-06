@@ -1,5 +1,6 @@
 % \ProvidesExplPackage{profile/page}{2021-9-4}{0.1}{Some things I wrote} 
 
+% 论文页码 页脚居中、五号阿拉伯数字（新罗马体）连续编码
 \fancypagestyle{njuplain}{%
    \fancyhead{}               
    \fancyfoot[C]{\zihao{5}\thepage}        
@@ -12,18 +13,22 @@
 \AtBeginDocument{\pagestyle{njuplain}} % 无页眉页脚
 
 % ctex格式设置
+% 目录标题 三号宋体加粗
+% 各部分标题 四号黑体
 \ctexset{
     contentsname = \songti\bfseries\zihao{3}目录,
-    chapter/format = \zihao{4}\bfseries\heiti\centering,
-    section/format = \zihao{4}\bfseries\heiti\raggedright,
-    subsection/format = \zihao{4}\bfseries\heiti\raggedright,
-    subsubsection/format = \zihao{4}\bfseries\heiti\raggedright
+    chapter/format = \zihao{4}\heiti\centering,
+    section/format = \zihao{4}\heiti\raggedright,
+    subsection/format = \zihao{4}\heiti\raggedright,
+    subsubsection/format = \zihao{4}\heiti\raggedright
 }
 
 % 重定义目录中章节标题样式
-\titlecontents{chapter}[5em]{\bfseries\heiti\zihao{4} \vspace{10pt}}{\contentslabel{4em}}{\hspace*{-4em}}{~\titlerule*[0.6pc]{$.$}~\contentspage}
-\titlecontents{section}[5em]{\vspace{0pt}}{\contentslabel{2.5em}}{}{~\titlerule*[0.6pc]{$.$}~\contentspage}
-\titlecontents{subsection}[8em]{\vspace{0pt}}{\contentslabel{3em}}{}{~\titlerule*[0.6pc]{$.$}~\contentspage}
+% 目录内容中章的标题 四号黑体
+% 目录中其他内容 小四号宋体
+\titlecontents{chapter}[5em]{\heiti\zihao{4}\vspace{10pt}}{\contentslabel{4em}}{\hspace*{-4em}}{~\titlerule*[0.6pc]{$.$}~\contentspage}
+\titlecontents{section}[5em]{\zihao{-4}\vspace{0pt}}{\contentslabel{2.5em}}{}{~\titlerule*[0.6pc]{$.$}~\contentspage}
+\titlecontents{subsection}[8em]{\zihao{-4}\vspace{0pt}}{\contentslabel{3em}}{}{~\titlerule*[0.6pc]{$.$}~\contentspage}
 % 1.{section}:标题级别
 % 2.[5em]:标题位置 (左间距)
 % 3.{\bfseries \zihao{5} \vspace{10pt}}:标题格式 (设置标题的整体格式，如字体尺寸、粗细、与上一个标题的垂直距离等，可空置)
