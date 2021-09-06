@@ -16,8 +16,13 @@
 
 1. 安装TexLive或者MikTex最新版
 2. 下载[模板全部文件](https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip)
-3. 根据需要更改`njuthesis.tex`文件中的内容
-4. 在模板根目录下运行`latexmk -xelatex`编译文件，得到对应的PDF
+3. ==准备所需字体==
+4. 根据需要更改`njuthesis.tex`文件中的内容
+5. 在模板根目录下运行`latexmk -xelatex`编译文件，得到对应的PDF
+
+#### 关于字体
+
+模板使用[思源宋体](https://www.google.com/get/noto/#serif-hans)、[思源黑体](https://www.google.com/get/noto/#sans-hans)、[方正仿宋](http://www.foundertype.com/index.php/FontInfo/index/id/128.html)、[方正楷体](http://www.foundertype.com/index.php/FontInfo/index/id/137.html)等中文字体用于统一格式，相关文件可以从[这个网盘链接](https://box.nju.edu.cn/d/df2788058fa74d88962b/)下载。
 
 #### **关于本地编译**
 
@@ -77,4 +82,3 @@
 - [x] Github Action自动化构建预览PDF
 - [x] 完善文档
 - [ ] CTAN发布宏包
-  
