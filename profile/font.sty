@@ -3,7 +3,7 @@
 \RequireXeTeX
 
 % 覆盖 ctex 字体设置
-\newcommand\use_fontset_windows{
+% \newcommand\use_fontset_windows{
   % 设置西文字体
   \setmainfont{Times~New~Roman}
   \setsansfont{Arial}
@@ -39,81 +39,81 @@
 
   \setCJKfamilyfont{zhsong}{Noto~Serif~CJK~SC}
   \setCJKfamilyfont{zhhei}{Noto~Sans~CJK~SC}
-  \setCJKfamilyfont{zhfs}{FangSong}
+  \setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
   % 楷体使用方正楷体简体，为免费商用字体，且支持CJK字符集
   % http://www.foundertype.com/index.php/FontInfo/index/id/137.html
-  \setCJKfamilyfont{zhkai}{FZKTJW--GB1-0}[AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[BoldFont=Microsoft~YaHei~Bold]
-}
+  \setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
+  % \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[BoldFont=Microsoft~YaHei~Bold]
+% }
 
-\newcommand\use_fontset_macos{
-  % 设置西文字体
-  \setmainfont{Times~New~Roman}
-  \setsansfont{Arial}
-  \setmonofont{Menlo}[Scale=MatchLowercase]
-  % 设置中文字体
-  \setCJKmainfont{Songti~SC~Light}[BoldFont=Songti~SC~Bold, ItalicFont=Kaiti~SC, BoldItalicFont=Kaiti~SC~Bold]
-  \setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-  \setCJKmonofont{STFangsong}
-  \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
-  \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-  \setCJKfamilyfont{zhfs}{STFangsong}
-  \setCJKfamilyfont{zhkai}{Kaiti~SC}[BoldFont=Kaiti~SC~Bold]
-  \setCJKfamilyfont{zhnewhei}{PingFang~SC}
-}
+% \newcommand\use_fontset_macos{
+%   % 设置西文字体
+%   \setmainfont{Times~New~Roman}
+%   \setsansfont{Arial}
+%   \setmonofont{Menlo}[Scale=MatchLowercase]
+%   % 设置中文字体
+%   \setCJKmainfont{Songti~SC~Light}[BoldFont=Songti~SC~Bold, ItalicFont=Kaiti~SC, BoldItalicFont=Kaiti~SC~Bold]
+%   \setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+%   \setCJKmonofont{STFangsong}
+%   \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
+%   \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+%   \setCJKfamilyfont{zhfs}{STFangsong}
+%   \setCJKfamilyfont{zhkai}{Kaiti~SC}[BoldFont=Kaiti~SC~Bold]
+%   \setCJKfamilyfont{zhnewhei}{PingFang~SC}
+% }
 
-\newcommand\use_fontset_linux{
-  % 移除 does not contain script "CJK" 警告
-  \msg_redirect_name:nnn {fontspec} {no-script} {info}
-  % 设置西文字体  
-  \setmainfont{texgyretermes}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic]
-  \setsansfont{texgyreheros}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic]
-  \setmonofont{texgyrecursor}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic,
-    Scale=MatchLowercase,
-    Ligatures=CommonOff]
-  % 设置中文字体
-  \setCJKmainfont{FandolSong-Regular}[Extension=.otf,BoldFont=FandolSong-Bold,ItalicFont=FandolKai-Regular]
-  \setCJKsansfont{FandolHei-Regular}[Extension=.otf,BoldFont=FandolHei-Bold]
-  \setCJKmonofont{FandolFang-Regular}[Extension=.otf]
-  \setCJKfamilyfont{zhsong}{FandolSong-Regular}[Extension=.otf,BoldFont=FandolSong-Bold]
-  \setCJKfamilyfont{zhhei}{FandolHei-Regular}[Extension=.otf,BoldFont=FandolHei-Bold]
-  \setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
-  \setCJKfamilyfont{zhkai}{FandolKai-Regular}[Extension=.otf]}
+% \newcommand\use_fontset_linux{
+%   % 移除 does not contain script "CJK" 警告
+%   \msg_redirect_name:nnn {fontspec} {no-script} {info}
+%   % 设置西文字体  
+%   \setmainfont{texgyretermes}[
+%     Extension=.otf,
+%     UprightFont=*-regular,
+%     BoldFont=*-bold,
+%     ItalicFont=*-italic,
+%     BoldItalicFont=*-bolditalic]
+%   \setsansfont{texgyreheros}[
+%     Extension=.otf,
+%     UprightFont=*-regular,
+%     BoldFont=*-bold,
+%     ItalicFont=*-italic,
+%     BoldItalicFont=*-bolditalic]
+%   \setmonofont{texgyrecursor}[
+%     Extension=.otf,
+%     UprightFont=*-regular,
+%     BoldFont=*-bold,
+%     ItalicFont=*-italic,
+%     BoldItalicFont=*-bolditalic,
+%     Scale=MatchLowercase,
+%     Ligatures=CommonOff]
+%   % 设置中文字体
+%   \setCJKmainfont{FandolSong-Regular}[Extension=.otf,BoldFont=FandolSong-Bold,ItalicFont=FandolKai-Regular]
+%   \setCJKsansfont{FandolHei-Regular}[Extension=.otf,BoldFont=FandolHei-Bold]
+%   \setCJKmonofont{FandolFang-Regular}[Extension=.otf]
+%   \setCJKfamilyfont{zhsong}{FandolSong-Regular}[Extension=.otf,BoldFont=FandolSong-Bold]
+%   \setCJKfamilyfont{zhhei}{FandolHei-Regular}[Extension=.otf,BoldFont=FandolHei-Bold]
+%   \setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
+%   \setCJKfamilyfont{zhkai}{FandolKai-Regular}[Extension=.otf]}
 
-% 检测是否是 Windows
-\sys_if_platform_windows:TF
-{
-  \use_fontset_windows
-}
-{
-  % 检测是否是 MacOS
-  \ctex_if_platform_macos:TF
-  {
-    \use_fontset_macos
-  }
-  % 其余系统一律识别为 Linux
-  {
-    \use_fontset_linux
-  }
-}
+% % 检测是否是 Windows
+% \sys_if_platform_windows:TF
+% {
+%   \use_fontset_windows
+% }
+% {
+%   % 检测是否是 MacOS
+%   \ctex_if_platform_macos:TF
+%   {
+%     \use_fontset_macos
+%   }
+%   % 其余系统一律识别为 Linux
+%   {
+%     \use_fontset_linux
+%   }
+% }
 
 \NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
 \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
 \NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
 \NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
-\NewDocumentCommand\lishu{}{\CJKfamily{zhli}}
+% \NewDocumentCommand\lishu{}{\CJKfamily{zhli}}
