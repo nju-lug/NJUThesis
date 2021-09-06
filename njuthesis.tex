@@ -31,6 +31,21 @@
 此模板旨在为同学提供毕业论文书写的方便，如有模板问题或者版权问题，请于Github上提出issue。
 
 \section{表格示例}
+\begin{table}[htbp]
+    \caption{经过测试的环境}
+    % \label{tab:1}
+    \begin{tabular}{ccc}
+        \toprule
+        OS & Tex & 测试情况 \\
+        \midrule
+        Windows 10 & TexLive 2021 & ✔ \\
+        Windows 10 & MikTex & ✔ \\
+        Windows 10 & TexLive 2020 & ✔  \\
+        Ubuntu 20.04 & TexLive 2021 & ✔ \\
+        南大Tex & Overleaf & ✔ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 你可以使用\lstinline|table|环境插入标准三线表，代码如下:
 \begin{lstlisting}[language=TeX]
 \begin{table}[htbp]
@@ -48,36 +63,20 @@
     \end{tabular}
 \end{table}}
 \end{lstlisting}
-\begin{table}[htbp]
-    \caption{经过测试的环境}
-    % \label{tab:1}
-    \begin{tabular}{ccc}
-        \toprule
-        OS & Tex & 测试情况 \\
-        \midrule
-        Windows 10 & TexLive 2021 & ✔ \\
-        Windows 10 & MikTex & ✔ \\
-        Windows 10 & TexLive 2020 & ✔  \\
-        Ubuntu 20.04 & TexLive 2021 & ✔ \\
-        南大Tex & Overleaf & ✔ \\
-        \bottomrule
-    \end{tabular}
-\end{table}
 
 \section{图片示例}
-你可以使用\lstinline|figure|环境插入图片，代码如下:
+\begin{figure}[htbp]
+    \includegraphics[width=0.5\textwidth]{njuname}
+    \caption{南京大学名称}
+    \label{fig:1}
+\end{figure}
+你可以使用\lstinline|figure|环境插入图片，如\ref{fig:1}，代码如下:
 \begin{lstlisting}[language=TeX]
 \begin{figure}
-    \centering
     \includegraphics[width=0.5\textwidth]{njuname}
     \caption{南京大学名称}
 \end{figure}
 \end{lstlisting}
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.5\textwidth]{njuname}
-\caption{南京大学名称}
-\end{figure}
 
 \subsection{文字环绕图像}
 % wrapfigure后面不能有空行
