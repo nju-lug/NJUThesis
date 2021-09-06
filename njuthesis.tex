@@ -33,7 +33,7 @@
 \section{表格示例}
 \begin{table}[htbp]
     \caption{经过测试的环境}
-    % \label{tab:1}
+    \labtab{mytab}
     \begin{tabular}{ccc}
         \toprule
         OS & Tex & 测试情况 \\
@@ -46,7 +46,7 @@
         \bottomrule
     \end{tabular}
 \end{table}
-你可以使用\lstinline|table|环境插入标准三线表，代码如下:
+你可以使用\lstinline|table|环境插入标准三线表，如\reftab{mytab}所示，代码如下:
 \begin{lstlisting}[language=TeX]
 \begin{table}[htbp]
     \caption{经过测试的环境}
@@ -68,9 +68,9 @@
 \begin{figure}[htbp]
     \includegraphics[width=0.5\textwidth]{njuname}
     \caption{南京大学名称}
-    \label{fig:1}
+    \labfig{njuname}
 \end{figure}
-你可以使用\lstinline|figure|环境插入图片，如\ref{fig:1}，代码如下:
+你可以使用\lstinline|figure|环境插入图片，如\reffig{njuname}，代码如下:
 \begin{lstlisting}[language=TeX]
 \begin{figure}
     \includegraphics[width=0.5\textwidth]{njuname}
