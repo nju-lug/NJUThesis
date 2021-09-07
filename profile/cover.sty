@@ -10,9 +10,9 @@
   \makebox[4.2em][s]{#1}
 }
 
-% 封面标题
-\tl_new:N \cover_oneline_title
-\tl_set:Nn \cover_oneline_title {
+% 封面信息栏
+\tl_new:N \cover_personalinfo
+\tl_set:Nn \cover_personalinfo {
   \begin{tabular}{p{4.2em}c}
     \coverbox:n {院\hfill 系}
     & \cover_underline:nn {250pt}{\songti\Department}\\
@@ -69,23 +69,12 @@
 }
 
 % 判断类型
-\int_compare:nNnTF { \TitleLength } = { 2 }  { 
-      \coverbox:n {\hfill}
-      & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\
-    }{}
-\ifthenelse{\equal{\Degree}{UG}}
-{
-  \NewDocumentCommand \Degreename {} {\hfill 本\hfill 科\hfill }
-}
-{}
+\str_if_eq:eeTF {\Degree} {UG}
+{\tl_const:Nn \Degreename {\hfill 本\hfill 科\hfill }}{}
 
-\ifthenelse{\equal{\Type}{thesis}}
-{
-  \NewDocumentCommand \typename {} {\Degreename 毕\hfill 业\hfill 论\hfill 文\hfill}
-}
-{
-  \NewDocumentCommand \typename {} {\Degreename 毕\hfill 业\hfill 设\hfill 计\hfill}
-}
+\str_if_eq:eeTF {\Type} {thesis} 
+{\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 论\hfill 文\hfill}}
+{\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 设\hfill 计\hfill}}
 
 % 重定义maketitle生成封面
 \RenewDocumentCommand \maketitle {} {%
@@ -104,7 +93,7 @@
     {\bgroup
     \kaishu\zihao{3}
     \def\tabcolsep{1pt}
-    \def\arraystretch{1.5}          \cover_oneline_title
+    \def\arraystretch{1.5}          \cover_personalinfo
     \egroup}\\
     \vfill
   \end{center}
