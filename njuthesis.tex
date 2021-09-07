@@ -93,6 +93,7 @@
 \end{lstlisting}
 
 \section{图片示例}
+\label{sec:figures}
 \begin{figure}[htbp]
     \includegraphics[width=0.5\textwidth]{njuname}
     \caption{南京大学名称}
@@ -109,18 +110,18 @@
 \subsection{文字环绕图像}
 % wrapfigure后面不能有空行
 \begin{wrapfigure}{r}{0cm}
-    \label{fig:njulogo}
     \includegraphics[width=.3\textwidth]{njulogo}
     \caption{环绕图像测试}
+    \label{fig:njulogo}
 \end{wrapfigure}
 \zhlipsum[4][name=xiangyu]
 
-你可以使用\lstinline|wrapfigure|环境插入图片，如\cref{fig:njulogo}，代码如下:
+你可以使用\lstinline|wrapfigure|环境插入图片，类似于\cref{sec:figures}的普通图片插入方法，代码如下:
 \begin{lstlisting}[language=TeX]
-    \begin{wrapfigure}{r}{0cm}
-    \label{fig:njulogo}
+\begin{wrapfigure}{r}{0cm}
     \includegraphics[width=.3\textwidth]{njulogo}
     \caption{环绕图像测试}
+    \label{fig:njulogo}
 \end{wrapfigure}
 \end{lstlisting}
 
