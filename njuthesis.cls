@@ -8,8 +8,7 @@
     family=njuthesis,
     prefix=
 }
-%
-% \PassOptionsToPackage{AutoFakeBold=2.17}{xeCJK}
+
 \LoadClass[
   a4paper,
   twoside,
@@ -26,5 +25,16 @@
 
 \ProcessKeyvalOptions*\relax
 
+\ExplSyntaxOn % 启用laTeX3语法
+
 % 输入配置文件
-\input{profile/profile.cls}
+\RequirePackage{profile/packages}
+\RequirePackage{coverinfo} 
+\RequirePackage{profile/font}
+\RequirePackage{profile/page}
+\RequirePackage{profile/reference}
+\RequirePackage{profile/components}
+\RequirePackage{profile/cover}
+\RequirePackage{profile/abstract}
+
+\ExplSyntaxOff

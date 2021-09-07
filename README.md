@@ -48,7 +48,6 @@
             font.sty
             packages.sty
             page.sty
-            profile.cls
             reference.sty
     ```
 
