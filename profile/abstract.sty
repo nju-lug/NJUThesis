@@ -8,6 +8,8 @@
 {%
   \pagestyle{plain}
   \pagenumbering{Roman}
+  % \phantomsection\addcontentsline{toc}{chapter}{中文摘要}
+  \pdfbookmark[0]{中文摘要}{中文摘要}
   \begin{center}
     \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）中文摘要}}}
   \end{center}
@@ -39,6 +41,8 @@
 \NewDocumentEnvironment{englishabstract} {}
 {%
   \pagestyle{plain}
+  \pdfbookmark[0]{英文摘要}{英文摘要}
+  % \phantomsection\addcontentsline{toc}{chapter}{英文摘要}
   \begin{center}
       \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）英文摘要}}}
   \end{center}
