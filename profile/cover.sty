@@ -19,20 +19,21 @@
     \coverbox:n {专\hfill 业}
     & \cover_underline:nn {250pt}{\songti\Major}\\
 
-    \coverbox:n {题\hfill 目}
-    & \cover_underline:nn {250pt}{\textbf{\songti\TitleA}} \\
-
-    \int_compare:nNnTF { \TitleLength } = { 2 }  { 
-      \coverbox:n {\hfill}
-      & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\
-    }{}
-    
-    \int_compare:nNnTF { \TitleLength } = { 3 }  { 
-      \coverbox:n {\hfill}
-      & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\
-      \coverbox:n {\hfill}
-      & \cover_underline:nn {250pt}{\textbf{\songti\TitleC}} \\
-    }{}
+    \int_case:nn {\TitleLength}
+      {
+        { 1 } { 
+          \coverbox:n {题\hfill 目}
+          & \cover_underline:nn {250pt}{\textbf{\songti\TitleA}} \\ }
+        { 2 } {
+          \coverbox:n {题\hfill 目}
+          & \cover_underline:nn {250pt}{\textbf{\songti\TitleA}} \\
+          & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\ }
+        { 3 } { 
+          \coverbox:n {题\hfill 目}
+          & \cover_underline:nn {250pt}{\textbf{\songti\TitleA}} \\
+          & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\
+          & \cover_underline:nn {250pt}{\textbf{\songti\TitleC}} \\}
+      }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
@@ -68,6 +69,10 @@
 }
 
 % 判断类型
+\int_compare:nNnTF { \TitleLength } = { 2 }  { 
+      \coverbox:n {\hfill}
+      & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\
+    }{}
 \ifthenelse{\equal{\Degree}{UG}}
 {
   \NewDocumentCommand \Degreename {} {\hfill 本\hfill 科\hfill }

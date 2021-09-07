@@ -21,6 +21,8 @@
   ]{ctexbook}[2018/04/01]
 
 \DeclareStringOption[1]{TitleLength}
+\DeclareStringOption[UG]{Degree}
+\DeclareStringOption[thesis]{Type}
 
 \ProcessKeyvalOptions*\relax
 
