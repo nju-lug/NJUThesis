@@ -1,14 +1,38 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NJU Thesis Undergraduate
+% 南京大学本科生毕业论文LaTeX模板
+% Version 0.1 (2021/09/07)
+%
+% 请关注项目地址以获取最新变化
+% https://github.com/nju-lug/NJUThesisUndergraduate
+% https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesisundergraduate
+%
+% 贡献者
+% @atxy
+% @FengChendian
+% @HermitSun
+% @glatavento
+% 
+% 许可证
+% LaTeX Project Public License（版本 1.3c 或更高）
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[
     TitleLength=1,% 选择标题行数，范围是1~3
     Degree=UG,% 学位 本科：UG
     Type=thesis% thesis：毕业论文，design:毕业设计
 ]{njuthesis}
 
+% 导入参考文献源
 \addbibresource{njuthesis.bib}
 
 \begin{document}
 
-\maketitle
+%----------------------------------------------------------------------------------------
+%	封面、摘要和目录
+%----------------------------------------------------------------------------------------
+
+\maketitle % 请在coverpage.sty输入封面信息
 
 \begin{abstract}
     \zhlipsum[76][name=zhufu]
@@ -23,7 +47,9 @@
 
 \tableofcontents
 
-% 开始正文部分
+%----------------------------------------------------------------------------------------
+%	正文部分
+%----------------------------------------------------------------------------------------
 \mainmatter
 
 \chapter{绪论}
@@ -119,14 +145,23 @@
 \end{equation}
 \end{lstlisting}
 
+%----------------------------------------------------------------------------------------
+%	致谢
+%----------------------------------------------------------------------------------------
+
 % \chapter*{致谢}
 % \addcontentsline{toc}{chapter}{致谢}
 % 感谢\href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU LUG}。
 
-\printbibliography[heading=bibintoc, title=参考文献] % 方括号内的命令可以将参考文献列表加入目录
-% \printindex
+%----------------------------------------------------------------------------------------
+%	参考文献
+%----------------------------------------------------------------------------------------
 
-% 开始附录部分
+\printbibliography[heading=bibintoc, title=参考文献] % 输出参考文献列表并插入目录
+
+%----------------------------------------------------------------------------------------
+%	附录部分
+%----------------------------------------------------------------------------------------
 \appendix 
 
 \end{document}
