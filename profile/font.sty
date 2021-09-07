@@ -41,7 +41,9 @@
 
 % 设置中文字体
 \NewDocumentCommand\set_chinese_fontset_windows{}{
-  \setCJKmainfont{SimSun}[AutoFakeBold=2.17, ItalicFont=KaiTi]
+  \setCJKmainfont{SimSun}[
+    AutoFakeBold=2.17, 
+    ItalicFont=KaiTi]
   \setCJKsansfont{SimHei}
   \setCJKmonofont{FangSong}
   \setCJKfamilyfont{zhsong}{SimSun}[AutoFakeBold=2.17]
@@ -52,6 +54,7 @@
 }
 
 \NewDocumentCommand\set_chinese_fontset_macos{}{
+  \msg_redirect_name:nnn {fontspec} {no-script} {info} % 移除 does not contain script "CJK" 警告
   \setCJKmainfont{Songti~SC~Light}[
     BoldFont=Songti~SC~Bold,
     ItalicFont=Kaiti~SC,
@@ -82,7 +85,9 @@
     Extension=.otf,
     BoldFont=FandolHei-Bold]
   \setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
-  \setCJKfamilyfont{zhkai}{FandolKai-Regular}[Extension=.otf]
+  \setCJKfamilyfont{zhkai}{FandolKai-Regular}[
+    Extension=.otf,
+    AutoFakeBold=2.17]
 }
 
 % 方正字符集
