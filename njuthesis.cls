@@ -26,11 +26,3 @@
 
 % 输入配置文件
 \input{profile/profile.cls}
-
-\ifthenelse{\equal{\Type}{thesis}}
-{
-  \NewDocumentCommand \typename {} {\Degree 毕业论文}
-}
-{
-  \NewDocumentCommand \typename {} {\Degree 毕业设计}
-}

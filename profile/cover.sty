@@ -14,41 +14,42 @@
 \tl_new:N \cover_oneline_title
 \tl_set:Nn \cover_oneline_title {
   \begin{tabular}{p{4.2em}c}
-    \coverbox:n {院系}
+    \coverbox:n {院\hfill 系}
     & \cover_underline:nn {250pt}{\songti\Department}\\
-    \coverbox:n {专业}
+    \coverbox:n {专\hfill 业}
     & \cover_underline:nn {250pt}{\songti\Major}\\
 
-    \coverbox:n {题目}
+    \coverbox:n {题\hfill 目}
     & \cover_underline:nn {250pt}{\textbf{\songti\TitleA}} \\
 
     \int_compare:nNnTF { \TitleLength } = { 2 }  { 
-      \coverbox:n {}
+      \coverbox:n {\hfill}
       & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\
     }{}
     
     \int_compare:nNnTF { \TitleLength } = { 3 }  { 
-      \coverbox:n {}
+      \coverbox:n {\hfill}
       & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\
-      \coverbox:n {}
+      \coverbox:n {\hfill}
       & \cover_underline:nn {250pt}{\textbf{\songti\TitleC}} \\
     }{}
-  \end{tabular} \\
+  \end{tabular}\\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \coverbox:n {年级}
+    \coverbox:n {年\hfill 级}
     & \cover_underline:nn {90pt}{\Grade}
-    & \coverbox:n {学号}
+    & \coverbox:n {学\hfill 号}
     & \cover_underline:nn {90pt}{\songti\StudentID}\\
   \end{tabular}\\
+  
   \begin{tabular}{p{4.2em}c}
-    \coverbox:n {学生姓名}
+    \coverbox:n {学\hfill 生\hfill 姓\hfill 名}
     & \cover_underline:nn {250pt}{\StudentName}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \coverbox:n {导师}
+    \coverbox:n {导\hfill 师}
     & \cover_underline:nn {90pt}{\Mentor}
-    & \coverbox:n {职称}
+    & \coverbox:n {职\hfill 称}
     & \cover_underline:nn {90pt}{\MentorTitle}\\
   \end{tabular}\\
 %   % 第二导师
@@ -61,9 +62,24 @@
 %     \end{tabular}
 %   \fi
   \begin{tabular}{p{4.2em}c}
-    \coverbox:n {提交日期}
+    \coverbox:n {提\hfill 交\hfill 日\hfill 期}
     & \cover_underline:nn {250pt}{\SubmitDate}\\
   \end{tabular}
+}
+
+% 判断类型
+\ifthenelse{\equal{\Degree}{UG}}
+{
+  \NewDocumentCommand \Degreename {} {\hfill 本\hfill 科\hfill }
+}
+{}
+
+\ifthenelse{\equal{\Type}{thesis}}
+{
+  \NewDocumentCommand \typename {} {\Degreename 毕\hfill 业\hfill 论\hfill 文\hfill}
+}
+{
+  \NewDocumentCommand \typename {} {\Degreename 毕\hfill 业\hfill 设\hfill 计\hfill}
 }
 
 % 重定义maketitle生成封面
@@ -72,41 +88,23 @@
   \pagenumbering{Roman}
   % Start 
   \begin{spacing}{1.25}
-  \vskip 0mm  
+  \vskip 0mm
   \hskip -10mm \includegraphics[width=2.55cm]{njulogo}\\
   \begin{center}
     \includegraphics[height=3.35cm]{njuname}\\
-    \vskip 10mm
+    \vskip 10mm 
     {\zihao{1}\makebox[9em][s]{\textbf{\songti\typename}}}\\
-    % 三行标题 + 第二导师可能会导致溢出
-    % 数字可以再调
-    % \ifnjut@title@threelinetitle
-    %   \ifnjut@title@twosupervisors
-    %     \vskip 18mm
-    %   \else
-    %     \vskip 22mm
-    %   \fi
-    % \else
-      \vskip 26mm
-    % \fi
+    \vfill
     \vskip\stretch{0}
     {\bgroup
     \kaishu\zihao{3}
     \def\tabcolsep{1pt}
-    \def\arraystretch{1.5}
-    % \ifnjut@title@twolinetitle
-    %   \njut@covertable@twolinetitle
-    % \else
-    %   \ifnjut@title@threelinetitle
-        % \njut@covertable@threelinetitle
-    %   \else
-          \cover_oneline_title
-    %   \fi
-    % \fi
+    \def\arraystretch{1.5}          \cover_oneline_title
     \egroup}\\
-    \vskip 8mm
+    \vfill
   \end{center}
   \end{spacing}
   \cleardoublepage
+  \vfill
   % \newpage
 }
