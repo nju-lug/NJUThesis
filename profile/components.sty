@@ -37,26 +37,17 @@
 \AtBeginEnvironment{lstlisting}{\linespread{1}\selectfont} % 调整代码环境行距
 
 % 图表标题样式
-\DeclareCaptionFont{songtibf}{\bf\songti}
+\DeclareCaptionFont{songticap}{\zihao{5}\songti}
 \captionsetup{
     font=small,%
     labelfont=bf,
+	textfont=songticap,
 	strut=no,%
 	hypcap=true, % Links point to the top of the figure
 	% indention=0pt, % Suppress indentation
 	% % parindent=0pt, % Suppress space between paragraphs
 	aboveskip=6pt, % Increase the space between the figure and the caption
 	belowskip=6pt, % Increase the space between the caption and the table
-}
-\captionsetup[table]{
-    position=top,
-    textfont=songtibf,
-    labelfont=songtibf
-}
-\captionsetup[figure]{
-    position=below,
-    textfont=songtibf,
-    labelfont=songtibf
 }
 
 % list configuration
