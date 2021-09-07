@@ -29,7 +29,7 @@
 ### [南大Tex](https://tex.nju.edu.cn)编译
 
 1. 下载[模板全部文件](https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip)
-2. 解压后将所有文件按照原目录结构上传至[南大Tex](https://tex.nju.edu.cn)（GitHub相关文件可不上传），上传后`njuthesis.tex`、`njuthesis.cls`等文件应在根目录，目录结构如下所示：
+2. 登录[南大Tex](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后`njuthesis.tex`、`njuthesis.cls`等文件应在根目录，目录结构如下所示：
 
     ```bash
     │  coverinfo.sty
