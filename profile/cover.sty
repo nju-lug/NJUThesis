@@ -70,11 +70,11 @@
 
 % 判断类型
 \str_if_eq:eeTF {\Degree} {UG}
-{\tl_const:Nn \Degreename {\hfill 本\hfill 科\hfill }}{}
+{\tl_const:Nn \Degreename {本\hfill 科\hfill }}{}
 
 \str_if_eq:eeTF {\Type} {thesis} 
-{\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 论\hfill 文\hfill}}
-{\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 设\hfill 计\hfill}}
+{\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 论\hfill 文}}
+{\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 设\hfill 计}}
 
 % 重定义maketitle生成封面
 \RenewDocumentCommand \maketitle {} {%
@@ -83,11 +83,12 @@
   % Start 
   \begin{spacing}{1.25}
   \vskip 0mm
-  \hskip -10mm \includegraphics[width=2.55cm]{njulogo}\\
+  \hspace{-10mm}
+  \includegraphics[height=3cm]{njulogo}\smallskip 
   \begin{center}
-    \includegraphics[height=3.35cm]{njuname}\\
+    \includegraphics[height=3.35cm]{njuname}
     \vskip 10mm 
-    {\zihao{1}\makebox[9em][s]{\textbf{\songti\typename}}}\\
+    {\zihao{1}\makebox[9em][s]{\textbf{\songti\typename}}}
     \vfill
     \vskip\stretch{0}
     {\bgroup
@@ -95,7 +96,7 @@
     \def\tabcolsep{1pt}
     \def\arraystretch{1.5}
     \cover_personalinfo % 绘制信息框
-    \egroup}\\
+    \egroup}
     \vfill
   \end{center}
   \end{spacing}

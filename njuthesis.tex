@@ -109,11 +109,20 @@
 \subsection{文字环绕图像}
 % wrapfigure后面不能有空行
 \begin{wrapfigure}{r}{0cm}
-    % \label{fig:njulogo}
+    \label{fig:njulogo}
     \includegraphics[width=.3\textwidth]{njulogo}
     \caption{环绕图像测试}
 \end{wrapfigure}
-\zhlipsum[3][name=xiangyu]
+\zhlipsum[4][name=xiangyu]
+
+你可以使用\lstinline|wrapfigure|环境插入图片，如\cref{fig:njulogo}，代码如下:
+\begin{lstlisting}[language=TeX]
+    \begin{wrapfigure}{r}{0cm}
+    \label{fig:njulogo}
+    \includegraphics[width=.3\textwidth]{njulogo}
+    \caption{环绕图像测试}
+\end{wrapfigure}
+\end{lstlisting}
 
 \section{公式示例}
 \begin{equation}\label{eq:dewitt}
