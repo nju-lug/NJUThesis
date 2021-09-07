@@ -25,8 +25,6 @@
 
 \ProcessKeyvalOptions*\relax
 
-\ExplSyntaxOn % 启用laTeX3语法
-
 % 输入配置文件
 \RequirePackage{profile/packages}
 \RequirePackage{coverinfo} 
@@ -36,5 +34,3 @@
 \RequirePackage{profile/components}
 \RequirePackage{profile/cover}
 \RequirePackage{profile/abstract}
-
-\ExplSyntaxOff
