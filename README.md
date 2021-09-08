@@ -24,7 +24,7 @@
 - 模板支持`latexmk`、`xelatex`、`lualatex`三种编译方式
 - 如果使用`latexmk`，请务必使用完整的命令`latexmk -xelatex`以免产生不必要的问题
 - 如果使用`xelatex`或`lualatex`，需要按照`xelatex/lualatex` -> `biber` -> `xelatex/lualatex` -> `xelatex/lualatex`的顺序编译四次
-- 仓库中.vscode附带一份VScode的Latex WorkShop的配置文件，可根据需要使用
+- 仓库中.vscode附带一份VScode的LaTeX WorkShop的配置文件，可根据需要使用
 
 ### [南大TeX](https://tex.nju.edu.cn)编译
 
@@ -42,17 +42,17 @@
     │      njuname.pdf
     │
     └─profile
-            abstract.sty
-            components.sty
-            cover.sty
-            font.sty
-            packages.sty
-            page.sty
-            reference.sty
+           abstract.sty
+           components.sty
+           cover.sty
+           font.sty
+           packages.sty
+           page.sty
+           reference.sty
     ```
 
 3. 在南大TeX项目内页面左上角的`Menu`中，将编译器改为`LuaLaTeX`
-4. 编写`tex`文件
+4. 编写tex文档
 
 ### 其他
 
