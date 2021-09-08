@@ -8,13 +8,13 @@
     % \label{tab:1}
     \begin{tabular}{ccc}
         \toprule
-        OS & Tex & 测试情况 \\
+        OS & TeX & 测试情况 \\
         \midrule
         Windows 10 & \hologo{TeX}\,Live 2021 & ✔ \\
         Windows 10 & \hologo{MiKTeX} & ✔ \\
         Windows 10 & \hologo{TeX}\,Live 2020 & ✔  \\
         Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & ✔ \\
-        南大Tex\footnote{由于未知原因，南大Tex不能使用\hologo{XeLaTeX}编译，请务必选择\hologo{LuaLaTeX}进行编译。} & Overleaf & ✔ \\
+        南大TeX\footnote{由于未知原因，南大TeX不能使用\hologo{XeLaTeX}编译，请务必选择\hologo{LuaLaTeX}进行编译。} & Overleaf & ✔ \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -32,7 +32,7 @@
 
 \subsection{配置前端}
 
-推荐使用 VSCode + LaTeX Workshop（VSCode插件）完成论文编写，也可以使用其他编辑器，如 texworks、texstudio。
+推荐使用 VSCode + LaTeX Workshop（VSCode插件）完成论文编写，也可以使用其他编辑器，如 TeXworks、TeXstudio。
 
 若使用 LaTeX Workshop 插件，本项目在\lstinline|.vscode/|中提供一份简易配置，可以直接使用。
 
@@ -47,7 +47,7 @@
 
 编译产物为\lstinline|njuthesis.pdf|。
 
-\section{南大Tex在线编译}
+\section{南大TeX在线编译}
 
 理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段简介，实际上大家都鸽了。
 
@@ -55,11 +55,11 @@
 
 1. 下载\href{https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip}{模板全部文件}
 
-2. 使用南京大学统一身份认证信息登录\href{https://tex.nju.edu.cn}{南大Tex}，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后njuthesis.tex、njuthesis.cls等文件应在根目录，目录结构如\cref{{sec:directory}}所示
+2. 使用南京大学统一身份认证信息登录\href{https://tex.nju.edu.cn}{南大TeX}，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后njuthesis.tex、njuthesis.cls等文件应在根目录，目录结构如\cref{{sec:directory}}所示
 
-3. 在南大Tex项目内页面左上角的Menu中，将编译器改为\hologo{LuaLaTeX}
+3. 在南大TeX项目内页面左上角的Menu中，将编译器改为\hologo{LuaLaTeX}
 
-4. 编写tex文件
+4. 编写TeX文档
 
 
 \section{字体}
@@ -93,9 +93,9 @@ sudo apt install fonts-wqy-zenhei ttf-mscorefonts-installer
         \toprule
         类型 & Windows & macOS & Linux \\
         \midrule
-        西文衬线 & Times~New~Roman & Times~New~Roman & texgyretermes \\
-        西文无衬线 & Arial & Arial & texgyreheros \\
-        西文等宽 & Courier~New & Courier~New & texgyrecursor \\
+        西文衬线 & Times~New~Roman & Times~New~Roman & TeX~Gyre~Termes \\
+        西文无衬线 & Arial & Arial & Tex~Gyre~Heros \\
+        西文等宽 & Courier~New & Courier~New & Tex~Gyre~Cursor \\
         宋体 & SimSun & Songti~SC~Light &FandolSong-Regular \\
         黑体 & SimHei & Heiti~SC~Light & FandolHei-Regular \\
         仿宋 & FangSong & STFangsong & FandolFang-Regular \\
