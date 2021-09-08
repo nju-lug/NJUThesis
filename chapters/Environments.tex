@@ -14,7 +14,7 @@
         Windows 10 & \hologo{MiKTeX} & ✔ \\
         Windows 10 & \hologo{TeX}\,Live 2020 & ✔  \\
         Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & ✔ \\
-        南大Tex\footnote{由于未知原因，南大Tex不能使用\hologo{XeLaTeX}编译，请务必选择\hologo{LuaLaTeX}进行编译。} & Overleaf & ✔ \\
+        南大\hologo{TeX}\footnote{由于未知原因，南大\hologo{TeX}不能使用\hologo{XeLaTeX}编译，请务必选择\hologo{LuaLaTeX}进行编译。} & Overleaf & ✔ \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -47,44 +47,50 @@
 
 编译产物为\lstinline|njuthesis.pdf|。
 
-\section{南大Tex在线编译}
+\section{南大\hologo{TeX}在线编译}
 
-理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段简介，实际上大家都鸽了。
+本地编译器占用空间过大，对于磁盘空间紧张或者处理器性能有限的同学，不妨尝试本节介绍的在线编译方法\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}。
+
+\subsection{平台简介}
+
+\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台，于2021年3月4日正式上线，面向南京大学全体师生开放。
 
 \subsection{操作步骤}
 
-1. 下载\href{https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip}{模板全部文件}
-
-2. 使用南京大学统一身份认证信息登录\href{https://tex.nju.edu.cn}{南大Tex}，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后njuthesis.tex、njuthesis.cls等文件应在根目录，目录结构如\cref{{sec:directory}}所示
-
-3. 在南大Tex项目内页面左上角的Menu中，将编译器改为\hologo{LuaLaTeX}
-
-4. 编写tex文件
-
+\begin{enumerate}
+    \item 下载\href{https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip}{模板全部文件}
+    \item 访问\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}，点击界面右上方Register，使用\emph{南京大学邮箱}注册账号并登录
+    \item 点击New Project -> Upload Project上传刚刚得到的zip文件，上传后njuthesis.tex、njuthesis.cls等文件应在根目录，目录结构如\cref{{sec:directory}}所示
+    \item 在南大\hologo{TeX}项目内页面左上角的Menu中，将编译器改为\hologo{XeLaTeX}
+    \item 编写论文
+    \item 点击Compile按钮进行预览
+\end{enumerate}
 
 \section{字体}
 
-学校论文格式要求的字体一般已经在电脑上包含，如果遇到以下问题，可以依照给出的方案解决。
+学校论文格式要求的字体一般已经在电脑上包含，
+本模板已对不同平台进行了适配。
 
-不同系统上的字体有所差别，实际输出结果可能会与其他环境有细微不同, 使用时请注意。
+在\cref{tab:fontset}中可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。出于美观考虑\footnote{以及出于编译速度考虑}，不推荐在Windows平台进行编译\footnote{因为SimSun没有原生粗体，AutoFakeBold效果实在难堪大用}，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上效果更佳。
 
-\begin{enumerate}
-    \item Ubuntu 下遇到缺失字体 WenQuanYi Zen Hei Mono 或 Times New Roman的问题：
+% \begin{enumerate}
+%     \item Ubuntu 下遇到缺失字体 WenQuanYi Zen Hei Mono 或 Times New Roman的问题：
     
-       安装对应字体即可。使用以下指令下载：
+%        安装对应字体即可。使用以下指令下载：
        
-       \begin{lstlisting}
-sudo apt install fonts-wqy-zenhei ttf-mscorefonts-installer
-        \end{lstlisting}
+%        \begin{lstlisting}
+% sudo apt install fonts-wqy-zenhei ttf-mscorefonts-installer
+%         \end{lstlisting}
 
-    \item macOS 下提示 Package fontspec Warning: Font "STSong" does not contain requested Script "CJK"
+%     \item macOS 下提示 Package fontspec Warning: Font "STSong" does not contain requested Script "CJK"
 
-       忽略即可，不影响使用。该警告已被抑制。
-\end{enumerate}
+%        忽略即可，不影响使用。该警告已被抑制。
+% \end{enumerate}
 
 \subsection{字体列表}
 
-字体定义写于\texttt{profile/font.sty}
+各个系统的默认字体请参考\cref{tab:fontset}。指定字体的相关命令写于\texttt{profile/font.sty}。
+该文件中也预留有使用方正字体或者思源字体的命令，可根据个人喜好进行修改选择。
 
 \begin{table}[htbp]
     \caption{默认字体清单}
