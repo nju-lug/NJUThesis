@@ -14,7 +14,7 @@
 % \RequirePackage{etoolbox}
 \RequirePackage{titlesec} % 修改章节标题功能由CTeX提供
 \RequirePackage{titletoc}
-\RequirePackage{appendix} % 定义附录样式
+% \RequirePackage{appendix} % 定义附录样式
 \RequirePackage{fancyhdr} % 调整页眉页脚
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
 \RequirePackage{ulem} % 绘制下划线
@@ -26,6 +26,8 @@
 \RequirePackage{caption}
 \RequirePackage{floatrow} % 用于图表等页面元素的定位
 \RequirePackage{booktabs} % 用于绘制三线表
+\RequirePackage{multirow} % Cells occupying multiple rows in tables
+\RequirePackage{multicol} % Multiple columns in dictionary
 \RequirePackage{siunitx} % 用于书写单位符号
 \RequirePackage[version=4]{mhchem} % 用于绘制分子式
 \RequirePackage{hologo} % 用于生成可以被插入书签的LaTeX logo
@@ -43,7 +45,7 @@
 
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
-\graphicspath{{figure/}}
+\graphicspath{{figure/}} % 图片路径
 \RequirePackage{wrapfig} % Wrap text around figures
 
 % 必须以该顺序加载以下三个包

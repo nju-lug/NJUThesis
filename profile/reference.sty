@@ -39,17 +39,30 @@
 }
 
 % 修改标签名称
-\crefdefaultlabelformat{#2#1#3~} % 默认在名称后面添加空格
-\creflabelformat{equation}{#2#1#3~} % 删除公式编号的空格
+\crefdefaultlabelformat{#2#1#3\,} % 默认在名称后面添加空格
 
-\crefname{theorem}{定理}{定理}
-\crefname{lemma}{引理}{引理}
-\crefname{definition}{定义}{定义}
 \crefname{figure}{图}{图}
 \crefname{table}{表}{表}
 \crefname{equation}{公式}{公式}
+% \crefformat{equation}{公式~#2#1#3~} % 删除公式编号的括号
 
-\crefname{chapter}{§}{§}
-\crefname{section}{§}{§}
-\crefname{subsection}{§}{§}
-\crefname{subsubsection}{§}{§}
+\crefformat{chapter}{第~#2#1#3~章}
+\crefformat{section}{第~#2#1#3~节}
+\crefformat{subsection}{第~#2#1#3~小节}
+\crefformat{subsubsection}{第~#2#1#3~小节}
+% \crefname{chapter}{§}{§}
+% \crefname{section}{§}{§}
+% \crefname{subsection}{§}{§}
+% \crefname{subsubsection}{§}{§}
+\crefname{appendix}{附录}{附录}
+
+\crefname{definition}{定义}{定义}
+\crefname{axiom}{公理}{公理}
+\crefname{property}{性质}{性质}
+\crefname{proposition}{命题}{命题}
+\crefname{lemma}{引理}{引理}
+\crefname{corollary}{推论}{推论}
+\crefname{remark}{注解}{注解}
+\crefname{condition}{条件}{条件}
+\crefname{conclusion}{结论}{结论}
+\crefname{assumption}{假设}{假设}

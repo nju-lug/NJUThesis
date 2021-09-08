@@ -2,6 +2,8 @@
 
 \section{总体要求}
 
+摘录自《11-南京大学毕业论文（设计）的撰写规范和装订要求》，内容详见\cref{chap:standard}
+
 \begin{description}
     \item[论文题目] 三号宋体加粗
     \item[各部分标题] 四号黑体
@@ -27,6 +29,7 @@
 \subsection{输入个人信息}
 
 主目录下的\texttt{coverinfo.sty}文件定义了用于文档封面的诸多属性参数，包括
+
 \begin{description}
     \item[\texttt{\textbackslash TitleA}] 单行标题，或多行标题的第一行。关于是否应该折行，单行能容纳的最长标题为\emph{15个中文字符}，请自行选择合适的截断处。
     \item[\texttt{\textbackslash TitleB}] 多行标题的第二行
@@ -53,11 +56,28 @@
 
 \section{摘要页}
 
+摘要页一般不插入目录，如有需求请在abstract.sty文件中反注释相关代码
 
 \section{目录页}
 
+目录页格式定制于page.sty
+
 \section{正文}
+
+正文格式定制于page.sty，页边距在package.sty
+
+\section{参考文献页}
+
+需要使用biber手动编译才会显示
 
 \section{致谢页}
 
-\section{参考文献页}
+致谢页采用无编号章节形式，需要手动插入目录
+\begin{lstlisting}[language=TeX]
+\chapter*{致谢}
+\addcontentsline{toc}{chapter}{致谢}
+\end{lstlisting}
+
+\section{附录页}
+
+附录放在最后，以英文字母进行编号
