@@ -46,3 +46,9 @@
                 {\contentslabel{3em}}
                 {\hspace*{-4em}}
                 {~\titlerule*[0.6pc]{$.$}~\contentspage}
+
+% 将目录页插入pdf书签
+\let\savedtableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{%
+  \pdfbookmark{目录}{目录}
+  \savedtableofcontents}

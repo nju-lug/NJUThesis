@@ -80,7 +80,8 @@
 \RenewDocumentCommand \maketitle {} {%
   \thispagestyle{empty}
   \pagenumbering{Roman}
-  % Start 
+  % Start
+  \pdfbookmark{封面}{封面} % 将封面插入pdf书签
   \begin{spacing}{1.25}
   \vskip 0mm
   \hspace{-10mm}
