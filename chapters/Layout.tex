@@ -1,0 +1,63 @@
+\chapter{页面布局}
+
+\section{总体要求}
+
+\begin{description}
+    \item[论文题目] 三号宋体加粗
+    \item[各部分标题] 四号黑体
+    \item[中文摘要、关键词内容] 小四号楷体
+    \item[英文摘要、关键词内容] 小四号新罗马体（Time New Roman）
+    \item[目录标题] 三号宋体加粗
+    \item[目录内容中章的标题] 四号黑体
+    \item[目录中其他内容] 小四号宋体
+    \item[正文] 小四号宋体（行距1.5倍）
+    \item[参考文献标题] 四号黑体
+    \item[参考文献内容] 小四号宋体
+    \item[注释内容] 五号宋体
+    \item[致谢、附录标题] 四号黑体
+    \item[致谢、附录内容] 小四号宋体（行距1.5倍）
+    \item[非正文部分的页码] 五号罗马数字（Ⅰ、Ⅱ……）
+    \item[论文页码] 页脚居中、五号阿拉伯数字（新罗马体）连续编码
+\end{description}
+
+\section{封面页}
+
+\subsection{封面格式}
+
+\subsection{输入个人信息}
+
+主目录下的\texttt{coverinfo.sty}文件定义了用于文档封面的诸多属性参数，包括
+\begin{description}
+    \item[\texttt{\textbackslash TitleA}] 单行标题，或多行标题的第一行。关于是否应该折行，单行能容纳的最长标题为\emph{15个中文字符}，请自行选择合适的截断处。
+    \item[\texttt{\textbackslash TitleB}] 多行标题的第二行
+    \item[\texttt{\textbackslash TitleC}] 多行标题的第三行
+    \item[\texttt{\textbackslash Title\textunderscore EN}] 英文标题，注意空格要用波浪线（\textasciitilde）替代
+    \item[\texttt{\textbackslash Grade}] 年级
+    \item[\texttt{\textbackslash StudentID}] 9位数字学号
+    \item[\texttt{\textbackslash StudentName}] 姓名
+    \item[\texttt{\textbackslash StudentName\textunderscore EN}] 姓名拼音 
+    \item[\texttt{\textbackslash Department}] 学院名称
+    \item[\texttt{\textbackslash Major}] 专业名称
+    \item[\texttt{\textbackslash Major\textunderscore EN}] 专业英文名称
+    \item[\texttt{\textbackslash Mentor}] 导师姓名
+    \item[\texttt{\textbackslash Mentor\textunderscore EN}] 导师姓名的英文拼音  
+    \item[\texttt{\textbackslash MentorTitle}] 导师职称
+    \item[\texttt{\textbackslash MentorTitle\textunderscore EN}] 导师职称英文
+    \item[\texttt{\textbackslash SubmitDate}] 论文提交日期
+\end{description}
+
+为了使较长的论文题目也能美观地呈现在封面页上，njuthesis类提供了\texttt{TitleLength}这一选项，用于控制封面标题的行数。该命令已于
+\cref{sec:classoptions}进行介绍，可以在\texttt{njuthesis.tex}文件开头的类定义中找到，可选值为1、2、3，缺省值为单行标题。
+
+如果编写的是毕业设计，请参考\cref{sec:classoptions}，将选项改为design。
+
+\section{摘要页}
+
+
+\section{目录页}
+
+\section{正文}
+
+\section{致谢页}
+
+\section{参考文献页}

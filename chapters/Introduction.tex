@@ -1,0 +1,56 @@
+\chapter{绪论}
+
+\section{简介}
+南京大学学士学位论文\LaTeX 模板\cite{njuthesis}基于本科生院的论文撰写规范修改，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文。
+
+此模板旨在为同学提供毕业论文书写的方便，如有模板问题或者版权问题，请于Github上提出issue。
+
+\section{开发环境}
+
+本模板的开发维护主要在\hologo{MiKTeX}与\hologo{TeX}\,Live\,2020下进行，内部代码主要由\lstinline|expl3|宏包提供的\hologo{LaTeX3}语法实现。
+
+\section{目录结构}
+\label{sec:directory}
+
+\begin{lstlisting}[language=bash]
+    │  coverinfo.sty
+    │  njuthesis.bib
+    │  njuthesis.cls
+    │  njuthesis.tex
+    │
+    ├─figure
+    │      njulogo.pdf
+    │      njuname.pdf
+    │
+    └─profile
+            abstract.sty
+            components.sty
+            cover.sty
+            font.sty
+            packages.sty
+            page.sty
+            reference.sty
+\end{lstlisting}
+
+\footnote{目录树里面想必可爱温柔的xygg会加上各个文件对应功能的说明的。}
+
+\section{文件说明}
+\begin{description}
+    \item [\texttt{abstract.sty}] 定义中英文摘要环境及相关格式
+    \item [\texttt{components.sty}] 定义图表标题格式
+    \item [\texttt{cover.sty}] 定义论文封面内容
+    \item [\texttt{font.sty}] 负责重定义CTex宏集的默认字体，因为CTex字体加粗要求不满足论文规定
+    \item [\texttt{page.sty}] 定义正文格式
+    \item [\texttt{reference.sty}] 定义引文格式
+\end{description}
+
+\section{自定义选项}
+\label{sec:classoptions}
+
+njuthesis类提供了三个可以自定义的选项，如下所示。
+\begin{description}
+    \item[\texttt{TitleLength}] 标题长度，用于控制封面标题的行数。可选值为1、2、3，缺省值为1。
+    \item[\texttt{Degree}] 学位类型，本科生为UG，即Undergraduate的缩写。
+    \item[\texttt{Type}] 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括thesis（表示毕业论文）和design（表示毕业设计），缺省值为thesis。
+\end{description}
+

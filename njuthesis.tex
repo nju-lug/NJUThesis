@@ -18,7 +18,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[
-    TitleLength=1,% 选择标题行数，范围是1~3
+    TitleLength=2,% 选择标题行数，范围是1~3
     Degree=UG,% 学位 本科：UG
     Type=thesis% thesis：毕业论文，design:毕业设计
 ]{njuthesis}
@@ -33,18 +33,7 @@
 %----------------------------------------------------------------------------------------
 
 \maketitle % 请在coverpage.sty输入封面信息
-
-\begin{abstract}
-    \zhlipsum[76][name=zhufu]
-    \keywords{驾驶；星际穿越}
-\end{abstract}
-
-\begin{englishabstract}
-    \blindtext
-    % 英文关键词。关键词之间用英文半角逗号隔开，末尾无符号。
-    \englishkeywords{Drive, Interstellar travel}
-\end{englishabstract}
-
+\input{chapters/Abstract.tex}
 \tableofcontents
 
 %----------------------------------------------------------------------------------------
@@ -52,126 +41,29 @@
 %----------------------------------------------------------------------------------------
 \mainmatter
 
-\chapter{绪论}
-\section{简介}
-南京大学学士学位论文\LaTeX 模板\cite{njuthesis}基于本科生院的论文撰写规范修改，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文。
-
-此模板旨在为同学提供毕业论文书写的方便，如有模板问题或者版权问题，请于Github上提出issue。
-
-\section{表格示例}
-\begin{table}[htbp]
-    \caption{经过测试的环境}
-    \label{tab:mytab}
-    \begin{tabular}{ccc}
-        \toprule
-        OS & Tex & 测试情况 \\
-        \midrule
-        Windows 10 & TexLive 2021 & ✔ \\
-        Windows 10 & MikTex & ✔ \\
-        Windows 10 & TexLive 2020 & ✔  \\
-        Ubuntu 20.04 & TexLive 2021 & ✔ \\
-        南大Tex & Overleaf & ✔ \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-你可以使用\lstinline|table|环境插入标准三线表，如\cref{tab:mytab}所示，代码如下:
-\begin{lstlisting}[language=TeX]
-\begin{table}[htbp]
-    \caption{经过测试的环境}
-    \begin{tabular}{ccc}
-        \toprule
-        OS & Tex & 测试情况 \\
-        \midrule
-        Windows 10 & TexLive 2021 & ✔ \\
-        Windows 10 & MikTex & ✔ \\
-        Windows 10 & TexLive 2020 & ✔  \\
-        Ubuntu 20.04 & TexLive 2021 & ✔ \\
-        南大Tex & Overleaf & ✔ \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-\end{lstlisting}
-
-\section{图片示例}
-\label{sec:figures}
-\begin{figure}[htbp]
-    \includegraphics[width=0.5\textwidth]{njuname}
-    \caption{南京大学名称}
-    \label{fig:njuname}
-\end{figure}
-你可以使用\lstinline|figure|环境插入图片，如\cref{fig:njuname}，代码如下:
-\begin{lstlisting}[language=TeX]
-\begin{figure}
-    \includegraphics[width=0.5\textwidth]{njuname}
-    \caption{南京大学名称}
-\end{figure}
-\end{lstlisting}
-
-\subsection{文字环绕图像}
-% wrapfigure后面不能有空行
-\begin{wrapfigure}{r}{0cm}
-    \includegraphics[width=.3\textwidth]{njulogo}
-    \caption{环绕图像测试}
-    \label{fig:njulogo}
-\end{wrapfigure}
-\zhlipsum[4][name=xiangyu]
-
-你可以使用\lstinline|wrapfigure|环境插入图片，类似于\cref{sec:figures}的普通图片插入方法，代码如下:
-\begin{lstlisting}[language=TeX]
-\begin{wrapfigure}{r}{0cm}
-    \includegraphics[width=.3\textwidth]{njulogo}
-    \caption{环绕图像测试}
-    \label{fig:njulogo}
-\end{wrapfigure}
-\end{lstlisting}
-
-\section{公式示例}
-\begin{equation}\label{eq:dewitt}
-    \int  e^{ax} \tanh bx\ dx = 
-    \begin{cases}
-    \displaystyle{ \frac{ e^{(a+2b)x}}{(a+2b)} 
-    {_2F_1}\left[ 1+\frac{a}{2b},1,2+\frac{a}{2b}, -e^{2bx}\right] }& \\
-    \displaystyle{
-    \hspace{1cm}-\frac{1}{a}e^{ax}{_2F_1}\left[ 1, \frac{a}{2b},1+\frac{a}{2b}, -e^{2bx}\right]
-    }
-     & a\ne b \\
-    \displaystyle{\frac{e^{ax}-2\tan^{-1}[e^{ax}]}{a} } & a = b
-    \end{cases}
-\end{equation}
-    
-你可以使用\lstinline|equation|环境插入公式，如\cref{eq:dewitt}，代码如下:
-\begin{lstlisting}[language=TeX]
-\begin{equation}\label{eq:dewitt}
-    \int  e^{ax} \tanh bx\ dx = 
-    \begin{cases}
-    \displaystyle{ \frac{ e^{(a+2b)x}}{(a+2b)} 
-    {_2F_1}\left[ 1+\frac{a}{2b},1,2+\frac{a}{2b}, -e^{2bx}\right] }& \\
-    \displaystyle{
-    \hspace{1cm}-\frac{1}{a}e^{ax}{_2F_1}\left[ 1, \frac{a}{2b},1+\frac{a}{2b}, -e^{2bx}\right]
-    }
-        & a\ne b \\
-    \displaystyle{\frac{e^{ax}-2\tan^{-1}[e^{ax}]}{a} } & a = b
-    \end{cases}
-\end{equation}
-\end{lstlisting}
+\input{chapters/Introduction.tex}
+\input{chapters/Environments.tex}
+\input{chapters/Layout.tex}
+\input{chapters/FigTabCode.tex}
+\input{chapters/Mathematics.tex}
+\input{chapters/Reference.tex}
 
 %----------------------------------------------------------------------------------------
 %	参考文献
 %----------------------------------------------------------------------------------------
-
 \printbibliography[heading=bibintoc, title=参考文献] % 输出参考文献列表并将本页插入目录条目
 
 %----------------------------------------------------------------------------------------
 %	致谢
 %----------------------------------------------------------------------------------------
 
-% \chapter*{致谢}
-% \addcontentsline{toc}{chapter}{致谢}
-% 感谢\href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU LUG}。
+\input{chapters/Acknowledgement.tex}
 
 %----------------------------------------------------------------------------------------
 %	附录部分
 %----------------------------------------------------------------------------------------
-\appendix 
+\appendix
+
+\input{chapters/Standard.tex}
 
 \end{document}
