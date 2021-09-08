@@ -21,15 +21,15 @@
 
 #### **关于本地编译**
 
-- 模板支持`latexmk`、`xelatex`、`lualatex`三种编译方式
+- 模板支持`latexmk`、`XeLaTex`、`LuaLaTex`三种编译方式
 - 如果使用`latexmk`，请务必使用完整的命令`latexmk -xelatex`以免产生不必要的问题
-- 如果使用`xelatex`或`lualatex`，需要按照`xelatex/lualatex` -> `biber` -> `xelatex/lualatex` -> `xelatex/lualatex`的顺序编译四次
-- 仓库中.vscode附带一份VScode的LaTeX WorkShop的配置文件，可根据需要使用
+- 如果使用`XeLaTex`或`LuaLaTex`，需要按照`XeLaTex/LuaLaTex` -> `biber` -> `XeLaTex/LuaLaTex` -> `XeLaTex/LuaLaTex`的顺序编译四次
+- 仓库中.vscode附带一份VScode的Latex WorkShop的配置文件，可根据需要使用
 
-### [南大TeX](https://tex.nju.edu.cn)编译
+### [南大Tex](https://tex.nju.edu.cn)编译
 
 1. 下载[模板全部文件](https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip)
-2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后`njuthesis.tex`、`njuthesis.cls`等文件应在根目录，目录结构如下所示：
+2. 登录[南大Tex](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后`njuthesis.tex`、`njuthesis.cls`等文件应在根目录，目录结构如下所示：
 
     ```bash
     │  coverinfo.sty
@@ -42,17 +42,17 @@
     │      njuname.pdf
     │
     └─profile
-           abstract.sty
-           components.sty
-           cover.sty
-           font.sty
-           packages.sty
-           page.sty
-           reference.sty
+            abstract.sty
+            components.sty
+            cover.sty
+            font.sty
+            packages.sty
+            page.sty
+            reference.sty
     ```
 
-3. 在南大TeX项目内页面左上角的`Menu`中，将编译器改为`LuaLaTeX`
-4. 编写tex文档
+3. 在南大Tex项目内页面左上角的`Menu`中，将编译器改为`LuaLatex`
+4. 编写tex文件
 
 ### 其他
 
@@ -72,8 +72,8 @@
 
 ## TODO
 
-- [x] 主要代码转为LaTeX3，使用`expl3`宏包
-- [x] 基于CTeX宏集重构所有页面以符合学校论文要求
+- [x] 主要代码转为Latex3，使用expl3宏包
+- [x] 基于CTex宏集重构所有页面以符合学校论文要求
 - [x] Github Action自动化构建预览PDF
 - [x] 完善文档
 - [ ] CTAN发布宏包

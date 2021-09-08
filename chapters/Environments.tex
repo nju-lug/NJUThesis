@@ -8,7 +8,7 @@
     % \label{tab:1}
     \begin{tabular}{ccc}
         \toprule
-        OS & TeX & 测试情况 \\
+        OS & Tex & 测试情况 \\
         \midrule
         Windows 10 & \hologo{TeX}\,Live 2021 & 通过 \\
         Windows 10 & \hologo{MiKTeX} & 通过 \\
@@ -32,7 +32,7 @@
 
 \subsection{配置前端}
 
-推荐使用 VSCode + LaTeX Workshop（VSCode插件）完成论文编写，也可以使用其他编辑器，如 TeXworks、TeXstudio。
+推荐使用 VSCode + LaTeX Workshop（VSCode插件）完成论文编写，也可以使用其他编辑器，如 texworks、texstudio。
 
 若使用 LaTeX Workshop 插件，本项目在\lstinline|.vscode/|中提供一份简易配置，可以直接使用。
 
@@ -47,31 +47,15 @@
 
 编译产物为\lstinline|njuthesis.pdf|。
 
-<<<<<<< HEAD
 \section{南大\hologo{TeX}在线编译}
-=======
-\section{南大TeX在线编译}
->>>>>>> d423a4a (fix:规范TeX大小写)
 
 本地编译器占用空间过大，对于磁盘空间紧张或者处理器性能有限的同学，不妨尝试本节介绍的在线编译方法\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}。
 
-<<<<<<< HEAD
 \subsection{平台简介}
 
 \href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台，于2021年3月4日正式上线，面向南京大学全体师生开放。
 
 \subsection{操作步骤}
-=======
-\subsection{操作步骤}
-
-1. 下载\href{https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip}{模板全部文件}
-
-2. 使用南京大学统一身份认证信息登录\href{https://tex.nju.edu.cn}{南大TeX}，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后njuthesis.tex、njuthesis.cls等文件应在根目录，目录结构如\cref{{sec:directory}}所示
-
-3. 在南大TeX项目内页面左上角的Menu中，将编译器改为\hologo{LuaLaTeX}
-
-4. 编写TeX文档
->>>>>>> d423a4a (fix:规范TeX大小写)
 
 \begin{enumerate}
     \item 下载\href{https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip}{模板全部文件}
@@ -115,9 +99,9 @@
         \toprule
         类型 & Windows & macOS & Linux \\
         \midrule
-        西文衬线 & Times~New~Roman & Times~New~Roman & TeX~Gyre~Termes \\
-        西文无衬线 & Arial & Arial & TeX~Gyre~Heros \\
-        西文等宽 & Courier~New & Courier~New & TeX~Gyre~Cursor \\
+        西文衬线 & Times~New~Roman & Times~New~Roman & texgyretermes \\
+        西文无衬线 & Arial & Arial & texgyreheros \\
+        西文等宽 & Courier~New & Courier~New & texgyrecursor \\
         宋体 & SimSun & Songti~SC~Light &FandolSong-Regular \\
         黑体 & SimHei & Heiti~SC~Light & FandolHei-Regular \\
         仿宋 & FangSong & STFangsong & FandolFang-Regular \\
