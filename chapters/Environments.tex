@@ -21,16 +21,20 @@
 
 \section{本地编译}
 
-\subsection{版本选择}
+\subsection{安装\hologo{TeX}发行版}
 
-\textbf{推荐使用最新的\hologo{TeX}\,Live 2021或者\hologo{MiKTeX} 21以避免潜在的兼容性问题。}
+首先需要下载\hologo{TeX}软件发行版，校园网环境中使用\href{https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南大镜像站}可以获得最好的体验。\textbf{推荐使用最新的\hologo{TeX}\,Live 2021或者\hologo{MiKTeX} 21以避免潜在的兼容性问题。}
 
 \begin{itemize}
-    \item 为了避免不必要的麻烦，请尽可能下载 full 版本，如 \hologo{TeX}\,Live-full。简而言之，下载大的那个。
-    \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题。\item 推荐使用 VSCode + LaTeX Workshop（VSCode插件）完成论文编写，也可以使用其他编辑器，如 texworks、texstudio。
-    \item 若使用 LaTeX Workshop 插件，本项目在\lstinline|.vscode/|中提供一份简易配置，可以直接使用。
-    \item 编译产物为\lstinline|njuthesis.pdf|。
+    \item 为了避免不必要的麻烦，请尽可能下载 full 版本，如 texlive-full。简而言之，下载大的那个。
+    \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题。
 \end{itemize}
+
+\subsection{配置前端}
+
+推荐使用 VSCode + LaTeX Workshop（VSCode插件）完成论文编写，也可以使用其他编辑器，如 texworks、texstudio。
+
+若使用 LaTeX Workshop 插件，本项目在\lstinline|.vscode/|中提供一份简易配置，可以直接使用。
 
 \subsection{编译顺序}
 应采用以下顺序进行编译，以生成正确的参考文献目录和编号。
@@ -41,7 +45,13 @@
     \item \hologo{XeLaTeX}/\hologo{LuaLaTeX}
 \end{enumerate}
 
+编译产物为\lstinline|njuthesis.pdf|。
+
 \section{南大Tex在线编译}
+
+理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段简介，实际上大家都鸽了。
+
+\subsection{操作步骤}
 
 1. 下载\href{https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip}{模板全部文件}
 
@@ -56,7 +66,7 @@
 
 学校论文格式要求的字体一般已经在电脑上包含，如果遇到以下问题，可以依照给出的方案解决。
 
-> 不同系统上的字体有所差别，实际输出结果可能会与其他环境有细微不同, 使用时请注意。
+不同系统上的字体有所差别，实际输出结果可能会与其他环境有细微不同, 使用时请注意。
 
 \begin{enumerate}
     \item Ubuntu 下遇到缺失字体 WenQuanYi Zen Hei Mono 或 Times New Roman的问题：
@@ -69,10 +79,12 @@ sudo apt install fonts-wqy-zenhei ttf-mscorefonts-installer
 
     \item macOS 下提示 Package fontspec Warning: Font "STSong" does not contain requested Script "CJK"
 
-       忽略即可，不影响使用。
+       忽略即可，不影响使用。该警告已被抑制。
 \end{enumerate}
 
 \subsection{字体列表}
+
+字体定义写于\texttt{profile/font.sty}
 
 \begin{table}[htbp]
     \caption{默认字体清单}

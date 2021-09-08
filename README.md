@@ -14,7 +14,7 @@
 
 ### 本地编译
 
-1. 安装TexLive或者MikTex最新版
+1. 推荐[从南大镜像站下载](https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F)并安装TexLive或者MikTex最新版
 2. 下载[模板全部文件](https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip)
 4. 根据需要更改`njuthesis.tex`文件中的内容
 5. 在模板根目录下运行`latexmk -xelatex`编译文件，得到对应的PDF
