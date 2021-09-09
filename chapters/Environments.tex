@@ -1,6 +1,5 @@
 \chapter{配置环境}
 
-\section{概述}
 下表是目前经过测试的环境。如果有其他可用不可用的环境，欢迎补充。
 
 \begin{table}[ht]
@@ -16,6 +15,7 @@
         Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & 通过 \\
         南大\hologo{TeX} & \hologo{TeX}\,Live 2021 & 通过 \\
         \bottomrule
+        Overleaf & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
     \end{tabular}
 \end{table}
 
@@ -34,7 +34,7 @@
 
 配置完编译器后，还需要一个文本编辑器作为前端来完成\texttt{.tex}文件内容的写作。
 
-至今仍有相当一部分人认为Windows自带的记事本是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\textbf{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 Visual Studio Code}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio等，顺手就行。
+至今仍有相当一部分人认为Windows自带的\texttt{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\textbf{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio等，顺手就行。
 
 若使用 LaTeX Workshop 插件，本项目在\lstinline|.vscode/|中提供一份简易配置，可以省略初始配置步骤直接使用。
 
@@ -51,7 +51,7 @@
 
 \section{在线编译}
 
-一个显然的事实是，本地\hologo{TeX}编译器安装过程较为漫长，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{其实这三点都是对广大的Windows用户说的，同一个模板在Linux编译可以节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
+相信你在接触了本地编译以后很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{其实这三点都是对广大的Windows用户说的，同一个模板在Linux编译可以节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
 
 \subsection{南大\hologo{TeX}平台简介}
 
