@@ -12,6 +12,7 @@
         Windows 10 & \hologo{TeX}\,Live 2021 & 通过 \\
         Windows 10 & \hologo{MiKTeX} & 通过 \\
         Windows 10 & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
+        macOS 10.15 & \hologo{TeX}\,Live 2021 & 通过 \\
         Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & 通过 \\
         南大\hologo{TeX} & \hologo{TeX}\,Live 2021 & 通过 \\
         Overleaf & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
@@ -51,7 +52,7 @@
 
 \section{在线编译}
 
-相信你在接触了本地编译以后很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{其实这三点都是对广大的Windows用户说的，同一个模板在Linux编译可以节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
+相信你在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{其实这三点都是对广大的Windows用户说的，同一个模板在Linux编译可以节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
 
 \subsection{南大\hologo{TeX}平台简介}
 
@@ -77,7 +78,7 @@
 
 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
 
-在\cref{tab:defaultfontset}中可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}。
+各个系统的默认字体请参考\cref{tab:defaultfontset}。可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；另一方面，在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}。
 
 % \begin{enumerate}
 %     \item Ubuntu 下遇到缺失字体 WenQuanYi Zen Hei Mono 或 Times New Roman的问题：
@@ -94,7 +95,7 @@
 % \end{enumerate}
 
 
-各个系统的默认字体请参考\cref{tab:defaultfontset}。指定字体的相关命令写于\texttt{profile/font.sty}。
+指定字体的相关命令写于\texttt{profile/font.sty}。
 该文件中也预留有使用方正字体或者思源字体的命令，涉及的字体见\cref{tab:userfontset}，可根据个人喜好进行修改选择。
 
 \begin{table}[htbp]

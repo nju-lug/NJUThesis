@@ -33,7 +33,8 @@
 \RequirePackage{hologo} % 用于生成可以被插入书签的LaTeX logo
 % \RequirePackage{needspace} % Required to prevent page break right after a sectioning command
 % \RequirePackage{xspace} % Better print trailing whitespace
-\sys_if_engine_xetex:T{ \RequirePackage{microtype} }
+\sys_if_engine_xetex:T{
+    \RequirePackage{microtype}}
 % \sys_if_engine_luatex:T{ 
 %     \RequirePackage{emoji} 
 %     \setemojifont{Segoe UI Emoji} % For windows. 
@@ -50,7 +51,11 @@
 \RequirePackage{amsthm} % Mathematical environments
 \RequirePackage{mathtools} % Mathematical tools to use with amsmath
 \RequirePackage{thmtools} % Theorem styles
-\RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math} % Math fonts in xetex or luatex
+\RequirePackage[
+    warnings-off={% 消除与mathtools合用产生的警告
+        mathtools-colon,
+        mathtools-overbracket}
+        ]{unicode-math} % Math fonts in xetex or luatex
 
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
