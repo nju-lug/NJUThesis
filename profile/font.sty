@@ -152,6 +152,7 @@
 }
 
 % 根据操作系统选择相应字体
+\ifUseSysFont
 % 检测是否是 Windows
 \sys_if_platform_windows:TF
 {
@@ -171,17 +172,24 @@
     \set_chinese_fontset_fandol
   }
 }
-
-% 选择其他字体，请确保相应字体已安装并自行取消注释
-% 使用方正字体
-% \set_chinese_fontset_founder
-
-% 使用思源宋体+思源黑体
-% \set_chinese_fontset_noto
-
+\else% 如果用户需要自定义
+\str_case:nnTF {\CustomChFont}
+{
+  {windows}{\set_chinese_fontset_windows}
+  {macos}{\set_chinese_fontset_macos}
+  {linux}{\set_chinese_fontset_fandol}
+  {founder}{\set_chinese_fontset_founder}% 使用方正字体
+  {noto}{\set_chinese_fontset_noto}% 使用思源宋体+思源黑体
+}
+\str_case:nnTF {\CustomEnFont}
+{
+  {windows}{\set_latin_fontset_windows}
+  {macos}{\set_latin_fontset_macos}
+  {linux}{\set_latin_fontset_gyre}
+}
+\fi
 % 我是 Linux 用户，但我用 Windows 字体（请您赶快坐到主席台上来）
-% \set_latin_fontset_windows
-% \set_chinese_fontset_windows
+% 选择其他字体，请确保相应字体已安装
 
 % 设置数学字体 (XITS, 或者 STIX, 与 Times New Roman 最为相近)
 % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]

@@ -6,7 +6,8 @@
 
 \SetupKeyvalOptions{
     family=njuthesis,
-    prefix=
+    prefix=,% 故意留空防止出现大量@，但估计要发布CTAN还得加回去
+    setkeys=\kvsetkeys
 }
 
 \LoadClass[
@@ -22,6 +23,8 @@
 \DeclareStringOption[1]{TitleLength}
 \DeclareStringOption[UG]{Degree}
 \DeclareStringOption[thesis]{Type}
+\DeclareBoolOption[true]{UseSysFont}
+\DeclareStringOption[linux]{CustomChFont}\DeclareStringOption[linux]{CustomEnFont}
 
 \ProcessKeyvalOptions*\relax
 
