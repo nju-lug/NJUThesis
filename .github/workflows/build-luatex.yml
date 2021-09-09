@@ -1,4 +1,4 @@
-name: Build LaTeX document
+name: Build LaTeX document using LuaLaTeX
 on: [push, pull_request]
 jobs:
   build_latex:
