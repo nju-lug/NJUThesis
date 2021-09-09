@@ -39,21 +39,21 @@
 \subsection{编译顺序}
 应采用以下顺序进行编译，以生成正确的参考文献目录和编号。
 \begin{enumerate}
-    \item \hologo{XeLaTeX}/\hologo{LuaLaTeX}
+    \item \lstinline|xelatex| / \lstinline|lualatex|
     \item \hologo{biber}
-    \item \hologo{XeLaTeX}/\hologo{LuaLaTeX}
-    \item \hologo{XeLaTeX}/\hologo{LuaLaTeX}
+    \item \lstinline|xelatex| / \lstinline|lualatex|
+    \item \lstinline|xelatex| / \lstinline|lualatex|
 \end{enumerate}
 
 编译产物为\lstinline|njuthesis.pdf|。
 
-\section{南大\hologo{TeX}在线编译}
+\section{在线编译}
 
-本地编译器占用空间过大，对于磁盘空间紧张或者处理器性能有限的同学，不妨尝试本节介绍的在线编译方法\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}。
+本地编译器占用空间过大，对于磁盘空间紧张或者处理器性能有限的同学，不妨尝试本节介绍的在线编译方法。
 
-\subsection{平台简介}
+\subsection{南大\hologo{TeX}平台简介}
 
-\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台，于2021年3月4日正式上线，面向南京大学全体师生开放。
+\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，面向南京大学全体师生开放。
 
 \subsection{操作步骤}
 
@@ -61,17 +61,20 @@
     \item 下载\href{https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip}{模板全部文件}
     \item 访问\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}，点击界面右上方Register，使用\emph{南京大学邮箱}注册账号并登录
     \item 点击New Project -> Upload Project上传刚刚得到的zip文件，上传后njuthesis.tex、njuthesis.cls等文件应在根目录，目录结构如\cref{{sec:directory}}所示
-    \item 在南大\hologo{TeX}项目内页面左上角的Menu中，将编译器改为\hologo{XeLaTeX}
+    \item 在项目页面左上角的Menu中，将编译器改为\hologo{XeLaTeX}或者\hologo{LuaLaTeX}
     \item 编写论文
     \item 点击Compile按钮进行预览
 \end{enumerate}
 
+\subsection{关于Overleaf平台}
+
+由于\href{https://www.overleaf.com/}{Overleaf平台}的\hologo{TeX}\,Live版本停留在2020，\texttt{cleveref}包在引用章节时会生成错误的标签，引发格式错误；而南大\hologo{TeX}通过及时更新规避了这一问题。因此\emph{请务必不要使用Overleaf官网进行编译}。
+
 \section{字体}
 
-学校论文格式要求的字体一般已经在电脑上包含，
-本模板已对不同平台进行了适配。
+学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
 
-在\cref{tab:fontset}中可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。出于美观考虑\footnote{以及出于编译速度考虑}，不推荐在Windows平台进行编译\footnote{因为SimSun没有原生粗体，AutoFakeBold效果实在难堪大用}，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上效果更佳。
+在\cref{tab:defaultfontset}中可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；在Windows平台进行编译\footnote{出于编译速度考虑，不推荐在Windows平台进行编译}的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}。
 
 % \begin{enumerate}
 %     \item Ubuntu 下遇到缺失字体 WenQuanYi Zen Hei Mono 或 Times New Roman的问题：
@@ -87,14 +90,13 @@
 %        忽略即可，不影响使用。该警告已被抑制。
 % \end{enumerate}
 
-\subsection{字体列表}
 
-各个系统的默认字体请参考\cref{tab:fontset}。指定字体的相关命令写于\texttt{profile/font.sty}。
-该文件中也预留有使用方正字体或者思源字体的命令，可根据个人喜好进行修改选择。
+各个系统的默认字体请参考\cref{tab:defaultfontset}。指定字体的相关命令写于\texttt{profile/font.sty}。
+该文件中也预留有使用方正字体或者思源字体的命令，涉及的字体见\cref{tab:userfontset}，可根据个人喜好进行修改选择。
 
 \begin{table}[htbp]
-    \caption{默认字体清单}
-    \label{tab:fontset}
+    \caption{操作系统预装字体清单}
+    \label{tab:defaultfontset}
     \begin{tabular}{cccc}
         \toprule
         类型 & Windows & macOS & Linux \\
@@ -109,3 +111,38 @@
         \bottomrule
     \end{tabular}
 \end{table}
+
+如果 Ubuntu 下遇到缺失字体 Times New Roman 的问题，安装对应字体即可。使用以下指令下载：
+\begin{lstlisting}
+sudo apt install ttf-mscorefonts-installer
+\end{lstlisting}
+
+\begin{table}[htbp]
+    \caption{预留的自定义中文字体清单}
+    \label{tab:userfontset}
+    \begin{tabular}{ccc}
+        \toprule
+        类型 & 方正 & 思源 \\
+        \midrule
+        宋体 & FZSSK & Noto~Serif~CJK~SC \\
+        黑体 & FZHTK & Noto~Sans~CJK~SC \\
+        仿宋 & FZFSK & 方正仿宋简体 \\
+        楷体 & FZKTK & 方正楷体简体 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{修改字体配置}
+
+如果希望覆盖检测系统字体的命令（譬如在Linux编译时使用Windows字体样式），在\texttt{profile/font.sty}中注释掉操作系统判断语句，并保留希望使用的字符集即可。全部字符集命令如下所示。
+
+\begin{description}
+    \item[\texttt{\textbackslash set\textunderscore latin\textunderscore fontset\textunderscore windows}] Windows英文字符集
+    \item[\texttt{\textbackslash set\textunderscore chinese\textunderscore fontset\textunderscore windows}] Windows中文字符集
+    \item[\texttt{\textbackslash set\textunderscore latin\textunderscore fontset\textunderscore macos}] macOS英文字符集
+    \item[\texttt{\textbackslash set\textunderscore chinese\textunderscore fontset\textunderscore macos}] macOS中文字符集
+    \item[\texttt{\textbackslash set\textunderscore latin\textunderscore fontset\textunderscore gyre}] Linux英文字符集
+    \item[\texttt{\textbackslash set\textunderscore chinese\textunderscore fontset\textunderscore fandol}] Linux中文字符集
+    \item[\texttt{\textbackslash set\textunderscore chinese\textunderscore fontset\textunderscore founder}] 方正中文字符集
+    \item[\texttt{\textbackslash set\textunderscore chinese\textunderscore fontset\textunderscore noto}] 思源中文字符集
+\end{description}
