@@ -33,7 +33,14 @@
 \RequirePackage{hologo} % 用于生成可以被插入书签的LaTeX logo
 % \RequirePackage{needspace} % Required to prevent page break right after a sectioning command
 % \RequirePackage{xspace} % Better print trailing whitespace
-\RequirePackage{microtype}
+\sys_if_engine_xetex:T{ \RequirePackage{microtype} }
+% \sys_if_engine_luatex:T{ 
+%     \RequirePackage{emoji} 
+%     \setemojifont{Segoe UI Emoji} % For windows. 
+%                                   % Shipped with the best `grinning-face-with-sweat' support.
+%                                   % Use `Apple Color Emoji' for macos 
+%                                   % or `Noto Color Emoji' if you prefer.
+% }
 
 \RequirePackage{blindtext} % 生成用于测试的大段无意义英文文字
 \RequirePackage{zhlipsum} % 生成用于测试的大段无意义中文文字
