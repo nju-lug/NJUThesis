@@ -177,6 +177,13 @@
 % 使用思源宋体+思源黑体
 % \set_chinese_fontset_noto
 
+% 设置数学字体 (XITS, 或者 STIX, 与 Times New Roman 最为相近)
+% \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
+\setmathfont{XITSMath-Regular}[
+  BoldFont = XITSMath-Bold,
+  Extension = .otf]
+
+
 \NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
 \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
 \NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
