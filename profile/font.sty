@@ -173,19 +173,19 @@
   }
 }
 \else% 如果用户需要自定义
-\str_case:nnTF {\CustomChFont}
-{
-  {windows}{\set_chinese_fontset_windows}
-  {macos}{\set_chinese_fontset_macos}
-  {linux}{\set_chinese_fontset_fandol}
-  {founder}{\set_chinese_fontset_founder}% 使用方正字体
-  {noto}{\set_chinese_fontset_noto}% 使用思源宋体+思源黑体
-}
-\str_case:nnTF {\CustomEnFont}
+\str_case:nn {\CustomEnFont}
 {
   {windows}{\set_latin_fontset_windows}
   {macos}{\set_latin_fontset_macos}
-  {linux}{\set_latin_fontset_gyre}
+  {gyre}{\set_latin_fontset_gyre}
+}
+\str_case:nn {\CustomZhFont}
+{
+  {windows}{\set_chinese_fontset_windows}
+  {macos}{\set_chinese_fontset_macos}
+  {fandol}{\set_chinese_fontset_fandol}
+  {founder}{\set_chinese_fontset_founder}% 使用方正字体
+  {noto}{\set_chinese_fontset_noto}% 使用思源宋体+思源黑体
 }
 \fi
 % 我是 Linux 用户，但我用 Windows 字体（请您赶快坐到主席台上来）
