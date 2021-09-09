@@ -1,0 +1,21 @@
+name: Build LaTeX document
+on: [push, pull_request]
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Compile to PDF
+        uses: HermitSun/latex-action@v3
+        with:
+          root_file: njuthesis.tex
+          latexmk_use_lualatex: true
+          args: '-bibtex'
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v2
+        with:
+          name: PDF
+          path: njuthesis.pdf
