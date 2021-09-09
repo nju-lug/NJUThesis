@@ -173,19 +173,26 @@
   }
 }
 \else% 如果用户需要自定义
-\str_case:nn {\CustomEnFont}
+% tl_case:Nn 只能实现宏和宏之间的比较，不能直接实现字符串和宏的比较，无奈出此下策，希望之后能找到更优雅的写法
+\tl_const:Nn \usingwindows {windows}
+\tl_const:Nn \usingmacos {macos}
+\tl_const:Nn \usingfandol {fandol}
+\tl_const:Nn \usinggyre {gyre}
+\tl_const:Nn \usingfounder {founder}
+\tl_const:Nn \usingnoto {noto}
+\tl_case:Nn {\CustomEnFont}
 {
-  {windows}{\set_latin_fontset_windows}
-  {macos}{\set_latin_fontset_macos}
-  {gyre}{\set_latin_fontset_gyre}
+  \usingwindows{\set_latin_fontset_windows}
+  \usingmacos{\set_latin_fontset_macos}
+  \usinggyre{\set_latin_fontset_gyre}
 }
-\str_case:nn {\CustomZhFont}
+\tl_case:Nn {\CustomZhFont}
 {
-  {windows}{\set_chinese_fontset_windows}
-  {macos}{\set_chinese_fontset_macos}
-  {fandol}{\set_chinese_fontset_fandol}
-  {founder}{\set_chinese_fontset_founder}% 使用方正字体
-  {noto}{\set_chinese_fontset_noto}% 使用思源宋体+思源黑体
+  \usingwindows{\set_chinese_fontset_windows}
+  \usingmacos{\set_chinese_fontset_macos}
+  \usingfandol{\set_chinese_fontset_fandol}
+  \usingfounder{\set_chinese_fontset_founder}% 使用方正字体
+  \usingnoto{\set_chinese_fontset_noto}% 使用思源宋体+思源黑体
 }
 \fi
 % 我是 Linux 用户，但我用 Windows 字体（请您赶快坐到主席台上来）

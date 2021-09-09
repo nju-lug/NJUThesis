@@ -24,7 +24,8 @@
 \DeclareStringOption[UG]{Degree}
 \DeclareStringOption[thesis]{Type}
 \DeclareBoolOption[true]{UseSysFont}
-\DeclareStringOption[windows]{CustomZhFont}\DeclareStringOption[windows]{CustomEnFont}
+\DeclareStringOption[windows]{CustomEnFont}
+\DeclareStringOption[windows]{CustomZhFont}
 
 \ProcessKeyvalOptions*\relax
 
