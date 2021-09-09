@@ -30,11 +30,11 @@
     \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题。
 \end{itemize}
 
-\subsection{配置前端}
+\subsection{选择编辑器}
 
 配置完编译器后，还需要一个\textbf{文本编辑器}作为前端来完成\texttt{.tex}文件内容的写作。
 
-至今仍有相当一部分人认为Windows自带的\textit{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\textbf{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio等，顺手就行。
+至今仍有相当一部分人认为Windows自带的\textit{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\textbf{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio 等，顺手就行。
 
 若使用 LaTeX Workshop 插件，本项目在\lstinline|.vscode/|中提供一份简易配置，可以省略初始配置步骤直接使用。
 
@@ -47,7 +47,7 @@
     \item \lstinline|xelatex| / \lstinline|lualatex|
 \end{enumerate}
 
-编译产物\footnote{作为化学学生，俺认为用“产物”代替“编译生成的文件”是一个通俗易懂的说法}为\lstinline|njuthesis.pdf|，位于主目录下。
+编译产物\footnote{作为化学学生，俺认为用“产物”代替“编译生成的文件”是一个通俗易懂的说法}为\lstinline|njuthesis.pdf|，位于主目录下。此外还会生成一系列中间文件，可以选择使用\lstinline|latexmk -c|进行清理。
 
 \section{在线编译}
 
@@ -55,7 +55,7 @@
 
 \subsection{南大\hologo{TeX}平台简介}
 
-\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，面向南京大学全体师生开放。
+\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，面向南京大学全体师生开放，首次使用需凭学校邮箱自助注册账号。
 
 \subsection{操作步骤}
 
@@ -106,7 +106,7 @@
         \midrule
         西文衬线 & Times~New~Roman & Times~New~Roman & TeX~Gyre~Termes \\
         西文无衬线 & Arial & Arial & TeX~Gyre~Heros \\
-        西文等宽 & Courier~New & Courier~New & TeX~Gyre~Cursor \\
+        西文等宽 & Courier~New & Menlo & TeX~Gyre~Cursor \\
         宋体 & SimSun & Songti~SC~Light &FandolSong-Regular \\
         黑体 & SimHei & Heiti~SC~Light & FandolHei-Regular \\
         仿宋 & FangSong & STFangsong & FandolFang-Regular \\

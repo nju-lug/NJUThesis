@@ -151,38 +151,41 @@
   \setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
 }
 
+% 根据操作系统选择相应字体
 % 检测是否是 Windows
 \sys_if_platform_windows:TF
 {
   \set_latin_fontset_windows
   \set_chinese_fontset_windows
 }
+% 检测是否是 macOS
+\ctex_if_platform_macos:TF
 {
-  % 检测是否是 MacOS
-  \ctex_if_platform_macos:TF
-  {
-    \set_latin_fontset_macos
-    \set_chinese_fontset_macos
-  }
-  % 其余系统一律使用自由字体
-  {
-    \set_latin_fontset_gyre
-    \set_chinese_fontset_fandol
-  }
+  \set_latin_fontset_macos
+  \set_chinese_fontset_macos
+}
+% 其余系统一律使用自由字体
+{
+  \set_latin_fontset_gyre
+  \set_chinese_fontset_fandol
 }
 
+% 选择其他字体，请确保相应字体已安装并自行取消注释
 % 使用方正字体
 % \set_chinese_fontset_founder
 
 % 使用思源宋体+思源黑体
 % \set_chinese_fontset_noto
 
+% 我是 Linux 用户，但我用 Windows 字体（请您赶快坐到主席台上来）
+% \set_latin_fontset_windows
+% \set_chinese_fontset_windows
+
 % 设置数学字体 (XITS, 或者 STIX, 与 Times New Roman 最为相近)
 % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
   Extension = .otf]
-
 
 \NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
 \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}

@@ -2,31 +2,31 @@
 
 \section{公式示例}
 \begin{equation}\label{eq:dewitt}
-    \int  e^{ax} \tanh bx\ dx = 
-    \begin{cases}
-    \displaystyle{ \frac{ e^{(a+2b)x}}{(a+2b)} 
-    {_2F_1}\left[ 1+\frac{a}{2b},1,2+\frac{a}{2b}, -e^{2bx}\right] }& \\
-    \displaystyle{
-    \hspace{1cm}-\frac{1}{a}e^{ax}{_2F_1}\left[ 1, \frac{a}{2b},1+\frac{a}{2b}, -e^{2bx}\right]
-    }
-     & a\ne b \\
-    \displaystyle{\frac{e^{ax}-2\tan^{-1}[e^{ax}]}{a} } & a = b
-    \end{cases}
+    \int \mathrm{e}^{ax} \tanh {bx} \, \mathrm{d}x =
+    \begin{dcases}
+        \begin{multlined}
+            \frac{\mathrm{e}^{(a+2b)x}}{(a + 2b)} \,
+            {{}_2F_1} \left( 1 + \frac{a}{2b}, 1, 2+\frac{a}{2b}, -\mathrm{e}^{2bx} \right) \\
+            - \frac{1}{a} \mathrm{e}^{ax} \, {{}_2F_1} \left( 1, \frac{a}{2b}, 1 + \frac{a}{2b}, -\mathrm{e}^{2bx} \right)
+        \end{multlined}
+        & a \ne b \\
+    \frac{e^{ax} - 2 \tan^{-1}(\mathrm{e}^{ax})}{a} & a = b
+  \end{dcases}
 \end{equation}
-    
+
 你可以使用\lstinline|equation|环境插入公式，如\cref{eq:dewitt}，代码如下:
 \begin{lstlisting}[language=TeX]
 \begin{equation}\label{eq:dewitt}
-    \int  e^{ax} \tanh bx\ dx = 
-    \begin{cases}
-    \displaystyle{ \frac{ e^{(a+2b)x}}{(a+2b)} 
-    {_2F_1}\left[ 1+\frac{a}{2b},1,2+\frac{a}{2b}, -e^{2bx}\right] }& \\
-    \displaystyle{
-    \hspace{1cm}-\frac{1}{a}e^{ax}{_2F_1}\left[ 1, \frac{a}{2b},1+\frac{a}{2b}, -e^{2bx}\right]
-    }
-        & a\ne b \\
-    \displaystyle{\frac{e^{ax}-2\tan^{-1}[e^{ax}]}{a} } & a = b
-    \end{cases}
+    \int\mathrm{e}^{ax}\tanh{bx}\,\mathrm{d}x =
+    \begin{dcases}
+        \begin{multlined}
+            \frac{\mathrm{e}^{(a+2b)x}}{(a+2b)}\,
+            {{}_2F_1}\left( 1+\frac{a}{2b},1,2+\frac{a}{2b},-\mathrm{e}^{2bx} \right) \\
+            - \frac{1}{a} \mathrm{e}^{ax}\,{{}_2F_1}\left( 1,\frac{a}{2b},1+\frac{a}{2b},-\mathrm{e}^{2bx} \right)
+        \end{multlined}
+        & a \ne b \\
+    \frac{e^{ax}-2\tan^{-1}(\mathrm{e}^{ax})}{a} & a = b
+  \end{dcases}
 \end{equation}
 \end{lstlisting}
 
