@@ -47,7 +47,7 @@
     │   page.sty
     │   reference.sty
     │
-    │ coverinfo.sty
+    │ coverinfo.tex
     │ njuthesis.bib
     │ njuthesis.cls
     │ njuthesis.tex

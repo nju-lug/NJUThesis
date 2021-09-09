@@ -27,7 +27,6 @@
 
 % 输入配置文件
 \RequirePackage{profile/packages}
-\RequirePackage{coverinfo} 
 \RequirePackage{profile/font}
 \RequirePackage{profile/page}
 \RequirePackage{profile/reference}
