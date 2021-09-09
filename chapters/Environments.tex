@@ -30,9 +30,9 @@
     \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题。
 \end{itemize}
 
-\subsection{配置前端}
+\subsection{配置环境}
 
-推荐使用 VSCode + LaTeX Workshop（VSCode插件）完成论文编写，也可以使用其他编辑器，如 TeXworks、TeXstudio。
+推荐使用 VSCode + LaTeX Workshop（VSCode插件）完成论文编写，也可以使用其他编辑器，如 TeXworks、TeXstudio 等。
 
 若使用 LaTeX Workshop 插件，本项目在\lstinline|.vscode/|中提供一份简易配置，可以直接使用。
 
@@ -45,7 +45,7 @@
     \item \hologo{XeLaTeX}/\hologo{LuaLaTeX}
 \end{enumerate}
 
-编译产物为\lstinline|njuthesis.pdf|。
+默认生成的文档为\lstinline|njuthesis.pdf|，此外还会生成一系列中间文件，可以选择使用\lstinline|latexmk -c|进行清理。
 
 \section{南大\hologo{TeX}在线编译}
 
@@ -53,7 +53,7 @@
 
 \subsection{平台简介}
 
-\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台，于2021年3月4日正式上线，面向南京大学全体师生开放。
+\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台，于2021年3月4日正式上线，面向南京大学全体师生开放，首次使用需凭学校邮箱自助注册账号。
 
 \subsection{操作步骤}
 
