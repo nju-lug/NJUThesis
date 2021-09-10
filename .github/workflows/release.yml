@@ -29,4 +29,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
           files: |
-          njuthesis.pdf
+            njuthesis.pdf
