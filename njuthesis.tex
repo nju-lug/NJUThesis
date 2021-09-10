@@ -25,6 +25,9 @@
     % customchinesefont=windows,% 设置中文字符集
     ]{njuthesis}
 
+% 添加自定义配置
+\input{custom.tex}
+
 % 输入封面信息
 \input{coverinfo.tex}
 
@@ -37,7 +40,7 @@
 %	封面、摘要和目录
 %----------------------------------------
 
-\maketitle % 请在coverpage.sty输入封面信息
+\maketitle 
 \input{chapters/Abstract.tex}
 \tableofcontents
 
