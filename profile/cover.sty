@@ -1,112 +1,86 @@
 \ProvidesExplPackage{profile/cover}{2021-09-04}{0.1}{NJU Thesis Undergraduate cover design} 
 
-% 封面信息
-\NewDocumentCommand\setTitleA{m}{\tl_const:Nn \TitleA {#1}}% 第一行标题
-\NewDocumentCommand\setTitleB{m}{\tl_const:Nn \TitleB {#1}}% 第二行标题
-\NewDocumentCommand\setTitleC{m}{\tl_const:Nn \TitleC {#1}}% 第三行标题
-\NewDocumentCommand\setTitleEN{m}{\tl_const:Nn \Title_EN {#1}}
-
-\NewDocumentCommand\setGrade{m}{\tl_const:Nn \Grade {#1}}
-\NewDocumentCommand\setStudentID{m}{\tl_const:Nn \StudentID {#1}}
-\NewDocumentCommand\setStudentName{m}{\tl_const:Nn \StudentName {#1}}
-\NewDocumentCommand\setStudentNameEN{m}{\tl_const:Nn \StudentName_EN {#1}}
-
-\NewDocumentCommand\setDepartment{m}{\tl_const:Nn \Department {#1}}
-\NewDocumentCommand\setDepartmentEN{m}{\tl_const:Nn \Department_EN {#1}}
-\NewDocumentCommand\setMajor{m}{\tl_const:Nn \Major {#1}}
-\NewDocumentCommand\setMajorEN{m}{\tl_const:Nn \Major_EN {#1}}
-
-\NewDocumentCommand\setMentorA{m}{\tl_const:Nn \MentorA {#1}}
-\NewDocumentCommand\setMentorAEN{m}{\tl_const:Nn \MentorA_EN {#1}}
-\NewDocumentCommand\setMentorATitle{m}{\tl_const:Nn \MentorATitle {#1}}
-\NewDocumentCommand\setMentorATitleEN{m}{\tl_const:Nn \MentorATitle_EN {#1}}
-
-\NewDocumentCommand\setMentorB{m}{\tl_const:Nn \MentorB {#1}}
-\NewDocumentCommand\setMentorBEN{m}{\tl_const:Nn \MentorB_EN {#1}}
-\NewDocumentCommand\setMentorBTitle{m}{\tl_const:Nn \MentorBTitle {#1}}
-\NewDocumentCommand\setMentorBTitleEN{m}{\tl_const:Nn \MentorBTitle_EN {#1}}
-
-\NewDocumentCommand\setSubmitDate{m}{\tl_const:Nn \SubmitDate {#1}}
-
 % 拼合标题
-\tl_const:Nn \Title {\TitleA\TitleB\TitleC}
+\tl_const:Nn \nju_title {\nju_title_a \nju_title_b \nju_title_c}
 
 % 封面下划线
-\cs_new:Npn \cover_underline:nn #1 #2 {
+\cs_new:Npn \nju_cover_underline:nn #1 #2 {
   \uline{\makebox[#1]{#2}}
 }
 
 % 封面表格边框
-\cs_new:Npn \coverbox:n #1 {
+\cs_new:Npn \nju_coverbox:n #1 {
   \makebox[4.2em][s]{#1}
 }
 
 % 封面信息栏
-\tl_new:N \cover_personalinfo
-\tl_set:Nn \cover_personalinfo {
+\tl_new:N \nju_cover_personalinfo
+\tl_set:Nn \nju_cover_personalinfo {
   \begin{tabular}{p{4.2em}c}
-    \coverbox:n {院\hfill 系}
-    & \cover_underline:nn {250pt}{\songti\Department}\\
-    \coverbox:n {专\hfill 业}
-    & \cover_underline:nn {250pt}{\songti\Major}\\
+    \nju_coverbox:n {院\hfill 系}
+    & \nju_cover_underline:nn {250pt}{\songti\nju_department}\\
+    \nju_coverbox:n {专\hfill 业}
+    & \nju_cover_underline:nn {250pt}{\songti\nju_major}\\
 
     % 标题换行
-    \int_case:nn {\nju@titlelength}
+    \int_case:nn {\nju_titlelength}
       {
         { 1 } { 
-          \coverbox:n {题\hfill 目}
-          & \cover_underline:nn {250pt}{\textbf{\songti\TitleA}} \\ }
+          \nju_coverbox:n {题\hfill 目}
+          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_a}} \\ }
         { 2 } {
-          \coverbox:n {题\hfill 目}
-          & \cover_underline:nn {250pt}{\textbf{\songti\TitleA}} \\
-          & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\ }
+          \nju_coverbox:n {题\hfill 目}
+          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_a}} \\
+          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_b}} \\ }
         { 3 } { 
-          \coverbox:n {题\hfill 目}
-          & \cover_underline:nn {250pt}{\textbf{\songti\TitleA}} \\
-          & \cover_underline:nn {250pt}{\textbf{\songti\TitleB}} \\
-          & \cover_underline:nn {250pt}{\textbf{\songti\TitleC}} \\}
+          \nju_coverbox:n {题\hfill 目}
+          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_a}} \\
+          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_b}} \\
+          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_c}} \\}
       }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \coverbox:n {年\hfill 级}
-    & \cover_underline:nn {90pt}{\Grade}
-    & \coverbox:n {学\hfill 号}
-    & \cover_underline:nn {90pt}{\songti\StudentID}\\
+    \nju_coverbox:n {年\hfill 级}
+    & \nju_cover_underline:nn {90pt}{\nju_grade}
+    & \nju_coverbox:n {学\hfill 号}
+    & \nju_cover_underline:nn {90pt}{\songti\nju_student_id}\\
   \end{tabular}\\
   
   \begin{tabular}{p{4.2em}c}
-    \coverbox:n {学\hfill 生\hfill 姓\hfill 名}
-    & \cover_underline:nn {250pt}{\StudentName}
+    \nju_coverbox:n {学\hfill 生\hfill 姓\hfill 名}
+    & \nju_cover_underline:nn {250pt}{\nju_student_name}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \coverbox:n {导\hfill 师}
-    & \cover_underline:nn {90pt}{\MentorA}
-    & \coverbox:n {职\hfill 称}
-    & \cover_underline:nn {90pt}{\MentorATitle}\\
+    \nju_coverbox:n {导\hfill 师}
+    & \nju_cover_underline:nn {90pt}{\nju_mentor_a}
+    & \nju_coverbox:n {职\hfill 称}
+    & \nju_cover_underline:nn {90pt}{\nju_mentor_a_title}\\
 
     % 第二导师
-    \ifnju@secondsupervisor
-    \coverbox:n {第\hfill 二\hfill 导\hfill 师}
-    & \cover_underline:nn {90pt}{\MentorB}
-    & \coverbox:n {职\hfill 称}
-    & \cover_underline:nn {90pt}{\MentorBTitle}\\
-    \fi
+    \bool_if:NTF \nju_second_mentor
+    {
+    \nju_coverbox:n {第\hfill 二\hfill 导\hfill 师}
+    & \nju_cover_underline:nn {90pt}{\nju_mentor_b}
+    & \nju_coverbox:n {职\hfill 称}
+    & \nju_cover_underline:nn {90pt}{\nju_mentor_b_title}\\
+    }
+    {}
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
-    \coverbox:n {提\hfill 交\hfill 日\hfill 期}
-    & \cover_underline:nn {250pt}{\SubmitDate}\\
+    \nju_coverbox:n {提\hfill 交\hfill 日\hfill 期}
+    & \nju_cover_underline:nn {250pt}{\nju_submit_date}\\
   \end{tabular}
 }
 
 % 判断类型
-\str_if_eq:eeTF {\nju@degree} {UG}
-{\tl_const:Nn \Degreename {本\hfill 科\hfill }}{}
+\str_if_eq:eeTF {\nju_degree} {UG}
+{\tl_const:Nn \nju_degree_name {本\hfill 科\hfill }}{}
 
-\str_if_eq:eeTF {\nju@type} {thesis} 
-{\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 论\hfill 文}}
-{\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 设\hfill 计}}
+\str_if_eq:eeTF {\nju_type} {thesis} 
+{\tl_const:Nn \nju_type_name {\nju_degree_name 毕\hfill 业\hfill 论\hfill 文}}
+{\tl_const:Nn \nju_type_name {\nju_degree_name 毕\hfill 业\hfill 设\hfill 计}}
 
 % 重定义maketitle生成封面
 \RenewDocumentCommand \maketitle {} {%
@@ -121,14 +95,14 @@
   \begin{center}
     \includegraphics[height=3.35cm]{njuname}
     \vskip 10mm 
-    {\zihao{1}\makebox[9em][s]{\textbf{\songti\typename}}}
+    {\zihao{1}\makebox[9em][s]{\textbf{\songti\nju_type_name}}}
     \vfill
     \vskip\stretch{0}
     {\bgroup
     \kaishu\zihao{3}
     \def\tabcolsep{1pt}
     \def\arraystretch{1.5}
-    \cover_personalinfo % 绘制信息框
+    \nju_cover_personalinfo % 绘制信息框
     \egroup}
     \vfill
   \end{center}

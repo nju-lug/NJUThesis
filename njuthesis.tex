@@ -17,19 +17,47 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[
     titlelength=2,% 选择标题行数，范围是1~3
-    secondsupervisor=true,% 有第二导师请反注释此项
+    secondmentor=true,% 有第二导师请取消注释此项
     % degree=UG,% UG: 本科 本项不需更改
     type=thesis,% thesis: 毕业论文，design: 毕业设计
-    % systemfont=false,% 自定义字体请反注释此项
+    % systemfont=false,% 自定义字体请取消注释此项
     % customlatinfont=windows,% 设置英文字符集
     % customchinesefont=windows,% 设置中文字符集
     ]{njuthesis}
 
-% 添加自定义配置
-\input{custom.tex}
-
-% 输入封面信息
-\input{coverinfo.tex}
+% 设置个人信息
+\njusetup {
+    % 注意不要有空行，否则可能报错
+    info = {
+        % 题目
+        TitleA = 一种使用南京大学\hologo{LaTeX}模版,
+        TitleB = 编写本科生毕业论文的经验性方法,
+        % TitleC = 没有第三行就不用填这个哦,
+        TitleEN = An~Empirical~Way~of~Composing~Undergraduate~Thesis~with~NJU~\hologo{LaTeX}~Template, %注意英文名中空格必须替换为波浪线
+        % 姓名学号
+        Grade = 2018,
+        StudentID = 181114514,
+        StudentName = 周煜华,
+        StudentNameEN = Zhou~Yuhua,
+        % 院系专业
+        Department = 拉太赫科学与技术学院,
+        DepartmentEN = School~of~\hologo{LaTeX},
+        Major = 拉太赫语言学,
+        MajorEN = \hologo{LaTeX}~Linguistics,
+        % 导师
+        MentorA = 李成殿,
+        MentorAEN= Li~Chengdian,
+        MentorATitle = 教授,
+        MentorATitleEN = Professor,
+        % 第二导师
+        MentorB = 孙赫弥,
+        MentorBEN = Sun~Hemi,
+        MentorBTitle = 副教授,
+        MentorBTitleEN = Associate professor,
+        % 提交时间
+        SubmitDate = 2021年8月10日,
+    }
+}
 
 % 导入参考文献源
 \addbibresource{njuthesis.bib}
