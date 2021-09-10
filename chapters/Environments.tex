@@ -138,7 +138,10 @@ sudo apt install ttf-mscorefonts-installer
 
 \subsection{修改字体配置}
 
-如果希望覆盖检测系统字体的命令（譬如在Linux编译时使用Windows字体样式），在\texttt{profile/font.sty}中注释掉操作系统判断语句，并保留希望使用的字符集即可。全部字符集命令如下所示。
+本模板提供了若干个字体相关的控制选项，已于\cref{sec:classoptions}初步进行介绍。如果希望覆盖检测系统字体的命令（譬如在Linux编译时使用Windows字体样式），请将
+UseSysFont设置为false，并通过CustomEnFont和CustomZhFont进行选择。
+
+全部字符集命令如下所示。
 
 \begin{description}
     \item[\texttt{\textbackslash set\textunderscore latin\textunderscore fontset\textunderscore windows}] Windows英文字符集
@@ -150,3 +153,5 @@ sudo apt install ttf-mscorefonts-installer
     \item[\texttt{\textbackslash set\textunderscore chinese\textunderscore fontset\textunderscore founder}] 方正中文字符集
     \item[\texttt{\textbackslash set\textunderscore chinese\textunderscore fontset\textunderscore noto}] 思源中文字符集
 \end{description}
+
+对于需要进一步自定义的同学，可以将CustomEnFont和CustomZhFont设置为null，自行在导言区设置字体。
