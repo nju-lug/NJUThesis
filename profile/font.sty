@@ -92,14 +92,21 @@
 
 % 方正字符集
 \NewDocumentCommand\set_chinese_fontset_founder{}{
+  % FZSSK 方正书宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/151 免费商用
+  % FZXBSK 方正小标宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/164 设计师非商免费
+  % FZKTK 方正楷体（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/137 免费商用
   \setCJKmainfont{FZSSK}[
     Extension=.ttf,
     BoldFont=FZXBSK,
     ItalicFont=FZKTK]
+  % FZXH1K 方正细黑一（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/161 设计师非商免费
+  % FZHTK 方正黑体（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/131 免费商用
   \setCJKsansfont{FZXH1K}[
     Extension=.ttf,
     BoldFont=FZHTK]
+  % FZFSK 方正仿宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/128
   \setCJKmonofont{FZFSK}[Extension=.ttf]
+
   \setCJKfamilyfont{zhsong}{FZSSK}[
     Extension=.ttf,
     BoldFont=FZXBSK]
@@ -108,6 +115,8 @@
     AutoFakeBold=2.17]
   \setCJKfamilyfont{zhfs}{FZFSK}[Extension=.ttf]
   \setCJKfamilyfont{zhkai}{FZKTK}[Extension=.ttf]
+  % FZYouHK_508R 方正悠黑508R（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/244 设计师非商免费
+  % FZYouHK_511M 方正悠黑511M（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/244 设计师非商免费
   \setCJKfamilyfont{zhnewhei}{FZYouHK_508R}[
     Extension=.ttf,
     BoldFont=FZYouHK_511M]
@@ -195,7 +204,6 @@
   \usingnoto{\set_chinese_fontset_noto}% 使用思源宋体+思源黑体
 }
 \fi
-% 我是 Linux 用户，但我用 Windows 字体（请您赶快坐到主席台上来）
 % 选择其他字体，请确保相应字体已安装
 
 % 设置数学字体 (XITS, 或者 STIX, 与 Times New Roman 最为相近)
