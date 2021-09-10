@@ -13,7 +13,7 @@
 \label{sec:directory}
 
 \begin{lstlisting}[language=bash]
-    │  coverinfo.sty
+    │  coverinfo.tex
     │  njuthesis.bib
     │  njuthesis.cls
     │  njuthesis.tex
@@ -46,10 +46,12 @@
 \section{自定义选项}
 \label{sec:classoptions}
 
-njuthesis类提供了三个可以自定义的选项，如下所示。
+njuthesis类提供了5个可以自定义的选项，如下所示。
 \begin{description}
     \item[\texttt{TitleLength}] 标题长度，用于控制封面标题的行数。可选值为1、2、3，缺省值为1。
     \item[\texttt{Degree}] 学位类型，本科生为UG，即Undergraduate的缩写。
-    \item[\texttt{Type}] 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括thesis（表示毕业论文）和design（表示毕业设计），缺省值为thesis。
+    \item[\texttt{Type}] 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括thesis（表示毕业论文）和design（表示毕业设计），缺省值为thesis。    \item[\texttt{UseSysFont}] Bool类型，用于选择是否使用系统预装字体，缺省值为true。
+    \item[\texttt{CustomEnFont}] 用于选择自定义英文字符集。可选值包括windows, macos, gyre, null，缺省值为windows。
+    \item[\texttt{CustomZhFont}] 用于选择自定义中文字符集。可选值包括windows, macos, fandol, founder, noto, null，缺省值为windows。
 \end{description}
 

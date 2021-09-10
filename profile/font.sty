@@ -180,11 +180,13 @@
 \tl_const:Nn \usinggyre {gyre}
 \tl_const:Nn \usingfounder {founder}
 \tl_const:Nn \usingnoto {noto}
+\tl_const:Nn \usingnull {null}
 \tl_case:Nn {\CustomEnFont}
 {
   \usingwindows{\set_latin_fontset_windows}
   \usingmacos{\set_latin_fontset_macos}
   \usinggyre{\set_latin_fontset_gyre}
+  \usingnull{}
 }
 \tl_case:Nn {\CustomZhFont}
 {
@@ -193,6 +195,7 @@
   \usingfandol{\set_chinese_fontset_fandol}
   \usingfounder{\set_chinese_fontset_founder}% 使用方正字体
   \usingnoto{\set_chinese_fontset_noto}% 使用思源宋体+思源黑体
+  \usingnull{}
 }
 \fi
 % 我是 Linux 用户，但我用 Windows 字体（请您赶快坐到主席台上来）
