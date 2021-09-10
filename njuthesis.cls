@@ -1,12 +1,12 @@
 \NeedsTeXFormat{LaTeX2e}
 
-\ProvidesClass{njuthesis}
+\ProvidesClass{njuthesis}[2021/09/10 NJU Thesis Undergraduate LaTeX Template]
 
 \RequirePackage{kvoptions}
 
 \SetupKeyvalOptions{
     family=njuthesis,
-    prefix=,% 故意留空防止出现大量@，但估计要发布CTAN还得加回去
+    prefix=nju@,% 故意留空防止出现大量@，但估计要发布CTAN还得加回nju@。
     setkeys=\kvsetkeys
 }
 
@@ -20,12 +20,12 @@
   zihao=-4
   ]{ctexbook}[2018/04/01]
 
-\DeclareStringOption[1]{TitleLength}
-\DeclareStringOption[UG]{Degree}
-\DeclareStringOption[thesis]{Type}
-\DeclareBoolOption[true]{UseSysFont}
-\DeclareStringOption[windows]{CustomEnFont}
-\DeclareStringOption[windows]{CustomZhFont}
+\DeclareStringOption[1]{titlelength}
+\DeclareStringOption[UG]{degree}
+\DeclareStringOption[thesis]{type}
+\DeclareBoolOption[true]{systemfont}
+\DeclareStringOption[windows]{customlatinfont}
+\DeclareStringOption[windows]{customchinesefont}
 
 \ProcessKeyvalOptions*\relax
 

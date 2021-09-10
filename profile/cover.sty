@@ -41,7 +41,7 @@
     \coverbox:n {专\hfill 业}
     & \cover_underline:nn {250pt}{\songti\Major}\\
 
-    \int_case:nn {\TitleLength}
+    \int_case:nn {\nju@titlelength}
       {
         { 1 } { 
           \coverbox:n {题\hfill 目}
@@ -91,10 +91,10 @@
 }
 
 % 判断类型
-\str_if_eq:eeTF {\Degree} {UG}
+\str_if_eq:eeTF {\nju@degree} {UG}
 {\tl_const:Nn \Degreename {本\hfill 科\hfill }}{}
 
-\str_if_eq:eeTF {\Type} {thesis} 
+\str_if_eq:eeTF {\nju@type} {thesis} 
 {\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 论\hfill 文}}
 {\tl_const:Nn \typename {\Degreename 毕\hfill 业\hfill 设\hfill 计}}
 
