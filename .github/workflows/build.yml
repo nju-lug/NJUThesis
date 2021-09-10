@@ -1,10 +1,10 @@
 name: Build LaTeX document
 on: 
   push:
-    tags-ignore:
-      - v*
+    tags:
+      - "!v*"
   pull_request:
-  
+
 jobs:
   build_latex:
     runs-on: ubuntu-latest
