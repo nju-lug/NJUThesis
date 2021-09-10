@@ -1,10 +1,6 @@
 name: Build LaTeX document
 on: 
   push:
-    branches:
-      - master
-    tags:
-      - "!v*"
   pull_request:
 
 jobs:
@@ -29,3 +25,20 @@ jobs:
         with:
           name: PDF_${{ matrix.latex }}
           path: njuthesis.pdf
+
+  release:
+    needs: build_latex
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: PDF_xelatex
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            njuthesis.pdf
