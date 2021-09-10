@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NJU Thesis Undergraduate
 % 南京大学本科生毕业论文LaTeX模板
-% Version 0.4.0 (2021-09-10)
+% Version 0.5.0 (2021-09-10)
 %
 % 请关注项目地址以获取最新变化
 % https://github.com/nju-lug/NJUThesisUndergraduate
@@ -16,18 +16,19 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[
-    TitleLength=2,% 选择标题行数，范围是1~3
-    Degree=UG,% UG: 本科
-    Type=thesis,% thesis: 毕业论文，design: 毕业设计
-    % UseSysFont=false,% 自定义字体请反注释此项
-    % CustomEnFont=windows,% 设置英文字符集
-    % CustomZhFont=windows,% 设置中文字符集
+    titlelength=2,% 选择标题行数，范围是1~3
+    secondsupervisor=true,% 有第二导师请反注释此项
+    % degree=UG,% UG: 本科 本项不需更改
+    type=thesis,% thesis: 毕业论文，design: 毕业设计
+    % systemfont=false,% 自定义字体请反注释此项
+    % customlatinfont=windows,% 设置英文字符集
+    % customchinesefont=windows,% 设置中文字符集
     ]{njuthesis}
 
 % 添加自定义配置
 \input{custom.tex}
 
-% 输入个人信息
+% 输入封面信息
 \input{coverinfo.tex}
 
 % 导入参考文献源
