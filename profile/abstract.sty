@@ -19,7 +19,12 @@
     院系： \Department \\
     专业： \Major \\
     本科生姓名： \StudentName \\
-    指导教师（姓名、职称）： \Mentor\ \MentorTitle \\
+    指导教师（姓名、职称）： \MentorA\ \MentorATitle 
+    % 第二导师
+    \ifnju@secondsupervisor
+    \ \MentorB\ \MentorBTitle 
+    \fi
+    \\
     摘要：
     \egroup
   }
@@ -49,7 +54,12 @@
     DEPARTMENT: ~~\Department_EN \\
     SPECIALIZATION: ~~\Major_EN \\
     UNDERGRADUATE:~~\StudentName_EN \\
-    MENTOR:~~\Mentor_EN \ \MentorTitle_EN\\
+    MENTOR:~~\MentorA_EN \ \MentorATitle_EN 
+    % 第二导师
+    \ifnju@secondsupervisor
+    \ \MentorB_EN\ \MentorBTitle_EN
+    \fi
+    \\
     ABSTRACT:
     \egroup
   }

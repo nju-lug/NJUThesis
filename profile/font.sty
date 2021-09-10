@@ -160,8 +160,9 @@
   \setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
 }
 
-% 根据操作系统选择相应字体
+% 字体判断
 \ifnju@systemfont
+% 根据操作系统自动选择相应字体
 % 检测是否是 Windows
 \sys_if_platform_windows:TF
 {
@@ -181,7 +182,7 @@
     \set_chinese_fontset_fandol
   }
 }
-\else% 如果用户需要自定义
+\else% 如果用户需要自定义字体
 % 此处需要使用\str_case_e而不是\str_case使宏展开为字符串
 \str_case_e:nn { \nju@customlatinfont }
 {

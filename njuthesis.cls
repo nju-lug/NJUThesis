@@ -21,6 +21,7 @@
   ]{ctexbook}[2018/04/01]
 
 \DeclareStringOption[1]{titlelength}
+\DeclareBoolOption[false]{secondsupervisor}
 \DeclareStringOption[UG]{degree}
 \DeclareStringOption[thesis]{type}
 \DeclareBoolOption[true]{systemfont}
