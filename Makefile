@@ -46,8 +46,3 @@ clean:
 		*.lof \
 		*.lot \
 		*.loe \
-		*.sty \
-		*.cfg \
-		*.cls \
-		*.sty \
-		*.pdf
