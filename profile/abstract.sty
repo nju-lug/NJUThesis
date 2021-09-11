@@ -93,22 +93,22 @@
     \begin{center}
       \kaishu\zihao{-2}{\textbf{\uuline{南京大学研究生毕业论文中文摘要首页用纸}}}
     \end{center}
-    {\bgroup
+    {%\bgroup
       \kaishu\zihao{4}
       \tl_set:Nn \tabcolsep {0pt}
       \tl_set:Nn \arraystretch {0.8}
       \noindent
-      毕业论文题目：\uline{\nju_title} \\
-      \uline{\nju_major}专业\uline{\nju_grade}级
+      毕业论文题目：\ \uline{我单知道雪天是野兽在深山里没有食吃会到村里来我不知道春天也会有} \\
+      \uline{\makebox[8em]{\nju_major}}专业\uline{\makebox[3em]{\nju_grade}}级
       \str_if_eq:eeTF {\nju_degree} { d } {博}{硕}
-      士生姓名：\uline{\nju_student_name} \\
-      指导教师（姓名、职称）：\uline{\nju_mentor_a\ \nju_mentor_a_title 
+      士生姓名：\uline{\hfill\nju_student_name\hfill} \\
+      指导教师（姓名、职称）：\uline{\hfill\nju_mentor_a\ \nju_mentor_a_title 
       % 第二导师
       \bool_if:NTF \nju_second_mentor
-      { \ \nju_mentor_b\ \nju_mentor_b_title }{}}
+      { \ \nju_mentor_b\ \nju_mentor_b_title }{}\hfill}
       \\
       摘要：
-      \egroup
+      % \egroup
     }
     \kaishu\zihao{-4}\par%
   }{%
