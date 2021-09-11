@@ -94,21 +94,18 @@
       \kaishu\zihao{-2}{\textbf{\uuline{南京大学研究生毕业论文中文摘要首页用纸}}}
     \end{center}
     {\bgroup
-      \kaishu\zihao{-4}
+      \kaishu\zihao{4}
       \tl_set:Nn \tabcolsep {0pt}
       \tl_set:Nn \arraystretch {0.8}
       \noindent
-      题目： \nju_title \\
-      \nju_major 专业\nju_grade 级
+      毕业论文题目：\uline{\nju_title} \\
+      \uline{\nju_major}专业\uline{\nju_grade}级
       \str_if_eq:eeTF {\nju_degree} { d } {博}{硕}
-      士生姓名： \nju_student_name \\
-      指导教师（姓名、职称）： \nju_mentor_a\ \nju_mentor_a_title 
+      士生姓名：\uline{\nju_student_name} \\
+      指导教师（姓名、职称）：\uline{\nju_mentor_a\ \nju_mentor_a_title 
       % 第二导师
       \bool_if:NTF \nju_second_mentor
-      {
-      \ \nju_mentor_b\ \nju_mentor_b_title 
-      }
-      {}
+      { \ \nju_mentor_b\ \nju_mentor_b_title }{}}
       \\
       摘要：
       \egroup
@@ -121,7 +118,7 @@
   % 中文关键词
   \NewDocumentCommand \keywords {m} {%
     \par\vspace{2ex}\noindent%
-    {\kaishu\zihao{-4}\makebox[4em][s]{关键词{：}}}~{#1}%
+    {\kaishu\zihao{4}\makebox[4em][s]{关键词{：}}}~{#1}%
   }
   
   % 英文摘要
@@ -135,6 +132,7 @@
     \end{center}
     {
       \bgroup
+      \zihao{4}
       THESIS: ~~\nju_title_en \\
       SPECIALIZATION: ~~\nju_major_en \\
       POSTGRADUATE:~~\nju_student_name_en \\
@@ -149,7 +147,7 @@
       ABSTRACT:
       \egroup
     }
-    \zihao{-4}\par%
+    \zihao{4}\par%
   }{%
   \cleardoublepage
   \newpage

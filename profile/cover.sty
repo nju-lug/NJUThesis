@@ -4,13 +4,19 @@
 \tl_const:Nn \nju_title {\nju_title_a \nju_title_b \nju_title_c}
 
 % 封面下划线
-\cs_new:Npn \nju_cover_underline:nn #1 #2 {
-  \uline{\makebox[#1]{#2}}
+\cs_new:Npn \nju_cover_underline_ug:nn #1 #2 {
+  \uline{\makebox[#1]{\rm\songti#2}}
+}
+\cs_new:Npn \nju_cover_underline_g:n #1 {
+  \uline{\makebox[215pt]{\rm\kaishu#1}}
 }
 
 % 封面表格边框
 \cs_new:Npn \nju_coverbox_ug:n #1 {
   \makebox[4.2em][s]{#1}
+}
+\cs_new:Npn \nju_coverbox_g:n #1 {
+  \makebox[6em][s]{#1\hspace{1em}}
 }
 
 % 判断学位
@@ -35,92 +41,92 @@
 \tl_set:Nn \nju_printcoverinfo_ug {
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {院\hfill 系}
-    & \nju_cover_underline:nn {250pt}{\songti\nju_department}\\
+    & \nju_cover_underline_ug:nn {250pt}{\nju_department}\\
     \nju_coverbox_ug:n {专\hfill 业}
-    & \nju_cover_underline:nn {250pt}{\songti\nju_major}\\
+    & \nju_cover_underline_ug:nn {250pt}{\nju_major}\\
 
     % 标题换行
     \int_case:nn {\nju_titlelength}
       {
         { 1 } { 
           \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_a}} \\ }
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_a}} \\ }
         { 2 } {
           \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_a}} \\
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_b}} \\ }
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_a}} \\
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_b}} \\ }
         { 3 } { 
           \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_a}} \\
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_b}} \\
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_c}} \\}
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_a}} \\
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_b}} \\
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_c}} \\}
       }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \nju_coverbox_ug:n {年\hfill 级}
-    & \nju_cover_underline:nn {90pt}{\nju_grade}
+    & \nju_cover_underline_ug:nn {90pt}{\nju_grade}
     & \nju_coverbox_ug:n {学\hfill 号}
-    & \nju_cover_underline:nn {90pt}{\songti\nju_student_id}\\
+    & \nju_cover_underline_ug:nn {90pt}{\nju_student_id}\\
   \end{tabular}\\
   
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {学\hfill 生\hfill 姓\hfill 名}
-    & \nju_cover_underline:nn {250pt}{\nju_student_name}
+    & \nju_cover_underline_ug:nn {250pt}{\nju_student_name}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \nju_coverbox_ug:n {导\hfill 师}
-    & \nju_cover_underline:nn {90pt}{\nju_mentor_a}
+    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_a}
     & \nju_coverbox_ug:n {职\hfill 称}
-    & \nju_cover_underline:nn {90pt}{\nju_mentor_a_title}\\
+    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_a_title}\\
 
     % 第二导师
     \bool_if:NTF \nju_second_mentor
     {
     \nju_coverbox_ug:n {第\hfill 二\hfill 导\hfill 师}
-    & \nju_cover_underline:nn {90pt}{\nju_mentor_b}
+    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b}
     & \nju_coverbox_ug:n {职\hfill 称}
-    & \nju_cover_underline:nn {90pt}{\nju_mentor_b_title}\\
+    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b_title}\\
     }
     {}
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {提\hfill 交\hfill 日\hfill 期}
-    & \nju_cover_underline:nn {250pt}{\nju_submit_date}\\
+    & \nju_cover_underline_ug:nn {250pt}{\nju_submit_date}\\
   \end{tabular}
 }
 
 % 封面信息栏 研究生
-\tl_new:N \nju_printcoverinfo_m
-\tl_set:Nn \nju_printcoverinfo_m {
-  \begin{tabular}{p{4.2em}c}
+\tl_new:N \nju_printcoverinfo_g
+\tl_set:Nn \nju_printcoverinfo_g {
+  \begin{tabular}{p{6em}c}
     % 标题换行
     \int_case:nn {\nju_titlelength}
       {
         { 1 } { 
-          \nju_coverbox_ug:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_a}} \\ }
+          \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
+          & \nju_cover_underline_g:n {\bf{\nju_title_a}} \\ }
         { 2 } {
-          \nju_coverbox_ug:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_a}} \\
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_b}} \\ }
+          \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
+          & \nju_cover_underline_g:n {\bf{\nju_title_a}} \\
+          & \nju_cover_underline_g:n {\bf{\nju_title_b}} \\ }
         { 3 } { 
-          \nju_coverbox_ug:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_a}} \\
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_b}} \\
-          & \nju_cover_underline:nn {250pt}{\textbf{\songti\nju_title_c}} \\}
+          \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
+          & \nju_cover_underline_g:n {\bf{\nju_title_a}} \\
+          & \nju_cover_underline_g:n {\bf{\nju_title_b}} \\
+          & \nju_cover_underline_g:n {\bf{\nju_title_c}} \\}
       }
 
-    \nju_coverbox_ug:n {作\hfill 者\hfill 姓\hfill 名}
-    & \nju_cover_underline:nn {250pt}{\nju_student_name}\\
+    \nju_coverbox_g:n {作\hfill 者\hfill 姓\hfill 名}
+    & \nju_cover_underline_g:n {\nju_student_name}\\
 
-    \nju_coverbox_ug:n {专\hfill 业\hfill 名\hfill 称}
-    & \nju_cover_underline:nn {250pt}{\nju_major}\\
-    \nju_coverbox_ug:n {研\hfill 究\hfill 方\hfill 向}
-    & \nju_cover_underline:nn {250pt}{\nju_field}\\
-    \nju_coverbox_ug:n {指\hfill 导\hfill 教\hfill 师}
-    & \nju_cover_underline:nn {250pt}{\nju_mentor_a}\\
+    \nju_coverbox_g:n {专\hfill 业\hfill 名\hfill 称}
+    & \nju_cover_underline_g:n {\nju_major}\\
+    \nju_coverbox_g:n {研\hfill 究\hfill 方\hfill 向}
+    & \nju_cover_underline_g:n {\nju_field}\\
+    \nju_coverbox_g:n {指\hfill 导\hfill 教\hfill 师}
+    & \nju_cover_underline_g:n {\nju_mentor_a\ \nju_mentor_a_title}\\
   \end{tabular}
 }
 
@@ -141,7 +147,7 @@
   \begin{center}
     \includegraphics[height=3.35cm]{njuname}
     \vskip 10mm 
-    {\zihao{1}\makebox[9em][s]{\textbf{\songti\nju_type_name}}}
+    {\zihao{1}\makebox[9em][s]{\bf{\songti\nju_type_name}}}
     \vfill
     \vskip\stretch{0}
     {\bgroup
@@ -166,40 +172,45 @@
   \pdfbookmark{封面}{封面} % 将封面插入pdf书签
   \begin{spacing}{1.25}
   \begin{center}
-    \vskip 10mm 
+    \hspace{0pt} \vskip 5mm
     \includegraphics[height=1.9cm]{njulogo}
     \vskip 10mm 
     \includegraphics[height=1.9cm]{njuname-large}
     \vskip 15mm 
-    {\zihao{1}\makebox[10em][s]{\textbf{\kaishu\nju_type_name}}}
+    {\zihao{1}\makebox[10em][s]{\bf{\kaishu\nju_type_name}}}
     \vskip 5mm
-    {\zihao{1}\textbf{\kaishu{（申请\nju_degree_title 学位）}}}
+    {\zihao{1}\bf{\kaishu{（申请\nju_degree_title 学位）}}}
     \par\vfill
     \vskip\stretch{0}
     {\bgroup
-    \kaishu\zihao{3}
+    \bf\kaishu\zihao{3}
     \def\tabcolsep{1pt}
     \def\arraystretch{1.5}
     \vskip 10mm
-    \nju_printcoverinfo_m % 绘制信息框
+    \nju_printcoverinfo_g % 绘制信息框
     \egroup}
     \vfill
     \vskip 10mm
-    \nju_submit_date
-    \vfill
+    \bf\kaishu\zihao{4}\nju_submit_date
+    \vskip 5mm
   \end{center}
   \end{spacing}
 
   \newpage % 封面背面
   \thispagestyle{empty}
-  \begin{spacing}{1.25}
+  \begin{spacing}{1.625}
     % TODO: 等待调整格式
-    \vskip 200mm
-    \textbf\kaishu 学号：\nju_student_id 
+    \hspace{0pt} \vfill
+    {\bgroup
+    \bf\kaishu\zihao{3}
+    \makebox[6em][s]{学\hfill 号}：\nju_student_id 
     \par
-    论文答辩日期：\nju_defense_date
+    \makebox[6em][s]{论文答辩日期}：\nju_defense_date
     \par
-    指 导 教 师： \hspace{40mm}（签字）
+    \makebox[6em][s]{指\hfill 导\hfill 教\hfill 师}：\hspace{50mm}（签字）
+    \par
+    \egroup}
+    \vskip 15mm
   \end{spacing}
   \cleardoublepage
 }
