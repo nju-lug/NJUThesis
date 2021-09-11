@@ -3,6 +3,31 @@
 % 拼合标题
 \tl_const:Nn \nju_title {\nju_title_a \nju_title_b \nju_title_c}
 
+% 拼合导师
+\bool_if:NTF \nju_second_mentor
+{ 
+  \tl_const:Nn \nju_mentor_full
+  {
+    \nju_mentor_a\ \nju_mentor_a_title
+    \ \ \nju_mentor_b\ \nju_mentor_b_title
+  }
+  \tl_const:Nn \nju_mentor_full_en
+  {
+    \nju_mentor_a_en\ \nju_mentor_a_title_en
+    \ \ \nju_mentor_b_en\ \nju_mentor_b_title_en
+  }
+}
+{
+  \tl_const:Nn \nju_mentor_full
+  {
+    \nju_mentor_a\ \nju_mentor_a_title
+  }
+  \tl_const:Nn \nju_mentor_full_en
+  {
+    \nju_mentor_a_en\ \nju_mentor_a_title_en
+  }
+}
+
 % 封面下划线
 \cs_new:Npn \nju_cover_underline_ug:nn #1 #2 {
   \uline{\makebox[#1]{\rm\songti#2}}
@@ -25,37 +50,14 @@
 { 
   % 本科以外都是研究生 
   \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill }
-  % 拼合导师
-  \bool_if:NTF \nju_second_mentor
-  { 
-    \tl_const:Nn \nju_mentor_full
-    {
-      \nju_mentor_a\ \nju_mentor_a_title
-      \ \ \nju_mentor_b\ \nju_mentor_b_title
-    }
-    \tl_const:Nn \nju_mentor_full_en
-    {
-      \nju_mentor_a_en\ \nju_mentor_a_title_en
-      \ \ \nju_mentor_b_en\ \nju_mentor_b_title_en
-    }
-  }
+  
+  % 研究生类别
+  \str_case_e:nn { \nju_degree }
   {
-    \tl_const:Nn \nju_mentor_full
-    {
-      \nju_mentor_a\ \nju_mentor_a_title
-    }
-    \tl_const:Nn \nju_mentor_full_en
-    {
-      \nju_mentor_a_en\ \nju_mentor_a_title_en
-    }
+    { mg } { \tl_const:Nn \nju_degree_title {硕士} }
+    { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }
+    { d } { \tl_const:Nn \nju_degree_title {博士} }
   }
-}
-
-\str_case_e:nn { \nju_degree }
-{
-  { mg } { \tl_const:Nn \nju_degree_title {硕士} }
-  { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }
-  { d } { \tl_const:Nn \nju_degree_title {博士} }
 }
 
 % 判断类型

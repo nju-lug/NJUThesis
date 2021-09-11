@@ -22,14 +22,7 @@
       院系： \nju_department \\
       专业： \nju_major \\
       本科生姓名： \nju_student_name \\
-      指导教师（姓名、职称）： \nju_mentor_a\ \nju_mentor_a_title 
-      % 第二导师
-      \bool_if:NTF \nju_second_mentor
-      {
-      \hspace{1em} \nju_mentor_b\ \nju_mentor_b_title 
-      }
-      {}
-      \\
+      指导教师（姓名、职称）：\nju_mentor_full \\
       摘要：
       \egroup
     }
@@ -59,14 +52,7 @@
       DEPARTMENT: ~~\nju_department_en \\
       SPECIALIZATION: ~~\nju_major_en \\
       UNDERGRADUATE:~~\nju_student_name_en \\
-      MENTOR:~~\nju_mentor_a_en \ \nju_mentor_a_title_en 
-      % 第二导师
-      \bool_if:NTF \nju_second_mentor
-      {
-      \hspace{1em} \nju_mentor_b_en\ \nju_mentor_b_title_en
-      }
-      {}
-      \\
+      MENTOR:~~\nju_mentor_full_en \\
       ABSTRACT:
       \egroup
     }
@@ -104,12 +90,10 @@
     \uline{\makebox[9em]{\nju_major}}专业\uline{\makebox[3em]{\nju_grade}}级
     \str_if_eq:eeTF {\nju_degree} { d } {博}{硕}
     士生姓名：\uline{\hfill\nju_student_name\hfill} \\
-    指导教师（姓名、职称）：\uline{\hfill\nju_mentor_full\hfill}
-    \\
-    摘要：
+    指导教师（姓名、职称）：\uline{\hfill\nju_mentor_full\hfill}\par
     \egroup
   
-    \kaishu\zihao{-4}\par%
+    \kaishu\zihao{4}\par%
   }{%
   \newpage
   }
@@ -135,8 +119,7 @@
       THESIS: ~~\nju_title_en \\
       SPECIALIZATION: ~~\nju_major_en \\
       POSTGRADUATE:~~\nju_student_name_en \\
-      MENTOR:~~\nju_mentor_full_en \\
-      ABSTRACT:
+      MENTOR:~~\nju_mentor_full_en\par
       \egroup
     }
     \zihao{4}\par%
