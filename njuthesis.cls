@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesExplClass{njuthesis}{2021-09-04}{0.6.0}{NJU Thesis Undergraduate LaTeX Template}
+\ProvidesExplClass{njuthesis}{2021-09-11}{0.6.0}{NJU Thesis Undergraduate LaTeX Template}
 
 % 通过类传递参数
 \RequirePackage{l3keys2e}
@@ -50,7 +50,7 @@
   TitleC            .tl_set:N     =   \nju_title_c,
   TitleEN           .tl_set:N     =   \nju_title_en,
 
-  % 年级姓名学号
+  % 年级学号姓名
   Grade             .tl_set:N     =   \nju_grade,
   StudentID         .tl_set:N     =   \nju_student_id,
   StudentName       .tl_set:N     =   \nju_student_name,

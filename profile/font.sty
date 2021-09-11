@@ -1,4 +1,4 @@
-\ProvidesExplPackage{profile/font}{2021-09-04}{0.1}{NJU Thesis Undergraduate font configuration}
+\ProvidesExplPackage{profile/font}{2021-09-11}{0.6.0}{NJU Thesis Undergraduate font configuration}
 
 % \RequireXeTeX
 % \RequireLuaTeX
@@ -190,14 +190,14 @@
   \str_case_e:nn { \nju_customlatinfont }
   {
     { windows } { \set_latin_fontset_windows }
-    { macos} { \set_latin_fontset_macos }
+    { macos } { \set_latin_fontset_macos }
     { gyre } { \set_latin_fontset_gyre }
     { null } {}
   }
   \str_case_e:nn { \nju_customchinesefont }
   {
     { windows } { \set_chinese_fontset_windows }
-    { macos} { \set_chinese_fontset_macos }
+    { macos } { \set_chinese_fontset_macos }
     { gyre } { \set_chinese_fontset_gyre }
     { founder } { \set_chinese_fontset_founder }
     { noto } { \set_chinese_fontset_noto }
