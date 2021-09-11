@@ -76,9 +76,22 @@
   MentorBTitle      .tl_set:N     =   \nju_mentor_b_title,
   MentorBTitleEN    .tl_set:N     =   \nju_mentor_b_title_en,
 
-  % 日期
+  % 提交日期
   SubmitDate        .tl_set:N     =   \nju_submit_date,
-  DefenseDate       .tl_set:N     =   \nju_defense_date,
+  
+  % 答辩
+  DefendDate        .tl_set:N     =   \nju_defend_date,
+  ReviewerChairman  .tl_set:N     =   \nju_reviewer_chairman,
+  ReviewerA         .tl_set:N     =   \nju_reviewer_a,
+  ReviewerB         .tl_set:N     =   \nju_reviewer_b,
+  ReviewerC         .tl_set:N     =   \nju_reviewer_c,
+  ReviewerD         .tl_set:N     =   \nju_reviewer_d,
+
+  % 国家图书馆封面相关
+  Classification    .tl_set:N     =   \nju_classification,
+  SecurityLevel     .tl_set:N     =   \nju_securitylevel,
+  UDC               .tl_set:N     =   \nju_udc,
+  MentorInfo        .tl_set:N     =   \nju_mentor_info,
 }
   
 \NewDocumentCommand \njusetup { m }

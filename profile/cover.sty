@@ -28,35 +28,55 @@
   }
 }
 
-% 封面下划线
-\cs_new:Npn \nju_cover_underline_ug:nn #1 #2 {
-  \uline{\makebox[#1]{\rm\songti#2}}
-}
-\cs_new:Npn \nju_cover_underline_g:n #1 {
-  \uline{\makebox[215pt]{\rm\kaishu#1}}
-}
-
-% 封面表格边框
-\cs_new:Npn \nju_coverbox_ug:n #1 {
-  \makebox[4.2em][s]{#1}
-}
-\cs_new:Npn \nju_coverbox_g:n #1 {
-  \makebox[6em][s]{#1\hspace{1em}}
-}
-
-% 判断学位
+% 判断学位进行命令定义
 \str_if_eq:eeTF {\nju_degree} { ug } 
-{ \tl_const:Nn \nju_degree_name {本\hfill 科\hfill } } % 本科
+{
+  % 本科
+  \tl_const:Nn \nju_degree_name {本\hfill 科\hfill }
+  
+  % 封面下划线
+  \cs_new:Npn \nju_cover_underline_ug:nn #1 #2 
+  {
+    \CJKunderline{\makebox[#1]{\rm\songti#2}}
+  }
+ 
+  % 封面表格边框
+  \cs_new:Npn \nju_coverbox_ug:n #1 
+  {
+    \makebox[4.2em][s]{#1}
+  }
+} 
 { 
   % 本科以外都是研究生 
   \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill }
+
+  % 封面下划线
+  \cs_new:Npn \nju_cover_underline_g:n #1 
+  {
+    \CJKunderline{\makebox[215pt]{\rm\kaishu#1}}
+  }
+
+  % 封面表格边框
+  \cs_new:Npn \nju_coverbox_g:n #1 
+  {
+    \makebox[6em][s]{#1\hspace{1em}}
+  }
   
-  % 研究生类别
+  % 研究生分类
   \str_case_e:nn { \nju_degree }
   {
     { mg } { \tl_const:Nn \nju_degree_title {硕士} }
     { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }
-    { d } { \tl_const:Nn \nju_degree_title {博士} }
+    { d } 
+    { 
+      \tl_const:Nn \nju_degree_title {博士} 
+
+      % 封面下划线
+      \cs_new:Npn \nju_cover_underline_nlc:nn #1 #2 
+      {
+        \CJKunderline{\makebox[#1]{#2}}
+      }
+    }
   }
 }
 
@@ -158,6 +178,71 @@
   \end{tabular}
 }
 
+% 国家图书馆封面，修改自旧模板
+\tl_new:N \nju_printcoverinfo_nlc
+\tl_set:Nn \nju_printcoverinfo_nlc {
+  \thispagestyle{empty}
+  \pdfbookmark[0]{国家图书馆封面}{nlc}
+  {
+    \hspace{0mm}
+    \vskip -20mm \hskip -15mm
+    \songti\zihao{-4}
+    \makebox[40pt][l]{分类号}
+    \nju_cover_underline_nlc:nn {150pt}{\nju_classification}
+    \hfill
+    \makebox[40pt][l]{密级}
+    \nju_cover_underline_nlc:nn {150pt}{\nju_securitylevel}
+    \vskip 10pt \hskip -15mm
+    \makebox[40pt][l]{UDC}
+    \nju_cover_underline_nlc:nn {150pt}{\nju_udc}
+  }
+  \vskip\stretch{2}
+  \begin{center}
+    \def\ULthickness{1pt}
+    {\kaishu\zihao{-0} 学\hspace{0.5em}位\hspace{0.5em}论\hspace{0.5em}文}
+    {\kaishu\zihao{1}
+    \vskip \stretch{1}
+    \nju_cover_underline_nlc:nn {14em}{\nju_title_a}\\
+    \nju_cover_underline_nlc:nn {14em}{\nju_title_b}\\
+    \nju_cover_underline_nlc:nn {14em}{\nju_title_c}\\
+    }
+    \vskip \stretch{1}
+    {\kaishu\zihao{4}（题名和副题名）}
+    \vskip \stretch{1}
+    {\kaishu\zihao{1}\CJKunderline{\makebox{\nju_student_name}}}
+    \vskip \stretch{1}
+    {\kaishu\zihao{4}（作者姓名）}
+  \end{center}
+  \vskip\stretch{1}
+  {\kaishu\zihao{4}
+    \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
+    \nju_cover_underline_nlc:nn {94pt}{\nju_mentor_a}\par
+    \noindent\nju_cover_underline_nlc:nn {\textwidth}{%
+    \nju_mentor_info}\par
+    \noindent 申请学位级别%
+    \nju_cover_underline_nlc:nn {8em}{\nju_degree_title}%
+    \noindent 专业名称%
+    \CJKunderline{\hfill\nju_major\hfill}\par% 需要调整下划线长度
+    \noindent 论文提交日期%
+    \nju_cover_underline_nlc:nn {8em}{\nju_submit_date}%
+    论文答辩日期%
+    \CJKunderline{\hfill\nju_defend_date\hfill}\par% 需要调整下划线长度
+    \noindent 学位授予单位和日期\CJKunderline{\hfill}\par
+    \noindent\hfill 答辩委员会主席：%
+    \nju_cover_underline_nlc:nn {9em}{\nju_reviewer_chairman}\par
+    \noindent\hfill 评阅人：%
+    \nju_cover_underline_nlc:nn {9em}{\nju_reviewer_a}\par
+    \noindent\hfill\nju_cover_underline_nlc:nn {9em}{\nju_reviewer_b}\par
+    \noindent\hfill\nju_cover_underline_nlc:nn {9em}{\nju_reviewer_c}\par
+    \noindent\hfill\nju_cover_underline_nlc:nn {9em}{\nju_reviewer_d}\par
+    
+    \begin{center}
+      \kaishu\zihao{3}\ 年\ 月\ 日
+    \end{center}
+    }
+  \cleardoublepage
+}
+
 % 绘制封面命令
 \tl_new:N \nju_printcover_ug % 本科封面
 \tl_new:N \nju_printcover_g % 研究生封面
@@ -194,6 +279,11 @@
 
 % 研究生封面
 \tl_set:Nn \nju_printcover_g {
+  % 博士生绘制国家图书馆封面
+  \str_if_eq:eeTF {\nju_degree} { d } 
+  { \nju_printcoverinfo_nlc } {}
+
+  % 绘制南大封面
   \thispagestyle{empty}
   \pagenumbering{Roman}
   % Start
@@ -233,7 +323,7 @@
     \bf\kaishu\zihao{3}
     \makebox[6em][s]{学\hfill 号}：\nju_student_id 
     \par
-    \makebox[6em][s]{论文答辩日期}：\nju_defense_date
+    \makebox[6em][s]{论文答辩日期}：\nju_defend_date
     \par
     \makebox[6em][s]{指\hfill 导\hfill 教\hfill 师}：\hspace{50mm}（签字）
     \par
