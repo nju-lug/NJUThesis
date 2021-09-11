@@ -56,11 +56,13 @@
   StudentName       .tl_set:N     =   \nju_student_name,
   StudentNameEN     .tl_set:N     =   \nju_student_name_en,
 
-  % 院系专业
+  % 院系专业方向
   Department        .tl_set:N     =   \nju_department,
   DepartmentEN      .tl_set:N     =   \nju_department_en,
   Major             .tl_set:N     =   \nju_major,
   MajorEN           .tl_set:N     =   \nju_major_en,
+  Field             .tl_set:N     =   \nju_field,
+  FieldEN           .tl_set:N     =   \nju_field_en,
 
   % 导师
   MentorA           .tl_set:N     =   \nju_mentor_a,
