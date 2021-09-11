@@ -22,7 +22,35 @@
 % 判断学位
 \str_if_eq:eeTF {\nju_degree} { ug } 
 { \tl_const:Nn \nju_degree_name {本\hfill 科\hfill } } % 本科
-{ \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill } } % 本科以外都是研究生 
+{ 
+  % 本科以外都是研究生 
+  \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill }
+  
+  % 拼合导师
+  \bool_if:NTF \nju_second_mentor
+  { 
+    \tl_const:Nn \nju_mentor_full
+    {
+      \nju_mentor_a\ \nju_mentor_a_title
+      \hspace{1em} \nju_mentor_b\ \nju_mentor_b_title
+    }
+    \tl_const:Nn \nju_mentor_full_en
+    {
+      \nju_mentor_a_en\ \nju_mentor_a_title_en
+      \hspace{1em} \nju_mentor_b_en\ \nju_mentor_b_title_en
+    }
+  }
+  {
+    \tl_const:Nn \nju_mentor_full
+    {
+      \nju_mentor_a\ \nju_mentor_a_title
+    }
+    \tl_const:Nn \nju_mentor_full_en
+    {
+      \nju_mentor_a_en\ \nju_mentor_a_title_en
+    }
+  }
+}
 
 \str_case_e:nn { \nju_degree }
 {
@@ -125,7 +153,7 @@
     \nju_coverbox_g:n {研\hfill 究\hfill 方\hfill 向}
     & \nju_cover_underline_g:n {\nju_field}\\
     \nju_coverbox_g:n {指\hfill 导\hfill 教\hfill 师}
-    & \nju_cover_underline_g:n {\nju_mentor_a\ \nju_mentor_a_title}\\
+    & \nju_cover_underline_g:n {\nju_mentor_full}\\
   \end{tabular}
 }
 
