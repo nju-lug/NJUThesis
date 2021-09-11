@@ -31,6 +31,13 @@ jobs:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+        
+      - name: Zip Source
+        run: |
+          zip -r njuthesis.zip . -x ".github/*" ".gitignore"
+          
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
@@ -42,3 +49,4 @@ jobs:
           prerelease: false
           files: |
             njuthesis.pdf
+            njuthesis.zip
