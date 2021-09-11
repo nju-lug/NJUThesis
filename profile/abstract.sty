@@ -1,80 +1,163 @@
-\ProvidesExplPackage{profile/abstract}{2021-09-11}{0.6.0}{NJU Thesis Undergraduate abstract design}
+\ProvidesExplPackage{profile/abstract}{2021-09-11}{0.6.0}{NJU Thesis abstract design}
 
-% 摘要环境
-\NewDocumentEnvironment{abstract} {}
-{%
-  \pagestyle{plain}
-  \pagenumbering{Roman}
-  % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
-  \pdfbookmark[0]{中文摘要}{中文摘要} % 将摘要插入pdf书签，与上一行不可共存
-  \begin{center}
-    \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）中文摘要}}}
-  \end{center}
-  {\bgroup
-    \kaishu\zihao{-4}
-    \tl_set:Nn \tabcolsep {0pt}
-    \tl_set:Nn \arraystretch {0.8}
-    \noindent
-    题目： \nju_title \\
-    院系： \nju_department \\
-    专业： \nju_major \\
-    本科生姓名： \nju_student_name \\
-    指导教师（姓名、职称）： \nju_mentor_a\ \nju_mentor_a_title 
-    % 第二导师
-    \bool_if:NTF \nju_second_mentor
-    {
-    \ \nju_mentor_b\ \nju_mentor_b_title 
+% 判断学位
+\str_if_eq:eeTF {\nju_degree} { ug } 
+{   
+  % 本科摘要环境
+  \NewDocumentEnvironment{abstract} {}
+  {%
+    \pagestyle{plain}
+    \pagenumbering{Roman}
+    % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
+    \pdfbookmark[0]{中文摘要}{中文摘要} % 将摘要插入pdf书签，与上一行不可共存
+    \begin{center}
+      \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）中文摘要}}}
+    \end{center}
+    {\bgroup
+      \kaishu\zihao{-4}
+      \tl_set:Nn \tabcolsep {0pt}
+      \tl_set:Nn \arraystretch {0.8}
+      \noindent
+      题目： \nju_title \\
+      院系： \nju_department \\
+      专业： \nju_major \\
+      本科生姓名： \nju_student_name \\
+      指导教师（姓名、职称）： \nju_mentor_a\ \nju_mentor_a_title 
+      % 第二导师
+      \bool_if:NTF \nju_second_mentor
+      {
+      \ \nju_mentor_b\ \nju_mentor_b_title 
+      }
+      {}
+      \\
+      摘要：
+      \egroup
     }
-    {}
-    \\
-    摘要：
-    \egroup
+    \kaishu\zihao{-4}\par%
+  }{%
+  \newpage
   }
-  \kaishu\zihao{-4}\par%
-}{%
-\newpage
-}
 
-% 中文关键词
-\NewDocumentCommand \keywords {m} {%
-  \par\vspace{2ex}\noindent%
-  {\kaishu\zihao{-4}\makebox[4em][s]{关键词{：}}}~{#1}%
-}
+  % 中文关键词
+  \NewDocumentCommand \keywords {m} {%
+    \par\vspace{2ex}\noindent%
+    {\kaishu\zihao{-4}\makebox[4em][s]{关键词{：}}}~{#1}%
+  }
 
-% 英文摘要
-\NewDocumentEnvironment{englishabstract} {}
-{%
-  \pagestyle{plain}
-  % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
-  \pdfbookmark[0]{英文摘要}{英文摘要} % 将摘要插入pdf书签，与上一行不可共存
-  \begin{center}
-      \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）英文摘要}}}
-  \end{center}
-  {
-    \bgroup
-    THESIS: ~~\nju_title_en \\
-    DEPARTMENT: ~~\nju_department_en \\
-    SPECIALIZATION: ~~\nju_major_en \\
-    UNDERGRADUATE:~~\nju_student_name_en \\
-    MENTOR:~~\nju_mentor_a_en \ \nju_mentor_a_title_en 
-    % 第二导师
-    \bool_if:NTF \nju_second_mentor
+  % 英文摘要
+  \NewDocumentEnvironment{englishabstract} {}
+  {%
+    \pagestyle{plain}
+    % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
+    \pdfbookmark[0]{英文摘要}{英文摘要} % 将摘要插入pdf书签，与上一行不可共存
+    \begin{center}
+        \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）英文摘要}}}
+    \end{center}
     {
-    \ \nju_mentor_b_en\ \nju_mentor_b_title_en
+      \bgroup
+      THESIS: ~~\nju_title_en \\
+      DEPARTMENT: ~~\nju_department_en \\
+      SPECIALIZATION: ~~\nju_major_en \\
+      UNDERGRADUATE:~~\nju_student_name_en \\
+      MENTOR:~~\nju_mentor_a_en \ \nju_mentor_a_title_en 
+      % 第二导师
+      \bool_if:NTF \nju_second_mentor
+      {
+      \ \nju_mentor_b_en\ \nju_mentor_b_title_en
+      }
+      {}
+      \\
+      ABSTRACT:
+      \egroup
     }
-    {}
-    \\
-    ABSTRACT:
-    \egroup
+    \zihao{-4}\par%
+  }{%
+  \cleardoublepage
+  \newpage
   }
-  \zihao{-4}\par%
-}{%
-\cleardoublepage
-\newpage
-}
 
-% 英文关键词
-\NewDocumentCommand \englishkeywords {m} {%
-  \par\vspace{2ex}\noindent%
-  {KEYWORDS{:}}~~{#1}%
+  % 英文关键词
+  \NewDocumentCommand \englishkeywords {m} {%
+    \par\vspace{2ex}\noindent%
+    {KEYWORDS{:}}~~{#1}%
+  }
+}
+{ 
+  % 摘要环境
+  \NewDocumentEnvironment{abstract} {}
+  {%
+    \pagestyle{plain}
+    \pagenumbering{Roman}
+    % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
+    \pdfbookmark[0]{中文摘要}{中文摘要} % 将摘要插入pdf书签，与上一行不可共存
+    \begin{center}
+      \kaishu\zihao{-2}{\textbf{\uuline{南京大学研究生毕业论文中文摘要首页用纸}}}
+    \end{center}
+    {\bgroup
+      \kaishu\zihao{-4}
+      \tl_set:Nn \tabcolsep {0pt}
+      \tl_set:Nn \arraystretch {0.8}
+      \noindent
+      题目： \nju_title \\
+      \nju_major 专业\nju_grade 级
+      \str_if_eq:eeTF {\nju_degree} { d } {博}{硕}
+      士生姓名： \nju_student_name \\
+      指导教师（姓名、职称）： \nju_mentor_a\ \nju_mentor_a_title 
+      % 第二导师
+      \bool_if:NTF \nju_second_mentor
+      {
+      \ \nju_mentor_b\ \nju_mentor_b_title 
+      }
+      {}
+      \\
+      摘要：
+      \egroup
+    }
+    \kaishu\zihao{-4}\par%
+  }{%
+  \newpage
+  }
+  
+  % 中文关键词
+  \NewDocumentCommand \keywords {m} {%
+    \par\vspace{2ex}\noindent%
+    {\kaishu\zihao{-4}\makebox[4em][s]{关键词{：}}}~{#1}%
+  }
+  
+  % 英文摘要
+  \NewDocumentEnvironment{englishabstract} {}
+  {%
+    \pagestyle{plain}
+    % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
+    \pdfbookmark[0]{英文摘要}{英文摘要} % 将摘要插入pdf书签，与上一行不可共存
+    \begin{center}
+        \kaishu\zihao{-2}{\textbf{\uuline{南京大学研究生毕业论文英文摘要首页用纸}}}
+    \end{center}
+    {
+      \bgroup
+      THESIS: ~~\nju_title_en \\
+      SPECIALIZATION: ~~\nju_major_en \\
+      POSTGRADUATE:~~\nju_student_name_en \\
+      MENTOR:~~\nju_mentor_a_en \ \nju_mentor_a_title_en 
+      % 第二导师
+      \bool_if:NTF \nju_second_mentor
+      {
+      \ \nju_mentor_b_en\ \nju_mentor_b_title_en
+      }
+      {}
+      \\
+      ABSTRACT:
+      \egroup
+    }
+    \zihao{-4}\par%
+  }{%
+  \cleardoublepage
+  \newpage
+  }
+  
+  % 英文关键词
+  \NewDocumentCommand \englishkeywords {m} {%
+    \par\vspace{2ex}\noindent%
+    {KEYWORDS{:}}~~{#1}%
+  }
 }

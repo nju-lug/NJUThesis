@@ -47,13 +47,12 @@
     │   page.sty
     │   reference.sty
     │
-    │ coverinfo.tex
     │ njuthesis.bib
     │ njuthesis.cls
     │ njuthesis.tex
     ```
 
-3. 在南大TeX项目内页面左上角的`Menu`中，将编译器改为`LuaLaTeX`
+3. 在南大TeX项目内页面左上角的`Menu`中，将编译器改为`XeLaTeX`
 4. 编写tex文档
 
 ### 其他

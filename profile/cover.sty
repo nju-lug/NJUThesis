@@ -1,4 +1,4 @@
-\ProvidesExplPackage{profile/cover}{2021-09-04}{0.1}{NJU Thesis Undergraduate cover design} 
+\ProvidesExplPackage{profile/cover}{2021-09-04}{0.1}{NJU Thesis cover design} 
 
 % 拼合标题
 \tl_const:Nn \nju_title {\nju_title_a \nju_title_b \nju_title_c}
@@ -16,7 +16,7 @@
 % 判断学位
 \str_if_eq:eeTF {\nju_degree} { ug } 
 { \tl_const:Nn \nju_degree_name {本\hfill 科\hfill } } % 本科
-{ \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill } } % 研究生 
+{ \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill } } % 本科以外都是研究生 
 
 \str_case_e:nn { \nju_degree }
 {
@@ -91,7 +91,7 @@
   \end{tabular}
 }
 
-% 封面信息栏 硕士
+% 封面信息栏 研究生
 \tl_new:N \nju_printcoverinfo_m
 \tl_set:Nn \nju_printcoverinfo_m {
   \begin{tabular}{p{4.2em}c}
@@ -121,12 +121,12 @@
     & \nju_cover_underline:nn {250pt}{\nju_field}\\
     \nju_coverbox_ug:n {指\hfill 导\hfill 教\hfill 师}
     & \nju_cover_underline:nn {250pt}{\nju_mentor_a}\\
-\end{tabular}
+  \end{tabular}
 }
 
 % 绘制封面命令
-\tl_new:N \nju_printcover_ug
-\tl_new:N \nju_printcover_g
+\tl_new:N \nju_printcover_ug % 本科封面
+\tl_new:N \nju_printcover_g % 研究生封面
 
 % 本科封面
 \tl_set:Nn \nju_printcover_ug {
@@ -189,9 +189,19 @@
     \vfill
   \end{center}
   \end{spacing}
+
+  \newpage % 封面背面
+  \thispagestyle{empty}
+  \begin{spacing}{1.25}
+    % TODO: 等待调整格式
+    \vskip 200mm
+    \textbf\kaishu 学号：\nju_student_id 
+    \par
+    论文答辩日期：\nju_defense_date
+    \par
+    指 导 教 师： \hspace{40mm}（签字）
+  \end{spacing}
   \cleardoublepage
-  \vfill
-  % \newpage
 }
 
 % 重定义maketitle生成封面

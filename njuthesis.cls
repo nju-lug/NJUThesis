@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesExplClass{njuthesis}{2021-09-11}{0.6.0}{NJU Thesis Undergraduate LaTeX Template}
+\ProvidesExplClass{njuthesis}{2021-09-11}{0.6.0}{NJU Thesis LaTeX Template}
 
 % 通过类传递参数
 \RequirePackage{l3keys2e}
@@ -76,8 +76,9 @@
   MentorBTitle      .tl_set:N     =   \nju_mentor_b_title,
   MentorBTitleEN    .tl_set:N     =   \nju_mentor_b_title_en,
 
-  % 提交时间
+  % 日期
   SubmitDate        .tl_set:N     =   \nju_submit_date,
+  DefenseDate       .tl_set:N     =   \nju_defense_date,
 }
   
 \NewDocumentCommand \njusetup { m }
