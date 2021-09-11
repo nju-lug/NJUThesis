@@ -14,11 +14,15 @@
 }
 
 % 判断学位
+\str_if_eq:eeTF {\nju_degree} { ug } 
+{ \tl_const:Nn \nju_degree_name {本\hfill 科\hfill } } % 本科
+{ \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill } } % 研究生 
+
 \str_case_e:nn { \nju_degree }
 {
-  { ug } { \tl_const:Nn \nju_degree_name {本\hfill 科\hfill } }
-  { m } { \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill } }
-  { d } { \tl_const:Nn \nju_degree_name {博\hfill 士\hfill 生\hfill} }
+  { mg } { \tl_const:Nn \nju_degree_title {硕士} }
+  { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }
+  { d } { \tl_const:Nn \nju_degree_title {博士} }
 }
 
 % 判断类型
@@ -27,8 +31,8 @@
 {\tl_const:Nn \nju_type_name {\nju_degree_name 毕\hfill 业\hfill 设\hfill 计}}
 
 % 封面信息栏 本科
-\tl_new:N \nju_printcover_ug
-\tl_set:Nn \nju_printcover_ug {
+\tl_new:N \nju_printcoverinfo_ug
+\tl_set:Nn \nju_printcoverinfo_ug {
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {院\hfill 系}
     & \nju_cover_underline:nn {250pt}{\songti\nju_department}\\
@@ -88,8 +92,8 @@
 }
 
 % 封面信息栏 硕士
-\tl_new:N \nju_printcover_m
-\tl_set:Nn \nju_printcover_m {
+\tl_new:N \nju_printcoverinfo_m
+\tl_set:Nn \nju_printcoverinfo_m {
   \begin{tabular}{p{4.2em}c}
     % 标题换行
     \int_case:nn {\nju_titlelength}
@@ -120,72 +124,79 @@
 \end{tabular}
 }
 
+% 绘制封面命令
+\tl_new:N \nju_printcover_ug
+\tl_new:N \nju_printcover_g
+
+% 本科封面
+\tl_set:Nn \nju_printcover_ug {
+  \thispagestyle{empty}
+  \pagenumbering{Roman}
+  % Start
+  \pdfbookmark{封面}{封面} % 将封面插入pdf书签
+  \begin{spacing}{1.25}
+  \vskip 0mm
+  \hspace{-10mm}
+  \includegraphics[height=3cm]{njulogo}\smallskip 
+  \begin{center}
+    \includegraphics[height=3.35cm]{njuname}
+    \vskip 10mm 
+    {\zihao{1}\makebox[9em][s]{\textbf{\songti\nju_type_name}}}
+    \vfill
+    \vskip\stretch{0}
+    {\bgroup
+    \kaishu\zihao{3}
+    \def\tabcolsep{1pt}
+    \def\arraystretch{1.5}
+    \nju_printcoverinfo_ug % 绘制信息框
+    \egroup}
+    \vfill
+  \end{center}
+  \end{spacing}
+  \cleardoublepage
+  \vfill
+  % \newpage
+}
+
+% 研究生封面
+\tl_set:Nn \nju_printcover_g {
+  \thispagestyle{empty}
+  \pagenumbering{Roman}
+  % Start
+  \pdfbookmark{封面}{封面} % 将封面插入pdf书签
+  \begin{spacing}{1.25}
+  \begin{center}
+    \vskip 10mm 
+    \includegraphics[height=1.9cm]{njulogo}
+    \vskip 10mm 
+    \includegraphics[height=1.9cm]{njuname-large}
+    \vskip 15mm 
+    {\zihao{1}\makebox[10em][s]{\textbf{\kaishu\nju_type_name}}}
+    \vskip 5mm
+    {\zihao{1}\textbf{\kaishu{（申请\nju_degree_title 学位）}}}
+    \par\vfill
+    \vskip\stretch{0}
+    {\bgroup
+    \kaishu\zihao{3}
+    \def\tabcolsep{1pt}
+    \def\arraystretch{1.5}
+    \vskip 10mm
+    \nju_printcoverinfo_m % 绘制信息框
+    \egroup}
+    \vfill
+    \vskip 10mm
+    \nju_submit_date
+    \vfill
+  \end{center}
+  \end{spacing}
+  \cleardoublepage
+  \vfill
+  % \newpage
+}
+
 % 重定义maketitle生成封面
 \RenewDocumentCommand \maketitle {} {%
-  \str_case_e:nn { \nju_degree }
-  {
-    { ug } {
-      \thispagestyle{empty}
-      \pagenumbering{Roman}
-      % Start
-      \pdfbookmark{封面}{封面} % 将封面插入pdf书签
-      \begin{spacing}{1.25}
-      \vskip 0mm
-      \hspace{-10mm}
-      \includegraphics[height=3cm]{njulogo}\smallskip 
-      \begin{center}
-        \includegraphics[height=3.35cm]{njuname}
-        \vskip 10mm 
-        {\zihao{1}\makebox[9em][s]{\textbf{\songti\nju_type_name}}}
-        \vfill
-        \vskip\stretch{0}
-        {\bgroup
-        \kaishu\zihao{3}
-        \def\tabcolsep{1pt}
-        \def\arraystretch{1.5}
-        \nju_printcover_ug % 绘制信息框
-        \egroup}
-        \vfill
-      \end{center}
-      \end{spacing}
-      \cleardoublepage
-      \vfill
-      % \newpage
-       }
-    % 硕士封面
-    { m } { 
-      \thispagestyle{empty}
-      \pagenumbering{Roman}
-      % Start
-      \pdfbookmark{封面}{封面} % 将封面插入pdf书签
-      \begin{spacing}{1.25}
-      \begin{center}
-        \includegraphics[height=1.9cm]{njulogo}
-        \vskip 10mm 
-        \includegraphics[height=1.9cm]{njuname-large}
-        \vskip 10mm 
-        {\zihao{1}\makebox[9em][s]{\textbf{\kaishu\nju_type_name}}}\vskip 5mm
-        {\zihao{1}\makebox[9em][s]{\textbf{\kaishu{（申请硕士专业学位）}}}}\par
-        \vfill
-        \vskip\stretch{0}
-        {\bgroup
-        \kaishu\zihao{3}
-        \def\tabcolsep{1pt}
-        \def\arraystretch{1.5}
-        \vskip 10mm
-        \nju_printcover_m % 绘制信息框
-        \egroup}
-        \vfill
-        \vskip 10mm
-        \nju_submit_date
-        \vfill
-      \end{center}
-      \end{spacing}
-      \cleardoublepage
-      \vfill
-      % \newpage
-    }
-    { d } {  }
-  }
-  
+  \str_if_eq:eeTF {\nju_degree} { ug } 
+  { \nju_printcover_ug } % 本科封面
+  { \nju_printcover_g } % 研究生封面 
 }
