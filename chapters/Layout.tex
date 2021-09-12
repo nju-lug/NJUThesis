@@ -105,6 +105,18 @@ secondmentor 用于指定是否在封面打印第二导师
 
 \texttt{profile/abstract.sty}提供了摘要页格式的定义。
 
+\begin{lstlisting}
+\begin{abstract}
+    <text>
+    \keywords{<keywords>}
+\end{abstract}
+
+\begin{englishabstract}
+    <text>
+    \englishkeywords{<keywords>}
+\end{englishabstract}
+\end{lstlisting}
+
 摘要页一般不插入目录，默认只添加pdf书签。如确实有插入目录的需求，请在\texttt{abstract.sty}文件中定位到如下语句
 \begin{lstlisting}[language=TeX]
 % \phantomsection\addcontentsline{toc}{chapter}{中文摘要}
@@ -121,6 +133,12 @@ secondmentor 用于指定是否在封面打印第二导师
 \section{前言页}
 
 使用preface环境定义
+
+\begin{lstlisting}
+\begin{preface}
+    <text>
+\end{preface}
+\end{lstlisting}
 
 \section{目录页}
 
@@ -141,6 +159,12 @@ secondmentor 用于指定是否在封面打印第二导师
 \section{致谢页}
 
 同前言，使用acknowledgement环境
+
+\begin{lstlisting}
+\begin{acknowledgement}
+    <text>
+\end{acknowledgement}
+\end{lstlisting}
 
 \section{附录页}
 
