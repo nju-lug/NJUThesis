@@ -295,8 +295,8 @@
 % 研究生封面
 \tl_set:Nn \nju_printcover_g {
   % 博士生绘制国家图书馆封面
-  \str_if_eq:eeTF {\nju_degree} { d } 
-  { \nju_printcoverinfo_nlc } {}
+  \str_if_eq:eeT {\nju_degree} { d } 
+  { \nju_printcoverinfo_nlc }
 
   % 绘制南大封面
   \thispagestyle{empty}
@@ -308,7 +308,7 @@
     \hspace{0pt} \vskip 5mm
     \includegraphics[height=1.9cm]{njulogo}
     \vskip 10mm 
-    \includegraphics[height=1.9cm]{njuname-large}
+    \includegraphics[height=2cm]{njuname-large}
     \vskip 15mm 
     {\zihao{1}\makebox[10em][s]{\bf{\kaishu\nju_type_name}}}
     \vskip 5mm
