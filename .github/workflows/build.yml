@@ -46,9 +46,9 @@ jobs:
       - name: Zip CTAN Source
         run: |
           mkdir -p doc/example
-          cp chapter njuthesis.tex doc/example
+          cp chapters njuthesis.tex doc/example
           cp njuthesis.pdf doc
-          zip -r njuthesis_ctan.zip . -x ".github/*" ".gitignore" "chapter/*" "njuthesis.*"
+          zip -r njuthesis_ctan.zip . -x ".github/*" ".gitignore" "chapters/*" "njuthesis.*"
           
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
