@@ -37,7 +37,7 @@
   % 封面下划线
   \cs_new:Npn \nju_cover_underline_ug:nn #1 #2 
   {
-    \CJKunderline{\makebox[#1]{\rm\songti#2}}
+    \nju_underline:n {\makebox[#1]{\rm\songti#2}}
   }
  
   % 封面表格边框
@@ -53,7 +53,7 @@
   % 封面下划线
   \cs_new:Npn \nju_cover_underline_g:n #1 
   {
-    \CJKunderline{\makebox[215pt]{\rm\kaishu#1}}
+    \nju_underline:n {\makebox[215pt]{\rm\kaishu#1}}
   }
 
   % 封面表格边框
@@ -74,7 +74,7 @@
       % 封面下划线
       \cs_new:Npn \nju_cover_underline_nlc:nn #1 #2 
       {
-        \CJKunderline{\makebox[#1]{#2}}
+        \nju_underline:n {\makebox[#1]{#2}}
       }
     }
   }
@@ -82,8 +82,14 @@
 
 % 判断类型
 \str_if_eq:eeTF {\nju_type} {thesis} 
-{\tl_const:Nn \nju_type_name {\nju_degree_name 毕\hfill 业\hfill 论\hfill 文}}
-{\tl_const:Nn \nju_type_name {\nju_degree_name 毕\hfill 业\hfill 设\hfill 计}}
+{
+  \tl_const:Nn \nju_type_name 
+    { \nju_degree_name 毕\hfill 业\hfill 论\hfill 文 }
+}
+{
+  \tl_const:Nn \nju_type_name 
+    { \nju_degree_name 毕\hfill 业\hfill 设\hfill 计 }
+}
 
 % 封面信息栏 本科
 \tl_new:N \nju_printcoverinfo_ug
@@ -95,7 +101,7 @@
     & \nju_cover_underline_ug:nn {250pt}{\nju_major}\\
 
     % 标题换行
-    \int_case:nn {\nju_titlelength}
+    \int_case:nn { \nju_titlelength }
       {
         { 1 } { 
           \nju_coverbox_ug:n {题\hfill 目}
@@ -130,14 +136,13 @@
     & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_a_title}\\
 
     % 第二导师
-    \bool_if:NTF \nju_second_mentor
+    \bool_if:NT \nju_second_mentor
     {
-    \nju_coverbox_ug:n {第\hfill 二\hfill 导\hfill 师}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b}
-    & \nju_coverbox_ug:n {职\hfill 称}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b_title}\\
+      \nju_coverbox_ug:n {第\hfill 二\hfill 导\hfill 师}
+      & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b}
+      & \nju_coverbox_ug:n {职\hfill 称}
+      & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b_title}\\
     }
-    {}
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
@@ -180,10 +185,12 @@
 
 % 国家图书馆封面，修改自旧模板
 \tl_new:N \nju_printcoverinfo_nlc
-\tl_set:Nn \nju_printcoverinfo_nlc {
+\tl_set:Nn \nju_printcoverinfo_nlc 
+{
   \thispagestyle{empty}
   \pdfbookmark[0]{国家图书馆封面}{nlc}
   {
+    % 顶端
     \hspace{0mm}
     \vskip -20mm \hskip -15mm
     \songti\zihao{-4}
@@ -196,6 +203,8 @@
     \makebox[40pt][l]{UDC}
     \nju_cover_underline_nlc:nn {150pt}{\nju_udc}
   }
+
+  % 中部
   \vskip\stretch{2}
   \begin{center}
     \def\ULthickness{1pt}
@@ -209,10 +218,12 @@
     \vskip \stretch{1}
     {\kaishu\zihao{4}（题名和副题名）}
     \vskip \stretch{1}
-    {\kaishu\zihao{1}\CJKunderline{\makebox{\nju_student_name}}}
+    {\kaishu\zihao{1}\nju_underline:n {\makebox{\nju_student_name}}}
     \vskip \stretch{1}
     {\kaishu\zihao{4}（作者姓名）}
   \end{center}
+
+  % 底部
   \vskip\stretch{1}
   {\kaishu\zihao{4}
     \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
@@ -222,12 +233,12 @@
     \noindent 申请学位级别%
     \nju_cover_underline_nlc:nn {8em}{\nju_degree_title}%
     \noindent 专业名称%
-    \CJKunderline{\hfill\nju_major\hfill}\par% 需要调整下划线长度
+    \nju_underline:n {\hfill\nju_major\hfill}\par% 需要调整下划线长度
     \noindent 论文提交日期%
     \nju_cover_underline_nlc:nn {8em}{\nju_submit_date}%
     论文答辩日期%
-    \CJKunderline{\hfill\nju_defend_date\hfill}\par% 需要调整下划线长度
-    \noindent 学位授予单位和日期\CJKunderline{\hfill}\par
+    \nju_underline:n {\hfill\nju_defend_date\hfill}\par% 需要调整下划线长度
+    \noindent 学位授予单位和日期\nju_underline:n {\hfill}\par
     \noindent\hfill 答辩委员会主席：%
     \nju_cover_underline_nlc:nn {9em}{\nju_reviewer_chairman}\par
     \noindent\hfill 评阅人：%
@@ -237,8 +248,9 @@
     \noindent\hfill\nju_cover_underline_nlc:nn {9em}{\nju_reviewer_d}\par
     
     \begin{center}
-      \kaishu\zihao{3}\ 年\ 月\ 日
+      \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
     \end{center}
+    \vskip -10mm
     }
   \cleardoublepage
 }

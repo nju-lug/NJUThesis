@@ -1,20 +1,18 @@
 \ProvidesExplPackage{profile/packages}{2021-09-11}{0.6.0}{NJU Thesis packages used} 
 
 \RequirePackage{expl3}
-\RequirePackage{ifxetex}
 \RequirePackage{fontspec}
-\RequirePackage{CJKfntef} % 加中文下划线，避免xeCJKfntef使lualatex失效
 \RequirePackage[    
     top=2.5cm,
     bottom=2.5cm,
     left=3.2cm,
     right=3.2cm
 ]{geometry}
-\RequirePackage{ifthen}
+% \RequirePackage{ifthen}
 \RequirePackage{xparse}
 % \RequirePackage{etoolbox}
-\RequirePackage{titlesec} % 修改章节标题功能由CTeX提供
-\RequirePackage{titletoc}
+% \RequirePackage{titlesec} % 修改章节标题功能由CTeX提供
+\RequirePackage{titletoc} % 修改目录内标题格式
 % \RequirePackage{appendix} % 定义附录样式
 \RequirePackage{fancyhdr} % 调整页眉页脚
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
@@ -25,6 +23,7 @@
 \RequirePackage{setspace}
 \RequirePackage{lastpage}
 \RequirePackage{emptypage} % 清除空白页的页码
+
 \RequirePackage{listings} % 代码环境
 \RequirePackage{enumitem} % 用于修改列表环境
 \RequirePackage{caption}
@@ -37,15 +36,27 @@
 \RequirePackage{hologo} % 用于生成可以被插入书签的LaTeX logo
 % \RequirePackage{needspace} % Required to prevent page break right after a sectioning command
 % \RequirePackage{xspace} % Better print trailing whitespace
-\sys_if_engine_xetex:T{
-    \RequirePackage{microtype}}
-% \sys_if_engine_luatex:T{ 
-%     \RequirePackage{emoji} 
-%     \setemojifont{Segoe UI Emoji} % For windows. 
-%                                   % Shipped with the best `grinning-face-with-sweat' support.
-%                                   % Use `Apple Color Emoji' for macos 
-%                                   % or `Noto Color Emoji' if you prefer.
-% }
+\sys_if_engine_xetex:T
+{
+    \RequirePackage{microtype}
+
+    % 加中文下划线，不能用于lualatex
+    \RequirePackage{xeCJKfntef} 
+    \cs_new:Npn \nju_underline:n #1 {\CJKunderline{#1}}
+}
+\sys_if_engine_luatex:T{
+    % 加中文下划线
+    \RequirePackage{lua-ul}
+    \cs_new:Npn \nju_underline:n #1 {\underLine{#1}}
+
+    % emoji支持
+    % \RequirePackage{emoji}
+    % \setemojifont{Segoe~UI~Emoji} % windows
+    % \setemojifont{Apple~Color~Emoji} % macos
+    % \setemojifont{Noto~Color~Emoji}
+    % For windows. 
+    % Shipped with the best `grinning-face-with-sweat' support.
+}
 
 \RequirePackage{blindtext} % 生成用于测试的大段无意义英文文字
 \RequirePackage{zhlipsum} % 生成用于测试的大段无意义中文文字
