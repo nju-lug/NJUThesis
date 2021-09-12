@@ -59,27 +59,24 @@
     \uline{\makebox[250pt]{\rm\kaishu#1}}
   }
 
+  % 国家图书馆封面下划线
+  \cs_new:Npn \nju_cover_underline_nl:nn #1 #2 
+  {
+    \uline{\makebox[#1]{#2}}
+  }
+
   % 封面表格边框
   \cs_new:Npn \nju_coverbox_g:n #1 
   {
     \makebox[6em][s]{#1\hspace{1em}}
   }
   
-  % 研究生分类
+  % 研究生学位分类
   \str_case_e:nn { \nju_degree }
   {
     { mg } { \tl_const:Nn \nju_degree_title {硕士} }
     { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }
-    { phd } 
-    { 
-      \tl_const:Nn \nju_degree_title {博士} 
-
-      % 国家图书馆封面下划线
-      \cs_new:Npn \nju_cover_underline_nl:nn #1 #2 
-      {
-        \uline{\makebox[#1]{#2}}
-      }
-    }
+    { phd } { \tl_const:Nn \nju_degree_title {博士} }
   }
 }
 
