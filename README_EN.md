@@ -5,7 +5,7 @@
 
 ## Overview
 
-This is A LaTex Template for Nanjing University Thesis. This template supports bachelor, master, doctor thesis. The Template needs `xelatex` or `lualatex`.
+This is A LaTex Template for Nanjing University Thesis. This template supports bachelor, master, and doctoral thesis. The Template needs `xelatex` or `lualatex`.
 
 ## License
 

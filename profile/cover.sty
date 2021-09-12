@@ -33,6 +33,9 @@
 {
   % 本科
   \tl_const:Nn \nju_degree_name {本\hfill 科\hfill }
+
+  % 本科强制不打印国家图书馆封面
+  \bool_set_false:N \nju_nl_cover
   
   % 封面下划线
   \cs_new:Npn \nju_cover_underline_ug:nn #1 #2 
@@ -71,7 +74,7 @@
     { 
       \tl_const:Nn \nju_degree_title {博士} 
 
-      % 封面下划线
+      % 国家图书馆封面下划线
       \cs_new:Npn \nju_cover_underline_nl:nn #1 #2 
       {
         \uline{\makebox[#1]{#2}}
