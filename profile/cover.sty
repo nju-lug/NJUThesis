@@ -37,7 +37,7 @@
   % 封面下划线
   \cs_new:Npn \nju_cover_underline_ug:nn #1 #2 
   {
-    \nju_underline:n {\makebox[#1]{\rm\songti#2}}
+    \uline{\makebox[#1]{\rm\songti#2}}
   }
  
   % 封面表格边框
@@ -53,7 +53,7 @@
   % 封面下划线
   \cs_new:Npn \nju_cover_underline_g:n #1 
   {
-    \nju_underline:n {\makebox[215pt]{\rm\kaishu#1}}
+    \uline{\makebox[215pt]{\rm\kaishu#1}}
   }
 
   % 封面表格边框
@@ -74,7 +74,7 @@
       % 封面下划线
       \cs_new:Npn \nju_cover_underline_nlc:nn #1 #2 
       {
-        \nju_underline:n {\makebox[#1]{#2}}
+        \uline{\makebox[#1]{#2}}
       }
     }
   }
@@ -93,7 +93,8 @@
 
 % 封面信息栏 本科
 \tl_new:N \nju_printcoverinfo_ug
-\tl_set:Nn \nju_printcoverinfo_ug {
+\tl_set:Nn \nju_printcoverinfo_ug 
+{
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {院\hfill 系}
     & \nju_cover_underline_ug:nn {250pt}{\nju_department}\\
@@ -153,7 +154,8 @@
 
 % 封面信息栏 研究生
 \tl_new:N \nju_printcoverinfo_g
-\tl_set:Nn \nju_printcoverinfo_g {
+\tl_set:Nn \nju_printcoverinfo_g 
+{
   \begin{tabular}{p{6em}c}
     % 标题换行
     \int_case:nn {\nju_titlelength}
@@ -218,27 +220,28 @@
     \vskip \stretch{1}
     {\kaishu\zihao{4}（题名和副题名）}
     \vskip \stretch{1}
-    {\kaishu\zihao{1}\nju_underline:n {\makebox{\nju_student_name}}}
+    {\kaishu\zihao{1}\uline{\makebox{\nju_student_name}}}
     \vskip \stretch{1}
     {\kaishu\zihao{4}（作者姓名）}
   \end{center}
 
   % 底部
   \vskip\stretch{1}
-  {\kaishu\zihao{4}
+  {
+    \kaishu\zihao{4}
     \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
     \nju_cover_underline_nlc:nn {94pt}{\nju_mentor_a}\par
     \noindent\nju_cover_underline_nlc:nn {\textwidth}{%
     \nju_mentor_info}\par
     \noindent 申请学位级别%
-    \nju_cover_underline_nlc:nn {8em}{\nju_degree_title}%
+    \nju_cover_underline_nlc:nn {9em}{\nju_degree_title}%
     \noindent 专业名称%
-    \nju_underline:n {\hfill\nju_major\hfill}\par% 需要调整下划线长度
+    \uline{\hfill\nju_major\hfill}\par% 需要调整下划线长度
     \noindent 论文提交日期%
-    \nju_cover_underline_nlc:nn {8em}{\nju_submit_date}%
+    \nju_cover_underline_nlc:nn {9em}{\nju_submit_date}%
     论文答辩日期%
-    \nju_underline:n {\hfill\nju_defend_date\hfill}\par% 需要调整下划线长度
-    \noindent 学位授予单位和日期\nju_underline:n {\hfill}\par
+    \uline{\hfill\nju_defend_date\hfill}\par% 需要调整下划线长度
+    \noindent 学位授予单位和日期\uline{\hfill}\par
     \noindent\hfill 答辩委员会主席：%
     \nju_cover_underline_nlc:nn {9em}{\nju_reviewer_chairman}\par
     \noindent\hfill 评阅人：%
