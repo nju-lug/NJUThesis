@@ -8,6 +8,13 @@
 \texttt{cover.sty}中定义了生成封面的相关命令
 
 
+\subsection{第二导师}
+
+secondmentor 用于指定是否在封面打印第二导师
+
+\subsection{国家图书馆封面}
+
+对于研究生，本模板提供了nlcover 用于生成国家图书馆封面
 
 \subsection{文档类型}
 
@@ -16,51 +23,82 @@
 
 为了使较长的论文题目也能美观地呈现在封面页上，njuthesis类提供了\texttt{TitleLength}这一选项，用于控制封面标题的行数。该命令已于\cref{sec:classoptions}进行介绍，可以在\texttt{njuthesis.tex}文件开头的类定义中找到，可选值为1、2、3，缺省值为单行标题。
 
-\subsection{第二导师}
-
-secondmentor 用于指定是否在封面打印第二导师
 
 \subsection{输入个人信息}
 
-\texttt{njusetup }定义了用于文档封面的诸多属性参数，
-写作时修改相应字符串即可。
+\texttt{njusetup}定义了用于文档封面的诸多属性参数，
+写作时修改相应字符串即可。注意不要有空行，否则可能报错
+
+\begin{lstlisting}
+\njusetup {
+    info = {
+        <type> = <myinfo>; 
+    }
+}
+\end{lstlisting}
 
 \subsubsection{论文标题}
 \begin{description}
-    \item[\texttt{\textbackslash TitleA}] 单行标题，或多行标题的第一行。关于是否应该折行，单行能容纳的最长标题为\emph{15个中文字符}，请自行选择合适的截断处。
-    \item[\texttt{\textbackslash TitleB}] 多行标题的第二行
-    \item[\texttt{\textbackslash TitleC}] 多行标题的第三行
-    \item[\texttt{\textbackslash Title\textunderscore EN}] 英文标题，注意空格要用波浪线（\textasciitilde）替代
+    \item[\texttt{TitleA}] 单行标题，或多行标题的第一行。关于是否应该折行，单行能容纳的最长标题为\emph{15个中文字符}，请自行选择合适的截断处。
+    \item[\texttt{TitleB}] 多行标题的第二行
+    \item[\texttt{TitleC}] 多行标题的第三行
+    \item[\texttt{TitleEN}] 英文标题，注意空格要用波浪线（\textasciitilde）替代
 \end{description}
 
 \subsubsection{个人年级、学号、姓名}
 \begin{description}
-    \item[\texttt{\textbackslash Grade}] 年级
-    \item[\texttt{\textbackslash StudentID}] 9位数字学号
-    \item[\texttt{\textbackslash StudentName}] 姓名
-    \item[\texttt{\textbackslash StudentName\textunderscore EN}] 姓名拼音 
+    \item[\texttt{Grade}] 年级
+    \item[\texttt{StudentID}] 本科生为9位数字学号，研究生为两位英文字母标识加8位数字学号，两位字母自动大写
+    \item[\texttt{StudentName}] 姓名
+    \item[\texttt{StudentNameEN}] 姓名拼音 
 \end{description}
 
 \subsubsection{就读院系专业}
+
+本科生无需填写研究方向。
 \begin{description}
-    \item[\texttt{\textbackslash Department}] 学院名称
-    \item[\texttt{\textbackslash Department\textunderscore EN}] 学院英文名称
-    \item[\texttt{\textbackslash Major}] 专业名称
-    \item[\texttt{\textbackslash Major\textunderscore EN}] 专业英文名称
+    \item[\texttt{Department}] 学院名称
+    \item[\texttt{DepartmentEN}] 学院英文名称
+    \item[\texttt{Major}] 专业名称
+    \item[\texttt{MajorEN}] 专业英文名称
+    \item[\texttt{Field}] 研究方向
+    \item[\texttt{FieldEN}] 研究方向英文名称
 \end{description}
 
 \subsubsection{导师信息}
 注意标注A的为第一导师
 \begin{description}
-    \item[\texttt{\textbackslash Mentor<A/B>}] 导师姓名
-    \item[\texttt{\textbackslash Mentor<A/B>\textunderscore EN}] 导师姓名的英文拼音  
-    \item[\texttt{\textbackslash Mentor<A/B>Title}] 导师职称
-    \item[\texttt{\textbackslash Mentor<A/B>Title\textunderscore EN}] 导师职称英文
+    \item[\texttt{Mentor<A/B>}] 导师姓名
+    \item[\texttt{Mentor<A/B>EN}] 导师姓名的英文拼音  
+    \item[\texttt{Mentor<A/B>Title}] 导师职称
+    \item[\texttt{Mentor<A/B>TitleEN}] 导师职称英文
 \end{description}
 
 \subsubsection{提交日期}
 \begin{description}
-    \item[\texttt{\textbackslash SubmitDate}] 论文提交日期
+    \item[\texttt{SubmitDate}] 论文提交日期
+\end{description}
+
+\subsubsection{答辩信息}
+
+除答辩日期以外，本部分内容仅用于国家图书馆封面。本科生忽略即可。
+答辩委员会姓名与职称之间需使用波浪线连接。
+
+\begin{description}
+    \item[\texttt{DefendDate}] 答辩日期
+    \item[\texttt{ReviewerChairman}] 答辩委员会主席的姓名及职称 
+    \item[\texttt{Reviewer<A/B/C/D>}] 四位评阅人的姓名及职称  
+\end{description}
+
+\subsubsection{国家图书馆封面相关信息}
+
+本部分内容仅用于国家图书馆封面。本科生忽略即可。
+
+\begin{description}
+    \item[\texttt{Classification}] 分类号
+    \item[\texttt{SecurityLevel}] 限制  
+    \item[\texttt{UDC}] UDC
+    \item[\texttt{MentorInfo}] 指导教师职务、职称、学位、单位名称及地址
 \end{description}
 
 \section{摘要页}
@@ -78,6 +116,8 @@ secondmentor 用于指定是否在封面打印第二导师
 % \pdfbookmark[0]{中文摘要}{中文摘要}
 \end{lstlisting}
 
+在使用\hologo{LuaLaTeX}编译时，研究生中文摘要页的标题会出现空格无下划线的问题，目前正在积极寻求解决方法。
+
 \section{目录页}
 
 目录页格式定制于\texttt{profile/page.sty}
@@ -86,7 +126,9 @@ secondmentor 用于指定是否在封面打印第二导师
 
 正文格式定制于\texttt{profile/page.sty}，页边距在\texttt{profile/packages.sty}
 
-对中文加下划线请使用xeCJKfntef包的CJKunderline命令代替uline，以解决中文的换行问题
+本科生无页眉，页面编号居中位于页脚；研究生无页脚，页眉包括章节名和页面编号。
+
+% 对中文加下划线请使用xeCJKfntef包的CJKunderline命令代替uline，以解决中文的换行问题
 
 \section{参考文献页}
 

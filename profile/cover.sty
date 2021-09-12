@@ -53,7 +53,7 @@
   % 封面下划线
   \cs_new:Npn \nju_cover_underline_g:n #1 
   {
-    \uline{\makebox[215pt]{\rm\kaishu#1}}
+    \uline{\makebox[250pt]{\rm\kaishu#1}}
   }
 
   % 封面表格边框
@@ -337,7 +337,7 @@
     \hspace{0pt} \vfill
     {\bgroup
     \bf\kaishu\zihao{3}
-    \makebox[6em][s]{学\hfill 号}：\nju_student_id 
+    \makebox[6em][s]{学\hfill 号}：\MakeUppercase{\nju_student_id} 
     \par
     \makebox[6em][s]{论文答辩日期}：\nju_defend_date
     \par
