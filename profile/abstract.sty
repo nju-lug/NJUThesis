@@ -1,7 +1,7 @@
 \ProvidesExplPackage{profile/abstract}{2021-09-11}{0.7.0}{NJU Thesis abstract design}
 
 % 判断学位
-\str_if_eq:eeTF {\nju_degree} { ug } 
+\str_if_eq:NNTF {\nju_degree} { ug } 
 {   
   % 本科摘要环境
   \NewDocumentEnvironment{abstract} {}
@@ -87,7 +87,7 @@
     \noindent
     毕业论文题目：\hspace{0.5em}\nju_underline:n {\nju_title\hfill}\\    
     \uline{\makebox[9em]{\nju_major}}专业\uline{\makebox[4em]{\nju_grade}}级
-    \str_if_eq:eeTF {\nju_degree} { d } {博}{硕}
+    \str_if_eq:NNTF {\nju_degree} { d } {博}{硕}
     士生姓名：\uline{\hfill\nju_student_name\hfill} \\
     指导教师（姓名、职称）：\uline{\hfill\nju_mentor_full\hfill}\par
     \egroup

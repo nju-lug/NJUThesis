@@ -29,7 +29,7 @@
 }
 
 % 判断学位进行命令定义
-\str_if_eq:eeTF {\nju_degree} { ug } 
+\str_if_eq:NNTF {\nju_degree} { ug } 
 {
   % 本科
   \tl_const:Nn \nju_degree_name {本\hfill 科\hfill }
@@ -81,7 +81,7 @@
 }
 
 % 判断类型
-\str_if_eq:eeTF {\nju_type} {thesis} 
+\str_if_eq:NNTF {\nju_type} {thesis} 
 {
   \tl_const:Nn \nju_type_name 
     { \nju_degree_name 毕\hfill 业\hfill 论\hfill 文 }
@@ -350,7 +350,7 @@
 
 % 重定义maketitle生成封面
 \RenewDocumentCommand \maketitle {} {%
-  \str_if_eq:eeTF {\nju_degree} { ug } 
+  \str_if_eq:NNTF { \nju_degree } { ug } 
   { \nju_printcover_ug } % 本科封面
   { \nju_printcover_g } % 研究生封面 
 }
