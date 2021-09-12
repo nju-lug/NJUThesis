@@ -72,11 +72,3 @@
 ## 许可
 
 本模板的发布遵守 LaTeX Project Public License（版本 1.3c 或更高）。
-
-## TODO
-
-- [x] 主要代码转为LaTeX3，使用`expl3`宏包
-- [x] 基于CTeX宏集重构所有页面以符合学校论文要求
-- [x] Github Action自动化构建预览PDF
-- [x] 完善文档
-- [x] CTAN发布宏包
