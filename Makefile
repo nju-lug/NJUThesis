@@ -46,3 +46,4 @@ clean:
 		*.lof \
 		*.lot \
 		*.loe \
+		*.run.xml \
