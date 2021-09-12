@@ -36,7 +36,7 @@ jobs:
         
       - name: Zip Release Source
         run: |
-          zip -r njuthesis.zip . -x ".github/*" ".gitignore"
+          zip -r njuthesis.zip . -x ".git/*" ".github/*" ".gitignore"
           
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -45,12 +45,13 @@ jobs:
           
       - name: Zip CTAN Source
         run: |
-          mkdir -p doc/example
-          cp -r chapters njuthesis.tex doc/example
-          cp njuthesis.pdf doc
-          mv README.md README_ZH_CN.md 
-          mv README_EN.md README.md
-          zip -r njuthesis_ctan.zip . -x ".github/*" ".gitignore" "chapters/*" "njuthesis.*"
+          mkdir -p njuthesis/doc/example
+          cp -r chapters njuthesis.tex njuthesis.bib Makefile njuthesis/doc/example
+          cp njuthesis.pdf njuthesis/doc
+          cp README.md njuthesis/README_ZH_CN.md 
+          cp README_EN.md njuthesis/README.md
+          cp -r figure profile LICENSE njuthesis.cls njuthesis
+          zip -r njuthesis_ctan.zip njuthesis
           
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
