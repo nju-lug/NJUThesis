@@ -35,8 +35,10 @@
 % 目录标题 三号宋体加粗
 % 各部分标题 四号黑体
 \ctexset{
-    % contentsname = \songti\bf\zihao{3}目\hspace{2em} 录,
     contentsname = 目录,
+    chapter/format = \zihao{4}\heiti\centering,
+    chapter/beforeskip = 10pt,
+    chapter/afterskip = 60pt,
     section/format = \zihao{4}\heiti\raggedright,
     subsection/format = \zihao{4}\heiti\raggedright,
     subsubsection/format = \zihao{4}\heiti\raggedright
@@ -78,8 +80,8 @@
   \ctexset{
     chapter = {
       format = \songti\bf\zihao{3}\centering,
-      beforeskip = -10mm,
-      % afterskip = 50pt,
+      beforeskip = 10pt,
+      afterskip = 40pt,
     }
   }
 
