@@ -34,7 +34,7 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
         
-      - name: Zip Source
+      - name: Zip Release Source
         run: |
           zip -r njuthesis.zip . -x ".github/*" ".gitignore"
           
@@ -42,7 +42,14 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: PDF_xelatex
-
+          
+      - name: Zip CTAN Source
+        run: |
+          mkdir -p doc/example
+          cp chapter njuthesis.tex doc/example
+          cp njuthesis.pdf doc
+          zip -r njuthesis_ctan.zip . -x ".github/*" ".gitignore" "chapter/*" "njuthesis.*"
+          
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
