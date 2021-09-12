@@ -23,8 +23,11 @@
 }
 {
   % the header line
-  % \tl_set:Nn \headrulewidth {1pt}
+  \tl_set:Nn \headrulewidth {0pt}
+  % the footer line
+  \tl_set:Nn \footrulewidth {0pt}
 
+  % \AtBeginDocument{\pagestyle{njuplain}} % 无页眉页脚
   \AtBeginDocument{\pagestyle{headings}} % 研究生有页眉页脚
 }
 
@@ -32,8 +35,8 @@
 % 目录标题 三号宋体加粗
 % 各部分标题 四号黑体
 \ctexset{
-    contentsname = \songti\bfseries\zihao{3}目\hspace{2em} 录,
-    chapter/format = \zihao{4}\heiti\centering,
+    % contentsname = \songti\bf\zihao{3}目\hspace{2em} 录,
+    contentsname = 目录,
     section/format = \zihao{4}\heiti\raggedright,
     subsection/format = \zihao{4}\heiti\raggedright,
     subsubsection/format = \zihao{4}\heiti\raggedright
@@ -63,8 +66,35 @@
                 {\hspace*{-4em}}
                 {~\titlerule*[0.6pc]{$.$}~\contentspage}
 
-% 将目录页插入pdf书签
-\let\savedtableofcontents\tableofcontents
-\renewcommand{\tableofcontents}{%
-  \pdfbookmark{目录}{目录}
-  \savedtableofcontents}
+\tl_set:Nn \tableofcontents 
+{%
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse
+  \fi
+
+  % 修改目录标题字体
+  \ctexset{
+    chapter = {
+      format = \songti\bf\zihao{3}\centering,
+      beforeskip = -10mm,
+      % afterskip = 50pt,
+    }
+  }
+
+  \chapter*{目\hspace{2em}录}%
+  \pdfbookmark[0]{目录}{目录} % 将目录页插入pdf书签
+  % \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+  \@starttoc{toc}%
+  \if@restonecol\twocolumn\fi
+  
+  % 恢复正常章节标题字体
+  \ctexset{
+    chapter = {
+      format = \zihao{4}\heiti\centering,
+      beforeskip = 10pt,
+      afterskip = 60pt,
+    }
+  }
+}

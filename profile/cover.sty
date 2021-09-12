@@ -350,7 +350,8 @@
 }
 
 % 重定义maketitle生成封面
-\RenewDocumentCommand \maketitle {} {%
+\tl_set:Nn \maketitle 
+{%
   \str_if_eq:NNTF { \nju_degree } { ug } 
   {
     \nju_printcover_nl % 国家图书馆封面
