@@ -30,6 +30,7 @@ clean:
 		*.aux \
 		*.bak \
 		*.bbl \
+		*.bcf \
 		*.blg \
 		*.dvi \
 		*.glo \
@@ -38,12 +39,12 @@ clean:
 		*.ilg \
 		*.ind \
 		*.ist \
+		*.loe \
+		*.lof \
 		*.log \
+		*.lot \
 		*.out \
 		*.ps \
+		*.run.xml \
 		*.thm \
 		*.toc \
-		*.lof \
-		*.lot \
-		*.loe \
-		*.run.xml \

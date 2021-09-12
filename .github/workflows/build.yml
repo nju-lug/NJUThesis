@@ -57,3 +57,4 @@ jobs:
           files: |
             njuthesis.pdf
             njuthesis.zip
+            njuthesis_ctan.zip
