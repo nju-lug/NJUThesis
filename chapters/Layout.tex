@@ -118,6 +118,10 @@ secondmentor 用于指定是否在封面打印第二导师
 
 在使用\hologo{LuaLaTeX}编译时，研究生中文摘要页的标题会出现空格无下划线的问题，目前正在积极寻求解决方法。
 
+\section{前言页}
+
+使用preface环境定义
+
 \section{目录页}
 
 目录页格式定制于\texttt{profile/page.sty}
@@ -136,11 +140,7 @@ secondmentor 用于指定是否在封面打印第二导师
 
 \section{致谢页}
 
-致谢页采用无编号章节形式，需要手动插入目录
-\begin{lstlisting}[language=TeX]
-\chapter*{致谢}
-\addcontentsline{toc}{chapter}{致谢}
-\end{lstlisting}
+同前言，使用acknowledgement环境
 
 \section{附录页}
 

@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesExplClass{njuthesis}{2021-09-12}{0.8.1}{NJU Thesis LaTeX Template}
+\ProvidesExplClass{njuthesis}{2021-09-12}{0.8.2}{NJU Thesis LaTeX Template}
 
 % 通过类传递参数
 \RequirePackage{l3keys2e}

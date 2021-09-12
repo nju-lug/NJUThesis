@@ -84,7 +84,8 @@
   }
 
   \chapter*{目\hspace{2em}录}%
-  \pdfbookmark[0]{目录}{目录} % 将目录页插入pdf书签
+  % \pdfbookmark[0]{目录}{目录} % 将目录页插入pdf书签
+  \addcontentsline{toc}{chapter}{目录}
   % \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
   \@starttoc{toc}%
   \if@restonecol\twocolumn\fi
@@ -98,3 +99,15 @@
     }
   }
 }
+
+% 定制前言、致谢环境
+\newenvironment{preface}
+{%
+  \chapter*{前言}
+  \addcontentsline{toc}{chapter}{前言}
+}{}
+\newenvironment{acknowledgement}
+{%
+  \chapter*{致谢}
+  \addcontentsline{toc}{chapter}{致谢}
+}{}
