@@ -10,7 +10,13 @@
 % the footer line
 \tl_set:Nn \footrulewidth {0pt}
 
-\AtBeginDocument{\pagestyle{njuplain}} % 无页眉页脚
+\str_if_eq:NNTF {\nju_degree} { ug } 
+{
+  \AtBeginDocument{\pagestyle{njuplain}} % 本科无页眉页脚
+}
+{
+  \AtBeginDocument{\pagestyle{plain}} % 研究生有页眉页脚
+}
 
 % ctex格式设置
 % 目录标题 三号宋体加粗

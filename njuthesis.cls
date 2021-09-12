@@ -24,6 +24,9 @@
   secondmentor      .bool_set:N   =   \nju_second_mentor,
   secondmentor      .initial:n    =   false,
 
+  nlcover           .bool_set:N   =   \nju_nl_cover,
+  nlcover           .initial:n    =   false,
+
   degree            .tl_set:N     =   \nju_degree,
   degree            .initial:n    =   UG,
 
