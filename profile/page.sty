@@ -1,21 +1,31 @@
 \ProvidesExplPackage{profile/page}{2021-09-11}{0.6.0}{NJU Thesis page layout} 
 
-% 论文页码 页脚居中、五号阿拉伯数字（新罗马体）连续编码
+% 本科生页眉页脚 
 \fancypagestyle{njuplain}{%
+   \fancyhead{}               
+   \fancyfoot[C]{\zihao{5}\thepage} % 页脚居中 五号新罗马体数字
+}
+
+% TODO: 研究生页眉页脚 
+\fancypagestyle{njuheadings}{%
    \fancyhead{}               
    \fancyfoot[C]{\zihao{5}\thepage}        
 }
-% the header line
-\tl_set:Nn \headrulewidth {0pt}
-% the footer line
-\tl_set:Nn \footrulewidth {0pt}
 
 \str_if_eq:NNTF {\nju_degree} { ug } 
 {
+  % the header line
+  \tl_set:Nn \headrulewidth {0pt}
+  % the footer line
+  \tl_set:Nn \footrulewidth {0pt}
+  
   \AtBeginDocument{\pagestyle{njuplain}} % 本科无页眉页脚
 }
 {
-  \AtBeginDocument{\pagestyle{plain}} % 研究生有页眉页脚
+  % the header line
+  % \tl_set:Nn \headrulewidth {1pt}
+
+  \AtBeginDocument{\pagestyle{headings}} % 研究生有页眉页脚
 }
 
 % ctex格式设置

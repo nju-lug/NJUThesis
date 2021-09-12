@@ -1,9 +1,11 @@
 \chapter{绪论}
 
 \section{简介}
-南京大学学位论文\hologo{LaTeX}模板\cite{njuthesis}基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文。
+南京大学学位论文\hologo{LaTeX}模板\cite{njuthesis}基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文，旨在为同学提供毕业论文书写的方便。
 
-此模板通过LPPL协议开源，旨在为同学提供毕业论文书写的方便，如有模板问题或者版权问题，请于Github上提出issue。
+此模板通过LPPL协议开源，目前已\href{https://ctan.org/pkg/njuthesis}{发布在CTAN}。
+
+如有模板问题或者版权问题，请于Github项目主页上\href{https://github.com/nju-lug/NJUThesis/issues}{提出issue}。
 
 \section{开发环境}
 
@@ -49,7 +51,8 @@ njuthesis类提供了若干个可以自定义的选项，如下所示。
 \begin{description}
     \item[\texttt{titlelength}] 标题长度，用于控制封面标题的行数。可选值为1、2、3，缺省值为1。
     \item[\texttt{secondmentor}] 是否有第二导师，用于在封面和摘要添加第二导师，缺省值为false。
-    \item[\texttt{degree}] 学位类型，本科学位为g，即Undergraduate的缩写；学术型硕士学位为mg；硕士专业学位为mf；博士学位为d。
+    \item[\texttt{nlcover}] 是否需要国家图书馆封面，缺省值为false。
+    \item[\texttt{degree}] 学位类型，本科学位为ug，即undergraduate的缩写；学术型硕士学位为mg；硕士专业学位为mf；博士学位为phd。
     \item[\texttt{type}] 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括thesis（表示毕业论文）和design（表示毕业设计），缺省值为thesis。
     \item[\texttt{systemfont}] 是否用系统字体，用于自动检测运行系统并使用预装字体，缺省值为true。
     \item[\texttt{customlatinfont}] 用于选择自定义英文字符集。可选值包括windows, macos, gyre, null，缺省值为windows。

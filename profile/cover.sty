@@ -67,7 +67,7 @@
   {
     { mg } { \tl_const:Nn \nju_degree_title {硕士} }
     { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }
-    { d } 
+    { phd } 
     { 
       \tl_const:Nn \nju_degree_title {博士} 
 
@@ -217,11 +217,12 @@
     \begin{center}
       \def\ULthickness{1pt}
       {\kaishu\zihao{-0} 学\hspace{0.5em}位\hspace{0.5em}论\hspace{0.5em}文}
-      {\kaishu\zihao{1}
-      \vskip \stretch{1}
-      \nju_cover_underline_nl:nn {14em}{\nju_title_a}\\
-      \nju_cover_underline_nl:nn {14em}{\nju_title_b}\\
-      \nju_cover_underline_nl:nn {14em}{\nju_title_c}\\
+      {
+        \kaishu\zihao{1}
+        \vskip \stretch{1}
+        \nju_cover_underline_nl:nn {14em}{\nju_title_a}\\
+        \nju_cover_underline_nl:nn {14em}{\nju_title_b}\\
+        \nju_cover_underline_nl:nn {14em}{\nju_title_c}\\
       }
       \vskip \stretch{1}
       {\kaishu\zihao{4}（题名和副题名）}
