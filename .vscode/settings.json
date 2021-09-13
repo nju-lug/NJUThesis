@@ -30,6 +30,14 @@
             "args": [
                 "%DOCFILE%"
             ]
+        },
+        {
+            "name": "makedoc",
+            "command": "latexmk",
+            "args": [
+                "-pv",
+                "njuthesis.dtx"
+            ]
         }
     ],
     "latex-workshop.latex.recipes": [
@@ -58,6 +66,12 @@
                 "biber",
                 "xelatex",
                 "xelatex"
+            ]
+        },
+        {
+            "name": "makedoc",
+            "tools": [
+                "makedoc"
             ]
         }
     ]

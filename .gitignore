@@ -13,6 +13,7 @@
 .*.lb
 
 ## Intermediate documents:
+*.hd
 *.dvi
 *.xdv
 *-converted-to.*
