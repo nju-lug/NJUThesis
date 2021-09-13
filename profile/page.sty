@@ -36,6 +36,8 @@
 % 各部分标题 四号黑体
 \ctexset{
     contentsname = 目录,
+    listfigurename = 插图清单, 
+    listtablename = 表格清单,
     chapter/format = \zihao{4}\heiti\centering,
     chapter/beforeskip = 10pt,
     chapter/afterskip = 60pt,
@@ -54,7 +56,7 @@
                 {\hspace*{-4em}}% 无序号标题
                 {~\titlerule*[0.6pc]{$.$}~\contentspage}% 指引线与页码
 
-\titlecontents{section}
+                \titlecontents{section}
                 [5em]
                 {\zihao{-4}\vspace{0pt}}
                 {\contentslabel{2.5em}}
@@ -68,105 +70,39 @@
                 {\hspace*{-4em}}
                 {~\titlerule*[0.6pc]{$.$}~\contentspage}
 
-% TODO: 简化目录格式修改
+\cs_set:Npn \CTEX@addtocline #1#2
+{ 
+  \addcontentsline { toc } {#1} 
+  { \use:c { CTEX@#1@tocline } {#1} {#2} } 
+}
+
+% 目录页面格式修改
+\cs_new:Npn \nju_tocpagestyle:nnn #1 #2 #3
+{
+  \newpage
+  \hspace{0pt}
+  \vskip 10pt
+  \begin{center}
+    \mbox{\songti\bf\zihao{3}{#1}} % 目录页面标题
+    \phantomsection
+    \addcontentsline{toc}{chapter}{#2} % 插入目录
+  \end{center}
+  \vskip 40pt 
+  \@starttoc{#3}%
+  \cleardoublepage
+}
+
 \tl_set:Nn \tableofcontents 
-{%
-  \if@twocolumn
-    \@restonecoltrue\onecolumn
-  \else
-    \@restonecolfalse
-  \fi
-
-  % 修改目录标题字体
-  \ctexset{
-    chapter = {
-      format = \songti\bf\zihao{3}\centering,
-      beforeskip = 10pt,
-      afterskip = 40pt,
-    }
-  }
-
-  \chapter*{目\hspace{2em}录}%
-  % \pdfbookmark[0]{目录}{目录} % 将目录页插入pdf书签
-  \addcontentsline{toc}{chapter}{\contentsname}
-  % \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
-  \@starttoc{toc}%
-  \if@restonecol\twocolumn\fi
-  
-  % 恢复正常章节标题字体
-  \ctexset{
-    chapter = {
-      format = \zihao{4}\heiti\centering,
-      beforeskip = 10pt,
-      afterskip = 60pt,
-    }
-  }
+{
+  \nju_tocpagestyle:nnn {目\hspace{2em}录}{\contentsname}{toc}
 }
 \tl_set:Nn \listoffigures
-{%
-  \if@twocolumn
-    \@restonecoltrue\onecolumn
-  \else
-    \@restonecolfalse
-  \fi
-
-  % 修改目录标题字体
-  \ctexset{
-    chapter = {
-      format = \songti\bf\zihao{3}\centering,
-      beforeskip = 10pt,
-      afterskip = 40pt,
-    }
-  }
-
-  \chapter*{插图清单}%
-  % \pdfbookmark[0]{目录}{目录} % 将目录页插入pdf书签
-  \addcontentsline{toc}{chapter}{\listfigurename}
-  % \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
-  \@starttoc{lot}%
-  \if@restonecol\twocolumn\fi
-  
-  % 恢复正常章节标题字体
-  \ctexset{
-    chapter = {
-      format = \zihao{4}\heiti\centering,
-      beforeskip = 10pt,
-      afterskip = 60pt,
-    }
-  }
+{
+  \nju_tocpagestyle:nnn {\listfigurename}{\listfigurename}{lof}
 }
 \tl_set:Nn \listoftables 
-{%
-  \if@twocolumn
-    \@restonecoltrue\onecolumn
-  \else
-    \@restonecolfalse
-  \fi
-
-  % 修改目录标题字体
-  \ctexset{
-    chapter = {
-      format = \songti\bf\zihao{3}\centering,
-      beforeskip = 10pt,
-      afterskip = 40pt,
-    }
-  }
-
-  \chapter*{表格清单}%
-  % \pdfbookmark[0]{目录}{目录} % 将目录页插入pdf书签
-  \addcontentsline{toc}{chapter}{\listtablename}
-  % \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
-  \@starttoc{lot}%
-  \if@restonecol\twocolumn\fi
-  
-  % 恢复正常章节标题字体
-  \ctexset{
-    chapter = {
-      format = \zihao{4}\heiti\centering,
-      beforeskip = 10pt,
-      afterskip = 60pt,
-    }
-  }
+{
+  \nju_tocpagestyle:nnn {\listtablename}{\listtablename}{lot}
 }
 
 % 定制前言、致谢环境

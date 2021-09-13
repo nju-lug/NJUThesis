@@ -64,7 +64,17 @@
   \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
   \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
   \setCJKfamilyfont{zhfs}{STFangsong}
-  \setCJKfamilyfont{zhkai}{Kaiti~SC}[BoldFont=Kaiti~SC~Bold]
+  \setCJKfamilyfont{zhkai}{Kaiti~SC}
+    [
+      BoldFont=Kaiti~SC~Bold,      
+      % 参考CTeX手册第9节 LuaLATEX 下的中文支持方式
+      % AlternateFont =
+      %   {
+      %   {⟨character range1⟩} {⟨alternate font name1⟩} 
+      %   {⟨alternate font features2⟩} ,
+      %   ......
+      %   }
+    ]
   \setCJKfamilyfont{zhnewhei}{PingFang~SC}
 }
 
