@@ -12,22 +12,22 @@
 
 ## 快速开始
 
-从0.9.0版以后，本模板以`.dtx`格式发布，同时在release区提供cls文件。
+从0.9.0版以后，本模板以DocStrip(`.dtx`)格式发布，同时在release区提供cls文件。
 
-### 使用`.dtx`文件
+### 使用DocStrip文件
 
-`.dtx`合并了LaTeX源代码和文档，更有利于宏包的发布。要使用该文件，请在当前工作目录下打开终端：
+DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使用该文件，请在当前工作目录下打开终端：
 
 - 输入`xetex njuthesis.ins`以解出常规使用的`.cls`文件
 - 输入`latexmk -pv njuthesis.dtx`以生成并查看内置的文档
 
-请注意，目前由于文件重名原因，编译论文模板与生成说明文档得到的PDF文件会冲突，只能保留一个。
+请注意，由于文件重名原因，项目中的示例论文模板已被重命名为`njuthesis-sample.tex`。
 
 ### 本地编译
 
 1. 推荐[从南大镜像站下载](https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F)并安装TeXLive或者MiKTeX最新版
 2. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包
-3. 根据需要更改`njuthesis.tex`文件中的内容
+3. 根据需要更改`njuthesis-sample.tex`文件中的内容
 4. 在模板根目录下运行`latexmk -xelatex`编译文件，得到对应的PDF
 
 #### **关于本地编译**
@@ -40,7 +40,7 @@
 ### [南大TeX](https://tex.nju.edu.cn)编译
 
 1. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包
-2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后`njuthesis.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
+2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
 
     ```shell
     NJUThesis-master/
@@ -51,7 +51,7 @@
     │
     │ njuthesis.bib
     │ njuthesis.cls
-    │ njuthesis.tex
+    │ njuthesis-sample.tex
     ```
     
 3. 在南大TeX项目内页面左上角的`Menu`中，将编译器改为`XeLaTeX`

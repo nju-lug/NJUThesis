@@ -12,11 +12,16 @@
 *.cb2
 .*.lb
 
+## LaTeX class and package
+*.cls
+*.sty
+
 ## Intermediate documents:
 *.hd
 *.dvi
 *.xdv
 *-converted-to.*
+
 # these rules might exclude image files for figures etc.
 # *.ps
 # *.eps
@@ -24,6 +29,7 @@
 
 ## Generated if empty string is given at "Please type another file name for output:"
 njuthesis.pdf
+njuthesis-sample.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
