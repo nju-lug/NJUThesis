@@ -1,0 +1,96 @@
+% \iffalse
+%
+%% File l3dosctrip.dtx
+%
+% Copyright (C) 2012,2014-2021 The LaTeX Project
+%
+% It may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this
+% license or (at your option) any later version.  The latest version
+% of this license is in the file
+%
+%    https://www.latex-project.org/lppl.txt
+%
+% This file is part of the "l3kernel bundle" (The Work in LPPL)
+% and all files in that bundle must be distributed together.
+%
+% -----------------------------------------------------------------------
+%
+% The development version of the bundle can be found at
+%
+%    https://github.com/latex3/latex3
+%
+% for those people who are interested.
+%
+%<*driver|program>
+%</driver|program>
+%<*driver>
+% The same approach as used in \textsf{DocStrip}: if \cs{documentclass}
+% is undefined then skip the driver, allowing the file to be used to extract
+% \texttt{l3docstrip.tex} from \texttt{l3docstrip.dtx} directly. This works
+% as the \cs{fi} is only seen if \LaTeX{} is not in use. The odd \cs{jobname}
+% business allows the extraction to work with \LaTeX{} provided an appropriate
+% \texttt{.ins} file is set up.
+%<*gobble>
+\ifx\jobname\relax\let\documentclass\undefined\fi
+\ifx\documentclass\undefined
+\else \csname fi\endcsname
+%</gobble>
+  \def\filename{docstrip.dtx}
+  \documentclass[full,kernel]{l3doc}
+  \ExplSyntaxOn
+  \cs_set_eq:NN \__codedoc_replace_at_at:N \use_none:n
+  \ExplSyntaxOff
+  \begin{document}
+    \DocInput{\jobname.dtx}
+  \end{document}
+%<*gobble>
+\fi
+%</gobble>
+%</driver>
+% \fi
+%
+% \title{^^A
+%   The \pkg{l3docstrip} package\\ Code extraction and manipulation^^A
+% }
+%
+% \author{^^A
+%  The \LaTeX{} Project\thanks
+%    {^^A
+%      E-mail:
+%        \href{mailto:latex-team@latex-project.org}
+%          {latex-team@latex-project.org}^^A
+%    }^^A
+% }
+%
+% \date{Released 2021-08-27}
+%
+% \maketitle
+%
+% \begin{documentation}
+%
+% This is a stub file to allow extraction of \texttt{l3docstrip}: all
+% functionality has been moved to the main DocStrip program.
+%
+% \end{documentation}
+%
+% \begin{implementation}
+%
+% \section{\pkg{l3docstrip} implementation}
+%
+%    \begin{macrocode}
+%<*program>
+%    \end{macrocode}
+%
+% Simply input DocStrip.
+%    \begin{macrocode}
+\input docstrip %
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</program>
+%    \end{macrocode}
+%
+% \end{implementation}
+%
+% \PrintIndex
