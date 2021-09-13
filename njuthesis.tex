@@ -19,7 +19,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[
     titlelength=2,% 选择标题行数，范围是1~3
-    secondmentor=true,% 无第二导师请注释此项
+    % secondmentor=true,% 无第二导师请注释此项
     nlcover=true,% 需要国家图书馆封面，对本科无效
     degree=ug,% ug: 本科, mg: 学硕, mf: 专硕, phd: 博士
     type=thesis,% thesis: 毕业论文，design: 毕业设计
@@ -30,16 +30,17 @@
 
 % 设置个人信息
 \njusetup {
+    % 本科生无需填写的项目已被特别标注
     % 注意不要有空行，否则可能报错
     info = {
         % 题目
         TitleA = 一种使用南京大学\hologo{LaTeX}模版,
         TitleB = 编写毕业论文的经验性方法,
-        % TitleC = 没有第三行就不用填这个哦,
-        TitleEN = An~Empirical~Way~of~Composing~Thesis~with~NJU~\hologo{LaTeX}~Template, %注意英文名中空格必须替换为波浪线
+        % TitleC = , % 没有第三行就不用填这个哦
+        TitleEN = An~Empirical~Way~of~Composing~Thesis~with~NJU~\hologo{LaTeX}~Template, % 注意空格必须替换为波浪线
         % 姓名学号
         Grade = 2018,
-        StudentID = 189114514,%dz18114514,
+        StudentID = 189114514, % dz18114514,
         StudentName = 周煜华,
         StudentNameEN = Zhou~Yuhua,
         % 院系专业
@@ -47,28 +48,28 @@
         DepartmentEN = School~of~\hologo{LaTeX},
         Major = 拉太赫语言学,
         MajorEN = \hologo{LaTeX}~Linguistics,
-        Field = 拉太赫语言在现当代的使用,
-        FieldEN = Contemporary~Usage~of~the~\hologo{LaTeX}~Language,
+        Field = 拉太赫语言在现当代的使用, % 研究生项
+        FieldEN = Contemporary~Usage~of~the~\hologo{LaTeX}~Language, % 研究生项
         % 导师
         MentorA = 李成殿,
         MentorAEN= Li~Chengdian,
         MentorATitle = 教授,
         MentorATitleEN = Professor,
-        % 第二导师
+        % 第二导师，如无则忽略
         MentorB = 孙赫弥,
         MentorBEN = Sun~Hemi,
         MentorBTitle = 副教授,
         MentorBTitleEN = Associate professor,
         % 提交日期
         SubmitDate = 2021年8月10日,
-        % 答辩
+        % 答辩，均为研究生项
         DefendDate = 2021年9月19日,
         ReviewerChairman = 张晓山~教授,
         ReviewerA = 王瑞希~教授,
         ReviewerB = 郭德纲~副教授,
-        ReviewerC = 胡芈库~教授,
+        ReviewerC = 华芈库~教授,
         ReviewerD = 戴菲菲~教授,
-        % 国家图书馆封面相关
+        % 国家图书馆封面相关，均为研究生项
         Classification = 0175.2,
         SecurityLevel = 限制,
         UDC = 004.72,
@@ -91,6 +92,8 @@
 \input{chapters/Preface.tex}
 
 \tableofcontents
+\listoffigures % 生成图片清单
+\listoftables % 生成表格清单
 
 %-------------------------------------------------
 %	正文部分

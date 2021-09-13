@@ -72,7 +72,7 @@
   }
   
   % 研究生学位分类
-  \str_case_e:nn { \nju_degree }
+  \str_case:Nn { \nju_degree }
   {
     { mg } { \tl_const:Nn \nju_degree_title {硕士} }
     { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }

@@ -68,6 +68,7 @@
                 {\hspace*{-4em}}
                 {~\titlerule*[0.6pc]{$.$}~\contentspage}
 
+% TODO: 简化目录格式修改
 \tl_set:Nn \tableofcontents 
 {%
   \if@twocolumn
@@ -87,9 +88,75 @@
 
   \chapter*{目\hspace{2em}录}%
   % \pdfbookmark[0]{目录}{目录} % 将目录页插入pdf书签
-  \addcontentsline{toc}{chapter}{目录}
+  \addcontentsline{toc}{chapter}{\contentsname}
   % \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
   \@starttoc{toc}%
+  \if@restonecol\twocolumn\fi
+  
+  % 恢复正常章节标题字体
+  \ctexset{
+    chapter = {
+      format = \zihao{4}\heiti\centering,
+      beforeskip = 10pt,
+      afterskip = 60pt,
+    }
+  }
+}
+\tl_set:Nn \listoffigures
+{%
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse
+  \fi
+
+  % 修改目录标题字体
+  \ctexset{
+    chapter = {
+      format = \songti\bf\zihao{3}\centering,
+      beforeskip = 10pt,
+      afterskip = 40pt,
+    }
+  }
+
+  \chapter*{插图清单}%
+  % \pdfbookmark[0]{目录}{目录} % 将目录页插入pdf书签
+  \addcontentsline{toc}{chapter}{\listfigurename}
+  % \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+  \@starttoc{lot}%
+  \if@restonecol\twocolumn\fi
+  
+  % 恢复正常章节标题字体
+  \ctexset{
+    chapter = {
+      format = \zihao{4}\heiti\centering,
+      beforeskip = 10pt,
+      afterskip = 60pt,
+    }
+  }
+}
+\tl_set:Nn \listoftables 
+{%
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse
+  \fi
+
+  % 修改目录标题字体
+  \ctexset{
+    chapter = {
+      format = \songti\bf\zihao{3}\centering,
+      beforeskip = 10pt,
+      afterskip = 40pt,
+    }
+  }
+
+  \chapter*{表格清单}%
+  % \pdfbookmark[0]{目录}{目录} % 将目录页插入pdf书签
+  \addcontentsline{toc}{chapter}{\listtablename}
+  % \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+  \@starttoc{lot}%
   \if@restonecol\twocolumn\fi
   
   % 恢复正常章节标题字体
