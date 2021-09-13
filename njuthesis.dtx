@@ -17,7 +17,7 @@
 %
 % \iffalse
 %<*driver>
-\ProvidesFile{njuthesis.dtx}
+\ProvidesFile{njuthesis.dtx}[2021/09/12 0.8.3 Nanjing University Thesis Template]
 %</driver>
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\ProvidesExplClass{njuthesis}{2021-09-12}{0.8.3}{NJU Thesis LaTeX Template}
@@ -25,6 +25,7 @@
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{dtx-style}
+\usepackage{hologo}
 
 \EnableCrossrefs
 \CodelineIndex
@@ -88,9 +89,101 @@
 % \date{v\fileversion\ (\filedate)}
 % \maketitle\thispagestyle{empty}
 %
-% \section{Introduction}
+%
+% \begin{abstract}\noindent
+%  南京大学学位论文\hologo{LaTeX}模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文，旨在为同学提供毕业论文书写的方便。
+% \end{abstract}
+%
+% \section{模板介绍}
+%
+% \section{贡献者}
+% \label{sec:contributors}
 %
 % Put text here.
+%
+% \section{配置环境}
+% \label{sec:setup}
+%
+% 下表是目前经过测试的环境。如果有其他可用不可用的环境，欢迎补充。
+%
+% \begin{table}[ht]
+%     \caption{经过测试的环境}
+%     % \label{tab:1}
+%     \begin{tabular}{ccc}
+%         \toprule
+%         OS & TeX & 测试情况 \\
+%         \midrule
+%         Windows 10 & \hologo{TeX}\,Live 2021 & 通过 \\
+%         Windows 10 & \hologo{MiKTeX} & 通过 \\
+%         Windows 10 & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
+%         macOS 10.15 & \hologo{TeX}\,Live 2021 & 通过 \\
+%         Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & 通过 \\
+%         南大\hologo{TeX} & \hologo{TeX}\,Live 2021 & 通过 \\
+%         Overleaf & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+%
+% \section{本地编译}
+%
+% \subsubsection{安装\hologo{TeX}发行版}
+%
+% 首先需要下载\hologo{TeX}软件发行版，校园网环境中使用\href{https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南大镜像站}可以获得最好的体验。\textbf{推荐使用最新的\hologo{TeX}\,Live 2021或者\hologo{MiKTeX} 21以避免潜在的兼容性问题。}
+%
+% \begin{itemize}
+%     \item 为了避免不必要的麻烦，请尽可能下载 full 版本，如 texlive-full。简而言之，下载大的那个。
+%     \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题。
+% \end{itemize}
+%
+% \subsubsection{选择编辑器}
+%
+% 配置完编译器后，还需要一个\textbf{文本编辑器}作为前端来完成\texttt{.tex}文件内容的写作。
+%
+% 至今仍有相当一部分人认为Windows自带的\textit{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\textbf{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio 等，顺手就行。
+%
+% 若使用 LaTeX Workshop 插件，本项目在\lstinline|.vscode/|中提供一份简易配置，可以省略初始配置步骤直接使用。
+%
+% \subsubsection{编译顺序}
+% 应采用以下命令顺序进行编译，以生成正确的目录、编号和参考文献条目。
+% \begin{enumerate}
+%     \item \lstinline|xelatex| / \lstinline|lualatex|
+%     \item \lstinline|biber|
+%     \item \lstinline|xelatex| / \lstinline|lualatex|
+%     \item \lstinline|xelatex| / \lstinline|lualatex|
+% \end{enumerate}
+%
+% 编译产物\footnote{作为化学学生，俺认为用“产物”代替“编译生成的文件”是一个通俗易懂的说法}为\lstinline|njuthesis.pdf|，位于主目录下。此外还会生成一系列中间文件，可以选择使用\lstinline|latexmk -c|进行清理。
+%
+% \subsection{在线编译}
+%
+% 相信你在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{其实这三点都是对广大的Windows用户说的，同一个模板在Linux编译可以节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
+%
+% \subsubsection{南大\hologo{TeX}平台简介}
+%
+% \href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，面向南京大学全体师生开放，首次使用需凭学校邮箱自助注册账号。
+%
+% \subsubsection{操作步骤}
+%
+% \begin{enumerate}
+%     \item 下载\href{https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip}{模板全部文件}
+%     \item 访问\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}，点击界面右上方Register，使用\emph{南京大学邮箱}注册账号并登录
+%     \item 点击New Project -> Upload Project上传刚刚得到的zip文件，上传后njuthesis.tex、njuthesis.cls等文件应在根目录，目录结构如{{sec:directory}}所示
+%     \item 在项目页面左上角的Menu中，将编译器改为\hologo{XeLaTeX}或者\hologo{LuaLaTeX}
+%     \item 编写论文
+%     \item 点击Compile按钮进行编译和预览
+%     \item 点击编译按钮右侧第三个按钮下载产物
+% \end{enumerate}
+%
+% \subsubsection{关于Overleaf平台}
+%
+% 由于\href{https://www.overleaf.com/}{Overleaf平台}的\hologo{TeX}\,Live版本停留在2020，\texttt{cleveref}包在引用章节时会生成错误的标签，引发格式错误；而南大\hologo{TeX}通过及时更新规避了这一问题。因此\emph{请务必不要使用Overleaf官网进行编译}。
+%
+% \subsection{字体}
+%
+% 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
+%
+% 各个系统的默认字体请参考{tab:defaultfontset}。可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；另一方面，在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}。
+%
 %
 % \section{Usage}
 %
@@ -122,28 +215,60 @@
 {
   titlelength       .int_set:N    =   \nju_titlelength,
   titlelength       .initial:n    =   1,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   secondmentor      .bool_set:N   =   \nju_second_mentor,
   secondmentor      .initial:n    =   false,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   nlcover           .bool_set:N   =   \nju_nl_cover,
   nlcover           .initial:n    =   false,
-
+%    \end{macrocode}
+%
+% \subsection{学位}
+% \DescribeOption{degree}
+% 选择学位，可选：
+% \option{ug}（默认），\option{mg}，\option{mf}，\option{phd}。
+%    \begin{macrocode}
   degree            .tl_set:N     =   \nju_degree,
-  degree            .initial:n    =   UG,
-
+  degree            .initial:n    =   ug,
+%    \end{macrocode}
+%
+% \subsection{类型}
+% \DescribeOption{type}
+% 选择学位，可选：
+% \option{thesis}（默认），\option{design}。
+%    \begin{macrocode}
   type              .tl_set:N     =   \nju_type,
   type              .initial:n    =   thesis,
-
+%    \end{macrocode}
+%
+% \DescribeOption{systemfont}
+% 是否使用系统预装的字体，可选：
+% \option{true}（默认），\option{false}。
+%    \begin{macrocode}
   systemfont        .bool_set:N   =   \nju_systemfont,
   systemfont        .initial:n    =   true,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   customlatinfont   .tl_set:N     =   \nju_customlatinfont,
   customlatinfont   .initial:n    =   windows,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   customchinesefont .tl_set:N     =   \nju_customchinesefont,
   customchinesefont .initial:n    =   windows,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   info              .meta:nn      =   { nju / info } { #1 }
 }
 %    \end{macrocode}
@@ -153,18 +278,28 @@
 %    \begin{macrocode}
 \keys_define:nn { nju / info }
 {
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   % 题目
   TitleA            .tl_set:N     =   \nju_title_a,
   TitleB            .tl_set:N     =   \nju_title_b,
   TitleC            .tl_set:N     =   \nju_title_c,
   TitleEN           .tl_set:N     =   \nju_title_en,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   % 年级学号姓名
   Grade             .tl_set:N     =   \nju_grade,
   StudentID         .tl_set:N     =   \nju_student_id,
   StudentName       .tl_set:N     =   \nju_student_name,
   StudentNameEN     .tl_set:N     =   \nju_student_name_en,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   % 院系专业方向
   Department        .tl_set:N     =   \nju_department,
   DepartmentEN      .tl_set:N     =   \nju_department_en,
@@ -172,22 +307,34 @@
   MajorEN           .tl_set:N     =   \nju_major_en,
   Field             .tl_set:N     =   \nju_field,
   FieldEN           .tl_set:N     =   \nju_field_en,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   % 导师
   MentorA           .tl_set:N     =   \nju_mentor_a,
   MentorAEN         .tl_set:N     =   \nju_mentor_a_en,
   MentorATitle      .tl_set:N     =   \nju_mentor_a_title,
   MentorATitleEN    .tl_set:N     =   \nju_mentor_a_title_en,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   % 第二导师
   MentorB           .tl_set:N     =   \nju_mentor_b,
   MentorBEN         .tl_set:N     =   \nju_mentor_b_en,
   MentorBTitle      .tl_set:N     =   \nju_mentor_b_title,
   MentorBTitleEN    .tl_set:N     =   \nju_mentor_b_title_en,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   % 提交日期
   SubmitDate        .tl_set:N     =   \nju_submit_date,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   % 答辩
   DefendDate        .tl_set:N     =   \nju_defend_date,
   ReviewerChairman  .tl_set:N     =   \nju_reviewer_chairman,
@@ -195,7 +342,10 @@
   ReviewerB         .tl_set:N     =   \nju_reviewer_b,
   ReviewerC         .tl_set:N     =   \nju_reviewer_c,
   ReviewerD         .tl_set:N     =   \nju_reviewer_d,
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
   % 国家图书馆封面相关
   Classification    .tl_set:N     =   \nju_classification,
   SecurityLevel     .tl_set:N     =   \nju_securitylevel,
@@ -243,7 +393,10 @@
 \RequirePackage{setspace}
 \RequirePackage{lastpage}
 \RequirePackage{emptypage} % 清除空白页的页码
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \RequirePackage{listings} % 代码环境
 \RequirePackage{enumitem} % 用于修改列表环境
 \RequirePackage{caption}
@@ -256,6 +409,10 @@
 \RequirePackage{hologo} % 用于生成可以被插入书签的LaTeX logo
 % \RequirePackage{needspace} % Required to prevent page break right after a sectioning command
 % \RequirePackage{xspace} % Better print trailing whitespace
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \sys_if_engine_xetex:T
 {
     \RequirePackage{microtype}
@@ -277,11 +434,17 @@
     % For windows. 
     % Shipped with the best `grinning-face-with-sweat' support.
 }
-
+%    \end{macrocode}
+%
+% 几个用来进行开发测试的包
+%    \begin{macrocode}
 \RequirePackage{blindtext} % 生成用于测试的大段无意义英文文字
 \RequirePackage{zhlipsum} % 生成用于测试的大段无意义中文文字
 % \RequirePackage{showframe} % 加载以后展示内容边界
-
+%    \end{macrocode}
+%
+% 数学
+%    \begin{macrocode}
 \RequirePackage{amsmath} % Must be loaded before unicode-math
 \RequirePackage{amsthm} % Mathematical environments
 \RequirePackage{mathtools} % Mathematical tools to use with amsmath
@@ -291,12 +454,18 @@
         mathtools-colon,
         mathtools-overbracket}
         ]{unicode-math} % Math fonts in xetex or luatex
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
 \graphicspath{{figure/}} % 图片路径
 \RequirePackage{wrapfig} % Wrap text around figures
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 必须以该顺序加载以下三个包
 % \RequirePackage{varioref}
 \RequirePackage[hidelinks,bookmarksnumbered=true]{hyperref}
@@ -311,13 +480,19 @@
   \setsansfont{Arial}
   \setmonofont{Courier~New}[Scale=MatchLowercase]
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \NewDocumentCommand\set_latin_fontset_macos{}{
   \setmainfont{Times~New~Roman}
   \setsansfont{Arial}
   \setmonofont{Menlo}[Scale=MatchLowercase]
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \NewDocumentCommand\set_latin_fontset_gyre{}{
   \setmainfont{texgyretermes}[
     Extension=.otf,
@@ -340,7 +515,10 @@
     Scale=MatchLowercase,
     Ligatures=CommonOff]
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 设置中文字体
 \NewDocumentCommand\set_chinese_fontset_windows{}{
   \setCJKmainfont{SimSun}[
@@ -354,7 +532,10 @@
   \setCJKfamilyfont{zhkai}{KaiTi}[AutoFakeBold=2.17]
   \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[BoldFont=Microsoft~YaHei~Bold]
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \NewDocumentCommand\set_chinese_fontset_macos{}{
   \msg_redirect_name:nnn {fontspec} {no-script} {info} % 移除 does not contain script "CJK" 警告
   \setCJKmainfont{Songti~SC~Light}[
@@ -379,7 +560,10 @@
     ]
   \setCJKfamilyfont{zhnewhei}{PingFang~SC}
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \NewDocumentCommand\set_chinese_fontset_fandol{}{
   \msg_redirect_name:nnn {fontspec} {no-script} {info} % 移除 does not contain script "CJK" 警告
   \setCJKmainfont{FandolSong-Regular}[
@@ -401,7 +585,10 @@
     Extension=.otf,
     AutoFakeBold=2.17]
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 方正字符集
 \NewDocumentCommand\set_chinese_fontset_founder{}{
   % FZSSK 方正书宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/151 免费商用
@@ -433,7 +620,10 @@
     Extension=.ttf,
     BoldFont=FZYouHK_511M]
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \NewDocumentCommand\set_chinese_fontset_noto{}{
   % 思源宋体 https://www.google.com/get/noto/#serif-hans
   \setCJKmainfont[
@@ -471,7 +661,10 @@
   \setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
   \setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 字体判断
 \bool_if:NTF \nju_systemfont
 % 根据操作系统自动选择相应字体
@@ -517,31 +710,46 @@
   }
 }
 % 选择其他字体，请确保相应字体已安装
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 设置数学字体 (XITS, 或者 STIX, 与 Times New Roman 最为相近)
 % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
   Extension = .otf]
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
 \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
 \NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
 \NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
 % \NewDocumentCommand\lishu{}{\CJKfamily{zhli}}
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 本科生页眉页脚 
 \fancypagestyle{njuplain}{%
    \fancyhead{}               
    \fancyfoot[C]{\zihao{5}\thepage} % 页脚居中 五号新罗马体数字
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % TODO: 研究生页眉页脚 
 \fancypagestyle{njuheadings}{%
    \fancyhead{}               
    \fancyfoot[C]{\zihao{5}\thepage}        
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \str_if_eq:NNTF {\nju_degree} { ug } 
 {
   % the header line
@@ -560,7 +768,10 @@
   % \AtBeginDocument{\pagestyle{njuplain}} % 无页眉页脚
   \AtBeginDocument{\pagestyle{headings}} % 研究生有页眉页脚
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % ctex格式设置
 % 目录标题 三号宋体加粗
 % 各部分标题 四号黑体
@@ -599,13 +810,19 @@
                 {\contentslabel{3em}}
                 {\hspace*{-4em}}
                 {~\titlerule*[0.6pc]{$.$}~\contentspage}
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \cs_set:Npn \CTEX@addtocline #1#2
 { 
   \addcontentsline { toc } {#1} 
   { \use:c { CTEX@#1@tocline } {#1} {#2} } 
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 目录页面格式修改
 \cs_new:Npn \nju_tocpagestyle:nnn #1 #2 #3
 {
@@ -621,7 +838,10 @@
   \@starttoc{#3}%
   \cleardoublepage
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \tl_set:Nn \tableofcontents 
 {
   \nju_tocpagestyle:nnn {目\hspace{2em}录}{\contentsname}{toc}
@@ -634,21 +854,30 @@
 {
   \nju_tocpagestyle:nnn {\listtablename}{\listtablename}{lot}
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 定制前言、致谢环境
 \newenvironment{preface}
 {%
   \chapter*{前言}
   \addcontentsline{toc}{chapter}{前言}
 }{}
+%    \end{macrocode}
+%
+% \DescribeEnv{acknowledgements}
+% 单独制作的致谢页。
+%    \begin{macrocode}
 \newenvironment{acknowledgement}
 {%
   \chapter*{致谢}
   \addcontentsline{toc}{chapter}{致谢}
 }{}
-
-\ProvidesExplPackage{profile/reference}{2021-09-11}{0.6.0}{NJU Thesis bibliography and reference} 
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % biblatex设置
 \RequirePackage[
     style=gb7714-2015,
@@ -673,7 +902,10 @@
     % gbpub=false,         % Uncomment if you do NOT want '[S.l. : s.n.]' in reference entries, GitHub Issue (#47)
     % gbnamefmt=lowercase, % Uncomment if you do NOT want uppercase author names in reference entries, GitHub Issue (#23)
 ]{biblatex}
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % Remove some unwanted entries from the bibliography
 \AtEveryBibitem{
 	\clearfield{abstract}
@@ -686,7 +918,10 @@
 	\ifentrytype{online}{}{\ifentrytype{misc}{}{\clearfield{url}}}
 	% \ifentrytype{book}{\clearfield{doi}}{}
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 修改标签名称
 \crefdefaultlabelformat{#2#1#3\,} % 默认在名称后面添加空格
 
@@ -715,9 +950,10 @@
 % \crefname{condition}{条件}{条件}
 % \crefname{conclusion}{结论}{结论}
 % \crefname{assumption}{假设}{假设}
-
-\ProvidesExplPackage{profile/components}{2021-09-11}{0.6.0}{NJU Thesis components configuration} 
-
+%    \end{macrocode}
+%
+% soifjsojfosjfos
+%    \begin{macrocode}
 % 图表位置调整
 \floatsetup[lstlisting]{ % Captions for lstlistings
 	capposition=above,%
@@ -734,7 +970,10 @@
 	margins=centering,%
 	floatwidth=\textwidth%
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 代码样式
 \lstset{
 	basicstyle=\ttfamily\linespread{1}\small\selectfont,
@@ -752,12 +991,18 @@
 	breaklines=true,
 	xleftmargin=2em,xrightmargin=2em,% set the width of the code environment
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \lstdefinestyle{LaTeX}{
   language=TeX,
   morekeywords={begin, caption, label, mathrm, frac, toprule, midrule, bottomrule, includegraphics}
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 图表标题样式
 \DeclareCaptionFont{songticap}{\zihao{5}\bf\songti}
 \captionsetup{
@@ -771,7 +1016,10 @@
 	aboveskip=6pt, % Increase the space between the figure and the caption
 	belowskip=6pt, % Increase the space between the caption and the table
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % list configuration
 \renewcommand{\labelitemi}{\tiny$\blacktriangleright$}
 \renewcommand{\labelitemii}{\textbullet}
@@ -779,7 +1027,10 @@
 \setlist[itemize]{noitemsep}
 \setlist[enumerate]{noitemsep}
 \setlist[description]{noitemsep}
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 数学环境
 \declaretheoremstyle[
     	%spaceabove=.5\thm@preskip,
@@ -794,10 +1045,16 @@
     ]{njuthm}
 
 \theoremstyle{njuthm}
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \let\oldproofname=\proofname
 \renewcommand*{\proofname}{\rm\bf\songti{\oldproofname}} % 修改证明环境标题
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 \declaretheorem[
 	name=算法,
 	style=njuthm,
@@ -889,12 +1146,16 @@
 	Refname={定理,定理},
 	numberwithin=section,
 ]{theorem}
-
-\ProvidesExplPackage{profile/cover}{2021-09-11}{0.7.0}{NJU Thesis cover design} 
-
+%    \end{macrocode}
+%
+% \section{封面设计}
+%    \begin{macrocode}
 % 拼合标题
 \tl_const:Nn \nju_title {\nju_title_a \nju_title_b \nju_title_c}
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 拼合导师
 \bool_if:NTF \nju_second_mentor
 { 
@@ -919,7 +1180,10 @@
     \nju_mentor_a_en\ \nju_mentor_a_title_en
   }
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 判断学位进行命令定义
 \str_if_eq:NNTF {\nju_degree} { ug } 
 {
@@ -971,7 +1235,10 @@
     { phd } { \tl_const:Nn \nju_degree_title {博士} }
   }
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 判断类型
 \str_if_eq:NNTF {\nju_type} {thesis} 
 {
@@ -982,7 +1249,10 @@
   \tl_const:Nn \nju_type_name 
     { \nju_degree_name 毕\hfill 业\hfill 设\hfill 计 }
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 封面信息栏 本科
 \tl_new:N \nju_printcoverinfo_ug
 \tl_set:Nn \nju_printcoverinfo_ug 
@@ -1043,7 +1313,10 @@
     & \nju_cover_underline_ug:nn {250pt}{\nju_submit_date}\\
   \end{tabular}
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 封面信息栏 研究生
 \tl_new:N \nju_printcoverinfo_g
 \tl_set:Nn \nju_printcoverinfo_g 
@@ -1076,12 +1349,18 @@
     & \nju_cover_underline_g:n {\nju_mentor_full}\\
   \end{tabular}
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 绘制封面命令
 \tl_new:N \nju_printcover_nl % 国家图书馆封面
 \tl_new:N \nju_printcover_ug % 本科封面
 \tl_new:N \nju_printcover_g % 研究生封面
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 按需绘制国家图书馆封面，修改自旧模板
 \bool_if:NT \nju_nl_cover
 {
@@ -1254,9 +1533,10 @@
     \nju_printcover_g % 研究生封面 
   } 
 }
-
-\ProvidesExplPackage{profile/abstract}{2021-09-11}{0.7.0}{NJU Thesis abstract design}
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 判断学位
 \str_if_eq:NNTF {\nju_degree} { ug } 
 {   

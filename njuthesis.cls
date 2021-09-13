@@ -39,28 +39,20 @@
 {
   titlelength       .int_set:N    =   \nju_titlelength,
   titlelength       .initial:n    =   1,
-
   secondmentor      .bool_set:N   =   \nju_second_mentor,
   secondmentor      .initial:n    =   false,
-
   nlcover           .bool_set:N   =   \nju_nl_cover,
   nlcover           .initial:n    =   false,
-
   degree            .tl_set:N     =   \nju_degree,
-  degree            .initial:n    =   UG,
-
+  degree            .initial:n    =   ug,
   type              .tl_set:N     =   \nju_type,
   type              .initial:n    =   thesis,
-
   systemfont        .bool_set:N   =   \nju_systemfont,
   systemfont        .initial:n    =   true,
-
   customlatinfont   .tl_set:N     =   \nju_customlatinfont,
   customlatinfont   .initial:n    =   windows,
-
   customchinesefont .tl_set:N     =   \nju_customchinesefont,
   customchinesefont .initial:n    =   windows,
-
   info              .meta:nn      =   { nju / info } { #1 }
 }
 \keys_define:nn { nju / info }
@@ -70,13 +62,11 @@
   TitleB            .tl_set:N     =   \nju_title_b,
   TitleC            .tl_set:N     =   \nju_title_c,
   TitleEN           .tl_set:N     =   \nju_title_en,
-
   % 年级学号姓名
   Grade             .tl_set:N     =   \nju_grade,
   StudentID         .tl_set:N     =   \nju_student_id,
   StudentName       .tl_set:N     =   \nju_student_name,
   StudentNameEN     .tl_set:N     =   \nju_student_name_en,
-
   % 院系专业方向
   Department        .tl_set:N     =   \nju_department,
   DepartmentEN      .tl_set:N     =   \nju_department_en,
@@ -84,22 +74,18 @@
   MajorEN           .tl_set:N     =   \nju_major_en,
   Field             .tl_set:N     =   \nju_field,
   FieldEN           .tl_set:N     =   \nju_field_en,
-
   % 导师
   MentorA           .tl_set:N     =   \nju_mentor_a,
   MentorAEN         .tl_set:N     =   \nju_mentor_a_en,
   MentorATitle      .tl_set:N     =   \nju_mentor_a_title,
   MentorATitleEN    .tl_set:N     =   \nju_mentor_a_title_en,
-
   % 第二导师
   MentorB           .tl_set:N     =   \nju_mentor_b,
   MentorBEN         .tl_set:N     =   \nju_mentor_b_en,
   MentorBTitle      .tl_set:N     =   \nju_mentor_b_title,
   MentorBTitleEN    .tl_set:N     =   \nju_mentor_b_title_en,
-
   % 提交日期
   SubmitDate        .tl_set:N     =   \nju_submit_date,
-
   % 答辩
   DefendDate        .tl_set:N     =   \nju_defend_date,
   ReviewerChairman  .tl_set:N     =   \nju_reviewer_chairman,
@@ -107,7 +93,6 @@
   ReviewerB         .tl_set:N     =   \nju_reviewer_b,
   ReviewerC         .tl_set:N     =   \nju_reviewer_c,
   ReviewerD         .tl_set:N     =   \nju_reviewer_d,
-
   % 国家图书馆封面相关
   Classification    .tl_set:N     =   \nju_classification,
   SecurityLevel     .tl_set:N     =   \nju_securitylevel,
@@ -133,7 +118,6 @@
 \RequirePackage{setspace}
 \RequirePackage{lastpage}
 \RequirePackage{emptypage} % 清除空白页的页码
-
 \RequirePackage{listings} % 代码环境
 \RequirePackage{enumitem} % 用于修改列表环境
 \RequirePackage{caption}
@@ -165,10 +149,8 @@
     % For windows.
     % Shipped with the best `grinning-face-with-sweat' support.
 }
-
 \RequirePackage{blindtext} % 生成用于测试的大段无意义英文文字
 \RequirePackage{zhlipsum} % 生成用于测试的大段无意义中文文字
-
 \RequirePackage{amsmath} % Must be loaded before unicode-math
 \RequirePackage{amsthm} % Mathematical environments
 \RequirePackage{mathtools} % Mathematical tools to use with amsmath
@@ -178,12 +160,10 @@
         mathtools-colon,
         mathtools-overbracket}
         ]{unicode-math} % Math fonts in xetex or luatex
-
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
 \graphicspath{{figure/}} % 图片路径
 \RequirePackage{wrapfig} % Wrap text around figures
-
 \RequirePackage[hidelinks,bookmarksnumbered=true]{hyperref}
 \RequirePackage[capitalise,nameinlink,noabbrev]{cleveref}
 \NewDocumentCommand\set_latin_fontset_windows{}{
@@ -191,13 +171,11 @@
   \setsansfont{Arial}
   \setmonofont{Courier~New}[Scale=MatchLowercase]
 }
-
 \NewDocumentCommand\set_latin_fontset_macos{}{
   \setmainfont{Times~New~Roman}
   \setsansfont{Arial}
   \setmonofont{Menlo}[Scale=MatchLowercase]
 }
-
 \NewDocumentCommand\set_latin_fontset_gyre{}{
   \setmainfont{texgyretermes}[
     Extension=.otf,
@@ -220,7 +198,6 @@
     Scale=MatchLowercase,
     Ligatures=CommonOff]
 }
-
 \NewDocumentCommand\set_chinese_fontset_windows{}{
   \setCJKmainfont{SimSun}[
     AutoFakeBold=2.17,
@@ -233,7 +210,6 @@
   \setCJKfamilyfont{zhkai}{KaiTi}[AutoFakeBold=2.17]
   \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[BoldFont=Microsoft~YaHei~Bold]
 }
-
 \NewDocumentCommand\set_chinese_fontset_macos{}{
   \msg_redirect_name:nnn {fontspec} {no-script} {info} % 移除 does not contain script "CJK" 警告
   \setCJKmainfont{Songti~SC~Light}[
@@ -258,7 +234,6 @@
     ]
   \setCJKfamilyfont{zhnewhei}{PingFang~SC}
 }
-
 \NewDocumentCommand\set_chinese_fontset_fandol{}{
   \msg_redirect_name:nnn {fontspec} {no-script} {info} % 移除 does not contain script "CJK" 警告
   \setCJKmainfont{FandolSong-Regular}[
@@ -280,7 +255,6 @@
     Extension=.otf,
     AutoFakeBold=2.17]
 }
-
 \NewDocumentCommand\set_chinese_fontset_founder{}{
   % FZSSK 方正书宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/151 免费商用
   % FZXBSK 方正小标宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/164 设计师非商免费
@@ -311,7 +285,6 @@
     Extension=.ttf,
     BoldFont=FZYouHK_511M]
 }
-
 \NewDocumentCommand\set_chinese_fontset_noto{}{
   % 思源宋体 https://www.google.com/get/noto/#serif-hans
   \setCJKmainfont[
@@ -349,7 +322,6 @@
   \setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
   \setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
 }
-
 \bool_if:NTF \nju_systemfont
 {
   % 检测是否是 Windows
@@ -392,26 +364,21 @@
     { null } {}
   }
 }
-
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
   Extension = .otf]
-
 \NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
 \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
 \NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
 \NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
-
 \fancypagestyle{njuplain}{%
    \fancyhead{}
    \fancyfoot[C]{\zihao{5}\thepage} % 页脚居中 五号新罗马体数字
 }
-
 \fancypagestyle{njuheadings}{%
    \fancyhead{}
    \fancyfoot[C]{\zihao{5}\thepage}
 }
-
 \str_if_eq:NNTF {\nju_degree} { ug }
 {
   % the header line
@@ -430,7 +397,6 @@
   % \AtBeginDocument{\pagestyle{njuplain}} % 无页眉页脚
   \AtBeginDocument{\pagestyle{headings}} % 研究生有页眉页脚
 }
-
 \ctexset{
     contentsname = 目录,
     listfigurename = 插图清单,
@@ -463,13 +429,11 @@
                 {\contentslabel{3em}}
                 {\hspace*{-4em}}
                 {~\titlerule*[0.6pc]{$.$}~\contentspage}
-
 \cs_set:Npn \CTEX@addtocline #1#2
 {
   \addcontentsline { toc } {#1}
   { \use:c { CTEX@#1@tocline } {#1} {#2} }
 }
-
 \cs_new:Npn \nju_tocpagestyle:nnn #1 #2 #3
 {
   \newpage
@@ -484,7 +448,6 @@
   \@starttoc{#3}%
   \cleardoublepage
 }
-
 \tl_set:Nn \tableofcontents
 {
   \nju_tocpagestyle:nnn {目\hspace{2em}录}{\contentsname}{toc}
@@ -497,7 +460,6 @@
 {
   \nju_tocpagestyle:nnn {\listtablename}{\listtablename}{lot}
 }
-
 \newenvironment{preface}
 {%
   \chapter*{前言}
@@ -508,9 +470,6 @@
   \chapter*{致谢}
   \addcontentsline{toc}{chapter}{致谢}
 }{}
-
-\ProvidesExplPackage{profile/reference}{2021-09-11}{0.6.0}{NJU Thesis bibliography and reference}
-
 \RequirePackage[
     style=gb7714-2015,
     %style=numeric-comp,
@@ -534,7 +493,6 @@
     % gbpub=false,         % Uncomment if you do NOT want '[S.l. : s.n.]' in reference entries, GitHub Issue (#47)
     % gbnamefmt=lowercase, % Uncomment if you do NOT want uppercase author names in reference entries, GitHub Issue (#23)
 ]{biblatex}
-
 \AtEveryBibitem{
 \clearfield{abstract}
 \clearfield{issn}
@@ -545,7 +503,6 @@
 \clearfield{eprint}
 \ifentrytype{online}{}{\ifentrytype{misc}{}{\clearfield{url}}}
 }
-
 \crefdefaultlabelformat{#2#1#3\,} % 默认在名称后面添加空格
 
 \crefname{figure}{图}{图}
@@ -557,9 +514,6 @@
 \crefformat{subsection}{第~#2#1#3~小节}
 \crefformat{subsubsection}{第~#2#1#3~小节}
 \crefname{appendix}{附录}{附录}
-
-
-\ProvidesExplPackage{profile/components}{2021-09-11}{0.6.0}{NJU Thesis components configuration}
 
 \floatsetup[lstlisting]{ % Captions for lstlistings
 capposition=above,%
@@ -576,7 +530,6 @@ capposition=above,%
 margins=centering,%
 floatwidth=\textwidth%
 }
-
 \lstset{
 basicstyle=\ttfamily\linespread{1}\small\selectfont,
     keywordstyle=\bfseries,% use bold style for keywords
@@ -590,12 +543,10 @@ basicstyle=\ttfamily\linespread{1}\small\selectfont,
 breaklines=true,
 xleftmargin=2em,xrightmargin=2em,% set the width of the code environment
 }
-
 \lstdefinestyle{LaTeX}{
   language=TeX,
   morekeywords={begin, caption, label, mathrm, frac, toprule, midrule, bottomrule, includegraphics}
 }
-
 \DeclareCaptionFont{songticap}{\zihao{5}\bf\songti}
 \captionsetup{
     font=small,%
@@ -606,14 +557,12 @@ hypcap=true, % Links point to the top of the figure
 aboveskip=6pt, % Increase the space between the figure and the caption
 belowskip=6pt, % Increase the space between the caption and the table
 }
-
 \renewcommand{\labelitemi}{\tiny$\blacktriangleright$}
 \renewcommand{\labelitemii}{\textbullet}
 
 \setlist[itemize]{noitemsep}
 \setlist[enumerate]{noitemsep}
 \setlist[description]{noitemsep}
-
 \declaretheoremstyle[
      %spaceabove=.5\thm@preskip,
      %spacebelow=.5\thm@postskip,
@@ -627,10 +576,8 @@ belowskip=6pt, % Increase the space between the caption and the table
     ]{njuthm}
 
 \theoremstyle{njuthm}
-
 \let\oldproofname=\proofname
 \renewcommand*{\proofname}{\rm\bf\songti{\oldproofname}} % 修改证明环境标题
-
 \declaretheorem[
 name=算法,
 style=njuthm,
@@ -711,11 +658,7 @@ refname={定理,定理},
 Refname={定理,定理},
 numberwithin=section,
 ]{theorem}
-
-\ProvidesExplPackage{profile/cover}{2021-09-11}{0.7.0}{NJU Thesis cover design}
-
 \tl_const:Nn \nju_title {\nju_title_a \nju_title_b \nju_title_c}
-
 \bool_if:NTF \nju_second_mentor
 {
   \tl_const:Nn \nju_mentor_full
@@ -739,7 +682,6 @@ numberwithin=section,
     \nju_mentor_a_en\ \nju_mentor_a_title_en
   }
 }
-
 \str_if_eq:NNTF {\nju_degree} { ug }
 {
   % 本科
@@ -790,7 +732,6 @@ numberwithin=section,
     { phd } { \tl_const:Nn \nju_degree_title {博士} }
   }
 }
-
 \str_if_eq:NNTF {\nju_type} {thesis}
 {
   \tl_const:Nn \nju_type_name
@@ -800,7 +741,6 @@ numberwithin=section,
   \tl_const:Nn \nju_type_name
     { \nju_degree_name 毕\hfill 业\hfill 设\hfill 计 }
 }
-
 \tl_new:N \nju_printcoverinfo_ug
 \tl_set:Nn \nju_printcoverinfo_ug
 {
@@ -860,7 +800,6 @@ numberwithin=section,
     & \nju_cover_underline_ug:nn {250pt}{\nju_submit_date}\\
   \end{tabular}
 }
-
 \tl_new:N \nju_printcoverinfo_g
 \tl_set:Nn \nju_printcoverinfo_g
 {
@@ -892,11 +831,9 @@ numberwithin=section,
     & \nju_cover_underline_g:n {\nju_mentor_full}\\
   \end{tabular}
 }
-
 \tl_new:N \nju_printcover_nl % 国家图书馆封面
 \tl_new:N \nju_printcover_ug % 本科封面
 \tl_new:N \nju_printcover_g % 研究生封面
-
 \bool_if:NT \nju_nl_cover
 {
   \tl_set:Nn \nju_printcover_nl
@@ -1065,9 +1002,6 @@ numberwithin=section,
     \nju_printcover_g % 研究生封面
   }
 }
-
-\ProvidesExplPackage{profile/abstract}{2021-09-11}{0.7.0}{NJU Thesis abstract design}
-
 \str_if_eq:NNTF {\nju_degree} { ug }
 {
   % 本科摘要环境
