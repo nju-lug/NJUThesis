@@ -54,7 +54,7 @@ jobs:
           cp njuthesis.pdf njuthesis/doc
           cp README.md njuthesis/README_ZH_CN.md 
           cp README_EN.md njuthesis/README.md
-          cp -r figure profile LICENSE njuthesis.cls njuthesis
+          cp -r figure LICENSE njuthesis.dtx njuthesis
           zip -r njuthesis_ctan.zip njuthesis
           
       - uses: "marvinpinto/action-automatic-releases@latest"
