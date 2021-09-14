@@ -232,12 +232,16 @@ through XeTeX.
 % \date{Released 2021-09-13}
 %
 % \maketitle
+%
+% \begin{abstract}
+% 南京大学学位论文\hologo{LaTeX}模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文，旨在为同学提供毕业论文书写的方便。
+% \end{abstract}
+%
 % \tableofcontents
 %
 % \EnableDocumentation
 %^^A \DisableDocumentation
 % 
-%<*class>
 % \begin{documentation}
 %
 %
@@ -360,6 +364,7 @@ through XeTeX.
 % \section{\pkg{njuthesis} implementation}
 %
 %    \begin{macrocode}
+%<*class>
 \LoadClass[
   a4paper,
   twoside,
@@ -529,7 +534,6 @@ through XeTeX.
 %
 % mandatory and optional arguments are, and so forth.
 %    \begin{macrocode}
-\RequirePackage{expl3}
 \RequirePackage{fontspec}
 \RequirePackage[    
     top=2.5cm,
@@ -1829,6 +1833,7 @@ through XeTeX.
     {KEYWORDS{:}}~~{#1}%
   }
 }
+%</class>
 %    \end{macrocode}
 %
 %
@@ -1837,4 +1842,3 @@ through XeTeX.
 % \end{implementation}
 %
 % \PrintIndex
-%</class>
