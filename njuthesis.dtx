@@ -1,8 +1,8 @@
 % \iffalse meta-comment
+% !TeX program  = XeLaTeX
+% !TeX encoding = UTF-8
 %
-%% File njuthesis.dtx
-%
-% Copyright (C) 2005-2021 by Nanjing University Linux User Group <my@yaoge123.com>
+% Copyright (C) 2021 by Nanjing University Linux User Group <my@yaoge123.com>
 % 
 % It may be distributed and/or modified under the conditions of the
 % LaTeX Project Public License (LPPL), either version 1.3c of this
@@ -19,56 +19,153 @@
 %
 % for those people who are interested.
 %
-%<*driver|program>
-\ProvidesFile{njuthesis.dtx}[2021/09/12 0.8.3 Nanjing University Thesis Template]
-%</driver|program>
-%<class>\NeedsTeXFormat{LaTeX2e}
-%<class>\ProvidesExplClass{njuthesis}{2021-09-12}{0.8.3}{NJU Thesis LaTeX Template}
-%<*driver>
-% The same approach as used in \textsf{DocStrip}: if \cs{documentclass}
-% is undefined then skip the driver, allowing the file to be used to extract
-% \texttt{l3docstrip.tex} from \texttt{l3docstrip.dtx} directly. This works
-% as the \cs{fi} is only seen if \LaTeX{} is not in use. The odd \cs{jobname}
-% business allows the extraction to work with \LaTeX{} provided an appropriate
-% \texttt{.ins} file is set up.
-%<*gobble>
-\ifx\jobname\relax\let\documentclass\undefined\fi
-\ifx\documentclass\undefined
-\else \csname fi\endcsname
-%</gobble>
-  \def\filename{njuthesis.dtx}
-  \documentclass{ctxdoc}
-  \ExplSyntaxOn
-  \cs_set_eq:NN \__codedoc_replace_at_at:N \use_none:n
-  \ExplSyntaxOff
-  \begin{document}
-    \DocInput{\jobname.dtx}
-  \end{document}
-%<*gobble>
+%<*internal>
+\iffalse
+%</internal>
+%
+%<*readme>
+# NJU Thesis
+
+## Overview
+
+This is A LaTex Template for Nanjing University Thesis. This template supports bachelor, master, and doctoral thesis. The Template needs `xelatex` or `lualatex`.
+
+## License
+
+-----
+    This work may be distributed and/or modified under the conditions of
+    the [LaTeX Project Public License](http://www.latex-project.org/lppl.txt),
+    either version 1.3c of this license or (at your option) any later
+    version.
+-----
+
+## Contributing
+
+If you find a problem with the template, please submit an issue or PR in Github
+
+## Wiki
+
+Please see [Chinese wiki](https://github.com/nju-lug/NJUThesis/wiki)。
+
+-----
+
+Copyright © NJU-LUG
+%</readme>
+%
+%<*internal>
 \fi
-%</gobble>
+\begingroup
+  \def\NameOfLaTeXe{LaTeX2e}
+\expandafter\endgroup\ifx\NameOfLaTeXe\fmtname\else
+\csname fi\endcsname
+%</internal>
+%
+%<*install>
+\input l3docstrip.tex
+\keepsilent
+\askforoverwritefalse
+
+\preamble
+
+Copyright (C) 2021 by Nanjing University Linux User Group <my@yaoge123.com>
+
+This file may be distributed and/or modified under the conditions of
+the LaTeX Project Public License, either version 1.3 of this license
+or (at your option) any later version.  The latest version of this
+license is in:
+
+   http://www.latex-project.org/lppl.txt
+
+and version 1.3 or later is part of all distributions of LaTeX version
+2005/12/01 or later.
+
+To produce the documentation run the original source files ending with `.dtx'
+through XeTeX.
+    
+\endpreamble
+
+\generate{
+  \usedir{tex/latex/njuthesis}
+    \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
+%</install>
+%<*internal>
+  \usedir{source/latex/njuthesis}
+    \file{\jobname.ins}        {\from{\jobname.dtx}{install}}
+%</internal>
+%<*install>
+  \usedir{doc/latex/njuthesis}
+  \nopreamble\nopostamble
+    \file{README_EN.md}           {\from{\jobname.dtx}{readme}}
+}
+
+\obeyspaces
+\Msg{*************************************************************}
+\Msg{*                                                           *}
+\Msg{* To finish the installation you have to move the following *}
+\Msg{* files into a directory searched by TeX:                   *}
+\Msg{*                                                           *}
+\Msg{* The recommended directory is TDS:tex/latex/njuthesis      *}
+\Msg{*                                                           *}
+\Msg{*     njuthesis.cls                                         *}
+\Msg{*     njuthesis.ins                                         *}
+\Msg{*     README_EN.md                                         *}
+\Msg{*                                                           *}
+\Msg{* To produce the documentation, run the file njuthesis.dtx  *}
+\Msg{* through XeLaTeX.                                          *}
+\Msg{*                                                           *}
+\Msg{* Happy TeXing!                                             *}
+\Msg{*                                                           *}
+\Msg{*************************************************************}
+
+\endbatchfile
+%</install>
+%
+%<*internal>
+\fi
+%</internal>
+%
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\RequirePackage{expl3}
+%<*!(driver|install)>
+%<!readme>\GetIdInfo $Id: njuthesis.dtx $
+%<class>  {Thesis template for Nanjing University}
+%<class>\ProvidesExplClass{\ExplFileName}
+%<!readme>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%</!(driver|install)>
+%<*driver>
+\documentclass{ctxdoc}
+  
+\title{^^A
+   The \pkg{njuthesis} package\\ 南京大学学位论文模板^^A
+ }
+
+\author{^^A
+Nanjing University Linux User Group\thanks
+  {^^A
+    E-mail:
+      \href{mailto:my@yaoge123.com}
+        {my@yaoge123.com}^^A
+  }^^A
+}
+
+\date{Released 2021-09-13}
+
+\begin{document}
+  \DisableImplementation
+%<!--CODEDOC-->  \EnableImplementation
+  \DocInput{njuthesis.dtx}
+\end{document}
 %</driver>
 % \fi
 %
-% \title{^^A
-%   The \pkg{njuthesis} package\\ 南京大学学位论文模板^^A
-% }
-%
-% \author{^^A
-%  Nanjing University Linux User Group\thanks
-%    {^^A
-%      E-mail:
-%        \href{mailto:my@yaoge123.com}
-%          {my@yaoge123.com}^^A
-%    }^^A
-% }
-%
-% \date{Released 2021-09-13}
 %
 % \maketitle
 %
-%
-% \tableofcontents
+% \EnableDocumentation
+%^^A \DisableDocumentation
+% 
+%<*class>
+% \begin{documentation}
 %
 %
 % \section{模板介绍}
@@ -165,7 +262,6 @@
 % \section{Usage}
 %
 % Put text here.
-% \begin{documentation}
 %
 % \subsection{学位}
 % \DescribeOption{degree}
@@ -1668,3 +1764,4 @@
 % \end{implementation}
 %
 % \PrintIndex
+%</class>

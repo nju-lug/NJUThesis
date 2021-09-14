@@ -16,6 +16,9 @@
 *.cls
 *.sty
 
+## DocStrip installation file
+*.ins
+
 ## Intermediate documents:
 *.hd
 *.dvi
