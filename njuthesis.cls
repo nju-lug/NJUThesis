@@ -21,11 +21,13 @@
 %% To produce the documentation run the original source files ending with `.dtx'
 %% through XeTeX.
 %% 
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage{expl3}
 \def\ExplFileName{njuthesis}
 \def\ExplFileDescription{Nanjing University thesis template class}
 \def\ExplFileDate{2021-09-14}
-\def\ExplFileVersion{v0.9.0}
-\ProvidesExplClass{\ExplFileName}{\ExplFileDate}\ExplFileVersion}{\ExplFileDescription}
+\def\ExplFileVersion{0.9.0}
+\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 \LoadClass[
   a4paper,
   twoside,
