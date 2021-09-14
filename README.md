@@ -1,4 +1,3 @@
-# NJU Thesis
 
 [![njuthesis](https://img.shields.io/badge/njuthesis-latex-blue)](https://git.nju.edu.cn/nju-lug/nju-latex-templates)
 [![overleaf](https://img.shields.io/badge/overleaf-supported-brightgreen)](https://tex.nju.edu.cn)
@@ -18,8 +17,8 @@
 
 DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使用该文件，请在当前工作目录下打开终端：
 
-- 输入`xetex njuthesis.ins`以解出常规使用的`.cls`文件
-- 输入`latexmk -pv njuthesis.dtx`以生成并查看内置的文档
+- 输入`xetex njuthesis.dtx`以解出宏包内容
+- 输入`latexmk njuthesis.dtx`以生成并查看内置的文档
 
 请注意，由于文件重名原因，项目中的示例论文模板已被重命名为`njuthesis-sample.tex`。
 
@@ -53,7 +52,7 @@ DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使�
     │ njuthesis.cls
     │ njuthesis-sample.tex
     ```
-    
+
 3. 在南大TeX项目内页面左上角的`Menu`中，将编译器改为`XeLaTeX`
 4. 编写TeX文档
 

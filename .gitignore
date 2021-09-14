@@ -13,8 +13,8 @@
 .*.lb
 
 ## LaTeX class and package
-*.cls
-*.sty
+# *.cls
+# *.sty
 
 ## DocStrip installation file
 *.ins
