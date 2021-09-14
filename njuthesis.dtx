@@ -175,7 +175,7 @@ through XeTeX.
   \usedir{doc/latex/njuthesis}
   \nopreamble\nopostamble
     \file{README.md}           {\from{\jobname.dtx}{readme}}
-    \file{README_EN.md}           {\from{\jobname.dtx}{readme-en}}
+    \file{README_EN.md}        {\from{\jobname.dtx}{readme-en}}
 }
 
 \obeyspaces
@@ -188,7 +188,8 @@ through XeTeX.
 \Msg{*                                                           *}
 \Msg{*     njuthesis.cls                                         *}
 \Msg{*     njuthesis.ins                                         *}
-\Msg{*     README_EN.md                                         *}
+\Msg{*     README.md                                             *}
+\Msg{*     README_EN.md                                          *}
 \Msg{*                                                           *}
 \Msg{* To produce the documentation, run the file njuthesis.dtx  *}
 \Msg{* through XeLaTeX.                                          *}
@@ -204,18 +205,15 @@ through XeTeX.
 \fi
 %</internal>
 %
-%
-%<*class>
-%\NeedsTeXFormat{LaTeX2e}
-%\RequirePackage{expl3}
-%</class>
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\RequirePackage{expl3}
 %<*driver|class>
 \def\ExplFileName{njuthesis}
 \def\ExplFileDescription{Nanjing University thesis template class}
 \def\ExplFileDate{2021-09-14}
-\def\ExplFileVersion{v0.9.0}
+\def\ExplFileVersion{0.9.0}
 %</driver|class>
-%<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}\ExplFileVersion}{\ExplFileDescription}
+%<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
 \ProvidesFile{\ExplFileName.dtx}
