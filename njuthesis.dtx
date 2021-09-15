@@ -207,7 +207,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2021-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
@@ -220,18 +220,24 @@ through XeTeX.
 %</driver>
 % \fi
 %
-% \title{The \pkg{njuthesis} package\\ 南京大学学位论文模板}
+% \title{The \textsc{NJuThesis} class\\ 南京大学学位论文模板}
 % 
 % \author{^^A
 % Nanjing University Linux User Group\thanks{E-mail: \href{mailto:my@yaoge123.com}{my@yaoge123.com}}}
 %
-% \date{Released 2021-09-13}
+% \date{v0.9.0 \\ Released 2021-09-15}
 %
 % \maketitle
 %
 % \begin{abstract}
 % 南京大学学位论文\hologo{LaTeX}模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文，旨在为同学提供毕业论文书写的方便。
 % \end{abstract}
+%
+% \def\abstractname{特别声明}
+% \begin{abstract}
+% 请注意，本模板仍未完成开发，出现bug或者文档不完善属于正常情况，提issue即可。
+% \end{abstract}
+%
 % \clearpage
 %
 % \tableofcontents
@@ -272,7 +278,7 @@ through XeTeX.
 %     \end{tabular}
 % \end{table}
 %
-% \section{本地编译}
+% \subsection{本地编译}
 %
 % \subsubsection{安装\hologo{TeX}发行版}
 %
@@ -326,16 +332,13 @@ through XeTeX.
 %
 % 由于\href{https://www.overleaf.com/}{Overleaf平台}的\hologo{TeX}\,Live版本停留在2020，\texttt{cleveref}包在引用章节时会生成错误的标签，引发格式错误；而南大\hologo{TeX}通过及时更新规避了这一问题。因此\emph{请务必不要使用Overleaf官网进行编译}。
 %
-% \subsection{字体}
-%
-% 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
-%
-% 各个系统的默认字体请参考{tab:defaultfontset}。可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；另一方面，在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}。
 %
 %
 % \section{使用方法}
 %
 % \subsection{自定义选项}
+%
+% 加粗的为默认选项
 %
 % \begin{function}[added=2021-09-07]{titlelength}
 %   \begin{syntax}
@@ -367,7 +370,7 @@ through XeTeX.
 % \subsubsection{学位信息}
 % \begin{function}[added=2021-09-07]{degree}
 %   \begin{syntax}
-%     degree = <mg|mf|phd|(ug)>
+%     degree = <(ug)|mg|mf|phd>
 %   \end{syntax}
 %
 % 选择学位，可选：
@@ -377,7 +380,7 @@ through XeTeX.
 %
 % \begin{function}[added=2021-09-07]{type}
 %   \begin{syntax}
-%     type = <design|(thesis)>
+%     type = <(thesis)|design>
 %   \end{syntax}
 %
 % 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括thesis（表示毕业论文）和design（表示毕业设计），缺省值为thesis。
@@ -393,13 +396,15 @@ through XeTeX.
 %     systemfont = <\TFF>
 %   \end{syntax}
 %
-% 是否使用系统预装的字体，可选：
-% \opt{true}（默认），\opt{false}。
+% 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
+%
+% 如果希望更改本模板使用的字体，请将本选项设置为\opt{false}，然后使用以下两个选项单独设置西文和中文字体。
+% 
 % \end{function}
 %
 % \begin{function}[added=2021-09-07]{customlatinfont}
 %   \begin{syntax}
-%     customlatinfont = <null|macos|gyre|(windows)>
+%     customlatinfont = <(windows)|macos|gyre|null>
 %   \end{syntax}
 %
 % 手动指定英文字体，可选：
@@ -409,11 +414,20 @@ through XeTeX.
 % 
 % \begin{function}[added=2021-09-07]{customchinesefont}
 %   \begin{syntax}
-%     customchinesefont = <null|macos|fandol|founder|noto|(windows)>
+%     customchinesefont = <(windows)|macos|fandol|founder|noto|null>
 %   \end{syntax}
 %
 % 手动指定中文字体，可选：
 % \opt{windows}（默认）， \opt{macos}， \opt{fandol}， \opt{founder}，\opt{noto}，\opt{null}。
+%
+% FZSSK 方正书宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/151 免费商用
+%
+% FZXBSK 方正小标宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/164 设计师非商免费
+%
+% FZKTK 方正楷体（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/137 免费商用
+% 
+% 各个系统的默认字体请参考。可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；另一方面，在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}，符合视觉习惯。
+% 
 % \end{function}
 %
 %
@@ -521,8 +535,9 @@ through XeTeX.
 %
 % \begin{implementation}
 %
-% \section{\pkg{njuthesis} 代码实现}
+% \section{代码实现}
 %
+% laTex默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故1.5/1.2*1.3 = 1.625
 %    \begin{macrocode}
 %<*class>
 \LoadClass[
@@ -530,7 +545,7 @@ through XeTeX.
   twoside,
   UTF8,
   scheme=chinese,
-  linespread=1.625,% laTex默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故1.5/1.2*1.3 = 1.625
+  linespread=1.625,
   fontset=none,
   zihao=-4
   ]{ctexbook}[2018/04/01]
@@ -733,7 +748,13 @@ through XeTeX.
 % 用于生成可以被插入书签的LaTeX logo，TODO 使用hologo创建|latex{}|命令
 %    \begin{macrocode}
 \RequirePackage{hologo} 
-% \RequirePackage{needspace} % Required to prevent page break right after a sectioning command
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
+% Required to prevent page break right after a sectioning command
+% \RequirePackage{needspace} 
+
 % \RequirePackage{xspace} % Better print trailing whitespace
 %    \end{macrocode}
 %
@@ -859,14 +880,16 @@ through XeTeX.
   \setCJKfamilyfont{zhhei}{SimHei}
   \setCJKfamilyfont{zhfs}{FangSong}
   \setCJKfamilyfont{zhkai}{KaiTi}[AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[BoldFont=Microsoft~YaHei~Bold]
+  \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[
+    BoldFont=Microsoft~YaHei~Bold]
 }
 %    \end{macrocode}
 %
 % Put text here.
 %    \begin{macrocode}
 \NewDocumentCommand\set_chinese_fontset_macos{}{
-  \msg_redirect_name:nnn {fontspec} {no-script} {info} % 移除 does not contain script "CJK" 警告
+  % 移除 does not contain script "CJK" 警告
+  \msg_redirect_name:nnn {fontspec} {no-script} {info} 
   \setCJKmainfont{Songti~SC~Light}[
     BoldFont=Songti~SC~Bold,
     ItalicFont=Kaiti~SC,
@@ -894,7 +917,8 @@ through XeTeX.
 % Put text here.
 %    \begin{macrocode}
 \NewDocumentCommand\set_chinese_fontset_fandol{}{
-  \msg_redirect_name:nnn {fontspec} {no-script} {info} % 移除 does not contain script "CJK" 警告
+  % 移除 does not contain script "CJK" 警告
+  \msg_redirect_name:nnn {fontspec} {no-script} {info} 
   \setCJKmainfont{FandolSong-Regular}[
     Extension=.otf,
     BoldFont=FandolSong-Bold,
@@ -920,9 +944,6 @@ through XeTeX.
 %    \begin{macrocode}
 % 方正字符集
 \NewDocumentCommand\set_chinese_fontset_founder{}{
-  % FZSSK 方正书宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/151 免费商用
-  % FZXBSK 方正小标宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/164 设计师非商免费
-  % FZKTK 方正楷体（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/137 免费商用
   \setCJKmainfont{FZSSK}[
     Extension=.ttf,
     BoldFont=FZXBSK,
@@ -1765,7 +1786,10 @@ through XeTeX.
     \cleardoublepage
   }
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 本科封面
 \tl_set:Nn \nju_printcover_ug 
 {
@@ -1796,7 +1820,10 @@ through XeTeX.
   % \vfill
   % \newpage
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 研究生封面
 \tl_set:Nn \nju_printcover_g 
 {
@@ -1848,7 +1875,10 @@ through XeTeX.
   \end{spacing}
   \cleardoublepage
 }
-
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 % 重定义maketitle生成封面
 \tl_set:Nn \maketitle 
 {%
@@ -1864,7 +1894,8 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% \subsection{摘要绘制}
+%
 %    \begin{macrocode}
 % 判断学位
 \str_if_eq:NNTF {\nju_degree} { ug } 
@@ -1877,7 +1908,8 @@ through XeTeX.
     % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
     \pdfbookmark[0]{中文摘要}{中文摘要} % 将摘要插入pdf书签，与上一行不可共存
     \begin{center}
-      \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）中文摘要}}}
+      \kaishu\zihao{-2}{\textbf{\uuline{
+        南京大学本科生毕业论文（设计、作品）中文摘要}}}
     \end{center}
     {\bgroup
       \kaishu\zihao{-4}
@@ -1910,7 +1942,8 @@ through XeTeX.
     % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
     \pdfbookmark[0]{英文摘要}{英文摘要} % 将摘要插入pdf书签，与上一行不可共存
     \begin{center}
-        \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）英文摘要}}}
+        \kaishu\zihao{-2}{\textbf{\uuline{
+          南京大学本科生毕业论文（设计、作品）英文摘要}}}
     \end{center}
     {
       \bgroup
@@ -1934,6 +1967,10 @@ through XeTeX.
     {KEYWORDS{:}}~~{#1}%
   }
 }
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
 { 
   % 研究生摘要环境
   \NewDocumentEnvironment{abstract} {}
@@ -1943,7 +1980,8 @@ through XeTeX.
     % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
     \pdfbookmark[0]{中文摘要}{中文摘要} % 将摘要插入pdf书签，与上一行不可共存
     \begin{center}
-      \kaishu\zihao{-2}{\textbf{\uuline{南京大学研究生毕业论文中文摘要首页用纸}}}
+      \kaishu\zihao{-2}{\textbf{\uuline{
+        南京大学研究生毕业论文中文摘要首页用纸}}}
     \end{center}
     
     \bgroup
@@ -1976,7 +2014,8 @@ through XeTeX.
     % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
     \pdfbookmark[0]{英文摘要}{英文摘要} % 将摘要插入pdf书签，与上一行不可共存
     \begin{center}
-        \kaishu\zihao{-2}{\textbf{\uuline{南京大学研究生毕业论文英文摘要首页用纸}}}
+        \kaishu\zihao{-2}{\textbf{\uuline{
+          南京大学研究生毕业论文英文摘要首页用纸}}}
     \end{center}
     {
       \bgroup
