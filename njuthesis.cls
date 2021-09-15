@@ -23,7 +23,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
- \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+ \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2021-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
   {Thesis template for Nanjing University}
 \ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 \LoadClass[
@@ -31,7 +31,7 @@
   twoside,
   UTF8,
   scheme=chinese,
-  linespread=1.625,% laTex默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故1.5/1.2*1.3 = 1.625
+  linespread=1.625,
   fontset=none,
   zihao=-4
   ]{ctexbook}[2018/04/01]
@@ -124,6 +124,7 @@
 \RequirePackage{siunitx} % 用于书写单位符号
 \RequirePackage[version=4]{mhchem} % 用于绘制分子式
 \RequirePackage{hologo}
+
 \sys_if_engine_xetex:T
 {
     \RequirePackage{microtype}
@@ -204,10 +205,12 @@
   \setCJKfamilyfont{zhhei}{SimHei}
   \setCJKfamilyfont{zhfs}{FangSong}
   \setCJKfamilyfont{zhkai}{KaiTi}[AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[BoldFont=Microsoft~YaHei~Bold]
+  \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[
+    BoldFont=Microsoft~YaHei~Bold]
 }
 \NewDocumentCommand\set_chinese_fontset_macos{}{
-  \msg_redirect_name:nnn {fontspec} {no-script} {info} % 移除 does not contain script "CJK" 警告
+  % 移除 does not contain script "CJK" 警告
+  \msg_redirect_name:nnn {fontspec} {no-script} {info}
   \setCJKmainfont{Songti~SC~Light}[
     BoldFont=Songti~SC~Bold,
     ItalicFont=Kaiti~SC,
@@ -231,7 +234,8 @@
   \setCJKfamilyfont{zhnewhei}{PingFang~SC}
 }
 \NewDocumentCommand\set_chinese_fontset_fandol{}{
-  \msg_redirect_name:nnn {fontspec} {no-script} {info} % 移除 does not contain script "CJK" 警告
+  % 移除 does not contain script "CJK" 警告
+  \msg_redirect_name:nnn {fontspec} {no-script} {info}
   \setCJKmainfont{FandolSong-Regular}[
     Extension=.otf,
     BoldFont=FandolSong-Bold,
@@ -252,9 +256,6 @@
     AutoFakeBold=2.17]
 }
 \NewDocumentCommand\set_chinese_fontset_founder{}{
-  % FZSSK 方正书宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/151 免费商用
-  % FZXBSK 方正小标宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/164 设计师非商免费
-  % FZKTK 方正楷体（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/137 免费商用
   \setCJKmainfont{FZSSK}[
     Extension=.ttf,
     BoldFont=FZXBSK,
@@ -486,8 +487,10 @@
     ibidtracker=context,
     autopunct=true,
     autocite=plain,
-    % gbpub=false,         % Uncomment if you do NOT want '[S.l. : s.n.]' in reference entries, GitHub Issue (#47)
-    % gbnamefmt=lowercase, % Uncomment if you do NOT want uppercase author names in reference entries, GitHub Issue (#23)
+    % gbpub=false,         % Uncomment if you do NOT want '[S.l. : s.n.]'
+                           % in reference entries, GitHub Issue (#47)
+    % gbnamefmt=lowercase, % Uncomment if you do NOT want uppercase author
+                           % names in reference entries, GitHub Issue (#23)
 ]{biblatex}
 \AtEveryBibitem{
 \clearfield{abstract}
@@ -904,7 +907,6 @@ numberwithin=section,
     \cleardoublepage
   }
 }
-
 \tl_set:Nn \nju_printcover_ug
 {
   \thispagestyle{empty}
@@ -934,7 +936,6 @@ numberwithin=section,
   % \vfill
   % \newpage
 }
-
 \tl_set:Nn \nju_printcover_g
 {
   \thispagestyle{empty}
@@ -985,7 +986,6 @@ numberwithin=section,
   \end{spacing}
   \cleardoublepage
 }
-
 \tl_set:Nn \maketitle
 {%
   \str_if_eq:NNTF { \nju_degree } { ug }
@@ -1008,7 +1008,8 @@ numberwithin=section,
     % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
     \pdfbookmark[0]{中文摘要}{中文摘要} % 将摘要插入pdf书签，与上一行不可共存
     \begin{center}
-      \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）中文摘要}}}
+      \kaishu\zihao{-2}{\textbf{\uuline{
+        南京大学本科生毕业论文（设计、作品）中文摘要}}}
     \end{center}
     {\bgroup
       \kaishu\zihao{-4}
@@ -1041,7 +1042,8 @@ numberwithin=section,
     % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
     \pdfbookmark[0]{英文摘要}{英文摘要} % 将摘要插入pdf书签，与上一行不可共存
     \begin{center}
-        \kaishu\zihao{-2}{\textbf{\uuline{南京大学本科生毕业论文（设计、作品）英文摘要}}}
+        \kaishu\zihao{-2}{\textbf{\uuline{
+          南京大学本科生毕业论文（设计、作品）英文摘要}}}
     \end{center}
     {
       \bgroup
@@ -1074,7 +1076,8 @@ numberwithin=section,
     % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
     \pdfbookmark[0]{中文摘要}{中文摘要} % 将摘要插入pdf书签，与上一行不可共存
     \begin{center}
-      \kaishu\zihao{-2}{\textbf{\uuline{南京大学研究生毕业论文中文摘要首页用纸}}}
+      \kaishu\zihao{-2}{\textbf{\uuline{
+        南京大学研究生毕业论文中文摘要首页用纸}}}
     \end{center}
 
     \bgroup
@@ -1107,7 +1110,8 @@ numberwithin=section,
     % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
     \pdfbookmark[0]{英文摘要}{英文摘要} % 将摘要插入pdf书签，与上一行不可共存
     \begin{center}
-        \kaishu\zihao{-2}{\textbf{\uuline{南京大学研究生毕业论文英文摘要首页用纸}}}
+        \kaishu\zihao{-2}{\textbf{\uuline{
+          南京大学研究生毕业论文英文摘要首页用纸}}}
     \end{center}
     {
       \bgroup
