@@ -14,7 +14,7 @@
 
 从0.9.0版以后，本模板以DocStrip(`.dtx`)格式进行维护，同时在仓库提供`.cls`文件以降低使用门槛。
 
-### 使用DocStrip文件
+### 如何使用DocStrip文件
 
 DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使用该文件，请在当前工作目录下打开终端：
 
@@ -39,8 +39,8 @@ DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使�
 
 ### [南大TeX](https://tex.nju.edu.cn)编译
 
-1. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包
-2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
+1. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的`njuthesis.zip`
+2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的压缩包，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
 
     ```shell
     NJUThesis-master/

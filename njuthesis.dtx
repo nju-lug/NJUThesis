@@ -40,7 +40,7 @@
 
 从0.9.0版以后，本模板以DocStrip(`.dtx`)格式进行维护，同时在仓库提供`.cls`文件以降低使用门槛。
 
-### 使用DocStrip文件
+### 如何使用DocStrip文件
 
 DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使用该文件，请在当前工作目录下打开终端：
 
@@ -65,8 +65,8 @@ DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使�
 
 ### [南大TeX](https://tex.nju.edu.cn)编译
 
-1. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包
-2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的zip文件，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
+1. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的`njuthesis.zip`
+2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的压缩包，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
 
     ```shell
     NJUThesis-master/
@@ -79,7 +79,7 @@ DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使�
     │ njuthesis.cls
     │ njuthesis-sample.tex
     ```
-    
+
 3. 在南大TeX项目内页面左上角的`Menu`中，将编译器改为`XeLaTeX`
 4. 编写TeX文档
 
@@ -207,7 +207,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<!readme> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-14 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+%<!(readme|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
@@ -627,19 +627,19 @@ through XeTeX.
   Field             .tl_set:N     =   \nju_field,
   FieldEN           .tl_set:N     =   \nju_field_en,
 %    \end{macrocode}
-%
+%  
+% 导师
 % Put text here.
 %    \begin{macrocode}
-  % 导师
   MentorA           .tl_set:N     =   \nju_mentor_a,
   MentorAEN         .tl_set:N     =   \nju_mentor_a_en,
   MentorATitle      .tl_set:N     =   \nju_mentor_a_title,
   MentorATitleEN    .tl_set:N     =   \nju_mentor_a_title_en,
 %    \end{macrocode}
 %
+% 第二导师
 % Put text here.
 %    \begin{macrocode}
-  % 第二导师
   MentorB           .tl_set:N     =   \nju_mentor_b,
   MentorBEN         .tl_set:N     =   \nju_mentor_b_en,
   MentorBTitle      .tl_set:N     =   \nju_mentor_b_title,
@@ -647,14 +647,14 @@ through XeTeX.
 %    \end{macrocode}
 %
 % Put text here.
+% 提交日期
 %    \begin{macrocode}
-  % 提交日期
   SubmitDate        .tl_set:N     =   \nju_submit_date,
 %    \end{macrocode}
 %
 % Put text here.
+% 答辩
 %    \begin{macrocode}
-  % 答辩
   DefendDate        .tl_set:N     =   \nju_defend_date,
   ReviewerChairman  .tl_set:N     =   \nju_reviewer_chairman,
   ReviewerA         .tl_set:N     =   \nju_reviewer_a,
@@ -722,8 +722,16 @@ through XeTeX.
 \RequirePackage{multirow} % Cells occupying multiple rows in tables
 \RequirePackage{multicol} % Multiple columns in dictionary
 \RequirePackage{siunitx} % 用于书写单位符号
+%    \end{macrocode}
+%
+% 用于化学
+%    \begin{macrocode}
 \RequirePackage[version=4]{mhchem} % 用于绘制分子式
-\RequirePackage{hologo} % 用于生成可以被插入书签的LaTeX logo
+%    \end{macrocode}
+%
+% 用于生成可以被插入书签的LaTeX logo，TODO 使用hologo创建|latex{}|命令
+%    \begin{macrocode}
+\RequirePackage{hologo} 
 % \RequirePackage{needspace} % Required to prevent page break right after a sectioning command
 % \RequirePackage{xspace} % Better print trailing whitespace
 %    \end{macrocode}
@@ -753,11 +761,15 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% 几个用来进行开发测试的包
+% 生成用于测试的大段无意义英文文字
 %    \begin{macrocode}
-\RequirePackage{blindtext} % 生成用于测试的大段无意义英文文字
-\RequirePackage{zhlipsum} % 生成用于测试的大段无意义中文文字
-% \RequirePackage{showframe} % 加载以后展示内容边界
+\RequirePackage{blindtext} 
+\RequirePackage{zhlipsum} 
+%    \end{macrocode}
+%
+% 加载以后展示内容边界
+%    \begin{macrocode}
+% \RequirePackage{showframe} 
 %    \end{macrocode}
 %
 % 数学
@@ -781,15 +793,14 @@ through XeTeX.
 \RequirePackage{wrapfig} % Wrap text around figures
 %    \end{macrocode}
 %
-% Put text here.
-%    \begin{macrocode}
 % 必须以该顺序加载以下三个包
+%    \begin{macrocode}
 % \RequirePackage{varioref}
 \RequirePackage[hidelinks,bookmarksnumbered=true]{hyperref}
 \RequirePackage[capitalise,nameinlink,noabbrev]{cleveref}
 %    \end{macrocode}
 %
-% and so forth.
+% \subsection{字体设置}
 %    \begin{macrocode}
 % 设置西文字体
 \NewDocumentCommand\set_latin_fontset_windows{}{
@@ -1465,7 +1476,7 @@ through XeTeX.
 ]{theorem}
 %    \end{macrocode}
 %
-% \section{封面设计}
+% \subsection{封面绘制}
 %    \begin{macrocode}
 % 拼合标题
 \tl_const:Nn \nju_title {\nju_title_a \nju_title_b \nju_title_c}

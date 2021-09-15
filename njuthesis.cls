@@ -23,7 +23,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-14 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+ \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
   {Thesis template for Nanjing University}
 \ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 \LoadClass[
@@ -75,19 +75,15 @@
   MajorEN           .tl_set:N     =   \nju_major_en,
   Field             .tl_set:N     =   \nju_field,
   FieldEN           .tl_set:N     =   \nju_field_en,
-  % 导师
   MentorA           .tl_set:N     =   \nju_mentor_a,
   MentorAEN         .tl_set:N     =   \nju_mentor_a_en,
   MentorATitle      .tl_set:N     =   \nju_mentor_a_title,
   MentorATitleEN    .tl_set:N     =   \nju_mentor_a_title_en,
-  % 第二导师
   MentorB           .tl_set:N     =   \nju_mentor_b,
   MentorBEN         .tl_set:N     =   \nju_mentor_b_en,
   MentorBTitle      .tl_set:N     =   \nju_mentor_b_title,
   MentorBTitleEN    .tl_set:N     =   \nju_mentor_b_title_en,
-  % 提交日期
   SubmitDate        .tl_set:N     =   \nju_submit_date,
-  % 答辩
   DefendDate        .tl_set:N     =   \nju_defend_date,
   ReviewerChairman  .tl_set:N     =   \nju_reviewer_chairman,
   ReviewerA         .tl_set:N     =   \nju_reviewer_a,
@@ -127,7 +123,7 @@
 \RequirePackage{multicol} % Multiple columns in dictionary
 \RequirePackage{siunitx} % 用于书写单位符号
 \RequirePackage[version=4]{mhchem} % 用于绘制分子式
-\RequirePackage{hologo} % 用于生成可以被插入书签的LaTeX logo
+\RequirePackage{hologo}
 \sys_if_engine_xetex:T
 {
     \RequirePackage{microtype}
@@ -149,8 +145,8 @@
     % For windows.
     % Shipped with the best `grinning-face-with-sweat' support.
 }
-\RequirePackage{blindtext} % 生成用于测试的大段无意义英文文字
-\RequirePackage{zhlipsum} % 生成用于测试的大段无意义中文文字
+\RequirePackage{blindtext}
+\RequirePackage{zhlipsum}
 \RequirePackage{amsmath} % Must be loaded before unicode-math
 \RequirePackage{amsthm} % Mathematical environments
 \RequirePackage{mathtools} % Mathematical tools to use with amsmath

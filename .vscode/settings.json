@@ -35,7 +35,7 @@
             "name": "makedoc",
             "command": "latexmk",
             "args": [
-                "-pv",
+                "-xelatex",
                 "njuthesis.dtx"
             ]
         }
