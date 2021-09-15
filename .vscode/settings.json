@@ -1,4 +1,5 @@
 {
+    "latex-workshop.latex.autoBuild.run": "never", // 禁止自动编译
     "latex-workshop.latex.tools": [
         {
             "name": "xelatex",

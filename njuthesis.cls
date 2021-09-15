@@ -6,7 +6,7 @@
 %%
 %% njuthesis.dtx  (with options: `class')
 %% 
-%% Copyright (C) 2021 by Nanjing University Linux User Group <my@yaoge123.com>
+%% Copyright (C) 2021 by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
 %% 
 %% This file may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3 of this license
@@ -23,7 +23,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
- \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2021-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+ \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2021-09-15 12:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
   {Thesis template for Nanjing University}
 \ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 \LoadClass[
@@ -40,8 +40,8 @@
 {
   titlelength       .int_set:N    =   \nju_titlelength,
   titlelength       .initial:n    =   1,
-  secondmentor      .bool_set:N   =   \nju_second_mentor,
-  secondmentor      .initial:n    =   false,
+  secondsupervisor      .bool_set:N   =   \nju_second_supervisor,
+  secondsupervisor      .initial:n    =   false,
   nlcover           .bool_set:N   =   \nju_nl_cover,
   nlcover           .initial:n    =   false,
   degree            .tl_set:N     =   \nju_degree,
@@ -59,42 +59,42 @@
 \keys_define:nn { nju / info }
 {
   % 题目
-  TitleA            .tl_set:N     =   \nju_title_a,
-  TitleB            .tl_set:N     =   \nju_title_b,
-  TitleC            .tl_set:N     =   \nju_title_c,
-  TitleEN           .tl_set:N     =   \nju_title_en,
+  TitleA            .tl_set:N     =   \l__nju_info_title_a_tl,
+  TitleB            .tl_set:N     =   \l__nju_info_title_b_tl,
+  TitleC            .tl_set:N     =   \l__nju_info_title_c_tl,
+  Title*            .tl_set:N     =   \l__nju_info_title_en_tl,
   % 年级学号姓名
-  Grade             .tl_set:N     =   \nju_grade,
-  StudentID         .tl_set:N     =   \nju_student_id,
-  StudentName       .tl_set:N     =   \nju_student_name,
-  StudentNameEN     .tl_set:N     =   \nju_student_name_en,
+  Grade             .tl_set:N     =   \l__nju_info_grade_tl,
+  StudentID         .tl_set:N     =   \l__nju_info_id_tl,
+  StudentName       .tl_set:N     =   \l__nju_info_author_tl,
+  StudentName*      .tl_set:N     =   \l__nju_info_author_en_tl,
   % 院系专业方向
-  Department        .tl_set:N     =   \nju_department,
-  DepartmentEN      .tl_set:N     =   \nju_department_en,
-  Major             .tl_set:N     =   \nju_major,
-  MajorEN           .tl_set:N     =   \nju_major_en,
-  Field             .tl_set:N     =   \nju_field,
-  FieldEN           .tl_set:N     =   \nju_field_en,
-  MentorA           .tl_set:N     =   \nju_mentor_a,
-  MentorAEN         .tl_set:N     =   \nju_mentor_a_en,
-  MentorATitle      .tl_set:N     =   \nju_mentor_a_title,
-  MentorATitleEN    .tl_set:N     =   \nju_mentor_a_title_en,
-  MentorB           .tl_set:N     =   \nju_mentor_b,
-  MentorBEN         .tl_set:N     =   \nju_mentor_b_en,
-  MentorBTitle      .tl_set:N     =   \nju_mentor_b_title,
-  MentorBTitleEN    .tl_set:N     =   \nju_mentor_b_title_en,
-  SubmitDate        .tl_set:N     =   \nju_submit_date,
-  DefendDate        .tl_set:N     =   \nju_defend_date,
-  ReviewerChairman  .tl_set:N     =   \nju_reviewer_chairman,
-  ReviewerA         .tl_set:N     =   \nju_reviewer_a,
-  ReviewerB         .tl_set:N     =   \nju_reviewer_b,
-  ReviewerC         .tl_set:N     =   \nju_reviewer_c,
-  ReviewerD         .tl_set:N     =   \nju_reviewer_d,
+  Department        .tl_set:N     =   \l__nju_info_dept_tl,
+  Department*       .tl_set:N     =   \l__nju_info_dept_en_tl,
+  Major             .tl_set:N     =   \l__nju_major_tl,
+  Major*            .tl_set:N     =   \l__nju_major_en_tl,
+  Field             .tl_set:N     =   \l__nju_field_tl,
+  Field*            .tl_set:N     =   \l__nju_field_en_tl,
+  SupervisorA       .tl_set:N     =   \l__nju_info_supv_a_tl,
+  SupervisorA*      .tl_set:N     =   \l__nju_info_supv_a_en_tl,
+  SupervisorATitle  .tl_set:N     =   \l__nju_info_supv_a_title_tl,
+  SupervisorATitle* .tl_set:N     =   \l__nju_info_supv_a_title_en_tl,
+  SupervisorB       .tl_set:N     =   \l__nju_info_supv_b_tl,
+  SupervisorB*      .tl_set:N     =   \l__nju_info_supv_b_en_tl,
+  SupervisorBTitle  .tl_set:N     =   \l__nju_info_supv_b_title_tl,
+  SupervisorBTitle* .tl_set:N     =   \l__nju_info_supv_b_title_en_tl,
+  SubmitDate        .tl_set:N     =   \l__nju_submit_date_tl,
+  DefendDate        .tl_set:N     =   \l__nju_defend_date_tl,
+  ReviewerChairman  .tl_set:N     =   \l__nju_info_chairman_tl,
+  ReviewerA         .tl_set:N     =   \l__nju_info_reviewer_a_tl,
+  ReviewerB         .tl_set:N     =   \l__nju_info_reviewer_b_tl,
+  ReviewerC         .tl_set:N     =   \l__nju_info_reviewer_c_tl,
+  ReviewerD         .tl_set:N     =   \l__nju_info_reviewer_d_tl,
   % 国家图书馆封面相关
-  Classification    .tl_set:N     =   \nju_classification,
-  SecurityLevel     .tl_set:N     =   \nju_securitylevel,
-  UDC               .tl_set:N     =   \nju_udc,
-  MentorInfo        .tl_set:N     =   \nju_mentor_info,
+  Classification    .tl_set:N     =   \l__nju_info_classif_tl,
+  SecurityLevel     .tl_set:N     =   \l__nju_info_seclv_tl,
+  UDC               .tl_set:N     =   \l__nju_info_udc_tl,
+  SupervisorContact .tl_set:N     =   \l__nju_info_supv_cont_tl,
 }
 \NewDocumentCommand \njusetup { m }
 { \keys_set:nn { nju } { #1 } }
@@ -108,7 +108,6 @@
 ]{geometry}
 \RequirePackage{xparse}
 \RequirePackage{titletoc} % 修改目录内标题格式
-\RequirePackage{fancyhdr} % 调整页眉页脚
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
 \RequirePackage{dashundergaps}
 \RequirePackage{setspace}
@@ -368,6 +367,7 @@
 \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
 \NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
 \NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
+\RequirePackage{fancyhdr} % 调整页眉页脚
 \fancypagestyle{njuplain}{%
    \fancyhead{}
    \fancyfoot[C]{\zihao{5}\thepage} % 页脚居中 五号新罗马体数字
@@ -657,28 +657,33 @@ refname={定理,定理},
 Refname={定理,定理},
 numberwithin=section,
 ]{theorem}
-\tl_const:Nn \nju_title {\nju_title_a \nju_title_b \nju_title_c}
-\bool_if:NTF \nju_second_mentor
+\tl_const:Nn \l__nju_info_title_tl,
 {
-  \tl_const:Nn \nju_mentor_full
+  \l__nju_info_title_a_tl
+  \l__nju_info_title_b_tl
+  \l__nju_info_title_c_tl
+}
+\bool_if:NTF \nju_second_supervisor
+{
+  \tl_const:Nn \nju_supervisor_full
   {
-    \nju_mentor_a\ \nju_mentor_a_title
-    \ \ \nju_mentor_b\ \nju_mentor_b_title
+    \l__nju_info_supv_a_tl\ \l__nju_info_supv_a_title_tl
+    \ \ \l__nju_info_supv_b_tl\ \l__nju_info_supv_b_title_tl
   }
-  \tl_const:Nn \nju_mentor_full_en
+  \tl_const:Nn \nju_supervisor_full_en
   {
-    \nju_mentor_a_en\ \nju_mentor_a_title_en
-    \ \ \nju_mentor_b_en\ \nju_mentor_b_title_en
+    \l__nju_info_supv_a_en_tl\ \l__nju_info_supv_a_title_en_tl
+    \ \ \l__nju_info_supv_b_en_tl\ \l__nju_info_supv_b_title_en_tl
   }
 }
 {
-  \tl_const:Nn \nju_mentor_full
+  \tl_const:Nn \nju_supervisor_full
   {
-    \nju_mentor_a\ \nju_mentor_a_title
+    \l__nju_info_supv_a_tl\ \l__nju_info_supv_a_title_tl
   }
-  \tl_const:Nn \nju_mentor_full_en
+  \tl_const:Nn \nju_supervisor_full_en
   {
-    \nju_mentor_a_en\ \nju_mentor_a_title_en
+    \l__nju_info_supv_a_en_tl\ \l__nju_info_supv_a_title_en_tl
   }
 }
 \str_if_eq:NNTF {\nju_degree} { ug }
@@ -745,58 +750,58 @@ numberwithin=section,
 {
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {院\hfill 系}
-    & \nju_cover_underline_ug:nn {250pt}{\nju_department}\\
+    & \nju_cover_underline_ug:nn {250pt}{\l__nju_info_dept_tl}\\
     \nju_coverbox_ug:n {专\hfill 业}
-    & \nju_cover_underline_ug:nn {250pt}{\nju_major}\\
+    & \nju_cover_underline_ug:nn {250pt}{\l__nju_major_tl}\\
 
     % 标题换行
     \int_case:nn { \nju_titlelength }
       {
         { 1 } {
           \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_a}} \\ }
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_a_tl,}} \\ }
         { 2 } {
           \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_a}} \\
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_b}} \\ }
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_a_tl,}} \\
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl,}} \\ }
         { 3 } {
           \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_a}} \\
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_b}} \\
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_c}} \\}
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_a_tl,}} \\
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl,}} \\
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_c_tl,}} \\}
       }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \nju_coverbox_ug:n {年\hfill 级}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_grade}
+    & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_grade_tl}
     & \nju_coverbox_ug:n {学\hfill 号}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_student_id}\\
+    & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_id_tl}\\
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {学\hfill 生\hfill 姓\hfill 名}
-    & \nju_cover_underline_ug:nn {250pt}{\nju_student_name}
+    & \nju_cover_underline_ug:nn {250pt}{\l__nju_info_author_tl}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \nju_coverbox_ug:n {导\hfill 师}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_a}
+    & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_supv_a_tl}
     & \nju_coverbox_ug:n {职\hfill 称}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_a_title}\\
+    & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_supv_a_title_tl}\\
 
     % 第二导师
-    \bool_if:NT \nju_second_mentor
+    \bool_if:NT \nju_second_supervisor
     {
       \nju_coverbox_ug:n {第\hfill 二\hfill 导\hfill 师}
-      & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b}
+      & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_supv_b_tl}
       & \nju_coverbox_ug:n {职\hfill 称}
-      & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b_title}\\
+      & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_supv_b_title_tl}\\
     }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {提\hfill 交\hfill 日\hfill 期}
-    & \nju_cover_underline_ug:nn {250pt}{\nju_submit_date}\\
+    & \nju_cover_underline_ug:nn {250pt}{\l__nju_submit_date_tl}\\
   \end{tabular}
 }
 \tl_new:N \nju_printcoverinfo_g
@@ -808,26 +813,26 @@ numberwithin=section,
       {
         { 1 } {
           \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline_g:n {\nju_title_a} \\ }
+          & \nju_cover_underline_g:n {\l__nju_info_title_a_tl,} \\ }
         { 2 } {
           \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline_g:n {\nju_title_a} \\
-          & \nju_cover_underline_g:n {\nju_title_b} \\ }
+          & \nju_cover_underline_g:n {\l__nju_info_title_a_tl,} \\
+          & \nju_cover_underline_g:n {\l__nju_info_title_b_tl,} \\ }
         { 3 } {
           \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline_g:n {\nju_title_a} \\
-          & \nju_cover_underline_g:n {\nju_title_b} \\
-          & \nju_cover_underline_g:n {\nju_title_c} \\}
+          & \nju_cover_underline_g:n {\l__nju_info_title_a_tl,} \\
+          & \nju_cover_underline_g:n {\l__nju_info_title_b_tl,} \\
+          & \nju_cover_underline_g:n {\l__nju_info_title_c_tl,} \\}
       }
 
     \nju_coverbox_g:n {作\hfill 者\hfill 姓\hfill 名}
-    & \nju_cover_underline_g:n {\nju_student_name}\\
+    & \nju_cover_underline_g:n {\l__nju_info_author_tl}\\
     \nju_coverbox_g:n {专\hfill 业\hfill 名\hfill 称}
-    & \nju_cover_underline_g:n {\nju_major}\\
+    & \nju_cover_underline_g:n {\l__nju_major_tl}\\
     \nju_coverbox_g:n {研\hfill 究\hfill 方\hfill 向}
-    & \nju_cover_underline_g:n {\nju_field}\\
+    & \nju_cover_underline_g:n {\l__nju_field_tl}\\
     \nju_coverbox_g:n {指\hfill 导\hfill 教\hfill 师}
-    & \nju_cover_underline_g:n {\nju_mentor_full}\\
+    & \nju_cover_underline_g:n {\nju_supervisor_full}\\
   \end{tabular}
 }
 \tl_new:N \nju_printcover_nl % 国家图书馆封面
@@ -845,13 +850,13 @@ numberwithin=section,
       \vskip -20mm \hskip -15mm
       \songti\zihao{-4}
       \makebox[40pt][l]{分类号}
-      \nju_cover_underline_nl:nn {150pt}{\nju_classification}
+      \nju_cover_underline_nl:nn {150pt}{\l__nju_info_classif_tl}
       \hfill
       \makebox[40pt][l]{密级}
-      \nju_cover_underline_nl:nn {150pt}{\nju_securitylevel}
+      \nju_cover_underline_nl:nn {150pt}{\l__nju_info_seclv_tl}
       \vskip 10pt \hskip -15mm
       \makebox[40pt][l]{UDC}
-      \nju_cover_underline_nl:nn {150pt}{\nju_udc}
+      \nju_cover_underline_nl:nn {150pt}{\l__nju_info_udc_tl}
     }
 
     % 中部
@@ -862,14 +867,14 @@ numberwithin=section,
       {
         \kaishu\zihao{1}
         \vskip \stretch{1}
-        \nju_cover_underline_nl:nn {14em}{\nju_title_a}\\
-        \nju_cover_underline_nl:nn {14em}{\nju_title_b}\\
-        \nju_cover_underline_nl:nn {14em}{\nju_title_c}\\
+        \nju_cover_underline_nl:nn {14em}{\l__nju_info_title_a_tl,}\\
+        \nju_cover_underline_nl:nn {14em}{\l__nju_info_title_b_tl,}\\
+        \nju_cover_underline_nl:nn {14em}{\l__nju_info_title_c_tl,}\\
       }
       \vskip \stretch{1}
       {\kaishu\zihao{4}（题名和副题名）}
       \vskip \stretch{1} \vskip 5mm
-      {\kaishu\zihao{1}\uline{\makebox{\nju_student_name}}}
+      {\kaishu\zihao{1}\uline{\makebox{\l__nju_info_author_tl}}}
       \vskip \stretch{1}
       {\kaishu\zihao{4}（作者姓名）}
     \end{center}
@@ -879,25 +884,25 @@ numberwithin=section,
     {
       \kaishu\zihao{4}
       \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
-      \nju_cover_underline_nl:nn {94pt}{\nju_mentor_a}\par
+      \nju_cover_underline_nl:nn {94pt}{\l__nju_info_supv_a_tl}\par
       \noindent\nju_cover_underline_nl:nn {\textwidth}{%
-      \nju_mentor_info}\par
+      \l__nju_info_supv_cont_tl}\par
       \noindent 申请学位级别%
       \nju_cover_underline_nl:nn {9em}{\nju_degree_title}%
       \noindent 专业名称%
-      \uline{\hfill\nju_major\hfill}\par% 需要调整下划线长度
+      \uline{\hfill\l__nju_major_tl\hfill}\par% 需要调整下划线长度
       \noindent 论文提交日期%
-      \nju_cover_underline_nl:nn {9em}{\nju_submit_date}%
+      \nju_cover_underline_nl:nn {9em}{\l__nju_submit_date_tl}%
       论文答辩日期%
-      \uline{\hfill\nju_defend_date\hfill}\par% 需要调整下划线长度
+      \uline{\hfill\l__nju_defend_date_tl\hfill}\par% 需要调整下划线长度
       \noindent 学位授予单位和日期\uline{\hfill}\par
       \noindent\hfill 答辩委员会主席：%
-      \nju_cover_underline_nl:nn {9em}{\nju_reviewer_chairman}\par
+      \nju_cover_underline_nl:nn {9em}{\l__nju_info_chairman_tl}\par
       \noindent\hfill 评阅人：%
-      \nju_cover_underline_nl:nn {9em}{\nju_reviewer_a}\par
-      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\nju_reviewer_b}\par
-      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\nju_reviewer_c}\par
-      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\nju_reviewer_d}\par
+      \nju_cover_underline_nl:nn {9em}{\l__nju_info_reviewer_a_tl}\par
+      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\l__nju_info_reviewer_b_tl}\par
+      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\l__nju_info_reviewer_c_tl}\par
+      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\l__nju_info_reviewer_d_tl}\par
 
       \begin{center}
         \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
@@ -963,7 +968,7 @@ numberwithin=section,
     \egroup}
     \vfill
     \vskip 10mm
-    \bf\kaishu\zihao{4}\nju_submit_date
+    \bf\kaishu\zihao{4}\l__nju_submit_date_tl
     \vskip 15mm
   \end{center}
   \end{spacing}
@@ -975,9 +980,9 @@ numberwithin=section,
     \hspace{0pt} \vfill
     {\bgroup
     \kaishu\zihao{3}
-    \makebox[6em][s]{\bf\kaishu 学\hfill 号}：\MakeUppercase{\nju_student_id}
+    \makebox[6em][s]{\bf\kaishu 学\hfill 号}：\MakeUppercase{\l__nju_info_id_tl}
     \par
-    \makebox[6em][s]{\bf\kaishu 论文答辩日期}：\nju_defend_date
+    \makebox[6em][s]{\bf\kaishu 论文答辩日期}：\l__nju_defend_date_tl
     \par
     \makebox[6em][s]{\bf\kaishu 指\hfill 导\hfill 教\hfill 师}：\hspace{50mm}（签字）
     \par
@@ -1016,11 +1021,11 @@ numberwithin=section,
       \tl_set:Nn \tabcolsep {0pt}
       \tl_set:Nn \arraystretch {0.8}
       \noindent
-      题目： \nju_title \\
-      院系： \nju_department \\
-      专业： \nju_major \\
-      本科生姓名： \nju_student_name \\
-      指导教师（姓名、职称）：\nju_mentor_full \\
+      题目： \l__nju_info_title_tl \\
+      院系： \l__nju_info_dept_tl \\
+      专业： \l__nju_major_tl \\
+      本科生姓名： \l__nju_info_author_tl \\
+      指导教师（姓名、职称）：\nju_supervisor_full \\
       摘要：
       \egroup
     }
@@ -1047,11 +1052,11 @@ numberwithin=section,
     \end{center}
     {
       \bgroup
-      THESIS: ~~\nju_title_en \\
-      DEPARTMENT: ~~\nju_department_en \\
-      SPECIALIZATION: ~~\nju_major_en \\
-      UNDERGRADUATE:~~\nju_student_name_en \\
-      MENTOR:~~\nju_mentor_full_en \\
+      THESIS: ~~\l__nju_info_title_en_tl, \\
+      DEPARTMENT: ~~\l__nju_info_dept_en_tl \\
+      SPECIALIZATION: ~~\l__nju_major_en_tl \\
+      UNDERGRADUATE:~~\l__nju_info_author_en_tl \\
+      MENTOR:~~\nju_supervisor_full_en \\
       ABSTRACT:
       \egroup
     }
@@ -1085,11 +1090,11 @@ numberwithin=section,
     \tl_set:Nn \tabcolsep {0pt}
     \tl_set:Nn \arraystretch {0.8}
     \noindent
-    毕业论文题目：\hspace{0.5em}\nju_underline:n {\nju_title\hfill}\\
-    \uline{\makebox[9em]{\nju_major}}专业\uline{\makebox[4em]{\nju_grade}}级
+    毕业论文题目：\hspace{0.5em}\nju_underline:n {\l__nju_info_title_tl\hfill}\\
+    \uline{\makebox[9em]{\l__nju_major_tl}}专业\uline{\makebox[4em]{\l__nju_info_grade_tl}}级
     \str_if_eq:NNTF {\nju_degree} { phd } {博}{硕}
-    士生姓名：\uline{\hfill\nju_student_name\hfill} \\
-    指导教师（姓名、职称）：\uline{\hfill\nju_mentor_full\hfill}\par
+    士生姓名：\uline{\hfill\l__nju_info_author_tl\hfill} \\
+    指导教师（姓名、职称）：\uline{\hfill\nju_supervisor_full\hfill}\par
     \egroup
 
     \kaishu\zihao{4}\par%
@@ -1116,10 +1121,10 @@ numberwithin=section,
     {
       \bgroup
       \zihao{4}
-      THESIS: ~~\nju_title_en \\
-      SPECIALIZATION: ~~\nju_major_en \\
-      POSTGRADUATE:~~\nju_student_name_en \\
-      MENTOR:~~\nju_mentor_full_en\par
+      THESIS: ~~\l__nju_info_title_en_tl, \\
+      SPECIALIZATION: ~~\l__nju_major_en_tl \\
+      POSTGRADUATE:~~\l__nju_info_author_en_tl \\
+      MENTOR:~~\nju_supervisor_full_en\par
       \egroup
     }
     \zihao{4}\par%

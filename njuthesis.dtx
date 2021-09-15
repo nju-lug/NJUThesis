@@ -2,7 +2,7 @@
 % !TeX program  = XeLaTeX
 % !TeX encoding = UTF-8
 %
-% Copyright (C) 2021 by Nanjing University Linux User Group <my@yaoge123.com>
+% Copyright (C) 2021 by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
 % 
 % It may be distributed and/or modified under the conditions of the
 % LaTeX Project Public License (LPPL), either version 1.3c of this
@@ -146,7 +146,7 @@ Copyright © NJU-LUG
 
 \preamble
 
-Copyright (C) 2021 by Nanjing University Linux User Group <my@yaoge123.com>
+Copyright (C) 2021 by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
 
 This file may be distributed and/or modified under the conditions of
 the LaTeX Project Public License, either version 1.3 of this license
@@ -207,23 +207,28 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2021-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2021-09-15 12:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
+\usepackage{listings,xcolor}
+\definecolor{njuviolet}{cmyk}{0.5,1,0,0.4}
+\definecolor{njumagenta}{cmyk}{0.05,1,0.55,0}
+\definecolor{njublue}{cmyk}{0.8,0.5,0,0}
+\definecolor{njuyellow}{cmyk}{0,0.3,1,0}
 \begin{document}
   \DocInput{njuthesis.dtx}
 \end{document}
 %</driver>
 % \fi
 %
-% \title{The \textsc{NJuThesis} class\\ 南京大学学位论文模板}
+% \title{\color{njuviolet}The \textsc{NJuThesis} class\\ 南京大学学位论文模板}
 % 
 % \author{^^A
-% Nanjing University Linux User Group\thanks{E-mail: \href{mailto:my@yaoge123.com}{my@yaoge123.com}}}
+% Nanjing University Linux User Group\thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
 % \date{v0.9.0 \\ Released 2021-09-15}
 %
@@ -255,12 +260,15 @@ through XeTeX.
 %
 % Put text here.
 %
-% \section{配置环境}
+% \section{安装}
 % \label{sec:setup}
+%
+% 本节主要介绍本宏包的获取、安装以及编译方式
 %
 % 下表是目前经过测试的环境。如果有其他可用不可用的环境，欢迎补充。
 %
 % \begin{table}[ht]
+%     \centering
 %     \caption{经过测试的环境}
 %     % \label{tab:1}
 %     \begin{tabular}{ccc}
@@ -298,15 +306,35 @@ through XeTeX.
 % 若使用 LaTeX Workshop 插件，本项目在|.vscode/|中提供一份简易配置，可以省略初始配置步骤直接使用。
 %
 % \subsubsection{编译顺序}
+% 假设即将使用的文件名为\file{mynjuthesis.tex}
 % 应采用以下命令顺序进行编译，以生成正确的目录、编号和参考文献条目。
-% \begin{enumerate}
-%     \item |xelatex| / |lualatex|
-%     \item |biber|
-%     \item |xelatex| / |lualatex|
-%     \item |xelatex| / |lualatex|
-% \end{enumerate}
+% \begin{lstlisting}
+%   xelatex mynjuthesis
+%   biber mynjuthesis
+%   xelatex mynjuthesis
+%   xelatex mynjuthesis
+% \end{lstlisting}
+% 使用 \pkg{latexmk}
+% \begin{lstlisting}
+%   latexmk -xelatex mynjuthesis
+% \end{lstlisting}
 %
-% 编译产物\footnote{作为化学学生，俺认为用“产物”代替“编译生成的文件”是一个通俗易懂的说法}为|njuthesis.pdf|，位于主目录下。此外还会生成一系列中间文件，可以选择使用|latexmk -c|进行清理。
+% \begin{lstlisting}
+%   lualatex mynjuthesis
+%   biber mynjuthesis
+%   lualatex mynjuthesis
+%   lualatex mynjuthesis
+% \end{lstlisting}
+% 使用 \pkg{latexmk}
+% \begin{lstlisting}
+%   latexmk -lualatex mynjuthesis
+% \end{lstlisting}
+%
+% 编译产物为\file{njuthesis.pdf}，位于主目录下。此外还会生成一系列中间文件，可以选择使用以下命令进行清理。
+%
+% \begin{lstlisting}
+%   latexmk -c
+% \end{lstlisting}
 %
 % \subsection{在线编译}
 %
@@ -338,22 +366,22 @@ through XeTeX.
 %
 % \subsection{自定义选项}
 %
-% 加粗的为默认选项
+% 尖括号内列出了若干个允许的选项，其中加粗的为默认选项
 %
 % \begin{function}[added=2021-09-07]{titlelength}
 %   \begin{syntax}
 %     titlelength = <(1)|2|3>
 %   \end{syntax}
 %
-% 为了使较长的论文题目也能美观地呈现在封面页上，njuthesis类提供了\texttt{TitleLength}这一选项，用于控制封面标题的行数。可选值为1、2、3，缺省值为1。
+% 为了使较长的论文题目也能美观地呈现在封面页上，njuthesis类提供了{TitleLength}这一选项，用于控制封面标题的行数。最多3行
 % \end{function}
 %
-% \begin{function}[added=2021-09-07]{secondmentor}
+% \begin{function}[added=2021-09-07]{secondsupervisor}
 %   \begin{syntax}
-%     secondmentor = <\TFF>
+%     secondsupervisor = <\TFF>
 %   \end{syntax}
 %
-% 用于在封面和摘要添加第二导师，缺省值为false。
+% 用于在封面和摘要添加第二导师。由于目前来说拥有两位指导老师并不是一种普遍状况，因此此项默认为\opt{false}。
 % \opt{true}，\opt{false}（默认）。
 % \end{function}
 %
@@ -362,8 +390,7 @@ through XeTeX.
 %     nlcover = <\TTF>
 %   \end{syntax}
 %
-% 用于添加国家图书馆封面，缺省值为true。
-% \opt{true}，\opt{false}（默认）。
+% 通过此项可选择是否添加国家图书馆封面，本选项仅对于研究生有效
 % \end{function}
 %
 % 
@@ -374,7 +401,7 @@ through XeTeX.
 %   \end{syntax}
 %
 % 选择学位，可选：
-% \opt{ug}（默认本科），\opt{mg}，\opt{mf}，\opt{phd}。
+% \opt{ug}（默认本科），\opt{mg}即学术硕士，\opt{mf}，\opt{phd}。
 % \end{function}
 %   
 %
@@ -420,11 +447,11 @@ through XeTeX.
 % 手动指定中文字体，可选：
 % \opt{windows}（默认）， \opt{macos}， \opt{fandol}， \opt{founder}，\opt{noto}，\opt{null}。
 %
-% FZSSK 方正书宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/151 免费商用
+% FZSSK 方正书宋（简繁扩展）  \href{http://www.foundertype.com/index.php/FontInfo/index/id/151 免费商用}{下载链接}
 %
-% FZXBSK 方正小标宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/164 设计师非商免费
+% FZXBSK 方正小标宋（简繁扩展） \href{http://www.foundertype.com/index.php/FontInfo/index/id/164 设计师非商免费}{下载链接}
 %
-% FZKTK 方正楷体（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/137 免费商用
+% FZKTK 方正楷体（简繁扩展） \href{http://www.foundertype.com/index.php/FontInfo/index/id/137 免费商用}{下载链接}
 % 
 % 各个系统的默认字体请参考。可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；另一方面，在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}，符合视觉习惯。
 % 
@@ -435,8 +462,12 @@ through XeTeX.
 %
 % \subsection{输入个人信息}
 %
-% \texttt{njusetup}定义了用于文档封面的诸多属性参数，
+% \begin{function}{\njusetup}
+% 
+%  定义了用于文档封面的诸多属性参数，
 % 写作时修改相应字符串即可。注意不要有空行，否则可能报错
+%
+% \end{function}
 %
 %
 % \subsubsection{论文标题}
@@ -444,7 +475,7 @@ through XeTeX.
 %     \item[\texttt{TitleA}] 单行标题，或多行标题的第一行。关于是否应该折行，单行能容纳的最长标题为\emph{15个中文字符}，请自行选择合适的截断处。
 %     \item[\texttt{TitleB}] 多行标题的第二行
 %     \item[\texttt{TitleC}] 多行标题的第三行
-%     \item[\texttt{TitleEN}] 英文标题，注意空格要用波浪线（\textasciitilde）替代
+%     \item[\texttt{Title*}] 英文标题，注意空格要用波浪线（\textasciitilde）替代
 % \end{description}
 %
 % \subsubsection{个人年级、学号、姓名}
@@ -452,7 +483,7 @@ through XeTeX.
 %     \item[\texttt{Grade}] 年级
 %     \item[\texttt{StudentID}] 本科生为9位数字学号，研究生为两位英文字母标识加8位数字学号，两位字母自动大写
 %     \item[\texttt{StudentName}] 姓名
-%     \item[\texttt{StudentNameEN}] 姓名拼音 
+%     \item[\texttt{StudentName*}] 姓名拼音 
 % \end{description}
 %
 % \subsubsection{就读院系专业}
@@ -460,20 +491,20 @@ through XeTeX.
 % 本科生无需填写研究方向。
 % \begin{description}
 %     \item[\texttt{Department}] 学院名称
-%     \item[\texttt{DepartmentEN}] 学院英文名称
+%     \item[\texttt{Department*}] 学院英文名称
 %     \item[\texttt{Major}] 专业名称
-%     \item[\texttt{MajorEN}] 专业英文名称
+%     \item[\texttt{Major*}] 专业英文名称
 %     \item[\texttt{Field}] 研究方向
-%     \item[\texttt{FieldEN}] 研究方向英文名称
+%     \item[\texttt{Field*}] 研究方向英文名称
 % \end{description}
 %
 % \subsubsection{导师信息}
 % 注意标注A的为第一导师
 % \begin{description}
-%     \item[\texttt{Mentor<A/B>}] 导师姓名
-%     \item[\texttt{Mentor<A/B>EN}] 导师姓名的英文拼音  
-%     \item[\texttt{Mentor<A/B>Title}] 导师职称
-%     \item[\texttt{Mentor<A/B>TitleEN}] 导师职称英文
+%     \item[\texttt{Supervisor<A/B>}] 导师姓名
+%     \item[\texttt{Supervisor<A/B>*}] 导师姓名的英文拼音  
+%     \item[\texttt{Supervisor<A/B>Title}] 导师职称
+%     \item[\texttt{Supervisor<A/B>Title*}] 导师职称英文
 % \end{description}
 %
 % \subsubsection{提交日期}
@@ -500,7 +531,7 @@ through XeTeX.
 %     \item[\texttt{Classification}] 分类号
 %     \item[\texttt{SecurityLevel}] 限制  
 %     \item[\texttt{UDC}] UDC
-%     \item[\texttt{MentorInfo}] 指导教师职务、职称、学位、单位名称及地址
+%     \item[\texttt{SupervisorContact}] 指导教师职务、职称、学位、单位名称及地址
 % \end{description}
 %
 % \subsection{摘要页}
@@ -536,9 +567,11 @@ through XeTeX.
 % \begin{implementation}
 %
 % \section{代码实现}
+% @@在l3docstrip中表示名空间，在生成cls时会被相应字段替换，譬如在njuthesis中@@=nju
 %
 % laTex默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故1.5/1.2*1.3 = 1.625
 %    \begin{macrocode}
+%<@@=nju>
 %<*class>
 \LoadClass[
   a4paper,
@@ -565,8 +598,8 @@ through XeTeX.
 %
 % Put text here.
 %    \begin{macrocode}
-  secondmentor      .bool_set:N   =   \nju_second_mentor,
-  secondmentor      .initial:n    =   false,
+  secondsupervisor      .bool_set:N   =   \nju_second_supervisor,
+  secondsupervisor      .initial:n    =   false,
 %    \end{macrocode}
 %
 % Put text here.
@@ -618,74 +651,74 @@ through XeTeX.
 % Put text here.
 %    \begin{macrocode}
   % 题目
-  TitleA            .tl_set:N     =   \nju_title_a,
-  TitleB            .tl_set:N     =   \nju_title_b,
-  TitleC            .tl_set:N     =   \nju_title_c,
-  TitleEN           .tl_set:N     =   \nju_title_en,
+  TitleA            .tl_set:N     =   \l_@@_info_title_a_tl,
+  TitleB            .tl_set:N     =   \l_@@_info_title_b_tl,
+  TitleC            .tl_set:N     =   \l_@@_info_title_c_tl,
+  Title*            .tl_set:N     =   \l_@@_info_title_en_tl,
 %    \end{macrocode}
 %
 % Put text here.
 %    \begin{macrocode}
   % 年级学号姓名
-  Grade             .tl_set:N     =   \nju_grade,
-  StudentID         .tl_set:N     =   \nju_student_id,
-  StudentName       .tl_set:N     =   \nju_student_name,
-  StudentNameEN     .tl_set:N     =   \nju_student_name_en,
+  Grade             .tl_set:N     =   \l_@@_info_grade_tl,
+  StudentID         .tl_set:N     =   \l_@@_info_id_tl,
+  StudentName       .tl_set:N     =   \l_@@_info_author_tl,
+  StudentName*      .tl_set:N     =   \l_@@_info_author_en_tl,
 %    \end{macrocode}
 %
 % Put text here.
 %    \begin{macrocode}
   % 院系专业方向
-  Department        .tl_set:N     =   \nju_department,
-  DepartmentEN      .tl_set:N     =   \nju_department_en,
-  Major             .tl_set:N     =   \nju_major,
-  MajorEN           .tl_set:N     =   \nju_major_en,
-  Field             .tl_set:N     =   \nju_field,
-  FieldEN           .tl_set:N     =   \nju_field_en,
+  Department        .tl_set:N     =   \l_@@_info_dept_tl,
+  Department*       .tl_set:N     =   \l_@@_info_dept_en_tl,
+  Major             .tl_set:N     =   \l_@@_major_tl,
+  Major*            .tl_set:N     =   \l_@@_major_en_tl,
+  Field             .tl_set:N     =   \l_@@_field_tl,
+  Field*            .tl_set:N     =   \l_@@_field_en_tl,
 %    \end{macrocode}
 %  
 % 导师
 % Put text here.
 %    \begin{macrocode}
-  MentorA           .tl_set:N     =   \nju_mentor_a,
-  MentorAEN         .tl_set:N     =   \nju_mentor_a_en,
-  MentorATitle      .tl_set:N     =   \nju_mentor_a_title,
-  MentorATitleEN    .tl_set:N     =   \nju_mentor_a_title_en,
+  SupervisorA       .tl_set:N     =   \l_@@_info_supv_a_tl,
+  SupervisorA*      .tl_set:N     =   \l_@@_info_supv_a_en_tl,
+  SupervisorATitle  .tl_set:N     =   \l_@@_info_supv_a_title_tl,
+  SupervisorATitle* .tl_set:N     =   \l_@@_info_supv_a_title_en_tl,
 %    \end{macrocode}
 %
 % 第二导师
 % Put text here.
 %    \begin{macrocode}
-  MentorB           .tl_set:N     =   \nju_mentor_b,
-  MentorBEN         .tl_set:N     =   \nju_mentor_b_en,
-  MentorBTitle      .tl_set:N     =   \nju_mentor_b_title,
-  MentorBTitleEN    .tl_set:N     =   \nju_mentor_b_title_en,
+  SupervisorB       .tl_set:N     =   \l_@@_info_supv_b_tl,
+  SupervisorB*      .tl_set:N     =   \l_@@_info_supv_b_en_tl,
+  SupervisorBTitle  .tl_set:N     =   \l_@@_info_supv_b_title_tl,
+  SupervisorBTitle* .tl_set:N     =   \l_@@_info_supv_b_title_en_tl,
 %    \end{macrocode}
 %
 % Put text here.
 % 提交日期
 %    \begin{macrocode}
-  SubmitDate        .tl_set:N     =   \nju_submit_date,
+  SubmitDate        .tl_set:N     =   \l_@@_submit_date_tl,
 %    \end{macrocode}
 %
 % Put text here.
 % 答辩
 %    \begin{macrocode}
-  DefendDate        .tl_set:N     =   \nju_defend_date,
-  ReviewerChairman  .tl_set:N     =   \nju_reviewer_chairman,
-  ReviewerA         .tl_set:N     =   \nju_reviewer_a,
-  ReviewerB         .tl_set:N     =   \nju_reviewer_b,
-  ReviewerC         .tl_set:N     =   \nju_reviewer_c,
-  ReviewerD         .tl_set:N     =   \nju_reviewer_d,
+  DefendDate        .tl_set:N     =   \l_@@_defend_date_tl,
+  ReviewerChairman  .tl_set:N     =   \l_@@_info_chairman_tl,
+  ReviewerA         .tl_set:N     =   \l_@@_info_reviewer_a_tl,
+  ReviewerB         .tl_set:N     =   \l_@@_info_reviewer_b_tl,
+  ReviewerC         .tl_set:N     =   \l_@@_info_reviewer_c_tl,
+  ReviewerD         .tl_set:N     =   \l_@@_info_reviewer_d_tl,
 %    \end{macrocode}
 %
 % Put text here.
 %    \begin{macrocode}
   % 国家图书馆封面相关
-  Classification    .tl_set:N     =   \nju_classification,
-  SecurityLevel     .tl_set:N     =   \nju_securitylevel,
-  UDC               .tl_set:N     =   \nju_udc,
-  MentorInfo        .tl_set:N     =   \nju_mentor_info,
+  Classification    .tl_set:N     =   \l_@@_info_classif_tl,
+  SecurityLevel     .tl_set:N     =   \l_@@_info_seclv_tl,
+  UDC               .tl_set:N     =   \l_@@_info_udc_tl,
+  SupervisorContact .tl_set:N     =   \l_@@_info_supv_cont_tl,
 }
 %    \end{macrocode}
 %
@@ -717,7 +750,6 @@ through XeTeX.
 % \RequirePackage{titlesec} % 修改章节标题功能由CTeX提供
 \RequirePackage{titletoc} % 修改目录内标题格式
 % \RequirePackage{appendix} % 定义附录样式
-\RequirePackage{fancyhdr} % 调整页眉页脚
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
 % \RequirePackage[normalem]{ulem} % 绘制下划线
 % \RequirePackage{soul} % 用不起来
@@ -1082,6 +1114,7 @@ through XeTeX.
 %
 % Put text here.
 %    \begin{macrocode}
+\RequirePackage{fancyhdr} % 调整页眉页脚
 % 本科生页眉页脚 
 \fancypagestyle{njuplain}{%
    \fancyhead{}               
@@ -1503,33 +1536,38 @@ through XeTeX.
 % \subsection{封面绘制}
 %    \begin{macrocode}
 % 拼合标题
-\tl_const:Nn \nju_title {\nju_title_a \nju_title_b \nju_title_c}
+\tl_const:Nn \l_@@_info_title_tl, 
+{
+  \l_@@_info_title_a_tl
+  \l_@@_info_title_b_tl
+  \l_@@_info_title_c_tl
+}
 %    \end{macrocode}
 %
 % Put text here.
 %    \begin{macrocode}
 % 拼合导师
-\bool_if:NTF \nju_second_mentor
+\bool_if:NTF \nju_second_supervisor
 { 
-  \tl_const:Nn \nju_mentor_full
+  \tl_const:Nn \nju_supervisor_full
   {
-    \nju_mentor_a\ \nju_mentor_a_title
-    \ \ \nju_mentor_b\ \nju_mentor_b_title
+    \l_@@_info_supv_a_tl\ \l_@@_info_supv_a_title_tl
+    \ \ \l_@@_info_supv_b_tl\ \l_@@_info_supv_b_title_tl
   }
-  \tl_const:Nn \nju_mentor_full_en
+  \tl_const:Nn \nju_supervisor_full_en
   {
-    \nju_mentor_a_en\ \nju_mentor_a_title_en
-    \ \ \nju_mentor_b_en\ \nju_mentor_b_title_en
+    \l_@@_info_supv_a_en_tl\ \l_@@_info_supv_a_title_en_tl
+    \ \ \l_@@_info_supv_b_en_tl\ \l_@@_info_supv_b_title_en_tl
   }
 }
 {
-  \tl_const:Nn \nju_mentor_full
+  \tl_const:Nn \nju_supervisor_full
   {
-    \nju_mentor_a\ \nju_mentor_a_title
+    \l_@@_info_supv_a_tl\ \l_@@_info_supv_a_title_tl
   }
-  \tl_const:Nn \nju_mentor_full_en
+  \tl_const:Nn \nju_supervisor_full_en
   {
-    \nju_mentor_a_en\ \nju_mentor_a_title_en
+    \l_@@_info_supv_a_en_tl\ \l_@@_info_supv_a_title_en_tl
   }
 }
 %    \end{macrocode}
@@ -1611,58 +1649,58 @@ through XeTeX.
 {
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {院\hfill 系}
-    & \nju_cover_underline_ug:nn {250pt}{\nju_department}\\
+    & \nju_cover_underline_ug:nn {250pt}{\l_@@_info_dept_tl}\\
     \nju_coverbox_ug:n {专\hfill 业}
-    & \nju_cover_underline_ug:nn {250pt}{\nju_major}\\
+    & \nju_cover_underline_ug:nn {250pt}{\l_@@_major_tl}\\
 
     % 标题换行
     \int_case:nn { \nju_titlelength }
       {
         { 1 } { 
           \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_a}} \\ }
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l_@@_info_title_a_tl,}} \\ }
         { 2 } {
           \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_a}} \\
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_b}} \\ }
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l_@@_info_title_a_tl,}} \\
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l_@@_info_title_b_tl,}} \\ }
         { 3 } { 
           \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_a}} \\
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_b}} \\
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\nju_title_c}} \\}
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l_@@_info_title_a_tl,}} \\
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l_@@_info_title_b_tl,}} \\
+          & \nju_cover_underline_ug:nn {250pt}{\bf{\l_@@_info_title_c_tl,}} \\}
       }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \nju_coverbox_ug:n {年\hfill 级}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_grade}
+    & \nju_cover_underline_ug:nn {90pt}{\l_@@_info_grade_tl}
     & \nju_coverbox_ug:n {学\hfill 号}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_student_id}\\
+    & \nju_cover_underline_ug:nn {90pt}{\l_@@_info_id_tl}\\
   \end{tabular}\\
   
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {学\hfill 生\hfill 姓\hfill 名}
-    & \nju_cover_underline_ug:nn {250pt}{\nju_student_name}
+    & \nju_cover_underline_ug:nn {250pt}{\l_@@_info_author_tl}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \nju_coverbox_ug:n {导\hfill 师}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_a}
+    & \nju_cover_underline_ug:nn {90pt}{\l_@@_info_supv_a_tl}
     & \nju_coverbox_ug:n {职\hfill 称}
-    & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_a_title}\\
+    & \nju_cover_underline_ug:nn {90pt}{\l_@@_info_supv_a_title_tl}\\
 
     % 第二导师
-    \bool_if:NT \nju_second_mentor
+    \bool_if:NT \nju_second_supervisor
     {
       \nju_coverbox_ug:n {第\hfill 二\hfill 导\hfill 师}
-      & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b}
+      & \nju_cover_underline_ug:nn {90pt}{\l_@@_info_supv_b_tl}
       & \nju_coverbox_ug:n {职\hfill 称}
-      & \nju_cover_underline_ug:nn {90pt}{\nju_mentor_b_title}\\
+      & \nju_cover_underline_ug:nn {90pt}{\l_@@_info_supv_b_title_tl}\\
     }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {提\hfill 交\hfill 日\hfill 期}
-    & \nju_cover_underline_ug:nn {250pt}{\nju_submit_date}\\
+    & \nju_cover_underline_ug:nn {250pt}{\l_@@_submit_date_tl}\\
   \end{tabular}
 }
 %    \end{macrocode}
@@ -1679,26 +1717,26 @@ through XeTeX.
       {
         { 1 } { 
           \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline_g:n {\nju_title_a} \\ }
+          & \nju_cover_underline_g:n {\l_@@_info_title_a_tl,} \\ }
         { 2 } {
           \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline_g:n {\nju_title_a} \\
-          & \nju_cover_underline_g:n {\nju_title_b} \\ }
+          & \nju_cover_underline_g:n {\l_@@_info_title_a_tl,} \\
+          & \nju_cover_underline_g:n {\l_@@_info_title_b_tl,} \\ }
         { 3 } { 
           \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline_g:n {\nju_title_a} \\
-          & \nju_cover_underline_g:n {\nju_title_b} \\
-          & \nju_cover_underline_g:n {\nju_title_c} \\}
+          & \nju_cover_underline_g:n {\l_@@_info_title_a_tl,} \\
+          & \nju_cover_underline_g:n {\l_@@_info_title_b_tl,} \\
+          & \nju_cover_underline_g:n {\l_@@_info_title_c_tl,} \\}
       }
 
     \nju_coverbox_g:n {作\hfill 者\hfill 姓\hfill 名}
-    & \nju_cover_underline_g:n {\nju_student_name}\\
+    & \nju_cover_underline_g:n {\l_@@_info_author_tl}\\
     \nju_coverbox_g:n {专\hfill 业\hfill 名\hfill 称}
-    & \nju_cover_underline_g:n {\nju_major}\\
+    & \nju_cover_underline_g:n {\l_@@_major_tl}\\
     \nju_coverbox_g:n {研\hfill 究\hfill 方\hfill 向}
-    & \nju_cover_underline_g:n {\nju_field}\\
+    & \nju_cover_underline_g:n {\l_@@_field_tl}\\
     \nju_coverbox_g:n {指\hfill 导\hfill 教\hfill 师}
-    & \nju_cover_underline_g:n {\nju_mentor_full}\\
+    & \nju_cover_underline_g:n {\nju_supervisor_full}\\
   \end{tabular}
 }
 %    \end{macrocode}
@@ -1726,13 +1764,13 @@ through XeTeX.
       \vskip -20mm \hskip -15mm
       \songti\zihao{-4}
       \makebox[40pt][l]{分类号}
-      \nju_cover_underline_nl:nn {150pt}{\nju_classification}
+      \nju_cover_underline_nl:nn {150pt}{\l_@@_info_classif_tl}
       \hfill
       \makebox[40pt][l]{密级}
-      \nju_cover_underline_nl:nn {150pt}{\nju_securitylevel}
+      \nju_cover_underline_nl:nn {150pt}{\l_@@_info_seclv_tl}
       \vskip 10pt \hskip -15mm
       \makebox[40pt][l]{UDC}
-      \nju_cover_underline_nl:nn {150pt}{\nju_udc}
+      \nju_cover_underline_nl:nn {150pt}{\l_@@_info_udc_tl}
     }
   
     % 中部
@@ -1743,14 +1781,14 @@ through XeTeX.
       {
         \kaishu\zihao{1}
         \vskip \stretch{1}
-        \nju_cover_underline_nl:nn {14em}{\nju_title_a}\\
-        \nju_cover_underline_nl:nn {14em}{\nju_title_b}\\
-        \nju_cover_underline_nl:nn {14em}{\nju_title_c}\\
+        \nju_cover_underline_nl:nn {14em}{\l_@@_info_title_a_tl,}\\
+        \nju_cover_underline_nl:nn {14em}{\l_@@_info_title_b_tl,}\\
+        \nju_cover_underline_nl:nn {14em}{\l_@@_info_title_c_tl,}\\
       }
       \vskip \stretch{1}
       {\kaishu\zihao{4}（题名和副题名）}
       \vskip \stretch{1} \vskip 5mm
-      {\kaishu\zihao{1}\uline{\makebox{\nju_student_name}}}
+      {\kaishu\zihao{1}\uline{\makebox{\l_@@_info_author_tl}}}
       \vskip \stretch{1}
       {\kaishu\zihao{4}（作者姓名）}
     \end{center}
@@ -1760,25 +1798,25 @@ through XeTeX.
     {
       \kaishu\zihao{4}
       \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
-      \nju_cover_underline_nl:nn {94pt}{\nju_mentor_a}\par
+      \nju_cover_underline_nl:nn {94pt}{\l_@@_info_supv_a_tl}\par
       \noindent\nju_cover_underline_nl:nn {\textwidth}{%
-      \nju_mentor_info}\par
+      \l_@@_info_supv_cont_tl}\par
       \noindent 申请学位级别%
       \nju_cover_underline_nl:nn {9em}{\nju_degree_title}%
       \noindent 专业名称%
-      \uline{\hfill\nju_major\hfill}\par% 需要调整下划线长度
+      \uline{\hfill\l_@@_major_tl\hfill}\par% 需要调整下划线长度
       \noindent 论文提交日期%
-      \nju_cover_underline_nl:nn {9em}{\nju_submit_date}%
+      \nju_cover_underline_nl:nn {9em}{\l_@@_submit_date_tl}%
       论文答辩日期%
-      \uline{\hfill\nju_defend_date\hfill}\par% 需要调整下划线长度
+      \uline{\hfill\l_@@_defend_date_tl\hfill}\par% 需要调整下划线长度
       \noindent 学位授予单位和日期\uline{\hfill}\par
       \noindent\hfill 答辩委员会主席：%
-      \nju_cover_underline_nl:nn {9em}{\nju_reviewer_chairman}\par
+      \nju_cover_underline_nl:nn {9em}{\l_@@_info_chairman_tl}\par
       \noindent\hfill 评阅人：%
-      \nju_cover_underline_nl:nn {9em}{\nju_reviewer_a}\par
-      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\nju_reviewer_b}\par
-      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\nju_reviewer_c}\par
-      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\nju_reviewer_d}\par
+      \nju_cover_underline_nl:nn {9em}{\l_@@_info_reviewer_a_tl}\par
+      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\l_@@_info_reviewer_b_tl}\par
+      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\l_@@_info_reviewer_c_tl}\par
+      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\l_@@_info_reviewer_d_tl}\par
       
       \begin{center}
         \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
@@ -1854,7 +1892,7 @@ through XeTeX.
     \egroup}
     \vfill
     \vskip 10mm
-    \bf\kaishu\zihao{4}\nju_submit_date
+    \bf\kaishu\zihao{4}\l_@@_submit_date_tl
     \vskip 15mm
   \end{center}
   \end{spacing}
@@ -1866,9 +1904,9 @@ through XeTeX.
     \hspace{0pt} \vfill
     {\bgroup
     \kaishu\zihao{3}
-    \makebox[6em][s]{\bf\kaishu 学\hfill 号}：\MakeUppercase{\nju_student_id}
+    \makebox[6em][s]{\bf\kaishu 学\hfill 号}：\MakeUppercase{\l_@@_info_id_tl}
     \par
-    \makebox[6em][s]{\bf\kaishu 论文答辩日期}：\nju_defend_date
+    \makebox[6em][s]{\bf\kaishu 论文答辩日期}：\l_@@_defend_date_tl
     \par
     \makebox[6em][s]{\bf\kaishu 指\hfill 导\hfill 教\hfill 师}：\hspace{50mm}（签字）
     \par
@@ -1918,11 +1956,11 @@ through XeTeX.
       \tl_set:Nn \tabcolsep {0pt}
       \tl_set:Nn \arraystretch {0.8}
       \noindent
-      题目： \nju_title \\
-      院系： \nju_department \\
-      专业： \nju_major \\
-      本科生姓名： \nju_student_name \\
-      指导教师（姓名、职称）：\nju_mentor_full \\
+      题目： \l_@@_info_title_tl \\
+      院系： \l_@@_info_dept_tl \\
+      专业： \l_@@_major_tl \\
+      本科生姓名： \l_@@_info_author_tl \\
+      指导教师（姓名、职称）：\nju_supervisor_full \\
       摘要：
       \egroup
     }
@@ -1949,11 +1987,11 @@ through XeTeX.
     \end{center}
     {
       \bgroup
-      THESIS: ~~\nju_title_en \\
-      DEPARTMENT: ~~\nju_department_en \\
-      SPECIALIZATION: ~~\nju_major_en \\
-      UNDERGRADUATE:~~\nju_student_name_en \\
-      MENTOR:~~\nju_mentor_full_en \\
+      THESIS: ~~\l_@@_info_title_en_tl, \\
+      DEPARTMENT: ~~\l_@@_info_dept_en_tl \\
+      SPECIALIZATION: ~~\l_@@_major_en_tl \\
+      UNDERGRADUATE:~~\l_@@_info_author_en_tl \\
+      MENTOR:~~\nju_supervisor_full_en \\
       ABSTRACT:
       \egroup
     }
@@ -1991,11 +2029,11 @@ through XeTeX.
     \tl_set:Nn \tabcolsep {0pt}
     \tl_set:Nn \arraystretch {0.8}
     \noindent
-    毕业论文题目：\hspace{0.5em}\nju_underline:n {\nju_title\hfill}\\    
-    \uline{\makebox[9em]{\nju_major}}专业\uline{\makebox[4em]{\nju_grade}}级
+    毕业论文题目：\hspace{0.5em}\nju_underline:n {\l_@@_info_title_tl\hfill}\\    
+    \uline{\makebox[9em]{\l_@@_major_tl}}专业\uline{\makebox[4em]{\l_@@_info_grade_tl}}级
     \str_if_eq:NNTF {\nju_degree} { phd } {博}{硕}
-    士生姓名：\uline{\hfill\nju_student_name\hfill} \\
-    指导教师（姓名、职称）：\uline{\hfill\nju_mentor_full\hfill}\par
+    士生姓名：\uline{\hfill\l_@@_info_author_tl\hfill} \\
+    指导教师（姓名、职称）：\uline{\hfill\nju_supervisor_full\hfill}\par
     \egroup
   
     \kaishu\zihao{4}\par%
@@ -2022,10 +2060,10 @@ through XeTeX.
     {
       \bgroup
       \zihao{4}
-      THESIS: ~~\nju_title_en \\
-      SPECIALIZATION: ~~\nju_major_en \\
-      POSTGRADUATE:~~\nju_student_name_en \\
-      MENTOR:~~\nju_mentor_full_en\par
+      THESIS: ~~\l_@@_info_title_en_tl, \\
+      SPECIALIZATION: ~~\l_@@_major_en_tl \\
+      POSTGRADUATE:~~\l_@@_info_author_en_tl \\
+      MENTOR:~~\nju_supervisor_full_en\par
       \egroup
     }
     \zihao{4}\par%

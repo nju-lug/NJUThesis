@@ -31,35 +31,36 @@
 % 设置个人信息
 \njusetup {
     % 本科生无需填写的项目已被特别标注
+    % 注意英文题目必须使用大括号，或者将空格替换为波浪线
     % 注意不要有空行，否则可能报错
     info = {
         % 题目
         TitleA = 一种使用南京大学\hologo{LaTeX}模版,
         TitleB = 编写毕业论文的经验性方法,
         % TitleC = , % 没有第三行就不用填这个哦
-        TitleEN = An~Empirical~Way~of~Composing~Thesis~with~NJU~\hologo{LaTeX}~Template, % 注意空格必须替换为波浪线
+        Title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
         % 姓名学号
         Grade = 2018,
         StudentID = 189114514, % dz18114514,
         StudentName = 周煜华,
-        StudentNameEN = Zhou~Yuhua,
+        StudentName* = Zhou~Yuhua,
         % 院系专业
         Department = 拉太赫科学与技术学院,
-        DepartmentEN = School~of~\hologo{LaTeX},
+        Department* = School~of~\hologo{LaTeX},
         Major = 拉太赫语言学,
-        MajorEN = \hologo{LaTeX}~Linguistics,
+        Major* = \hologo{LaTeX}~Linguistics,
         Field = 拉太赫语言在现当代的使用, % 研究生项
-        FieldEN = Contemporary~Usage~of~the~\hologo{LaTeX}~Language, % 研究生项
+        Field* = Contemporary~Usage~of~the~\hologo{LaTeX}~Language, % 研究生项
         % 导师
-        MentorA = 李成殿,
-        MentorAEN= Li~Chengdian,
-        MentorATitle = 教授,
-        MentorATitleEN = Professor,
+        SupervisorA = 李成殿,
+        SupervisorA*= Li~Chengdian,
+        SupervisorATitle = 教授,
+        SupervisorATitle* = Professor,
         % 第二导师，如无则忽略
-        MentorB = 孙赫弥,
-        MentorBEN = Sun~Hemi,
-        MentorBTitle = 副教授,
-        MentorBTitleEN = Associate professor,
+        SupervisorB = 孙赫弥,
+        SupervisorB* = Sun~Hemi,
+        SupervisorBTitle = 副教授,
+        SupervisorBTitle* = Associate professor,
         % 提交日期
         SubmitDate = 2021年8月10日,
         % 答辩，均为研究生项
@@ -73,7 +74,7 @@
         Classification = 0175.2,
         SecurityLevel = 限制,
         UDC = 004.72,
-        MentorInfo = 拉太赫科学与技术学院~枝江市结丘路~19~号~114514,
+        SupervisorContact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514},
     }
 }
 
