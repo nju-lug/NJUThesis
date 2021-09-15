@@ -38,8 +38,6 @@
 \RequirePackage{l3keys2e}
 \keys_define:nn { nju }
 {
-  titlelength       .int_set:N    =   \nju_titlelength,
-  titlelength       .initial:n    =   1,
   secondsupervisor      .bool_set:N   =   \nju_second_supervisor,
   secondsupervisor      .initial:n    =   false,
   nlcover           .bool_set:N   =   \nju_nl_cover,
@@ -657,7 +655,7 @@ refname={定理,定理},
 Refname={定理,定理},
 numberwithin=section,
 ]{theorem}
-\tl_const:Nn \l__nju_info_title_tl,
+\tl_const:Nn \l__nju_info_title_tl
 {
   \l__nju_info_title_a_tl
   \l__nju_info_title_b_tl
@@ -695,7 +693,7 @@ numberwithin=section,
   \bool_set_false:N \nju_nl_cover
 
   % 封面下划线
-  \cs_new:Npn \nju_cover_underline_ug:nn #1 #2
+  \cs_new:Npn \nju_cover_uline_ug:nn #1 #2
   {
     \uline{\makebox[#1]{\rm\songti#2}}
   }
@@ -711,13 +709,13 @@ numberwithin=section,
   \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill }
 
   % 封面下划线
-  \cs_new:Npn \nju_cover_underline_g:n #1
+  \cs_new:Npn \nju_cover_uline_g:n #1
   {
     \uline{\makebox[250pt]{\rm\kaishu#1}}
   }
 
   % 国家图书馆封面下划线
-  \cs_new:Npn \nju_cover_underline_nl:nn #1 #2
+  \cs_new:Npn \nju_cover_uline_nl:nn #1 #2
   {
     \uline{\makebox[#1]{#2}}
   }
@@ -750,89 +748,81 @@ numberwithin=section,
 {
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {院\hfill 系}
-    & \nju_cover_underline_ug:nn {250pt}{\l__nju_info_dept_tl}\\
+    & \nju_cover_uline_ug:nn {250pt}{\l__nju_info_dept_tl} \\
     \nju_coverbox_ug:n {专\hfill 业}
-    & \nju_cover_underline_ug:nn {250pt}{\l__nju_major_tl}\\
+    & \nju_cover_uline_ug:nn {250pt}{\l__nju_major_tl} \\
 
-    % 标题换行
-    \int_case:nn { \nju_titlelength }
-      {
-        { 1 } {
-          \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_a_tl,}} \\ }
-        { 2 } {
-          \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_a_tl,}} \\
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl,}} \\ }
-        { 3 } {
-          \nju_coverbox_ug:n {题\hfill 目}
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_a_tl,}} \\
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl,}} \\
-          & \nju_cover_underline_ug:nn {250pt}{\bf{\l__nju_info_title_c_tl,}} \\}
-      }
+    \nju_coverbox_ug:n {题\hfill 目}
+    & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_a_tl}} \\
+    % 自动判断标题换行
+    \tl_if_empty:NTF \l__nju_info_title_b_tl {}
+    {
+      \tl_if_empty:NTF \l__nju_info_title_c_tl
+        { & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl}} \\ }
+        {
+          & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl}} \\
+          & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_c_tl}} \\
+        }
+    }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \nju_coverbox_ug:n {年\hfill 级}
-    & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_grade_tl}
+    & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_grade_tl}
     & \nju_coverbox_ug:n {学\hfill 号}
-    & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_id_tl}\\
+    & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_id_tl}\\
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {学\hfill 生\hfill 姓\hfill 名}
-    & \nju_cover_underline_ug:nn {250pt}{\l__nju_info_author_tl}
+    & \nju_cover_uline_ug:nn {250pt}{\l__nju_info_author_tl}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
     \nju_coverbox_ug:n {导\hfill 师}
-    & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_supv_a_tl}
+    & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_supv_a_tl}
     & \nju_coverbox_ug:n {职\hfill 称}
-    & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_supv_a_title_tl}\\
+    & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_supv_a_title_tl}\\
 
     % 第二导师
     \bool_if:NT \nju_second_supervisor
     {
       \nju_coverbox_ug:n {第\hfill 二\hfill 导\hfill 师}
-      & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_supv_b_tl}
+      & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_supv_b_tl}
       & \nju_coverbox_ug:n {职\hfill 称}
-      & \nju_cover_underline_ug:nn {90pt}{\l__nju_info_supv_b_title_tl}\\
+      & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_supv_b_title_tl}\\
     }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
     \nju_coverbox_ug:n {提\hfill 交\hfill 日\hfill 期}
-    & \nju_cover_underline_ug:nn {250pt}{\l__nju_submit_date_tl}\\
+    & \nju_cover_uline_ug:nn {250pt}{\l__nju_submit_date_tl}\\
   \end{tabular}
 }
 \tl_new:N \nju_printcoverinfo_g
 \tl_set:Nn \nju_printcoverinfo_g
 {
   \begin{tabular}{p{6em}c}
-    % 标题换行
-    \int_case:nn {\nju_titlelength}
-      {
-        { 1 } {
-          \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline_g:n {\l__nju_info_title_a_tl,} \\ }
-        { 2 } {
-          \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline_g:n {\l__nju_info_title_a_tl,} \\
-          & \nju_cover_underline_g:n {\l__nju_info_title_b_tl,} \\ }
-        { 3 } {
-          \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-          & \nju_cover_underline_g:n {\l__nju_info_title_a_tl,} \\
-          & \nju_cover_underline_g:n {\l__nju_info_title_b_tl,} \\
-          & \nju_cover_underline_g:n {\l__nju_info_title_c_tl,} \\}
-      }
+    \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
+    & \nju_cover_uline_g:n {\l__nju_info_title_a_tl} \\
+    % 自动判断标题换行
+    \tl_if_empty:NTF \l__nju_info_title_b_tl {}
+    {
+      \tl_if_empty:NTF \l__nju_info_title_c_tl
+        { & \nju_cover_uline_g:n {\l__nju_info_title_b_tl} \\ }
+        {
+          & \nju_cover_uline_g:n {\l__nju_info_title_b_tl} \\
+          & \nju_cover_uline_g:n {\l__nju_info_title_c_tl} \\
+        }
+    }
 
     \nju_coverbox_g:n {作\hfill 者\hfill 姓\hfill 名}
-    & \nju_cover_underline_g:n {\l__nju_info_author_tl}\\
+    & \nju_cover_uline_g:n {\l__nju_info_author_tl}\\
     \nju_coverbox_g:n {专\hfill 业\hfill 名\hfill 称}
-    & \nju_cover_underline_g:n {\l__nju_major_tl}\\
+    & \nju_cover_uline_g:n {\l__nju_major_tl}\\
     \nju_coverbox_g:n {研\hfill 究\hfill 方\hfill 向}
-    & \nju_cover_underline_g:n {\l__nju_field_tl}\\
+    & \nju_cover_uline_g:n {\l__nju_field_tl}\\
     \nju_coverbox_g:n {指\hfill 导\hfill 教\hfill 师}
-    & \nju_cover_underline_g:n {\nju_supervisor_full}\\
+    & \nju_cover_uline_g:n {\nju_supervisor_full}\\
   \end{tabular}
 }
 \tl_new:N \nju_printcover_nl % 国家图书馆封面
@@ -850,13 +840,13 @@ numberwithin=section,
       \vskip -20mm \hskip -15mm
       \songti\zihao{-4}
       \makebox[40pt][l]{分类号}
-      \nju_cover_underline_nl:nn {150pt}{\l__nju_info_classif_tl}
+      \nju_cover_uline_nl:nn {150pt}{\l__nju_info_classif_tl}
       \hfill
       \makebox[40pt][l]{密级}
-      \nju_cover_underline_nl:nn {150pt}{\l__nju_info_seclv_tl}
+      \nju_cover_uline_nl:nn {150pt}{\l__nju_info_seclv_tl}
       \vskip 10pt \hskip -15mm
       \makebox[40pt][l]{UDC}
-      \nju_cover_underline_nl:nn {150pt}{\l__nju_info_udc_tl}
+      \nju_cover_uline_nl:nn {150pt}{\l__nju_info_udc_tl}
     }
 
     % 中部
@@ -867,9 +857,9 @@ numberwithin=section,
       {
         \kaishu\zihao{1}
         \vskip \stretch{1}
-        \nju_cover_underline_nl:nn {14em}{\l__nju_info_title_a_tl,}\\
-        \nju_cover_underline_nl:nn {14em}{\l__nju_info_title_b_tl,}\\
-        \nju_cover_underline_nl:nn {14em}{\l__nju_info_title_c_tl,}\\
+        \nju_cover_uline_nl:nn {14em}{\l__nju_info_title_a_tl}\\
+        \nju_cover_uline_nl:nn {14em}{\l__nju_info_title_b_tl}\\
+        \nju_cover_uline_nl:nn {14em}{\l__nju_info_title_c_tl}\\
       }
       \vskip \stretch{1}
       {\kaishu\zihao{4}（题名和副题名）}
@@ -884,25 +874,25 @@ numberwithin=section,
     {
       \kaishu\zihao{4}
       \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
-      \nju_cover_underline_nl:nn {94pt}{\l__nju_info_supv_a_tl}\par
-      \noindent\nju_cover_underline_nl:nn {\textwidth}{%
+      \nju_cover_uline_nl:nn {94pt}{\l__nju_info_supv_a_tl}\par
+      \noindent\nju_cover_uline_nl:nn {\textwidth}{%
       \l__nju_info_supv_cont_tl}\par
       \noindent 申请学位级别%
-      \nju_cover_underline_nl:nn {9em}{\nju_degree_title}%
+      \nju_cover_uline_nl:nn {9em}{\nju_degree_title}%
       \noindent 专业名称%
       \uline{\hfill\l__nju_major_tl\hfill}\par% 需要调整下划线长度
       \noindent 论文提交日期%
-      \nju_cover_underline_nl:nn {9em}{\l__nju_submit_date_tl}%
+      \nju_cover_uline_nl:nn {9em}{\l__nju_submit_date_tl}%
       论文答辩日期%
       \uline{\hfill\l__nju_defend_date_tl\hfill}\par% 需要调整下划线长度
       \noindent 学位授予单位和日期\uline{\hfill}\par
       \noindent\hfill 答辩委员会主席：%
-      \nju_cover_underline_nl:nn {9em}{\l__nju_info_chairman_tl}\par
+      \nju_cover_uline_nl:nn {9em}{\l__nju_info_chairman_tl}\par
       \noindent\hfill 评阅人：%
-      \nju_cover_underline_nl:nn {9em}{\l__nju_info_reviewer_a_tl}\par
-      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\l__nju_info_reviewer_b_tl}\par
-      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\l__nju_info_reviewer_c_tl}\par
-      \noindent\hfill\nju_cover_underline_nl:nn {9em}{\l__nju_info_reviewer_d_tl}\par
+      \nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_a_tl}\par
+      \noindent\hfill\nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_b_tl}\par
+      \noindent\hfill\nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_c_tl}\par
+      \noindent\hfill\nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_d_tl}\par
 
       \begin{center}
         \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
@@ -1052,7 +1042,7 @@ numberwithin=section,
     \end{center}
     {
       \bgroup
-      THESIS: ~~\l__nju_info_title_en_tl, \\
+      THESIS: ~~\l__nju_info_title_en_tl \\
       DEPARTMENT: ~~\l__nju_info_dept_en_tl \\
       SPECIALIZATION: ~~\l__nju_major_en_tl \\
       UNDERGRADUATE:~~\l__nju_info_author_en_tl \\
@@ -1121,7 +1111,7 @@ numberwithin=section,
     {
       \bgroup
       \zihao{4}
-      THESIS: ~~\l__nju_info_title_en_tl, \\
+      THESIS: ~~\l__nju_info_title_en_tl \\
       SPECIALIZATION: ~~\l__nju_major_en_tl \\
       POSTGRADUATE:~~\l__nju_info_author_en_tl \\
       MENTOR:~~\nju_supervisor_full_en\par
