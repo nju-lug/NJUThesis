@@ -9,7 +9,17 @@ $bibtex_use = 1.5;
 
 $clean_ext = "hd loe ptc run.xml synctex.gz thm xdv";
 
-$makeindex = "makeindex -s gind.ist %O -o %D %S";
+$makeindex = "makeindex %O -s gind.ist -o %D %S";
+add_cus_dep('glo','gls',0,'makeindex');
+sub makeindex {
+  if ( $silent ) {
+    system( "makeindex -q -s gglo.ist -o \"$_[0].gls\" \"$_[0].glo\"" );
+  }
+  else {
+    system( "makeindex -s gglo.ist -o \"$_[0].gls\" \"$_[0].glo\"" );
+  };
+}
+$makeindex_silent_switch = "-q";
 
 add_cus_dep('nlo', 'nls', 0, 'nlo2nls');
 sub nlo2nls {

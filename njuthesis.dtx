@@ -207,12 +207,12 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-14 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+%<!readme> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-14 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
-\ProvidesFile{\ExplFileName.dtx}
+\ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
 \begin{document}
   \DocInput{njuthesis.dtx}
@@ -332,26 +332,46 @@ through XeTeX.
 % 各个系统的默认字体请参考{tab:defaultfontset}。可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；另一方面，在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}。
 %
 %
-% \section{Usage}
+% \section{使用方法}
 %
 % Put text here.
+% \subsubsection{格式信息}
+% 用于控制封面标题的行数。可选值为1、2、3，缺省值为1。
 %
-% \subsection{学位}
-% \DescribeOption{degree}
+% {第二导师}
+% 用于在封面和摘要添加第二导师，缺省值为false。
+%
+% {国家图书馆封面}
+% 缺省值为false。
+% 
+% \subsubsection{学位信息}
+% \begin{function}[added=2021-09-07]{type}
+%   \begin{syntax}
+%     type = <mg|mf|phd|(ug)>
+%   \end{syntax}
+%
 % 选择学位，可选：
-% -option{ug}（默认），-option{mg}，-option{mf}，-option{phd}。
+% \opt{ug}（默认本科），\opt{mg}，\opt{mf}，\opt{phd}。
+% \end{function}
+%   
 %
-% \subsection{类型}
 % \DescribeOption{type}
-% 选择学位，可选：
-% -option{thesis}（默认），-option{design}。
+% 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括thesis（表示毕业论文）和design（表示毕业设计），缺省值为thesis。
+% \opt{thesis}（默认），\opt{design}。
 %
+% \subsubsection{指定字体}
 % \DescribeOption{systemfont}
 % 是否使用系统预装的字体，可选：
-% -option{true}（默认），-option{false}。
+% \opt{true}（默认），\opt{false}。
 %
-% This is a stub file to allow extraction of \texttt{l3docstrip}: all
-% functionality has been moved to the main DocStrip program.
+% \DescribeOption{customlatinfont}
+% 是否使用系统预装的字体，可选：
+% \opt{true}（默认），\opt{false}。
+%
+% \DescribeOption{customchinesefont}
+% 是否使用系统预装的字体，可选：
+% \opt{true}（默认），\opt{false}。
+%
 %
 % \end{documentation}
 %
