@@ -20,11 +20,9 @@ jobs:
       - name: Compile to PDF
         uses: HermitSun/latex-action@v3
         with:
-          root_file: njuthesis-sample.tex
+          root_file: njuthesis.dtx
           latexmk_use_${{ matrix.latex }}: true
           args: '-bibtex'
-          # 与后面保持一致，因为大量的内容依赖于`njuthesis.pdf`这个名称
-          post_compile: 'mv njuthesis-sample.pdf njuthesis.pdf'
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
@@ -51,13 +49,12 @@ jobs:
           
       - name: Zip CTAN Source
         run: |
-          mkdir -p njuthesis/doc/example
-          cp -r chapters njuthesis.tex njuthesis.bib Makefile njuthesis/doc/example
-          cp njuthesis.pdf njuthesis/doc
+          mkdir -p njuthesis/
+          cp njuthesis.pdf njuthesis/njuthesis.pdf
           cp README.md njuthesis/README_ZH_CN.md 
           cp README_EN.md njuthesis/README.md
-          cp -r figure LICENSE njuthesis.dtx njuthesis
-          zip -r njuthesis_ctan.zip njuthesis
+          cp -r figure/ LICENSE njuthesis.dtx njuthesis/
+          zip -r njuthesis_ctan.zip njuthesis/
           
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
