@@ -38,7 +38,7 @@
 
 ## 快速开始
 
-从0.9.0版以后，本模板以DocStrip(`.dtx`)格式发布，同时在release区提供cls文件。
+从0.9.0版以后，本模板以DocStrip(`.dtx`)格式进行维护，同时在仓库提供`.cls`文件以降低使用门槛。
 
 ### 使用DocStrip文件
 
@@ -207,12 +207,8 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<*driver|class>
-\def\ExplFileName{njuthesis}
-\def\ExplFileDescription{Nanjing University thesis template class}
-\def\ExplFileDate{2021-09-14}
-\def\ExplFileVersion{0.9.0}
-%</driver|class>
+%<class>\GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-14 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+%<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
@@ -381,11 +377,6 @@ through XeTeX.
 \RequirePackage{l3keys2e}
 %    \end{macrocode}
 %
-% \DescribeMacro{\dummyMacro}
-% This macro does nothing.\index{doing nothing|usage} It is merely an
-% example.  If this were a real macro, you would put a paragraph here
-% describing what the macro is supposed to do, what its mandatory and
-% optional arguments are, and so forth.
 %    \begin{macrocode}
 \keys_define:nn { nju }
 {
@@ -1391,7 +1382,7 @@ through XeTeX.
   }
   
   % 研究生学位分类
-  \str_case:Nn { \nju_degree }
+  \str_case_e:nn { \nju_degree }
   {
     { mg } { \tl_const:Nn \nju_degree_title {硕士} }
     { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }

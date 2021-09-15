@@ -23,10 +23,8 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\def\ExplFileName{njuthesis}
-\def\ExplFileDescription{Nanjing University thesis template class}
-\def\ExplFileDate{2021-09-14}
-\def\ExplFileVersion{0.9.0}
+\GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-14 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+  {Thesis template for Nanjing University}
 \ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 \LoadClass[
   a4paper,
@@ -105,7 +103,6 @@
 \NewDocumentCommand \njusetup { m }
 { \keys_set:nn { nju } { #1 } }
 \ProcessKeysOptions { nju }
-\RequirePackage{expl3}
 \RequirePackage{fontspec}
 \RequirePackage[
     top=2.5cm,
@@ -728,7 +725,7 @@ numberwithin=section,
   }
 
   % 研究生学位分类
-  \str_case:Nn { \nju_degree }
+  \str_case_e:nn { \nju_degree }
   {
     { mg } { \tl_const:Nn \nju_degree_title {硕士} }
     { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }
