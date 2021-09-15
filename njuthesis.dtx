@@ -334,20 +334,39 @@ through XeTeX.
 %
 % \section{使用方法}
 %
-% Put text here.
-% \subsubsection{格式信息}
-% 用于控制封面标题的行数。可选值为1、2、3，缺省值为1。
+% \subsection{自定义选项}
 %
-% {第二导师}
+% \begin{function}[added=2021-09-07]{titlelength}
+%   \begin{syntax}
+%     titlelength = <(1)|2|3>
+%   \end{syntax}
+%
+% 为了使较长的论文题目也能美观地呈现在封面页上，njuthesis类提供了\texttt{TitleLength}这一选项，用于控制封面标题的行数。可选值为1、2、3，缺省值为1。
+% \end{function}
+%
+% \begin{function}[added=2021-09-07]{secondmentor}
+%   \begin{syntax}
+%     secondmentor = <\TFF>
+%   \end{syntax}
+%
 % 用于在封面和摘要添加第二导师，缺省值为false。
+% \opt{true}，\opt{false}（默认）。
+% \end{function}
 %
-% {国家图书馆封面}
-% 缺省值为false。
+% \begin{function}[added=2021-09-07]{nlcover}
+%   \begin{syntax}
+%     nlcover = <\TTF>
+%   \end{syntax}
+%
+% 用于添加国家图书馆封面，缺省值为true。
+% \opt{true}，\opt{false}（默认）。
+% \end{function}
+%
 % 
 % \subsubsection{学位信息}
-% \begin{function}[added=2021-09-07]{type}
+% \begin{function}[added=2021-09-07]{degree}
 %   \begin{syntax}
-%     type = <mg|mf|phd|(ug)>
+%     degree = <mg|mf|phd|(ug)>
 %   \end{syntax}
 %
 % 选择学位，可选：
@@ -355,29 +374,153 @@ through XeTeX.
 % \end{function}
 %   
 %
-% \DescribeOption{type}
+% \begin{function}[added=2021-09-07]{type}
+%   \begin{syntax}
+%     type = <design|(thesis)>
+%   \end{syntax}
+%
 % 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括thesis（表示毕业论文）和design（表示毕业设计），缺省值为thesis。
 % \opt{thesis}（默认），\opt{design}。
+% \end{function}
+%   
+%
 %
 % \subsubsection{指定字体}
-% \DescribeOption{systemfont}
+%
+% \begin{function}[added=2021-09-07]{systemfont}
+%   \begin{syntax}
+%     systemfont = <\TFF>
+%   \end{syntax}
+%
 % 是否使用系统预装的字体，可选：
 % \opt{true}（默认），\opt{false}。
+% \end{function}
 %
-% \DescribeOption{customlatinfont}
-% 是否使用系统预装的字体，可选：
-% \opt{true}（默认），\opt{false}。
+% \begin{function}[added=2021-09-07]{customlatinfont}
+%   \begin{syntax}
+%     customlatinfont = <null|macos|gyre|(windows)>
+%   \end{syntax}
 %
-% \DescribeOption{customchinesefont}
-% 是否使用系统预装的字体，可选：
-% \opt{true}（默认），\opt{false}。
+% 手动指定英文字体，可选：
+% \opt{windows}（默认）， \opt{macos}， \opt{gyre}， \opt{null}。
+% \end{function}
 %
+% 
+% \begin{function}[added=2021-09-07]{customchinesefont}
+%   \begin{syntax}
+%     customchinesefont = <null|macos|fandol|founder|noto|(windows)>
+%   \end{syntax}
+%
+% 手动指定中文字体，可选：
+% \opt{windows}（默认）， \opt{macos}， \opt{fandol}， \opt{founder}，\opt{noto}，\opt{null}。
+% \end{function}
+%
+%
+% \subsection{封面信息}
+%
+% \subsection{输入个人信息}
+%
+% \texttt{njusetup}定义了用于文档封面的诸多属性参数，
+% 写作时修改相应字符串即可。注意不要有空行，否则可能报错
+%
+%
+% \subsubsection{论文标题}
+% \begin{description}
+%     \item[\texttt{TitleA}] 单行标题，或多行标题的第一行。关于是否应该折行，单行能容纳的最长标题为\emph{15个中文字符}，请自行选择合适的截断处。
+%     \item[\texttt{TitleB}] 多行标题的第二行
+%     \item[\texttt{TitleC}] 多行标题的第三行
+%     \item[\texttt{TitleEN}] 英文标题，注意空格要用波浪线（\textasciitilde）替代
+% \end{description}
+%
+% \subsubsection{个人年级、学号、姓名}
+% \begin{description}
+%     \item[\texttt{Grade}] 年级
+%     \item[\texttt{StudentID}] 本科生为9位数字学号，研究生为两位英文字母标识加8位数字学号，两位字母自动大写
+%     \item[\texttt{StudentName}] 姓名
+%     \item[\texttt{StudentNameEN}] 姓名拼音 
+% \end{description}
+%
+% \subsubsection{就读院系专业}
+%
+% 本科生无需填写研究方向。
+% \begin{description}
+%     \item[\texttt{Department}] 学院名称
+%     \item[\texttt{DepartmentEN}] 学院英文名称
+%     \item[\texttt{Major}] 专业名称
+%     \item[\texttt{MajorEN}] 专业英文名称
+%     \item[\texttt{Field}] 研究方向
+%     \item[\texttt{FieldEN}] 研究方向英文名称
+% \end{description}
+%
+% \subsubsection{导师信息}
+% 注意标注A的为第一导师
+% \begin{description}
+%     \item[\texttt{Mentor<A/B>}] 导师姓名
+%     \item[\texttt{Mentor<A/B>EN}] 导师姓名的英文拼音  
+%     \item[\texttt{Mentor<A/B>Title}] 导师职称
+%     \item[\texttt{Mentor<A/B>TitleEN}] 导师职称英文
+% \end{description}
+%
+% \subsubsection{提交日期}
+% \begin{description}
+%     \item[\texttt{SubmitDate}] 论文提交日期
+% \end{description}
+%
+% \subsubsection{答辩信息}
+%
+% 除答辩日期以外，本部分内容仅用于国家图书馆封面。本科生忽略即可。
+% 答辩委员会姓名与职称之间需使用波浪线连接。
+%
+% \begin{description}
+%     \item[\texttt{DefendDate}] 答辩日期
+%     \item[\texttt{ReviewerChairman}] 答辩委员会主席的姓名及职称 
+%     \item[\texttt{Reviewer<A/B/C/D>}] 四位评阅人的姓名及职称  
+% \end{description}
+%
+% \subsubsection{国家图书馆封面相关信息}
+%
+% 本部分内容仅用于国家图书馆封面。本科生忽略即可。
+%
+% \begin{description}
+%     \item[\texttt{Classification}] 分类号
+%     \item[\texttt{SecurityLevel}] 限制  
+%     \item[\texttt{UDC}] UDC
+%     \item[\texttt{MentorInfo}] 指导教师职务、职称、学位、单位名称及地址
+% \end{description}
+%
+% \subsection{摘要页}
+%
+% 摘要页一般不插入目录，默认只添加pdf书签。如确实有插入目录的需求，请在\texttt{abstract.sty}文件中定位到如下语句
+%
+% 在使用\hologo{LuaLaTeX}编译时，研究生中文摘要页的标题会出现空格无下划线的问题，目前正在积极寻求解决方法。
+%
+% {前言页}
+% 使用preface环境定义
+%
+%
+% \subsection{正文格式}
+%
+% 本科生无页眉，页面编号居中位于页脚；研究生无页脚，页眉包括章节名和页面编号。
+%
+% 
+% 对中文加下划线请使用xeCJKfntef包的CJKunderline命令代替uline，以解决中文的换行问题
+%
+% {参考文献页}
+%
+% 需要使用biber手动编译才会显示，具体内容参考
+%
+% {致谢页}
+% 同前言，使用acknowledgement环境
+% 
+% {附录页}
+%
+% 附录放在|\appendix|命令后，以英文字母进行编号
 %
 % \end{documentation}
 %
 % \begin{implementation}
 %
-% \section{\pkg{njuthesis} implementation}
+% \section{\pkg{njuthesis} 代码实现}
 %
 %    \begin{macrocode}
 %<*class>
