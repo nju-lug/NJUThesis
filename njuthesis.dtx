@@ -23,7 +23,7 @@
 \iffalse
 %</internal>
 %
-%<*readme>
+%<*readme-zh>
 # NJU Thesis
 
 [![njuthesis](https://img.shields.io/badge/njuthesis-latex-blue)](https://git.nju.edu.cn/nju-lug/nju-latex-templates)
@@ -100,7 +100,7 @@ DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使�
 ## 许可
 
 本模板的发布遵守 LaTeX Project Public License（版本 1.3c 或更高）。
-%</readme>
+%</readme-zh>
 %
 %<*readme-en>
 # NJU Thesis
@@ -174,8 +174,8 @@ through XeTeX.
 %<*install>
   \usedir{doc/latex/njuthesis}
   \nopreamble\nopostamble
-    \file{README.md}           {\from{\jobname.dtx}{readme}}
     \file{README_EN.md}        {\from{\jobname.dtx}{readme-en}}
+    \file{README.md}           {\from{\jobname.dtx}{readme-zh}}
 }
 
 \obeyspaces
@@ -207,7 +207,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<!(readme|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
+%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2020-09-15 12:00:00 +0800  NJU LUG <my@yaoge123.com> $
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
