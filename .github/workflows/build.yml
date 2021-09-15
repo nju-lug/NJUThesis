@@ -23,6 +23,8 @@ jobs:
           root_file: njuthesis.tex
           latexmk_use_${{ matrix.latex }}: true
           args: '-bibtex'
+          # 与后面保持一致，因为大量的内容依赖于`njuthesis.pdf`这个名称
+          post_compile: 'mv njuthesis-sample.pdf njuthesis.pdf'
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
