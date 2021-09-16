@@ -36,54 +36,78 @@
   zihao=-4
   ]{ctexbook}[2018/04/01]
 \RequirePackage{l3keys2e}
+\tl_new:N \l__nju_info_degree_tl
+\tl_new:N \l__nju_info_type_tl
 \keys_define:nn { nju }
 {
   nlcover           .bool_set:N   =   \nju_nl_cover,
   nlcover           .initial:n    =   false,
-  degree            .tl_set:N     =   \nju_degree,
-  degree            .initial:n    =   ug,
-  type              .tl_set:N     =   \nju_type,
-  type              .initial:n    =   thesis,
 }
 \keys_define:nn { nju }
 {
-  info              .meta:nn      =   { nju / info } { #1 }
+  degree            .choices:nn   =
+  { ug, mg, mg, phd }
+  { \tl_set_eq:NN \l__nju_info_degree_tl \l_keys_choice_tl },
+  type              .choices:nn   =
+  { thesis, design }
+  { \tl_set_eq:NN \l__nju_info_type_tl   \l_keys_choice_tl },
+}
+\keys_define:nn { nju }
+{
+  info.meta:nn = { nju / info } { #1 }
 }
 \keys_define:nn { nju / info }
 {
-  % 题目
   TitleA            .tl_set:N     =   \l__nju_info_title_a_tl,
   TitleB            .tl_set:N     =   \l__nju_info_title_b_tl,
   TitleC            .tl_set:N     =   \l__nju_info_title_c_tl,
   Title*            .tl_set:N     =   \l__nju_info_title_en_tl,
-  % 年级学号姓名
+}
+\keys_define:nn { nju / info }
+{
   Grade             .tl_set:N     =   \l__nju_info_grade_tl,
   StudentID         .tl_set:N     =   \l__nju_info_id_tl,
   StudentName       .tl_set:N     =   \l__nju_info_author_tl,
   StudentName*      .tl_set:N     =   \l__nju_info_author_en_tl,
-  % 院系专业方向
+}
+\keys_define:nn { nju / info }
+{
   Department        .tl_set:N     =   \l__nju_info_dept_tl,
   Department*       .tl_set:N     =   \l__nju_info_dept_en_tl,
   Major             .tl_set:N     =   \l__nju_major_tl,
   Major*            .tl_set:N     =   \l__nju_major_en_tl,
   Field             .tl_set:N     =   \l__nju_field_tl,
   Field*            .tl_set:N     =   \l__nju_field_en_tl,
+}
+\keys_define:nn { nju / info }
+{
   SupervisorA       .tl_set:N     =   \l__nju_info_supv_a_tl,
   SupervisorA*      .tl_set:N     =   \l__nju_info_supv_a_en_tl,
   SupervisorATitle  .tl_set:N     =   \l__nju_info_supv_a_title_tl,
   SupervisorATitle* .tl_set:N     =   \l__nju_info_supv_a_title_en_tl,
+}
+\keys_define:nn { nju / info }
+{
   SupervisorB       .tl_set:N     =   \l__nju_info_supv_b_tl,
   SupervisorB*      .tl_set:N     =   \l__nju_info_supv_b_en_tl,
   SupervisorBTitle  .tl_set:N     =   \l__nju_info_supv_b_title_tl,
   SupervisorBTitle* .tl_set:N     =   \l__nju_info_supv_b_title_en_tl,
+}
+\keys_define:nn { nju / info }
+{
   SubmitDate        .tl_set:N     =   \l__nju_submit_date_tl,
+}
+\keys_define:nn { nju / info }
+{
   DefendDate        .tl_set:N     =   \l__nju_defend_date_tl,
   ReviewerChairman  .tl_set:N     =   \l__nju_info_chairman_tl,
   ReviewerA         .tl_set:N     =   \l__nju_info_reviewer_a_tl,
   ReviewerB         .tl_set:N     =   \l__nju_info_reviewer_b_tl,
   ReviewerC         .tl_set:N     =   \l__nju_info_reviewer_c_tl,
   ReviewerD         .tl_set:N     =   \l__nju_info_reviewer_d_tl,
-  % 国家图书馆封面相关
+}
+\keys_define:nn { nju / info }
+{
   Classification    .tl_set:N     =   \l__nju_info_classif_tl,
   SecurityLevel     .tl_set:N     =   \l__nju_info_seclv_tl,
   UDC               .tl_set:N     =   \l__nju_info_udc_tl,
@@ -372,7 +396,7 @@
    \fancyhead{}
    \fancyfoot[C]{\zihao{5}\thepage}
 }
-\str_if_eq:NNTF {\nju_degree} { ug }
+\str_if_eq:NNTF {\l__nju_info_degree_tl} { ug }
 {
   % the header line
   \tl_set:Nn \headrulewidth {0pt}
@@ -690,10 +714,10 @@ numberwithin=section,
     \l__nju_info_supv_b_title_en_tl
   }
 }
-\str_if_eq:NNTF {\nju_degree} { ug }
+\str_if_eq:NNTF {\l__nju_info_degree_tl} { ug }
 {
   % 本科
-  \tl_const:Nn \c__nju_name_diploma_tl { 本\hfill 科\hfill }
+  \tl_const:Nn \l__nju_name_diploma_tl { 本\hfill 科\hfill }
   \tl_const:Nn \c__nju_name_title_tl { 题\hfill 目 }
 
   \tl_const:Nn \c__nju_cover_uline_len_a_tl { 250pt }
@@ -709,23 +733,23 @@ numberwithin=section,
 }
 {
   % 本科以外都是研究生
-  \tl_const:Nn \c__nju_name_diploma_tl { 研\hfill 究\hfill 生\hfill }
+  \tl_const:Nn \l__nju_name_diploma_tl { 研\hfill 究\hfill 生\hfill }
   \tl_const:Nn \c__nju_name_title_tl { 论\hfill 文\hfill 题\hfill 目 }
 
   \tl_const:Nn \c__nju_cover_uline_len_a_tl { 250pt }
   \tl_const:Nn \c__nju_cover_uline_len_b_tl { 14em }
   \tl_const:Nn \c__nju_cover_uline_font_tl { \kaishu }
-  \tl_const:Nn \c__nju_cover_uline_style_tl { }
+  \tl_const:Nn \c__nju_cover_uline_style_tl {}
   \tl_const:Nn \c__nju_cover_uline_bskip_tl { \hspace{1em} }
 
   \tl_const:Nn \c__nju_cover_box_len_tl { 6em }
 
   % 研究生学位分类
-  \str_case_e:nn { \nju_degree }
+  \str_case_e:nn { \l__nju_info_degree_tl }
   {
-    { mg } { \tl_const:Nn \c__nju_name_degree_tl {硕士} }
-    { mf } { \tl_const:Nn \c__nju_name_degree_tl {硕士专业} }
-    { phd } { \tl_const:Nn \c__nju_name_degree_tl {博士} }
+    { mg } { \tl_const:Nn \c__nju_name_degree_tl { 硕士 } }
+    { mf } { \tl_const:Nn \c__nju_name_degree_tl { 硕士专业 } }
+    { phd } { \tl_const:Nn \c__nju_name_degree_tl { 博士 } }
   }
 }
 \cs_new:Npn \__nju_cover_uline_a:n #1
@@ -748,14 +772,14 @@ numberwithin=section,
   \makebox[\c__nju_cover_box_len_tl][s]{
     #1\c__nju_cover_uline_bskip_tl}
 }
-\str_if_eq:NNTF {\nju_type} {thesis}
+\str_if_eq:NNTF { \l__nju_info_type_tl } { thesis }
 {
-  \tl_const:Nn \nju_type_name
-    { \c__nju_name_diploma_tl 毕\hfill 业\hfill 论\hfill 文 }
+  \tl_const:Nn \l__nju_info_type_tl_name
+    { \l__nju_name_diploma_tl 毕\hfill 业\hfill 论\hfill 文 }
 }
 {
-  \tl_const:Nn \nju_type_name
-    { \c__nju_name_diploma_tl 毕\hfill 业\hfill 设\hfill 计 }
+  \tl_const:Nn \l__nju_info_type_tl_name
+    { \l__nju_name_diploma_tl 毕\hfill 业\hfill 设\hfill 计 }
 }
 \cs_new_protected:Npn \__nju_cover_title_breakline:
 {
@@ -778,63 +802,63 @@ numberwithin=section,
       }
   }
 }
-\tl_new:N \nju_printcoverinfo_ug
-\tl_set:Nn \nju_printcoverinfo_ug
-{
-  \begin{tabular}{p{4.2em}c}
-    \__nju_cover_box:n {院\hfill 系}
-    & \__nju_cover_uline_a:n  {\l__nju_info_dept_tl} \\
-    \__nju_cover_box:n {专\hfill 业}
-    & \__nju_cover_uline_a:n  {\l__nju_major_tl} \\
-    \__nju_cover_title_breakline:
-  \end{tabular}\\
+\cs_new_protected:Npn \__nju_print_covertab:
+{%
+  \str_if_eq:NNTF { \l__nju_info_degree_tl } { ug }
+  {
+    \begin{tabular}{p{4.2em}c}
+      \__nju_cover_box:n {院\hfill 系}
+      & \__nju_cover_uline_a:n  {\l__nju_info_dept_tl} \\
+      \__nju_cover_box:n {专\hfill 业}
+      & \__nju_cover_uline_a:n  {\l__nju_major_tl} \\
+      \__nju_cover_title_breakline:
+    \end{tabular}\\
 
-  \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \__nju_cover_box:n {年\hfill 级}
-    & \__nju_cover_uline_b:n {\l__nju_info_grade_tl}
-    & \__nju_cover_box:n {学\hfill 号}
-    & \__nju_cover_uline_b:n {\l__nju_info_id_tl}\\
-  \end{tabular}\\
+    \begin{tabular}{p{4.2em}cp{4.2em}c}
+      \__nju_cover_box:n {年\hfill 级}
+      & \__nju_cover_uline_b:n {\l__nju_info_grade_tl}
+      & \__nju_cover_box:n {学\hfill 号}
+      & \__nju_cover_uline_b:n {\l__nju_info_id_tl}\\
+    \end{tabular}\\
 
-  \begin{tabular}{p{4.2em}c}
-    \__nju_cover_box:n {学\hfill 生\hfill 姓\hfill 名}
-    & \__nju_cover_uline_a:n  {\l__nju_info_author_tl}
-  \end{tabular}\\
-  \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \__nju_cover_box:n {导\hfill 师}
-    & \__nju_cover_uline_b:n {\l__nju_info_supv_a_tl}
-    & \__nju_cover_box:n {职\hfill 称}
-    & \__nju_cover_uline_b:n {\l__nju_info_supv_a_title_tl}\\
-
-    % 第二导师
-    \tl_if_empty:NF \l__nju_info_supv_b_tl
-    {
-      \__nju_cover_box:n {第\hfill 二\hfill 导\hfill 师}
-      & \__nju_cover_uline_b:n {\l__nju_info_supv_b_tl}
+    \begin{tabular}{p{4.2em}c}
+      \__nju_cover_box:n {学\hfill 生\hfill 姓\hfill 名}
+      & \__nju_cover_uline_a:n  {\l__nju_info_author_tl}
+    \end{tabular}\\
+    \begin{tabular}{p{4.2em}cp{4.2em}c}
+      \__nju_cover_box:n {导\hfill 师}
+      & \__nju_cover_uline_b:n {\l__nju_info_supv_a_tl}
       & \__nju_cover_box:n {职\hfill 称}
-      & \__nju_cover_uline_b:n {\l__nju_info_supv_b_title_tl}\\
-    }
-  \end{tabular}\\
+      & \__nju_cover_uline_b:n {\l__nju_info_supv_a_title_tl}\\
 
-  \begin{tabular}{p{4.2em}c}
-    \__nju_cover_box:n {提\hfill 交\hfill 日\hfill 期}
-    & \__nju_cover_uline_a:n  {\l__nju_submit_date_tl}\\
-  \end{tabular}
-}
-\tl_new:N \nju_printcoverinfo_g
-\tl_set:Nn \nju_printcoverinfo_g
-{
-  \begin{tabular}{p{6em}c}
-    \__nju_cover_title_breakline:
-    \__nju_cover_box:n {作\hfill 者\hfill 姓\hfill 名}
-    & \__nju_cover_uline_a:n  {\l__nju_info_author_tl}\\
-    \__nju_cover_box:n {专\hfill 业\hfill 名\hfill 称}
-    & \__nju_cover_uline_a:n  {\l__nju_major_tl}\\
-    \__nju_cover_box:n {研\hfill 究\hfill 方\hfill 向}
-    & \__nju_cover_uline_a:n  {\l__nju_field_tl}\\
-    \__nju_cover_box:n {指\hfill 导\hfill 教\hfill 师}
-    & \__nju_cover_uline_a:n  {\l__nju_info_supv_full_tl}\\
-  \end{tabular}
+      % 第二导师
+      \tl_if_empty:NF \l__nju_info_supv_b_tl
+      {
+        \__nju_cover_box:n {第\hfill 二\hfill 导\hfill 师}
+        & \__nju_cover_uline_b:n {\l__nju_info_supv_b_tl}
+        & \__nju_cover_box:n {职\hfill 称}
+        & \__nju_cover_uline_b:n {\l__nju_info_supv_b_title_tl}\\
+      }
+    \end{tabular}\\
+
+    \begin{tabular}{p{4.2em}c}
+      \__nju_cover_box:n {提\hfill 交\hfill 日\hfill 期}
+      & \__nju_cover_uline_a:n  {\l__nju_submit_date_tl}\\
+    \end{tabular}
+  }
+  {
+    \begin{tabular}{p{6em}c}
+      \__nju_cover_title_breakline:
+      \__nju_cover_box:n {作\hfill 者\hfill 姓\hfill 名}
+      & \__nju_cover_uline_a:n  {\l__nju_info_author_tl}\\
+      \__nju_cover_box:n {专\hfill 业\hfill 名\hfill 称}
+      & \__nju_cover_uline_a:n  {\l__nju_major_tl}\\
+      \__nju_cover_box:n {研\hfill 究\hfill 方\hfill 向}
+      & \__nju_cover_uline_a:n  {\l__nju_field_tl}\\
+      \__nju_cover_box:n {指\hfill 导\hfill 教\hfill 师}
+      & \__nju_cover_uline_a:n  {\l__nju_info_supv_full_tl}\\
+    \end{tabular}
+  }
 }
 \tl_new:N \nju_printcover_nl % 国家图书馆封面
 \tl_new:N \nju_printcover_ug % 本科封面
@@ -926,14 +950,15 @@ numberwithin=section,
   \begin{center}
     \includegraphics[height=3.35cm]{njuname}
     \vskip 10mm
-    {\zihao{1}\makebox[9em][s]{\bf{\songti\nju_type_name}}}
+    {\zihao{1}\makebox[9em][s]{\bf{\songti\l__nju_info_type_tl_name}}}
     \vfill
     \vskip\stretch{0}
     {\bgroup
     \kaishu\zihao{3}
     \def\tabcolsep{1pt}
     \def\arraystretch{1.5}
-    \nju_printcoverinfo_ug % 绘制信息框
+    % 绘制信息框
+    \__nju_print_covertab:
     \egroup}
     \vfill
   \end{center}
@@ -955,7 +980,7 @@ numberwithin=section,
     \vskip 10mm
     \includegraphics[height=2cm]{njuname-large}
     \vskip 15mm
-    {\zihao{1}\makebox[10em][s]{\bf{\kaishu\nju_type_name}}}
+    {\zihao{1}\makebox[10em][s]{\bf{\kaishu\l__nju_info_type_tl_name}}}
     \vskip 5mm
     {\zihao{1}\bf{\kaishu{（申请\c__nju_name_degree_tl 学位）}}}
     \par\vfill
@@ -965,7 +990,8 @@ numberwithin=section,
     \def\tabcolsep{1pt}
     \def\arraystretch{1.5}
     \vskip 10mm
-    \nju_printcoverinfo_g % 绘制信息框
+    % 绘制信息框
+    \__nju_print_covertab:
     \egroup}
     \vfill
     \vskip 10mm
@@ -994,7 +1020,7 @@ numberwithin=section,
 }
 \tl_set:Nn \maketitle
 {%
-  \str_if_eq:NNTF { \nju_degree } { ug }
+  \str_if_eq:NNTF { \l__nju_info_degree_tl } { ug }
   {
     \nju_printcover_nl % 国家图书馆封面
     \nju_printcover_ug % 本科封面
@@ -1004,7 +1030,7 @@ numberwithin=section,
     \nju_printcover_g % 研究生封面
   }
 }
-\str_if_eq:NNTF {\nju_degree} { ug }
+\str_if_eq:NNTF {\l__nju_info_degree_tl} { ug }
 {
   % 本科摘要环境
   \NewDocumentEnvironment{abstract} {}
@@ -1094,7 +1120,7 @@ numberwithin=section,
     毕业论文题目：\hspace{0.5em}\nju_underline:n {\l__nju_info_title_tl\hfill}\\
     \uline{\makebox[9em]{\l__nju_major_tl}}专业
     \uline{\makebox[4em]{\l__nju_info_grade_tl}}级
-    \str_if_eq:NNTF {\nju_degree} { phd } {博}{硕}
+    \str_if_eq:NNTF {\l__nju_info_degree_tl} { phd } {博}{硕}
     士生姓名：\uline{\hfill\l__nju_info_author_tl\hfill} \\
     指导教师（姓名、职称）：\uline{\hfill\l__nju_info_supv_full_tl\hfill}\par
     \egroup

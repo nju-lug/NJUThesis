@@ -572,7 +572,6 @@ through XeTeX.
 % \section{代码实现}
 % @@在l3docstrip中表示名空间，在生成cls时会被相应字段替换，譬如在njuthesis中@@=nju
 %
-% laTex默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故1.5/1.2*1.3 = 1.625
 %    \begin{macrocode}
 %<@@=nju>
 %<*class>
@@ -581,125 +580,155 @@ through XeTeX.
   twoside,
   UTF8,
   scheme=chinese,
+%    \end{macrocode}
+%
+% 关于行距，\hologo{LaTeX}默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故
+% \[ 1.5\times\frac{1.3}{1.2} = 1.625\]
+%    \begin{macrocode}
   linespread=1.625,
   fontset=none,
   zihao=-4
   ]{ctexbook}[2018/04/01]
 %    \end{macrocode}
 %
-% Put text here.
+% 是否需要国家图书馆封面的设置
 %    \begin{macrocode}
 \RequirePackage{l3keys2e}
 %    \end{macrocode}
+% 用于存储学位名称的全局变量，注意宏的命名，l代表局部变量，g代表全局变量
+%    \begin{macrocode}
+\tl_new:N \l_@@_info_degree_tl
+\tl_new:N \l_@@_info_type_tl
+%    \end{macrocode}
 %
+% 是否需要国家图书馆封面的设置
 %    \begin{macrocode}
 \keys_define:nn { nju }
 {
   nlcover           .bool_set:N   =   \nju_nl_cover,
   nlcover           .initial:n    =   false,
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-  degree            .tl_set:N     =   \nju_degree,
-  degree            .initial:n    =   ug,
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-  type              .tl_set:N     =   \nju_type,
-  type              .initial:n    =   thesis,
 }
 %    \end{macrocode}
-% 
-% Put text here.
+%
+% 学位信息的设置
 %    \begin{macrocode}
 \keys_define:nn { nju }
 {
-  info              .meta:nn      =   { nju / info } { #1 }
+  degree            .choices:nn   =
+  { ug, mg, mg, phd }
+  { \tl_set_eq:NN \l_@@_info_degree_tl \l_keys_choice_tl },  
+  type              .choices:nn   =
+  { thesis, design }
+  { \tl_set_eq:NN \l_@@_info_type_tl   \l_keys_choice_tl }, 
 }
-\keys_define:nn { nju / info }
+%    \end{macrocode}
+% 
+% \subsection{个人信息}
+% 输入
+%    \begin{macrocode}
+\keys_define:nn { nju }
 {
+  info.meta:nn = { nju / info } { #1 }
+}
 %    \end{macrocode}
 %
-% Put text here.
+% 题目
 %    \begin{macrocode}
-  % 题目
+\keys_define:nn { nju / info }
+{
   TitleA            .tl_set:N     =   \l_@@_info_title_a_tl,
   TitleB            .tl_set:N     =   \l_@@_info_title_b_tl,
   TitleC            .tl_set:N     =   \l_@@_info_title_c_tl,
   Title*            .tl_set:N     =   \l_@@_info_title_en_tl,
+}
 %    \end{macrocode}
 %
-% Put text here.
+% 年级、学号、姓名
 %    \begin{macrocode}
-  % 年级学号姓名
+\keys_define:nn { nju / info }
+{
   Grade             .tl_set:N     =   \l_@@_info_grade_tl,
   StudentID         .tl_set:N     =   \l_@@_info_id_tl,
   StudentName       .tl_set:N     =   \l_@@_info_author_tl,
   StudentName*      .tl_set:N     =   \l_@@_info_author_en_tl,
+}
 %    \end{macrocode}
 %
-% Put text here.
+% 院系、专业、方向
 %    \begin{macrocode}
-  % 院系专业方向
+\keys_define:nn { nju / info }
+{
   Department        .tl_set:N     =   \l_@@_info_dept_tl,
   Department*       .tl_set:N     =   \l_@@_info_dept_en_tl,
   Major             .tl_set:N     =   \l_@@_major_tl,
   Major*            .tl_set:N     =   \l_@@_major_en_tl,
   Field             .tl_set:N     =   \l_@@_field_tl,
   Field*            .tl_set:N     =   \l_@@_field_en_tl,
+}
 %    \end{macrocode}
 %  
 % 导师
-% Put text here.
+% 
 %    \begin{macrocode}
+\keys_define:nn { nju / info }
+{
   SupervisorA       .tl_set:N     =   \l_@@_info_supv_a_tl,
   SupervisorA*      .tl_set:N     =   \l_@@_info_supv_a_en_tl,
   SupervisorATitle  .tl_set:N     =   \l_@@_info_supv_a_title_tl,
   SupervisorATitle* .tl_set:N     =   \l_@@_info_supv_a_title_en_tl,
+}
 %    \end{macrocode}
 %
 % 第二导师
-% Put text here.
+%
 %    \begin{macrocode}
+\keys_define:nn { nju / info }
+{
   SupervisorB       .tl_set:N     =   \l_@@_info_supv_b_tl,
   SupervisorB*      .tl_set:N     =   \l_@@_info_supv_b_en_tl,
   SupervisorBTitle  .tl_set:N     =   \l_@@_info_supv_b_title_tl,
   SupervisorBTitle* .tl_set:N     =   \l_@@_info_supv_b_title_en_tl,
+}
 %    \end{macrocode}
 %
-% Put text here.
 % 提交日期
 %    \begin{macrocode}
+\keys_define:nn { nju / info }
+{
   SubmitDate        .tl_set:N     =   \l_@@_submit_date_tl,
+}
 %    \end{macrocode}
 %
-% Put text here.
 % 答辩
 %    \begin{macrocode}
+\keys_define:nn { nju / info }
+{
   DefendDate        .tl_set:N     =   \l_@@_defend_date_tl,
   ReviewerChairman  .tl_set:N     =   \l_@@_info_chairman_tl,
   ReviewerA         .tl_set:N     =   \l_@@_info_reviewer_a_tl,
   ReviewerB         .tl_set:N     =   \l_@@_info_reviewer_b_tl,
   ReviewerC         .tl_set:N     =   \l_@@_info_reviewer_c_tl,
   ReviewerD         .tl_set:N     =   \l_@@_info_reviewer_d_tl,
+}
 %    \end{macrocode}
 %
-% Put text here.
+% 国家图书馆封面相关
 %    \begin{macrocode}
-  % 国家图书馆封面相关
+\keys_define:nn { nju / info }
+{
   Classification    .tl_set:N     =   \l_@@_info_classif_tl,
   SecurityLevel     .tl_set:N     =   \l_@@_info_seclv_tl,
   UDC               .tl_set:N     =   \l_@@_info_udc_tl,
   SupervisorContact .tl_set:N     =   \l_@@_info_supv_cont_tl,
 }
 %    \end{macrocode}
-%
+% 定义用于设置个人信息的命令
 %    \begin{macrocode}
 \NewDocumentCommand \njusetup { m }
 { \keys_set:nn { nju } { #1 } }
 %    \end{macrocode}
 %
-% mandatory and optional arguments are, and so forth.
+% 设置页边距
 %    \begin{macrocode}
 \RequirePackage[    
     top=2.5cm,
@@ -707,6 +736,10 @@ through XeTeX.
     left=3.2cm,
     right=3.2cm
 ]{geometry}
+%    \end{macrocode}
+%
+% mandatory and optional arguments are, and so forth.
+%    \begin{macrocode}
 \RequirePackage{xparse}
 \RequirePackage{titletoc} % 修改目录内标题格式
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
@@ -821,7 +854,7 @@ through XeTeX.
 % 
 %
 % \begin{variable}{\g_@@_latin_fontset_tl,\g_@@_cjk_fontset_tl}
-% 用于存储所使用字体名称的全局变量，注意宏的命名，l代表局部变量，g代表全局变量
+% 用于存储所使用字体名称的全局变量
 %    \begin{macrocode}
 \tl_new:N \g_@@_latin_fontset_tl
 \tl_new:N \g_@@_cjk_fontset_tl
@@ -1154,7 +1187,7 @@ through XeTeX.
 %
 % Put text here.
 %    \begin{macrocode}
-\str_if_eq:NNTF {\nju_degree} { ug } 
+\str_if_eq:NNTF {\l_@@_info_degree_tl} { ug } 
 {
   % the header line
   \tl_set:Nn \headrulewidth {0pt}
@@ -1607,10 +1640,10 @@ through XeTeX.
 % Put text here.
 %    \begin{macrocode}
 % 判断学位进行命令定义
-\str_if_eq:NNTF {\nju_degree} { ug } 
+\str_if_eq:NNTF {\l_@@_info_degree_tl} { ug } 
 {
   % 本科
-  \tl_const:Nn \c_@@_name_diploma_tl { 本\hfill 科\hfill }
+  \tl_const:Nn \l_@@_name_diploma_tl { 本\hfill 科\hfill }
   \tl_const:Nn \c_@@_name_title_tl { 题\hfill 目 }
   
   \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
@@ -1626,30 +1659,30 @@ through XeTeX.
 } 
 { 
   % 本科以外都是研究生 
-  \tl_const:Nn \c_@@_name_diploma_tl { 研\hfill 究\hfill 生\hfill }
+  \tl_const:Nn \l_@@_name_diploma_tl { 研\hfill 究\hfill 生\hfill }
   \tl_const:Nn \c_@@_name_title_tl { 论\hfill 文\hfill 题\hfill 目 }
 
   \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
   \tl_const:Nn \c_@@_cover_uline_len_b_tl { 14em }
   \tl_const:Nn \c_@@_cover_uline_font_tl { \kaishu }
-  \tl_const:Nn \c_@@_cover_uline_style_tl { }
+  \tl_const:Nn \c_@@_cover_uline_style_tl {}
   \tl_const:Nn \c_@@_cover_uline_bskip_tl { \hspace{1em} }
 
   \tl_const:Nn \c_@@_cover_box_len_tl { 6em }
 
   % 研究生学位分类
-  \str_case_e:nn { \nju_degree }
+  \str_case_e:nn { \l_@@_info_degree_tl }
   {
-    { mg } { \tl_const:Nn \c_@@_name_degree_tl {硕士} }
-    { mf } { \tl_const:Nn \c_@@_name_degree_tl {硕士专业} }
-    { phd } { \tl_const:Nn \c_@@_name_degree_tl {博士} }
+    { mg } { \tl_const:Nn \c_@@_name_degree_tl { 硕士 } }
+    { mf } { \tl_const:Nn \c_@@_name_degree_tl { 硕士专业 } }
+    { phd } { \tl_const:Nn \c_@@_name_degree_tl { 博士 } }
   }
 }
 %    \end{macrocode}
 %
-% Put text here.
+% \begin{macro}{\@@_cover_uline_a:n}
+% 在封面绘制下划线
 %    \begin{macrocode}
-% 封面下划线
 \cs_new:Npn \@@_cover_uline_a:n #1
 {
   \uline{\makebox[\c_@@_cover_uline_len_a_tl]
@@ -1666,6 +1699,7 @@ through XeTeX.
     {\rm\c_@@_cover_uline_font_tl #2 }}
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % Put text here.
 %    \begin{macrocode}
@@ -1680,19 +1714,19 @@ through XeTeX.
 % Put text here.
 %    \begin{macrocode}
 % 判断类型
-\str_if_eq:NNTF {\nju_type} {thesis} 
+\str_if_eq:NNTF { \l_@@_info_type_tl } { thesis } 
 {
-  \tl_const:Nn \nju_type_name 
-    { \c_@@_name_diploma_tl 毕\hfill 业\hfill 论\hfill 文 }
+  \tl_const:Nn \l_@@_info_type_tl_name 
+    { \l_@@_name_diploma_tl 毕\hfill 业\hfill 论\hfill 文 }
 }
 {
-  \tl_const:Nn \nju_type_name 
-    { \c_@@_name_diploma_tl 毕\hfill 业\hfill 设\hfill 计 }
+  \tl_const:Nn \l_@@_info_type_tl_name 
+    { \l_@@_name_diploma_tl 毕\hfill 业\hfill 设\hfill 计 }
 }
 %    \end{macrocode}
 %
+% \begin{macro}{\@@_cover_title_breakline:}
 % 对多行标题进行自动判断，并输出换行后的结果
-%
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_title_breakline:
 {
@@ -1716,74 +1750,72 @@ through XeTeX.
   }
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % Put text here.
-%    \begin{macrocode}
 % 封面信息栏 本科
-\tl_new:N \nju_printcoverinfo_ug
-\tl_set:Nn \nju_printcoverinfo_ug 
-{
-  \begin{tabular}{p{4.2em}c}
-    \@@_cover_box:n {院\hfill 系}
-    & \@@_cover_uline_a:n  {\l_@@_info_dept_tl} \\
-    \@@_cover_box:n {专\hfill 业}
-    & \@@_cover_uline_a:n  {\l_@@_major_tl} \\
-    \@@_cover_title_breakline:
-  \end{tabular}\\
-
-  \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \@@_cover_box:n {年\hfill 级}
-    & \@@_cover_uline_b:n {\l_@@_info_grade_tl}
-    & \@@_cover_box:n {学\hfill 号}
-    & \@@_cover_uline_b:n {\l_@@_info_id_tl}\\
-  \end{tabular}\\
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_print_covertab:
+{%
+  \str_if_eq:NNTF { \l_@@_info_degree_tl } { ug } 
+  {
+    \begin{tabular}{p{4.2em}c}
+      \@@_cover_box:n {院\hfill 系}
+      & \@@_cover_uline_a:n  {\l_@@_info_dept_tl} \\
+      \@@_cover_box:n {专\hfill 业}
+      & \@@_cover_uline_a:n  {\l_@@_major_tl} \\
+      \@@_cover_title_breakline:
+    \end{tabular}\\
   
-  \begin{tabular}{p{4.2em}c}
-    \@@_cover_box:n {学\hfill 生\hfill 姓\hfill 名}
-    & \@@_cover_uline_a:n  {\l_@@_info_author_tl}
-  \end{tabular}\\
-  \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \@@_cover_box:n {导\hfill 师}
-    & \@@_cover_uline_b:n {\l_@@_info_supv_a_tl}
-    & \@@_cover_box:n {职\hfill 称}
-    & \@@_cover_uline_b:n {\l_@@_info_supv_a_title_tl}\\
-
-    % 第二导师
-    \tl_if_empty:NF \l_@@_info_supv_b_tl
-    {
-      \@@_cover_box:n {第\hfill 二\hfill 导\hfill 师}
-      & \@@_cover_uline_b:n {\l_@@_info_supv_b_tl}
+    \begin{tabular}{p{4.2em}cp{4.2em}c}
+      \@@_cover_box:n {年\hfill 级}
+      & \@@_cover_uline_b:n {\l_@@_info_grade_tl}
+      & \@@_cover_box:n {学\hfill 号}
+      & \@@_cover_uline_b:n {\l_@@_info_id_tl}\\
+    \end{tabular}\\
+    
+    \begin{tabular}{p{4.2em}c}
+      \@@_cover_box:n {学\hfill 生\hfill 姓\hfill 名}
+      & \@@_cover_uline_a:n  {\l_@@_info_author_tl}
+    \end{tabular}\\
+    \begin{tabular}{p{4.2em}cp{4.2em}c}
+      \@@_cover_box:n {导\hfill 师}
+      & \@@_cover_uline_b:n {\l_@@_info_supv_a_tl}
       & \@@_cover_box:n {职\hfill 称}
-      & \@@_cover_uline_b:n {\l_@@_info_supv_b_title_tl}\\
-    }
-  \end{tabular}\\
-
-  \begin{tabular}{p{4.2em}c}
-    \@@_cover_box:n {提\hfill 交\hfill 日\hfill 期}
-    & \@@_cover_uline_a:n  {\l_@@_submit_date_tl}\\
-  \end{tabular}
+      & \@@_cover_uline_b:n {\l_@@_info_supv_a_title_tl}\\
+  
+      % 第二导师
+      \tl_if_empty:NF \l_@@_info_supv_b_tl
+      {
+        \@@_cover_box:n {第\hfill 二\hfill 导\hfill 师}
+        & \@@_cover_uline_b:n {\l_@@_info_supv_b_tl}
+        & \@@_cover_box:n {职\hfill 称}
+        & \@@_cover_uline_b:n {\l_@@_info_supv_b_title_tl}\\
+      }
+    \end{tabular}\\
+  
+    \begin{tabular}{p{4.2em}c}
+      \@@_cover_box:n {提\hfill 交\hfill 日\hfill 期}
+      & \@@_cover_uline_a:n  {\l_@@_submit_date_tl}\\
+    \end{tabular}  
+  } 
+  { 
+    \begin{tabular}{p{6em}c}    
+      \@@_cover_title_breakline:
+      \@@_cover_box:n {作\hfill 者\hfill 姓\hfill 名}
+      & \@@_cover_uline_a:n  {\l_@@_info_author_tl}\\
+      \@@_cover_box:n {专\hfill 业\hfill 名\hfill 称}
+      & \@@_cover_uline_a:n  {\l_@@_major_tl}\\
+      \@@_cover_box:n {研\hfill 究\hfill 方\hfill 向}
+      & \@@_cover_uline_a:n  {\l_@@_field_tl}\\
+      \@@_cover_box:n {指\hfill 导\hfill 教\hfill 师}
+      & \@@_cover_uline_a:n  {\l_@@_info_supv_full_tl}\\
+    \end{tabular}
+  } 
 }
 %    \end{macrocode}
 %
 % Put text here.
-%    \begin{macrocode}
-% 封面信息栏 研究生
-\tl_new:N \nju_printcoverinfo_g
-\tl_set:Nn \nju_printcoverinfo_g 
-{
-  \begin{tabular}{p{6em}c}    
-    \@@_cover_title_breakline:
-    \@@_cover_box:n {作\hfill 者\hfill 姓\hfill 名}
-    & \@@_cover_uline_a:n  {\l_@@_info_author_tl}\\
-    \@@_cover_box:n {专\hfill 业\hfill 名\hfill 称}
-    & \@@_cover_uline_a:n  {\l_@@_major_tl}\\
-    \@@_cover_box:n {研\hfill 究\hfill 方\hfill 向}
-    & \@@_cover_uline_a:n  {\l_@@_field_tl}\\
-    \@@_cover_box:n {指\hfill 导\hfill 教\hfill 师}
-    & \@@_cover_uline_a:n  {\l_@@_info_supv_full_tl}\\
-  \end{tabular}
-}
-%    \end{macrocode}
 %
 % Put text here.
 %    \begin{macrocode}
@@ -1888,14 +1920,15 @@ through XeTeX.
   \begin{center}
     \includegraphics[height=3.35cm]{njuname}
     \vskip 10mm 
-    {\zihao{1}\makebox[9em][s]{\bf{\songti\nju_type_name}}}
+    {\zihao{1}\makebox[9em][s]{\bf{\songti\l_@@_info_type_tl_name}}}
     \vfill
     \vskip\stretch{0}
     {\bgroup
     \kaishu\zihao{3}
     \def\tabcolsep{1pt}
     \def\arraystretch{1.5}
-    \nju_printcoverinfo_ug % 绘制信息框
+    % 绘制信息框
+    \@@_print_covertab: 
     \egroup}
     \vfill
   \end{center}
@@ -1922,7 +1955,7 @@ through XeTeX.
     \vskip 10mm 
     \includegraphics[height=2cm]{njuname-large}
     \vskip 15mm 
-    {\zihao{1}\makebox[10em][s]{\bf{\kaishu\nju_type_name}}}
+    {\zihao{1}\makebox[10em][s]{\bf{\kaishu\l_@@_info_type_tl_name}}}
     \vskip 5mm
     {\zihao{1}\bf{\kaishu{（申请\c_@@_name_degree_tl 学位）}}}
     \par\vfill
@@ -1932,7 +1965,8 @@ through XeTeX.
     \def\tabcolsep{1pt}
     \def\arraystretch{1.5}
     \vskip 10mm
-    \nju_printcoverinfo_g % 绘制信息框
+    % 绘制信息框
+    \@@_print_covertab:
     \egroup}
     \vfill
     \vskip 10mm
@@ -1966,7 +2000,7 @@ through XeTeX.
 % 重定义maketitle生成封面
 \tl_set:Nn \maketitle 
 {%
-  \str_if_eq:NNTF { \nju_degree } { ug } 
+  \str_if_eq:NNTF { \l_@@_info_degree_tl } { ug } 
   {
     \nju_printcover_nl % 国家图书馆封面
     \nju_printcover_ug % 本科封面
@@ -1982,7 +2016,7 @@ through XeTeX.
 %
 %    \begin{macrocode}
 % 判断学位
-\str_if_eq:NNTF {\nju_degree} { ug } 
+\str_if_eq:NNTF {\l_@@_info_degree_tl} { ug } 
 {   
   % 本科摘要环境
   \NewDocumentEnvironment{abstract} {}
@@ -2076,7 +2110,7 @@ through XeTeX.
     毕业论文题目：\hspace{0.5em}\nju_underline:n {\l_@@_info_title_tl\hfill}\\    
     \uline{\makebox[9em]{\l_@@_major_tl}}专业
     \uline{\makebox[4em]{\l_@@_info_grade_tl}}级
-    \str_if_eq:NNTF {\nju_degree} { phd } {博}{硕}
+    \str_if_eq:NNTF {\l_@@_info_degree_tl} { phd } {博}{硕}
     士生姓名：\uline{\hfill\l_@@_info_author_tl\hfill} \\
     指导教师（姓名、职称）：\uline{\hfill\l_@@_info_supv_full_tl\hfill}\par
     \egroup
