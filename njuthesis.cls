@@ -38,20 +38,15 @@
 \RequirePackage{l3keys2e}
 \keys_define:nn { nju }
 {
-  secondsupervisor      .bool_set:N   =   \nju_second_supervisor,
-  secondsupervisor      .initial:n    =   false,
   nlcover           .bool_set:N   =   \nju_nl_cover,
   nlcover           .initial:n    =   false,
   degree            .tl_set:N     =   \nju_degree,
   degree            .initial:n    =   ug,
   type              .tl_set:N     =   \nju_type,
   type              .initial:n    =   thesis,
-  systemfont        .bool_set:N   =   \nju_systemfont,
-  systemfont        .initial:n    =   true,
-  customlatinfont   .tl_set:N     =   \nju_customlatinfont,
-  customlatinfont   .initial:n    =   windows,
-  customchinesefont .tl_set:N     =   \nju_customchinesefont,
-  customchinesefont .initial:n    =   windows,
+}
+\keys_define:nn { nju }
+{
   info              .meta:nn      =   { nju / info } { #1 }
 }
 \keys_define:nn { nju / info }
@@ -96,8 +91,6 @@
 }
 \NewDocumentCommand \njusetup { m }
 { \keys_set:nn { nju } { #1 } }
-\ProcessKeysOptions { nju }
-\RequirePackage{fontspec}
 \RequirePackage[
     top=2.5cm,
     bottom=2.5cm,
@@ -160,39 +153,85 @@
 \RequirePackage{wrapfig} % Wrap text around figures
 \RequirePackage[hidelinks,bookmarksnumbered=true]{hyperref}
 \RequirePackage[capitalise,nameinlink,noabbrev]{cleveref}
-\NewDocumentCommand\set_latin_fontset_windows{}{
+\RequirePackage{fontspec}
+\tl_new:N \g__nju_latin_fontset_tl
+\tl_new:N \g__nju_cjk_fontset_tl
+\keys_define:nn { nju }
+{
+  customlatinfont   .choices:nn   =
+  { gyre, macos, windows, null }
+  { \tl_set_eq:NN \g__nju_latin_fontset_tl \l_keys_choice_tl },
+  customchinesefont .choices:nn   =
+  { fandol, founder, macos, noto, windows, null }
+  { \tl_set_eq:NN \g__nju_cjk_fontset_tl   \l_keys_choice_tl },
+}
+\ProcessKeysOptions { nju }
+\bool_new:N \g__nju_load_system_fontset_tl
+\tl_if_empty:NTF \g__nju_latin_fontset_tl
+  { \bool_gset_true:N \g__nju_load_system_fontset_tl }
+{
+  \tl_if_empty:NT \g__nju_cjk_fontset_tl
+    { \bool_gset_true:N \g__nju_load_system_fontset_tl }
+}
+\bool_if:NT \g__nju_load_system_fontset_tl
+{
+  % 检测是否是 Windows
+  \sys_if_platform_windows:TF
+  {
+    \tl_set:Nn \g__nju_latin_fontset_tl { windows }
+    \tl_set:Nn \g__nju_cjk_fontset_tl   { windows }
+  }
+  {
+    % 检测是否是 macOS
+    \ctex_if_platform_macos:TF
+    {
+      \tl_set:Nn \g__nju_latin_fontset_tl { macos }
+      \tl_set:Nn \g__nju_cjk_fontset_tl   { macos }
+    }
+    % 其余系统一律使用自由字体
+    {
+      \tl_set:Nn \g__nju_latin_fontset_tl { gyre }
+      \tl_set:Nn \g__nju_cjk_fontset_tl { fandol }
+    }
+  }
+}
+\cs_new_protected:Npn \__nju_load_latin_font_windows:
+{
   \setmainfont{Times~New~Roman}
   \setsansfont{Arial}
   \setmonofont{Courier~New}[Scale=MatchLowercase]
 }
-\NewDocumentCommand\set_latin_fontset_macos{}{
-  \setmainfont{Times~New~Roman}
-  \setsansfont{Arial}
-  \setmonofont{Menlo}[Scale=MatchLowercase]
+\cs_new_protected:Npn \__nju_load_latin_font_macos:
+{
+\setmainfont{Times~New~Roman}
+\setsansfont{Arial}
+\setmonofont{Menlo}[Scale=MatchLowercase]
 }
-\NewDocumentCommand\set_latin_fontset_gyre{}{
-  \setmainfont{texgyretermes}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic]
-  \setsansfont{texgyreheros}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic]
-  \setmonofont{texgyrecursor}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic,
-    Scale=MatchLowercase,
-    Ligatures=CommonOff]
+\cs_new_protected:Npn \__nju_load_latin_font_gyre:
+{
+\setmainfont{texgyretermes}[
+  Extension=.otf,
+  UprightFont=*-regular,
+  BoldFont=*-bold,
+  ItalicFont=*-italic,
+  BoldItalicFont=*-bolditalic]
+\setsansfont{texgyreheros}[
+  Extension=.otf,
+  UprightFont=*-regular,
+  BoldFont=*-bold,
+  ItalicFont=*-italic,
+  BoldItalicFont=*-bolditalic]
+\setmonofont{texgyrecursor}[
+  Extension=.otf,
+  UprightFont=*-regular,
+  BoldFont=*-bold,
+  ItalicFont=*-italic,
+  BoldItalicFont=*-bolditalic,
+  Scale=MatchLowercase,
+  Ligatures=CommonOff]
 }
-\NewDocumentCommand\set_chinese_fontset_windows{}{
+\cs_new_protected:Npn \__nju_load_cjk_font_windows:
+{
   \setCJKmainfont{SimSun}[
     AutoFakeBold=2.17,
     ItalicFont=KaiTi]
@@ -205,166 +244,125 @@
   \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[
     BoldFont=Microsoft~YaHei~Bold]
 }
-\NewDocumentCommand\set_chinese_fontset_macos{}{
-  % 移除 does not contain script "CJK" 警告
-  \msg_redirect_name:nnn {fontspec} {no-script} {info}
-  \setCJKmainfont{Songti~SC~Light}[
-    BoldFont=Songti~SC~Bold,
-    ItalicFont=Kaiti~SC,
-    BoldItalicFont=Kaiti~SC~Bold]
-  \setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-  \setCJKmonofont{STFangsong}
-  \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
-  \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-  \setCJKfamilyfont{zhfs}{STFangsong}
-  \setCJKfamilyfont{zhkai}{Kaiti~SC}
-    [
-      BoldFont=Kaiti~SC~Bold,
-      % 参考CTeX手册第9节 LuaLATEX 下的中文支持方式
-      % AlternateFont =
-      %   {
-      %   {⟨character range1⟩} {⟨alternate font name1⟩}
-      %   {⟨alternate font features2⟩} ,
-      %   ......
-      %   }
-    ]
-  \setCJKfamilyfont{zhnewhei}{PingFang~SC}
+\cs_new_protected:Npn \__nju_load_cjk_font_macos:
+{
+\msg_redirect_name:nnn {fontspec} {no-script} {info}
+\setCJKmainfont{Songti~SC~Light}[
+  BoldFont=Songti~SC~Bold,
+  ItalicFont=Kaiti~SC,
+  BoldItalicFont=Kaiti~SC~Bold]
+\setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+\setCJKmonofont{STFangsong}
+\setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
+\setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+\setCJKfamilyfont{zhfs}{STFangsong}
+\setCJKfamilyfont{zhkai}{Kaiti~SC}
+  [
+    BoldFont=Kaiti~SC~Bold,
+    % 参考CTeX手册第9节 LuaLATEX 下的中文支持方式
+    % AlternateFont =
+    %   {
+    %   {⟨character range1⟩} {⟨alternate font name1⟩}
+    %   {⟨alternate font features2⟩} ,
+    %   ......
+    %   }
+  ]
+\setCJKfamilyfont{zhnewhei}{PingFang~SC}
 }
-\NewDocumentCommand\set_chinese_fontset_fandol{}{
-  % 移除 does not contain script "CJK" 警告
-  \msg_redirect_name:nnn {fontspec} {no-script} {info}
-  \setCJKmainfont{FandolSong-Regular}[
-    Extension=.otf,
-    BoldFont=FandolSong-Bold,
-    ItalicFont=FandolKai-Regular]
-  \setCJKsansfont{FandolHei-Regular}[
-    Extension=.otf,
-    BoldFont=FandolHei-Bold]
-  \setCJKmonofont{FandolFang-Regular}[Extension=.otf]
-  \setCJKfamilyfont{zhsong}{FandolSong-Regular}[
-    Extension=.otf,
-    BoldFont=FandolSong-Bold]
-  \setCJKfamilyfont{zhhei}{FandolHei-Regular}[
-    Extension=.otf,
-    BoldFont=FandolHei-Bold]
-  \setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
-  \setCJKfamilyfont{zhkai}{FandolKai-Regular}[
-    Extension=.otf,
-    AutoFakeBold=2.17]
+\cs_new_protected:Npn \__nju_load_cjk_font_fandol:
+{
+\msg_redirect_name:nnn {fontspec} {no-script} {info}
+\setCJKmainfont{FandolSong-Regular}[
+  Extension=.otf,
+  BoldFont=FandolSong-Bold,
+  ItalicFont=FandolKai-Regular]
+\setCJKsansfont{FandolHei-Regular}[
+  Extension=.otf,
+  BoldFont=FandolHei-Bold]
+\setCJKmonofont{FandolFang-Regular}[Extension=.otf]
+\setCJKfamilyfont{zhsong}{FandolSong-Regular}[
+  Extension=.otf,
+  BoldFont=FandolSong-Bold]
+\setCJKfamilyfont{zhhei}{FandolHei-Regular}[
+  Extension=.otf,
+  BoldFont=FandolHei-Bold]
+\setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
+\setCJKfamilyfont{zhkai}{FandolKai-Regular}[
+  Extension=.otf,
+  AutoFakeBold=2.17]
 }
-\NewDocumentCommand\set_chinese_fontset_founder{}{
-  \setCJKmainfont{FZSSK}[
-    Extension=.ttf,
-    BoldFont=FZXBSK,
-    ItalicFont=FZKTK]
-  % FZXH1K 方正细黑一（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/161 设计师非商免费
-  % FZHTK 方正黑体（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/131 免费商用
-  \setCJKsansfont{FZXH1K}[
-    Extension=.ttf,
-    BoldFont=FZHTK]
-  % FZFSK 方正仿宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/128
-  \setCJKmonofont{FZFSK}[Extension=.ttf]
-
-  \setCJKfamilyfont{zhsong}{FZSSK}[
+\cs_new_protected:Npn \__nju_load_cjk_font_founder:
+{
+\setCJKmainfont{FZSSK}[% 方正书宋
+  Extension=.ttf,
+  BoldFont=FZXBSK,% 方正小标宋
+  ItalicFont=FZKTK]% 方正楷体
+\setCJKsansfont{FZXH1K}[% 方正细黑一
+  Extension=.ttf,
+  BoldFont=FZHTK]% FZHTK 方正黑体
+\setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
+\setCJKfamilyfont{zhsong}
+  {FZSSK}[
     Extension=.ttf,
     BoldFont=FZXBSK]
-  \setCJKfamilyfont{zhhei}{FZHTK}[
+\setCJKfamilyfont{zhhei}
+  {FZHTK}[
     Extension=.ttf,
     AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhfs}{FZFSK}[Extension=.ttf]
-  \setCJKfamilyfont{zhkai}{FZKTK}[Extension=.ttf]
-  % FZYouHK_508R 方正悠黑508R（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/244 设计师非商免费
-  % FZYouHK_511M 方正悠黑511M（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/244 设计师非商免费
-  \setCJKfamilyfont{zhnewhei}{FZYouHK_508R}[
+\setCJKfamilyfont{zhfs}
+  {FZFSK}[Extension=.ttf]
+\setCJKfamilyfont{zhkai}
+  {FZKTK}[Extension=.ttf]
+\setCJKfamilyfont{zhnewhei}
+  {FZYouHK_508R}[% 方正悠黑508R
     Extension=.ttf,
-    BoldFont=FZYouHK_511M]
+    BoldFont=FZYouHK_511M]% 方正悠黑511M
 }
-\NewDocumentCommand\set_chinese_fontset_noto{}{
-  % 思源宋体 https://www.google.com/get/noto/#serif-hans
-  \setCJKmainfont[
-    UprightFont=NotoSerifCJKsc-Regular,
-    BoldFont=NotoSerifCJKsc-Bold,
-    ItalicFont=NotoSerifCJKsc-Regular,
-    BoldItalicFont=NotoSerifCJKsc-Bold,
-    ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Serif~CJK~SC}
-
-  % 思源黑体 https://www.google.com/get/noto/#sans-hans
-  \setCJKsansfont[
-    UprightFont=NotoSansCJKsc-Regular,
-    BoldFont=NotoSansCJKsc-Bold,
-    ItalicFont=NotoSansCJKsc-Regular,
-    BoldItalicFont=NotoSansCJKsc-Bold,
-    ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Sans~CJK~SC}
-
-  % 包含于上述思源黑体
-  \setCJKmonofont[
-    UprightFont=NotoSansMonoCJKsc-Regular,
-    BoldFont=NotoSansMonoCJKsc-Bold,
-    ItalicFont=NotoSansMonoCJKsc-Regular,
-    BoldItalicFont=NotoSansMonoCJKsc-Bold,
-    ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Sans~Mono~SC}
-
-  \setCJKfamilyfont{zhsong}{Noto~Serif~CJK~SC}
-  \setCJKfamilyfont{zhhei}{Noto~Sans~CJK~SC}
-
-  % 方正楷体、方正仿宋为免费商用字体，且支持CJK字符集
-  % 方正仿宋 http://www.foundertype.com/index.php/FontInfo/index/id/128.html
-  % 方正楷体 http://www.foundertype.com/index.php/FontInfo/index/id/137.html
-  \setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
-}
-\bool_if:NTF \nju_systemfont
+\cs_new_protected:Npn \__nju_load_cjk_font_noto:
 {
-  % 检测是否是 Windows
-  \sys_if_platform_windows:TF
-  {
-    \set_latin_fontset_windows
-    \set_chinese_fontset_windows
-  }
-  {
-    % 检测是否是 macOS
-    \ctex_if_platform_macos:TF
-    {
-      \set_latin_fontset_macos
-      \set_chinese_fontset_macos
-    }
-    % 其余系统一律使用自由字体
-    {
-      \set_latin_fontset_gyre
-      \set_chinese_fontset_fandol
-    }
-  }
+\setCJKmainfont[
+  UprightFont=NotoSerifCJKsc-Regular,
+  BoldFont=NotoSerifCJKsc-Bold,
+  ItalicFont=NotoSerifCJKsc-Regular,
+  BoldItalicFont=NotoSerifCJKsc-Bold,
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant]{Noto~Serif~CJK~SC}
+
+\setCJKsansfont[
+  UprightFont=NotoSansCJKsc-Regular,
+  BoldFont=NotoSansCJKsc-Bold,
+  ItalicFont=NotoSansCJKsc-Regular,
+  BoldItalicFont=NotoSansCJKsc-Bold,
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant]{Noto~Sans~CJK~SC}
+
+\setCJKmonofont[
+  UprightFont=NotoSansMonoCJKsc-Regular,
+  BoldFont=NotoSansMonoCJKsc-Bold,
+  ItalicFont=NotoSansMonoCJKsc-Regular,
+  BoldItalicFont=NotoSansMonoCJKsc-Bold,
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant]{Noto~Sans~Mono~SC}
+
+\setCJKfamilyfont{zhsong}{Noto~Serif~CJK~SC}
+\setCJKfamilyfont{zhhei}{Noto~Sans~CJK~SC}
+\setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
+\setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
 }
+\cs_new_protected:Npn \__nju_load_font:
 {
-  % 如果用户需要自定义字体
-  % 此处需要使用\str_case_e而不是\str_case使宏展开为字符串
-  \str_case_e:nn { \nju_customlatinfont }
-  {
-    { windows } { \set_latin_fontset_windows }
-    { macos } { \set_latin_fontset_macos }
-    { gyre } { \set_latin_fontset_gyre }
-    { null } {}
-  }
-  \str_case_e:nn { \nju_customchinesefont }
-  {
-    { windows } { \set_chinese_fontset_windows }
-    { macos } { \set_chinese_fontset_macos }
-    { gyre } { \set_chinese_fontset_gyre }
-    { founder } { \set_chinese_fontset_founder }
-    { noto } { \set_chinese_fontset_noto }
-    { null } {}
-  }
+  \use:c { __nju_load_latin_font_ \g__nju_latin_fontset_tl : }
+  \use:c { __nju_load_cjk_font_   \g__nju_cjk_fontset_tl   : }
+
+  \NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
+  \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
+  \NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
+  \NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
 }
+\__nju_load_font:
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
   Extension = .otf]
-\NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
-\NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
-\NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
-\NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
 \RequirePackage{fancyhdr} % 调整页眉页脚
 \fancypagestyle{njuplain}{%
    \fancyhead{}
@@ -455,12 +453,12 @@
 {
   \nju_tocpagestyle:nnn {\listtablename}{\listtablename}{lot}
 }
-\newenvironment{preface}
+\NewDocumentEnvironment{preface}{}
 {%
   \chapter*{前言}
   \addcontentsline{toc}{chapter}{前言}
 }{}
-\newenvironment{acknowledgement}
+\NewDocumentEnvironment{acknowledgement}{}
 {%
   \chapter*{致谢}
   \addcontentsline{toc}{chapter}{致谢}
@@ -542,7 +540,9 @@ xleftmargin=2em,xrightmargin=2em,% set the width of the code environment
 }
 \lstdefinestyle{LaTeX}{
   language=TeX,
-  morekeywords={begin, caption, label, mathrm, frac, toprule, midrule, bottomrule, includegraphics}
+  morekeywords={
+    begin, caption, label, mathrm, frac,
+    toprule, midrule, bottomrule, includegraphics}
 }
 \DeclareCaptionFont{songticap}{\zihao{5}\bf\songti}
 \captionsetup{
@@ -661,168 +661,179 @@ numberwithin=section,
   \l__nju_info_title_b_tl
   \l__nju_info_title_c_tl
 }
-\bool_if:NTF \nju_second_supervisor
+\tl_if_empty:NTF \l__nju_info_supv_b_tl
 {
-  \tl_const:Nn \nju_supervisor_full
+  \tl_const:Nn \l__nju_info_supv_full_tl
   {
-    \l__nju_info_supv_a_tl\ \l__nju_info_supv_a_title_tl
-    \ \ \l__nju_info_supv_b_tl\ \l__nju_info_supv_b_title_tl
+     \l__nju_info_supv_a_tl\hspace{.5em}
+     \l__nju_info_supv_a_title_tl
   }
-  \tl_const:Nn \nju_supervisor_full_en
+  \tl_const:Nn \l__nju_info_supv_full_tl_en
   {
-    \l__nju_info_supv_a_en_tl\ \l__nju_info_supv_a_title_en_tl
-    \ \ \l__nju_info_supv_b_en_tl\ \l__nju_info_supv_b_title_en_tl
+    \l__nju_info_supv_a_en_tl\hspace{.5em}
+    \l__nju_info_supv_a_title_en_tl
   }
 }
 {
-  \tl_const:Nn \nju_supervisor_full
+  \tl_const:Nn \l__nju_info_supv_full_tl
   {
-    \l__nju_info_supv_a_tl\ \l__nju_info_supv_a_title_tl
+    \l__nju_info_supv_a_tl\hspace{.5em}
+    \l__nju_info_supv_a_title_tl\hspace{1em}
+    \l__nju_info_supv_b_tl\hspace{.5em}
+    \l__nju_info_supv_b_title_tl
   }
-  \tl_const:Nn \nju_supervisor_full_en
+  \tl_const:Nn \l__nju_info_supv_full_tl_en
   {
-    \l__nju_info_supv_a_en_tl\ \l__nju_info_supv_a_title_en_tl
+    \l__nju_info_supv_a_en_tl\hspace{.5em}
+    \l__nju_info_supv_a_title_en_tl\hspace{1em}
+    \l__nju_info_supv_b_en_tl\hspace{.5em}
+    \l__nju_info_supv_b_title_en_tl
   }
 }
 \str_if_eq:NNTF {\nju_degree} { ug }
 {
   % 本科
-  \tl_const:Nn \nju_degree_name {本\hfill 科\hfill }
+  \tl_const:Nn \c__nju_name_diploma_tl { 本\hfill 科\hfill }
+  \tl_const:Nn \c__nju_name_title_tl { 题\hfill 目 }
+
+  \tl_const:Nn \c__nju_cover_uline_len_a_tl { 250pt }
+  \tl_const:Nn \c__nju_cover_uline_len_b_tl { 90pt }
+  \tl_const:Nn \c__nju_cover_uline_font_tl { \songti }
+  \tl_const:Nn \c__nju_cover_uline_style_tl { \bf }
+  \tl_const:Nn \c__nju_cover_uline_bskip_tl {}
+
+  \tl_const:Nn \c__nju_cover_box_len_tl { 4.2em }
 
   % 本科强制不打印国家图书馆封面
   \bool_set_false:N \nju_nl_cover
-
-  % 封面下划线
-  \cs_new:Npn \nju_cover_uline_ug:nn #1 #2
-  {
-    \uline{\makebox[#1]{\rm\songti#2}}
-  }
-
-  % 封面表格边框
-  \cs_new:Npn \nju_coverbox_ug:n #1
-  {
-    \makebox[4.2em][s]{#1}
-  }
 }
 {
   % 本科以外都是研究生
-  \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill }
+  \tl_const:Nn \c__nju_name_diploma_tl { 研\hfill 究\hfill 生\hfill }
+  \tl_const:Nn \c__nju_name_title_tl { 论\hfill 文\hfill 题\hfill 目 }
 
-  % 封面下划线
-  \cs_new:Npn \nju_cover_uline_g:n #1
-  {
-    \uline{\makebox[250pt]{\rm\kaishu#1}}
-  }
+  \tl_const:Nn \c__nju_cover_uline_len_a_tl { 250pt }
+  \tl_const:Nn \c__nju_cover_uline_len_b_tl { 14em }
+  \tl_const:Nn \c__nju_cover_uline_font_tl { \kaishu }
+  \tl_const:Nn \c__nju_cover_uline_style_tl { }
+  \tl_const:Nn \c__nju_cover_uline_bskip_tl { \hspace{1em} }
 
-  % 国家图书馆封面下划线
-  \cs_new:Npn \nju_cover_uline_nl:nn #1 #2
-  {
-    \uline{\makebox[#1]{#2}}
-  }
-
-  % 封面表格边框
-  \cs_new:Npn \nju_coverbox_g:n #1
-  {
-    \makebox[6em][s]{#1\hspace{1em}}
-  }
+  \tl_const:Nn \c__nju_cover_box_len_tl { 6em }
 
   % 研究生学位分类
   \str_case_e:nn { \nju_degree }
   {
-    { mg } { \tl_const:Nn \nju_degree_title {硕士} }
-    { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }
-    { phd } { \tl_const:Nn \nju_degree_title {博士} }
+    { mg } { \tl_const:Nn \c__nju_name_degree_tl {硕士} }
+    { mf } { \tl_const:Nn \c__nju_name_degree_tl {硕士专业} }
+    { phd } { \tl_const:Nn \c__nju_name_degree_tl {博士} }
   }
+}
+\cs_new:Npn \__nju_cover_uline_a:n #1
+{
+  \uline{\makebox[\c__nju_cover_uline_len_a_tl]
+    {\rm\c__nju_cover_uline_font_tl #1 }}
+}
+\cs_new:Npn \__nju_cover_uline_b:n #1
+{
+  \uline{\makebox[\c__nju_cover_uline_len_b_tl]
+    {\rm\c__nju_cover_uline_font_tl #1 }}
+}
+\cs_new:Npn \__nju_cover_uline_nl:nn #1 #2
+{
+  \uline{\makebox[#1]
+    {\rm\c__nju_cover_uline_font_tl #2 }}
+}
+\cs_new:Npn \__nju_cover_box:n #1
+{
+  \makebox[\c__nju_cover_box_len_tl][s]{
+    #1\c__nju_cover_uline_bskip_tl}
 }
 \str_if_eq:NNTF {\nju_type} {thesis}
 {
   \tl_const:Nn \nju_type_name
-    { \nju_degree_name 毕\hfill 业\hfill 论\hfill 文 }
+    { \c__nju_name_diploma_tl 毕\hfill 业\hfill 论\hfill 文 }
 }
 {
   \tl_const:Nn \nju_type_name
-    { \nju_degree_name 毕\hfill 业\hfill 设\hfill 计 }
+    { \c__nju_name_diploma_tl 毕\hfill 业\hfill 设\hfill 计 }
+}
+\cs_new_protected:Npn \__nju_cover_title_breakline:
+{
+  \__nju_cover_box:n {\c__nju_name_title_tl}
+  & \__nju_cover_uline_a:n
+  { \c__nju_cover_uline_style_tl \l__nju_info_title_a_tl } \\
+  % 如果某行标题空则不输出接下来的若干行
+  \tl_if_empty:NF \l__nju_info_title_b_tl
+  {
+    \tl_if_empty:NTF \l__nju_info_title_c_tl
+      {
+        & \__nju_cover_uline_a:n
+        {\c__nju_cover_uline_style_tl \l__nju_info_title_b_tl } \\
+      }
+      {
+        & \__nju_cover_uline_a:n
+        { \c__nju_cover_uline_style_tl \l__nju_info_title_b_tl } \\
+        & \__nju_cover_uline_a:n
+        { \c__nju_cover_uline_style_tl \l__nju_info_title_c_tl } \\
+      }
+  }
 }
 \tl_new:N \nju_printcoverinfo_ug
 \tl_set:Nn \nju_printcoverinfo_ug
 {
   \begin{tabular}{p{4.2em}c}
-    \nju_coverbox_ug:n {院\hfill 系}
-    & \nju_cover_uline_ug:nn {250pt}{\l__nju_info_dept_tl} \\
-    \nju_coverbox_ug:n {专\hfill 业}
-    & \nju_cover_uline_ug:nn {250pt}{\l__nju_major_tl} \\
-
-    \nju_coverbox_ug:n {题\hfill 目}
-    & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_a_tl}} \\
-    % 自动判断标题换行
-    \tl_if_empty:NTF \l__nju_info_title_b_tl {}
-    {
-      \tl_if_empty:NTF \l__nju_info_title_c_tl
-        { & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl}} \\ }
-        {
-          & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl}} \\
-          & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_c_tl}} \\
-        }
-    }
+    \__nju_cover_box:n {院\hfill 系}
+    & \__nju_cover_uline_a:n  {\l__nju_info_dept_tl} \\
+    \__nju_cover_box:n {专\hfill 业}
+    & \__nju_cover_uline_a:n  {\l__nju_major_tl} \\
+    \__nju_cover_title_breakline:
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \nju_coverbox_ug:n {年\hfill 级}
-    & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_grade_tl}
-    & \nju_coverbox_ug:n {学\hfill 号}
-    & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_id_tl}\\
+    \__nju_cover_box:n {年\hfill 级}
+    & \__nju_cover_uline_b:n {\l__nju_info_grade_tl}
+    & \__nju_cover_box:n {学\hfill 号}
+    & \__nju_cover_uline_b:n {\l__nju_info_id_tl}\\
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
-    \nju_coverbox_ug:n {学\hfill 生\hfill 姓\hfill 名}
-    & \nju_cover_uline_ug:nn {250pt}{\l__nju_info_author_tl}
+    \__nju_cover_box:n {学\hfill 生\hfill 姓\hfill 名}
+    & \__nju_cover_uline_a:n  {\l__nju_info_author_tl}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \nju_coverbox_ug:n {导\hfill 师}
-    & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_supv_a_tl}
-    & \nju_coverbox_ug:n {职\hfill 称}
-    & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_supv_a_title_tl}\\
+    \__nju_cover_box:n {导\hfill 师}
+    & \__nju_cover_uline_b:n {\l__nju_info_supv_a_tl}
+    & \__nju_cover_box:n {职\hfill 称}
+    & \__nju_cover_uline_b:n {\l__nju_info_supv_a_title_tl}\\
 
     % 第二导师
-    \bool_if:NT \nju_second_supervisor
+    \tl_if_empty:NF \l__nju_info_supv_b_tl
     {
-      \nju_coverbox_ug:n {第\hfill 二\hfill 导\hfill 师}
-      & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_supv_b_tl}
-      & \nju_coverbox_ug:n {职\hfill 称}
-      & \nju_cover_uline_ug:nn {90pt}{\l__nju_info_supv_b_title_tl}\\
+      \__nju_cover_box:n {第\hfill 二\hfill 导\hfill 师}
+      & \__nju_cover_uline_b:n {\l__nju_info_supv_b_tl}
+      & \__nju_cover_box:n {职\hfill 称}
+      & \__nju_cover_uline_b:n {\l__nju_info_supv_b_title_tl}\\
     }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
-    \nju_coverbox_ug:n {提\hfill 交\hfill 日\hfill 期}
-    & \nju_cover_uline_ug:nn {250pt}{\l__nju_submit_date_tl}\\
+    \__nju_cover_box:n {提\hfill 交\hfill 日\hfill 期}
+    & \__nju_cover_uline_a:n  {\l__nju_submit_date_tl}\\
   \end{tabular}
 }
 \tl_new:N \nju_printcoverinfo_g
 \tl_set:Nn \nju_printcoverinfo_g
 {
   \begin{tabular}{p{6em}c}
-    \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-    & \nju_cover_uline_g:n {\l__nju_info_title_a_tl} \\
-    % 自动判断标题换行
-    \tl_if_empty:NTF \l__nju_info_title_b_tl {}
-    {
-      \tl_if_empty:NTF \l__nju_info_title_c_tl
-        { & \nju_cover_uline_g:n {\l__nju_info_title_b_tl} \\ }
-        {
-          & \nju_cover_uline_g:n {\l__nju_info_title_b_tl} \\
-          & \nju_cover_uline_g:n {\l__nju_info_title_c_tl} \\
-        }
-    }
-
-    \nju_coverbox_g:n {作\hfill 者\hfill 姓\hfill 名}
-    & \nju_cover_uline_g:n {\l__nju_info_author_tl}\\
-    \nju_coverbox_g:n {专\hfill 业\hfill 名\hfill 称}
-    & \nju_cover_uline_g:n {\l__nju_major_tl}\\
-    \nju_coverbox_g:n {研\hfill 究\hfill 方\hfill 向}
-    & \nju_cover_uline_g:n {\l__nju_field_tl}\\
-    \nju_coverbox_g:n {指\hfill 导\hfill 教\hfill 师}
-    & \nju_cover_uline_g:n {\nju_supervisor_full}\\
+    \__nju_cover_title_breakline:
+    \__nju_cover_box:n {作\hfill 者\hfill 姓\hfill 名}
+    & \__nju_cover_uline_a:n  {\l__nju_info_author_tl}\\
+    \__nju_cover_box:n {专\hfill 业\hfill 名\hfill 称}
+    & \__nju_cover_uline_a:n  {\l__nju_major_tl}\\
+    \__nju_cover_box:n {研\hfill 究\hfill 方\hfill 向}
+    & \__nju_cover_uline_a:n  {\l__nju_field_tl}\\
+    \__nju_cover_box:n {指\hfill 导\hfill 教\hfill 师}
+    & \__nju_cover_uline_a:n  {\l__nju_info_supv_full_tl}\\
   \end{tabular}
 }
 \tl_new:N \nju_printcover_nl % 国家图书馆封面
@@ -840,13 +851,13 @@ numberwithin=section,
       \vskip -20mm \hskip -15mm
       \songti\zihao{-4}
       \makebox[40pt][l]{分类号}
-      \nju_cover_uline_nl:nn {150pt}{\l__nju_info_classif_tl}
+      \__nju_cover_uline_b:n {\l__nju_info_classif_tl}
       \hfill
       \makebox[40pt][l]{密级}
-      \nju_cover_uline_nl:nn {150pt}{\l__nju_info_seclv_tl}
+      \__nju_cover_uline_b:n {\l__nju_info_seclv_tl}
       \vskip 10pt \hskip -15mm
       \makebox[40pt][l]{UDC}
-      \nju_cover_uline_nl:nn {150pt}{\l__nju_info_udc_tl}
+      \__nju_cover_uline_b:n {\l__nju_info_udc_tl}
     }
 
     % 中部
@@ -857,9 +868,9 @@ numberwithin=section,
       {
         \kaishu\zihao{1}
         \vskip \stretch{1}
-        \nju_cover_uline_nl:nn {14em}{\l__nju_info_title_a_tl}\\
-        \nju_cover_uline_nl:nn {14em}{\l__nju_info_title_b_tl}\\
-        \nju_cover_uline_nl:nn {14em}{\l__nju_info_title_c_tl}\\
+        \__nju_cover_uline_b:n {\l__nju_info_title_a_tl}\\
+        \__nju_cover_uline_b:n {\l__nju_info_title_b_tl}\\
+        \__nju_cover_uline_b:n {\l__nju_info_title_c_tl}\\
       }
       \vskip \stretch{1}
       {\kaishu\zihao{4}（题名和副题名）}
@@ -874,25 +885,25 @@ numberwithin=section,
     {
       \kaishu\zihao{4}
       \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
-      \nju_cover_uline_nl:nn {94pt}{\l__nju_info_supv_a_tl}\par
-      \noindent\nju_cover_uline_nl:nn {\textwidth}{%
+      \__nju_cover_uline_nl:nn {94pt}{\l__nju_info_supv_a_tl}\par
+      \noindent\__nju_cover_uline_nl:nn {\textwidth}{%
       \l__nju_info_supv_cont_tl}\par
       \noindent 申请学位级别%
-      \nju_cover_uline_nl:nn {9em}{\nju_degree_title}%
+      \__nju_cover_uline_nl:nn {9em}{\c__nju_name_degree_tl}%
       \noindent 专业名称%
       \uline{\hfill\l__nju_major_tl\hfill}\par% 需要调整下划线长度
       \noindent 论文提交日期%
-      \nju_cover_uline_nl:nn {9em}{\l__nju_submit_date_tl}%
+      \__nju_cover_uline_nl:nn {9em}{\l__nju_submit_date_tl}%
       论文答辩日期%
       \uline{\hfill\l__nju_defend_date_tl\hfill}\par% 需要调整下划线长度
       \noindent 学位授予单位和日期\uline{\hfill}\par
       \noindent\hfill 答辩委员会主席：%
-      \nju_cover_uline_nl:nn {9em}{\l__nju_info_chairman_tl}\par
+      \__nju_cover_uline_nl:nn {9em}{\l__nju_info_chairman_tl}\par
       \noindent\hfill 评阅人：%
-      \nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_a_tl}\par
-      \noindent\hfill\nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_b_tl}\par
-      \noindent\hfill\nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_c_tl}\par
-      \noindent\hfill\nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_d_tl}\par
+      \__nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_a_tl}\par
+      \noindent\hfill\__nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_b_tl}\par
+      \noindent\hfill\__nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_c_tl}\par
+      \noindent\hfill\__nju_cover_uline_nl:nn {9em}{\l__nju_info_reviewer_d_tl}\par
 
       \begin{center}
         \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
@@ -946,7 +957,7 @@ numberwithin=section,
     \vskip 15mm
     {\zihao{1}\makebox[10em][s]{\bf{\kaishu\nju_type_name}}}
     \vskip 5mm
-    {\zihao{1}\bf{\kaishu{（申请\nju_degree_title 学位）}}}
+    {\zihao{1}\bf{\kaishu{（申请\c__nju_name_degree_tl 学位）}}}
     \par\vfill
     \vskip\stretch{0}
     {\bgroup
@@ -1015,7 +1026,7 @@ numberwithin=section,
       院系： \l__nju_info_dept_tl \\
       专业： \l__nju_major_tl \\
       本科生姓名： \l__nju_info_author_tl \\
-      指导教师（姓名、职称）：\nju_supervisor_full \\
+      指导教师（姓名、职称）：\l__nju_info_supv_full_tl \\
       摘要：
       \egroup
     }
@@ -1046,7 +1057,7 @@ numberwithin=section,
       DEPARTMENT: ~~\l__nju_info_dept_en_tl \\
       SPECIALIZATION: ~~\l__nju_major_en_tl \\
       UNDERGRADUATE:~~\l__nju_info_author_en_tl \\
-      MENTOR:~~\nju_supervisor_full_en \\
+      MENTOR:~~\l__nju_info_supv_full_tl_en \\
       ABSTRACT:
       \egroup
     }
@@ -1081,10 +1092,11 @@ numberwithin=section,
     \tl_set:Nn \arraystretch {0.8}
     \noindent
     毕业论文题目：\hspace{0.5em}\nju_underline:n {\l__nju_info_title_tl\hfill}\\
-    \uline{\makebox[9em]{\l__nju_major_tl}}专业\uline{\makebox[4em]{\l__nju_info_grade_tl}}级
+    \uline{\makebox[9em]{\l__nju_major_tl}}专业
+    \uline{\makebox[4em]{\l__nju_info_grade_tl}}级
     \str_if_eq:NNTF {\nju_degree} { phd } {博}{硕}
     士生姓名：\uline{\hfill\l__nju_info_author_tl\hfill} \\
-    指导教师（姓名、职称）：\uline{\hfill\nju_supervisor_full\hfill}\par
+    指导教师（姓名、职称）：\uline{\hfill\l__nju_info_supv_full_tl\hfill}\par
     \egroup
 
     \kaishu\zihao{4}\par%
@@ -1114,7 +1126,7 @@ numberwithin=section,
       THESIS: ~~\l__nju_info_title_en_tl \\
       SPECIALIZATION: ~~\l__nju_major_en_tl \\
       POSTGRADUATE:~~\l__nju_info_author_en_tl \\
-      MENTOR:~~\nju_supervisor_full_en\par
+      MENTOR:~~\l__nju_info_supv_full_tl_en\par
       \egroup
     }
     \zihao{4}\par%

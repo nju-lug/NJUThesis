@@ -18,11 +18,10 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[
-    % secondmentor=true,% 无第二导师请注释此项
-    nlcover=true,% 需要国家图书馆封面，对本科无效
     degree=ug,% ug: 本科, mg: 学硕, mf: 专硕, phd: 博士
     type=thesis,% thesis: 毕业论文，design: 毕业设计
-    % systemfont=false,% 自定义字体请取消注释此项
+    nlcover=true,% 需要国家图书馆封面，对本科无效
+    % 若以下两项不设置则自动调用系统预装字体
     % customlatinfont=windows,% 设置英文字符集
     % customchinesefont=windows,% 设置中文字符集
     ]{njuthesis}
@@ -55,11 +54,11 @@
         SupervisorA*= Li~Chengdian,
         SupervisorATitle = 教授,
         SupervisorATitle* = Professor,
-        % 第二导师，如无则忽略
-        SupervisorB = 孙赫弥,
-        SupervisorB* = Sun~Hemi,
-        SupervisorBTitle = 副教授,
-        SupervisorBTitle* = Associate professor,
+        % 第二导师，如无则留空
+        % SupervisorB = 孙赫弥,
+        % SupervisorB* = Sun~Hemi,
+        % SupervisorBTitle = 副教授,
+        % SupervisorBTitle* = Associate professor,
         % 提交日期
         SubmitDate = 2021年8月10日,
         % 答辩，均为研究生项

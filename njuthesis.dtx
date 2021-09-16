@@ -225,7 +225,7 @@ through XeTeX.
 %</driver>
 % \fi
 %
-% \title{\color{njuviolet}The \textsc{NJuThesis} class\\ 南京大学学位论文模板}
+% \title{\color{njuviolet} The \textsc{NJuThesis} class\\ 南京大学学位论文模板}
 % 
 % \author{^^A
 % Nanjing University Linux User Group\thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
@@ -368,16 +368,9 @@ through XeTeX.
 %
 % 尖括号内列出了若干个允许的选项，其中加粗的为默认选项
 %
-% \end{function}
+% 封面留空即可自动化换行
 %
-% \begin{function}[added=2021-09-07]{secondsupervisor}
-%   \begin{syntax}
-%     secondsupervisor = <\TFF>
-%   \end{syntax}
-%
-% 用于在封面和摘要添加第二导师。由于目前来说拥有两位指导老师并不是一种普遍状况，因此此项默认为\opt{false}。
-% \opt{true}，\opt{false}（默认）。
-% \end{function}
+% 第二导师不填则留空。由于目前来说拥有两位指导老师并不是一种普遍状况，因此此项默认为\opt{false}。
 %
 % \begin{function}[added=2021-09-07]{nlcover}
 %   \begin{syntax}
@@ -412,16 +405,11 @@ through XeTeX.
 %
 % \subsubsection{指定字体}
 %
-% \begin{function}[added=2021-09-07]{systemfont}
-%   \begin{syntax}
-%     systemfont = <\TFF>
-%   \end{syntax}
 %
 % 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
 %
-% 如果希望更改本模板使用的字体，请将本选项设置为\opt{false}，然后使用以下两个选项单独设置西文和中文字体。
+% 如果希望更改本模板使用的字体，请填写以下两个选项
 % 
-% \end{function}
 %
 % \begin{function}[added=2021-09-07]{customlatinfont}
 %   \begin{syntax}
@@ -441,12 +429,33 @@ through XeTeX.
 % 手动指定中文字体，可选：
 % \opt{windows}（默认）， \opt{macos}， \opt{fandol}， \opt{founder}，\opt{noto}，\opt{null}。
 %
-% FZSSK 方正书宋（简繁扩展）  \href{http://www.foundertype.com/index.php/FontInfo/index/id/151 免费商用}{下载链接}
+% 方正字体（简繁扩展）系列
+% FZSSK \href{http://www.foundertype.com/index.php/FontInfo/index/id/151}{方正书宋} 免费商用
 %
-% FZXBSK 方正小标宋（简繁扩展） \href{http://www.foundertype.com/index.php/FontInfo/index/id/164 设计师非商免费}{下载链接}
+% FZXBSK \href{http://www.foundertype.com/index.php/FontInfo/index/id/164}{方正小标宋} 设计师非商免费
 %
-% FZKTK 方正楷体（简繁扩展） \href{http://www.foundertype.com/index.php/FontInfo/index/id/137 免费商用}{下载链接}
+% FZKTK \href{http://www.foundertype.com/index.php/FontInfo/index/id/137}{方正楷体} 免费商用
+%
+% FZXH1K \href{http://www.foundertype.com/index.php/FontInfo/index/id/161}{方正细黑一} 设计师非商免费
+%
+% FZHTK  \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}{方正黑体} 免费商用
+%
+% FZFSK  \href{http://www.foundertype.com/index.php/FontInfo/index/id/128}{方正仿宋}
+%
+% FZYouHK_508R  \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑508R} 设计师非商免费
+%
+% FZYouHK_511M \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑511M} 设计师非商免费
+%
+% 思源字体\footnote{思源宋体和思源黑体有两种英文命名，本模板采用Google的noto系列}：
+%  \href{https://www.google.com/get/noto/#serif-hans}{思源宋体}、
+%  \href{https://www.google.com/get/noto/#sans-hans}{思源黑体}
 % 
+%
+% 
+% 方正楷体、方正仿宋为免费商用字体，且支持CJK字符集
+%  \href{http://www.foundertype.com/index.php/FontInfo/index/id/128.html}{方正仿宋}
+%  \href{http://www.foundertype.com/index.php/FontInfo/index/id/137.html}{方正楷体}
+%
 % 各个系统的默认字体请参考。可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；另一方面，在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}，符合视觉习惯。
 % 
 % \end{function}
@@ -586,18 +595,6 @@ through XeTeX.
 %    \begin{macrocode}
 \keys_define:nn { nju }
 {
-%  titlelength       .int_set:N    =   \nju_titlelength,
-%  titlelength       .initial:n    =   1,
-%    \end{macrocode}
-%
-% Put text here.
-%    \begin{macrocode}
-  secondsupervisor      .bool_set:N   =   \nju_second_supervisor,
-  secondsupervisor      .initial:n    =   false,
-%    \end{macrocode}
-%
-% Put text here.
-%    \begin{macrocode}
   nlcover           .bool_set:N   =   \nju_nl_cover,
   nlcover           .initial:n    =   false,
 %    \end{macrocode}
@@ -610,34 +607,15 @@ through XeTeX.
 %    \begin{macrocode}
   type              .tl_set:N     =   \nju_type,
   type              .initial:n    =   thesis,
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-  systemfont        .bool_set:N   =   \nju_systemfont,
-  systemfont        .initial:n    =   true,
-%    \end{macrocode}
-%
-% Put text here.
-%    \begin{macrocode}
-  customlatinfont   .tl_set:N     =   \nju_customlatinfont,
-  customlatinfont   .initial:n    =   windows,
-%    \end{macrocode}
-%
-% Put text here.
-%    \begin{macrocode}
-  customchinesefont .tl_set:N     =   \nju_customchinesefont,
-  customchinesefont .initial:n    =   windows,
-%    \end{macrocode}
-%
-% Put text here.
-%    \begin{macrocode}
-  info              .meta:nn      =   { nju / info } { #1 }
 }
 %    \end{macrocode}
-%
+% 
 % Put text here.
-%
 %    \begin{macrocode}
+\keys_define:nn { nju }
+{
+  info              .meta:nn      =   { nju / info } { #1 }
+}
 \keys_define:nn { nju / info }
 {
 %    \end{macrocode}
@@ -716,38 +694,23 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% This environment does nothing.  It is merely an example.
-% If this were a real environment, you would put a paragraph here
-% describing what the environment is supposed to do, what its
-% mandatory and optional arguments are, and so forth.
 %    \begin{macrocode}
 \NewDocumentCommand \njusetup { m }
 { \keys_set:nn { nju } { #1 } }
 %    \end{macrocode}
-% mandatory and optional arguments are, and so forth.
-%    \begin{macrocode}
-\ProcessKeysOptions { nju }
-%    \end{macrocode}
 %
 % mandatory and optional arguments are, and so forth.
 %    \begin{macrocode}
-\RequirePackage{fontspec}
 \RequirePackage[    
     top=2.5cm,
     bottom=2.5cm,
     left=3.2cm,
     right=3.2cm
 ]{geometry}
-% \RequirePackage{ifthen}
 \RequirePackage{xparse}
-% \RequirePackage{etoolbox}
-% \RequirePackage{titlesec} % 修改章节标题功能由CTeX提供
 \RequirePackage{titletoc} % 修改目录内标题格式
-% \RequirePackage{appendix} % 定义附录样式
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
 % \RequirePackage[normalem]{ulem} % 绘制下划线
-% \RequirePackage{soul} % 用不起来
-% \RequirePackage{soulutf8} 
 \RequirePackage{dashundergaps}
 \RequirePackage{setspace}
 \RequirePackage{lastpage}
@@ -849,54 +812,146 @@ through XeTeX.
 %    \end{macrocode}
 %
 % \subsection{字体设置}
+%
+% 加载设置字体所需的包\pkg{fontspec}
 %    \begin{macrocode}
-% 设置西文字体
-\NewDocumentCommand\set_latin_fontset_windows{}{
+\RequirePackage{fontspec}
+%    \end{macrocode}
+%
+% 
+%
+% \begin{variable}{\g_@@_latin_fontset_tl,\g_@@_cjk_fontset_tl}
+% 用于存储所使用字体名称的全局变量，注意宏的命名，l代表局部变量，g代表全局变量
+%    \begin{macrocode}
+\tl_new:N \g_@@_latin_fontset_tl
+\tl_new:N \g_@@_cjk_fontset_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% 定义字体选项
+%    \begin{macrocode}
+\keys_define:nn { nju }
+{
+  customlatinfont   .choices:nn   =
+  { gyre, macos, windows, null }
+  { \tl_set_eq:NN \g_@@_latin_fontset_tl \l_keys_choice_tl },  
+  customchinesefont .choices:nn   =
+  { fandol, founder, macos, noto, windows, null }
+  { \tl_set_eq:NN \g_@@_cjk_fontset_tl   \l_keys_choice_tl },
+}
+%    \end{macrocode}
+%
+% \begin{macro}{\ProcessKeysOptions}
+% 在定义完全部设置以后从tex文件导言区输入参数
+%    \begin{macrocode}
+\ProcessKeysOptions { nju }
+%    \end{macrocode}
+% \end{macro}
+%
+% 如果未进行设置则使用系统默认字体覆盖输入参数
+%
+% \begin{variable}{\g_@@_load_system_fontset_tl}
+% 用于判断是否需要载入系统预装字体的全局变量
+%    \begin{macrocode}
+\bool_new:N \g_@@_load_system_fontset_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% 判断用户是否自定义了中英文字体，如果其中任意一种未被定义，
+% 则使用系统预装字体覆盖字体选项
+%    \begin{macrocode}
+\tl_if_empty:NTF \g_@@_latin_fontset_tl
+  { \bool_gset_true:N \g_@@_load_system_fontset_tl }  
+{  
+  \tl_if_empty:NT \g_@@_cjk_fontset_tl
+    { \bool_gset_true:N \g_@@_load_system_fontset_tl }  
+}
+\bool_if:NT \g_@@_load_system_fontset_tl
+{
+  % 检测是否是 Windows
+  \sys_if_platform_windows:TF
+  {
+    \tl_set:Nn \g_@@_latin_fontset_tl { windows }
+    \tl_set:Nn \g_@@_cjk_fontset_tl   { windows }
+  }
+  {
+    % 检测是否是 macOS
+    \ctex_if_platform_macos:TF
+    {
+      \tl_set:Nn \g_@@_latin_fontset_tl { macos }
+      \tl_set:Nn \g_@@_cjk_fontset_tl   { macos }
+    }
+    % 其余系统一律使用自由字体
+    {
+      \tl_set:Nn \g_@@_latin_fontset_tl { gyre }
+      \tl_set:Nn \g_@@_cjk_fontset_tl { fandol }
+    }
+  }
+}
+%    \end{macrocode}
+%
+% 接下来逐个定义所需要使用的字符集
+%
+% \begin{macro}{\@@_load_latin_font_windows:}
+% Windows 西文字体
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_load_latin_font_windows:
+{
   \setmainfont{Times~New~Roman}
   \setsansfont{Arial}
   \setmonofont{Courier~New}[Scale=MatchLowercase]
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% Put text here.
+%
+% \begin{macro}{\@@_load_latin_font_macos:}
+% macOS 西文字体
 %    \begin{macrocode}
-\NewDocumentCommand\set_latin_fontset_macos{}{
-  \setmainfont{Times~New~Roman}
-  \setsansfont{Arial}
-  \setmonofont{Menlo}[Scale=MatchLowercase]
+\cs_new_protected:Npn \@@_load_latin_font_macos:
+{
+\setmainfont{Times~New~Roman}
+\setsansfont{Arial}
+\setmonofont{Menlo}[Scale=MatchLowercase]
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% Put text here.
+%
+% \begin{macro}{\@@_load_latin_font_gyre:}
+% 开源的 gyre 西文字体
 %    \begin{macrocode}
-\NewDocumentCommand\set_latin_fontset_gyre{}{
-  \setmainfont{texgyretermes}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic]
-  \setsansfont{texgyreheros}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic]
-  \setmonofont{texgyrecursor}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic,
-    Scale=MatchLowercase,
-    Ligatures=CommonOff]
+\cs_new_protected:Npn \@@_load_latin_font_gyre:
+{
+\setmainfont{texgyretermes}[
+  Extension=.otf,
+  UprightFont=*-regular,
+  BoldFont=*-bold,
+  ItalicFont=*-italic,
+  BoldItalicFont=*-bolditalic]
+\setsansfont{texgyreheros}[
+  Extension=.otf,
+  UprightFont=*-regular,
+  BoldFont=*-bold,
+  ItalicFont=*-italic,
+  BoldItalicFont=*-bolditalic]
+\setmonofont{texgyrecursor}[
+  Extension=.otf,
+  UprightFont=*-regular,
+  BoldFont=*-bold,
+  ItalicFont=*-italic,
+  BoldItalicFont=*-bolditalic,
+  Scale=MatchLowercase,
+  Ligatures=CommonOff]
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% Put text here.
+% \begin{macro}{\@@_load_cjk_font_windows:}
+% Windows 中文字体
 %    \begin{macrocode}
-% 设置中文字体
-\NewDocumentCommand\set_chinese_fontset_windows{}{
+\cs_new_protected:Npn \@@_load_cjk_font_windows:
+{
   \setCJKmainfont{SimSun}[
     AutoFakeBold=2.17, 
     ItalicFont=KaiTi]
@@ -910,201 +965,173 @@ through XeTeX.
     BoldFont=Microsoft~YaHei~Bold]
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% Put text here.
+%
+% \begin{macro}{\@@_load_cjk_font_macos:}
+% macOS 字体
 %    \begin{macrocode}
-\NewDocumentCommand\set_chinese_fontset_macos{}{
-  % 移除 does not contain script "CJK" 警告
-  \msg_redirect_name:nnn {fontspec} {no-script} {info} 
-  \setCJKmainfont{Songti~SC~Light}[
-    BoldFont=Songti~SC~Bold,
-    ItalicFont=Kaiti~SC,
-    BoldItalicFont=Kaiti~SC~Bold]
-  \setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-  \setCJKmonofont{STFangsong}
-  \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
-  \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-  \setCJKfamilyfont{zhfs}{STFangsong}
-  \setCJKfamilyfont{zhkai}{Kaiti~SC}
-    [
-      BoldFont=Kaiti~SC~Bold,      
-      % 参考CTeX手册第9节 LuaLATEX 下的中文支持方式
-      % AlternateFont =
-      %   {
-      %   {⟨character range1⟩} {⟨alternate font name1⟩} 
-      %   {⟨alternate font features2⟩} ,
-      %   ......
-      %   }
-    ]
-  \setCJKfamilyfont{zhnewhei}{PingFang~SC}
+\cs_new_protected:Npn \@@_load_cjk_font_macos:
+{
+% 移除 does not contain script "CJK" 警告
+\msg_redirect_name:nnn {fontspec} {no-script} {info} 
+\setCJKmainfont{Songti~SC~Light}[
+  BoldFont=Songti~SC~Bold,
+  ItalicFont=Kaiti~SC,
+  BoldItalicFont=Kaiti~SC~Bold]
+\setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+\setCJKmonofont{STFangsong}
+\setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
+\setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+\setCJKfamilyfont{zhfs}{STFangsong}
+\setCJKfamilyfont{zhkai}{Kaiti~SC}
+  [
+    BoldFont=Kaiti~SC~Bold,      
+    % 参考CTeX手册第9节 LuaLATEX 下的中文支持方式
+    % AlternateFont =
+    %   {
+    %   {⟨character range1⟩} {⟨alternate font name1⟩} 
+    %   {⟨alternate font features2⟩} ,
+    %   ......
+    %   }
+  ]
+\setCJKfamilyfont{zhnewhei}{PingFang~SC}
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% Put text here.
+%
+% \begin{macro}{\@@_load_cjk_font_fandol:}
+% Fandol 字体
 %    \begin{macrocode}
-\NewDocumentCommand\set_chinese_fontset_fandol{}{
-  % 移除 does not contain script "CJK" 警告
-  \msg_redirect_name:nnn {fontspec} {no-script} {info} 
-  \setCJKmainfont{FandolSong-Regular}[
-    Extension=.otf,
-    BoldFont=FandolSong-Bold,
-    ItalicFont=FandolKai-Regular]
-  \setCJKsansfont{FandolHei-Regular}[
-    Extension=.otf,
-    BoldFont=FandolHei-Bold]
-  \setCJKmonofont{FandolFang-Regular}[Extension=.otf]
-  \setCJKfamilyfont{zhsong}{FandolSong-Regular}[
-    Extension=.otf,
-    BoldFont=FandolSong-Bold]
-  \setCJKfamilyfont{zhhei}{FandolHei-Regular}[
-    Extension=.otf,
-    BoldFont=FandolHei-Bold]
-  \setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
-  \setCJKfamilyfont{zhkai}{FandolKai-Regular}[
-    Extension=.otf,
-    AutoFakeBold=2.17]
+\cs_new_protected:Npn \@@_load_cjk_font_fandol:
+{
+% 移除 does not contain script "CJK" 警告
+\msg_redirect_name:nnn {fontspec} {no-script} {info} 
+\setCJKmainfont{FandolSong-Regular}[
+  Extension=.otf,
+  BoldFont=FandolSong-Bold,
+  ItalicFont=FandolKai-Regular]
+\setCJKsansfont{FandolHei-Regular}[
+  Extension=.otf,
+  BoldFont=FandolHei-Bold]
+\setCJKmonofont{FandolFang-Regular}[Extension=.otf]
+\setCJKfamilyfont{zhsong}{FandolSong-Regular}[
+  Extension=.otf,
+  BoldFont=FandolSong-Bold]
+\setCJKfamilyfont{zhhei}{FandolHei-Regular}[
+  Extension=.otf,
+  BoldFont=FandolHei-Bold]
+\setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
+\setCJKfamilyfont{zhkai}{FandolKai-Regular}[
+  Extension=.otf,
+  AutoFakeBold=2.17]
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% Put text here.
+%
+% \begin{macro}{\@@_load_cjk_font_founder:}
+%  方正字符集（简繁扩展）
 %    \begin{macrocode}
-% 方正字符集
-\NewDocumentCommand\set_chinese_fontset_founder{}{
-  \setCJKmainfont{FZSSK}[
-    Extension=.ttf,
-    BoldFont=FZXBSK,
-    ItalicFont=FZKTK]
-  % FZXH1K 方正细黑一（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/161 设计师非商免费
-  % FZHTK 方正黑体（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/131 免费商用
-  \setCJKsansfont{FZXH1K}[
-    Extension=.ttf,
-    BoldFont=FZHTK]
-  % FZFSK 方正仿宋（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/128
-  \setCJKmonofont{FZFSK}[Extension=.ttf]
-
-  \setCJKfamilyfont{zhsong}{FZSSK}[
+\cs_new_protected:Npn \@@_load_cjk_font_founder:
+{
+\setCJKmainfont{FZSSK}[% 方正书宋
+  Extension=.ttf,
+  BoldFont=FZXBSK,% 方正小标宋
+  ItalicFont=FZKTK]% 方正楷体
+\setCJKsansfont{FZXH1K}[% 方正细黑一
+  Extension=.ttf,
+  BoldFont=FZHTK]% FZHTK 方正黑体
+\setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
+\setCJKfamilyfont{zhsong}
+  {FZSSK}[
     Extension=.ttf,
     BoldFont=FZXBSK]
-  \setCJKfamilyfont{zhhei}{FZHTK}[
+\setCJKfamilyfont{zhhei}
+  {FZHTK}[
     Extension=.ttf,
     AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhfs}{FZFSK}[Extension=.ttf]
-  \setCJKfamilyfont{zhkai}{FZKTK}[Extension=.ttf]
-  % FZYouHK_508R 方正悠黑508R（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/244 设计师非商免费
-  % FZYouHK_511M 方正悠黑511M（简繁扩展） http://www.foundertype.com/index.php/FontInfo/index/id/244 设计师非商免费
-  \setCJKfamilyfont{zhnewhei}{FZYouHK_508R}[
+\setCJKfamilyfont{zhfs}
+  {FZFSK}[Extension=.ttf]
+\setCJKfamilyfont{zhkai}
+  {FZKTK}[Extension=.ttf]
+\setCJKfamilyfont{zhnewhei}
+  {FZYouHK_508R}[% 方正悠黑508R
     Extension=.ttf,
-    BoldFont=FZYouHK_511M]
+    BoldFont=FZYouHK_511M]% 方正悠黑511M 
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% Put text here.
-%    \begin{macrocode}
-\NewDocumentCommand\set_chinese_fontset_noto{}{
-  % 思源宋体 https://www.google.com/get/noto/#serif-hans
-  \setCJKmainfont[
-    UprightFont=NotoSerifCJKsc-Regular,
-    BoldFont=NotoSerifCJKsc-Bold,
-    ItalicFont=NotoSerifCJKsc-Regular,
-    BoldItalicFont=NotoSerifCJKsc-Bold,
-    ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Serif~CJK~SC}
-
-  % 思源黑体 https://www.google.com/get/noto/#sans-hans
-  \setCJKsansfont[
-    UprightFont=NotoSansCJKsc-Regular,
-    BoldFont=NotoSansCJKsc-Bold,
-    ItalicFont=NotoSansCJKsc-Regular,
-    BoldItalicFont=NotoSansCJKsc-Bold,
-    ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Sans~CJK~SC}
-
-  % 包含于上述思源黑体
-  \setCJKmonofont[
-    UprightFont=NotoSansMonoCJKsc-Regular,
-    BoldFont=NotoSansMonoCJKsc-Bold,
-    ItalicFont=NotoSansMonoCJKsc-Regular,
-    BoldItalicFont=NotoSansMonoCJKsc-Bold,
-    ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Sans~Mono~SC}
-
-  \setCJKfamilyfont{zhsong}{Noto~Serif~CJK~SC}
-  \setCJKfamilyfont{zhhei}{Noto~Sans~CJK~SC}
-
-  % 方正楷体、方正仿宋为免费商用字体，且支持CJK字符集
-  % 方正仿宋 http://www.foundertype.com/index.php/FontInfo/index/id/128.html
-  % 方正楷体 http://www.foundertype.com/index.php/FontInfo/index/id/137.html
-  \setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
-}
-%    \end{macrocode}
 %
-% Put text here.
+% \begin{macro}{\@@_load_cjk_font_noto:}
+% 思源字体
 %    \begin{macrocode}
-% 字体判断
-\bool_if:NTF \nju_systemfont
-% 根据操作系统自动选择相应字体
+\cs_new_protected:Npn \@@_load_cjk_font_noto:
 {
-  % 检测是否是 Windows
-  \sys_if_platform_windows:TF
-  {
-    \set_latin_fontset_windows
-    \set_chinese_fontset_windows
-  }
-  {
-    % 检测是否是 macOS
-    \ctex_if_platform_macos:TF
-    {
-      \set_latin_fontset_macos
-      \set_chinese_fontset_macos
-    }
-    % 其余系统一律使用自由字体
-    {
-      \set_latin_fontset_gyre
-      \set_chinese_fontset_fandol
-    }
-  }
+% 思源宋体
+\setCJKmainfont[
+  UprightFont=NotoSerifCJKsc-Regular,
+  BoldFont=NotoSerifCJKsc-Bold,
+  ItalicFont=NotoSerifCJKsc-Regular,
+  BoldItalicFont=NotoSerifCJKsc-Bold,
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant]{Noto~Serif~CJK~SC}
+
+% 思源黑体
+\setCJKsansfont[
+  UprightFont=NotoSansCJKsc-Regular,
+  BoldFont=NotoSansCJKsc-Bold,
+  ItalicFont=NotoSansCJKsc-Regular,
+  BoldItalicFont=NotoSansCJKsc-Bold,
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant]{Noto~Sans~CJK~SC}
+
+% 包含于上述思源黑体
+\setCJKmonofont[
+  UprightFont=NotoSansMonoCJKsc-Regular,
+  BoldFont=NotoSansMonoCJKsc-Bold,
+  ItalicFont=NotoSansMonoCJKsc-Regular,
+  BoldItalicFont=NotoSansMonoCJKsc-Bold,
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant]{Noto~Sans~Mono~SC}
+
+\setCJKfamilyfont{zhsong}{Noto~Serif~CJK~SC}
+\setCJKfamilyfont{zhhei}{Noto~Sans~CJK~SC}
+\setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
+\setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
 }
+%    \end{macrocode}
+% \end{macro}
+%
+% 载入设置的字体
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_load_font:
 {
-  % 如果用户需要自定义字体
-  % 此处需要使用\str_case_e而不是\str_case使宏展开为字符串
-  \str_case_e:nn { \nju_customlatinfont }
-  {
-    { windows } { \set_latin_fontset_windows }
-    { macos } { \set_latin_fontset_macos }
-    { gyre } { \set_latin_fontset_gyre }
-    { null } {}
-  }
-  \str_case_e:nn { \nju_customchinesefont }
-  {
-    { windows } { \set_chinese_fontset_windows }
-    { macos } { \set_chinese_fontset_macos }
-    { gyre } { \set_chinese_fontset_gyre }
-    { founder } { \set_chinese_fontset_founder }
-    { noto } { \set_chinese_fontset_noto }
-    { null } {}
-  }
+  \use:c { @@_load_latin_font_ \g_@@_latin_fontset_tl : }
+  \use:c { @@_load_cjk_font_   \g_@@_cjk_fontset_tl   : }
+  
+  \NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
+  \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
+  \NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
+  \NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
 }
-% 选择其他字体，请确保相应字体已安装
+\@@_load_font:
 %    \end{macrocode}
 %
-% Put text here.
-%    \begin{macrocode}
 % 设置数学字体 (XITS, 或者 STIX, 与 Times New Roman 最为相近)
+%    \begin{macrocode}
 % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
   Extension = .otf]
 %    \end{macrocode}
 %
-% Put text here.
-%    \begin{macrocode}
-\NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
-\NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
-\NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
-\NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
-% \NewDocumentCommand\lishu{}{\CJKfamily{zhli}}
-%    \end{macrocode}
+%
+% \subsection{页面样式}
+%
+% \subsubsection{页眉页脚}
 %
 % Put text here.
 %    \begin{macrocode}
@@ -1233,25 +1260,28 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
+% \begin{environment}{preface}
 % Put text here.
 %    \begin{macrocode}
 % 定制前言、致谢环境
-\newenvironment{preface}
+\NewDocumentEnvironment{preface}{}
 {%
   \chapter*{前言}
   \addcontentsline{toc}{chapter}{前言}
 }{}
 %    \end{macrocode}
+% \end{environment}
 %
-% \DescribeEnv{acknowledgements}
+% \begin{environment}{acknowledgement}
 % 单独制作的致谢页。
 %    \begin{macrocode}
-\newenvironment{acknowledgement}
+\NewDocumentEnvironment{acknowledgement}{}
 {%
   \chapter*{致谢}
   \addcontentsline{toc}{chapter}{致谢}
 }{}
 %    \end{macrocode}
+% \end{environment}
 %
 % Put text here.
 %    \begin{macrocode}
@@ -1376,7 +1406,9 @@ through XeTeX.
 %    \begin{macrocode}
 \lstdefinestyle{LaTeX}{
   language=TeX,
-  morekeywords={begin, caption, label, mathrm, frac, toprule, midrule, bottomrule, includegraphics}
+  morekeywords={
+    begin, caption, label, mathrm, frac, 
+    toprule, midrule, bottomrule, includegraphics}
 }
 %    \end{macrocode}
 %
@@ -1538,30 +1570,36 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 双导师的处理
 %    \begin{macrocode}
 % 拼合导师
-\bool_if:NTF \nju_second_supervisor
-{ 
-  \tl_const:Nn \nju_supervisor_full
+\tl_if_empty:NTF \l_@@_info_supv_b_tl
+{
+  \tl_const:Nn \l_@@_info_supv_full_tl
   {
-    \l_@@_info_supv_a_tl\ \l_@@_info_supv_a_title_tl
-    \ \ \l_@@_info_supv_b_tl\ \l_@@_info_supv_b_title_tl
+     \l_@@_info_supv_a_tl\hspace{.5em}
+     \l_@@_info_supv_a_title_tl
   }
-  \tl_const:Nn \nju_supervisor_full_en
+  \tl_const:Nn \l_@@_info_supv_full_tl_en
   {
-    \l_@@_info_supv_a_en_tl\ \l_@@_info_supv_a_title_en_tl
-    \ \ \l_@@_info_supv_b_en_tl\ \l_@@_info_supv_b_title_en_tl
+    \l_@@_info_supv_a_en_tl\hspace{.5em}
+    \l_@@_info_supv_a_title_en_tl
   }
 }
-{
-  \tl_const:Nn \nju_supervisor_full
+{ 
+  \tl_const:Nn \l_@@_info_supv_full_tl
   {
-    \l_@@_info_supv_a_tl\ \l_@@_info_supv_a_title_tl
+    \l_@@_info_supv_a_tl\hspace{.5em}
+    \l_@@_info_supv_a_title_tl\hspace{1em}
+    \l_@@_info_supv_b_tl\hspace{.5em}
+    \l_@@_info_supv_b_title_tl
   }
-  \tl_const:Nn \nju_supervisor_full_en
+  \tl_const:Nn \l_@@_info_supv_full_tl_en
   {
-    \l_@@_info_supv_a_en_tl\ \l_@@_info_supv_a_title_en_tl
+    \l_@@_info_supv_a_en_tl\hspace{.5em}
+    \l_@@_info_supv_a_title_en_tl\hspace{1em}
+    \l_@@_info_supv_b_en_tl\hspace{.5em}
+    \l_@@_info_supv_b_title_en_tl
   }
 }
 %    \end{macrocode}
@@ -1572,52 +1610,70 @@ through XeTeX.
 \str_if_eq:NNTF {\nju_degree} { ug } 
 {
   % 本科
-  \tl_const:Nn \nju_degree_name {本\hfill 科\hfill }
+  \tl_const:Nn \c_@@_name_diploma_tl { 本\hfill 科\hfill }
+  \tl_const:Nn \c_@@_name_title_tl { 题\hfill 目 }
+  
+  \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
+  \tl_const:Nn \c_@@_cover_uline_len_b_tl { 90pt }
+  \tl_const:Nn \c_@@_cover_uline_font_tl { \songti }
+  \tl_const:Nn \c_@@_cover_uline_style_tl { \bf }
+  \tl_const:Nn \c_@@_cover_uline_bskip_tl {}
+
+  \tl_const:Nn \c_@@_cover_box_len_tl { 4.2em }
 
   % 本科强制不打印国家图书馆封面
   \bool_set_false:N \nju_nl_cover
-  
-  % 封面下划线
-  \cs_new:Npn \nju_cover_uline_ug:nn #1 #2 
-  {
-    \uline{\makebox[#1]{\rm\songti#2}}
-  }
- 
-  % 封面表格边框
-  \cs_new:Npn \nju_coverbox_ug:n #1 
-  {
-    \makebox[4.2em][s]{#1}
-  }
 } 
 { 
   % 本科以外都是研究生 
-  \tl_const:Nn \nju_degree_name {研\hfill 究\hfill 生\hfill }
+  \tl_const:Nn \c_@@_name_diploma_tl { 研\hfill 究\hfill 生\hfill }
+  \tl_const:Nn \c_@@_name_title_tl { 论\hfill 文\hfill 题\hfill 目 }
 
-  % 封面下划线
-  \cs_new:Npn \nju_cover_uline_g:n #1 
-  {
-    \uline{\makebox[250pt]{\rm\kaishu#1}}
-  }
+  \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
+  \tl_const:Nn \c_@@_cover_uline_len_b_tl { 14em }
+  \tl_const:Nn \c_@@_cover_uline_font_tl { \kaishu }
+  \tl_const:Nn \c_@@_cover_uline_style_tl { }
+  \tl_const:Nn \c_@@_cover_uline_bskip_tl { \hspace{1em} }
 
-  % 国家图书馆封面下划线
-  \cs_new:Npn \nju_cover_uline_nl:nn #1 #2 
-  {
-    \uline{\makebox[#1]{#2}}
-  }
+  \tl_const:Nn \c_@@_cover_box_len_tl { 6em }
 
-  % 封面表格边框
-  \cs_new:Npn \nju_coverbox_g:n #1 
-  {
-    \makebox[6em][s]{#1\hspace{1em}}
-  }
-  
   % 研究生学位分类
   \str_case_e:nn { \nju_degree }
   {
-    { mg } { \tl_const:Nn \nju_degree_title {硕士} }
-    { mf } { \tl_const:Nn \nju_degree_title {硕士专业} }
-    { phd } { \tl_const:Nn \nju_degree_title {博士} }
+    { mg } { \tl_const:Nn \c_@@_name_degree_tl {硕士} }
+    { mf } { \tl_const:Nn \c_@@_name_degree_tl {硕士专业} }
+    { phd } { \tl_const:Nn \c_@@_name_degree_tl {博士} }
   }
+}
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
+% 封面下划线
+\cs_new:Npn \@@_cover_uline_a:n #1
+{
+  \uline{\makebox[\c_@@_cover_uline_len_a_tl]
+    {\rm\c_@@_cover_uline_font_tl #1 }}
+}
+\cs_new:Npn \@@_cover_uline_b:n #1
+{
+  \uline{\makebox[\c_@@_cover_uline_len_b_tl]
+    {\rm\c_@@_cover_uline_font_tl #1 }}
+}
+\cs_new:Npn \@@_cover_uline_nl:nn #1 #2
+{
+  \uline{\makebox[#1]
+    {\rm\c_@@_cover_uline_font_tl #2 }}
+}
+%    \end{macrocode}
+%
+% Put text here.
+%    \begin{macrocode}
+% 封面表格边框
+\cs_new:Npn \@@_cover_box:n #1 
+{
+  \makebox[\c_@@_cover_box_len_tl][s]{
+    #1\c_@@_cover_uline_bskip_tl}
 }
 %    \end{macrocode}
 %
@@ -1627,11 +1683,37 @@ through XeTeX.
 \str_if_eq:NNTF {\nju_type} {thesis} 
 {
   \tl_const:Nn \nju_type_name 
-    { \nju_degree_name 毕\hfill 业\hfill 论\hfill 文 }
+    { \c_@@_name_diploma_tl 毕\hfill 业\hfill 论\hfill 文 }
 }
 {
   \tl_const:Nn \nju_type_name 
-    { \nju_degree_name 毕\hfill 业\hfill 设\hfill 计 }
+    { \c_@@_name_diploma_tl 毕\hfill 业\hfill 设\hfill 计 }
+}
+%    \end{macrocode}
+%
+% 对多行标题进行自动判断，并输出换行后的结果
+%
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_title_breakline:
+{
+  \@@_cover_box:n {\c_@@_name_title_tl}
+  & \@@_cover_uline_a:n 
+  { \c_@@_cover_uline_style_tl \l_@@_info_title_a_tl } \\
+  % 如果某行标题空则不输出接下来的若干行
+  \tl_if_empty:NF \l_@@_info_title_b_tl
+  {
+    \tl_if_empty:NTF \l_@@_info_title_c_tl
+      { 
+        & \@@_cover_uline_a:n  
+        {\c_@@_cover_uline_style_tl \l_@@_info_title_b_tl } \\ 
+      }
+      {
+        & \@@_cover_uline_a:n  
+        { \c_@@_cover_uline_style_tl \l_@@_info_title_b_tl } \\
+        & \@@_cover_uline_a:n  
+        { \c_@@_cover_uline_style_tl \l_@@_info_title_c_tl } \\
+      }
+  }
 }
 %    \end{macrocode}
 %
@@ -1642,55 +1724,43 @@ through XeTeX.
 \tl_set:Nn \nju_printcoverinfo_ug 
 {
   \begin{tabular}{p{4.2em}c}
-    \nju_coverbox_ug:n {院\hfill 系}
-    & \nju_cover_uline_ug:nn {250pt}{\l__nju_info_dept_tl} \\
-    \nju_coverbox_ug:n {专\hfill 业}
-    & \nju_cover_uline_ug:nn {250pt}{\l__nju_major_tl} \\
-
-    \nju_coverbox_ug:n {题\hfill 目}
-    & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_a_tl}} \\
-    % 自动判断标题换行
-    \tl_if_empty:NTF \l__nju_info_title_b_tl {}
-    {
-      \tl_if_empty:NTF \l__nju_info_title_c_tl
-        { & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl}} \\ }
-        {
-          & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_b_tl}} \\
-          & \nju_cover_uline_ug:nn {250pt}{\bf{\l__nju_info_title_c_tl}} \\
-        }
-    }
+    \@@_cover_box:n {院\hfill 系}
+    & \@@_cover_uline_a:n  {\l_@@_info_dept_tl} \\
+    \@@_cover_box:n {专\hfill 业}
+    & \@@_cover_uline_a:n  {\l_@@_major_tl} \\
+    \@@_cover_title_breakline:
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \nju_coverbox_ug:n {年\hfill 级}
-    & \nju_cover_uline_ug:nn {90pt}{\l_@@_info_grade_tl}
-    & \nju_coverbox_ug:n {学\hfill 号}
-    & \nju_cover_uline_ug:nn {90pt}{\l_@@_info_id_tl}\\
+    \@@_cover_box:n {年\hfill 级}
+    & \@@_cover_uline_b:n {\l_@@_info_grade_tl}
+    & \@@_cover_box:n {学\hfill 号}
+    & \@@_cover_uline_b:n {\l_@@_info_id_tl}\\
   \end{tabular}\\
   
   \begin{tabular}{p{4.2em}c}
-    \nju_coverbox_ug:n {学\hfill 生\hfill 姓\hfill 名}
-    & \nju_cover_uline_ug:nn {250pt}{\l_@@_info_author_tl}
+    \@@_cover_box:n {学\hfill 生\hfill 姓\hfill 名}
+    & \@@_cover_uline_a:n  {\l_@@_info_author_tl}
   \end{tabular}\\
   \begin{tabular}{p{4.2em}cp{4.2em}c}
-    \nju_coverbox_ug:n {导\hfill 师}
-    & \nju_cover_uline_ug:nn {90pt}{\l_@@_info_supv_a_tl}
-    & \nju_coverbox_ug:n {职\hfill 称}
-    & \nju_cover_uline_ug:nn {90pt}{\l_@@_info_supv_a_title_tl}\\
+    \@@_cover_box:n {导\hfill 师}
+    & \@@_cover_uline_b:n {\l_@@_info_supv_a_tl}
+    & \@@_cover_box:n {职\hfill 称}
+    & \@@_cover_uline_b:n {\l_@@_info_supv_a_title_tl}\\
 
     % 第二导师
-    \bool_if:NT \nju_second_supervisor
+    \tl_if_empty:NF \l_@@_info_supv_b_tl
     {
-      \nju_coverbox_ug:n {第\hfill 二\hfill 导\hfill 师}
-      & \nju_cover_uline_ug:nn {90pt}{\l_@@_info_supv_b_tl}
-      & \nju_coverbox_ug:n {职\hfill 称}
-      & \nju_cover_uline_ug:nn {90pt}{\l_@@_info_supv_b_title_tl}\\
+      \@@_cover_box:n {第\hfill 二\hfill 导\hfill 师}
+      & \@@_cover_uline_b:n {\l_@@_info_supv_b_tl}
+      & \@@_cover_box:n {职\hfill 称}
+      & \@@_cover_uline_b:n {\l_@@_info_supv_b_title_tl}\\
     }
   \end{tabular}\\
 
   \begin{tabular}{p{4.2em}c}
-    \nju_coverbox_ug:n {提\hfill 交\hfill 日\hfill 期}
-    & \nju_cover_uline_ug:nn {250pt}{\l_@@_submit_date_tl}\\
+    \@@_cover_box:n {提\hfill 交\hfill 日\hfill 期}
+    & \@@_cover_uline_a:n  {\l_@@_submit_date_tl}\\
   \end{tabular}
 }
 %    \end{macrocode}
@@ -1702,27 +1772,15 @@ through XeTeX.
 \tl_set:Nn \nju_printcoverinfo_g 
 {
   \begin{tabular}{p{6em}c}    
-    \nju_coverbox_g:n {论\hfill 文\hfill 题\hfill 目}
-    & \nju_cover_uline_g:n {\l_@@_info_title_a_tl} \\
-    % 自动判断标题换行
-    \tl_if_empty:NTF \l__nju_info_title_b_tl {}
-    {
-      \tl_if_empty:NTF \l__nju_info_title_c_tl
-        { & \nju_cover_uline_g:n {\l_@@_info_title_b_tl} \\ }
-        {
-          & \nju_cover_uline_g:n {\l_@@_info_title_b_tl} \\
-          & \nju_cover_uline_g:n {\l_@@_info_title_c_tl} \\
-        }
-    }
-
-    \nju_coverbox_g:n {作\hfill 者\hfill 姓\hfill 名}
-    & \nju_cover_uline_g:n {\l_@@_info_author_tl}\\
-    \nju_coverbox_g:n {专\hfill 业\hfill 名\hfill 称}
-    & \nju_cover_uline_g:n {\l_@@_major_tl}\\
-    \nju_coverbox_g:n {研\hfill 究\hfill 方\hfill 向}
-    & \nju_cover_uline_g:n {\l_@@_field_tl}\\
-    \nju_coverbox_g:n {指\hfill 导\hfill 教\hfill 师}
-    & \nju_cover_uline_g:n {\nju_supervisor_full}\\
+    \@@_cover_title_breakline:
+    \@@_cover_box:n {作\hfill 者\hfill 姓\hfill 名}
+    & \@@_cover_uline_a:n  {\l_@@_info_author_tl}\\
+    \@@_cover_box:n {专\hfill 业\hfill 名\hfill 称}
+    & \@@_cover_uline_a:n  {\l_@@_major_tl}\\
+    \@@_cover_box:n {研\hfill 究\hfill 方\hfill 向}
+    & \@@_cover_uline_a:n  {\l_@@_field_tl}\\
+    \@@_cover_box:n {指\hfill 导\hfill 教\hfill 师}
+    & \@@_cover_uline_a:n  {\l_@@_info_supv_full_tl}\\
   \end{tabular}
 }
 %    \end{macrocode}
@@ -1750,13 +1808,13 @@ through XeTeX.
       \vskip -20mm \hskip -15mm
       \songti\zihao{-4}
       \makebox[40pt][l]{分类号}
-      \nju_cover_uline_nl:nn {150pt}{\l_@@_info_classif_tl}
+      \@@_cover_uline_b:n {\l_@@_info_classif_tl}
       \hfill
       \makebox[40pt][l]{密级}
-      \nju_cover_uline_nl:nn {150pt}{\l_@@_info_seclv_tl}
+      \@@_cover_uline_b:n {\l_@@_info_seclv_tl}
       \vskip 10pt \hskip -15mm
       \makebox[40pt][l]{UDC}
-      \nju_cover_uline_nl:nn {150pt}{\l_@@_info_udc_tl}
+      \@@_cover_uline_b:n {\l_@@_info_udc_tl}
     }
   
     % 中部
@@ -1767,9 +1825,9 @@ through XeTeX.
       {
         \kaishu\zihao{1}
         \vskip \stretch{1}
-        \nju_cover_uline_nl:nn {14em}{\l_@@_info_title_a_tl}\\
-        \nju_cover_uline_nl:nn {14em}{\l_@@_info_title_b_tl}\\
-        \nju_cover_uline_nl:nn {14em}{\l_@@_info_title_c_tl}\\
+        \@@_cover_uline_b:n {\l_@@_info_title_a_tl}\\
+        \@@_cover_uline_b:n {\l_@@_info_title_b_tl}\\
+        \@@_cover_uline_b:n {\l_@@_info_title_c_tl}\\
       }
       \vskip \stretch{1}
       {\kaishu\zihao{4}（题名和副题名）}
@@ -1784,25 +1842,25 @@ through XeTeX.
     {
       \kaishu\zihao{4}
       \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
-      \nju_cover_uline_nl:nn {94pt}{\l_@@_info_supv_a_tl}\par
-      \noindent\nju_cover_uline_nl:nn {\textwidth}{%
+      \@@_cover_uline_nl:nn {94pt}{\l_@@_info_supv_a_tl}\par
+      \noindent\@@_cover_uline_nl:nn {\textwidth}{%
       \l_@@_info_supv_cont_tl}\par
       \noindent 申请学位级别%
-      \nju_cover_uline_nl:nn {9em}{\nju_degree_title}%
+      \@@_cover_uline_nl:nn {9em}{\c_@@_name_degree_tl}%
       \noindent 专业名称%
       \uline{\hfill\l_@@_major_tl\hfill}\par% 需要调整下划线长度
       \noindent 论文提交日期%
-      \nju_cover_uline_nl:nn {9em}{\l_@@_submit_date_tl}%
+      \@@_cover_uline_nl:nn {9em}{\l_@@_submit_date_tl}%
       论文答辩日期%
       \uline{\hfill\l_@@_defend_date_tl\hfill}\par% 需要调整下划线长度
       \noindent 学位授予单位和日期\uline{\hfill}\par
       \noindent\hfill 答辩委员会主席：%
-      \nju_cover_uline_nl:nn {9em}{\l_@@_info_chairman_tl}\par
+      \@@_cover_uline_nl:nn {9em}{\l_@@_info_chairman_tl}\par
       \noindent\hfill 评阅人：%
-      \nju_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_a_tl}\par
-      \noindent\hfill\nju_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_b_tl}\par
-      \noindent\hfill\nju_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_c_tl}\par
-      \noindent\hfill\nju_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_d_tl}\par
+      \@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_a_tl}\par
+      \noindent\hfill\@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_b_tl}\par
+      \noindent\hfill\@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_c_tl}\par
+      \noindent\hfill\@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_d_tl}\par
       
       \begin{center}
         \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
@@ -1866,7 +1924,7 @@ through XeTeX.
     \vskip 15mm 
     {\zihao{1}\makebox[10em][s]{\bf{\kaishu\nju_type_name}}}
     \vskip 5mm
-    {\zihao{1}\bf{\kaishu{（申请\nju_degree_title 学位）}}}
+    {\zihao{1}\bf{\kaishu{（申请\c_@@_name_degree_tl 学位）}}}
     \par\vfill
     \vskip\stretch{0}
     {\bgroup
@@ -1946,7 +2004,7 @@ through XeTeX.
       院系： \l_@@_info_dept_tl \\
       专业： \l_@@_major_tl \\
       本科生姓名： \l_@@_info_author_tl \\
-      指导教师（姓名、职称）：\nju_supervisor_full \\
+      指导教师（姓名、职称）：\l_@@_info_supv_full_tl \\
       摘要：
       \egroup
     }
@@ -1977,7 +2035,7 @@ through XeTeX.
       DEPARTMENT: ~~\l_@@_info_dept_en_tl \\
       SPECIALIZATION: ~~\l_@@_major_en_tl \\
       UNDERGRADUATE:~~\l_@@_info_author_en_tl \\
-      MENTOR:~~\nju_supervisor_full_en \\
+      MENTOR:~~\l_@@_info_supv_full_tl_en \\
       ABSTRACT:
       \egroup
     }
@@ -2016,10 +2074,11 @@ through XeTeX.
     \tl_set:Nn \arraystretch {0.8}
     \noindent
     毕业论文题目：\hspace{0.5em}\nju_underline:n {\l_@@_info_title_tl\hfill}\\    
-    \uline{\makebox[9em]{\l_@@_major_tl}}专业\uline{\makebox[4em]{\l_@@_info_grade_tl}}级
+    \uline{\makebox[9em]{\l_@@_major_tl}}专业
+    \uline{\makebox[4em]{\l_@@_info_grade_tl}}级
     \str_if_eq:NNTF {\nju_degree} { phd } {博}{硕}
     士生姓名：\uline{\hfill\l_@@_info_author_tl\hfill} \\
-    指导教师（姓名、职称）：\uline{\hfill\nju_supervisor_full\hfill}\par
+    指导教师（姓名、职称）：\uline{\hfill\l_@@_info_supv_full_tl\hfill}\par
     \egroup
   
     \kaishu\zihao{4}\par%
@@ -2049,7 +2108,7 @@ through XeTeX.
       THESIS: ~~\l_@@_info_title_en_tl \\
       SPECIALIZATION: ~~\l_@@_major_en_tl \\
       POSTGRADUATE:~~\l_@@_info_author_en_tl \\
-      MENTOR:~~\nju_supervisor_full_en\par
+      MENTOR:~~\l_@@_info_supv_full_tl_en\par
       \egroup
     }
     \zihao{4}\par%
