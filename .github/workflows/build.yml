@@ -46,6 +46,7 @@ jobs:
         uses: FengChendian/latex-dtx2cls-action@v4
         with:
           root_file: njuthesis.dtx
+          working_directory: ./
 
       - name: Zip Release Source
         run: |
