@@ -41,10 +41,15 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
-          
+
+      - name: Github Action for LaTeX dtx to cls
+        uses: FengChendian/latex-dtx2cls-action@v4
+        with:
+          root_file: njuthesis.dtx
+
       - name: Zip Release Source
         run: |
-          zip -r njuthesis.zip . -x ".git/*" ".github/*" ".gitignore" "*.dtx"
+          zip -r njuthesis.zip . -x ".git/*" "*.ins" ".github/*" ".gitignore" "*.dtx"
           
       - name: Download artifact
         uses: actions/download-artifact@v2
