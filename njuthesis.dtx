@@ -2,7 +2,8 @@
 % !TeX program  = XeLaTeX
 % !TeX encoding = UTF-8
 %
-% Copyright (C) 2021 by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
+% Copyright (C) 2021 
+% by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
 % 
 % It may be distributed and/or modified under the conditions of the
 % LaTeX Project Public License (LPPL), either version 1.3c of this
@@ -38,23 +39,23 @@
 
 ## 快速开始
 
-从0.9.0版以后，本模板以DocStrip(`.dtx`)格式进行维护，同时在仓库提供`.cls`文件以降低使用门槛。
+从0.9.0版以后，本模板以DocStrip(`.dtx`)格式进行维护。常规的`.cls`格式文件可从Releases页面下载或使用以下方法提取。
 
-### 如何使用DocStrip文件
+### 关于DocStrip文件
 
-DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使用该文件，请在当前工作目录下打开终端：
+DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发布。要使用该文件，请在当前工作目录下打开终端：
 
-- 输入`xetex njuthesis.dtx`以解出宏包内容
+- 输入`xetex njuthesis.dtx`以提取宏包内容
 - 输入`latexmk njuthesis.dtx`以生成并查看内置的文档
 
 请注意，由于文件重名原因，项目中的示例论文模板已被重命名为`njuthesis-sample.tex`。
 
 ### 本地编译
 
-1. 推荐[从南大镜像站下载](https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F)并安装TeXLive或者MiKTeX最新版
-2. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包
+1. [从南大镜像站下载](https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F)并安装TeXLive或者MiKTeX最新版
+2. 下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包`njuthesis.zip`
 3. 根据需要更改`njuthesis-sample.tex`文件中的内容
-4. 在模板根目录下运行`latexmk -xelatex`编译文件，得到对应的PDF
+4. 在模板根目录下运行`latexmk`编译文件，得到对应的PDF
 
 #### **关于本地编译**
 
@@ -65,7 +66,7 @@ DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使�
 
 ### [南大TeX](https://tex.nju.edu.cn)编译
 
-1. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的`njuthesis.zip`
+1. 下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包`njuthesis.zip`
 2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的压缩包，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
 
     ```shell
@@ -100,14 +101,15 @@ DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使�
 ## 许可
 
 本模板的发布遵守 LaTeX Project Public License（版本 1.3c 或更高）。
+
 %</readme-zh>
 %
 %<*readme-en>
-# NJU Thesis
+# The njuthesis class
 
 ## Overview
 
-This is A LaTex Template for Nanjing University Thesis. This template supports bachelor, master, and doctoral thesis. The Template needs `xelatex` or `lualatex`.
+This package is intended for typesetting Nanjing University thesis with LaTeX, providing support for bachelor, master, and doctoral thesis. Compilation of this class requires either `xelatex` or `lualatex` engine.
 
 ## License
 
@@ -120,7 +122,7 @@ This is A LaTex Template for Nanjing University Thesis. This template supports b
 
 ## Contributing
 
-If you find a problem with the template, please submit an issue or PR in Github
+If you run into any problem with the template, please contact us via Github issue or submit Pull Request.
 
 ## Wiki
 
@@ -146,7 +148,8 @@ Copyright © NJU-LUG
 
 \preamble
 
-Copyright (C) 2021 by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
+Copyright (C) 2021 
+by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
 
 This file may be distributed and/or modified under the conditions of
 the LaTeX Project Public License, either version 1.3 of this license
@@ -207,7 +210,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.0 2021-09-15 12:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.1 2021-09-16 12:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
@@ -230,7 +233,7 @@ through XeTeX.
 % \author{^^A
 % Nanjing University Linux User Group\thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.9.0 \\ Released 2021-09-15}
+% \date{v0.9.1 \\ Released 2021-09-16}
 %
 % \maketitle
 %
@@ -240,12 +243,15 @@ through XeTeX.
 %
 % \def\abstractname{特别声明}
 % \begin{abstract}
-% 请注意，本模板仍未完成开发，出现bug或者文档不完善属于正常情况，提issue即可。
+% 请注意，本模板仍未完成开发，出现bug或者文档不完善属于正常情况，提issue或Pull Request即可。
+%
+% \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU LUG}始终欢迎您的加入与贡献！
 % \end{abstract}
 %
 % \clearpage
 %
 % \tableofcontents
+% \clearpage
 %
 % \EnableDocumentation
 %^^A \DisableDocumentation
@@ -254,16 +260,40 @@ through XeTeX.
 %
 %
 % \section{模板介绍}
+% NJUTHESIS，即南京大学学位论文模板，是一个由南京大学LUG组织维护的，用于处理本校学生毕业论文排版需求的\hologo{LaTeX}模板。
 %
-% \section{贡献者}
-% \label{sec:contributors}
+% \subsection{历史沿革}
 %
-% Put text here.
+% 十几年来，多位热心校友发布过自己编写的模板，在GitHub上可考的包括
+% \begin{enumerate}
+%  \item \href{}{@solrex}的\href{https://github.com/solrex/njuthesis}{南京大学学位论文\hologo{LaTeX}模板}（2010） 
+%  \item \href{}{@fireblue}基于solrex模板的的\href{https://github.com/fireblue/NJUThesis}{南京大学学位论文\hologo{LaTeX}模板}（2013）
+%  \item \href{}{@wenhai-zheng}的\href{https://github.com/wenhai-zheng/NJUThesis}{NJUThesis}（2013）  
+%  \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的\href{https://github.com/Haixing-Hu/nju-thesis}{NJU-Thesis}（2013 - 2018）
+%  \item 张楚珩（\href{https://github.com/zhangchuheng123}{@zhangchuheng123}）基于胡海星模板的\href{https://github.com/zhangchuheng123/NJUThesis}{NJUThesis}（2016）
+%  \item 蒋炎岩（\href{}{@jyy}）的\href{https://github.com/jiangyy/njuthesis}{南京大学山寨\hologo{LyX}研究生毕业论文模板}（2017）
+%  \item \href{https://anyirao.com/}{@AnyiRao}基于胡海星模板的\href{https://github.com/jiangyy/njuthesis}{NJU-Thesis}（2018）
+%  \item \href{}{@njuHan}基于胡海星模板的\href{https://github.com/njuHan/njuthesis-nju-thesis-template/}{NJU-Thesis}（2018 - 2021）
+%  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于AnyiRao模板的\href{https://github.com/FengChendian/NJUThesis2021}{NJU Thesis 2021}（2021）
+% \end{enumerate}
+% 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
+%
+% 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼顾友校thuthesis、fduthesis等优秀项目，构建了这一全新模板，力求通过\hologo{LaTeX3}语法和清淅的接口实现良好的易用性和可维护性。
+%
+% \subsection{君\hologo{LaTeX}本当上手}
+% \hologo{LaTeX}并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须要面对的情况。目前，中文互联网上的\hologo{LaTeX}写作教程不能说屈指可数，起码也是汗牛充栋，比较著名的包括刘海洋的《\hologo{LaTeX}入门》等等都是不错的参考资料。然而如何快速准确找到所需要的用法，尤其是\hologo{LaTeX3}的新接口，需要一定的时间或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您的相关知识体系，只能尽力做到有求必应，在需要的地方顺带提一嘴，保证您少走点弯路。
+%
+% \subsection{关于本说明手册}
+%
+% 本手册包含njuthesi模板的所有基本信息，主要包括模板说明和代码实现两部分。后者配合附录，为有意参与模板开发的同学提供指导。
+%
+% 如果您在使用最新版模板时发现了任何问题，请联系LUG或者在GitHub提交issue。
 %
 % \section{安装}
 % \label{sec:setup}
 %
 % 本节主要介绍本宏包的获取、安装以及编译方式
+% \subsection{下载模板}
 %
 % 下表是目前经过测试的环境。如果有其他可用不可用的环境，欢迎补充。
 %
@@ -368,9 +398,9 @@ through XeTeX.
 %
 % 尖括号内列出了若干个允许的选项，其中加粗的为默认选项
 %
-% 封面留空即可自动化换行
+% 封面标题留空即可自动化换行
 %
-% 第二导师不填则留空。由于目前来说拥有两位指导老师并不是一种普遍状况，因此此项默认为\opt{false}。
+% 第二导师不填则留空，目前来说拥有两位指导老师并不是一种普遍状况。
 %
 % \begin{function}[added=2021-09-07]{nlcover}
 %   \begin{syntax}
@@ -1121,7 +1151,7 @@ through XeTeX.
   ItalicFeatures=FakeSlant,
   BoldItalicFeatures=FakeSlant]{Noto~Sans~CJK~SC}
 
-% 包含于上述思源黑体
+% 包含于思源黑体
 \setCJKmonofont[
   UprightFont=NotoSansMonoCJKsc-Regular,
   BoldFont=NotoSansMonoCJKsc-Bold,

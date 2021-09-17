@@ -12,23 +12,23 @@
 
 ## 快速开始
 
-从0.9.0版以后，本模板以DocStrip(`.dtx`)格式进行维护，同时在仓库提供`.cls`文件以降低使用门槛。
+从0.9.0版以后，本模板以DocStrip(`.dtx`)格式进行维护。常规的`.cls`格式文件可从Releases页面下载或使用以下方法提取。
 
-### 如何使用DocStrip文件
+### 关于DocStrip文件
 
-DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使用该文件，请在当前工作目录下打开终端：
+DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发布。要使用该文件，请在当前工作目录下打开终端：
 
-- 输入`xetex njuthesis.dtx`以解出宏包内容
+- 输入`xetex njuthesis.dtx`以提取宏包内容
 - 输入`latexmk njuthesis.dtx`以生成并查看内置的文档
 
 请注意，由于文件重名原因，项目中的示例论文模板已被重命名为`njuthesis-sample.tex`。
 
 ### 本地编译
 
-1. 推荐[从南大镜像站下载](https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F)并安装TeXLive或者MiKTeX最新版
-2. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包
+1. [从南大镜像站下载](https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F)并安装TeXLive或者MiKTeX最新版
+2. 下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包`njuthesis.zip`
 3. 根据需要更改`njuthesis-sample.tex`文件中的内容
-4. 在模板根目录下运行`latexmk -xelatex`编译文件，得到对应的PDF
+4. 在模板根目录下运行`latexmk`编译文件，得到对应的PDF
 
 #### **关于本地编译**
 
@@ -39,7 +39,7 @@ DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使�
 
 ### [南大TeX](https://tex.nju.edu.cn)编译
 
-1. 从release下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的`njuthesis.zip`
+1. 下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包`njuthesis.zip`
 2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的压缩包，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
 
     ```shell
@@ -74,3 +74,4 @@ DocStrip合并了LaTeX源代码和文档，更有利于宏包的发布。要使�
 ## 许可
 
 本模板的发布遵守 LaTeX Project Public License（版本 1.3c 或更高）。
+
