@@ -667,9 +667,11 @@ through XeTeX.
   degree            .choices:nn   =
   { ug, mg, mg, phd }
   { \tl_set_eq:NN \l_@@_info_degree_tl \l_keys_choice_tl },  
+  degree            .initial:n    =   ug,
   type              .choices:nn   =
   { thesis, design }
   { \tl_set_eq:NN \l_@@_info_type_tl   \l_keys_choice_tl }, 
+  type              .initial:n    =   thesis,
 }
 %    \end{macrocode}
 % 
@@ -1731,7 +1733,7 @@ through XeTeX.
   \str_if_eq:NNTF { \l_@@_info_degree_tl } { phd }
   {
     \tl_set:Nn \c_@@_name_degree_tl { 博士 }
-    \tl_set:Nn \c_@@_name_degree_en_tl { Doctor of Philosophy }
+    \tl_set:Nn \c_@@_name_degree_en_tl { Doctor~of~Philosophy }
   }
   {
     \tl_set:Nn \c_@@_name_degree_en_tl { Master }
@@ -1879,96 +1881,86 @@ through XeTeX.
 % 
 %
 % 
-%    \begin{macrocode}
-% 绘制封面命令
-\tl_new:N \nju_printcover_nl % 国家图书馆封面
-\tl_new:N \nju_printcover_ug % 本科封面
-\tl_new:N \nju_printcover_g % 研究生封面
-%    \end{macrocode}
-%
+% 按需绘制国家图书馆封面，修改自胡海星模板
 % 
 %    \begin{macrocode}
-% 按需绘制国家图书馆封面，修改自旧模板
-\bool_if:NT \g_@@_nlcover_bool
+\cs_new_protected:Npn \@@_print_cover_nl:
 {
-  \tl_set:Nn \nju_printcover_nl 
+  \thispagestyle{empty}
+  \pdfbookmark[0]{国家图书馆封面}{nl}
   {
-    \thispagestyle{empty}
-    \pdfbookmark[0]{国家图书馆封面}{nl}
-    {
-      % 顶端
-      \hspace{0mm}
-      \vskip -20mm \hskip -15mm
-      \songti\zihao{-4}
-      \makebox[40pt][l]{分类号}
-      \@@_cover_uline_b:n {\l_@@_info_classif_tl}
-      \hfill
-      \makebox[40pt][l]{密级}
-      \@@_cover_uline_b:n {\l_@@_info_seclv_tl}
-      \vskip 10pt \hskip -15mm
-      \makebox[40pt][l]{UDC}
-      \@@_cover_uline_b:n {\l_@@_info_udc_tl}
-    }
-  
-    % 中部
-    \vskip\stretch{2}
-    \begin{center}
-      \def\ULthickness{1pt}
-      {\kaishu\zihao{-0} 学\hspace{0.5em}位\hspace{0.5em}论\hspace{0.5em}文}
-      {
-        \kaishu\zihao{1}
-        \vskip \stretch{1}
-        \@@_cover_uline_b:n {\l_@@_info_title_a_tl}\\
-        \@@_cover_uline_b:n {\l_@@_info_title_b_tl}\\
-        \@@_cover_uline_b:n {\l_@@_info_title_c_tl}\\
-      }
-      \vskip \stretch{1}
-      {\kaishu\zihao{4}（题名和副题名）}
-      \vskip \stretch{1} \vskip 5mm
-      {\kaishu\zihao{1}\uline{\makebox{\l_@@_info_author_tl}}}
-      \vskip \stretch{1}
-      {\kaishu\zihao{4}（作者姓名）}
-    \end{center}
-  
-    % 底部
-    \vskip\stretch{1}
-    {
-      \kaishu\zihao{4}
-      \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
-      \@@_cover_uline_nl:nn {94pt}{\l_@@_info_supv_a_tl}\par
-      \noindent\@@_cover_uline_nl:nn {\textwidth}{%
-      \l_@@_info_supv_cont_tl}\par
-      \noindent 申请学位级别%
-      \@@_cover_uline_nl:nn {9em}{\c_@@_name_degree_tl}%
-      \noindent 专业名称%
-      \uline{\hfill\l_@@_major_tl\hfill}\par% 需要调整下划线长度
-      \noindent 论文提交日期%
-      \@@_cover_uline_nl:nn {9em}{\l_@@_submit_date_tl}%
-      论文答辩日期%
-      \uline{\hfill\l_@@_defend_date_tl\hfill}\par% 需要调整下划线长度
-      \noindent 学位授予单位和日期\uline{\hfill}\par
-      \noindent\hfill 答辩委员会主席：%
-      \@@_cover_uline_nl:nn {9em}{\l_@@_info_chairman_tl}\par
-      \noindent\hfill 评阅人：%
-      \@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_a_tl}\par
-      \noindent\hfill\@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_b_tl}\par
-      \noindent\hfill\@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_c_tl}\par
-      \noindent\hfill\@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_d_tl}\par
-      
-      \begin{center}
-        \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
-      \end{center}
-      \vskip -10mm
-      }
-    \cleardoublepage
+    % 顶端
+    \hspace{0mm}
+    \vskip -20mm \hskip -15mm
+    \songti\zihao{-4}
+    \makebox[40pt][l]{分类号}
+    \@@_cover_uline_b:n {\l_@@_info_classif_tl}
+    \hfill
+    \makebox[40pt][l]{密级}
+    \@@_cover_uline_b:n {\l_@@_info_seclv_tl}
+    \vskip 10pt \hskip -15mm
+    \makebox[40pt][l]{UDC}
+    \@@_cover_uline_b:n {\l_@@_info_udc_tl}
   }
+
+  % 中部
+  \vskip\stretch{2}
+  \begin{center}
+    \def\ULthickness{1pt}
+    {\kaishu\zihao{-0} 学\hspace{0.5em}位\hspace{0.5em}论\hspace{0.5em}文}
+    {
+      \kaishu\zihao{1}
+      \vskip \stretch{1}
+      \@@_cover_uline_b:n {\l_@@_info_title_a_tl}\\
+      \@@_cover_uline_b:n {\l_@@_info_title_b_tl}\\
+      \@@_cover_uline_b:n {\l_@@_info_title_c_tl}\\
+    }
+    \vskip \stretch{1}
+    {\kaishu\zihao{4}（题名和副题名）}
+    \vskip \stretch{1} \vskip 5mm
+    {\kaishu\zihao{1}\uline{\makebox{\l_@@_info_author_tl}}}
+    \vskip \stretch{1}
+    {\kaishu\zihao{4}（作者姓名）}
+  \end{center}
+
+  % 底部
+  \vskip\stretch{1}
+  {
+    \kaishu\zihao{4}
+    \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
+    \@@_cover_uline_nl:nn {94pt}{\l_@@_info_supv_a_tl}\par
+    \noindent\@@_cover_uline_nl:nn {\textwidth}{%
+    \l_@@_info_supv_cont_tl}\par
+    \noindent 申请学位级别%
+    \@@_cover_uline_nl:nn {9em}{\c_@@_name_degree_tl}%
+    \noindent 专业名称%
+    \uline{\hfill\l_@@_major_tl\hfill}\par% 需要调整下划线长度
+    \noindent 论文提交日期%
+    \@@_cover_uline_nl:nn {9em}{\l_@@_submit_date_tl}%
+    论文答辩日期%
+    \uline{\hfill\l_@@_defend_date_tl\hfill}\par% 需要调整下划线长度
+    \noindent 学位授予单位和日期\uline{\hfill}\par
+    \noindent\hfill 答辩委员会主席：%
+    \@@_cover_uline_nl:nn {9em}{\l_@@_info_chairman_tl}\par
+    \noindent\hfill 评阅人：%
+    \@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_a_tl}\par
+    \noindent\hfill\@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_b_tl}\par
+    \noindent\hfill\@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_c_tl}\par
+    \noindent\hfill\@@_cover_uline_nl:nn {9em}{\l_@@_info_reviewer_d_tl}\par
+    
+    \begin{center}
+      \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
+    \end{center}
+    \vskip -10mm
+    }
+  \cleardoublepage
 }
 %    \end{macrocode}
 %
 % 
 %    \begin{macrocode}
 % 本科封面
-\tl_set:Nn \nju_printcover_ug 
+\cs_new_protected:Npn \@@_print_cover_ug:
 {
   \thispagestyle{empty}
   \pagenumbering{Roman}
@@ -2003,7 +1995,7 @@ through XeTeX.
 % 
 %    \begin{macrocode}
 % 研究生封面
-\tl_set:Nn \nju_printcover_g 
+\cs_new_protected:Npn \@@_print_cover_g:
 {
   \thispagestyle{empty}
   \pagenumbering{Roman}
@@ -2057,7 +2049,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_print_cover_en:
 {
   \thispagestyle{empty}
-  \pdfbookmark{英文封面}{English cover} % 将封面插入pdf书签
+  \pdfbookmark{英文封面}{English~cover} % 将封面插入pdf书签
   \begin{center}
     \vspace*{20pt}
     \bf\sffamily\zihao{2}\l_@@_info_title_en_tl
@@ -2066,15 +2058,15 @@ through XeTeX.
     \vskip 3pt
     \bf\sffamily\zihao{4}\l_@@_info_author_en_tl
     \vskip\stretch{1}
-    \normalfont\rmfamily\zihao{4}{Supervised by}
+    \normalfont\rmfamily\zihao{4}{Supervised~by}
     \vskip 3pt
     \normalfont\sffamily\zihao{4}\l_@@_info_supv_a_title_en_tl
     \hspace{.5em}\l_@@_info_supv_a_en_tl
     \vskip\stretch{1}
     \normalsize\rmfamily{%
-      A dissertation submitted to\\
-      the graduate school of Nanjing University\\
-      in partial fulfilment of the requirements for the degree of\\
+      A~dissertation~submitted~to\\
+      the~graduate~school~of~Nanjing~University\\
+      in~partial~fulfilment~of~the~requirements~for~the~degree~of\\
       {\textsc{\c_@@_name_degree_en_tl}}\\
       in\\
       {\l_@@_major_en_tl}
@@ -2083,7 +2075,7 @@ through XeTeX.
     \includegraphics[width=2.5cm]{njulogo} \\
     \vskip 3mm
     \normalfont\l_@@_info_dept_en_tl\\
-    {Nanjing University}
+    {Nanjing~University}
     \vskip 30pt
     \normalfont\normalsize\l_@@_submit_date_en_tl
   \end{center}
@@ -2099,12 +2091,11 @@ through XeTeX.
 {%
   \str_if_eq:NNTF { \l_@@_info_degree_tl } { ug } 
   {
-    \nju_printcover_nl % 国家图书馆封面
-    \nju_printcover_ug % 本科封面
+    \@@_print_cover_ug: % 本科封面
   } 
   { 
-    \nju_printcover_nl % 国家图书馆封面
-    \nju_printcover_g % 研究生封面
+    \bool_if:NT \g_@@_nlcover_bool { \@@_print_cover_nl: } % 国家图书馆封面
+    \@@_print_cover_g: % 研究生封面
     \@@_print_cover_en: % 英文封面
   } 
 }
@@ -2124,8 +2115,8 @@ through XeTeX.
     % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
     \pdfbookmark[0]{中文摘要}{中文摘要} % 将摘要插入pdf书签，与上一行不可共存
     \begin{center}
-      \kaishu\zihao{-2}{\textbf{\uuline{
-        南京大学本科生毕业论文（设计、作品）中文摘要}}}
+      \kaishu\zihao{-2}{\textbf{
+        \uuline{南京大学本科生毕业论文（设计、作品）中文摘要}}}
     \end{center}
     {\bgroup
       \kaishu\zihao{-4}
