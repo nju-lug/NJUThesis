@@ -737,6 +737,7 @@ through XeTeX.
 \keys_define:nn { nju / info }
 {
   SubmitDate        .tl_set:N     =   \l_@@_submit_date_tl,
+  SubmitDate*       .tl_set:N     =   \l_@@_submit_date_en_tl,
 }
 %    \end{macrocode}
 %
@@ -1677,10 +1678,16 @@ through XeTeX.
   }
 }
 %    \end{macrocode}
-%
-% Put text here.
+% \begin{variable}{\c_@@_name_degree_tl,\c_@@_name_degree_en_tl}
+% 用于存储学位名称的变量
 %    \begin{macrocode}
+\tl_new:N \c_@@_name_degree_tl
+\tl_new:N \c_@@_name_degree_en_tl
+%    \end{macrocode}
+% \end{variable}
+%
 % 判断学位进行命令定义
+%    \begin{macrocode}
 \str_if_eq:NNTF {\l_@@_info_degree_tl} { ug } 
 {
   % 本科
@@ -1711,12 +1718,17 @@ through XeTeX.
 
   \tl_const:Nn \c_@@_cover_box_len_tl { 6em }
 
-  % 研究生学位分类
-  \str_case_e:nn { \l_@@_info_degree_tl }
+  % 研究生学位名称
+  \str_if_eq:NNTF { \l_@@_info_degree_tl } { phd }
   {
-    { mg } { \tl_const:Nn \c_@@_name_degree_tl { 硕士 } }
-    { mf } { \tl_const:Nn \c_@@_name_degree_tl { 硕士专业 } }
-    { phd } { \tl_const:Nn \c_@@_name_degree_tl { 博士 } }
+    \tl_set:Nn \c_@@_name_degree_tl { 博士 }
+    \tl_set:Nn \c_@@_name_degree_en_tl { Doctor of Philosophy }
+  }
+  {
+    \tl_set:Nn \c_@@_name_degree_en_tl { Master }
+    \str_if_eq:NNTF { \l_@@_info_degree_tl } { mg }
+    { \tl_set:Nn \c_@@_name_degree_tl { 硕士 } }
+    { \tl_set:Nn \c_@@_name_degree_tl { 硕士专业 } }
   }
 }
 %    \end{macrocode}
@@ -1793,7 +1805,6 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% Put text here.
 % 封面信息栏 本科
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_covertab:
@@ -2034,6 +2045,42 @@ through XeTeX.
   \end{spacing}
   \cleardoublepage
 }
+\cs_new_protected:Npn \@@_print_cover_en:
+{
+  \thispagestyle{empty}
+  \pdfbookmark{英文封面}{English cover} % 将封面插入pdf书签
+  \begin{center}
+    \vspace*{20pt}
+    \bf\sffamily\zihao{2}\l_@@_info_title_en_tl
+    \vskip \stretch{1}
+    \normalfont\rmfamily\zihao{4}{by}
+    \vskip 3pt
+    \bf\sffamily\zihao{4}\l_@@_info_author_en_tl
+    \vskip\stretch{1}
+    \normalfont\rmfamily\zihao{4}{Supervised by}
+    \vskip 3pt
+    \normalfont\sffamily\zihao{4}\l_@@_info_supv_a_title_en_tl
+    \hspace{.5em}\l_@@_info_supv_a_en_tl
+    \vskip\stretch{1}
+    \normalsize\rmfamily{%
+      A dissertation submitted to\\
+      the graduate school of Nanjing University\\
+      in partial fulfilment of the requirements for the degree of\\
+      {\textsc{\c_@@_name_degree_en_tl}}\\
+      in\\
+      {\l_@@_major_en_tl}
+    }
+    \vskip\stretch{2}
+    \includegraphics[width=2.5cm]{njulogo} \\
+    \vskip 3mm
+    \normalfont\l_@@_info_dept_en_tl\\
+    {Nanjing University}
+    \vskip 30pt
+    \normalfont\normalsize\l_@@_submit_date_en_tl
+  \end{center}
+  \normalfont
+  \cleardoublepage
+}
 %    \end{macrocode}
 %
 % Put text here.
@@ -2048,7 +2095,8 @@ through XeTeX.
   } 
   { 
     \nju_printcover_nl % 国家图书馆封面
-    \nju_printcover_g % 研究生封面 
+    \nju_printcover_g % 研究生封面
+    \@@_print_cover_en: % 英文封面
   } 
 }
 %    \end{macrocode}
