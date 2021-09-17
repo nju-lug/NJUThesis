@@ -228,10 +228,11 @@ through XeTeX.
 %</driver>
 % \fi
 %
-% \title{\color{njuviolet} The \textsc{NJuThesis} class\\ 南京大学学位论文模板}
+% \title{\color{njuviolet}{The \textsc{NJuThesis} class\\ 南京大学学位论文模板}}
 % 
 % \author{^^A
-% Nanjing University Linux User Group\thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
+% Nanjing University Linux User Group
+% \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
 % \date{v0.9.1 \\ Released 2021-09-16}
 %
@@ -250,6 +251,7 @@ through XeTeX.
 %
 % \clearpage
 %
+% \setcounter{tocdepth}{4}
 % \tableofcontents
 % \clearpage
 %
@@ -260,7 +262,7 @@ through XeTeX.
 %
 %
 % \section{模板介绍}
-% NJUTHESIS，即南京大学学位论文模板，是一个由南京大学LUG组织维护的，用于处理本校学生毕业论文排版需求的\hologo{LaTeX}模板。
+% \textsc{NJuThesis}，即南京大学学位论文模板，是一个由南京大学LUG组织维护的，用于处理本校学生毕业论文排版需求的\hologo{LaTeX}模板。
 %
 % \subsection{历史沿革}
 %
@@ -272,7 +274,7 @@ through XeTeX.
 %  \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的\href{https://github.com/Haixing-Hu/nju-thesis}{NJU-Thesis}（2013 - 2018）
 %  \item 张楚珩（\href{https://github.com/zhangchuheng123}{@zhangchuheng123}）基于胡海星模板的\href{https://github.com/zhangchuheng123/NJUThesis}{NJUThesis}（2016）
 %  \item 蒋炎岩（\href{http://ics.nju.edu.cn/~jyy/}{@jiangyy}）的\href{https://github.com/jiangyy/njuthesis}{南京大学山寨\hologo{LyX}研究生毕业论文模板}（2017）
-%  \item \href{https://anyirao.com/}{@AnyiRao}基于胡海星模板的\href{https://github.com/jiangyy/njuthesis}{NJU-Thesis}（2018）
+%  \item 饶安逸（\href{https://anyirao.com/}{@AnyiRao}）基于胡海星模板的\href{https://github.com/jiangyy/njuthesis}{NJU-Thesis}（2018）
 %  \item \href{https://github.com/njuHan}{@njuHan}基于胡海星模板的\href{https://github.com/njuHan/njuthesis-nju-thesis-template/}{NJU-Thesis}（2018 - 2021）
 %  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于AnyiRao模板的\href{https://github.com/FengChendian/NJUThesis2021}{NJU Thesis 2021}（2021）
 % \end{enumerate}
@@ -288,13 +290,16 @@ through XeTeX.
 % \end{itemize}
 %
 % \subsection{君\hologo{LaTeX}本当上手}
-% \hologo{LaTeX}并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须要面对的情况。目前，中文互联网上的\hologo{LaTeX}写作教程不能说屈指可数，起码也是汗牛充栋，比较著名的包括刘海洋的《\hologo{LaTeX}入门》等等都是不错的参考资料。然而如何快速准确找到所需要的用法，尤其是\hologo{LaTeX3}的新接口，需要一定的时间或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您的相关知识体系，只能尽力做到有求必应，在需要的地方顺带提一嘴，保证您少走点弯路。
+% \hologo{LaTeX}并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须要面对的情况。目前，中文互联网上的\hologo{LaTeX}写作教程不能说屈指可数，起码也是汗牛充栋，比较著名的包括刘海洋的《\hologo{LaTeX}入门》等等都是不错的参考资料。然而如何快速准确找到所需要的用法，尤其是\hologo{LaTeX3}的新接口，需要一定的时间或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您的相关知识体系，只能\textbf{尽力做到有求必应}，在需要的地方顺带提一嘴，保证您少走点弯路。
 %
 % \subsection{关于本说明手册}
 %
-% 本手册包含njuthesi模板的所有基本信息，主要包括模板说明和代码实现两部分。后者配合附录，为有意参与模板开发的同学提供指导。
+% 本模板通过\textsc{DocStrip}进行维护，实际上是一种\emph{文学编程}。文学编程的本体是那些用来说明的文字，按写书写文章的方式组织。
+% \file{njuthesis.dtx}包含njuthesis模板的所有信息。前半部分为模板说明，即各种常用命令与必要的使用方法；后半部分为代码实现，为带有详细注释的\hologo{TeX}源代码。后者配合附录，为有意了解本模板细节的同学提供简明的指引。
 %
-% 如果您在使用最新版模板时发现了任何问题，请联系LUG或者在GitHub提交issue。
+% 下文中将出现若干特殊格式，包括\file{file-example.xxx}等。
+%
+% 如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过GitHub issue或者QQ群聊联系LUG。
 %
 % \section{安装}
 % \label{sec:setup}
@@ -407,7 +412,7 @@ through XeTeX.
 %
 % \subsection{自定义选项}
 %
-% 尖括号内列出了若干个允许的选项，其中加粗的为默认选项
+% 尖括号内列出了若干个允许的选项，其中加粗的为默认选项。
 %
 % 封面标题留空即可自动化换行
 %
@@ -449,7 +454,7 @@ through XeTeX.
 %
 % 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
 %
-% 如果希望更改本模板使用的字体，请填写以下两个选项
+% 如果希望更改本模板使用的字体，请填写以下两个选项覆盖检测操作系统得到的设置
 % 
 %
 % \begin{function}[added=2021-09-07]{customlatinfont}
@@ -513,70 +518,73 @@ through XeTeX.
 %
 % \end{function}
 %
+% 本科生可以参考如下列表输入个人信息。注意不能有空行，有空格的内容需要将空格替换为波浪线或者两端加上大括号
 %
-% \subsubsection{论文标题}
-% \begin{description}
-%     \item[\texttt{TitleA}] 单行标题，或多行标题的第一行。关于是否应该折行，单行能容纳的最长标题为\emph{15个中文字符}，请自行选择合适的截断处。
-%     \item[\texttt{TitleB}] 多行标题的第二行
-%     \item[\texttt{TitleC}] 多行标题的第三行
-%     \item[\texttt{Title*}] 英文标题，注意空格要用波浪线（\textasciitilde）替代
-% \end{description}
+% \begin{ctexexam}
+% \njusetup {
+%     info = {
+%         TitleA = 一种使用南京大学\hologo{LaTeX}模版,
+%         TitleB = 编写毕业论文的经验性方法,
+%         Title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
+%         Grade = 2018,
+%         StudentID = 189114514,
+%         StudentName = 周煜华,
+%         StudentName* = Zhou~Yuhua,
+%         Department = 拉太赫科学与技术学院,
+%         Department* = School~of~\hologo{LaTeX},
+%         Major = 拉太赫语言学,
+%         Major* = \hologo{LaTeX}~Linguistics,
+%         SupervisorA = 李成殿,
+%         SupervisorA*= Li~Chengdian,
+%         SupervisorATitle = 教授,
+%         SupervisorATitle* = Professor,
+%         SupervisorB = 孙赫弥,
+%         SupervisorB* = Sun~Hemi,
+%         SupervisorBTitle = 副教授,
+%         SupervisorBTitle* = Associate professor,
+%         SubmitDate = 2021年8月10日,
+%     }
+% }
+% \end{ctexexam}
 %
-% \subsubsection{个人年级、学号、姓名}
-% \begin{description}
-%     \item[\texttt{Grade}] 年级
-%     \item[\texttt{StudentID}] 本科生为9位数字学号，研究生为两位英文字母标识加8位数字学号，两位字母自动大写
-%     \item[\texttt{StudentName}] 姓名
-%     \item[\texttt{StudentName*}] 姓名拼音 
-% \end{description}
+% 研究生可以参考如下列表输入个人信息
 %
-% \subsubsection{就读院系专业}
-%
-% 本科生无需填写研究方向。
-% \begin{description}
-%     \item[\texttt{Department}] 学院名称
-%     \item[\texttt{Department*}] 学院英文名称
-%     \item[\texttt{Major}] 专业名称
-%     \item[\texttt{Major*}] 专业英文名称
-%     \item[\texttt{Field}] 研究方向
-%     \item[\texttt{Field*}] 研究方向英文名称
-% \end{description}
-%
-% \subsubsection{导师信息}
-% 注意标注A的为第一导师
-% \begin{description}
-%     \item[\texttt{Supervisor<A/B>}] 导师姓名
-%     \item[\texttt{Supervisor<A/B>*}] 导师姓名的英文拼音  
-%     \item[\texttt{Supervisor<A/B>Title}] 导师职称
-%     \item[\texttt{Supervisor<A/B>Title*}] 导师职称英文
-% \end{description}
-%
-% \subsubsection{提交日期}
-% \begin{description}
-%     \item[\texttt{SubmitDate}] 论文提交日期
-% \end{description}
-%
-% \subsubsection{答辩信息}
-%
-% 除答辩日期以外，本部分内容仅用于国家图书馆封面。本科生忽略即可。
-% 答辩委员会姓名与职称之间需使用波浪线连接。
-%
-% \begin{description}
-%     \item[\texttt{DefendDate}] 答辩日期
-%     \item[\texttt{ReviewerChairman}] 答辩委员会主席的姓名及职称 
-%     \item[\texttt{Reviewer<A/B/C/D>}] 四位评阅人的姓名及职称  
-% \end{description}
-%
-% \subsubsection{国家图书馆封面相关信息}
-%
-% 本部分内容仅用于国家图书馆封面。本科生忽略即可。
-%
-% \begin{description}
-%     \item[\texttt{Classification}] 分类号
-%     \item[\texttt{SecurityLevel}] 限制  
-%     \item[\texttt{UDC}] UDC
-%     \item[\texttt{SupervisorContact}] 指导教师职务、职称、学位、单位名称及地址
-% \end{description}
+% \begin{ctexexam}
+% \njusetup {
+%     info = {
+%         TitleA = 一种使用南京大学\hologo{LaTeX}模版,
+%         TitleB = 编写毕业论文的经验性方法,
+%         TitleC = （内容已经过时，详见说明手册）,
+%         Title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
+%         Grade = 2018,
+%         StudentID = dz18114514,
+%         StudentName = 周煜华,
+%         StudentName* = Zhou~Yuhua,
+%         Department = 拉太赫科学与技术学院,
+%         Department* = School~of~\hologo{LaTeX},
+%         Major = 拉太赫语言学,
+%         Major* = \hologo{LaTeX}~Linguistics,
+%         Field = 拉太赫语言在现当代的使用, 
+%         Field* = Contemporary~Usage~of~the~\hologo{LaTeX}~Language, 
+%         SupervisorA = 李成殿,
+%         SupervisorA*= Li~Chengdian,
+%         SupervisorATitle = 教授,
+%         SupervisorATitle* = Professor,
+%         SubmitDate = 2021年8月10日,
+%         SubmitDate* = {Aug 10, 2021}, 
+%         DefendDate = 2021年9月19日,
+%         ReviewerChairman = 张晓山~教授,
+%         ReviewerA = 王瑞希~教授,
+%         ReviewerB = 郭德纲~副教授,
+%         ReviewerC = 华芈库~教授,
+%         ReviewerD = 戴菲菲~教授,
+%         Classification = 0175.2,
+%         SecurityLevel = 限制,
+%         UDC = 004.72,
+%         SupervisorContact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514},
+%     }
+% }
+% \end{ctexexam}
 %
 % \subsection{摘要页}
 %
@@ -585,7 +593,7 @@ through XeTeX.
 % 在使用\hologo{LuaLaTeX}编译时，研究生中文摘要页的标题会出现空格无下划线的问题，目前正在积极寻求解决方法。
 %
 % {前言页}
-% 使用preface环境定义
+% 使用\env{preface}环境定义
 %
 %
 % \subsection{正文格式}
@@ -600,7 +608,7 @@ through XeTeX.
 % 需要使用biber手动编译才会显示，具体内容参考
 %
 % {致谢页}
-% 同前言，使用acknowledgement环境
+% 同前言，使用\env{acknowledgement}环境
 % 
 % {附录页}
 %
@@ -611,7 +619,8 @@ through XeTeX.
 % \begin{implementation}
 %
 % \section{代码实现}
-% @@在l3docstrip中表示名空间，在生成cls时会被相应字段替换，譬如在njuthesis中@@=nju
+% @@在l3docstrip中表示名空间，在生成cls时会被相应字段替换，譬如在njuthesis中@@=nju。
+% 尖括号包裹的|<*class>||</class>|用来指定某段代码属于哪个文件。
 %
 %    \begin{macrocode}
 %<@@=nju>
@@ -632,7 +641,7 @@ through XeTeX.
   ]{ctexbook}[2018/04/01]
 %    \end{macrocode}
 %
-% 是否需要国家图书馆封面的设置
+% 宏包\pkg{l3keys2e}用于配置模板选项。
 %    \begin{macrocode}
 \RequirePackage{l3keys2e}
 %    \end{macrocode}
@@ -646,7 +655,7 @@ through XeTeX.
 %    \begin{macrocode}
 \keys_define:nn { nju }
 {
-  nlcover           .bool_set:N   =   \nju_nl_cover,
+  nlcover           .bool_set:N   =   \g_@@_nlcover_bool,
   nlcover           .initial:n    =   false,
 }
 %    \end{macrocode}
@@ -665,7 +674,7 @@ through XeTeX.
 %    \end{macrocode}
 % 
 % \subsection{个人信息}
-% 输入
+% 输入个人信息的区域。
 %    \begin{macrocode}
 \keys_define:nn { nju }
 {
@@ -770,7 +779,7 @@ through XeTeX.
 { \keys_set:nn { nju } { #1 } }
 %    \end{macrocode}
 %
-% 设置页边距
+% 使用\pkg{geometry}设置页边距。
 %    \begin{macrocode}
 \RequirePackage[    
     top=2.5cm,
@@ -780,7 +789,7 @@ through XeTeX.
 ]{geometry}
 %    \end{macrocode}
 %
-% mandatory and optional arguments are, and so forth.
+% 
 %    \begin{macrocode}
 \RequirePackage{xparse}
 \RequirePackage{titletoc} % 修改目录内标题格式
@@ -792,7 +801,7 @@ through XeTeX.
 \RequirePackage{emptypage} % 清除空白页的页码
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 \RequirePackage{listings} % 代码环境
 \RequirePackage{enumitem} % 用于修改列表环境
@@ -809,12 +818,12 @@ through XeTeX.
 \RequirePackage[version=4]{mhchem} % 用于绘制分子式
 %    \end{macrocode}
 %
-% 用于生成可以被插入书签的LaTeX logo，TODO 使用hologo创建|latex{}|命令
+% 用于生成可以被插入书签的LaTeX logo，TODO: 使用hologo创建|latex{}|命令
 %    \begin{macrocode}
 \RequirePackage{hologo} 
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % Required to prevent page break right after a sectioning command
 % \RequirePackage{needspace} 
@@ -822,7 +831,7 @@ through XeTeX.
 % \RequirePackage{xspace} % Better print trailing whitespace
 %    \end{macrocode}
 %
-% Put text here.
+% 针对编译引擎，使用不同的宏包重构下划线命令
 %    \begin{macrocode}
 \sys_if_engine_xetex:T
 {
@@ -871,7 +880,7 @@ through XeTeX.
         ]{unicode-math} % Math fonts in xetex or luatex
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
@@ -925,10 +934,10 @@ through XeTeX.
 %
 % 如果未进行设置则使用系统默认字体覆盖输入参数
 %
-% \begin{variable}{\g_@@_load_system_fontset_tl}
+% \begin{variable}{\g_@@_load_system_fontset_bool}
 % 用于判断是否需要载入系统预装字体的全局变量
 %    \begin{macrocode}
-\bool_new:N \g_@@_load_system_fontset_tl
+\bool_new:N \g_@@_load_system_fontset_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -936,12 +945,12 @@ through XeTeX.
 % 则使用系统预装字体覆盖字体选项
 %    \begin{macrocode}
 \tl_if_empty:NTF \g_@@_latin_fontset_tl
-  { \bool_gset_true:N \g_@@_load_system_fontset_tl }  
+  { \bool_gset_true:N \g_@@_load_system_fontset_bool }  
 {  
   \tl_if_empty:NT \g_@@_cjk_fontset_tl
-    { \bool_gset_true:N \g_@@_load_system_fontset_tl }  
+    { \bool_gset_true:N \g_@@_load_system_fontset_bool }  
 }
-\bool_if:NT \g_@@_load_system_fontset_tl
+\bool_if:NT \g_@@_load_system_fontset_bool
 {
   % 检测是否是 Windows
   \sys_if_platform_windows:TF
@@ -1045,6 +1054,7 @@ through XeTeX.
 %
 % \begin{macro}{\@@_load_cjk_font_macos:}
 % macOS 字体
+% 参考CTeX手册第9节 LuaLATEX 下的中文支持方式解决issue问题
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_macos:
 {
@@ -1062,11 +1072,10 @@ through XeTeX.
 \setCJKfamilyfont{zhkai}{Kaiti~SC}
   [
     BoldFont=Kaiti~SC~Bold,      
-    % 参考CTeX手册第9节 LuaLATEX 下的中文支持方式
     % AlternateFont =
     %   {
-    %   {⟨character range1⟩} {⟨alternate font name1⟩} 
-    %   {⟨alternate font features2⟩} ,
+    %   {character range1} {alternate font name1} 
+    %   {alternate font features2} ,
     %   ......
     %   }
   ]
@@ -1208,7 +1217,7 @@ through XeTeX.
 %
 % \subsubsection{页眉页脚}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 \RequirePackage{fancyhdr} % 调整页眉页脚
 % 本科生页眉页脚 
@@ -1218,7 +1227,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % TODO: 研究生页眉页脚 
 \fancypagestyle{njuheadings}{%
@@ -1227,7 +1236,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 \str_if_eq:NNTF {\l_@@_info_degree_tl} { ug } 
 {
@@ -1249,7 +1258,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % ctex格式设置
 % 目录标题 三号宋体加粗
@@ -1291,7 +1300,7 @@ through XeTeX.
                 {~\titlerule*[0.6pc]{$.$}~\contentspage}
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 \cs_set:Npn \CTEX@addtocline #1#2
 { 
@@ -1300,7 +1309,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 目录页面格式修改
 \cs_new:Npn \nju_tocpagestyle:nnn #1 #2 #3
@@ -1319,7 +1328,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 \tl_set:Nn \tableofcontents 
 {
@@ -1336,7 +1345,7 @@ through XeTeX.
 %    \end{macrocode}
 %
 % \begin{environment}{preface}
-% Put text here.
+% 
 %    \begin{macrocode}
 % 定制前言、致谢环境
 \NewDocumentEnvironment{preface}{}
@@ -1358,7 +1367,7 @@ through XeTeX.
 %    \end{macrocode}
 % \end{environment}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % biblatex设置
 \RequirePackage[
@@ -1388,7 +1397,7 @@ through XeTeX.
 ]{biblatex}
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % Remove some unwanted entries from the bibliography
 \AtEveryBibitem{
@@ -1404,7 +1413,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 修改标签名称
 \crefdefaultlabelformat{#2#1#3\,} % 默认在名称后面添加空格
@@ -1456,7 +1465,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 代码样式
 \lstset{
@@ -1477,7 +1486,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 \lstdefinestyle{LaTeX}{
   language=TeX,
@@ -1487,7 +1496,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 图表标题样式
 \DeclareCaptionFont{songticap}{\zihao{5}\bf\songti}
@@ -1504,7 +1513,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % list configuration
 \renewcommand{\labelitemi}{\tiny$\blacktriangleright$}
@@ -1515,7 +1524,7 @@ through XeTeX.
 \setlist[description]{noitemsep}
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 数学环境
 \declaretheoremstyle[
@@ -1533,13 +1542,13 @@ through XeTeX.
 \theoremstyle{njuthm}
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 \let\oldproofname=\proofname
 \renewcommand*{\proofname}{\rm\bf\songti{\oldproofname}} % 修改证明环境标题
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 \declaretheorem[
 	name=算法,
@@ -1703,7 +1712,7 @@ through XeTeX.
   \tl_const:Nn \c_@@_cover_box_len_tl { 4.2em }
 
   % 本科强制不打印国家图书馆封面
-  \bool_set_false:N \nju_nl_cover
+  \bool_set_false:N \g_@@_nlcover_bool
 } 
 { 
   % 本科以外都是研究生 
@@ -1754,7 +1763,7 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 封面表格边框
 \cs_new:Npn \@@_cover_box:n #1 
@@ -1764,7 +1773,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 判断类型
 \str_if_eq:NNTF { \l_@@_info_type_tl } { thesis } 
@@ -1867,9 +1876,9 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 绘制封面命令
 \tl_new:N \nju_printcover_nl % 国家图书馆封面
@@ -1877,10 +1886,10 @@ through XeTeX.
 \tl_new:N \nju_printcover_g % 研究生封面
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 按需绘制国家图书馆封面，修改自旧模板
-\bool_if:NT \nju_nl_cover
+\bool_if:NT \g_@@_nlcover_bool
 {
   \tl_set:Nn \nju_printcover_nl 
   {
@@ -1956,7 +1965,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 本科封面
 \tl_set:Nn \nju_printcover_ug 
@@ -1991,7 +2000,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 研究生封面
 \tl_set:Nn \nju_printcover_g 
@@ -2083,7 +2092,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 % 重定义maketitle生成封面
 \tl_set:Nn \maketitle 
@@ -2176,7 +2185,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% Put text here.
+% 
 %    \begin{macrocode}
 { 
   % 研究生摘要环境
