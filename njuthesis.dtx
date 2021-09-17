@@ -1060,28 +1060,28 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_macos:
 {
-% 移除 does not contain script "CJK" 警告
-\msg_redirect_name:nnn {fontspec} {no-script} {info} 
-\setCJKmainfont{Songti~SC~Light}[
-  BoldFont=Songti~SC~Bold,
-  ItalicFont=Kaiti~SC,
-  BoldItalicFont=Kaiti~SC~Bold]
-\setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-\setCJKmonofont{STFangsong}
-\setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
-\setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-\setCJKfamilyfont{zhfs}{STFangsong}
-\setCJKfamilyfont{zhkai}{Kaiti~SC}
-  [
-    BoldFont=Kaiti~SC~Bold,      
-    % AlternateFont =
-    %   {
-    %   {character range1} {alternate font name1} 
-    %   {alternate font features2} ,
-    %   ......
-    %   }
-  ]
-\setCJKfamilyfont{zhnewhei}{PingFang~SC}
+  % 移除 does not contain script "CJK" 警告
+  \msg_redirect_name:nnn {fontspec} {no-script} {info} 
+  \setCJKmainfont{Songti~SC~Light}[
+    BoldFont=Songti~SC~Bold,
+    ItalicFont=Kaiti~SC,
+    BoldItalicFont=Kaiti~SC~Bold]
+  \setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+  \setCJKmonofont{STFangsong}
+  \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
+  \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+  \setCJKfamilyfont{zhfs}{STFangsong}
+  \setCJKfamilyfont{zhkai}{Kaiti~SC}
+    [
+      BoldFont=Kaiti~SC~Bold,      
+      % AlternateFont =
+      %   {
+      %   {character range1} {alternate font name1} 
+      %   {alternate font features2} ,
+      %   ......
+      %   }
+    ]
+  \setCJKfamilyfont{zhnewhei}{PingFang~SC}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1092,26 +1092,26 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_fandol:
 {
-% 移除 does not contain script "CJK" 警告
-\msg_redirect_name:nnn {fontspec} {no-script} {info} 
-\setCJKmainfont{FandolSong-Regular}[
-  Extension=.otf,
-  BoldFont=FandolSong-Bold,
-  ItalicFont=FandolKai-Regular]
-\setCJKsansfont{FandolHei-Regular}[
-  Extension=.otf,
-  BoldFont=FandolHei-Bold]
-\setCJKmonofont{FandolFang-Regular}[Extension=.otf]
-\setCJKfamilyfont{zhsong}{FandolSong-Regular}[
-  Extension=.otf,
-  BoldFont=FandolSong-Bold]
-\setCJKfamilyfont{zhhei}{FandolHei-Regular}[
-  Extension=.otf,
-  BoldFont=FandolHei-Bold]
-\setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
-\setCJKfamilyfont{zhkai}{FandolKai-Regular}[
-  Extension=.otf,
-  AutoFakeBold=2.17]
+  % 移除 does not contain script "CJK" 警告
+  \msg_redirect_name:nnn {fontspec} {no-script} {info} 
+  \setCJKmainfont{FandolSong-Regular}[
+    Extension=.otf,
+    BoldFont=FandolSong-Bold,
+    ItalicFont=FandolKai-Regular]
+  \setCJKsansfont{FandolHei-Regular}[
+    Extension=.otf,
+    BoldFont=FandolHei-Bold]
+  \setCJKmonofont{FandolFang-Regular}[Extension=.otf]
+  \setCJKfamilyfont{zhsong}{FandolSong-Regular}[
+    Extension=.otf,
+    BoldFont=FandolSong-Bold]
+  \setCJKfamilyfont{zhhei}{FandolHei-Regular}[
+    Extension=.otf,
+    BoldFont=FandolHei-Bold]
+  \setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
+  \setCJKfamilyfont{zhkai}{FandolKai-Regular}[
+    Extension=.otf,
+    AutoFakeBold=2.17]
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1122,30 +1122,30 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_founder:
 {
-\setCJKmainfont{FZSSK}[% 方正书宋
-  Extension=.ttf,
-  BoldFont=FZXBSK,% 方正小标宋
-  ItalicFont=FZKTK]% 方正楷体
-\setCJKsansfont{FZXH1K}[% 方正细黑一
-  Extension=.ttf,
-  BoldFont=FZHTK]% FZHTK 方正黑体
-\setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
-\setCJKfamilyfont{zhsong}
-  {FZSSK}[
+  \setCJKmainfont{FZSSK}[% 方正书宋
     Extension=.ttf,
-    BoldFont=FZXBSK]
-\setCJKfamilyfont{zhhei}
-  {FZHTK}[
+    BoldFont=FZXBSK,% 方正小标宋
+    ItalicFont=FZKTK]% 方正楷体
+  \setCJKsansfont{FZXH1K}[% 方正细黑一
     Extension=.ttf,
-    AutoFakeBold=2.17]
-\setCJKfamilyfont{zhfs}
-  {FZFSK}[Extension=.ttf]
-\setCJKfamilyfont{zhkai}
-  {FZKTK}[Extension=.ttf]
-\setCJKfamilyfont{zhnewhei}
-  {FZYouHK_508R}[% 方正悠黑508R
-    Extension=.ttf,
-    BoldFont=FZYouHK_511M]% 方正悠黑511M 
+    BoldFont=FZHTK]% FZHTK 方正黑体
+  \setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
+  \setCJKfamilyfont{zhsong}
+    {FZSSK}[
+      Extension=.ttf,
+      BoldFont=FZXBSK]
+  \setCJKfamilyfont{zhhei}
+    {FZHTK}[
+      Extension=.ttf,
+      AutoFakeBold=2.17]
+  \setCJKfamilyfont{zhfs}
+    {FZFSK}[Extension=.ttf]
+  \setCJKfamilyfont{zhkai}
+    {FZKTK}[Extension=.ttf]
+  \setCJKfamilyfont{zhnewhei}
+    {FZYouHK_508R}[% 方正悠黑508R
+      Extension=.ttf,
+      BoldFont=FZYouHK_511M]% 方正悠黑511M 
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1156,37 +1156,37 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_noto:
 {
-% 思源宋体
-\setCJKmainfont[
-  UprightFont=NotoSerifCJKsc-Regular,
-  BoldFont=NotoSerifCJKsc-Bold,
-  ItalicFont=NotoSerifCJKsc-Regular,
-  BoldItalicFont=NotoSerifCJKsc-Bold,
-  ItalicFeatures=FakeSlant,
-  BoldItalicFeatures=FakeSlant]{Noto~Serif~CJK~SC}
+  % 思源宋体
+  \setCJKmainfont[
+    UprightFont=NotoSerifCJKsc-Regular,
+    BoldFont=NotoSerifCJKsc-Bold,
+    ItalicFont=NotoSerifCJKsc-Regular,
+    BoldItalicFont=NotoSerifCJKsc-Bold,
+    ItalicFeatures=FakeSlant,
+    BoldItalicFeatures=FakeSlant]{Noto~Serif~CJK~SC}
 
-% 思源黑体
-\setCJKsansfont[
-  UprightFont=NotoSansCJKsc-Regular,
-  BoldFont=NotoSansCJKsc-Bold,
-  ItalicFont=NotoSansCJKsc-Regular,
-  BoldItalicFont=NotoSansCJKsc-Bold,
-  ItalicFeatures=FakeSlant,
-  BoldItalicFeatures=FakeSlant]{Noto~Sans~CJK~SC}
+  % 思源黑体
+  \setCJKsansfont[
+    UprightFont=NotoSansCJKsc-Regular,
+    BoldFont=NotoSansCJKsc-Bold,
+    ItalicFont=NotoSansCJKsc-Regular,
+    BoldItalicFont=NotoSansCJKsc-Bold,
+    ItalicFeatures=FakeSlant,
+    BoldItalicFeatures=FakeSlant]{Noto~Sans~CJK~SC}
 
-% 包含于思源黑体
-\setCJKmonofont[
-  UprightFont=NotoSansMonoCJKsc-Regular,
-  BoldFont=NotoSansMonoCJKsc-Bold,
-  ItalicFont=NotoSansMonoCJKsc-Regular,
-  BoldItalicFont=NotoSansMonoCJKsc-Bold,
-  ItalicFeatures=FakeSlant,
-  BoldItalicFeatures=FakeSlant]{Noto~Sans~Mono~SC}
+  % 包含于思源黑体
+  \setCJKmonofont[
+    UprightFont=NotoSansMonoCJKsc-Regular,
+    BoldFont=NotoSansMonoCJKsc-Bold,
+    ItalicFont=NotoSansMonoCJKsc-Regular,
+    BoldItalicFont=NotoSansMonoCJKsc-Bold,
+    ItalicFeatures=FakeSlant,
+    BoldItalicFeatures=FakeSlant]{Noto~Sans~Mono~SC}
 
-\setCJKfamilyfont{zhsong}{Noto~Serif~CJK~SC}
-\setCJKfamilyfont{zhhei}{Noto~Sans~CJK~SC}
-\setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
-\setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
+  \setCJKfamilyfont{zhsong}{Noto~Serif~CJK~SC}
+  \setCJKfamilyfont{zhhei}{Noto~Sans~CJK~SC}
+  \setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
+  \setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1655,38 +1655,30 @@ through XeTeX.
   \l_@@_info_title_c_tl
 }
 %    \end{macrocode}
-%
 % 双导师的处理
+%% \begin{variable}{\l_@@_info_supv_full_tl,\l_@@_info_supv_full_en_tl}
+% 用于存储导师姓名加职称的变量，旧版编译器不支持字符串中含有|\hspace{.5em}|这样的空白空间命令
 %    \begin{macrocode}
+\tl_new:N \l_@@_info_supv_full_tl
+\tl_new:N \l_@@_info_supv_full_en_tl
+%    \end{macrocode}
+% \end{variable}
+%
 % 拼合导师
-\tl_if_empty:NTF \l_@@_info_supv_b_tl
+%    \begin{macrocode}
+\tl_set:Nn \l_@@_info_supv_full_tl
 {
-  \tl_const:Nn \l_@@_info_supv_full_tl
-  {
-     \l_@@_info_supv_a_tl\hspace{.5em}
-     \l_@@_info_supv_a_title_tl
-  }
-  \tl_const:Nn \l_@@_info_supv_full_tl_en
-  {
-    \l_@@_info_supv_a_en_tl\hspace{.5em}
-    \l_@@_info_supv_a_title_en_tl
-  }
+  \l_@@_info_supv_a_tl\ 
+  \l_@@_info_supv_a_title_tl\ \ 
+  \l_@@_info_supv_b_tl\ 
+  \l_@@_info_supv_b_title_tl
 }
-{ 
-  \tl_const:Nn \l_@@_info_supv_full_tl
-  {
-    \l_@@_info_supv_a_tl\hspace{.5em}
-    \l_@@_info_supv_a_title_tl\hspace{1em}
-    \l_@@_info_supv_b_tl\hspace{.5em}
-    \l_@@_info_supv_b_title_tl
-  }
-  \tl_const:Nn \l_@@_info_supv_full_tl_en
-  {
-    \l_@@_info_supv_a_en_tl\hspace{.5em}
-    \l_@@_info_supv_a_title_en_tl\hspace{1em}
-    \l_@@_info_supv_b_en_tl\hspace{.5em}
-    \l_@@_info_supv_b_title_en_tl
-  }
+\tl_set:Nn \l_@@_info_supv_full_en_tl
+{
+  \l_@@_info_supv_a_en_tl\ 
+  \l_@@_info_supv_a_title_en_tl\ \ 
+  \l_@@_info_supv_b_en_tl\ 
+  \l_@@_info_supv_b_title_en_tl
 }
 %    \end{macrocode}
 % \begin{variable}{\c_@@_name_degree_tl,\c_@@_name_degree_en_tl}
@@ -1766,18 +1758,20 @@ through XeTeX.
 % \end{macro}
 %
 % 
-%    \begin{macrocode}
+% \begin{macro}{\@@_cover_box:n}
 % 封面表格边框
+%    \begin{macrocode}
 \cs_new:Npn \@@_cover_box:n #1 
 {
   \makebox[\c_@@_cover_box_len_tl][s]{
     #1\c_@@_cover_uline_bskip_tl}
 }
 %    \end{macrocode}
+% \end{macro}
 %
+% 判断类型
 % 
 %    \begin{macrocode}
-% 判断类型
 \str_if_eq:NNTF { \l_@@_info_type_tl } { thesis } 
 {
   \tl_const:Nn \l_@@_info_type_tl_name 
@@ -1816,7 +1810,8 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% 封面信息栏 本科
+% \begin{macro}{\@@_print_covertab:}
+% 封面信息栏
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_covertab:
 {%
@@ -1877,10 +1872,12 @@ through XeTeX.
   } 
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % 
 %
 % 
+% \begin{macro}{\@@_print_cover_nl:}
 % 按需绘制国家图书馆封面，修改自胡海星模板
 % 
 %    \begin{macrocode}
@@ -1956,10 +1953,12 @@ through XeTeX.
   \cleardoublepage
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % 
-%    \begin{macrocode}
+% \begin{macro}{\@@_print_cover_ug:}
 % 本科封面
+%    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_cover_ug:
 {
   \thispagestyle{empty}
@@ -1991,10 +1990,12 @@ through XeTeX.
   % \newpage
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % 
-%    \begin{macrocode}
+% \begin{macro}{\@@_print_cover_g:}
 % 研究生封面
+%    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_cover_g:
 {
   \thispagestyle{empty}
@@ -2046,6 +2047,12 @@ through XeTeX.
   \end{spacing}
   \cleardoublepage
 }
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{\@@_print_cover_en:}
+% 研究生英文封面
+%    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_cover_en:
 {
   \thispagestyle{empty}
@@ -2083,10 +2090,11 @@ through XeTeX.
   \cleardoublepage
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % 
-%    \begin{macrocode}
 % 重定义maketitle生成封面
+%    \begin{macrocode}
 \tl_set:Nn \maketitle 
 {%
   \str_if_eq:NNTF { \l_@@_info_degree_tl } { ug } 
@@ -2102,6 +2110,26 @@ through XeTeX.
 %    \end{macrocode}
 %
 % \subsection{摘要绘制}
+%
+% 中文关键词
+%    \begin{macrocode}
+\NewDocumentCommand \keywords {m} {%
+  \par\vspace{2ex}\noindent%
+  {\kaishu\zihao{-4}\makebox[4em][s]{关键词{：}}}~{#1}%
+}
+%    \end{macrocode}
+%
+% 
+% 英文关键词
+%
+%    \begin{macrocode}
+\NewDocumentCommand \englishkeywords {m} {%
+  \par\vspace{2ex}\noindent%
+  {KEYWORDS{:}}~~{#1}%
+}
+%    \end{macrocode}
+%
+% 
 %
 %    \begin{macrocode}
 % 判断学位
@@ -2136,12 +2164,6 @@ through XeTeX.
   \newpage
   }
 
-  % 中文关键词
-  \NewDocumentCommand \keywords {m} {%
-    \par\vspace{2ex}\noindent%
-    {\kaishu\zihao{-4}\makebox[4em][s]{关键词{：}}}~{#1}%
-  }
-
   % 英文摘要
   \NewDocumentEnvironment{englishabstract} {}
   {%
@@ -2158,7 +2180,7 @@ through XeTeX.
       DEPARTMENT: ~~\l_@@_info_dept_en_tl \\
       SPECIALIZATION: ~~\l_@@_major_en_tl \\
       UNDERGRADUATE:~~\l_@@_info_author_en_tl \\
-      MENTOR:~~\l_@@_info_supv_full_tl_en \\
+      MENTOR:~~\l_@@_info_supv_full_en_tl \\
       ABSTRACT:
       \egroup
     }
@@ -2166,12 +2188,6 @@ through XeTeX.
   }{%
   \cleardoublepage
   \newpage
-  }
-
-  % 英文关键词
-  \NewDocumentCommand \englishkeywords {m} {%
-    \par\vspace{2ex}\noindent%
-    {KEYWORDS{:}}~~{#1}%
   }
 }
 %    \end{macrocode}
@@ -2209,12 +2225,6 @@ through XeTeX.
   \newpage
   }
   
-  % 中文关键词
-  \NewDocumentCommand \keywords {m} {%
-    \par\vspace{2ex}\noindent%
-    {\kaishu\zihao{4}\makebox[4em][s]{关键词{：}}}~{#1}%
-  }
-  
   % 英文摘要
   \NewDocumentEnvironment{englishabstract} {}
   {%
@@ -2231,19 +2241,13 @@ through XeTeX.
       THESIS: ~~\l_@@_info_title_en_tl \\
       SPECIALIZATION: ~~\l_@@_major_en_tl \\
       POSTGRADUATE:~~\l_@@_info_author_en_tl \\
-      MENTOR:~~\l_@@_info_supv_full_tl_en\par
+      MENTOR:~~\l_@@_info_supv_full_en_tl\par
       \egroup
     }
     \zihao{4}\par%
   }{%
   \cleardoublepage
   \newpage
-  }
-  
-  % 英文关键词
-  \NewDocumentCommand \englishkeywords {m} {%
-    \par\vspace{2ex}\noindent%
-    {KEYWORDS{:}}~~{#1}%
   }
 }
 %</class>
