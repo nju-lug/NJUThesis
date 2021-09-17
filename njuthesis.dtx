@@ -266,19 +266,26 @@ through XeTeX.
 %
 % 十几年来，多位热心校友发布过自己编写的模板，在GitHub上可考的包括
 % \begin{enumerate}
-%  \item \href{}{@solrex}的\href{https://github.com/solrex/njuthesis}{南京大学学位论文\hologo{LaTeX}模板}（2010） 
-%  \item \href{}{@fireblue}基于solrex模板的的\href{https://github.com/fireblue/NJUThesis}{南京大学学位论文\hologo{LaTeX}模板}（2013）
-%  \item \href{}{@wenhai-zheng}的\href{https://github.com/wenhai-zheng/NJUThesis}{NJUThesis}（2013）  
+%  \item 杨文博（\href{http://yangwenbo.com/}{@solrex}）的\href{https://github.com/solrex/njuthesis}{南京大学学位论文\hologo{LaTeX}模板}（2010） 
+%  \item \href{https://github.com/fireblue}{@fireblue}基于solrex模板的的\href{https://github.com/fireblue/NJUThesis}{南京大学学位论文\hologo{LaTeX}模板}（2013）
+%  \item \href{https://github.com/wenhai-zheng}{@wenhai-zheng}的\href{https://github.com/wenhai-zheng/NJUThesis}{NJUThesis}（2013）  
 %  \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的\href{https://github.com/Haixing-Hu/nju-thesis}{NJU-Thesis}（2013 - 2018）
 %  \item 张楚珩（\href{https://github.com/zhangchuheng123}{@zhangchuheng123}）基于胡海星模板的\href{https://github.com/zhangchuheng123/NJUThesis}{NJUThesis}（2016）
-%  \item 蒋炎岩（\href{}{@jyy}）的\href{https://github.com/jiangyy/njuthesis}{南京大学山寨\hologo{LyX}研究生毕业论文模板}（2017）
+%  \item 蒋炎岩（\href{http://ics.nju.edu.cn/~jyy/}{@jiangyy}）的\href{https://github.com/jiangyy/njuthesis}{南京大学山寨\hologo{LyX}研究生毕业论文模板}（2017）
 %  \item \href{https://anyirao.com/}{@AnyiRao}基于胡海星模板的\href{https://github.com/jiangyy/njuthesis}{NJU-Thesis}（2018）
-%  \item \href{}{@njuHan}基于胡海星模板的\href{https://github.com/njuHan/njuthesis-nju-thesis-template/}{NJU-Thesis}（2018 - 2021）
+%  \item \href{https://github.com/njuHan}{@njuHan}基于胡海星模板的\href{https://github.com/njuHan/njuthesis-nju-thesis-template/}{NJU-Thesis}（2018 - 2021）
 %  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于AnyiRao模板的\href{https://github.com/FengChendian/NJUThesis2021}{NJU Thesis 2021}（2021）
 % \end{enumerate}
 % 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
 %
 % 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼顾友校thuthesis、fduthesis等优秀项目，构建了这一全新模板，力求通过\hologo{LaTeX3}语法和清淅的接口实现良好的易用性和可维护性。
+%
+% 目前，本模板的主要维护者包括：
+%
+% \begin{itemize}
+%     \item 赵懿晨
+%     \item 熊煜
+% \end{itemize}
 %
 % \subsection{君\hologo{LaTeX}本当上手}
 % \hologo{LaTeX}并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须要面对的情况。目前，中文互联网上的\hologo{LaTeX}写作教程不能说屈指可数，起码也是汗牛充栋，比较著名的包括刘海洋的《\hologo{LaTeX}入门》等等都是不错的参考资料。然而如何快速准确找到所需要的用法，尤其是\hologo{LaTeX3}的新接口，需要一定的时间或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您的相关知识体系，只能尽力做到有求必应，在需要的地方顺带提一嘴，保证您少走点弯路。
@@ -295,26 +302,11 @@ through XeTeX.
 % 本节主要介绍本宏包的获取、安装以及编译方式
 % \subsection{下载模板}
 %
-% 下表是目前经过测试的环境。如果有其他可用不可用的环境，欢迎补充。
+% 本宏包已经发布在CTAN，将在明年进入\hologo{TeX}\,Live 2022 发行版。然而CTAN版更新不及时，更推荐使用以下方式下载。
 %
-% \begin{table}[ht]
-%     \centering
-%     \caption{经过测试的环境}
-%     % \label{tab:1}
-%     \begin{tabular}{ccc}
-%         \toprule
-%         OS & TeX & 测试情况 \\
-%         \midrule
-%         Windows 10 & \hologo{TeX}\,Live 2021 & 通过 \\
-%         Windows 10 & \hologo{MiKTeX} & 通过 \\
-%         Windows 10 & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
-%         macOS 10.15 & \hologo{TeX}\,Live 2021 & 通过 \\
-%         Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & 通过 \\
-%         南大\hologo{TeX} & \hologo{TeX}\,Live 2021 & 通过 \\
-%         Overleaf & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
-%         \bottomrule
-%     \end{tabular}
-% \end{table}
+% 从本模板的Github Releases页面下载最新的发布版
+%
+% 从本模板的Github仓库下载最新的dtx文件自行安装
 %
 % \subsection{本地编译}
 %
@@ -327,6 +319,25 @@ through XeTeX.
 %     \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题。
 % \end{itemize}
 %
+% 下表是目前经过测试的环境。如果有其他可用不可用的环境，欢迎补充。
+% \begin{table}[ht]
+%     \centering
+%     \caption{经过测试的环境}
+%     % \label{tab:1}
+%     \begin{tabular}{ccc}
+%         \toprule
+%         OS & TeX & 测试情况 \\
+%         \midrule
+%         Windows 10   & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
+%         Windows 10   & \hologo{TeX}\,Live 2021 & 通过 \\
+%         Windows 10   & \hologo{MiKTeX}         & 通过 \\
+%         macOS 10.15  & mac\hologo{TeX} 2021    & 通过 \\
+%         Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & 通过 \\
+%         Arch Linux   & \hologo{TeX}\,Live 2021 & 通过 \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+%
 % \subsubsection{选择编辑器}
 %
 % 配置完编译器后，还需要一个\textbf{文本编辑器}作为前端来完成\texttt{.tex}文件内容的写作。
@@ -338,33 +349,33 @@ through XeTeX.
 % \subsubsection{编译顺序}
 % 假设即将使用的文件名为\file{mynjuthesis.tex}
 % 应采用以下命令顺序进行编译，以生成正确的目录、编号和参考文献条目。
-% \begin{lstlisting}
+% \begin{ctexexam}
 %   xelatex mynjuthesis
 %   biber mynjuthesis
 %   xelatex mynjuthesis
 %   xelatex mynjuthesis
-% \end{lstlisting}
+% \end{ctexexam}
 % 使用 \pkg{latexmk}
-% \begin{lstlisting}
+% \begin{ctexexam}
 %   latexmk -xelatex mynjuthesis
-% \end{lstlisting}
+% \end{ctexexam}
 %
-% \begin{lstlisting}
+% \begin{ctexexam}
 %   lualatex mynjuthesis
 %   biber mynjuthesis
 %   lualatex mynjuthesis
 %   lualatex mynjuthesis
-% \end{lstlisting}
+% \end{ctexexam}
 % 使用 \pkg{latexmk}
-% \begin{lstlisting}
+% \begin{ctexexam}
 %   latexmk -lualatex mynjuthesis
-% \end{lstlisting}
+% \end{ctexexam}
 %
 % 编译产物为\file{njuthesis.pdf}，位于主目录下。此外还会生成一系列中间文件，可以选择使用以下命令进行清理。
 %
-% \begin{lstlisting}
+% \begin{ctexexam}
 %   latexmk -c
-% \end{lstlisting}
+% \end{ctexexam}
 %
 % \subsection{在线编译}
 %
