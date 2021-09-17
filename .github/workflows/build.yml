@@ -41,6 +41,7 @@ jobs:
           path: |
             njuthesis-sample.pdf
             njuthesis.cls
+            README_EN.md
 
   release:
     needs: build_latex
