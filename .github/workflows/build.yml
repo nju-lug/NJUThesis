@@ -21,10 +21,16 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
+      - name: Github Action for LaTeX dtx to cls
+        uses: FengChendian/latex-dtx2cls-action@4.0.1
+        with:
+          root_file: njuthesis.dtx
+          working_directory: ./
+
       - name: Compile to PDF
         uses: HermitSun/latex-action@v3
         with:
-          root_file: njuthesis.dtx
+          root_file: njuthesis-sample.tex
           latexmk_use_${{ matrix.latex }}: true
           args: '-bibtex'
 
@@ -32,31 +38,37 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: PDF_${{ matrix.latex }}
-          path: njuthesis.pdf
+          path: |
+            njuthesis-sample.pdf
+            njuthesis.cls
 
   release:
     needs: build_latex
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        latex: [xelatex]
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
-      - name: Github Action for LaTeX dtx to cls
-        uses: FengChendian/latex-dtx2cls-action@v4
-        with:
-          root_file: njuthesis.dtx
-          working_directory: ./
-
-      - name: Zip Release Source
-        run: |
-          zip -r njuthesis.zip . -x ".git/*" "*.ins" ".github/*" ".gitignore" "*.dtx"
-          
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
           name: PDF_xelatex
+
+      - name: Zip Release Source
+        run: |
+          zip -r njuthesis.zip . -x ".git/*" "*.ins" ".github/*" ".gitignore" "*.dtx" ".pdf"
           
+      - name: Compile to PDF
+        uses: HermitSun/latex-action@v3
+        with:
+          root_file: njuthesis.dtx
+          latexmk_use_${{ matrix.latex }}: true
+          args: '-bibtex'
+
       - name: Zip CTAN Source
         run: |
           mkdir -p njuthesis/
