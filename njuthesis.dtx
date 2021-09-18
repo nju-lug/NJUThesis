@@ -247,10 +247,10 @@ through XeTeX.
 % The \textsc{NJuThesis} class is intended for typesetting Nanjing University thesis with \hologo{LaTeX}, providing support for bachelor, master, and doctoral thesis. 
 % \end{abstract}
 %
+% \vspace{1cm}
 % \def\abstractname{特别声明}
 % \begin{abstract}
 % 请注意，本模板仍未完成开发，出现bug或者文档不完善属于正常情况，提issue或Pull Request即可。
-%
 % \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU LUG}始终欢迎您的加入与贡献！
 % \end{abstract}
 %
@@ -308,15 +308,21 @@ through XeTeX.
 %
 % \section{安装}
 % \label{sec:setup}
-%
 % 本节主要介绍本宏包的获取、安装以及编译方式
+% 
 % \subsection{下载模板}
 %
-% 本宏包已经发布在CTAN，将在明年进入\hologo{TeX}\,Live 2022 发行版。然而CTAN版更新不及时，更推荐使用以下方式下载。
+% 本宏包已经\href{https://ctan.org/pkg/njuthesis}{发布在CTAN}，将在明年进入\hologo{TeX}\,Live 2022 和\hologo{MiKTeX}发行版。然而CTAN版更新不及时，更推荐使用以下方式下载。
 %
-% 从本模板的Github Releases页面下载最新的发布版
+% 
+% \subsubsection{发布版}
 %
-% 从本模板的Github仓库或者NJU Git同步镜像下载最新的dtx文件自行安装
+% 从本模板的\href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases页面}下载最新的发布版。
+% 如果Github访问速度较慢，也可以使用\href{https://mirror.nju.edu.cn/github-release/nju-lug/NJUThesis/LatestRelease/}{南大镜像}
+%
+% \subsubsection{源代码}
+%
+% 从本模板的\href{https://github.com/nju-lug/NJUThesis/}{ Github 仓库}或者\href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像}下载最新的dtx文件自行安装
 %
 % \subsection{本地编译}
 %
@@ -398,7 +404,7 @@ through XeTeX.
 % \subsubsection{操作步骤}
 %
 % \begin{enumerate}
-%     \item 下载\href{https://github.com/nju-lug/NJUThesisUndergraduate/archive/refs/heads/master.zip}{模板全部文件}
+%     \item 下载模板全部文件
 %     \item 访问\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}，点击界面右上方Register，使用\emph{南京大学邮箱}注册账号并登录
 %     \item 点击New Project -> Upload Project上传刚刚得到的zip文件，上传后njuthesis.tex、njuthesis.cls等文件应在根目录，目录结构如{{sec:directory}}所示
 %     \item 在项目页面左上角的Menu中，将编译器改为\hologo{XeLaTeX}或者\hologo{LuaLaTeX}
@@ -1019,12 +1025,12 @@ through XeTeX.
 
     % 加中文下划线，不能用于lualatex
     \RequirePackage{xeCJKfntef} 
-    \cs_new:Npn \nju_underline:n #1 {\CJKunderline{#1}}
+    \cs_new:Npn \@@_uline:n #1 {\CJKunderline{#1}}
 }
 \sys_if_engine_luatex:T{
     % 加中文下划线
     \RequirePackage{lua-ul}
-    \cs_new:Npn \nju_underline:n #1 {\underLine{#1}}
+    \cs_new:Npn \@@_uline:n #1 {\underLine{#1}}
 
     % emoji支持
     % \RequirePackage{emoji}
@@ -1480,18 +1486,11 @@ through XeTeX.
 %    \end{macrocode}
 %
 % 
-%    \begin{macrocode}
-\cs_set:Npn \CTEX@addtocline #1#2
-{ 
-  \addcontentsline { toc } {#1} 
-  { \use:c { CTEX@#1@tocline } {#1} {#2} } 
-}
-%    \end{macrocode}
-%
+% \begin{macro}{\@@_toc_pagestyle:nnn}
+% 目录页面格式修改
 % 
 %    \begin{macrocode}
-% 目录页面格式修改
-\cs_new:Npn \nju_tocpagestyle:nnn #1 #2 #3
+\cs_new_protected:Npn \@@_toc_pagestyle:nnn #1 #2 #3
 {
   \newpage
   \hspace{0pt}
@@ -1506,20 +1505,20 @@ through XeTeX.
   \cleardoublepage
 }
 %    \end{macrocode}
-%
+% \end{macro}
 % 
 %    \begin{macrocode}
 \tl_set:Nn \tableofcontents 
 {
-  \nju_tocpagestyle:nnn {目\hspace{2em}录}{\contentsname}{toc}
+  \@@_toc_pagestyle:nnn {目\hspace{2em}录}{\contentsname}{toc}
 }
 \tl_set:Nn \listoffigures
 {
-  \nju_tocpagestyle:nnn {\listfigurename}{\listfigurename}{lof}
+  \@@_toc_pagestyle:nnn {\listfigurename}{\listfigurename}{lof}
 }
 \tl_set:Nn \listoftables 
 {
-  \nju_tocpagestyle:nnn {\listtablename}{\listtablename}{lot}
+  \@@_toc_pagestyle:nnn {\listtablename}{\listtablename}{lot}
 }
 %    \end{macrocode}
 %
@@ -2389,7 +2388,7 @@ through XeTeX.
     \tl_set:Nn \tabcolsep {0pt}
     \tl_set:Nn \arraystretch {0.8}
     \noindent
-    毕业论文题目：\hspace{0.5em}\nju_underline:n {\l_@@_info_title_tl\hfill}\\    
+    毕业论文题目：\hspace{0.5em}\@@_uline:n {\l_@@_info_title_tl\hfill}\\    
     \uline{\makebox[9em]{\l_@@_major_tl}}专业
     \uline{\makebox[4em]{\l_@@_info_grade_tl}}级
     \str_if_eq:NNTF {\l_@@_info_degree_tl} { phd } {博}{硕}
