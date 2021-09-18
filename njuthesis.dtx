@@ -244,7 +244,7 @@ through XeTeX.
 %
 % \def\abstractname{Abstract}
 % \begin{abstract}
-% The \textsc{NJuThesis} class is intended for typesetting Nanjing University thesis with LaTeX, providing support for bachelor, master, and doctoral thesis. 
+% The \textsc{NJuThesis} class is intended for typesetting Nanjing University thesis with \hologo{LaTeX}, providing support for bachelor, master, and doctoral thesis. 
 % \end{abstract}
 %
 % \def\abstractname{特别声明}
@@ -302,7 +302,7 @@ through XeTeX.
 % 本模板通过\textsc{DocStrip}进行维护，实际上是一种\emph{文学编程}。文学编程的本体是那些用来说明的文字，按写书写文章的方式组织。
 % \file{njuthesis.dtx}包含njuthesis模板的所有信息。前半部分为模板说明，即各种常用命令与必要的使用方法；后半部分为代码实现，为带有详细注释的\hologo{TeX}源代码。后者配合附录，为有意了解本模板细节的同学提供简明的指引。
 %
-% 下文中将出现若干特殊格式，包括\file{file-example.xxx}等。
+% 下文中将出现若干特殊格式，用来指示代码组件。譬如，\file{file-example.xxx}为文件名，\pkg{pkg-example}为宏包名，\opt{opt-example}为选项名，\env{env-example}为需要|\begin{}|和|\end{}|的环境名，等。
 %
 % 如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过GitHub issue或者QQ群聊联系LUG。
 %
@@ -316,7 +316,7 @@ through XeTeX.
 %
 % 从本模板的Github Releases页面下载最新的发布版
 %
-% 从本模板的Github仓库下载最新的dtx文件自行安装
+% 从本模板的Github仓库或者NJU Git同步镜像下载最新的dtx文件自行安装
 %
 % \subsection{本地编译}
 %
@@ -326,25 +326,25 @@ through XeTeX.
 %
 % \begin{itemize}
 %     \item 为了避免不必要的麻烦，请尽可能下载 full 版本，如 texlive-full。简而言之，下载大的那个。
-%     \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题。
+%     \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题以及l3语法解释错误。
 % \end{itemize}
 %
 % 下表是目前经过测试的环境。如果有其他可用不可用的环境，欢迎补充。
 % \begin{table}[ht]
 %     \centering
 %     \caption{经过测试的环境}
-%     % \label{tab:1}
+%     \label{tab:1}
 %     \begin{tabular}{ccc}
-%         \toprule
-%         OS & TeX & 测试情况 \\
-%         \midrule
-%         Windows 10   & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
-%         Windows 10   & \hologo{TeX}\,Live 2021 & 通过 \\
-%         Windows 10   & \hologo{MiKTeX}         & 通过 \\
-%         macOS 10.15  & mac\hologo{TeX} 2021    & 通过 \\
-%         Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & 通过 \\
-%         Arch Linux   & \hologo{TeX}\,Live 2021 & 通过 \\
-%         \bottomrule
+%           \toprule
+%           OS & TeX & 测试情况 \\
+%           \midrule
+%           Windows 10   & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
+%           Windows 10   & \hologo{TeX}\,Live 2021 & 通过 \\
+%           Windows 10   & \hologo{MiKTeX}         & 通过 \\
+%           macOS 10.15  & mac\hologo{TeX} 2021    & 通过 \\
+%           Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & 通过 \\
+%           Arch Linux   & \hologo{TeX}\,Live 2021 & 通过 \\
+%           \bottomrule
 %     \end{tabular}
 % \end{table}
 %
@@ -464,21 +464,21 @@ through XeTeX.
 %
 % \begin{function}[added=2021-09-07]{customlatinfont}
 %   \begin{syntax}
-%     customlatinfont = <(windows)|macos|gyre|null>
+%     customlatinfont = <(windows)|macos|gyre|none>
 %   \end{syntax}
 %
 % 手动指定英文字体，可选：
-% \opt{windows}（默认）， \opt{macos}， \opt{gyre}， \opt{null}。
+% \opt{windows}（默认）， \opt{macos}， \opt{gyre}， \opt{none}。
 % \end{function}
 %
 % 
 % \begin{function}[added=2021-09-07]{customchinesefont}
 %   \begin{syntax}
-%     customchinesefont = <(windows)|macos|fandol|founder|noto|null>
+%     customchinesefont = <(windows)|macos|fandol|founder|noto|none>
 %   \end{syntax}
 %
 % 手动指定中文字体，可选：
-% \opt{windows}（默认）， \opt{macos}， \opt{fandol}， \opt{founder}，\opt{noto}，\opt{null}。
+% \opt{windows}（默认）， \opt{macos}， \opt{fandol}， \opt{founder}，\opt{noto}，\opt{none}。
 %
 % 方正字体（简繁扩展）系列
 % FZSSK \href{http://www.foundertype.com/index.php/FontInfo/index/id/151}{方正书宋} 免费商用
@@ -526,74 +526,74 @@ through XeTeX.
 % 本科生可以参考如下列表输入个人信息。注意不能有空行，有空格的内容需要将空格替换为波浪线或者两端加上大括号
 %
 % \begin{ctexexam}
-% \njusetup {
-%     info = {
-%         TitleA = 一种使用南京大学\hologo{LaTeX}模版,
-%         TitleB = 编写毕业论文的经验性方法,
-%         Title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
-%         Grade = 2018,
-%         StudentID = 189114514,
-%         StudentName = 周煜华,
-%         StudentName* = Zhou~Yuhua,
-%         Department = 拉太赫科学与技术学院,
-%         Department* = School~of~\hologo{LaTeX},
-%         Major = 拉太赫语言学,
-%         Major* = \hologo{LaTeX}~Linguistics,
-%         SupervisorA = 李成殿,
-%         SupervisorA*= Li~Chengdian,
-%         SupervisorATitle = 教授,
-%         SupervisorATitle* = Professor,
-%         SupervisorB = 孙赫弥,
-%         SupervisorB* = Sun~Hemi,
-%         SupervisorBTitle = 副教授,
-%         SupervisorBTitle* = Associate professor,
-%         SubmitDate = 2021年8月10日,
-%     }
-% }
+%   \njusetup {
+%       info = {
+%           TitleA = 第一行标题,
+%           TitleB = 第二行标题,
+%           Title* = {My title in English}, 
+%           Grade = 2018,
+%           StudentID = 189114514,
+%           StudentName = 周煜华,
+%           StudentName* = Zhou~Yuhua,
+%           Department = 拉太赫科学与技术学院,
+%           Department* = School~of~\hologo{LaTeX},
+%           Major = 拉太赫语言学,
+%           Major* = \hologo{LaTeX}~Linguistics,
+%           SupervisorA = 李成殿,
+%           SupervisorA*= Li~Chengdian,
+%           SupervisorATitle = 教授,
+%           SupervisorATitle* = Professor,
+%           SupervisorB = 孙赫弥,
+%           SupervisorB* = Sun~Hemi,
+%           SupervisorBTitle = 副教授,
+%           SupervisorBTitle* = Associate professor,
+%           SubmitDate = 2021年8月10日,
+%       }
+%   }
 % \end{ctexexam}
 %
 % 研究生可以参考如下列表输入个人信息
 %
 % \begin{ctexexam}
-% \njusetup {
-%     info = {
-%         TitleA = 一种使用南京大学\hologo{LaTeX}模版,
-%         TitleB = 编写毕业论文的经验性方法,
-%         TitleC = （内容已经过时，详见说明手册）,
-%         Title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
-%         Grade = 2018,
-%         StudentID = dz18114514,
-%         StudentName = 周煜华,
-%         StudentName* = Zhou~Yuhua,
-%         Department = 拉太赫科学与技术学院,
-%         Department* = School~of~\hologo{LaTeX},
-%         Major = 拉太赫语言学,
-%         Major* = \hologo{LaTeX}~Linguistics,
-%         Field = 拉太赫语言在现当代的使用, 
-%         Field* = Contemporary~Usage~of~the~\hologo{LaTeX}~Language, 
-%         SupervisorA = 李成殿,
-%         SupervisorA*= Li~Chengdian,
-%         SupervisorATitle = 教授,
-%         SupervisorATitle* = Professor,
-%         SubmitDate = 2021年8月10日,
-%         SubmitDate* = {Aug 10, 2021}, 
-%         DefendDate = 2021年9月19日,
-%         ReviewerChairman = 张晓山~教授,
-%         ReviewerA = 王瑞希~教授,
-%         ReviewerB = 郭德纲~副教授,
-%         ReviewerC = 华芈库~教授,
-%         ReviewerD = 戴菲菲~教授,
-%         Classification = 0175.2,
-%         SecurityLevel = 限制,
-%         UDC = 004.72,
-%         SupervisorContact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514},
-%     }
-% }
+%   \njusetup {
+%       info = {
+%           TitleA = 第一行标题,
+%           TitleB = 第二行标题,
+%           TitleC = 第三行标题,
+%           Title* = {My title in English}, 
+%           Grade = 2018,
+%           StudentID = dz18114514,
+%           StudentName = 周煜华,
+%           StudentName* = Zhou~Yuhua,
+%           Department = 拉太赫科学与技术学院,
+%           Department* = School~of~\hologo{LaTeX},
+%           Major = 拉太赫语言学,
+%           Major* = \hologo{LaTeX}~Linguistics,
+%           Field = 拉太赫语言在现当代的使用, 
+%           Field* = Contemporary~Usage~of~the~\hologo{LaTeX}~Language, 
+%           SupervisorA = 李成殿,
+%           SupervisorA*= Li~Chengdian,
+%           SupervisorATitle = 教授,
+%           SupervisorATitle* = Professor,
+%           SubmitDate = 2021年8月10日,
+%           SubmitDate* = {Aug 10, 2021}, 
+%           DefendDate = 2021年9月19日,
+%           ReviewerChairman = 张晓山~教授,
+%           ReviewerA = 王瑞希~教授,
+%           ReviewerB = 郭德纲~副教授,
+%           ReviewerC = 华芈库~教授,
+%           ReviewerD = 戴菲菲~教授,
+%           Classification = 0175.2,
+%           SecurityLevel = 限制,
+%           UDC = 004.72,
+%           SupervisorContact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514},
+%       }
+%   }
 % \end{ctexexam}
 %
 % \subsection{摘要页}
 %
-% 摘要页一般不插入目录，默认只添加pdf书签。如确实有插入目录的需求，请在\texttt{abstract.sty}文件中定位到如下语句
+% 
 %
 % 在使用\hologo{LuaLaTeX}编译时，研究生中文摘要页的标题会出现空格无下划线的问题，目前正在积极寻求解决方法。
 %
@@ -606,11 +606,8 @@ through XeTeX.
 % 本科生无页眉，页面编号居中位于页脚；研究生无页脚，页眉包括章节名和页面编号。
 %
 % 
-% 对中文加下划线请使用xeCJKfntef包的CJKunderline命令代替uline，以解决中文的换行问题
+% 
 %
-% {参考文献页}
-%
-% 需要使用biber手动编译才会显示，具体内容参考
 %
 % {致谢页}
 % 同前言，使用\env{acknowledgement}环境
@@ -619,12 +616,103 @@ through XeTeX.
 %
 % 附录放在|\appendix|命令后，以英文字母进行编号
 %
+% 
+% 
+% \subsection{页面元素}
+%
+% \subsubsection{图片}
+%
+% 所有图片默认存放在主目录下的\texttt{figure/}文件夹内，允许的文件名包括\file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}, 
+%
+% 下面这个例子展示了如何插入一张名称为\file{myfig.jpg}，宽度占页面文字宽度一半的图片。注意标签命令|\label|必须放在图注命令|\caption|之后。
+%
+% \begin{ctexexam}
+%   \begin{figure}
+%       \includegraphics[width=0.5\textwidth]{myfig}
+%       \caption{我的图}
+%       \label{fig:myfig}
+%   \end{figure}
+% \end{ctexexam}
+%
+% 
+% 文字环绕图像，\env{wrapfigure}后面不能有空行
+%
+% \begin{ctexexam}
+%   \begin{wrapfigure}{r}{0cm}
+%       \includegraphics[width=0.15\textwidth]{myfig}
+%       \caption{我的图}
+%       \label{fig:myfig}
+%   \end{wrapfigure}
+%   <text>
+% \end{ctexexam}
+% 
+%
+% \subsubsection{表格}
+%
+% 下面这个例子展示了如何插入一张表格
+% \begin{ctexexam}
+%   \begin{table}[htbp]
+%       \caption{我的表}
+%       \label{tab:testtab}
+%       \begin{tabular}{ccc}
+%           \toprule
+%           OS & TeX & 测试情况 \\
+%           \midrule
+%           南大TeX & Overleaf & √ \\
+%           \bottomrule
+%       \end{tabular}
+%   \end{table}
+% \end{ctexexam}
+%
+% 
+% 
+% 
+%
+% \subsubsection{代码}
+%
+% \env{lstlisting}环境用来进行代码排版
+% 
+% \subsubsection{引用标签}
+%
+% 使用\pkg{cleveref}宏包实现了带图、表等项目名称的智能引用，仅需使用|\cref{<label>}|命令。
+%
+% \subsection{参考文献}
+%
+% 符合GB7714-2015规范。使用\hologo{biber}作为\hologo{BibTeX}后端。需要使用|biber|命令手动编译才会显示
+%
+% 默认参考文献存储于主目录下的\file{njuthesis.bib}，直接向其中粘贴新的参考文献即可。
+%
+% 如果希望额外添加一个名叫\file{mybiblio.bib}的参考文献目录，可以在主文件\file{mynjuthesis.tex}的导言区中添加以下命令：
+%
+% \begin{ctexexam}
+%   \addbibresource{mybiblio.bib}
+% \end{ctexexam}
+%
+% \subsubsection{使用EndNote管理文献}
+%
+% 南京大学信息化建设管理服务中心已购买\href{https://itsc.nju.edu.cn/EndNote/list.htm}{EndNote}供全校师生免费试用，最新版为EndNote 20。
+%
+%
+%
+% 
+%
+% \subsubsection{使用Zotero管理文献}
+%
+% \href{https://www.zotero.org/}{Zotero}是一款免费的文献管理软件，支持所有桌面平台。
+%
+% 在保持Zotero程序运行的情况下，点击浏览器工具栏的Zotero Connector插件即可自动从网页抓取参考文件信息。Zotero也有知网插件
+%
+% \subsubsection{文段内引用}
+%
+% |\cite{myref}|，|\citesuthor{myref}|
+%
+% 
 % \end{documentation}
 %
 % \begin{implementation}
 %
 % \section{代码实现}
-% @@在l3docstrip中表示名空间，在生成cls时会被相应字段替换，譬如在njuthesis中@@=nju。
+% @@在l3docstrip中表示名空间，在生成cls时会被相应字段替换，譬如在\pkg{njuthesis}中|@@=nju|。
 % 尖括号包裹的|<*class>||</class>|用来指定某段代码属于哪个文件。
 %
 %    \begin{macrocode}
@@ -641,6 +729,10 @@ through XeTeX.
 % \[ 1.5\times\frac{1.3}{1.2} = 1.625\]
 %    \begin{macrocode}
   linespread=1.625,
+%    \end{macrocode}
+%
+% 默认不载入任何字体，供模板自行设置
+%    \begin{macrocode}
   fontset=none,
   zihao=-4
   ]{ctexbook}[2018/04/01]
@@ -649,11 +741,6 @@ through XeTeX.
 % 宏包\pkg{l3keys2e}用于配置模板选项。
 %    \begin{macrocode}
 \RequirePackage{l3keys2e}
-%    \end{macrocode}
-% 用于存储学位名称的全局变量，注意宏的命名，l代表局部变量，g代表全局变量
-%    \begin{macrocode}
-\tl_new:N \l_@@_info_degree_tl
-\tl_new:N \l_@@_info_type_tl
 %    \end{macrocode}
 %
 % 是否需要国家图书馆封面的设置
@@ -664,6 +751,15 @@ through XeTeX.
   nlcover           .initial:n    =   false,
 }
 %    \end{macrocode}
+% 
+%
+% \begin{variable}{\l_@@_info_degree_tl,\l_@@_info_type_tl}
+% 用于存储学位名称的变量，注意宏的命名，l代表局部变量，g代表全局变量
+%    \begin{macrocode}
+\tl_new:N \l_@@_info_degree_tl
+\tl_new:N \l_@@_info_type_tl
+%    \end{macrocode}
+% \end{variable}
 %
 % 学位信息的设置
 %    \begin{macrocode}
@@ -801,7 +897,6 @@ through XeTeX.
 \RequirePackage{xparse}
 \RequirePackage{titletoc} % 修改目录内标题格式
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
-% \RequirePackage[normalem]{ulem} % 绘制下划线
 \RequirePackage{dashundergaps}
 \RequirePackage{setspace}
 \RequirePackage{lastpage}
@@ -887,7 +982,7 @@ through XeTeX.
         ]{unicode-math} % Math fonts in xetex or luatex
 %    \end{macrocode}
 %
-% 
+% 配置图片路径
 %    \begin{macrocode}
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
@@ -895,9 +990,8 @@ through XeTeX.
 \RequirePackage{wrapfig} % Wrap text around figures
 %    \end{macrocode}
 %
-% 必须以该顺序加载以下三个包
+% 必须以该顺序加载以下包
 %    \begin{macrocode}
-% \RequirePackage{varioref}
 \RequirePackage[hidelinks,bookmarksnumbered=true]{hyperref}
 \RequirePackage[capitalise,nameinlink,noabbrev]{cleveref}
 %    \end{macrocode}
@@ -924,10 +1018,10 @@ through XeTeX.
 \keys_define:nn { nju }
 {
   customlatinfont   .choices:nn   =
-  { gyre, macos, windows, null }
+  { gyre, macos, windows, none }
   { \tl_set_eq:NN \g_@@_latin_fontset_tl \l_keys_choice_tl },  
   customchinesefont .choices:nn   =
-  { fandol, founder, macos, noto, windows, null }
+  { fandol, founder, macos, noto, windows, none }
   { \tl_set_eq:NN \g_@@_cjk_fontset_tl   \l_keys_choice_tl },
 }
 %    \end{macrocode}
