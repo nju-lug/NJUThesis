@@ -415,7 +415,7 @@ through XeTeX.
 %
 % \section{使用方法}
 %
-% \subsection{自定义选项}
+% \subsection{模板选项}
 %
 % 尖括号内列出了若干个允许的选项，其中加粗的为默认选项。
 %
@@ -512,9 +512,9 @@ through XeTeX.
 % \end{function}
 %
 %
-% \subsection{封面信息}
+% 
 %
-% \subsection{输入个人信息}
+% \subsection{个人信息}
 %
 % \begin{function}{\njusetup}
 % 
@@ -591,34 +591,14 @@ through XeTeX.
 %   }
 % \end{ctexexam}
 %
-% \subsection{摘要页}
-%
-% 
-%
-% 在使用\hologo{LuaLaTeX}编译时，研究生中文摘要页的标题会出现空格无下划线的问题，目前正在积极寻求解决方法。
-%
-% {前言页}
-% 使用\env{preface}环境定义
 %
 %
-% \subsection{正文格式}
+% \subsection{编写正文}
 %
 % 本科生无页眉，页面编号居中位于页脚；研究生无页脚，页眉包括章节名和页面编号。
 %
 % 
 % 
-%
-%
-% {致谢页}
-% 同前言，使用\env{acknowledgement}环境
-% 
-% {附录页}
-%
-% 附录放在|\appendix|命令后，以英文字母进行编号
-%
-% 
-% 
-% \subsection{页面元素}
 %
 % \subsubsection{图片}
 %
@@ -664,7 +644,63 @@ through XeTeX.
 %   \end{table}
 % \end{ctexexam}
 %
+% \subsubsection{脚注}
+% |\footnote{<text>}|
 % 
+% 
+% \subsubsection{引用}
+% 
+% 使用\pkg{cleveref}宏包实现了带图、表等项目名称的智能引用，仅需使用|\cref{<label>}|命令。
+%
+% |\href{<url>}{<name>}|
+% 
+% \subsection{特殊页面}
+%
+%
+% \subsubsection{摘要页}
+%
+% 中文关键词，每个关键词之间用“；”分开，最后一个关键词不打标点符号
+% 英文关键词。关键词之间用英文半角逗号隔开，末尾无符号。
+% 
+% \begin{ctexexam}
+%   \begin{abstract}
+%       我的中文摘要
+%       \keywords{我；就是；充数的；关键词}
+%   \end{abstract}
+%
+%   \begin{englishabstract}
+%       My abstract in English
+%       \englishkeywords{Dummy; Keywords; Here}
+%   \end{englishabstract}
+% \end{ctexexam}
+%
+% 在使用\hologo{LuaLaTeX}编译时，研究生中文摘要页的标题会出现空格无下划线的问题，目前正在积极寻求解决方法。
+%
+% \subsubsection{前言页}
+%        
+% 使用\env{preface}环境定义
+% 
+% \begin{ctexexam}
+%   \begin{preface}
+%       我的前言
+%   \end{preface}
+% \end{ctexexam}
+%
+% \subsubsection{致谢页}
+%
+% 同前言，使用\env{acknowledgement}环境
+% 
+% \begin{ctexexam}
+%   \begin{acknowledgement}
+%       感谢NJU LUG
+%   \end{acknowledgement}
+% \end{ctexexam}
+%
+% 
+% \subsubsection{附录页}
+%
+% 附录放在|\appendix|命令后，以英文字母进行编号，正常通过|\chapter{}|编写
+%
 % 
 % 
 %
@@ -704,7 +740,7 @@ through XeTeX.
 %
 % \subsubsection{文段内引用}
 %
-% |\cite{myref}|，|\citesuthor{myref}|
+% |\cite{myref}|，|\citeauthor{myref}|
 %
 % 
 % \end{documentation}
