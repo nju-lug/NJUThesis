@@ -644,6 +644,47 @@ through XeTeX.
 %   \end{table}
 % \end{ctexexam}
 %
+%
+% \subsubsection{代码}
+%
+% 由\pkg{listings}提供代码排版。代码块\env{lstlisting}，注意这个环境中的缩进空格会如实输出
+% \begin{ctexexam}
+%   \begin{lstlisting}
+%   <code>
+%   \end{lstlisting}
+% \end{ctexexam}
+%
+% 行间代码|\lstinline!<code>!|
+%
+%
+% \subsubsection{数学}
+%
+% 行内公式形如|$\mathrm{e}^{(a+2b)x}$|
+%
+% 带有编号的行间公式\env{equation}
+% \begin{ctexexam}
+%   \begin{equation}\label{eq:myeqlabel}
+%       \pi
+%   \end{equation}
+% \end{ctexexam}
+%
+% 如不需要编号，可以用\env{equation*}或者 |\[<eq>\]|
+%
+% 也提供了一系列的数学环境。证明环境会在结尾添加证毕符号
+% \begin{ctexexam}
+%   \begin{proof}
+%       证明我是我
+%   \end{proof}
+% \end{ctexexam}
+%
+% 普通环境
+% \begin{ctexexam}
+%   \begin{definition}[他人]
+%       定义他人即地狱
+%   \end{definition}
+% \end{ctexexam}
+% 
+% 
 % \subsubsection{脚注}
 % |\footnote{<text>}|
 % 
@@ -652,10 +693,12 @@ through XeTeX.
 % 
 % 使用\pkg{cleveref}宏包实现了带图、表等项目名称的智能引用，仅需使用|\cref{<label>}|命令。
 %
-% |\href{<url>}{<name>}|
+% 超链接|\href{<url>}{<name>}|
+% 
 % 
 % \subsection{特殊页面}
-%
+% 
+% 本模板还提供一系列环境用于生成所需的特殊页面
 %
 % \subsubsection{摘要页}
 %
@@ -696,21 +739,20 @@ through XeTeX.
 %   \end{acknowledgement}
 % \end{ctexexam}
 %
+% \subsubsection{参考文献页}
+%
+% 使用以下命令，\opt{bibintoc}可以将参考文献页插入目录
+% 
+% \begin{ctexexam}
+%   \printbibliography[heading=bibintoc,title=参考文献]
+% \end{ctexexam}
 % 
 % \subsubsection{附录页}
 %
 % 附录放在|\appendix|命令后，以英文字母进行编号，正常通过|\chapter{}|编写
 %
+% 是否需要索引？
 % 
-% 
-%
-% \subsubsection{代码}
-%
-% \env{lstlisting}环境用来进行代码排版
-% 
-% \subsubsection{引用标签}
-%
-% 使用\pkg{cleveref}宏包实现了带图、表等项目名称的智能引用，仅需使用|\cref{<label>}|命令。
 %
 % \subsection{参考文献}
 %
@@ -718,7 +760,7 @@ through XeTeX.
 %
 % 默认参考文献存储于主目录下的\file{njuthesis.bib}，直接向其中粘贴新的参考文献即可。
 %
-% 如果希望额外添加一个名叫\file{mybiblio.bib}的参考文献目录，可以在主文件\file{mynjuthesis.tex}的导言区中添加以下命令：
+% 如果希望额外添加管理文献列表，譬如添加一个名叫\file{mybiblio.bib}的参考文献文件，可以在主文件\file{mynjuthesis.tex}的导言区中添加以下命令：
 %
 % \begin{ctexexam}
 %   \addbibresource{mybiblio.bib}
