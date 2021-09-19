@@ -276,12 +276,13 @@ through XeTeX.
 %  \item 杨文博（\href{http://yangwenbo.com/}{@solrex}）的\href{https://github.com/solrex/njuthesis}{南京大学学位论文\hologo{LaTeX}模板}（2010） 
 %  \item \href{https://github.com/fireblue}{@fireblue}基于solrex模板的的\href{https://github.com/fireblue/NJUThesis}{南京大学学位论文\hologo{LaTeX}模板}（2013）
 %  \item \href{https://github.com/wenhai-zheng}{@wenhai-zheng}的\href{https://github.com/wenhai-zheng/NJUThesis}{NJUThesis}（2013）  
+%  \item 曹增乐（\href{https://github.com/ZLCao}{@ZLCao}）的\href{https://github.com/ZLCao/NJUBachelor}{NJUBachelor}（2013-2016）
 %  \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的\href{https://github.com/Haixing-Hu/nju-thesis}{NJU-Thesis}（2013 - 2018）
 %  \item 张楚珩（\href{https://github.com/zhangchuheng123}{@zhangchuheng123}）基于胡海星模板的\href{https://github.com/zhangchuheng123/NJUThesis}{NJUThesis}（2016）
 %  \item 蒋炎岩（\href{http://ics.nju.edu.cn/~jyy/}{@jiangyy}）的\href{https://github.com/jiangyy/njuthesis}{南京大学山寨\hologo{LyX}研究生毕业论文模板}（2017）
-%  \item 饶安逸（\href{https://anyirao.com/}{@AnyiRao}）基于胡海星模板的\href{https://github.com/jiangyy/njuthesis}{NJU-Thesis}（2018）
 %  \item \href{https://github.com/njuHan}{@njuHan}基于胡海星模板的\href{https://github.com/njuHan/njuthesis-nju-thesis-template/}{NJU-Thesis}（2018 - 2021）
-%  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于AnyiRao模板的\href{https://github.com/FengChendian/NJUThesis2021}{NJU Thesis 2021}（2021）
+%  \item 饶安逸（\href{https://anyirao.com/}{@AnyiRao}）基于张楚珩模板的\href{https://github.com/AnyiRao/NJUThesis2018/}{NJU Thesis 2018}（2018）
+%  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于饶安逸模板的\href{https://github.com/FengChendian/NJUThesis2021}{NJU Thesis 2021}（2021）
 % \end{enumerate}
 % 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
 %
@@ -979,7 +980,6 @@ through XeTeX.
 % 
 %    \begin{macrocode}
 \RequirePackage{xparse}
-\RequirePackage{titletoc} % 修改目录内标题格式
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
 \RequirePackage{dashundergaps}
 \RequirePackage{setspace}
@@ -1443,15 +1443,10 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% 
+% 章节标题格式
 %    \begin{macrocode}
-% ctex格式设置
-% 目录标题 三号宋体加粗
-% 各部分标题 四号黑体
+% 
 \ctexset{
-    contentsname = 目录,
-    listfigurename = 插图清单, 
-    listtablename = 表格清单,
     chapter/format = \zihao{4}\heiti\centering,
     chapter/beforeskip = 10pt,
     chapter/afterskip = 60pt,
@@ -1459,78 +1454,65 @@ through XeTeX.
     subsection/format = \zihao{4}\heiti\raggedright,
     subsubsection/format = \zihao{4}\heiti\raggedright
 }
+%    \end{macrocode}
+%
+% 目录标题名称
+%    \begin{macrocode}
+\ctexset{
+    contentsname = 目录,
+    listfigurename = 插图清单, 
+    listtablename = 表格清单,
+}
+%    \end{macrocode}
+%
+% \pkg{tocloft}定制目录文字格式
+%    \begin{macrocode}
+\RequirePackage[]{tocloft}
+\cftsetpnumwidth{2em}
+\setlength{\cftbeforetoctitleskip}{10pt}
+\setlength{\cftaftertoctitleskip}{40pt}
+\renewcommand{\cfttoctitlefont}{\hfill\centering\songti\bf\zihao{3}}
+\renewcommand{\cftaftertoctitle}{\hfill} 
 
-% 重定义目录中章节标题样式
-% 目录内容中章的标题 四号黑体
-% 目录中其他内容 小四号宋体
-\titlecontents{chapter}% 标题级别
-                [5em]% 标题左间距
-                {\heiti\zihao{4}\vspace{10pt}}% 标题格式
-                {\contentslabel{4em}}% 标题标志
-                {\hspace*{-4em}}% 无序号标题
-                {~\titlerule*[0.6pc]{$.$}~\contentspage}% 指引线与页码
+\setlength{\cftbeforeloftitleskip}{10pt}
+\setlength{\cftafterloftitleskip}{40pt}
+\renewcommand{\cftloftitlefont}{\hfill\centering\songti\bf\zihao{3}}
+\renewcommand{\cftafterloftitle}{
+  \hfill\phantomsection
+  \addcontentsline{toc}{chapter}{\listfigurename}} 
+    
+\setlength{\cftbeforelottitleskip}{10pt}
+\setlength{\cftafterlottitleskip}{40pt}
+\renewcommand{\cftlottitlefont}{\hfill\centering\songti\bf\zihao{3}}
+\renewcommand{\cftafterlottitle}{
+  \hfill\phantomsection
+  \addcontentsline{toc}{chapter}{\listtablename}} 
 
-                \titlecontents{section}
-                [5em]
-                {\zihao{-4}\vspace{0pt}}
-                {\contentslabel{2.5em}}
-                {\hspace*{-4em}}
-                {~\titlerule*[0.6pc]{$.$}~\contentspage}
+\renewcommand{\cftchapfont}{\heiti\zihao{4}}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
+\renewcommand{\cftchapdotsep}{\cftdotsep}
 
-\titlecontents{subsection}
-                [8em]
-                {\zihao{-4}\vspace{0pt}}
-                {\contentslabel{3em}}
-                {\hspace*{-4em}}
-                {~\titlerule*[0.6pc]{$.$}~\contentspage}
+\setlength{\cftsecindent}{2em}
+\setlength{\cftsubsecindent}{52pt}
+\setlength{\cftsubsecnumwidth}{2em}
 %    \end{macrocode}
 %
 % 
-% \begin{macro}{\@@_toc_pagestyle:nnn}
-% 目录页面格式修改
-% 
+%
+% \pkg{tocbibind}将目录插入书签
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_toc_pagestyle:nnn #1 #2 #3
-{
-  \newpage
-  \hspace{0pt}
-  \vskip 10pt
-  \begin{center}
-    \mbox{\songti\bf\zihao{3}{#1}} % 目录页面标题
-    \phantomsection
-    \addcontentsline{toc}{chapter}{#2} % 插入目录
-  \end{center}
-  \vskip 40pt 
-  \@starttoc{#3}%
-  \cleardoublepage
-}
-%    \end{macrocode}
-% \end{macro}
-% 
-%    \begin{macrocode}
-\tl_set:Nn \tableofcontents 
-{
-  \@@_toc_pagestyle:nnn {目\hspace{2em}录}{\contentsname}{toc}
-}
-\tl_set:Nn \listoffigures
-{
-  \@@_toc_pagestyle:nnn {\listfigurename}{\listfigurename}{lof}
-}
-\tl_set:Nn \listoftables 
-{
-  \@@_toc_pagestyle:nnn {\listtablename}{\listtablename}{lot}
-}
+\RequirePackage{tocbibind}
 %    \end{macrocode}
 %
 % \begin{environment}{preface}
-% 
+%
+% 单独制作的前言页。
 %    \begin{macrocode}
-% 定制前言、致谢环境
 \NewDocumentEnvironment{preface}{}
 {%
   \chapter*{前言}
   \addcontentsline{toc}{chapter}{前言}
-}{}
+}{\cleardoublepage}
 %    \end{macrocode}
 % \end{environment}
 %
@@ -1541,13 +1523,13 @@ through XeTeX.
 {%
   \chapter*{致谢}
   \addcontentsline{toc}{chapter}{致谢}
-}{}
+}{\cleardoublepage}
 %    \end{macrocode}
 % \end{environment}
 %
 % 
-%    \begin{macrocode}
 % biblatex设置
+%    \begin{macrocode}
 \RequirePackage[
     style=gb7714-2015,
     %style=numeric-comp,
