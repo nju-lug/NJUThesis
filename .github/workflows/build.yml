@@ -59,9 +59,12 @@ jobs:
         with:
           name: PDF_xelatex
 
+      - name: Set Version
+        run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
       - name: Zip Release Source
         run: |
-          zip -r njuthesis.zip . -x ".git/*" "*.ins" ".github/*" ".gitignore" "*.dtx" ".pdf"
+          zip -r njuthesis-$VERSION.zip . -x ".git/*" "*.ins" ".github/*" ".gitignore" "*.dtx" ".pdf"
           
       - name: Compile to PDF
         uses: HermitSun/latex-action@v3
@@ -69,21 +72,22 @@ jobs:
           root_file: njuthesis.dtx
           latexmk_use_${{ matrix.latex }}: true
           args: '-bibtex'
+          post_compile: "mv njuthesis.pdf njuthesis-$VERSION.pdf"
 
       - name: Zip CTAN Source
         run: |
           mkdir -p njuthesis/
-          cp njuthesis.pdf njuthesis/njuthesis.pdf
+          cp njuthesis-$VERSION.pdf njuthesis/njuthesis-$VERSION.pdf
           cp README.md njuthesis/README_ZH_CN.md 
           cp README_EN.md njuthesis/README.md
           cp -r figure/ LICENSE njuthesis.dtx njuthesis/
-          zip -r njuthesis_ctan.zip njuthesis/
+          zip -r njuthesis-ctan-$VERSION.zip njuthesis/
           
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            njuthesis.pdf
-            njuthesis.zip
-            njuthesis_ctan.zip
+            njuthesis-v*.pdf
+            njuthesis-v*.zip
+            njuthesis_ctan-v*.zip
