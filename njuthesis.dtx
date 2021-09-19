@@ -552,7 +552,7 @@ through XeTeX.
 % \begin{itemize}
 %  \item 思源宋体和思源黑体有两种英文命名，本模板采用Google的noto系列：\href{https://www.google.com/get/noto/#serif-hans}{思源宋体}、\href{https://www.google.com/get/noto/#sans-hans}{思源黑体}
 %  \item 思源字体并不包含楷书和仿宋，所以使用方正字体代替
-\end{itemize}
+% \end{itemize}
 %  
 %  
 % 
@@ -784,15 +784,12 @@ through XeTeX.
 %
 % \subsubsection{目录页}
 %
-% 目录、图片清单和表格清单可使用如下命令生成。由于目前用来修改目录格式的\pkg{tocloft}会覆盖一些默认选项，所以需要加入|\cleardoublepage|进行换页。
+% 目录、图片清单和表格清单可使用如下命令生成。
 % 
 % \begin{ctexexam}
 %   \tableofcontents
-%   \cleardoublepage
 %   \listoffigures
-%   \cleardoublepage
 %   \listoftables
-%   \cleardoublepage
 % \end{ctexexam}
 %
 % \subsubsection{致谢页}
@@ -1361,7 +1358,7 @@ through XeTeX.
 %
 % \begin{macro}{\@@_load_cjk_font_founder:}
 %  方正字符集（简繁扩展）
-FZYouHK_508R  \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑508R} 设计师非商免费，
+% FZYouHK_508R  \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑508R} 设计师非商免费，
 % FZYouHK_511M \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑511M} 设计师非商免费
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_founder:
@@ -1492,17 +1489,16 @@ FZYouHK_508R  \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{
   \tl_set:Nn \headrulewidth {0pt}
   % the footer line
   \tl_set:Nn \footrulewidth {0pt}
-  
-  \AtBeginDocument{\pagestyle{njuplain}} % 本科无页眉页脚
+  \AtBeginDocument{\pagestyle{njuplain}\flushbottom} % 本科无页眉页脚
 }
 {
   % the header line
   \tl_set:Nn \headrulewidth {1pt}
   % the footer line
   \tl_set:Nn \footrulewidth {0pt}
-
+  \setlength{\headheight}{20pt}
   % \AtBeginDocument{\pagestyle{njuplain}} % 无页眉页脚
-  \AtBeginDocument{\pagestyle{headings}} % 研究生有页眉页脚
+  \AtBeginDocument{\pagestyle{fancy}\flushbottom} % 研究生有页眉页脚
 }
 %    \end{macrocode}
 %
@@ -1510,12 +1506,12 @@ FZYouHK_508R  \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{
 %    \begin{macrocode}
 % 
 \ctexset{
-    chapter/format = \zihao{4}\heiti\centering,
+    chapter/format = \zihao{4}\heiti\centering\selectfont,
     chapter/beforeskip = 10pt,
     chapter/afterskip = 60pt,
-    section/format = \zihao{4}\heiti\raggedright,
-    subsection/format = \zihao{4}\heiti\raggedright,
-    subsubsection/format = \zihao{4}\heiti\raggedright
+    section/format = \zihao{4}\heiti\raggedright\selectfont,
+    subsection/format = \zihao{4}\heiti\raggedright\selectfont,
+    subsubsection/format = \zihao{4}\heiti\raggedright\selectfont,
 }
 %    \end{macrocode}
 %
@@ -1530,31 +1526,11 @@ FZYouHK_508R  \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{
 %
 % \pkg{tocloft}定制目录文字格式
 %    \begin{macrocode}
-\RequirePackage[]{tocloft}
+\RequirePackage[titles]{tocloft}
 \cftsetpnumwidth{2em}
-\setlength{\cftbeforetoctitleskip}{10pt}
-\setlength{\cftaftertoctitleskip}{40pt}
-\renewcommand{\cfttoctitlefont}{\hfill\centering\songti\bf\zihao{3}}
-\renewcommand{\cftaftertoctitle}{\hfill} 
-
-\setlength{\cftbeforeloftitleskip}{10pt}
-\setlength{\cftafterloftitleskip}{40pt}
-\renewcommand{\cftloftitlefont}{\hfill\centering\songti\bf\zihao{3}}
-\renewcommand{\cftafterloftitle}{
-  \hfill\phantomsection
-  \addcontentsline{toc}{chapter}{\listfigurename}} 
-    
-\setlength{\cftbeforelottitleskip}{10pt}
-\setlength{\cftafterlottitleskip}{40pt}
-\renewcommand{\cftlottitlefont}{\hfill\centering\songti\bf\zihao{3}}
-\renewcommand{\cftafterlottitle}{
-  \hfill\phantomsection
-  \addcontentsline{toc}{chapter}{\listtablename}} 
-
-\renewcommand{\cftchapfont}{\heiti\zihao{4}}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
 \renewcommand{\cftchapdotsep}{\cftdotsep}
-
+\renewcommand{\cftchapfont}{\heiti\zihao{4}}
 \setlength{\cftsecindent}{2em}
 \setlength{\cftsubsecindent}{52pt}
 \setlength{\cftsubsecnumwidth}{2em}
@@ -1562,9 +1538,46 @@ FZYouHK_508R  \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{
 %
 % 
 %
-% \pkg{tocbibind}将目录插入书签
+% 将目录插入书签
 %    \begin{macrocode}
-\RequirePackage{tocbibind}
+\renewcommand\tableofcontents{%
+  \raggedbottom
+  \begingroup
+    \ctexset{
+      contentsname = {目\hspace{2em}录},
+      chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
+    }%
+    \chapter*{\contentsname}%
+  \endgroup
+  \addcontentsline{toc}{chapter}{\contentsname}
+  \vskip 20pt 
+  \@starttoc{toc}%
+  \cleardoublepage
+}
+\renewcommand\listoffigures{%
+  \begingroup
+  \ctexset{
+    chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
+  }%
+  \chapter*{\listfigurename}%
+  \endgroup
+  \addcontentsline{toc}{chapter}{\listfigurename}
+  \vskip 20pt 
+  \@starttoc{lof}%
+  \cleardoublepage
+}
+\renewcommand\listoftables{%
+  \begingroup
+  \ctexset{
+    chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
+  }%
+  \chapter*{\listtablename}%
+  \endgroup
+  \addcontentsline{toc}{chapter}{\listtablename}
+  \vskip 20pt 
+  \@starttoc{lot}%
+  \cleardoublepage
+}
 %    \end{macrocode}
 %
 % \begin{environment}{preface}
