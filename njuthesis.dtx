@@ -642,10 +642,18 @@ through XeTeX.
 %
 % \subsection{编写正文}
 %
-% 本科生无页眉，页面编号居中位于页脚；研究生无页脚，页眉包括章节名和页面编号。
+% 与导言区相对的是正文，位于\env{document}环境内。
+% 
+% \begin{ctexexam}
+%   \begin{document}}
+%     text
+%   \end{document}
+% \end{ctexexam}
+%
+% 加上空行就可以另起一段。
 %
 % 
-% 
+% 在页面布局方面，本科生无页眉，页面编号居中位于页脚；研究生无页脚，页眉包括章节名和页面编号（尚未确定）。
 %
 % \subsubsection{图片}
 %
@@ -673,6 +681,7 @@ through XeTeX.
 %   <text>
 % \end{ctexexam}
 % 
+% TODO：subfigure
 %
 % \subsubsection{表格}
 %
@@ -747,6 +756,16 @@ through XeTeX.
 % \subsection{特殊页面}
 % 
 % 本模板还提供一系列环境用于生成所需的特殊页面
+%
+% \subsubsection{封面}
+%
+% 封面可使用如下命令生成。
+% 
+% \begin{ctexexam}
+%   \maketitle
+% \end{ctexexam}
+%
+% 本科生仅会生成中文封面；研究生会生成中英文封面。如果选择了\opt{nlcover}，也会生成研究生的国家图书馆封面。
 %
 % \subsubsection{摘要页}
 %
@@ -823,11 +842,13 @@ through XeTeX.
 %
 % 默认参考文献存储于主目录下的\file{njuthesis.bib}，直接向其中粘贴新的参考文献即可。
 %
-% 如果希望额外添加管理文献列表，譬如添加一个名叫\file{mybiblio.bib}的参考文献文件，可以在主文件\file{mynjuthesis.tex}的导言区中添加以下命令：
+% 如果希望额外添加参考文献列表，可以在主文件\file{mynjuthesis.tex}的导言区中多次调用|\addbibresource|命令：
 %
 % \begin{ctexexam}
-%   \addbibresource{mybiblio.bib}
+%   \addbibresource{file1.bib}
+%   \addbibresource{file2.bib}
 % \end{ctexexam}
+% 注意本命令与|\bibliography{bibfile1,bibfile2}|不同，不可以用逗号分隔多个输入文件，且必须使用带扩展名的完整文件名。
 %
 % \subsubsection{使用EndNote管理文献}
 %
