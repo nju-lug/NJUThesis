@@ -90,4 +90,4 @@ jobs:
           files: |
             njuthesis-v*.pdf
             njuthesis-v*.zip
-            njuthesis_ctan-v*.zip
+            njuthesis-ctan-v*.zip
