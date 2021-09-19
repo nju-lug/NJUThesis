@@ -210,7 +210,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.2 2021-09-17 22:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.3 2021-09-19 20:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
@@ -234,7 +234,7 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.9.2 \\ Released 2021-09-17}
+% \date{v0.9.3 \\ Released 2021-09-19}
 %
 % \maketitle
 %
@@ -455,8 +455,8 @@ through XeTeX.
 %     type = <(thesis)|design>
 %   \end{syntax}
 %
-% 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括thesis（表示毕业论文）和design（表示毕业设计），缺省值为thesis。
-% \opt{thesis}（默认），\opt{design}。
+% 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括\opt{thesis}（表示毕业论文）和\opt{design}（表示毕业设计），缺省值为thesis。
+% 
 % \end{function}
 %   
 %
@@ -466,7 +466,7 @@ through XeTeX.
 %
 % 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
 %
-% 如果希望更改本模板使用的字体，请填写以下两个选项覆盖检测操作系统得到的设置
+% 如果希望更改本模板使用的字体，请填写以下两个选项覆盖检测操作系统得到的设置。
 % 
 %
 % \begin{function}[added=2021-09-07]{customlatinfont}
@@ -478,6 +478,22 @@ through XeTeX.
 % \opt{windows}（默认）， \opt{macos}， \opt{gyre}， \opt{none}。
 % \end{function}
 %
+% 西文包括衬线（serif）、无衬线（sans）、等宽（mono）三种字形
+% \begin{table}[htbp]
+%   \centering
+%   \caption{西文字体清单}
+%   \label{tab:latinfontset}
+%   \begin{tabular}{cccc}
+%       \toprule
+%       操作系统 & 衬线 & 无衬线 & 等宽 \\
+%       \midrule
+%       Windows & Times~New~Roman & Arial & Courier~New \\
+%       macOS & Times~New~Roman & Arial & Menlo \\
+%       Linux & TeX~Gyre~Termes & TeX~Gyre~Heros & TeX~Gyre~Cursor \\
+%       \bottomrule
+%   \end{tabular}
+% \end{table}
+%
 % 
 % \begin{function}[added=2021-09-07]{customchinesefont}
 %   \begin{syntax}
@@ -486,37 +502,61 @@ through XeTeX.
 %
 % 手动指定中文字体，可选：
 % \opt{windows}（默认）， \opt{macos}， \opt{fandol}， \opt{founder}，\opt{noto}，\opt{none}。
-%
-% 方正字体（简繁扩展）系列
-% FZSSK \href{http://www.foundertype.com/index.php/FontInfo/index/id/151}{方正书宋} 免费商用
-%
-% FZXBSK \href{http://www.foundertype.com/index.php/FontInfo/index/id/164}{方正小标宋} 设计师非商免费
-%
-% FZKTK \href{http://www.foundertype.com/index.php/FontInfo/index/id/137}{方正楷体} 免费商用
-%
-% FZXH1K \href{http://www.foundertype.com/index.php/FontInfo/index/id/161}{方正细黑一} 设计师非商免费
-%
-% FZHTK  \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}{方正黑体} 免费商用
-%
-% FZFSK  \href{http://www.foundertype.com/index.php/FontInfo/index/id/128}{方正仿宋}
-%
-% FZYouHK_508R  \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑508R} 设计师非商免费
-%
-% FZYouHK_511M \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑511M} 设计师非商免费
-%
-% 思源字体\footnote{思源宋体和思源黑体有两种英文命名，本模板采用Google的noto系列}：
-%  \href{https://www.google.com/get/noto/#serif-hans}{思源宋体}、
-%  \href{https://www.google.com/get/noto/#sans-hans}{思源黑体}
-% 
-%
-% 
-% 方正楷体、方正仿宋为免费商用字体，且支持CJK字符集
-%  \href{http://www.foundertype.com/index.php/FontInfo/index/id/128.html}{方正仿宋}
-%  \href{http://www.foundertype.com/index.php/FontInfo/index/id/137.html}{方正楷体}
-%
-% 各个系统的默认字体请参考。可以看到，不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；另一方面，在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}，符合视觉习惯。
-% 
 % \end{function}
+% 
+% 中文字体分为宋体（serif）、黑体（sans）、楷体、仿宋四种字形
+% 
+% \begin{table}[htbp]
+%   \centering
+%   \caption{中文字体清单}
+%   \label{tab:cjkfontset}
+%   \begin{tabular}{ccccc}
+%       \toprule
+%       操作系统 & 宋体 & 黑体 & 楷书 & 仿宋 \\
+%       \midrule
+%       Windows & SimSun & SimHei & KaiTi & FangSong \\
+%       macOS & Songti~SC~Light & Heiti~SC~Light & Kaiti~SC & STFangsong \\
+%       Linux & FandolSong & FandolHei  & FandolKai & FandolFang \\
+%       方正 & FZSSK/FZXBSK & FZHTK/FZXH1K & FZKTK & FZFSK \\
+%       思源 & Noto~Serif~CJK~SC & Noto~Sans~CJK~SC & FZKTK & FZFSK \\
+%       \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+%
+% 各个系统的默认字体请参考上述表格。可以看到，在模板自动检测时不同系统上使用的字体有所差别，实际输出结果可能存在细微不同, 使用时请注意。例如，在Linux平台或者使用了Ubuntu后端的南大\hologo{TeX}上，宋体加粗效果更明显；另一方面，在Windows平台进行编译的效果更接近Word加粗\footnote{因为SimSun没有原生粗体，通过AutoFakeBold=2.17进行模仿}，建议最后交稿时设置使用Windows字体以适应评委视觉习惯。
+% 
+% 出于美观考虑，我们也单独提供了方正和思源两套中文字体预设。表中方正字体采用了文件名以缩短长度，其全称如下所示：
+%
+% \begin{table}[htbp]
+%   \centering
+%   \caption{方正字体清单}
+%   \label{tab:founder}
+%   \begin{tabular}{ccc}
+%       \toprule
+%       文件名 & 全称 & 许可 \\
+%       \midrule
+%       FZSSK  & \href{http://www.foundertype.com/index.php/FontInfo/index/id/151}{方正书宋（简繁扩展）} & 免费商用 \\
+%       FZXBSK & \href{http://www.foundertype.com/index.php/FontInfo/index/id/164}{方正小标宋（简繁扩展）} & 设计师非商免费 \\
+%       FZHTK  & \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}{方正黑体（简繁扩展）} & 免费商用 \\
+%       FZXH1K & \href{http://www.foundertype.com/index.php/FontInfo/index/id/161}{方正细黑一（简繁扩展）} & 设计师非商免费 \\
+%       FZKTK  & \href{http://www.foundertype.com/index.php/FontInfo/index/id/137}{方正楷体（简繁扩展）} & 免费商用 \\
+%       FZFSK  & \href{http://www.foundertype.com/index.php/FontInfo/index/id/128}{方正仿宋（简繁扩展）} &  \\
+%       \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+% 
+%
+% 关于思源字体的一些解释：
+% \begin{itemize}
+%  \item 思源宋体和思源黑体有两种英文命名，本模板采用Google的noto系列：\href{https://www.google.com/get/noto/#serif-hans}{思源宋体}、\href{https://www.google.com/get/noto/#sans-hans}{思源黑体}
+%  \item 思源字体并不包含楷书和仿宋，所以使用方正字体代替
+\end{itemize}
+%  
+%  
+% 
+%
 %
 %
 % 
@@ -636,7 +676,7 @@ through XeTeX.
 %
 % \subsubsection{表格}
 %
-% 下面这个例子展示了如何插入一张表格
+% 下面这个例子展示了如何插入一张表格。通过\pkg{booktabs}提供的|\toprule|、|\midrule|和|\bottomrule|，我们可以很轻松地绘制出一张漂亮规范的三线表。
 % \begin{ctexexam}
 %   \begin{table}[htbp]
 %       \caption{我的表}
@@ -651,6 +691,7 @@ through XeTeX.
 %   \end{table}
 % \end{ctexexam}
 %
+% TODO：\pkg{multirow}\pkg{multicol}合并单元格
 %
 % \subsubsection{代码}
 %
@@ -661,7 +702,7 @@ through XeTeX.
 %   \end{lstlisting}
 % \end{ctexexam}
 %
-% 行间代码|\lstinline!<code>!|
+% 行间代码|\lstinline!<code>!|，其中包裹代码的两个感叹号并不是绝对的，可以替换成任何两个相同的没有在这段代码中出现过的符号。
 %
 %
 % \subsubsection{数学}
@@ -677,7 +718,7 @@ through XeTeX.
 %
 % 如不需要编号，可以用\env{equation*}或者 |\[<eq>\]|
 %
-% 也提供了一系列的数学环境。证明环境会在结尾添加证毕符号
+% 本模板也提供了一系列的数学环境。证明环境会在结尾添加证毕符号
 % \begin{ctexexam}
 %   \begin{proof}
 %       证明我是我
@@ -733,7 +774,25 @@ through XeTeX.
 % \begin{ctexexam}
 %   \begin{preface}
 %       我的前言
+%       \vspace{1cm}
+%       \begin{flushright}
+%       我的名字\\
+%       时间地点
+%       \end{flushright}
 %   \end{preface}
+% \end{ctexexam}
+%
+% \subsubsection{目录页}
+%
+% 目录、图片清单和表格清单可使用如下命令生成。由于目前用来修改目录格式的\pkg{tocloft}会覆盖一些默认选项，所以需要加入|\cleardoublepage|进行换页。
+% 
+% \begin{ctexexam}
+%   \tableofcontents
+%   \cleardoublepage
+%   \listoffigures
+%   \cleardoublepage
+%   \listoftables
+%   \cleardoublepage
 % \end{ctexexam}
 %
 % \subsubsection{致谢页}
@@ -1230,8 +1289,8 @@ through XeTeX.
   \setCJKfamilyfont{zhhei}{SimHei}
   \setCJKfamilyfont{zhfs}{FangSong}
   \setCJKfamilyfont{zhkai}{KaiTi}[AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[
-    BoldFont=Microsoft~YaHei~Bold]
+  % \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[
+  %   BoldFont=Microsoft~YaHei~Bold]
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1302,6 +1361,8 @@ through XeTeX.
 %
 % \begin{macro}{\@@_load_cjk_font_founder:}
 %  方正字符集（简繁扩展）
+FZYouHK_508R  \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑508R} 设计师非商免费，
+% FZYouHK_511M \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑511M} 设计师非商免费
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_founder:
 {
@@ -1325,10 +1386,10 @@ through XeTeX.
     {FZFSK}[Extension=.ttf]
   \setCJKfamilyfont{zhkai}
     {FZKTK}[Extension=.ttf]
-  \setCJKfamilyfont{zhnewhei}
-    {FZYouHK_508R}[% 方正悠黑508R
-      Extension=.ttf,
-      BoldFont=FZYouHK_511M]% 方正悠黑511M 
+  % \setCJKfamilyfont{zhnewhei}
+  %   {FZYouHK_508R}[% 方正悠黑508R
+  %     Extension=.ttf,
+  %     BoldFont=FZYouHK_511M]% 方正悠黑511M
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1368,8 +1429,10 @@ through XeTeX.
 
   \setCJKfamilyfont{zhsong}{Noto~Serif~CJK~SC}
   \setCJKfamilyfont{zhhei}{Noto~Sans~CJK~SC}
-  \setCJKfamilyfont{zhfs}{方正仿宋简体}[AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhkai}{方正楷体简体}[AutoFakeBold=2.17]
+  \setCJKfamilyfont{zhfs}
+    {FZFSK}[Extension=.ttf]
+  \setCJKfamilyfont{zhkai}
+    {FZKTK}[Extension=.ttf]
 }
 %    \end{macrocode}
 % \end{macro}
