@@ -507,25 +507,26 @@ through XeTeX.
 %   \begin{talltblr}[
 %    caption = {中文字体配置列表},
 %    label = {tab:chinesefontset},
-%    note{a} = {此字体只有常规自重，因此本模板中使用伪粗体代替粗体},
-%    note{b} = {使用方正小标宋作为粗体},
-%    note{c} = {使用方正黑体作为粗体},
-%    note{d} = {考虑到获取字体的难易程度，采用 noto 字体表示思源字体},
-%    note{e} = {思源字体并不包含楷书和仿宋，而Adobe楷体和仿宋难以直接下载，因此使用方正字体代替},
-%   ]{colspec = {ccccc}}
+%    note{a} = {使用方正小标宋作为方正书宋的粗体，使用方正黑体作为方正细黑一的粗体},
+%    note{b} = {思源字体并不包含楷书和仿宋，而Adobe楷体和仿宋难以直接下载，因此使用方正字体代替；考虑到获取字体的难易程度，采用 \href{https://www.google.com/get/noto}{noto} 字体表示思源字体},
+%   ] { cell{2}{2,4} = {njuyellow}, cell{4}{4} = {njuyellow}, colspec = {ccccc} }
 %     \toprule
 %     配置名称 & 宋体 & 黑体 & 楷书 & 仿宋 \\
 %     \midrule
-%     Windows & 中易宋体\TblrNote{a} & 中易黑体 & 中易楷体\TblrNote{a} & 中易仿宋 \\
-%     macOS   & 华文宋体 & 华文黑体 & 华文楷体 & 华文仿宋 \\
-%     Fandol  & Fandol宋体 & Fandol黑体 & Fandol楷体\TblrNote{a} & Fandol仿宋 \\
-%     方正     & 方正书宋\TblrNote{b} & 方正细黑一\TblrNote{c} & 方正楷体 & 方正仿宋 \\
-%     思源     & 思源宋体\TblrNote{d} & 思源黑体\TblrNote{d} & 方正楷体\TblrNote{e} & 方正仿宋\TblrNote{e} \\
+%     Windows          & 中易宋体    & 中易黑体    & 中易楷体    & 中易仿宋 \\
+%     macOS            & 华文宋体    & 华文黑体    & 华文楷体    & 华文仿宋 \\
+%     \href{https://www.ctan.org/pkg/fandol} {Fandol}           
+%                      & Fandol宋体  & Fandol黑体  & Fandol楷体  & Fandol仿宋 \\
+%     \href{https://www.foundertype.com}     {方正}\TblrNote{a} 
+%                      & 方正书宋    & 方正细黑一  & 方正楷体    & 方正仿宋 \\
+%     \href{https://github.com/adobe-fonts}  {思源}\TblrNote{b} 
+%                      & 思源宋体    & 思源黑体    & 方正楷体    & 方正仿宋 \\
 %     \bottomrule
 %   \end{talltblr}
 % \end{table}
 %
-% 可以看出，不同系统上使用的字体以及加粗的方式有所差别，实际输出结果可能存在细微不同，使用时请注意。
+% 由于各操作系统对自带字体的支持程度不同，本模板对不同字体加粗的方式有所差别，表 \ref{tab:chinesefontset} 中，黄色底色的字体采用算法加粗。
+% 除此以外，各种字体在设计上也存在差异，因此本模板在不同操作系统下编译的结果可能存在细微不同，使用时请注意。
 % 若想要获得与 Word 版本模板最为贴近的体验，可以通过手动安装 Windows 自带的中易宋体、中易黑体、中易楷体和中易仿宋，并设置使用 Windows 字体来实现。
 %
 % 本模板提供的西文字体配置如表 \ref{tab:latinfontset} 所示。
@@ -537,18 +538,19 @@ through XeTeX.
 %   \label{tab:latinfontset}
 %   \begin{tabular}{cccc}
 %       \toprule
-%       配置名称 & 衬线体                    & 无衬线体                  & 等宽字体                  \\
+%       配置名称 & 衬线体 & 无衬线体 & 等宽字体 \\
 %       \midrule
-%       Windows & Times~New~Roman          & Arial                   & Courier~New              \\
-%       macOS   & Times~New~Roman          & Arial                   & Menlo                    \\
-%       gyre    & \Hologo{TeX}~Gyre~Termes & \Hologo{TeX}~Gyre~Heros & \Hologo{TeX}~Gyre~Cursor \\
+%       Windows  & Times~New~Roman           & Arial                   & Courier~New \\
+%       macOS    & Times~New~Roman           & Arial                   & Menlo \\
+%       \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{gyre} 
+%                & \Hologo{TeX}~Gyre~Termes  & \Hologo{TeX}~Gyre~Heros & \Hologo{TeX}~Gyre~Cursor \\
 %       \bottomrule
 %   \end{tabular}
 % \end{table}
 %
 % 若要手动选择字体，则需将字体设置为 \texttt{none}，再通过 \texttt{fontspec} 宏包或 \texttt{ctex} 宏包中给出的命令来实现。
 %
-% 最后，出于统一格式的需要，本模板还选取了与正文字体相似度最高的数学字体（STIX 字体）用于公式排版。
+% 最后，出于统一格式的需要，本模板还选取了与正文字体相似度最高的数学字体（\href{https://www.stixfonts.org}{STIX 字体}）用于公式排版。
 %
 % \subsection{个人信息}
 %
