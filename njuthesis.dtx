@@ -465,10 +465,7 @@ through XeTeX.
 %   
 %
 %
-% \subsubsection{指定字体\protect\footnote{
-% 本节提及的字库中，中文字库只有方正书宋、方正黑体、方正楷体、方正仿宋、两种思源字体和四种Fandol字体能够免费商用；
-% 英文字库中只有 Times New Roman、STIX 和三种\Hologo{TeX} Gyre字体能够免费商用。
-% 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。}}
+% \subsubsection{指定字体}
 %
 % 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
 %
@@ -500,7 +497,7 @@ through XeTeX.
 %
 % 本模板提供的中文字体配置如表 \ref{tab:chinesefontset} 所示。
 % 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置（见表中前三行，Windows 和 macOS 以外的系统采用 Fandol 配置）。
-% 此外，我们也单独提供了方正和思源两套中文字体配置。
+% 此外，我们也单独提供了方正和思源（\href{https://www.google.com/get/noto/#serif-hans}{思源宋体}、\href{https://www.google.com/get/noto/#sans-hans}{思源黑体}）两套中文字体配置。
 %
 % \begin{table}[htbp]
 %   \centering
@@ -530,7 +527,7 @@ through XeTeX.
 % 若想要获得与 Word 版本模板最为贴近的体验，可以通过手动安装 Windows 自带的中易宋体、中易黑体、中易楷体和中易仿宋，并设置使用 Windows 字体来实现。
 %
 % 本模板提供的西文字体配置如表 \ref{tab:latinfontset} 所示。
-% 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置（见表中前三行，Windows 和 macOS 以外的系统采用 gyre 配置）。
+% 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置（见表中前三行，Windows 和 macOS 以外的系统采用 \opt{gyre} 配置）。
 %
 % \begin{table}[htbp]
 %   \centering
@@ -548,16 +545,20 @@ through XeTeX.
 %   \end{tabular}
 % \end{table}
 %
-% 若要手动选择字体，则需将字体设置为 \texttt{none}，再通过 \texttt{fontspec} 宏包或 \texttt{ctex} 宏包中给出的命令来实现。
+% 若要手动选择字体，则需将字体设置为 \opt{none}，再通过 \pkg{fontspec} 宏包或 \pkg{ctex} 宏包中给出的命令来实现。
 %
 % 最后，出于统一格式的需要，本模板还选取了与正文字体相似度最高的数学字体（\href{https://www.stixfonts.org}{STIX 字体}）用于公式排版。
+%
+% 本节提及的字库中，中文字库只有方正书宋、方正黑体、方正楷体、方正仿宋、两种思源字体和四种Fandol字体能够\emph{免费商用}；
+% 英文字库中只有 Times New Roman、STIX 和三种\Hologo{TeX} Gyre字体能够\emph{免费商用}。
+% 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。
 %
 % \subsection{个人信息}
 %
 % \begin{function}{\njusetup}
 % 
-%  定义了用于文档封面的诸多属性参数，
-% 写作时修改相应字符串即可。注意不要有空行，否则可能报错
+% 定义了用于文档封面的诸多属性参数，
+% 写作时修改相应字符串即可。
 %
 % \end{function}
 %
@@ -841,7 +842,7 @@ through XeTeX.
 % \end{ctexexam}
 % 注意本命令与|\bibliography{bibfile1,bibfile2}|不同，不可以用逗号分隔多个输入文件，且必须使用带扩展名的完整文件名。
 %
-% \subsubsection{使用EndNote管理文献}
+% \subsubsection{使用EndNote}
 %
 % 南京大学信息化建设管理服务中心已购买\href{https://itsc.nju.edu.cn/EndNote/list.htm}{EndNote}供全校师生免费试用，最新版为EndNote 20。
 %
@@ -849,7 +850,7 @@ through XeTeX.
 %
 % 
 %
-% \subsubsection{使用Zotero管理文献}
+% \subsubsection{使用Zotero}
 %
 % \href{https://www.zotero.org/}{Zotero}是一款免费的文献管理软件，支持所有桌面平台。
 %
