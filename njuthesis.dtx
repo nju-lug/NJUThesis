@@ -1545,6 +1545,7 @@ through XeTeX.
 % 将目录插入书签
 %    \begin{macrocode}
 \renewcommand\tableofcontents{%
+  \cleardoublepage
   \raggedbottom
   \begingroup
     \ctexset{
@@ -1556,9 +1557,9 @@ through XeTeX.
   \addcontentsline{toc}{chapter}{\contentsname}
   \vskip 20pt 
   \@starttoc{toc}%
-  \cleardoublepage
 }
 \renewcommand\listoffigures{%
+  \cleardoublepage
   \begingroup
   \ctexset{
     chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
@@ -1568,9 +1569,9 @@ through XeTeX.
   \addcontentsline{toc}{chapter}{\listfigurename}
   \vskip 20pt 
   \@starttoc{lof}%
-  \cleardoublepage
 }
 \renewcommand\listoftables{%
+  \cleardoublepage
   \begingroup
   \ctexset{
     chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
@@ -1580,7 +1581,6 @@ through XeTeX.
   \addcontentsline{toc}{chapter}{\listtablename}
   \vskip 20pt 
   \@starttoc{lot}%
-  \cleardoublepage
 }
 %    \end{macrocode}
 %
@@ -2224,8 +2224,6 @@ through XeTeX.
   \end{center}
   \end{spacing}
   \cleardoublepage
-  % \vfill
-  % \newpage
 }
 %    \end{macrocode}
 % \end{macro}
