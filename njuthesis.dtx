@@ -2451,12 +2451,12 @@ through XeTeX.
     \kaishu\zihao{4}
     \tl_set:Nn \tabcolsep {0pt}
     \tl_set:Nn \arraystretch {0.8}
-    毕业论文题目：\hspace{0.5em}\njuline{\l__nju_info_title_tl\hfill}\hspace{0em}\\
-    \njuline{\makebox[9em]{\l__nju_major_tl}}专业
-    \njuline{\makebox[4em]{\l__nju_info_grade_tl}}级
-    \str_if_eq:NNTF {\l__nju_info_degree_tl} { phd } {博}{硕}
-    士生姓名：\njuline{\hfill\l__nju_info_author_tl\hfill}\hspace{0em}\\
-    指导教师（姓名、职称）：\njuline{\hfill\l__nju_info_supv_full_tl\hfill}\hspace{0em}\par
+    毕业论文题目：\hspace{0.5em}\njuline{\l_@@_info_title_tl\hfill}\hspace{0em}\\
+    \njuline{\makebox[9em]{\l_@@_major_tl}}专业
+    \njuline{\makebox[4em]{\l_@@_info_grade_tl}}级
+    \str_if_eq:NNTF {\l_@@_info_degree_tl} { phd } {博}{硕}
+    士生姓名：\njuline{\hfill\l_@@_info_author_tl\hfill}\hspace{0em}\\
+    指导教师（姓名、职称）：\njuline{\hfill\l_@@_info_supv_full_tl\hfill}\hspace{0em}\par
     \egroup
     \kaishu\zihao{4}\par%
   }{%
@@ -2476,10 +2476,10 @@ through XeTeX.
     {
       \bgroup
       \zihao{4}
-      THESIS: ~~\l__nju_info_title_en_tl \\
-      SPECIALIZATION: ~~\l__nju_major_en_tl \\
-      POSTGRADUATE:~~\l__nju_info_author_en_tl \\
-      MENTOR:~~\l__nju_info_supv_full_en_tl\par
+      THESIS: ~~\l_@@_info_title_en_tl \\
+      SPECIALIZATION: ~~\l_@@_major_en_tl \\
+      POSTGRADUATE:~~\l_@@_info_author_en_tl \\
+      MENTOR:~~\l_@@_info_supv_full_en_tl\par
       \egroup
     }
     \zihao{4}\par%
