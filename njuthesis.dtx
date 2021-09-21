@@ -647,6 +647,10 @@ through XeTeX.
 % 
 % 在页面布局方面，本科生无页眉，页面编号居中位于页脚；研究生无页脚，页眉包括章节名和页面编号（尚未确定）。
 %
+% \subsubsection{文字}
+%
+% 为了避免原生|\uline|命令在中文环境下不能正常换行的问题，本模板使用|\njuline|作为替代方案，分别对\hologo{XeLaTeX} 的\pkg{xeCJKfntef}包和\hologo{LuaLaTeX}的\pkg{lua-ul}包中的下划线命令进行了包装。
+%
 % \subsubsection{图片}
 %
 % 所有图片默认存放在主目录下的\texttt{figure/}文件夹内，允许的文件名包括\file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}, 
@@ -1093,13 +1097,13 @@ through XeTeX.
     \RequirePackage{microtype}
 
     % 加中文下划线，不能用于lualatex
-    \RequirePackage{xeCJKfntef} 
-    \cs_new:Npn \@@_uline:n #1 {\CJKunderline{#1}}
+    \RequirePackage{xeCJKfntef}
+    \newcommand{\njuline}[1]{\CJKunderline{#1}}
 }
 \sys_if_engine_luatex:T{
     % 加中文下划线
     \RequirePackage{lua-ul}
-    \cs_new:Npn \@@_uline:n #1 {\underLine{#1}}
+    \newcommand{\njuline}[1]{\underLine{#1}}
 
     % emoji支持
     % \RequirePackage{emoji}
@@ -2429,9 +2433,9 @@ through XeTeX.
 %    \end{macrocode}
 %
 % 
+% 研究生摘要环境
 %    \begin{macrocode}
-{ 
-  % 研究生摘要环境
+{
   \NewDocumentEnvironment{abstract} {}
   {%
     \pagestyle{plain}
@@ -2442,25 +2446,23 @@ through XeTeX.
       \kaishu\zihao{-2}{\textbf{\uuline{
         南京大学研究生毕业论文中文摘要首页用纸}}}
     \end{center}
-    
     \bgroup
+    \noindent
     \kaishu\zihao{4}
     \tl_set:Nn \tabcolsep {0pt}
     \tl_set:Nn \arraystretch {0.8}
-    \noindent
-    毕业论文题目：\hspace{0.5em}\@@_uline:n {\l_@@_info_title_tl\hfill}\\    
-    \uline{\makebox[9em]{\l_@@_major_tl}}专业
-    \uline{\makebox[4em]{\l_@@_info_grade_tl}}级
-    \str_if_eq:NNTF {\l_@@_info_degree_tl} { phd } {博}{硕}
-    士生姓名：\uline{\hfill\l_@@_info_author_tl\hfill} \\
-    指导教师（姓名、职称）：\uline{\hfill\l_@@_info_supv_full_tl\hfill}\par
+    毕业论文题目：\hspace{0.5em}\njuline{\l__nju_info_title_tl\hfill}\hspace{0em}\\
+    \njuline{\makebox[9em]{\l__nju_major_tl}}专业
+    \njuline{\makebox[4em]{\l__nju_info_grade_tl}}级
+    \str_if_eq:NNTF {\l__nju_info_degree_tl} { phd } {博}{硕}
+    士生姓名：\njuline{\hfill\l__nju_info_author_tl\hfill}\hspace{0em}\\
+    指导教师（姓名、职称）：\njuline{\hfill\l__nju_info_supv_full_tl\hfill}\hspace{0em}\par
     \egroup
-  
     \kaishu\zihao{4}\par%
   }{%
   \newpage
   }
-  
+
   % 英文摘要
   \NewDocumentEnvironment{englishabstract} {}
   {%
@@ -2474,10 +2476,10 @@ through XeTeX.
     {
       \bgroup
       \zihao{4}
-      THESIS: ~~\l_@@_info_title_en_tl \\
-      SPECIALIZATION: ~~\l_@@_major_en_tl \\
-      POSTGRADUATE:~~\l_@@_info_author_en_tl \\
-      MENTOR:~~\l_@@_info_supv_full_en_tl\par
+      THESIS: ~~\l__nju_info_title_en_tl \\
+      SPECIALIZATION: ~~\l__nju_major_en_tl \\
+      POSTGRADUATE:~~\l__nju_info_author_en_tl \\
+      MENTOR:~~\l__nju_info_supv_full_en_tl\par
       \egroup
     }
     \zihao{4}\par%
