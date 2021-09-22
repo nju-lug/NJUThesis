@@ -72,10 +72,8 @@ DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发�
     ```shell
     NJUThesis-master/
     │
-    ├─figure/
-    │   njulogo.pdf
-    │   njuname.pdf
-    │
+    │ njulogo.eps
+    │ njuname.eps
     │ njuthesis.bib
     │ njuthesis.cls
     │ njuthesis-sample.tex
@@ -177,10 +175,10 @@ through XeTeX.
 %<*install>
   \usedir{doc/latex/njuthesis}
   \nopreamble\nopostamble
-    \file{README_EN.md}        {\from{\jobname.dtx}{readme-en}}
+    \file{njulogo.eps}         {\from{\jobname-logos.dtx}{njulogo}}
+    \file{njuname.eps}         {\from{\jobname-logos.dtx}{njuname}}
     \file{README.md}           {\from{\jobname.dtx}{readme-zh}}
-    \file{njuname.eps}         {\from{\jobname-logos.dtx}{njulogo}}
-    \file{njulogo.eps}         {\from{\jobname-logos.dtx}{njuname}}
+    \file{README_EN.md}        {\from{\jobname.dtx}{readme-en}}
 }
 
 \obeyspaces
@@ -191,6 +189,8 @@ through XeTeX.
 \Msg{*                                                           *}
 \Msg{* The recommended directory is TDS:tex/latex/njuthesis      *}
 \Msg{*                                                           *}
+\Msg{*     njulogo.eps                                           *}
+\Msg{*     njuname.eps                                           *}
 \Msg{*     njuthesis.cls                                         *}
 \Msg{*     njuthesis.ins                                         *}
 \Msg{*     README.md                                             *}
@@ -441,21 +441,36 @@ through XeTeX.
 %
 % \section{使用方法}
 %
+% \subsection{标准结构}
+%
+% 典型的\cls{njuthesis}主文件结构应该如下所示：
+%
+% \begin{ctexexam}
+%   \documentclass[<options>]{njuthesis}
+%   \njusetup { info = {<info>} }
+%   \graphicspath{{figure/}}
+%   \addbibresource{njuthesis.bib}
+%   \begin{document}
+%   \maketitle
+%   <abstract>
+%   <preface>
+%   \tableofcontents
+%   \listoffigures
+%   \listoftables
+%   \mainmatter
+%   <text>
+%   \printbibliography[heading=bibintoc,title=参考文献]
+%   <acknowledgement>
+%   \appendix
+%   <appendix>
+%   \end{document}
+% \end{ctexexam}
+%
 % \subsection{模板选项}
 %
-% 尖括号内列出了若干个允许的选项，其中加粗的为默认选项。
+% 模板选项位于|\documentclass|后的方括号内，用于指定模板的行为。
+% 下文中尖括号内列出了若干个允许的选项，其中加粗的为默认选项。
 %
-% 封面标题留空即可自动化换行
-%
-% 第二导师不填则留空，目前来说拥有两位指导老师并不是一种普遍状况。
-%
-% \begin{function}[added=2021-09-07]{nlcover}
-%   \begin{syntax}
-%     nlcover = <\TTF>
-%   \end{syntax}
-%
-% 通过此项可选择是否添加国家图书馆封面，本选项仅对于研究生有效
-% \end{function}
 %
 % 
 % \subsubsection{学位信息}
@@ -467,7 +482,14 @@ through XeTeX.
 % 选择学位，可选：
 % \opt{ug}（默认本科），\opt{mg}即学术硕士，\opt{mf}，\opt{phd}。
 % \end{function}
-%   
+% 
+% \begin{function}[added=2021-09-07]{nlcover}
+%   \begin{syntax}
+%     nlcover = <\TTF>
+%   \end{syntax}
+%
+% 通过此项可选择是否添加国家图书馆封面，本选项仅对于研究生有效
+% \end{function}  
 %
 % \begin{function}[added=2021-09-07]{type}
 %   \begin{syntax}
@@ -579,6 +601,10 @@ through XeTeX.
 %
 % 本科生可以参考如下列表输入个人信息。注意不能有空行，有空格的内容需要将空格替换为波浪线或者两端加上大括号
 %
+% 封面标题留空即可自动化换行。
+%
+% 第二导师不填则留空，目前来说拥有两位指导老师并不是一种普遍状况。
+%
 % \begin{ctexexam}
 %   \njusetup {
 %       info = {
@@ -668,7 +694,7 @@ through XeTeX.
 %
 % \subsubsection{图片}
 %
-% 所有图片默认存放在主目录下的\texttt{figure/}文件夹内，允许的文件名包括\file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}。可以在导言区通过以下命令添加图片存放路径。
+% 所有图片默认存放在主目录下的\texttt{figure/}文件夹内，允许的文件名包括\file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}。使用自己的图片时，需要在导言区通过以下命令添加图片存放路径。
 %
 % \begin{ctexexam}
 %   \graphicspath{{img/}{images/}}
@@ -820,7 +846,6 @@ through XeTeX.
 %   \end{englishabstract}
 % \end{ctexexam}
 %
-% 在使用\hologo{LuaLaTeX}编译时，研究生中文摘要页的标题会出现空格无下划线的问题，目前正在积极寻求解决方法。
 %
 % \subsubsection{前言页}
 %        
