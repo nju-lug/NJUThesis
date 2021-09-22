@@ -671,7 +671,7 @@ through XeTeX.
 % 下面这个例子展示了如何插入一张名称为\file{myfig.jpg}，宽度占页面文字宽度一半的图片。注意标签命令|\label|必须放在图注命令|\caption|之后。
 %
 % \begin{ctexexam}
-%   \begin{figure}
+%   \begin{figure}[h]
 %       \includegraphics[width=0.5\textwidth]{myfig}
 %       \caption{我的图}
 %       \label{fig:myfig}
@@ -690,7 +690,28 @@ through XeTeX.
 %   <text>
 % \end{ctexexam}
 % 
-% TODO：subfigure
+% TODO：subfigure \pkg{subcaption}
+%
+% \begin{ctexexam}
+%   \begin{figure}
+%       \begin{subfigure}{.32\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{fig1}  
+%          \caption{fig1}
+%       \end{subfigure}
+%       \begin{subfigure}{.32\textwidth}
+%          \centering
+%           \includegraphics[width=\textwidth]{fig2}  
+%           \caption{fig2}
+%       \end{subfigure}
+%       \begin{subfigure}{.32\textwidth}
+%           \centering
+%           \includegraphics[width=\textwidth]{fig3}  
+%           \caption{fig3}
+%       \end{subfigure}
+%       \caption{subfigures}
+%   \end{figure}
+% \end{ctexexam}
 %
 % \subsubsection{表格}
 %
@@ -1144,11 +1165,12 @@ through XeTeX.
         ]{unicode-math} % Math fonts in xetex or luatex
 %    \end{macrocode}
 %
-% 配置图片路径
+% 配置图片
 %    \begin{macrocode}
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
 \graphicspath{{figure/}} % 图片路径
+\RequirePackage{subcaption}
 \RequirePackage{wrapfig} % Wrap text around figures
 %    \end{macrocode}
 %
@@ -1750,8 +1772,8 @@ through XeTeX.
 % 图表标题样式
 \DeclareCaptionFont{songticap}{\zihao{5}\bf\songti}
 \captionsetup{
-    font=small,%
-    labelfont=songticap,
+  font=small,%
+  labelfont=songticap,
 	textfont=songticap,
 	strut=no,%
 	hypcap=true, % Links point to the top of the figure
