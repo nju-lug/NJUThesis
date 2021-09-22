@@ -179,6 +179,8 @@ through XeTeX.
   \nopreamble\nopostamble
     \file{README_EN.md}        {\from{\jobname.dtx}{readme-en}}
     \file{README.md}           {\from{\jobname.dtx}{readme-zh}}
+    \file{njuname.eps}         {\from{\jobname-logos.dtx}{njulogo}}
+    \file{njulogo.eps}         {\from{\jobname-logos.dtx}{njuname}}
 }
 
 \obeyspaces
@@ -1173,7 +1175,6 @@ through XeTeX.
 %    \begin{macrocode}
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
-\graphicspath{{figure/}}
 \RequirePackage{subcaption}
 \RequirePackage{wrapfig} % Wrap text around figures
 %    \end{macrocode}
@@ -2278,7 +2279,7 @@ through XeTeX.
     \hspace{0pt} \vskip 5mm
     \includegraphics[height=1.9cm]{njulogo}
     \vskip 10mm 
-    \includegraphics[height=2cm]{njuname-large}
+    \includegraphics[height=2cm]{njuname}
     \vskip 15mm 
     {\zihao{1}\makebox[10em][s]{\bf{\kaishu\l_@@_info_type_tl_name}}}
     \vskip 5mm
