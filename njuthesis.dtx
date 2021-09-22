@@ -315,25 +315,38 @@ through XeTeX.
 % \label{sec:setup}
 % 本节主要介绍本宏包的获取、安装以及编译方式
 % 
-% \subsection{下载模板}
+% \subsection{获取模板}
 %
-% 本宏包已经\href{https://ctan.org/pkg/njuthesis}{发布在CTAN}，将在明年进入\hologo{TeX}\,Live 2022 和\hologo{MiKTeX}发行版。然而CTAN版更新不及时，更推荐使用以下方式下载。
+% \subsubsection{自动安装}
 %
+% \pkg{njuthesis}已经于2021年9月12日\href{https://ctan.org/pkg/njuthesis}{发布在CTAN}（Comprehensive \hologo{TeX} Archive Network），将在明年进入\hologo{TeX}\,Live 2022。
+% 目前，您已经可以通过\pkg{tlmgr}或者\hologo{MiKTeX} Console等包管理器直接安装并使用最新的稳定版，方法详见第\ref{subsec:localcompile} 节。
+%
+% 然而CTAN版需要开发者手动上传，版本更新具有滞后性。如果使用时遇到了问题，推荐使用以下方式获取最新版本。
 % 
-% \subsubsection{发布版}
+% \subsubsection{下载正式版}
 %
-% 从本模板的\href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases页面}下载最新的发布版。
-% 如果Github访问速度较慢，也可以使用\href{https://mirror.nju.edu.cn/github-release/nju-lug/NJUThesis/LatestRelease/}{南大镜像}
+% 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，下载方式包括：
+% \begin{itemize}
+%  \item \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases页面}
+%  \item \href{https://mirror.nju.edu.cn/download/app/NJUThesis%20%E8%AE%BA%E6%96%87%E6%A8%A1%E6%9D%BF}{南大镜像下载页}
+%\end{itemize}
+% 在国内使用时，后者具有显著更快的速度。
 %
-% \subsubsection{源代码}
+% \subsubsection{下载开发版}
 %
-% 从本模板的\href{https://github.com/nju-lug/NJUThesis/}{ Github 仓库}或者\href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像}下载最新的dtx文件自行安装
+% 开发版具有最新的进度，推荐需要最新补丁或者参与开发的同学下载最新的\file{dtx}文件自行安装
+% \begin{itemize}
+%  \item \href{https://github.com/nju-lug/NJUThesis/}{Github 仓库}
+%  \item \href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像}
+%\end{itemize}
 %
 % \subsection{本地编译}
+% \label{subsec:localcompile}
 %
 % \subsubsection{安装\hologo{TeX}发行版}
 %
-% 首先需要下载\hologo{TeX}软件发行版，校园网环境中使用\href{https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南大镜像站}可以获得最好的体验。\textbf{推荐使用最新的\hologo{TeX}\,Live 2021或者\hologo{MiKTeX} 21以避免潜在的兼容性问题。}
+% 首先需要下载\hologo{TeX}软件发行版，校园网环境中使用\href{https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南大镜像站}可以获得最好的体验。\textbf{推荐使用最新的\hologo{TeX}\,Live 2021或者\hologo{MiKTeX} 21以避免潜在的兼容性问题。使用\hologo{LuaLaTeX}编译需要将\pkg{LuaTeX-ja}包更新至2021-09-19或更新的版本}
 %
 % \begin{itemize}
 %     \item 为了避免不必要的麻烦，请尽可能下载 full 版本，如 texlive-full。简而言之，下载大的那个。
@@ -1090,30 +1103,22 @@ through XeTeX.
 % \RequirePackage{xspace} % Better print trailing whitespace
 %    \end{macrocode}
 %
-% 针对编译引擎，使用不同的宏包重构下划线命令
+% \begin{macro}{\njuline}
+% 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。\pkg{lua-ul}中需要在结尾使用|\null|保护尾部空白。
 %    \begin{macrocode}
 \sys_if_engine_xetex:T
 {
     \RequirePackage{microtype}
-
-    % 加中文下划线，不能用于lualatex
     \RequirePackage{xeCJKfntef}
     \newcommand{\njuline}[1]{\CJKunderline{#1}}
 }
-\sys_if_engine_luatex:T{
-    % 加中文下划线
+\sys_if_engine_luatex:T
+{
     \RequirePackage{lua-ul}
     \newcommand{\njuline}[1]{\underLine{#1}\null}
-
-    % emoji支持
-    % \RequirePackage{emoji}
-    % \setemojifont{Segoe~UI~Emoji} % windows
-    % \setemojifont{Apple~Color~Emoji} % macos
-    % \setemojifont{Noto~Color~Emoji}
-    % For windows. 
-    % Shipped with the best `grinning-face-with-sweat' support.
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % 生成用于测试的大段无意义英文文字
 %    \begin{macrocode}
@@ -2351,26 +2356,23 @@ through XeTeX.
 %
 % \subsection{摘要绘制}
 %
-% 中文关键词
+% \begin{macro}{\keywords,\englishkeywords}
+% 中英文关键词
 %    \begin{macrocode}
 \NewDocumentCommand \keywords {m} {%
   \par\vspace{2ex}\noindent%
   {\kaishu\zihao{-4}\makebox[4em][s]{关键词{：}}}~{#1}%
 }
-%    \end{macrocode}
-%
-% 
-% 英文关键词
-%
-%    \begin{macrocode}
 \NewDocumentCommand \englishkeywords {m} {%
   \par\vspace{2ex}\noindent%
   {KEYWORDS{:}}~~{#1}%
 }
 %    \end{macrocode}
+% \end{macro}
 %
 %   
-% 本科摘要环境
+% \begin{macro}{\@@_print_abstract_ug:,\@@_print_abstract_en_ug:}
+% 输出本科摘要格式。
 %
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_abstract_ug:
@@ -2420,9 +2422,11 @@ through XeTeX.
   \zihao{-4}\par%
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % 
-% 研究生摘要环境
+% \begin{macro}{\@@_print_abstract_g:,\@@_print_abstract_en_g:}
+% 输出研究生摘要格式。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_abstract_g:
 {
@@ -2469,6 +2473,7 @@ through XeTeX.
   \zihao{4}\par%
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % 
 % 判断学位
