@@ -2263,7 +2263,7 @@ through XeTeX.
   \thispagestyle{empty}
   \pagenumbering{Roman}
   % Start
-  \pdfbookmark{封面}{封面} % 将封面插入pdf书签
+  \pdfbookmark{封面}{cover} % 将封面插入pdf书签
   \begin{spacing}{1.25}
   \vskip 0mm
   \hspace{-10mm}
@@ -2298,7 +2298,7 @@ through XeTeX.
   \thispagestyle{empty}
   \pagenumbering{Roman}
   % Start
-  \pdfbookmark{封面}{封面} % 将封面插入pdf书签
+  \pdfbookmark{封面}{cover} % 将封面插入pdf书签
   \begin{spacing}{1.25}
   \begin{center}
     \hspace{0pt} \vskip 5mm
@@ -2353,7 +2353,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_print_cover_en:
 {
   \thispagestyle{empty}
-  \pdfbookmark{英文封面}{English~cover} % 将封面插入pdf书签
+  \pdfbookmark{英文封面}{cover-en} % 将封面插入pdf书签
   \begin{center}
     \vspace*{20pt}
     \bf\sffamily\zihao{2}\l_@@_info_title_en_tl
