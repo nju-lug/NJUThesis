@@ -210,7 +210,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.3 2021-09-19 20:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.4 2021-09-22 18:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
@@ -238,7 +238,7 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.9.3 \\ Released 2021-09-19}
+% \date{v0.9.4 \\ Released 2021-09-22}
 %
 % \maketitle
 %
@@ -666,7 +666,11 @@ through XeTeX.
 %
 % \subsubsection{图片}
 %
-% 所有图片默认存放在主目录下的\texttt{figure/}文件夹内，允许的文件名包括\file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}, 
+% 所有图片默认存放在主目录下的\texttt{figure/}文件夹内，允许的文件名包括\file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}。可以在导言区通过以下命令添加图片存放路径。
+%
+% \begin{ctexexam}
+%   \graphicspath{{img/}{images/}}
+% \end{ctexexam}
 %
 % 下面这个例子展示了如何插入一张名称为\file{myfig.jpg}，宽度占页面文字宽度一半的图片。注意标签命令|\label|必须放在图注命令|\caption|之后。
 %
@@ -1169,7 +1173,7 @@ through XeTeX.
 %    \begin{macrocode}
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
-\graphicspath{{figure/}} % 图片路径
+\graphicspath{{figure/}}
 \RequirePackage{subcaption}
 \RequirePackage{wrapfig} % Wrap text around figures
 %    \end{macrocode}
