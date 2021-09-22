@@ -1103,7 +1103,7 @@ through XeTeX.
 \sys_if_engine_luatex:T{
     % 加中文下划线
     \RequirePackage{lua-ul}
-    \newcommand{\njuline}[1]{\underLine{#1}}
+    \newcommand{\njuline}[1]{\underLine{#1}\null}
 
     % emoji支持
     % \RequirePackage{emoji}
@@ -2369,124 +2369,123 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% 
+%   
+% 本科摘要环境
 %
 %    \begin{macrocode}
-% 判断学位
-\str_if_eq:NNTF {\l_@@_info_degree_tl} { ug } 
-{   
-  % 本科摘要环境
-  \NewDocumentEnvironment{abstract} {}
-  {%
-    % \pagestyle{plain}
-    % \pagenumbering{Roman}
-    % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
-    \pdfbookmark[0]{中文摘要}{abstract-zh} % 将摘要插入pdf书签，与上一行不可共存
-    \begin{center}
-      \kaishu\zihao{-2}{\textbf{
-        \uuline{南京大学本科生毕业论文（设计、作品）中文摘要}}}
-    \end{center}
-    {\bgroup
-      \kaishu\zihao{-4}
-      \tl_set:Nn \tabcolsep {0pt}
-      \tl_set:Nn \arraystretch {0.8}
-      \noindent
-      题目： \l_@@_info_title_tl \\
-      院系： \l_@@_info_dept_tl \\
-      专业： \l_@@_major_tl \\
-      本科生姓名： \l_@@_info_author_tl \\
-      指导教师（姓名、职称）：\l_@@_info_supv_full_tl \\
-      摘要：
-      \egroup
-    }
-    \kaishu\zihao{-4}\par%
-  }{%
-  \newpage
+\cs_new_protected:Npn \@@_print_abstract_ug:
+{
+  % \pagestyle{plain}
+  % \pagenumbering{Roman}
+  % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
+  \pdfbookmark[0]{中文摘要}{abstract-zh} % 将摘要插入pdf书签，与上一行不可共存
+  \begin{center}
+    \kaishu\zihao{-2}{\textbf{
+      \uuline{南京大学本科生毕业论文（设计、作品）中文摘要}}}
+  \end{center}
+  {\bgroup
+    \kaishu\zihao{-4}
+    \tl_set:Nn \tabcolsep {0pt}
+    \tl_set:Nn \arraystretch {0.8}
+    \noindent
+    题目： \l_@@_info_title_tl \\
+    院系： \l_@@_info_dept_tl \\
+    专业： \l_@@_major_tl \\
+    本科生姓名： \l_@@_info_author_tl \\
+    指导教师（姓名、职称）：\l_@@_info_supv_full_tl \\
+    摘要：
+    \egroup
   }
-
-  % 英文摘要
-  \NewDocumentEnvironment{englishabstract} {}
-  {%
-    \pagestyle{plain}
-    % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
-    \pdfbookmark[0]{英文摘要}{abstract-en} % 将摘要插入pdf书签，与上一行不可共存
-    \begin{center}
-        \kaishu\zihao{-2}{\textbf{\uuline{
-          南京大学本科生毕业论文（设计、作品）英文摘要}}}
-    \end{center}
-    {
-      \bgroup
-      THESIS: ~~\l_@@_info_title_en_tl \\
-      DEPARTMENT: ~~\l_@@_info_dept_en_tl \\
-      SPECIALIZATION: ~~\l_@@_major_en_tl \\
-      UNDERGRADUATE:~~\l_@@_info_author_en_tl \\
-      MENTOR:~~\l_@@_info_supv_full_en_tl \\
-      ABSTRACT:
-      \egroup
-    }
-    \zihao{-4}\par%
-  }{%
-  \cleardoublepage
-  \newpage
+  \kaishu\zihao{-4}\par%
+}
+\cs_new_protected:Npn \@@_print_abstract_en_ug:
+{
+  \pagestyle{plain}
+  % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
+  \pdfbookmark[0]{英文摘要}{abstract-en} % 将摘要插入pdf书签，与上一行不可共存
+  \begin{center}
+      \kaishu\zihao{-2}{\textbf{\uuline{
+        南京大学本科生毕业论文（设计、作品）英文摘要}}}
+  \end{center}
+  {
+    \bgroup
+    THESIS: ~~\l_@@_info_title_en_tl \\
+    DEPARTMENT: ~~\l_@@_info_dept_en_tl \\
+    SPECIALIZATION: ~~\l_@@_major_en_tl \\
+    UNDERGRADUATE:~~\l_@@_info_author_en_tl \\
+    MENTOR:~~\l_@@_info_supv_full_en_tl \\
+    ABSTRACT:
+    \egroup
   }
+  \zihao{-4}\par%
 }
 %    \end{macrocode}
 %
 % 
 % 研究生摘要环境
 %    \begin{macrocode}
+\cs_new_protected:Npn \@@_print_abstract_g:
+{
+  \pagestyle{plain}
+  \pagenumbering{Roman}
+  % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
+  \pdfbookmark[0]{中文摘要}{abstract-zh} % 将摘要插入pdf书签，与上一行不可共存
+  \begin{center}
+    \kaishu\zihao{-2}{\textbf{\uuline{
+      南京大学研究生毕业论文中文摘要首页用纸}}}
+  \end{center}
+  \bgroup
+  \noindent
+  \kaishu\zihao{4}
+  \tl_set:Nn \tabcolsep {0pt}
+  \tl_set:Nn \arraystretch {0.8}
+  毕业论文题目：\hspace{0.5em}\njuline{\l_@@_info_title_tl\hfill}\\
+  \njuline{\makebox[11em]{\l_@@_major_tl}}专业
+  \njuline{\makebox[4em]{\l_@@_info_grade_tl}}级
+  \str_if_eq:NNTF {\l_@@_info_degree_tl} { phd } {博}{硕}
+  士生姓名：\njuline{\hfill\l_@@_info_author_tl\hfill}\\
+  指导教师（姓名、职称）：\njuline{\hfill\l_@@_info_supv_full_tl\hfill}\par
+  \egroup
+  \kaishu\zihao{4}\par%
+}
+\cs_new_protected:Npn \@@_print_abstract_en_g:
+{
+  \pagestyle{plain}
+  % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
+  \pdfbookmark[0]{英文摘要}{abstract-en} % 将摘要插入pdf书签，与上一行不可共存
+  \begin{center}
+      \kaishu\zihao{-2}{\textbf{\uuline{
+        南京大学研究生毕业论文英文摘要首页用纸}}}
+  \end{center}
+  {
+    \bgroup
+    \zihao{4}
+    THESIS: ~~\l_@@_info_title_en_tl \\
+    SPECIALIZATION: ~~\l_@@_major_en_tl \\
+    POSTGRADUATE:~~\l_@@_info_author_en_tl \\
+    MENTOR:~~\l_@@_info_supv_full_en_tl\par
+    \egroup
+  }
+  \zihao{4}\par%
+}
+%    \end{macrocode}
+%
+% 
+% 判断学位
+%
+%    \begin{macrocode}
+\str_if_eq:NNTF {\l_@@_info_degree_tl} { ug } 
+{   
+  \NewDocumentEnvironment{abstract} {}
+  {\@@_print_abstract_ug:}{\newpage}
+  \NewDocumentEnvironment{englishabstract} {}
+  {\@@_print_abstract_en_ug:}{\cleardoublepage}
+}
 {
   \NewDocumentEnvironment{abstract} {}
-  {%
-    \pagestyle{plain}
-    \pagenumbering{Roman}
-    % \phantomsection\addcontentsline{toc}{chapter}{中文摘要} % 将摘要插入目录和pdf书签
-    \pdfbookmark[0]{中文摘要}{abstract-zh} % 将摘要插入pdf书签，与上一行不可共存
-    \begin{center}
-      \kaishu\zihao{-2}{\textbf{\uuline{
-        南京大学研究生毕业论文中文摘要首页用纸}}}
-    \end{center}
-    \bgroup
-    \noindent
-    \kaishu\zihao{4}
-    \tl_set:Nn \tabcolsep {0pt}
-    \tl_set:Nn \arraystretch {0.8}
-    毕业论文题目：\hspace{0.5em}\njuline{\l_@@_info_title_tl\hfill}\hspace{0em}\\
-    \njuline{\makebox[9em]{\l_@@_major_tl}}专业
-    \njuline{\makebox[4em]{\l_@@_info_grade_tl}}级
-    \str_if_eq:NNTF {\l_@@_info_degree_tl} { phd } {博}{硕}
-    士生姓名：\njuline{\hfill\l_@@_info_author_tl\hfill}\hspace{0em}\\
-    指导教师（姓名、职称）：\njuline{\hfill\l_@@_info_supv_full_tl\hfill}\hspace{0em}\par
-    \egroup
-    \kaishu\zihao{4}\par%
-  }{%
-  \newpage
-  }
-
-  % 英文摘要
+  {\@@_print_abstract_g:}{\newpage}
   \NewDocumentEnvironment{englishabstract} {}
-  {%
-    \pagestyle{plain}
-    % \phantomsection\addcontentsline{toc}{chapter}{英文摘要} % 将摘要插入目录和pdf书签
-    \pdfbookmark[0]{英文摘要}{abstract-en} % 将摘要插入pdf书签，与上一行不可共存
-    \begin{center}
-        \kaishu\zihao{-2}{\textbf{\uuline{
-          南京大学研究生毕业论文英文摘要首页用纸}}}
-    \end{center}
-    {
-      \bgroup
-      \zihao{4}
-      THESIS: ~~\l_@@_info_title_en_tl \\
-      SPECIALIZATION: ~~\l_@@_major_en_tl \\
-      POSTGRADUATE:~~\l_@@_info_author_en_tl \\
-      MENTOR:~~\l_@@_info_supv_full_en_tl\par
-      \egroup
-    }
-    \zihao{4}\par%
-  }{%
-  \cleardoublepage
-  \newpage
-  }
+  {\@@_print_abstract_en_g:}{\cleardoublepage}
 }
 %</class>
 %    \end{macrocode}
