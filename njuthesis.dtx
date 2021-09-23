@@ -179,8 +179,8 @@ through XeTeX.
   \nopreamble\nopostamble
     \file{README_EN.md}        {\from{\jobname.dtx}{readme-en}}
     \file{README.md}           {\from{\jobname.dtx}{readme-zh}}
-    \file{njuname.eps}         {\from{\jobname-logos.dtx}{njulogo}}
-    \file{njulogo.eps}         {\from{\jobname-logos.dtx}{njuname}}
+    \file{njuname.tikz}         {\from{\jobname-logos.dtx}{njulogo}}
+    \file{njulogo.tikz}         {\from{\jobname-logos.dtx}{njuname}}
 }
 
 \obeyspaces
@@ -1177,6 +1177,7 @@ through XeTeX.
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
 \RequirePackage{subcaption}
 \RequirePackage{wrapfig} % Wrap text around figures
+\RequirePackage{tikz}
 %    \end{macrocode}
 %
 % 必须以该顺序加载以下包
@@ -2242,9 +2243,9 @@ through XeTeX.
   \begin{spacing}{1.25}
   \vskip 0mm
   \hspace{-10mm}
-  \includegraphics[height=3cm]{njulogo}\smallskip 
+  \resizebox{!}{3cm}{\input{njulogo.tikz}}\smallskip 
   \begin{center}
-    \includegraphics[height=3.35cm]{njuname}
+    \resizebox{!}{3.35cm}{\input{njuname.tikz}}
     \vskip 10mm 
     {\zihao{1}\makebox[9em][s]{\bf{\songti\l_@@_info_type_tl_name}}}
     \vfill
@@ -2277,9 +2278,9 @@ through XeTeX.
   \begin{spacing}{1.25}
   \begin{center}
     \hspace{0pt} \vskip 5mm
-    \includegraphics[height=1.9cm]{njulogo}
+    \resizebox{!}{1.9cm}{\input{njulogo.tikz}}
     \vskip 10mm 
-    \includegraphics[height=2cm]{njuname}
+    \resizebox{!}{2cm}{\input{njuname.tikz}}
     \vskip 15mm 
     {\zihao{1}\makebox[10em][s]{\bf{\kaishu\l_@@_info_type_tl_name}}}
     \vskip 5mm
@@ -2351,7 +2352,7 @@ through XeTeX.
       {\l_@@_major_en_tl}
     }
     \vskip\stretch{2}
-    \includegraphics[width=2.5cm]{njulogo} \\
+    \resizebox{2.5cm}{!}{\input{njulogo.tikz}} \\
     \vskip 3mm
     \normalfont\l_@@_info_dept_en_tl\\
     {Nanjing~University}
