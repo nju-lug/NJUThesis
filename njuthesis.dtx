@@ -67,13 +67,12 @@ DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发�
 ### [南大TeX](https://tex.nju.edu.cn)编译
 
 1. 下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包`njuthesis.zip`
-2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的压缩包，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
+2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的压缩包，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.10.0以后的目录结构如下所示：
 
     ```shell
-    NJUThesis-master/
+    NJUThesis/
     │
-    │ njulogo.tikz
-    │ njuname.tikz
+    │ njulogo.sty
     │ njuthesis.bib
     │ njuthesis.cls
     │ njuthesis-sample.tex
@@ -167,6 +166,8 @@ through XeTeX.
 \generate{
   \usedir{tex/latex/njuthesis}
     \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
+    \file{njulogo.sty}         {\from{\jobname.dtx}{logo}
+                                \from{\jobname-logos.dtx}{logo}}
 %</install>
 %<*internal>
   \usedir{source/latex/njuthesis}
@@ -175,8 +176,6 @@ through XeTeX.
 %<*install>
   \usedir{doc/latex/njuthesis}
   \nopreamble\nopostamble
-    \file{njuname.tikz}        {\from{\jobname-logos.dtx}{njulogo}}
-    \file{njulogo.tikz}        {\from{\jobname-logos.dtx}{njuname}}
     \file{README.md}           {\from{\jobname.dtx}{readme-zh}}
 }
 
@@ -188,8 +187,7 @@ through XeTeX.
 \Msg{*                                                           *}
 \Msg{* The recommended directory is TDS:tex/latex/njuthesis      *}
 \Msg{*                                                           *}
-\Msg{*     njulogo.tikz                                          *}
-\Msg{*     njuname.tikz                                          *}
+\Msg{*     njulogo.sty                                          *}
 \Msg{*     njuthesis.cls                                         *}
 \Msg{*     njuthesis.ins                                         *}
 \Msg{*     README.md                                             *}
@@ -208,11 +206,14 @@ through XeTeX.
 \fi
 %</internal>
 %
-%<class>\NeedsTeXFormat{LaTeX2e}
-%<class>\RequirePackage{expl3}
+%<class|logo>\NeedsTeXFormat{LaTeX2e}
+%<class|logo>\RequirePackage{expl3}
 %<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.4 2021-09-22 18:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
-%<class>  {Thesis template for Nanjing University}
-%<class>\ProvidesExplClass{\ExplFileName}{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%<class>  { Thesis template for Nanjing University }
+%<logo>  { LaTeX3 Package for NJU Visual Identity }
+%<class>\ProvidesExplClass{njuthesis}
+%<logo>\ProvidesExplPackage{njulogo}
+%<!(readme-zh|readme-en)> {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
@@ -2254,6 +2255,9 @@ through XeTeX.
 % \end{macro}
 %
 % 
+%    \begin{macrocode}
+\RequirePackage{njulogo}
+%    \end{macrocode}
 % \begin{macro}{\@@_print_cover_ug:}
 % 本科封面
 %    \begin{macrocode}
@@ -2264,11 +2268,10 @@ through XeTeX.
   % Start
   \pdfbookmark{封面}{cover} % 将封面插入pdf书签
   \begin{spacing}{1.25}
-  \vskip 0mm
-  \hspace{-10mm}
-  \resizebox{!}{3cm}{\input{njulogo.tikz}}\smallskip 
+  \null\hspace{-10mm}
+  \njulogo{!}{3cm}\smallskip 
   \begin{center}
-    \resizebox{!}{3.35cm}{\input{njuname.tikz}}
+    \njuname{!}{3.35cm}
     \vskip 10mm 
     {\zihao{1}\makebox[9em][s]{\bf{\songti\l_@@_info_type_tl_name}}}
     \vfill
@@ -2300,10 +2303,10 @@ through XeTeX.
   \pdfbookmark{封面}{cover} % 将封面插入pdf书签
   \begin{spacing}{1.25}
   \begin{center}
-    \hspace{0pt} \vskip 5mm
-    \resizebox{!}{1.9cm}{\input{njulogo.tikz}}
+    \null\vskip 5mm
+    \njulogo{!}{1.9cm}
     \vskip 10mm 
-    \resizebox{!}{2cm}{\input{njuname.tikz}}
+    \njuname{4.4cm}{!}
     \vskip 15mm 
     {\zihao{1}\makebox[10em][s]{\bf{\kaishu\l_@@_info_type_tl_name}}}
     \vskip 5mm
@@ -2329,7 +2332,7 @@ through XeTeX.
   \thispagestyle{empty}
   \begin{spacing}{1.625}
     % TODO: 等待调整格式
-    \hspace{0pt} \vfill
+    \null\vfill
     {\bgroup
     \kaishu\zihao{3}
     \makebox[6em][s]{\bf\kaishu 学\hfill 号}：\MakeUppercase{\l_@@_info_id_tl}
@@ -2375,7 +2378,7 @@ through XeTeX.
       {\l_@@_major_en_tl}
     }
     \vskip\stretch{2}
-    \resizebox{2.5cm}{!}{\input{njulogo.tikz}} \\
+    \njulogo{2.5cm}{!}\par
     \vskip 3mm
     \normalfont\l_@@_info_dept_en_tl\\
     {Nanjing~University}

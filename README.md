@@ -40,13 +40,12 @@ DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发�
 ### [南大TeX](https://tex.nju.edu.cn)编译
 
 1. 下载包含[模板全部文件](https://github.com/nju-lug/NJUThesis/releases/latest)的压缩包`njuthesis.zip`
-2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的压缩包，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.9.0以后的目录结构如下所示：
+2. 登录[南大TeX](https://tex.nju.edu.cn)，点击New Project -> Upload Project上传刚刚得到的压缩包，上传后`njuthesis-sample.tex`、`njuthesis.cls`等文件应在根目录，0.10.0以后的目录结构如下所示：
 
     ```shell
-    NJUThesis-master/
+    NJUThesis/
     │
-    │ njulogo.tikz
-    │ njuname.tikz
+    │ njulogo.sty
     │ njuthesis.bib
     │ njuthesis.cls
     │ njuthesis-sample.tex
