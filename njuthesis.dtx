@@ -72,7 +72,7 @@ DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发�
     ```shell
     NJUThesis/
     │
-    │ njulogo.sty
+    │ nju-visual-identity.sty
     │ njuthesis.bib
     │ njuthesis.cls
     │ njuthesis-sample.tex
@@ -166,8 +166,9 @@ through XeTeX.
 \generate{
   \usedir{tex/latex/njuthesis}
     \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
-    \file{njulogo.sty}         {\from{\jobname.dtx}{logo}
-                                \from{\jobname-logos.dtx}{logo}}
+    \file{nju-visual-identity.sty}
+                               {\from{\jobname.dtx}{visual-identity}
+                                \from{nju-visual-identity.dtx}{visual-identity}}
 %</install>
 %<*internal>
   \usedir{source/latex/njuthesis}
@@ -187,7 +188,7 @@ through XeTeX.
 \Msg{*                                                           *}
 \Msg{* The recommended directory is TDS:tex/latex/njuthesis      *}
 \Msg{*                                                           *}
-\Msg{*     njulogo.sty                                          *}
+\Msg{*     nju-visual-identity.sty                               *}
 \Msg{*     njuthesis.cls                                         *}
 \Msg{*     njuthesis.ins                                         *}
 \Msg{*     README.md                                             *}
@@ -206,13 +207,13 @@ through XeTeX.
 \fi
 %</internal>
 %
-%<class|logo>\NeedsTeXFormat{LaTeX2e}
-%<class|logo>\RequirePackage{expl3}
+%<class|visual-identity>\NeedsTeXFormat{LaTeX2e}
+%<class|visual-identity>\RequirePackage{expl3}
 %<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.4 2021-09-22 18:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
-%<logo>  { LaTeX3 Package for NJU Visual Identity }
+%<visual-identity>  { LaTeX3 Package for NJU Visual Identity }
 %<class>\ProvidesExplClass{njuthesis}
-%<logo>\ProvidesExplPackage{njulogo}
+%<visual-identity>\ProvidesExplPackage{nju-visual-identity}
 %<!(readme-zh|readme-en)> {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
@@ -2256,7 +2257,7 @@ through XeTeX.
 %
 % 
 %    \begin{macrocode}
-\RequirePackage{njulogo}
+\RequirePackage{nju-visual-identity}
 %    \end{macrocode}
 % \begin{macro}{\@@_print_cover_ug:}
 % 本科封面
