@@ -60,8 +60,9 @@ through XeTeX.
 \generate{
   \usedir{tex/latex/njuthesis}
     \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
-    \file{njulogo.sty}         {\from{\jobname.dtx}{logo}
-                                \from{\jobname-logos.dtx}{logo}}
+    \file{nju-visual-identity.sty}
+                               {\from{\jobname.dtx}{visual-identity}
+                                \from{nju-visual-identity.dtx}{visual-identity}}
 %</install>
 %<*internal>
   \usedir{source/latex/njuthesis}
@@ -78,10 +79,9 @@ through XeTeX.
 \Msg{*                                                           *}
 \Msg{* The recommended directory is TDS:tex/latex/njuthesis      *}
 \Msg{*                                                           *}
-\Msg{*     njulogo.sty                                          *}
+\Msg{*     nju-visual-identity.sty                               *}
 \Msg{*     njuthesis.cls                                         *}
 \Msg{*     njuthesis.ins                                         *}
-\Msg{*     README.md                                             *}
 \Msg{*                                                           *}
 \Msg{* To produce the documentation, run the file njuthesis.dtx  *}
 \Msg{* through XeLaTeX.                                          *}
@@ -97,13 +97,13 @@ through XeTeX.
 \fi
 %</internal>
 %
-%<class|logo>\NeedsTeXFormat{LaTeX2e}
-%<class|logo>\RequirePackage{expl3}
+%<class|visual-identity>\NeedsTeXFormat{LaTeX2e}
+%<class|visual-identity>\RequirePackage{expl3}
 %<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.4 2021-09-22 18:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
-%<logo>  { LaTeX3 Package for NJU Visual Identity }
+%<visual-identity>  { LaTeX3 Package for NJU Visual Identity }
 %<class>\ProvidesExplClass{njuthesis}
-%<logo>\ProvidesExplPackage{njulogo}
+%<visual-identity>\ProvidesExplPackage{nju-visual-identity}
 %<!(readme-zh|readme-en)> {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
@@ -120,7 +120,7 @@ through XeTeX.
 \definecolor{njuyellow}{cmyk}{0,0.3,1,0}
 \begin{document}
   \DocInput{njuthesis.dtx}  
-  \DocInput{njuthesis-logos.dtx}
+  \DocInput{nju-visual-identity.dtx}
   \PrintIndex
 \end{document}
 %</driver>
@@ -2149,7 +2149,7 @@ through XeTeX.
 %
 % 
 %    \begin{macrocode}
-\RequirePackage{njulogo}
+\RequirePackage{nju-visual-identity}
 %    \end{macrocode}
 % \begin{macro}{\@@_print_cover_ug:}
 % 本科封面
@@ -2162,9 +2162,9 @@ through XeTeX.
   \pdfbookmark{封面}{cover} % 将封面插入pdf书签
   \begin{spacing}{1.25}
   \null\hspace{-10mm}
-  \njulogo{!}{3cm}\smallskip 
+  \njuemblem{!}{3cm}\smallskip 
   \begin{center}
-    \njuname{!}{3.35cm}
+    \njunamecn{!}{3.35cm}
     \vskip 10mm 
     {\zihao{1}\makebox[9em][s]{\bf{\songti\l_@@_info_type_tl_name}}}
     \vfill
@@ -2197,9 +2197,9 @@ through XeTeX.
   \begin{spacing}{1.25}
   \begin{center}
     \null\vskip 5mm
-    \njulogo{!}{1.9cm}
+    \njuemblem{!}{1.9cm}
     \vskip 10mm 
-    \njuname{4.4cm}{!}
+    \njunamecn{4.4cm}{!}
     \vskip 15mm 
     {\zihao{1}\makebox[10em][s]{\bf{\kaishu\l_@@_info_type_tl_name}}}
     \vskip 5mm
@@ -2271,7 +2271,7 @@ through XeTeX.
       {\l_@@_major_en_tl}
     }
     \vskip\stretch{2}
-    \njulogo{2.5cm}{!}\par
+    \njuemblem{2.5cm}{!}\par
     \vskip 3mm
     \normalfont\l_@@_info_dept_en_tl\\
     {Nanjing~University}
