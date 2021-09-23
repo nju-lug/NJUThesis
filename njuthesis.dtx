@@ -60,9 +60,9 @@ through XeTeX.
 \generate{
   \usedir{tex/latex/njuthesis}
     \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
-    \file{nju-visual-identity.sty}
-                               {\from{\jobname.dtx}{visual-identity}
-                                \from{nju-visual-identity.dtx}{visual-identity}}
+    \file{njuvisual.sty}
+                               {\from{\jobname.dtx}{njuvisual}
+                                \from{njuvisual.dtx}{njuvisual}}
 %</install>
 %<*internal>
   \usedir{source/latex/njuthesis}
@@ -79,7 +79,7 @@ through XeTeX.
 \Msg{*                                                           *}
 \Msg{* The recommended directory is TDS:tex/latex/njuthesis      *}
 \Msg{*                                                           *}
-\Msg{*     nju-visual-identity.sty                               *}
+\Msg{*     njuvisual.sty                                         *}
 \Msg{*     njuthesis.cls                                         *}
 \Msg{*     njuthesis.ins                                         *}
 \Msg{*                                                           *}
@@ -97,13 +97,13 @@ through XeTeX.
 \fi
 %</internal>
 %
-%<class|visual-identity>\NeedsTeXFormat{LaTeX2e}
-%<class|visual-identity>\RequirePackage{expl3}
+%<class|njuvisual>\NeedsTeXFormat{LaTeX2e}
+%<class|njuvisual>\RequirePackage{expl3}
 %<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.4 2021-09-22 18:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
-%<visual-identity>  { LaTeX3 Package for NJU Visual Identity }
+%<njuvisual>  { LaTeX3 Package for NJU Visual Identity }
 %<class>\ProvidesExplClass{njuthesis}
-%<visual-identity>\ProvidesExplPackage{nju-visual-identity}
+%<njuvisual>\ProvidesExplPackage{njuvisual}
 %<!(readme-zh|readme-en)> {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
@@ -120,7 +120,7 @@ through XeTeX.
 \definecolor{njuyellow}{cmyk}{0,0.3,1,0}
 \begin{document}
   \DocInput{njuthesis.dtx}  
-  \DocInput{nju-visual-identity.dtx}
+  \DocInput{njuvisual.dtx}
   \PrintIndex
 \end{document}
 %</driver>
@@ -2149,7 +2149,7 @@ through XeTeX.
 %
 % 
 %    \begin{macrocode}
-\RequirePackage{nju-visual-identity}
+\RequirePackage{njuvisual}
 %    \end{macrocode}
 % \begin{macro}{\@@_print_cover_ug:}
 % 本科封面
