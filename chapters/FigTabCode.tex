@@ -5,14 +5,16 @@
 所有图片默认存放在主目录下的\texttt{figure/}文件夹内
 
 \begin{figure}[htbp]
-    \includegraphics[width=0.5\textwidth]{njuname}
+    % \includegraphics[width=0.5\textwidth]{njuname}
+    \resizebox{0.5\textwidth}{!}{\input{njuname.tikz}}
     \caption{南京大学名称}
     \label{fig:njuname}
 \end{figure}
 你可以使用\lstinline|figure|环境插入图片，如\cref{fig:njuname}，代码如下:
 \begin{lstlisting}[style=LaTeX]
 \begin{figure}
-    \includegraphics[width=0.5\textwidth]{njuname}
+    % \includegraphics[width=0.5\textwidth]{njuname}
+    \resizebox{0.5\textwidth}{!}{\input{njuname.tikz}}
     \caption{南京大学名称}
 \end{figure}
 \end{lstlisting}
@@ -21,7 +23,8 @@
 % wrapfigure后面不能有空行
 \begin{wrapfigure}{r}{0cm}
     % \label{fig:njulogo}
-    \includegraphics[width=.15\textwidth]{njulogo}
+    % \includegraphics[width=.15\textwidth]{njulogo}
+    \resizebox{.15\textwidth}{!}{\input{njulogo.tikz}}
     \caption{校徽}
 \end{wrapfigure}
 \zhlipsum[3][name=xiangyu]
@@ -29,17 +32,20 @@
 \begin{figure}[htbp]
     \begin{subfigure}{.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{njulogo}  
+        % \includegraphics[width=\textwidth]{njulogo} 
+        \resizebox{\textwidth}{!}{\input{njulogo.tikz}} 
         \caption{logo1}
     \end{subfigure}
     \begin{subfigure}{.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{njulogo}  
+        % \includegraphics[width=\textwidth]{njulogo}  
+        \resizebox{\textwidth}{!}{\input{njulogo.tikz}} 
         \caption{logo2}
     \end{subfigure}
     \begin{subfigure}{.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{njulogo}  
+        % \includegraphics[width=\textwidth]{njulogo}  
+        \resizebox{\textwidth}{!}{\input{njulogo.tikz}} 
         \caption{logo3}
     \end{subfigure}
     \caption{njulogos}
