@@ -45,10 +45,8 @@ DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发�
     ```shell
     NJUThesis-master/
     │
-    ├─figure/
-    │   njulogo.pdf
-    │   njuname.pdf
-    │
+    │ njulogo.tikz
+    │ njuname.tikz
     │ njuthesis.bib
     │ njuthesis.cls
     │ njuthesis-sample.tex
