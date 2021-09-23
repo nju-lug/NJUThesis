@@ -24,6 +24,7 @@
 \iffalse
 %</internal>
 %
+<<<<<<< HEAD
 %<*readme-zh>
 # NJU Thesis
 
@@ -130,6 +131,8 @@ Please see [Chinese wiki](https://github.com/nju-lug/NJUThesis/wiki)。
 Copyright © NJU-LUG
 %</readme-en>
 %
+=======
+>>>>>>> e8c950d07a9d71f10608b9c7a18eadd7e024982c
 %<*internal>
 \fi
 \begingroup
@@ -175,9 +178,6 @@ through XeTeX.
     \file{\jobname.ins}        {\from{\jobname.dtx}{install}}
 %</internal>
 %<*install>
-  \usedir{doc/latex/njuthesis}
-  \nopreamble\nopostamble
-    \file{README.md}           {\from{\jobname.dtx}{readme-zh}}
 }
 
 \obeyspaces
@@ -229,7 +229,9 @@ through XeTeX.
 \definecolor{njublue}{cmyk}{0.8,0.5,0,0}
 \definecolor{njuyellow}{cmyk}{0,0.3,1,0}
 \begin{document}
-  \DocInput{njuthesis.dtx}
+  \DocInput{njuthesis.dtx}  
+  \DocInput{njuthesis-logos.dtx}
+  \PrintIndex
 \end{document}
 %</driver>
 % \fi
@@ -2555,4 +2557,3 @@ through XeTeX.
 %
 % \end{implementation}
 %
-% \PrintIndex
