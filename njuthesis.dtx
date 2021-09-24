@@ -203,13 +203,14 @@ through XeTeX.
 % \end{enumerate}
 % 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
 %
-% 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼顾友校thuthesis、fduthesis等优秀项目，构建了这一全新模板，力求通过\hologo{LaTeX3}语法和清淅的接口实现良好的易用性和可维护性。
+% 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼顾友校\href{https://ctan.org/pkg/thuthesis}{thuthesis}、\href{https://ctan.org/pkg/fduthesis}{fduthesis}等优秀项目，构建了这一全新模板，力求通过\hologo{LaTeX3}语法和清晰的接口实现良好的易用性和可维护性。
 %
 % 目前，本模板的主要维护者包括：
 %
 % \begin{itemize}
 %     \item 赵懿晨
 %     \item 熊煜
+%     \item 马畅
 % \end{itemize}
 %
 % \subsection{君\hologo{LaTeX}本当上手}
@@ -233,12 +234,16 @@ through XeTeX.
 % \subsubsection{自动安装}
 %
 % \pkg{njuthesis}已经于2021年9月12日\href{https://ctan.org/pkg/njuthesis}{发布在CTAN}（Comprehensive \hologo{TeX} Archive Network），将在明年进入\hologo{TeX}\,Live 2022。
-% 目前，您已经可以通过\pkg{tlmgr}或者\hologo{MiKTeX} Console等
-% 包管理器直接安装并使用最新的稳定版，此方法为我们的首要推荐。
-% 南大\hologo{TeX}已预置本模板，详见\ref{subsec:onlinecompile}。
-% 本地安装方法方法详见第\ref{subsec:localcompile} 节（TODO）。
+% 目前，南大\hologo{TeX}已预置本模板，详见\ref{subsec:onlinecompile}。
+% 您可以通过 \hologo{TeX}\,Live Manager 或者 \hologo{MiKTeX} Console 等
+% 图形化包管理器直接安装并使用最新的稳定版，也可以使用 \pkg{tlmgr}
+% \begin{ctexexam}
+%   tlmgr install njuthesis
+% \end{ctexexam}
+% 
+% 我们强烈建议使用这种安装方式。
 %
-% 然而CTAN版需要开发者手动上传，版本更新具有滞后性。如果使用时遇到了问题，推荐使用以下方式获取最新版本。
+% 另一方面，CTAN版需要开发者手动上传，版本更新具有滞后性。如果使用时遇到了问题，推荐使用以下方式获取最新正式版。
 % 
 % \subsubsection{下载正式版}
 % \label{subsubsec:downloadrtm}
@@ -250,9 +255,10 @@ through XeTeX.
 %\end{itemize}
 % 在国内使用时，后者具有显著更快的速度。
 %
-% \subsubsection{下载开发版}
+% \subsubsection{下载源代码}
 %
-% 开发版具有最新的进度，推荐需要最新补丁或者参与开发的同学下载最新的\file{dtx}文件自行安装
+% 最新开发进度会提交在位于Github仓库的源代码。请注意，如果想要使用模板，请无论如何都不要从编译源代码开始。
+% 我们只推荐希望参与开发的同学下载\file{dtx}文件。
 % \begin{itemize}
 %  \item \href{https://github.com/nju-lug/NJUThesis/}{Github 仓库}
 %  \item \href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像}
@@ -422,8 +428,7 @@ through XeTeX.
 %     degree = <(ug)|mg|mf|phd>
 %   \end{syntax}
 %
-% 选择学位，可选：
-% \opt{ug}（默认本科），\opt{mg}即学术硕士，\opt{mf}，\opt{phd}。
+% 选择学位，分别为本科、学术型硕士、专业硕士、博士。
 % \end{function}
 % 
 % \begin{function}[added=2021-09-07]{nlcover}
@@ -431,7 +436,7 @@ through XeTeX.
 %     nlcover = <\TTF>
 %   \end{syntax}
 %
-% 通过此项可选择是否添加国家图书馆封面，本选项仅对于研究生有效
+% 通过此项可选择是否添加国家图书馆封面。由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
 % \end{function}  
 %
 % \begin{function}[added=2021-09-07]{type}
@@ -439,7 +444,7 @@ through XeTeX.
 %     type = <(thesis)|design>
 %   \end{syntax}
 %
-% 用于选择文档类型并将相关字段输出在封面和摘要页。可选值包括\opt{thesis}（表示毕业论文）和\opt{design}（表示毕业设计），缺省值为thesis。
+% 用于选择文档类型并将相关字段输出在封面和摘要页，可选值分别为毕业论文和毕业设计。
 % 
 % \end{function}
 %   
@@ -451,23 +456,15 @@ through XeTeX.
 %
 % 如果希望更改本模板使用的字体，请填写以下两个选项以覆盖操作系统检测得到的设置。
 % 
-% \begin{function}[added=2021-09-07]{customchinesefont}
+% \begin{function}[added=2021-09-07]{customchinesefont,customlatinfont}
 %   \begin{syntax}
 %     customchinesefont = <(windows)|macos|fandol|founder|noto|none>
-%   \end{syntax}
-%
-% 手动指定中文字体，可选：
-% \opt{windows}（默认）， \opt{macos}， \opt{fandol}， \opt{founder}，\opt{noto}，\opt{none}。
-% \end{function}
-%
-% \begin{function}[added=2021-09-07]{customlatinfont}
-%   \begin{syntax}
 %     customlatinfont = <(windows)|macos|gyre|none>
 %   \end{syntax}
 %
-% 手动指定西文字体，可选：
-% \opt{windows}（默认）， \opt{macos}， \opt{gyre}， \opt{none}。
+% 手动指定字体。
 % \end{function}
+%
 %
 % 根据学校论文格式的要求，本模板使用的中文字体主要有{\songti 宋体}、{\heiti 黑体}、{\kaishu 楷体}、{\fangsong 仿宋}四种；
 % 西文字体主要有衬线体（\textup{serif}）、无衬线体（\textsf{sans-serif}）和等宽字体（\texttt{monospace}）三种。
@@ -476,38 +473,53 @@ through XeTeX.
 % 因此，本模板对于中文字体和西文字体都提供了多种字体配置。
 %
 % 本模板提供的中文字体配置如表 \ref{tab:chinesefontset} 所示。
-% 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置（见表中前三行，Windows 和 macOS 以外的系统采用 Fandol 配置）。
-% 此外，我们也单独提供了方正和思源（\href{https://www.google.com/get/noto/#serif-hans}{思源宋体}、\href{https://www.google.com/get/noto/#sans-hans}{思源黑体}）两套中文字体配置。
+% 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置
+% （见表中前三行，Windows 和 macOS 以外的系统采用 Fandol 配置）。
+% 此外，我们也单独提供了方正和思源两套中文字体配置。
 %
 % \begin{table}[htbp]
 %   \centering
 %   \begin{talltblr}[
-%    caption = {中文字体配置列表},
-%    label = {tab:chinesefontset},
-%    note{a} = {使用方正小标宋作为方正书宋的粗体，使用方正黑体作为方正细黑一的粗体},
-%    note{b} = {思源字体并不包含楷书和仿宋，而Adobe楷体和仿宋难以直接下载，因此使用方正字体代替；考虑到获取字体的难易程度，采用 \href{https://www.google.com/get/noto}{noto} 字体表示思源字体},
+%   caption = {中文字体配置列表},
+%   label = {tab:chinesefontset},
+%   note{a} = {使用
+%     \href{http://www.foundertype.com/index.php/FontInfo/index/id/164}{方正小标宋}
+%     作为方正书宋的粗体，使用
+%     \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}{方正黑体}
+%     作为方正细黑一的粗体},
+%   note{b} = {思源字体并不包含楷书和仿宋，而Adobe楷体和仿宋难以直接下载，
+%     因此使用方正字体代替；考虑到获取字体的难易程度，采用
+%     \href{https://www.google.com/get/noto}{noto} 字体表示思源字体},
 %   ] { cell{2}{2,4} = {njuyellow}, cell{4}{4} = {njuyellow}, colspec = {ccccc} }
-%     \toprule
-%     配置名称 & 宋体 & 黑体 & 楷书 & 仿宋 \\
-%     \midrule
-%     Windows          & 中易宋体    & 中易黑体    & 中易楷体    & 中易仿宋 \\
-%     macOS            & 华文宋体    & 华文黑体    & 华文楷体    & 华文仿宋 \\
-%     \href{https://www.ctan.org/pkg/fandol} {Fandol}           
-%                      & Fandol宋体  & Fandol黑体  & Fandol楷体  & Fandol仿宋 \\
-%     \href{https://www.foundertype.com}     {方正}\TblrNote{a} 
-%                      & 方正书宋    & 方正细黑一  & 方正楷体    & 方正仿宋 \\
-%     \href{https://github.com/adobe-fonts}  {思源}\TblrNote{b} 
-%                      & 思源宋体    & 思源黑体    & 方正楷体    & 方正仿宋 \\
-%     \bottomrule
+%   \toprule
+%   配置名称   & 宋体        & 黑体        & 楷书        & 仿宋 \\
+%   \midrule
+%   Windows    & 中易宋体    & 中易黑体    & 中易楷体    & 中易仿宋 \\
+%   macOS      & 华文宋体    & 华文黑体    & 华文楷体    & 华文仿宋 \\
+%   \href{https://www.ctan.org/pkg/fandol} {Fandol}           
+%              & Fandol宋体  & Fandol黑体  & Fandol楷体  & Fandol仿宋 \\
+%   \href{https://www.foundertype.com}     {方正}\TblrNote{a} 
+%   & \href{http://www.foundertype.com/index.php/FontInfo/index/id/151}{方正书宋}
+%   & \href{http://www.foundertype.com/index.php/FontInfo/index/id/161}{方正细黑一}
+%   & \href{http://www.foundertype.com/index.php/FontInfo/index/id/137}{方正楷体}
+%   & \href{http://www.foundertype.com/index.php/FontInfo/index/id/128}{方正仿宋} \\
+%   \href{https://github.com/adobe-fonts}  {思源}\TblrNote{b} 
+%   & \href{https://fonts.google.com/noto/specimen/Noto+Serif+SC}{思源宋体}
+%   & \href{https://fonts.google.com/noto/specimen/Noto+Sans+SC}{思源黑体}
+%                                          & 方正楷体    & 方正仿宋 \\
+%   \bottomrule
 %   \end{talltblr}
 % \end{table}
 %
-% 由于各操作系统对自带字体的支持程度不同，本模板对不同字体加粗的方式有所差别，表 \ref{tab:chinesefontset} 中，黄色底色的字体采用算法加粗。
+% 由于各操作系统对自带字体的支持程度不同，本模板对不同字体加粗的方式有所差别，
+% 表 \ref{tab:chinesefontset} 中，黄色底色的字体采用算法加粗。
 % 除此以外，各种字体在设计上也存在差异，因此本模板在不同操作系统下编译的结果可能存在细微不同，使用时请注意。
-% 若想要获得与 Word 版本模板最为贴近的体验，可以通过手动安装 Windows 自带的中易宋体、中易黑体、中易楷体和中易仿宋，并设置使用 Windows 字体来实现。
+% 若想要获得与 Word 版本模板最为贴近的体验，
+% 可以通过手动安装 Windows 自带的中易宋体、中易黑体、中易楷体和中易仿宋，并设置使用 Windows 字体来实现。
 %
 % 本模板提供的西文字体配置如表 \ref{tab:latinfontset} 所示。
-% 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置（见表中前三行，Windows 和 macOS 以外的系统采用 \opt{gyre} 配置）。
+% 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置
+% （见表中前三行，Windows 和 macOS 以外的系统采用 \opt{gyre} 配置）。
 %
 % \begin{table}[htbp]
 %   \centering
@@ -728,7 +740,16 @@ through XeTeX.
 %   \end{table}
 % \end{ctexexam}
 %
+% \begin{function}{\multirow,\multicolumn}
+%   \begin{syntax}
+%     \tn{multirow}\Arg{nrows}\oarg{bigstructs}\Arg{width}[\oarg{fixup}\Arg{text}
+%     \tn{multicolumn}\Arg{nrows}\Arg{width}\Arg{text}
+%   \end{syntax}
+%
 % TODO：\pkg{multirow}\pkg{multicol}合并单元格
+% \url{http://www.ctex.org/documents/packages/table/multirow.htm}
+%
+% \end{function}
 %
 % \subsubsection{代码}
 %
