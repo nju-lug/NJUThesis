@@ -12,7 +12,7 @@
 
 ## 快速开始
 
-从0.9.0版以后，本模板以DocStrip(`.dtx`)格式进行维护。常规的`.cls`格式文件可从Releases页面下载或使用以下方法提取。
+从0.9.0版以后，本模板以DocStrip(`.dtx`)格式进行维护。常规的`.cls`和`.sty`格式文件可从Releases页面下载或使用以下方法提取。
 
 ### 关于DocStrip文件
 
@@ -45,13 +45,13 @@ DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发�
     ```shell
     NJUThesis/
     │
-    │ njulogo.sty
     │ njuthesis.bib
     │ njuthesis.cls
     │ njuthesis-sample.tex
+    │ njuvisual.sty
     ```
 
-3. 在南大TeX项目内页面左上角的`Menu`中，将编译器改为`XeLaTeX`
+3. 在南大TeX项目内页面左上角的`Menu`中，将编译器改为`XeLaTeX`或`LuaLaTeX`
 4. 编写TeX文档
 
 ### 其他
