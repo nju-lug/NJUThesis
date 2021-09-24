@@ -79,9 +79,9 @@ through XeTeX.
 \Msg{*                                                           *}
 \Msg{* The recommended directory is TDS:tex/latex/njuthesis      *}
 \Msg{*                                                           *}
-\Msg{*     njuvisual.sty                                         *}
 \Msg{*     njuthesis.cls                                         *}
 \Msg{*     njuthesis.ins                                         *}
+\Msg{*     njuvisual.sty                                         *}
 \Msg{*                                                           *}
 \Msg{* To produce the documentation, run the file njuthesis.dtx  *}
 \Msg{* through XeLaTeX.                                          *}
@@ -99,12 +99,12 @@ through XeTeX.
 %
 %<class|visual>\NeedsTeXFormat{LaTeX2e}
 %<class|visual>\RequirePackage{expl3}
-%<!(readme-zh|readme-en)> \GetIdInfo  $Id: njuthesis.dtx 0.9.4 2021-09-22 18:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.10.0 2021-09-24 12:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
-%<visual>  { LaTeX3 Package for NJU Visual Identity }
 %<class>\ProvidesExplClass{njuthesis}
+%<visual>  { LaTeX3 Package for NJU Visual Identity }
 %<visual>\ProvidesExplPackage{njuvisual}
-%<!(readme-zh|readme-en)> {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%<class|visual>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
@@ -121,6 +121,7 @@ through XeTeX.
 \begin{document}
   \DocInput{njuthesis.dtx}  
   \DocInput{njuvisual.dtx}
+  \PrintChanges
   \PrintIndex
 \end{document}
 %</driver>
@@ -132,20 +133,28 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.9.4 \\ Released 2021-09-22}
+% \date{v0.10.0 \\ Released 2021-09-24}
+%
+% \changes{v0.9}{2021/09/15}{使用DocStrip合并模板文件。}
+% \changes{v0.10}{2021/09/24}{添加南京大学视觉识别系统。}
 %
 % \maketitle
 %
 % \begin{abstract}
-% 南京大学学位论文\hologo{LaTeX}模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文，旨在为同学提供毕业论文书写的方便。
+% 南京大学学位论文\hologo{LaTeX}模板基于本科生院的论文撰写规范制作，
+% 同时参考研究生院提供的硕士、博士学位材料包，
+% 用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文，
+% 旨在为同学提供毕业论文书写的方便。
 % \end{abstract}
 %
 % \def\abstractname{Abstract}
 % \begin{abstract}
-% The \textsc{NJuThesis} class is intended for typesetting Nanjing University thesis with \hologo{LaTeX}, providing support for bachelor, master, and doctoral thesis. 
+% The \textsc{NJuThesis} class is intended for 
+% typesetting Nanjing University thesis with \hologo{LaTeX}, 
+% providing support for bachelor, master, and doctoral thesis. 
 % \end{abstract}
 %
-% \vspace{1cm}
+% \vspace{2cm}
 % \def\abstractname{特别声明}
 % \begin{abstract}
 % 请注意，本模板仍未完成开发，出现bug或者文档不完善属于正常情况，提issue或Pull Request即可。
@@ -2147,7 +2156,8 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% 
+% 载入南京大学识别视觉系统。
+% \changes{v0.10}{2021/09/24}{新增南京大学识别视觉系统。}
 %    \begin{macrocode}
 \RequirePackage{njuvisual}
 %    \end{macrocode}
@@ -2200,6 +2210,8 @@ through XeTeX.
     \njuemblem{!}{1.9cm}
     \vskip 10mm 
     \njuname{4.4cm}{!}
+    \par\vskip -2mm 
+    \njuname*{4.4cm}{!}
     \vskip 15mm 
     {\zihao{1}\makebox[10em][s]{\bf{\kaishu\l_@@_info_type_tl_name}}}
     \vskip 5mm
