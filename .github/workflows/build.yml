@@ -32,7 +32,7 @@ jobs:
         with:
           root_file: njuthesis-sample.tex
           latexmk_use_${{ matrix.latex }}: true
-          args: '-bibtex'
+          args: "-bibtex"
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
@@ -62,27 +62,27 @@ jobs:
       - name: Set Version
         run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
-      - name: Zip Release Source
-        run: |
-          zip -r njuthesis-$VERSION.zip . -x ".git/*" "*.ins" ".github/*" ".gitignore" "*.dtx" ".pdf"
-          
       - name: Compile to PDF
         uses: HermitSun/latex-action@v3
         with:
           root_file: njuthesis.dtx
           latexmk_use_${{ matrix.latex }}: true
-          args: '-bibtex'
+          args: "-bibtex"
+          pre_compile: "xetex njuthesis.dtx"
           post_compile: "mv njuthesis.pdf njuthesis-$VERSION.pdf"
+      
+      - name: Zip Release Source
+        run: |
+          zip -r njuthesis-$VERSION.zip .vscode chapters/ latexmkrc LICENSE Makefile njuthesis.bib njuthesis.cls njuthesis-sample.tex njuvisual.sty README.md
 
       - name: Zip CTAN Source
         run: |
           mkdir -p njuthesis/
-          cp njuthesis-$VERSION.pdf njuthesis/njuthesis-$VERSION.pdf
-          cp README.md njuthesis/README_ZH_CN.md 
-          cp README_EN.md njuthesis/README.md
-          cp -r figure/ LICENSE njuthesis.dtx njuthesis/
+          cp njuthesis-$VERSION.pdf njuthesis/njuthesis.pdf
+          cp README-ctan.md njuthesis/README.md
+          cp LICENSE njuthesis.dtx njuvisual.dtx njuthesis.ins njuthesis/
           zip -r njuthesis-ctan-$VERSION.zip njuthesis/
-          
+
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
