@@ -223,11 +223,15 @@ through XeTeX.
 % \subsubsection{自动安装}
 %
 % \pkg{njuthesis}已经于2021年9月12日\href{https://ctan.org/pkg/njuthesis}{发布在CTAN}（Comprehensive \hologo{TeX} Archive Network），将在明年进入\hologo{TeX}\,Live 2022。
-% 目前，您已经可以通过\pkg{tlmgr}或者\hologo{MiKTeX} Console等包管理器直接安装并使用最新的稳定版，方法详见第\ref{subsec:localcompile} 节。
+% 目前，您已经可以通过\pkg{tlmgr}或者\hologo{MiKTeX} Console等
+% 包管理器直接安装并使用最新的稳定版，此方法为我们的首要推荐。
+% 南大\hologo{TeX}已预置本模板，详见\ref{subsec:onlinecompile}。
+% 本地安装方法方法详见第\ref{subsec:localcompile} 节（TODO）。
 %
 % 然而CTAN版需要开发者手动上传，版本更新具有滞后性。如果使用时遇到了问题，推荐使用以下方式获取最新版本。
 % 
 % \subsubsection{下载正式版}
+% \label{subsubsec:downloadrtm}
 %
 % 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，下载方式包括：
 % \begin{itemize}
@@ -243,6 +247,34 @@ through XeTeX.
 %  \item \href{https://github.com/nju-lug/NJUThesis/}{Github 仓库}
 %  \item \href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像}
 %\end{itemize}
+%
+% \subsection{文件构成}
+%
+% \cls{njuthesis}由数量众多的文件组成，\emph{所有可能遇到的}文件如表 \ref{tab:njuthesisfiles} 所示。
+%
+% \begin{table}[ht]
+%   \caption{\cls{njuthesis}文件构成}
+%   \label{tab:njuthesisfiles}
+%   \centering
+%   \begin{tabular}{lp{18em}}
+%     \toprule
+%     名称 & 说明 \\
+%     \midrule
+%     \file{.vscode}                & Visual Studio Code 配置文件 \\
+%     \file{latexmkrc}              & latexmk 配置文件 \\
+%     \file{LICENSE}                & 许可证 \\
+%     \file{njuthesis.bib}          & 示例参考文献列表 \\
+%     \file{njuthesis.cls}          & 模板文档类 \\
+%     \file{njuthesis.dtx}          & 文档类源代码 \\
+%     \file{njuthesis.ins}          & 文档类安装脚本 \\
+%     \file{njuthesis.pdf}          & 用户手册（本文档） \\
+%     \file{njuthesis-sample.tex}   & 示例文档，不妨以此为基础撰写论文 \\
+%     \file{njuvisual.dtx}          & 视觉识别系统源代码 \\
+%     \file{njuvisual.sty}          & 南京大学视觉识别系统 \\
+%     \file{README.md}              & 自述文件 \\
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
 %
 % \subsection{本地编译}
 % \label{subsec:localcompile}
@@ -277,11 +309,11 @@ through XeTeX.
 %
 % \subsubsection{选择编辑器}
 %
-% 配置完编译器后，还需要一个\textbf{文本编辑器}作为前端来完成\texttt{.tex}文件内容的写作。
+% 配置完编译器后，还需要一个\textbf{文本编辑器}作为前端来完成\file{.tex}文件内容的写作。
 %
-% 至今仍有相当一部分人认为Windows自带的\textit{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\textbf{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio 等，顺手就行。
+% 至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\textbf{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio 等，顺手就行。
 %
-% 若使用 LaTeX Workshop 插件，本项目在|.vscode/|中提供一份简易配置，可以省略初始配置步骤直接使用。
+% 若使用 \hologo{LaTeX} Workshop 插件，本项目在|.vscode/|中提供一份简易配置，可以省略初始配置步骤直接使用。
 %
 % \subsubsection{编译顺序}
 % 假设即将使用的文件名为\file{mynjuthesis.tex}
@@ -315,6 +347,7 @@ through XeTeX.
 % \end{ctexexam}
 %
 % \subsection{在线编译}
+% \label{subsec:onlinecompile}
 %
 % 相信你在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{其实这三点都是对广大的Windows用户说的，同一个模板在Linux编译可以节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
 %
@@ -325,18 +358,17 @@ through XeTeX.
 % \subsubsection{操作步骤}
 %
 % \begin{enumerate}
-%     \item 下载模板全部文件
 %     \item 访问\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}，点击界面右上方Register，使用\emph{南京大学邮箱}注册账号并登录
-%     \item 点击New Project -> Upload Project上传刚刚得到的zip文件，上传后njuthesis.tex、njuthesis.cls等文件应在根目录，目录结构如{{sec:directory}}所示
 %     \item 在项目页面左上角的Menu中，将编译器改为\hologo{XeLaTeX}或者\hologo{LuaLaTeX}
-%     \item 编写论文
+%     \item 仿照\file{njuthesis-sample.tex}编写论文
 %     \item 点击Compile按钮进行编译和预览
-%     \item 点击编译按钮右侧第三个按钮下载产物
 % \end{enumerate}
 %
-% \subsubsection{关于Overleaf平台}
+% 注意，由于南大\hologo{TeX}已预装\cls{njuthesis}，可以直接编写正文，无需\file{.cls}等格式文件。如果需要使用新版模板，也可以点击New Project -> Upload Project上传 \ref{subsubsec:downloadrtm} 得到的压缩文件。
 %
-% 由于\href{https://www.overleaf.com/}{Overleaf平台}的\hologo{TeX}\,Live版本停留在2020，\texttt{cleveref}包在引用章节时会生成错误的标签，引发格式错误；而南大\hologo{TeX}通过及时更新规避了这一问题。因此\emph{请务必不要使用Overleaf官网进行编译}。
+% \subsubsection{关于Overleaf}
+%
+% 由于\href{https://www.overleaf.com/}{Overleaf平台}的\hologo{TeX}\,Live版本停留在2020，\texttt{cleveref}包在引用章节时会生成错误的标签，引发格式错误；而南大\hologo{TeX}通过及时更新规避了若干问题。因此\emph{请务必不要使用Overleaf官网进行编译}。
 %
 %
 %
@@ -369,7 +401,7 @@ through XeTeX.
 %
 % \subsection{模板选项}
 %
-% 模板选项位于|\documentclass|后的方括号内，用于指定模板的行为。
+% 模板选项位于\tn{documentclass}后的方括号内，用于指定模板的行为。
 % 下文中尖括号内列出了若干个允许的选项，其中加粗的为默认选项。
 %
 %
@@ -494,6 +526,9 @@ through XeTeX.
 % \subsection{个人信息}
 %
 % \begin{function}{\njusetup}
+%   \begin{syntax}
+%     \tn{njusetup}\marg{键值列表}
+%   \end{syntax}
 % 
 % 定义了用于文档封面的诸多属性参数，
 % 写作时修改相应字符串即可。
@@ -591,7 +626,13 @@ through XeTeX.
 %
 % \subsubsection{文字}
 %
-% 为了避免原生|\uline|命令在中文环境下不能正常换行的问题，本模板使用|\njuline|作为替代方案，分别对\hologo{XeLaTeX} 的\pkg{xeCJKfntef}包和\hologo{LuaLaTeX}的\pkg{lua-ul}包中的下划线命令进行了包装。
+% \begin{function}[added=2021-09-22]{\njuline}
+%   \begin{syntax}
+%     \tn{njuline}\Arg{文字}
+%   \end{syntax}
+%
+% 为了避免原生\tn{uline}命令在中文环境下不能正常换行的问题，本模板使用\tn{njuline}作为替代方案，分别对\hologo{XeLaTeX} 的\pkg{xeCJKfntef}包和\hologo{LuaLaTeX}的\pkg{lua-ul}包中的下划线命令进行了包装。
+% \end{function}
 %
 % \subsubsection{图片}
 %
@@ -601,7 +642,7 @@ through XeTeX.
 %   \graphicspath{{img/}{images/}}
 % \end{ctexexam}
 %
-% 下面这个例子展示了如何插入一张名称为\file{myfig.jpg}，宽度占页面文字宽度一半的图片。注意标签命令|\label|必须放在图注命令|\caption|之后。
+% 下面这个例子展示了如何插入一张名称为\file{myfig.jpg}，宽度占页面文字宽度一半的图片。注意标签命令\tn{label}必须放在图注命令\tn{caption}之后。
 %
 % \begin{ctexexam}
 %   \begin{figure}[h]
@@ -623,7 +664,7 @@ through XeTeX.
 %   <text>
 % \end{ctexexam}
 % 
-% TODO：subfigure \pkg{subcaption}
+% TODO：使用\pkg{subcaption}的\env{subfigure}实现多张图片并排的效果
 %
 % \begin{ctexexam}
 %   \begin{figure}
@@ -648,7 +689,9 @@ through XeTeX.
 %
 % \subsubsection{表格}
 %
-% 下面这个例子展示了如何插入一张表格。通过\pkg{booktabs}提供的|\toprule|、|\midrule|和|\bottomrule|，我们可以很轻松地绘制出一张漂亮规范的三线表。
+% 下面这个例子展示了如何插入一张表格。
+%
+% 通过\pkg{booktabs}提供的\tn{toprule}、\tn{midrule}和\tn{bottomrule}，我们可以很轻松地绘制出一张漂亮规范的三线表。
 % \begin{ctexexam}
 %   \begin{table}[htbp]
 %       \caption{我的表}
@@ -793,7 +836,7 @@ through XeTeX.
 % 
 % \subsubsection{附录页}
 %
-% 附录放在|\appendix|命令后，以英文字母进行编号，正常通过|\chapter{}|编写
+% 附录放在|\appendix|命令后，以英文字母进行编号，正常通过|chapter{}|编写
 %
 % 是否需要索引？
 % 
@@ -804,7 +847,7 @@ through XeTeX.
 %
 % 默认参考文献存储于主目录下的\file{njuthesis.bib}，直接向其中粘贴新的参考文献即可。
 %
-% 如果希望额外添加参考文献列表，可以在主文件\file{mynjuthesis.tex}的导言区中多次调用|\addbibresource|命令：
+% 如果希望额外添加参考文献列表，可以在主文件\file{mynjuthesis.tex}的导言区中多次调用\tn{addbibresource}命令：
 %
 % \begin{ctexexam}
 %   \addbibresource{file1.bib}
@@ -830,7 +873,45 @@ through XeTeX.
 %
 % |\cite{myref}|，|\citeauthor{myref}|
 %
+% \subsection{视觉识别系统}
 % 
+% \begin{function}[added=2021-09-24]{\njuemblem}
+%   \begin{syntax}
+%     \tn{njuemblem}\oarg{颜色}\Arg{宽度}\Arg{高度}
+%   \end{syntax}
+%
+% 生成指定颜色和大小的南京大学校徽
+% \end{function}
+%
+% \begin{function}[added=2021-09-24]{\njuname}
+%   \begin{syntax}
+%     \tn{njuname}\oarg{颜色}\Arg{宽度}\Arg{高度}
+%     \tn{njuname*}\oarg{颜色}\Arg{宽度}\Arg{高度}
+%   \end{syntax}
+%
+% 生成指定颜色和大小的南京大学校名，加星号的为英文校名
+% \end{function}
+%
+% 
+% \begin{function}[added=2021-09-24]{\njumotto}
+%   \begin{syntax}
+%     \tn{njumotto}\oarg{颜色}\Arg{宽度}\Arg{高度}
+%   \end{syntax}
+%
+% 生成指定颜色和大小的南京大学校训
+% \end{function}
+%
+%
+% \begin{function}[added=2021-09-24]{\njuspirit}
+%   \begin{syntax}
+%     \tn{njuspirit}\oarg{颜色}\Arg{宽度}\Arg{高度}
+%   \end{syntax}
+%
+% 生成指定颜色和大小的南京大学校徽
+% \end{function}
+%
+%
+%
 % \end{documentation}
 %
 % \begin{implementation}
@@ -1057,7 +1138,7 @@ through XeTeX.
 %    \end{macrocode}
 %
 % \begin{macro}{\njuline}
-% 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。\pkg{lua-ul}中需要在结尾使用|\null|保护尾部空白。
+% 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。\pkg{lua-ul}中需要在结尾使用\tn{null}保护尾部空白。
 %    \begin{macrocode}
 \sys_if_engine_xetex:T
 {
