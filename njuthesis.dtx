@@ -135,6 +135,14 @@ through XeTeX.
 %
 % \date{v0.10.0 \\ Released 2021-09-24}
 %
+% \changes{v0.1}{2021/09/04}{开始开发。}
+% \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
+% \changes{v0.3}{2021/09/09}{使用自动构建工具进行测试。}
+% \changes{v0.4}{2021/09/09}{将个人信息使用内置命令输入。}
+% \changes{v0.5}{2021/09/10}{新增了对第二导师的支持。}
+% \changes{v0.6}{2021/09/10}{封装个人信息，实现自动打包发布。}
+% \changes{v0.7}{2021/09/11}{增加对研究生模板的支持，在CTAN公开发布。}
+% \changes{v0.8}{2021/09/12}{修复已知问题，进行公开宣传。}
 % \changes{v0.9}{2021/09/15}{使用DocStrip合并模板文件。}
 % \changes{v0.10}{2021/09/24}{添加南京大学视觉识别系统。}
 %
@@ -524,10 +532,11 @@ through XeTeX.
 % 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。
 %
 % \subsection{个人信息}
+% \changes{v0.6}{2021/09/10}{改用键值对输入信息。}
 %
-% \begin{function}{\njusetup}
+% \begin{function}[added=2021-09-10]{\njusetup}
 %   \begin{syntax}
-%     \tn{njusetup}\marg{键值列表}
+%     \tn{njusetup}\Arg{键值列表}
 %   \end{syntax}
 % 
 % 定义了用于文档封面的诸多属性参数，
@@ -634,13 +643,24 @@ through XeTeX.
 % 为了避免原生\tn{uline}命令在中文环境下不能正常换行的问题，本模板使用\tn{njuline}作为替代方案，分别对\hologo{XeLaTeX} 的\pkg{xeCJKfntef}包和\hologo{LuaLaTeX}的\pkg{lua-ul}包中的下划线命令进行了包装。
 % \end{function}
 %
-% \subsubsection{图片}
+% \begin{function}{\footnote}
+%   \begin{syntax}
+%     \tn{footnote}\Arg{脚注}
+%   \end{syntax}
 %
-% 所有图片默认存放在主目录下的\texttt{figure/}文件夹内，允许的文件名包括\file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}。使用自己的图片时，需要在导言区通过以下命令添加图片存放路径。
+% 添加脚注
+% \end{function}
 %
-% \begin{ctexexam}
-%   \graphicspath{{img/}{images/}}
-% \end{ctexexam}
+% 
+%  \subsubsection{图片}
+%
+% \begin{function}{\graphicspath}
+%   \begin{syntax}
+%     \tn{graphicspath}\{\marg{路径1}\marg{路径2}\}
+%   \end{syntax}
+% 使用自己的图片时，需要在导言区通过本命令添加图片存放路径，允许的文件名包括\file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}。
+% \end{function}
+%
 %
 % 下面这个例子展示了如何插入一张名称为\file{myfig.jpg}，宽度占页面文字宽度一半的图片。注意标签命令\tn{label}必须放在图注命令\tn{caption}之后。
 %
@@ -748,10 +768,6 @@ through XeTeX.
 % \end{ctexexam}
 % 
 % 
-% \subsubsection{脚注}
-% |\footnote{<text>}|
-% 
-% 
 % \subsubsection{引用}
 % 
 % 使用\pkg{cleveref}宏包实现了带图、表等项目名称的智能引用，仅需使用|\cref{<label>}|命令。
@@ -836,7 +852,10 @@ through XeTeX.
 % 
 % \subsubsection{附录页}
 %
-% 附录放在|\appendix|命令后，以英文字母进行编号，正常通过|chapter{}|编写
+% \begin{function}{\appendix}
+%
+% 附录放在本命令后，以英文字母进行编号，编写方式同正文
+% \end{function}
 %
 % 是否需要索引？
 % 
@@ -845,15 +864,17 @@ through XeTeX.
 %
 % 符合GB7714-2015规范。使用\hologo{biber}作为\hologo{BibTeX}后端。需要使用|biber|命令手动编译才会显示
 %
-% 默认参考文献存储于主目录下的\file{njuthesis.bib}，直接向其中粘贴新的参考文献即可。
+% \begin{function}{\addbibresource}
+%   \begin{syntax}
+%     \tn{addbibresource}\Arg{文件}
+%   \end{syntax}
 %
-% 如果希望额外添加参考文献列表，可以在主文件\file{mynjuthesis.tex}的导言区中多次调用\tn{addbibresource}命令：
+% 默认参考文献存储于主目录下的\file{njuthesis.bib}，直接向其中粘贴新的参考文献即可。如果希望额外添加参考文献列表，可以在导言区中多次调用\tn{addbibresource}命令。注意本命令与|\bibliography{bibfile1,bibfile2}|不同，不可以用逗号分隔多个输入文件，且必须使用带扩展名的完整文件名。
+% \end{function}
 %
-% \begin{ctexexam}
-%   \addbibresource{file1.bib}
-%   \addbibresource{file2.bib}
-% \end{ctexexam}
-% 注意本命令与|\bibliography{bibfile1,bibfile2}|不同，不可以用逗号分隔多个输入文件，且必须使用带扩展名的完整文件名。
+% 
+%
+% 
 %
 % \subsubsection{使用EndNote}
 %
@@ -871,7 +892,14 @@ through XeTeX.
 %
 % \subsubsection{文段内引用}
 %
-% |\cite{myref}|，|\citeauthor{myref}|
+% \begin{function}{\cite,\citeauthor,\citeyear}
+%   \begin{syntax}
+%     \tn{cite}\Arg{文献}
+%     \tn{citeauthor}\Arg{文献}
+%     \tn{citeyear}\Arg{文献}
+%   \end{syntax}
+% 引用文献
+% \end{function}
 %
 % \subsection{视觉识别系统}
 % 
@@ -2238,7 +2266,6 @@ through XeTeX.
 % \end{macro}
 %
 % 载入南京大学识别视觉系统。
-% \changes{v0.10}{2021/09/24}{新增南京大学识别视觉系统。}
 %    \begin{macrocode}
 \RequirePackage{njuvisual}
 %    \end{macrocode}
