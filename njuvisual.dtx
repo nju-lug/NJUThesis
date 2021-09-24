@@ -35,8 +35,9 @@
 % \subsection{视觉识别系统}
 % \changes{v0.10}{2021/09/24}{使用tikz图像替换单独存储的图片。}
 %
-% 以下为南京大学校徽及校名。矢量图来自南京大学视觉形象规范化标准，可以从校长办公室的
-% \href{https://xiaoban.nju.edu.cn/c7/7b/c684a509819/page.psp}{相关页面}下载。
+% 南京大学视觉形象规范化标准（\pkg{njuvisual}）宏包是 \pkg{njuthesis} 的子宏包，负责实现
+% \href{https://xiaoban.nju.edu.cn/c7/7b/c684a509819/page.psp}{南京大学视觉形象规范化标准}
+% 中定义的配色方案和标识。
 %
 %    \begin{macrocode}
 %<@@=njuvisual>
@@ -49,13 +50,13 @@
 %    \end{macrocode}
 %
 %
-% \begin{macro}{\definecolor}
+% \begin{macro}{njuviolet,njumagenta,njublue,njuyellow}
 % 定义南京大学视觉形象规范化标准中给定的四种颜色
 %    \begin{macrocode}
-\definecolor { njuviolet  } { cmyk } {  0.5,   1,    0, 0.4 }
-\definecolor { njumagenta } { cmyk } { 0.05,   1, 0.55,   0 }
-\definecolor { njublue    } { cmyk } {  0.8, 0.5,    0,   0 }
-\definecolor { njuyellow  } { cmyk } {    0, 0.3,    1,   0 }
+\definecolor { njuviolet  } { cmyk } { 0.50, 1   , 0   , 0.40 }
+\definecolor { njumagenta } { cmyk } { 0.05, 1   , 0.55, 0    }
+\definecolor { njublue    } { cmyk } { 0.80, 0.50, 0   , 0    }
+\definecolor { njuyellow  } { cmyk } { 0   , 0.30, 1   , 0    }
 %    \end{macrocode}
 % \end{macro}
 %
