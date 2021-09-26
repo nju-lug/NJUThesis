@@ -553,16 +553,109 @@ through XeTeX.
 %     \tn{njusetup}\Arg{键值列表}
 %   \end{syntax}
 % 
-% 定义了用于文档封面的诸多属性参数，
-% 写作时修改相应字符串即可。
+%
+% 以下为各项个人信息，其中带星号的为对应的英文名称。
+% 有空格的内容需要将空格替换为波浪线或者两端加上大括号，不需要的项目不填即可。
 %
 % \end{function}
 %
-% 本科生可以参考如下列表输入个人信息。注意不能有空行，有空格的内容需要将空格替换为波浪线或者两端加上大括号
+% \begin{function}{info/TitleA,info/TitleB,info/TitleC,info/Title*}
+%   \begin{syntax}
+%     TitleA = \Arg{第一行标题}
+%     TitleB = \Arg{第二行标题}
+%     TitleC = \Arg{第三行标题}
+%     Title* = \Arg{英文标题}
+%   \end{syntax}
+% 题目。ABC是用来对过长题目进行手动换行。
+% 推荐单行长度为15个中文字符，如果不需要二三行，留空即可。
+% \end{function}
 %
-% 封面标题留空即可自动化换行。
+% \begin{function}{info/Grade}
+%   \begin{syntax}
+%     Grade = \Arg{20XX}
+%   \end{syntax}
+% 年级，推荐格式为“20XX”。
+% \end{function}
 %
-% 第二导师不填则留空，目前来说拥有两位指导老师并不是一种普遍状况。
+% \begin{function}{info/StudentID}
+%   \begin{syntax}
+%     StudentID = \Arg{学号}
+%   \end{syntax}
+% 学号。南京大学本科生为9位数字学号，研究生为两位大写字母标识加上八位数字组成的学号。
+% \end{function}
+%
+% \begin{function}{info/StudentName,info/StudentName*}
+%   \begin{syntax}
+%     StudentName = \Arg{你的名字}
+%     StudentName* = \Arg{姓名拼音}
+%   \end{syntax}
+% 姓名。
+% \end{function}
+% 
+% \begin{function}{info/Department,info/Department*}
+%   \begin{syntax}
+%     Department = \Arg{院系}
+%     Department* = \Arg{院系}
+%   \end{syntax}
+% 院系。
+% \end{function}
+% 
+% \begin{function}{info/Major,info/Major*}
+%   \begin{syntax}
+%     Major = \Arg{专业}
+%     Major* = \Arg{专业}
+%   \end{syntax}
+% 专业。
+% \end{function}
+% 
+% \begin{function}{info/Field,info/Field*}
+%   \begin{syntax}
+%     Field = \Arg{方向}
+%     Field* = \Arg{方向}
+%   \end{syntax}
+% 研究领域。只有研究生有研究领域的说法。
+% \end{function}
+%  
+% \begin{function}{info/SupervisorA,info/SupervisorA*,info/SupervisorATitle,info/SupervisorATitle*}
+%   \begin{syntax}
+%     SupervisorA = \Arg{导师}
+%     SupervisorA* = \Arg{导师}
+%     SupervisorATitle = \Arg{导师职称}
+%     SupervisorATitle* = \Arg{导师职称}
+%   \end{syntax}
+% 导师，如果有第二导师，填写第二导师时将A替换为B即可。
+% \end{function}
+%
+%
+% \begin{function}{info/SubmitDate,info/SubmitDate*}
+%   \begin{syntax}
+%     SubmitDate = \Arg{提交日期}
+%     SubmitDate* = \Arg{提交日期}
+%   \end{syntax}
+% 提交日期。
+% \end{function}
+%
+% \begin{function}{info/DefendDate,info/ReviewerChairman,info/ReviewerA,info/ReviewerB,info/ReviewerC,info/ReviewerD}
+%   \begin{syntax}
+%     DefendDate = \Arg{答辩日期}
+%     ReviewerChairman = \Arg{答辩主席}
+%     Reviewer<A|B|C|D> = \Arg{评委姓名职称}
+%   \end{syntax}
+% 答辩相关的内容，只对研究生有效，包括答辩日期，评审委员会主席及四位成员的姓名加职称。
+% \end{function}
+%
+% \begin{function}{info/Classification,info/SecurityLevel,info/UDC,info/SupervisorContact}
+%   \begin{syntax}
+%     Classification = \Arg{中图分类号}
+%     SecurityLevel = <不涉密|秘密|机密|绝密>
+%     UDC = \Arg{UDC}
+%     SupervisorContact = \Arg{导师联系方式}
+%   \end{syntax}
+% 国家图书馆封面相关，包括分类号、密级和UDC。
+% \end{function}
+%
+% 本科生可以参考如下列表输入个人信息。注意不能有空行。
+%
 %
 % \begin{ctexexam}
 %   \njusetup {
@@ -793,9 +886,23 @@ through XeTeX.
 % 
 % \subsubsection{引用}
 % 
-% 使用\pkg{cleveref}宏包实现了带图、表等项目名称的智能引用，仅需使用|\cref{<label>}|命令。
+% \begin{function}{\cref}
+%   \begin{syntax}
+%     \tn{cref}\Arg{标签}
+%   \end{syntax}
 %
-% 超链接|\href{<url>}{<name>}|
+% 使用\pkg{cleveref}宏包实现了带图、表等项目名称的智能引用。
+% 
+% \end{function}
+%
+% \begin{function}{\href}
+%   \begin{syntax}
+%     \tn{href}\Arg{链接}\Arg{名称}
+%   \end{syntax}
+%
+% 超链接。
+% 
+% \end{function}
 % 
 % 
 % \subsection{特殊页面}
@@ -804,13 +911,14 @@ through XeTeX.
 %
 % \subsubsection{封面}
 %
-% 封面可使用如下命令生成。
-% 
-% \begin{ctexexam}
-%   \maketitle
-% \end{ctexexam}
+% \begin{function}{\maketitle}
 %
-% 本科生仅会生成中文封面；研究生会生成中英文封面。如果选择了\opt{nlcover}，也会生成研究生的国家图书馆封面。
+% 用于生成封面
+% 本科生仅会生成中文封面；研究生会生成中英文封面。
+% 如果选择了\opt{nlcover}，也会生成研究生的国家图书馆封面。
+% 
+% \end{function}
+%
 %
 % \subsubsection{摘要页}
 %
@@ -831,8 +939,10 @@ through XeTeX.
 %
 %
 % \subsubsection{前言页}
-%        
+% 
+% \begin{function}{preface}       
 % 使用\env{preface}环境定义
+% \end{function}
 % 
 % \begin{ctexexam}
 %   \begin{preface}
@@ -847,17 +957,18 @@ through XeTeX.
 %
 % \subsubsection{目录页}
 %
-% 目录、图片清单和表格清单可使用如下命令生成。
+% \begin{function}{\tableofcontents,\listoffigures,\listoftables}
+%
+% 分别生成目录、图片清单和表格清单。
 % 
-% \begin{ctexexam}
-%   \tableofcontents
-%   \listoffigures
-%   \listoftables
-% \end{ctexexam}
+% \end{function}
+% 
 %
 % \subsubsection{致谢页}
 %
+% \begin{function}{acknowledgement}
 % 同前言，使用\env{acknowledgement}环境
+% \end{function}
 % 
 % \begin{ctexexam}
 %   \begin{acknowledgement}
@@ -974,37 +1085,28 @@ through XeTeX.
 %    \begin{macrocode}
 %<@@=nju>
 %<*class>
-\LoadClass[
-  a4paper,
-  twoside,
-  UTF8,
-  scheme=chinese,
 %    \end{macrocode}
 %
-% 关于行距，\hologo{LaTeX}默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故
-% \[ 1.5\times\frac{1.3}{1.2} = 1.625\]
+% \subsection{模板选项}
+%
+% 用于配置模板选项的宏包。
 %    \begin{macrocode}
-  linespread=1.625,
+\RequirePackage{xparse,xtemplate,l3keys2e}
 %    \end{macrocode}
-%
-% 默认不载入任何字体，供模板自行设置
-%    \begin{macrocode}
-  fontset=none,
-  zihao=-4
-  ]{ctexbook}[2018/04/01]
-%    \end{macrocode}
-%
-% 宏包\pkg{l3keys2e}用于配置模板选项。
-%    \begin{macrocode}
-\RequirePackage{l3keys2e}
-%    \end{macrocode}
-%
 %
 % \begin{variable}{\l_@@_info_degree_tl,\l_@@_info_type_tl}
 % 用于存储学位名称的变量，注意宏的命名，l代表局部变量，g代表全局变量
 %    \begin{macrocode}
 \tl_new:N \l_@@_info_degree_tl
 \tl_new:N \l_@@_info_type_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_latin_fontset_tl,\g_@@_cjk_fontset_tl}
+% 用于存储所使用字体名称的全局变量
+%    \begin{macrocode}
+\tl_new:N \g_@@_latin_fontset_tl
+\tl_new:N \g_@@_cjk_fontset_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1039,215 +1141,12 @@ through XeTeX.
 %    \begin{macrocode}
   nlcover           .bool_set:N   =   \g_@@_nlcover_bool,
   nlcover           .initial:n    =   false,
-}
 %    \end{macrocode}
 % \end{macro}
 % 
-% \subsection{个人信息}
-% 输入个人信息的区域。
-%    \begin{macrocode}
-\keys_define:nn { nju }
-{
-  info.meta:nn = { nju / info } { #1 }
-}
-%    \end{macrocode}
-%
-% 题目
-%    \begin{macrocode}
-\keys_define:nn { nju / info }
-{
-  TitleA            .tl_set:N     =   \l_@@_info_title_a_tl,
-  TitleB            .tl_set:N     =   \l_@@_info_title_b_tl,
-  TitleC            .tl_set:N     =   \l_@@_info_title_c_tl,
-  Title*            .tl_set:N     =   \l_@@_info_title_en_tl,
-%    \end{macrocode}
-%
-% 年级、学号、姓名
-%    \begin{macrocode}
-  Grade             .tl_set:N     =   \l_@@_info_grade_tl,
-  StudentID         .tl_set:N     =   \l_@@_info_id_tl,
-  StudentName       .tl_set:N     =   \l_@@_info_author_tl,
-  StudentName*      .tl_set:N     =   \l_@@_info_author_en_tl,
-%    \end{macrocode}
-%
-% 
-% \begin{macro}{info/Department,info/Department*}
-% 院系、专业、方向。
-%    \begin{macrocode}
-  Department        .tl_set:N     =   \l_@@_info_dept_tl,
-  Department*       .tl_set:N     =   \l_@@_info_dept_en_tl,
-  Major             .tl_set:N     =   \l_@@_major_tl,
-  Major*            .tl_set:N     =   \l_@@_major_en_tl,
-  Field             .tl_set:N     =   \l_@@_field_tl,
-  Field*            .tl_set:N     =   \l_@@_field_en_tl,
-%    \end{macrocode}
-% \end{macro}
-%  
-% 导师
-% 
-%    \begin{macrocode}
-  SupervisorA       .tl_set:N     =   \l_@@_info_supv_a_tl,
-  SupervisorA*      .tl_set:N     =   \l_@@_info_supv_a_en_tl,
-  SupervisorATitle  .tl_set:N     =   \l_@@_info_supv_a_title_tl,
-  SupervisorATitle* .tl_set:N     =   \l_@@_info_supv_a_title_en_tl,
-%    \end{macrocode}
-%
-% 第二导师
-%
-%    \begin{macrocode}
-  SupervisorB       .tl_set:N     =   \l_@@_info_supv_b_tl,
-  SupervisorB*      .tl_set:N     =   \l_@@_info_supv_b_en_tl,
-  SupervisorBTitle  .tl_set:N     =   \l_@@_info_supv_b_title_tl,
-  SupervisorBTitle* .tl_set:N     =   \l_@@_info_supv_b_title_en_tl,
-%    \end{macrocode}
-%
-% 提交日期
-%    \begin{macrocode}
-  SubmitDate        .tl_set:N     =   \l_@@_submit_date_tl,
-  SubmitDate*       .tl_set:N     =   \l_@@_submit_date_en_tl,
-%    \end{macrocode}
-%
-% 答辩
-%    \begin{macrocode}
-  DefendDate        .tl_set:N     =   \l_@@_defend_date_tl,
-  ReviewerChairman  .tl_set:N     =   \l_@@_info_chairman_tl,
-  ReviewerA         .tl_set:N     =   \l_@@_info_reviewer_a_tl,
-  ReviewerB         .tl_set:N     =   \l_@@_info_reviewer_b_tl,
-  ReviewerC         .tl_set:N     =   \l_@@_info_reviewer_c_tl,
-  ReviewerD         .tl_set:N     =   \l_@@_info_reviewer_d_tl,
-%    \end{macrocode}
-%
-% 国家图书馆封面相关
-%    \begin{macrocode}
-  Classification    .tl_set:N     =   \l_@@_info_classif_tl,
-  SecurityLevel     .tl_set:N     =   \l_@@_info_seclv_tl,
-  UDC               .tl_set:N     =   \l_@@_info_udc_tl,
-  SupervisorContact .tl_set:N     =   \l_@@_info_supv_cont_tl,
-}
-%    \end{macrocode}
-% 定义用于设置个人信息的命令
-%    \begin{macrocode}
-\NewDocumentCommand \njusetup { m }
-{ \keys_set:nn { nju } { #1 } }
-%    \end{macrocode}
-%
-%
-% \subsection{载入宏包}
-% 
-%    \begin{macrocode}
-\RequirePackage{geometry}
-\RequirePackage{xparse}
-\RequirePackage[hyphens]{url} % generate better linebreaks in the url
-\RequirePackage{setspace}
-\RequirePackage{lastpage}
-\RequirePackage{emptypage} % 清除空白页的页码
-%    \end{macrocode}
-%
-% 
-%    \begin{macrocode}
-\RequirePackage{caption}
-\RequirePackage{floatrow} % 用于图表等页面元素的定位
-\RequirePackage{booktabs,multirow,multicol}
-\RequirePackage{listings} % 代码环境
-\RequirePackage{enumitem} % 用于修改列表环境
-\RequirePackage{siunitx} % 用于书写单位符号
-%    \end{macrocode}
-%
-% 用于化学
-%    \begin{macrocode}
-\RequirePackage[version=4]{mhchem} % 用于绘制分子式
-%    \end{macrocode}
-%
-% 用于生成可以被插入书签的LaTeX logo，TODO: 使用hologo创建|latex{}|命令
-%    \begin{macrocode}
-\RequirePackage{hologo} 
-%    \end{macrocode}
-%
-% 
-%    \begin{macrocode}
-% Required to prevent page break right after a sectioning command
-% \RequirePackage{needspace} 
-
-% \RequirePackage{xspace} % Better print trailing whitespace
-%    \end{macrocode}
-%
-% \begin{macro}{\njuline}
-% 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。\pkg{lua-ul}中需要在结尾使用\tn{null}保护尾部空白。
-%    \begin{macrocode}
-\sys_if_engine_xetex:T
-{
-    \RequirePackage{microtype}
-    \RequirePackage{xeCJKfntef}
-    \newcommand{\njuline}[1]{\CJKunderline{#1}}
-}
-\sys_if_engine_luatex:T
-{
-    \RequirePackage{lua-ul}
-    \newcommand{\njuline}[1]{\underLine{#1}\null}
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% 生成用于测试的大段无意义英文文字
-%    \begin{macrocode}
-\RequirePackage{blindtext,zhlipsum} 
-%    \end{macrocode}
-%
-% 加载以后展示内容边界
-%    \begin{macrocode}
-% \RequirePackage{showframe} 
-%    \end{macrocode}
-%
-% 数学
-%    \begin{macrocode}
-\RequirePackage{amsmath} % Must be loaded before unicode-math
-\RequirePackage{amsthm} % Mathematical environments
-\RequirePackage{mathtools} % Mathematical tools to use with amsmath
-\RequirePackage{thmtools} % Theorem styles
-\RequirePackage[
-    warnings-off={% 消除与mathtools合用产生的警告
-        mathtools-colon,
-        mathtools-overbracket}
-        ]{unicode-math} % Math fonts in xetex or luatex
-%    \end{macrocode}
-%
-% 配置图片
-%    \begin{macrocode}
-\RequirePackage{graphicx}
-\DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
-\RequirePackage{subcaption,wrapfig}
-\RequirePackage{tikz}
-%    \end{macrocode}
-%
-% 必须以该顺序加载以下包
-%    \begin{macrocode}
-\RequirePackage[hidelinks,bookmarksnumbered=true]{hyperref}
-\RequirePackage[capitalise,nameinlink,noabbrev]{cleveref}
-%    \end{macrocode}
-%
-% \subsection{字体设置}
-%
-% 加载设置字体所需的包\pkg{fontspec}
-%    \begin{macrocode}
-\RequirePackage{fontspec}
-%    \end{macrocode}
-%
-% 
-%
-% \begin{variable}{\g_@@_latin_fontset_tl,\g_@@_cjk_fontset_tl}
-% 用于存储所使用字体名称的全局变量
-%    \begin{macrocode}
-\tl_new:N \g_@@_latin_fontset_tl
-\tl_new:N \g_@@_cjk_fontset_tl
-%    \end{macrocode}
-% \end{variable}
-%
-%
 % \begin{macro}{customlatinfont,customchinesefont}
 % 定义字体选项
 %    \begin{macrocode}
-\keys_define:nn { nju }
-{
   customlatinfont   .choices:nn   =
   { gyre, macos, windows, none }
   { \tl_set_eq:NN \g_@@_latin_fontset_tl \l_keys_choice_tl },  
@@ -1265,17 +1164,233 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% 如果未进行设置则使用系统默认字体覆盖输入参数
+% 
+%
+%
+% \subsection{个人信息}
+% 输入个人信息的区域。
+%    \begin{macrocode}
+\keys_define:nn { nju }
+{
+  info.meta:nn = { nju / info } { #1 }
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\keys_define:nn { nju / info }
+{
+%    \end{macrocode}
+%
+% \begin{macro}{info/TitleA,info/TitleB,info/TitleC,info/Title*}
+% 题目
+%    \begin{macrocode}
+  TitleA            .tl_set:N     =   \l_@@_info_title_a_tl,
+  TitleB            .tl_set:N     =   \l_@@_info_title_b_tl,
+  TitleC            .tl_set:N     =   \l_@@_info_title_c_tl,
+  Title*            .tl_set:N     =   \l_@@_info_title_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/Grade,info/StudentID,info/StudentName,info/StudentName*}
+% 年级、学号、姓名
+%    \begin{macrocode}
+  Grade             .tl_set:N     =   \l_@@_info_grade_tl,
+  StudentID         .tl_set:N     =   \l_@@_info_id_tl,
+  StudentName       .tl_set:N     =   \l_@@_info_author_tl,
+  StudentName*      .tl_set:N     =   \l_@@_info_author_en_tl,
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{info/Department,info/Department*,info/Major,info/Major*,info/Field,info/Field*}
+% 院系、专业、方向。
+%    \begin{macrocode}
+  Department        .tl_set:N     =   \l_@@_info_dept_tl,
+  Department*       .tl_set:N     =   \l_@@_info_dept_en_tl,
+  Major             .tl_set:N     =   \l_@@_major_tl,
+  Major*            .tl_set:N     =   \l_@@_major_en_tl,
+  Field             .tl_set:N     =   \l_@@_field_tl,
+  Field*            .tl_set:N     =   \l_@@_field_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%  
+% \begin{macro}{info/SupervisorA,info/SupervisorA*,info/SupervisorATitle,info/SupervisorATitle*}
+% 导师
+%    \begin{macrocode}
+  SupervisorA       .tl_set:N     =   \l_@@_info_supv_a_tl,
+  SupervisorA*      .tl_set:N     =   \l_@@_info_supv_a_en_tl,
+  SupervisorATitle  .tl_set:N     =   \l_@@_info_supv_a_title_tl,
+  SupervisorATitle* .tl_set:N     =   \l_@@_info_supv_a_title_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/SupervisorB,info/SupervisorB*,info/SupervisorBTitle,info/SupervisorBTitle*}
+% 第二导师
+%    \begin{macrocode}
+  SupervisorB       .tl_set:N     =   \l_@@_info_supv_b_tl,
+  SupervisorB*      .tl_set:N     =   \l_@@_info_supv_b_en_tl,
+  SupervisorBTitle  .tl_set:N     =   \l_@@_info_supv_b_title_tl,
+  SupervisorBTitle* .tl_set:N     =   \l_@@_info_supv_b_title_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/SubmitDate,info/SubmitDate*}
+  % 提交日期
+%    \begin{macrocode}
+  SubmitDate        .tl_set:N     =   \l_@@_submit_date_tl,
+  SubmitDate*       .tl_set:N     =   \l_@@_submit_date_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/DefendDate,info/ReviewerChairman,info/ReviewerA,info/ReviewerB,info/ReviewerC,info/ReviewerD}
+% 答辩 TODO: 用clist处理答辩委员会成员名称
+%    \begin{macrocode}
+  DefendDate        .tl_set:N     =   \l_@@_defend_date_tl,
+  ReviewerChairman  .tl_set:N     =   \l_@@_info_chairman_tl,
+  ReviewerA         .tl_set:N     =   \l_@@_info_reviewer_a_tl,
+  ReviewerB         .tl_set:N     =   \l_@@_info_reviewer_b_tl,
+  ReviewerC         .tl_set:N     =   \l_@@_info_reviewer_c_tl,
+  ReviewerD         .tl_set:N     =   \l_@@_info_reviewer_d_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/Classification,info/SecurityLevel,info/UDC,info/SupervisorContact}
+% 国家图书馆封面相关
+%    \begin{macrocode}
+  Classification    .tl_set:N     =   \l_@@_info_clc_tl,
+  SecurityLevel     .tl_set:N     =   \l_@@_info_seclv_tl,
+  UDC               .tl_set:N     =   \l_@@_info_udc_tl,
+  SupervisorContact .tl_set:N     =   \l_@@_info_supv_cont_tl,
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% 定义用于设置个人信息的命令
+%    \begin{macrocode}
+\NewDocumentCommand \njusetup { m }
+{ \keys_set:nn { nju } { #1 } }
+%    \end{macrocode}
+%
+%
+% \subsection{载入宏包}
+% 
+% 使用\pkg{ctexbook}文档类。
+%    \begin{macrocode}
+\LoadClass[
+  a4paper,
+  twoside,
+  UTF8,
+  scheme=chinese,
+%    \end{macrocode}
+% 关于行距，\hologo{LaTeX}默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故
+% \[ 1.5\times\frac{1.3}{1.2} = 1.625\]
+%    \begin{macrocode}
+  linespread=1.625,
+%    \end{macrocode}
+% 默认不载入任何字体，供模板自行设置
+%    \begin{macrocode}
+  fontset=none,
+  zihao=-4
+  ]{ctexbook}[2018/04/01]
+%    \end{macrocode}
+%
+% 载入各种宏包。
+% \pkg{emptypage}用于清除空白页的页码。
+%    \begin{macrocode}
+\RequirePackage
+{
+  geometry,
+  caption,
+  floatrow,
+  setspace,
+  lastpage,
+  emptypage,
+  fancyhdr,
+}
+\RequirePackage[titles]{tocloft}
+\RequirePackage[hyphens]{url} % generate better linebreaks in the url
+%    \end{macrocode}
+%
+%
+% 用于特定学科的包。
+%    \begin{macrocode}
+\RequirePackage{siunitx} % 用于书写单位符号
+\RequirePackage[version=4]{mhchem} % 用于绘制分子式
+%    \end{macrocode}
+%
+% 用于生成可以被插入书签的LaTeX logo，TODO: 使用hologo创建|latex{}|命令
+%    \begin{macrocode}
+\RequirePackage{hologo} 
+%    \end{macrocode}
+%
+% 
+%    \begin{macrocode}
+% Required to prevent page break right after a sectioning command
+% \RequirePackage{needspace} 
+% \RequirePackage{xspace} % Better print trailing whitespace
+%    \end{macrocode}
+%
+% \begin{macro}{\njuline}
+% 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。\pkg{lua-ul}中需要在结尾使用\tn{null}保护尾部空白。
+%    \begin{macrocode}
+\sys_if_engine_xetex:T
+{
+    \RequirePackage{xeCJKfntef,microtype}
+    \newcommand{\njuline}[1]{\CJKunderline{#1}}
+}
+\sys_if_engine_luatex:T
+{
+    \RequirePackage{lua-ul,dashundergaps}
+    \newcommand{\njuline}[1]{\underLine{#1}\null}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% 数学，\pkg{amsmath}必须在\pkg{unicode-math}前加载。
+% \pkg{unicode-math}指定了\hologo{XeTeX}和\hologo{LuaTeX}下所使用的数学字体。
+% 用于配置数学环境的\pkg{mathtools}会与\pkg{unicode-math}发生冲突，此处手动消除其警告。
+%    \begin{macrocode}
+\RequirePackage{amsmath,amsthm,mathtools,thmtools}
+\RequirePackage[
+    warnings-off={
+        mathtools-colon,
+        mathtools-overbracket}
+        ]{unicode-math}
+%    \end{macrocode}
+%
+% 配置图片、表格、代码、列表环境
+%    \begin{macrocode}
+\RequirePackage{graphicx,subcaption,wrapfig,tikz}
+\DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
+\RequirePackage{booktabs,multirow,multicol,listings,enumitem}
+%    \end{macrocode}
+%
+% 必须以该顺序加载以下两个关于引用的包。
+%    \begin{macrocode}
+\RequirePackage[hidelinks,bookmarksnumbered=true]{hyperref}
+\RequirePackage[capitalise,nameinlink,noabbrev]{cleveref}
+%    \end{macrocode}
+%
+% 生成用于测试的大段填充文字。
+%    \begin{macrocode}
+\RequirePackage{blindtext,zhlipsum} 
+% \RequirePackage{showframe} 
+%    \end{macrocode}
+%
+% \subsection{字体设置}
+%
+% \pkg{fontspec}已在C\hologo{TeX}套件中包含，无需另外载入。
+%
+% \subsubsection{自动检测系统}
 %
 % \begin{variable}{\g_@@_load_system_fontset_bool}
-% 用于判断是否需要载入系统预装字体的全局变量
+% 定义用于判断是否需要载入系统预装字体的变量。
 %    \begin{macrocode}
 \bool_new:N \g_@@_load_system_fontset_bool
 %    \end{macrocode}
 % \end{variable}
 %
 % 判断用户是否自定义了中英文字体，如果其中任意一种未被定义，
-% 则使用系统预装字体覆盖字体选项
+% 则使用系统预装字体覆盖字体选项。
 %    \begin{macrocode}
 \tl_if_empty:NTF \g_@@_latin_fontset_tl
   { \bool_gset_true:N \g_@@_load_system_fontset_bool }  
@@ -1283,22 +1398,26 @@ through XeTeX.
   \tl_if_empty:NT \g_@@_cjk_fontset_tl
     { \bool_gset_true:N \g_@@_load_system_fontset_bool }  
 }
+%    \end{macrocode}
+%
+% 进行系统检测。
+% 检测 Windows 的命令由\pkg{l3kernal}提供，
+% 检测 macOS 的命令由\pkg{ctex}提供，
+% 这两种情况外的系统被判断为 Linux，一律使用自由字体。
+%    \begin{macrocode}
 \bool_if:NT \g_@@_load_system_fontset_bool
 {
-  % 检测是否是 Windows
   \sys_if_platform_windows:TF
   {
     \tl_set:Nn \g_@@_latin_fontset_tl { windows }
     \tl_set:Nn \g_@@_cjk_fontset_tl   { windows }
   }
   {
-    % 检测是否是 macOS
     \ctex_if_platform_macos:TF
     {
       \tl_set:Nn \g_@@_latin_fontset_tl { macos }
       \tl_set:Nn \g_@@_cjk_fontset_tl   { macos }
     }
-    % 其余系统一律使用自由字体
     {
       \tl_set:Nn \g_@@_latin_fontset_tl { gyre }
       \tl_set:Nn \g_@@_cjk_fontset_tl { fandol }
@@ -1307,7 +1426,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% 接下来逐个定义所需要使用的字库
+% 接下来逐个定义所需要使用的字库。
 %
 % \begin{macro}{\@@_load_latin_font_windows:}
 % Windows 西文字体
@@ -1323,7 +1442,7 @@ through XeTeX.
 %
 %
 % \begin{macro}{\@@_load_latin_font_macos:}
-% macOS 西文字体
+% macOS 西文字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_latin_font_macos:
 {
@@ -1336,7 +1455,7 @@ through XeTeX.
 %
 %
 % \begin{macro}{\@@_load_latin_font_gyre:}
-% 开源的 gyre 西文字体
+% 开源的 gyre 西文字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_latin_font_gyre:
 {
@@ -1365,7 +1484,7 @@ through XeTeX.
 % \end{macro}
 %
 % \begin{macro}{\@@_load_cjk_font_windows:}
-% Windows 中文字体
+% Windows 中文字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_windows:
 {
@@ -1386,8 +1505,8 @@ through XeTeX.
 %
 %
 % \begin{macro}{\@@_load_cjk_font_macos:}
-% macOS 字体
-% 参考CTeX手册第9节 LuaLATEX 下的中文支持方式解决issue问题
+% macOS 字体。
+% TODO: 参考CTeX手册第9节 LuaLATEX 下的中文支持方式解决 issue \#5 问题。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_macos:
 {
@@ -1476,7 +1595,7 @@ through XeTeX.
 %
 %
 % \begin{macro}{\@@_load_cjk_font_noto:}
-% 思源字体
+% 思源字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_noto:
 {
@@ -1510,18 +1629,24 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% 载入设置的字体
+% 载入字体命令。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_font:
 {
   \use:c { @@_load_latin_font_ \g_@@_latin_fontset_tl : }
   \use:c { @@_load_cjk_font_   \g_@@_cjk_fontset_tl   : }
-  
+%    \end{macrocode}
+% 自行定义C\hologo{TeX}中的四类字体命令。
+%    \begin{macrocode}
   \NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
   \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
   \NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
   \NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
 }
+%    \end{macrocode}
+%
+% 载入设置的字体。
+%    \begin{macrocode}
 \@@_load_font:
 %    \end{macrocode}
 %
@@ -1536,6 +1661,7 @@ through XeTeX.
 %
 % \subsection{页面布局}
 %
+% \subsubsection{页边距}
 %
 % 使用\pkg{geometry}设置页边距。
 %    \begin{macrocode}
@@ -1545,13 +1671,11 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-
 % \subsubsection{页眉页脚}
 %
 % 
-%    \begin{macrocode}
-\RequirePackage{fancyhdr} % 调整页眉页脚
 % 本科生页眉页脚 
+%    \begin{macrocode}
 \fancypagestyle{njuplain}{%
    \fancyhead{}               
    \fancyfoot[C]{\zihao{5}\thepage} % 页脚居中 五号新罗马体数字
@@ -1559,15 +1683,15 @@ through XeTeX.
 %    \end{macrocode}
 %
 % 
-%    \begin{macrocode}
 % TODO: 研究生页眉页脚 
+%    \begin{macrocode}
 \fancypagestyle{njuheadings}{%
    \fancyhead{}               
    \fancyfoot[C]{\zihao{5}\thepage}        
 }
 %    \end{macrocode}
 %
-% 
+% 载入页眉页脚设置。
 %    \begin{macrocode}
 \str_if_eq:NNTF {\l_@@_info_degree_tl} { ug } 
 {
@@ -1588,9 +1712,9 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% 章节标题格式
-%    \begin{macrocode}
+% \subsection{章节标题格式}
 % 
+%    \begin{macrocode}
 \ctexset{
     chapter/format = \zihao{4}\heiti\centering\selectfont,
     chapter/beforeskip = 10pt,
@@ -1601,7 +1725,7 @@ through XeTeX.
 }
 %    \end{macrocode}
 %
-% \subsection{目录}
+% \subsection{目录格式}
 % 目录标题名称
 %    \begin{macrocode}
 \ctexset{
@@ -1613,7 +1737,6 @@ through XeTeX.
 %
 % \pkg{tocloft}定制目录文字格式
 %    \begin{macrocode}
-\RequirePackage[titles]{tocloft}
 \cftsetpnumwidth{2em}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
 \renewcommand{\cftchapdotsep}{\cftdotsep}
@@ -1623,9 +1746,7 @@ through XeTeX.
 \setlength{\cftsubsecnumwidth}{2em}
 %    \end{macrocode}
 %
-% 
-%
-% 将目录插入书签
+% 重定义目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
 \renewcommand\tableofcontents{%
   \cleardoublepage
@@ -1641,6 +1762,10 @@ through XeTeX.
   \vskip 20pt 
   \@starttoc{toc}%
 }
+%    \end{macrocode}
+%
+% 重定义插图目录命令，修改标题格式并插入书签。
+%    \begin{macrocode}
 \renewcommand\listoffigures{%
   \cleardoublepage
   \begingroup
@@ -1653,6 +1778,10 @@ through XeTeX.
   \vskip 20pt 
   \@starttoc{lof}%
 }
+%    \end{macrocode}
+%
+% 重定义表格目录命令，修改标题格式并插入书签。
+%    \begin{macrocode}
 \renewcommand\listoftables{%
   \cleardoublepage
   \begingroup
@@ -2223,7 +2352,7 @@ through XeTeX.
     \vskip -20mm \hskip -15mm
     \songti\zihao{-4}
     \makebox[40pt][l]{分类号}
-    \@@_cover_uline_b:n {\l_@@_info_classif_tl}
+    \@@_cover_uline_b:n {\l_@@_info_clc_tl}
     \hfill
     \makebox[40pt][l]{密级}
     \@@_cover_uline_b:n {\l_@@_info_seclv_tl}
