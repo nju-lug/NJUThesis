@@ -32,11 +32,11 @@
 %
 % \begin{implementation}
 %
-% \subsection{视觉识别系统}
+% \subsection{视觉识别系统\pkg{njuvisual}}
 % \changes{v0.10}{2021/09/24}{使用tikz图像替换单独存储的图片。}
 %
-% 南京大学视觉形象规范化标准（\pkg{njuvisual}）宏包是 \pkg{njuthesis} 的子宏包，负责实现
-% \href{https://xiaoban.nju.edu.cn/c7/7b/c684a509819/page.psp}{南京大学视觉形象规范化标准}
+% 南京大学视觉形象规范化标准（\pkg{njuvisual}）宏包是 \pkg{njuthesis} 文档类的子宏包，负责实现
+% \href{https://www.nju.edu.cn/3647/list.htm}{南京大学视觉形象规范化标准}
 % 中定义的配色方案和标识。
 %
 %    \begin{macrocode}
@@ -44,14 +44,16 @@
 %<*visual>
 %    \end{macrocode}
 %
-% 导入 \pkg{tikz} 宏包
+% \subsubsection{内部命令}
+%
+% 导入 \pkg{tikz} 宏包，其中已包含 \pkg{xcolor}，无需单独加载。 
 %    \begin{macrocode}
-\RequirePackage { tikz } % xcolor already loaded in tikz
+\RequirePackage { tikz }
 %    \end{macrocode}
 %
 %
 % \begin{macro}{njuviolet,njumagenta,njublue,njuyellow}
-% 定义南京大学视觉形象规范化标准中给定的四种颜色
+% 定义南京大学视觉形象规范化标准中给定的四种标准色：紫色、洋红、蓝色、黄色。
 %    \begin{macrocode}
 \definecolor { njuviolet  } { cmyk } { 0.50, 1   , 0   , 0.40 }
 \definecolor { njumagenta } { cmyk } { 0.05, 1   , 0.55, 0    }
@@ -61,11 +63,17 @@
 % \end{macro}
 %
 %
-% \begin{macro}{\@@_resizable_tikz_wrapper}
+% \begin{macro}{\@@_tikz_wrapper}
+% 可变大小的 tikz 容器。
+% \begin{arguments}
+%   \item 颜色
+%   \item 路径
+%   \item 宽度
+%   \item 高度
+% \end{arguments}
 % 封装 resizebox 和 tikzpicture 环境，减少重复。
-% 用法：|\@@_resizable_tikz_wrapper{颜色}{路径}{宽度}{高度}|
 %    \begin{macrocode}
-\NewDocumentCommand \@@_resizable_tikz_wrapper { m m m m } 
+\NewDocumentCommand \@@_tikz_wrapper { m m m m } 
 { \resizebox { #3 } { #4 } { 
     \begin{tikzpicture}[y=0.80pt, x=0.80pt, yscale=-1,
       xscale=1, inner~sep=0pt, outer~sep=0pt]
@@ -81,52 +89,61 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% 
+% \subsubsection{用户接口}
+%
 % \begin{macro}{\njuemblem}
-% 定义南京大学校徽，用法：|\njuemblem[颜色]{宽度}{高度}|
+% 定义南京大学盾形校徽。
 %    \begin{macrocode}
 \NewDocumentCommand \njuemblem { O { black } m m } 
-{ \@@_resizable_tikz_wrapper 
+{ \@@_tikz_wrapper 
   { #1 } { \@@_path_emblem } { #2 } { #3 } }
 %    \end{macrocode}
 % \end{macro}
 %
-% 
 % \begin{macro}{\njuname}
-% 定义南京大学校名
+% 定义南京大学中英文校名。
 %    \begin{macrocode}
 \NewDocumentCommand \njuname   { t* O { black } m m } 
 {
   \IfBooleanTF {#1}
-  { \@@_resizable_tikz_wrapper 
+  { \@@_tikz_wrapper 
     { #2 } { \@@_path_name_en } { #3 } { #4 } }
-  { \@@_resizable_tikz_wrapper 
+  { \@@_tikz_wrapper 
     { #2 } { \@@_path_name_cn } { #3 } { #4 } } }
 %    \end{macrocode}
 % \end{macro}
 %
 % 
 % \begin{macro}{\njumotto}
-% 定义南京大学校训
+% 定义南京大学校训。在筹备百年校庆过程中，经过广泛征求意见和反复遴选比较，学校决定将“诚朴雄伟，励学敦行”作为南京大学新的校训。
 %    \begin{macrocode}
 \NewDocumentCommand \njumotto  { O { black } m m } 
-{ \@@_resizable_tikz_wrapper 
+{ \@@_tikz_wrapper 
   { #1 } { \@@_path_motto } { #2 } { #3 } }
 %    \end{macrocode}
 % \end{macro}
 %
 % 
 % \begin{macro}{\njuspirit}
-% 定义南京大学校风
+% 定义南京大学校风。1991年，在广泛征求师生意见和总结南大办学传统的基础上，曲钦岳校长确定将“严谨、求实、勤奋、创新”作为南大校风。
 %    \begin{macrocode}
 \NewDocumentCommand \njuspirit { O { black } m m } 
-{ \@@_resizable_tikz_wrapper 
+{ \@@_tikz_wrapper 
   { #1 } { \@@_path_spirit } { #2 } { #3 } }
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{图形绘制}
+%
+% 本部分绘制命令来自于\href{https://xiaoban.nju.edu.cn/c7/7b/c684a509819/page.psp}{南京大学视觉形象规范化标准矢量图}。
+%
 % \begin{macro}{\@@_path_emblem,\@@_path_name_en,
 %   \@@_path_name_cn,\@@_path_motto,\@@_path_spirit}
-% 定义用到的各种路径。
+% 定义用到的各种路径。由于路径本身长达数千行，故在此文档中隐去，有兴趣的同学可以自行查阅\file{njuvisual.dtx}。
+%    \begin{macrocode}
+%</visual>
+%    \end{macrocode}
 % \end{macro}
 % \end{implementation}
 %
@@ -134,6 +151,7 @@
 %
 % \begin{implementation}
 %    \begin{macrocode}
+%<*visual>
 \def \@@_path_emblem{
   (217.2400,100.3700) 
 -- (51.2000,100.3700) 
