@@ -2213,6 +2213,7 @@ through XeTeX.
 % 将会去掉最后一个 \tn{hfil}。见 \url{https://tex.stackexchange.com/q/169689}。
 % |#2| 需要完全展开以避免 underfull 警告。
 %    \begin{macrocode}
+\cs_generate_variant:Nn \tl_map_inline:nn       { xn }
 \cs_new_protected:Npn \@@_spread_box:nn #1#2
   {
     \mode_leave_vertical:
@@ -2255,8 +2256,8 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\l_@@_name_diploma_tl}
 % 判断类型
-% 
 %    \begin{macrocode}
 \str_if_eq:NNTF { \l_@@_info_type_tl } { thesis } 
 {
@@ -2268,18 +2269,18 @@ through XeTeX.
     { \l_@@_name_diploma_tl 毕业设计 }
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsubsection{封面组件}
 %
 % \begin{macro}{\@@_cover_title_breakline:}
-% 对多行标题进行自动判断，并输出换行后的结果
+% 对标题进行自动判断，如果某行标题空则不输出接下来的若干行，得到多行标题。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_title_breakline:
 {
   \@@_cover_box:n {\c_@@_name_title_tl}
   & \@@_cover_uline_a:n 
   { \c_@@_cover_uline_style_tl \l_@@_info_title_a_tl } \\
-  % 如果某行标题空则不输出接下来的若干行
   \tl_if_empty:NF \l_@@_info_title_b_tl
   {
     \tl_if_empty:NTF \l_@@_info_title_c_tl
@@ -2377,8 +2378,7 @@ through XeTeX.
   \pdfbookmark[0]{国家图书馆封面}{nl}
   {
     % 顶端
-    \hspace{0mm}
-    \vskip -20mm \hskip -15mm
+    \noindent\null\vskip -20mm \hskip -15mm
     \songti\zihao{-4}
     \makebox[40pt][l]{分类号}
     \@@_cover_uline_b:n {\l_@@_info_clc_tl}
@@ -2459,7 +2459,7 @@ through XeTeX.
   % Start
   \pdfbookmark{封面}{cover} % 将封面插入pdf书签
   \begin{spacing}{1.25}
-  \null\hspace{-10mm}
+  \noindent\null\hspace{-10mm}
   \njuemblem{!}{3cm}\smallskip 
   \begin{center}
     \njuname{!}{3.35cm}
@@ -2494,7 +2494,7 @@ through XeTeX.
   \pdfbookmark{封面}{cover} % 将封面插入pdf书签
   \begin{spacing}{1.25}
   \begin{center}
-    \null\vskip 5mm
+    \noindent\null\vskip 5mm
     \njuemblem{!}{1.9cm}
     \vskip 10mm 
     \njuname{4.4cm}{!}
@@ -2586,6 +2586,7 @@ through XeTeX.
 % \end{macro}
 %
 % 
+% \begin{macro}{\maketitle}
 % 重定义maketitle生成封面
 %    \begin{macrocode}
 \tl_set:Nn \maketitle 
@@ -2601,6 +2602,7 @@ through XeTeX.
   } 
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{摘要绘制}
 %
@@ -2633,8 +2635,8 @@ through XeTeX.
     \kaishu\zihao{-2}{\textbf{
       \uuline{南京大学本科生毕业论文（设计、作品）中文摘要}}}
   \end{center}
-  {\bgroup
-    \kaishu\zihao{-4}
+  \bgroup
+    \noindent\kaishu\zihao{-4}
     \tl_set:Nn \tabcolsep {0pt}
     \tl_set:Nn \arraystretch {0.8}
     \noindent
@@ -2644,8 +2646,7 @@ through XeTeX.
     本科生姓名： \l_@@_info_author_tl \\
     指导教师（姓名、职称）：\l_@@_info_supv_full_tl \\
     摘要：
-    \egroup
-  }
+  \egroup
   \kaishu\zihao{-4}\par%
 }
 \cs_new_protected:Npn \@@_print_abstract_en_ug:
