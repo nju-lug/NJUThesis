@@ -1498,33 +1498,26 @@ through XeTeX.
 {
   % 思源宋体
   \setCJKmainfont[
-    UprightFont=NotoSerifCJKsc-Regular,
-    BoldFont=NotoSerifCJKsc-Bold,
-    ItalicFont=NotoSerifCJKsc-Regular,
-    BoldItalicFont=NotoSerifCJKsc-Bold,
+    UprightFont=NotoSerifSC-Regular,
+    BoldFont=NotoSerifSC-Bold,
+    ItalicFont=NotoSerifSC-Regular,
+    BoldItalicFont=NotoSerifSC-Bold,
     ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Serif~CJK~SC}
+    BoldItalicFeatures=FakeSlant]{Noto~Serif~SC}
 
   % 思源黑体
   \setCJKsansfont[
-    UprightFont=NotoSansCJKsc-Regular,
-    BoldFont=NotoSansCJKsc-Bold,
-    ItalicFont=NotoSansCJKsc-Regular,
-    BoldItalicFont=NotoSansCJKsc-Bold,
+    UprightFont=NotoSansSC-Regular,
+    BoldFont=NotoSansSC-Bold,
+    ItalicFont=NotoSansSC-Regular,
+    BoldItalicFont=NotoSansSC-Bold,
     ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Sans~CJK~SC}
+    BoldItalicFeatures=FakeSlant]{Noto~Sans~SC}
 
-  % 包含于思源黑体
-  \setCJKmonofont[
-    UprightFont=NotoSansMonoCJKsc-Regular,
-    BoldFont=NotoSansMonoCJKsc-Bold,
-    ItalicFont=NotoSansMonoCJKsc-Regular,
-    BoldItalicFont=NotoSansMonoCJKsc-Bold,
-    ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Sans~Mono~SC}
+  \setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
 
-  \setCJKfamilyfont{zhsong}{Noto~Serif~CJK~SC}
-  \setCJKfamilyfont{zhhei}{Noto~Sans~CJK~SC}
+  \setCJKfamilyfont{zhsong}{Noto~Serif~SC}
+  \setCJKfamilyfont{zhhei}{Noto~Sans~SC}
   \setCJKfamilyfont{zhfs}
     {FZFSK}[Extension=.ttf]
   \setCJKfamilyfont{zhkai}
