@@ -147,8 +147,8 @@ through XeTeX.
 % \changes{v0.8}{2021/09/12}{修复已知问题，进行公开宣传。}
 % \changes{v0.9}{2021/09/15}{使用DocStrip合并模板文件。}
 % \changes{v0.9}{2021/09/15}{进一步完善文档。}
-% \changes{v0.10}{2021/09/24}{添加南京大学视觉识别系统。}
-% \changes{v0.10}{2021/09/26}{对代码实现部分进行了整理。}
+% \changes{v0.10}{2021/09/24}{删除了生成自述文件的代码。}
+% \changes{v0.10}{2021/09/25}{躺着。}
 %
 % \maketitle
 %
@@ -372,6 +372,7 @@ through XeTeX.
 % 相信你在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{其实这三点都是对广大的Windows用户说的，同一个模板在Linux编译可以节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
 %
 % \subsubsection{南大\hologo{TeX}平台简介}
+% \changes{v0.2}{2021/09/07}{添加对南大\hologo{TeX}的支持。}
 %
 % \href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，面向南京大学全体师生开放，首次使用需凭学校邮箱自助注册账号。
 %
@@ -1083,6 +1084,8 @@ through XeTeX.
 % \begin{implementation}
 %
 % \section{代码实现}
+% \changes{v0.10}{2021/09/26}{对代码实现部分进行了整理。}
+%
 % @@在l3docstrip中表示名空间，在生成cls时会被相应字段替换，譬如在\pkg{njuthesis}中|@@=nju|。
 % 尖括号包裹的|<*class>||</class>|用来指定某段代码属于哪个文件。
 %
@@ -1326,7 +1329,6 @@ through XeTeX.
 \RequirePackage{hologo} 
 %    \end{macrocode}
 %
-% 
 %    \begin{macrocode}
 % Required to prevent page break right after a sectioning command
 % \RequirePackage{needspace} 
@@ -1374,6 +1376,11 @@ through XeTeX.
 \RequirePackage[capitalise,nameinlink,noabbrev]{cleveref}
 %    \end{macrocode}
 %
+% 载入南京大学识别视觉系统。
+%    \begin{macrocode}
+\RequirePackage{njuvisual}
+%    \end{macrocode}
+% 
 % 生成用于测试的大段填充文字。
 %    \begin{macrocode}
 \RequirePackage{blindtext,zhlipsum} 
@@ -2445,10 +2452,6 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% 载入南京大学识别视觉系统。
-%    \begin{macrocode}
-\RequirePackage{njuvisual}
-%    \end{macrocode}
 % \begin{macro}{\@@_print_cover_ug:}
 % 本科封面
 %    \begin{macrocode}
