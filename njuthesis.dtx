@@ -864,6 +864,8 @@ through XeTeX.
 %
 % \subsubsection{数学}
 %
+% 符号表可以参考\url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}。单位请参考\pkg{siunitx}。
+%
 % 行内公式形如|$\mathrm{e}^{(a+2b)x}$|
 %
 % 带有编号的行间公式\env{equation}
@@ -1368,7 +1370,7 @@ through XeTeX.
 % \pkg{unicode-math}指定了\hologo{XeTeX}和\hologo{LuaTeX}下所使用的数学字体。
 % 用于配置数学环境的\pkg{mathtools}会与\pkg{unicode-math}发生冲突，此处手动消除其警告。
 %    \begin{macrocode}
-\RequirePackage{amsmath,amsthm,mathtools,thmtools}
+\RequirePackage{amsmath,amssymb,amsthm,mathtools,thmtools}
 \RequirePackage[
     warnings-off={
         mathtools-colon,
@@ -2013,6 +2015,14 @@ through XeTeX.
 %
 % 
 % \subsection{定理环境}
+%
+% \begin{macro}{\mathbi}
+% Math bold italic letters
+%    \begin{macrocode}
+\def\mathbi#1{\textbf{\em #1}}
+%    \end{macrocode}
+% \end{macro}
+%
 %    \begin{macrocode}
 \declaretheoremstyle[
     	%spaceabove=.5\thm@preskip,
