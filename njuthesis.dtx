@@ -1370,7 +1370,7 @@ through XeTeX.
 % \pkg{unicode-math}指定了\hologo{XeTeX}和\hologo{LuaTeX}下所使用的数学字体。
 % 用于配置数学环境的\pkg{mathtools}会与\pkg{unicode-math}发生冲突，此处手动消除其警告。
 %    \begin{macrocode}
-\RequirePackage{amsmath,amssymb,amsthm,mathtools,thmtools}
+\RequirePackage{amsmath,amsthm,mathtools,thmtools}
 \RequirePackage[
     warnings-off={
         mathtools-colon,
@@ -1688,6 +1688,7 @@ through XeTeX.
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
   Extension = .otf]
+\setmathfont{latinmodern-math.otf}[range={cal,bb,frak}]
 %    \end{macrocode}
 %
 %
