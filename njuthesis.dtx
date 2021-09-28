@@ -110,6 +110,7 @@ through XeTeX.
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
 \usepackage{listings,xcolor,tabularray}
+\setlist[1]{labelindent=0.5em}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
@@ -900,12 +901,13 @@ through XeTeX.
 % 
 % \end{function}
 %
-% \begin{function}{\href}
+% \begin{function}{\href,\url}
 %   \begin{syntax}
 %     \tn{href}\Arg{链接}\Arg{名称}
+%     \tn{url}\Arg{链接}
 %   \end{syntax}
 %
-% 超链接。
+% 超链接。\tn{href}会将特定字符显示为可点击的超链接，\tn{url}会输出可点击的链接原文。
 % 
 % \end{function}
 % 
@@ -918,7 +920,7 @@ through XeTeX.
 %
 % \begin{function}{\maketitle}
 %
-% 用于生成封面
+% 用于生成封面。
 % 本科生仅会生成中文封面；研究生会生成中英文封面。
 % 如果选择了\opt{nlcover}，也会生成研究生的国家图书馆封面。
 % 
@@ -1042,6 +1044,17 @@ through XeTeX.
 %
 % \subsection{视觉识别系统}
 % 
+% \begin{function}[added=2021-09-24]{njuviolet,njumagenta,njublue,njuyellow}
+%   \begin{syntax}
+%     \tn{color}\Arg{颜色}
+%   \end{syntax}
+% 定义并使用南京大学视觉形象规范化标准中给定的四种标准色：
+%
+% {\color{njuviolet}紫色}\hspace{1em}{\color{njumagenta}洋红}\hspace{1em}
+% {\color{njublue}蓝色}\hspace{1em}{\color{njuyellow}黄色}
+%
+% \end{function}
+%
 % \begin{function}[added=2021-09-24]{\njuemblem}
 %   \begin{syntax}
 %     \tn{njuemblem}\oarg{颜色}\Arg{宽度}\Arg{高度}
@@ -2149,10 +2162,10 @@ through XeTeX.
 }
 \tl_set:Nn \l_@@_info_supv_full_en_tl
 {
-  \l_@@_info_supv_a_en_tl\ 
-  \l_@@_info_supv_a_title_en_tl\ \ 
-  \l_@@_info_supv_b_en_tl\ 
-  \l_@@_info_supv_b_title_en_tl
+  \l_@@_info_supv_a_title_en_tl\ 
+  \l_@@_info_supv_a_en_tl\ \ 
+  \l_@@_info_supv_b_title_en_tl\ 
+  \l_@@_info_supv_b_en_tl
 }
 %    \end{macrocode}
 %
@@ -2554,7 +2567,7 @@ through XeTeX.
   \thispagestyle{empty}
   \pdfbookmark{英文封面}{cover-en} % 将封面插入pdf书签
   \begin{center}
-    \vspace*{20pt}
+    \noindent\vspace*{20pt}
     \bf\sffamily\zihao{2}\l_@@_info_title_en_tl
     \vskip \stretch{1}
     \normalfont\rmfamily\zihao{4}{by}
@@ -2563,8 +2576,11 @@ through XeTeX.
     \vskip\stretch{1}
     \normalfont\rmfamily\zihao{4}{Supervised~by}
     \vskip 3pt
-    \normalfont\sffamily\zihao{4}\l_@@_info_supv_a_title_en_tl
-    \hspace{.5em}\l_@@_info_supv_a_en_tl
+    \normalfont\sffamily\zihao{4}
+    \l_@@_info_supv_a_title_en_tl
+    \hspace{.5em}\l_@@_info_supv_a_en_tl\\
+    \l_@@_info_supv_b_title_en_tl
+    \hspace{.5em}\l_@@_info_supv_b_en_tl
     \vskip\stretch{1}
     \normalsize\rmfamily{%
       A~dissertation~submitted~to\\
