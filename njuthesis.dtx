@@ -1002,6 +1002,15 @@ through XeTeX.
 %
 % 是否需要索引？
 % 
+% 
+% \subsubsection{成果列表}
+%
+% \begin{function}{\njupaperlist,\njupaperlist*}
+%   \begin{syntax}
+%     \tn{njupaperlist}\Arg{文献}
+%   \end{syntax}
+% 成果列表文献
+% \end{function}
 %
 % \subsection{参考文献}
 %
@@ -1065,7 +1074,7 @@ through XeTeX.
 % 生成指定颜色和大小的南京大学校徽
 % \end{function}
 %
-% \begin{function}[added=2021-09-24]{\njuname}
+% \begin{function}[added=2021-09-24]{\njuname,\njuname*}
 %   \begin{syntax}
 %     \tn{njuname}\oarg{颜色}\Arg{宽度}\Arg{高度}
 %     \tn{njuname*}\oarg{颜色}\Arg{宽度}\Arg{高度}
@@ -1854,6 +1863,22 @@ through XeTeX.
 %    \end{macrocode}
 % \end{environment}
 %
+%
+% \begin{macro}{\njupaperlist}
+% 发表文章目录
+%    \begin{macrocode}
+\NewDocumentCommand\njupaperlist { t* m }
+{  
+  \begin{refsection} 
+    \nocite{#2}
+    \IfBooleanTF {#1}
+    { \printbibliography[heading=subbibliography,title=合作文章目录] }
+    { \printbibliography[heading=subbibliography,title=发表文章目录] }
+  \end{refsection}
+}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{参考文献}
 % 
 % biblatex设置
@@ -2020,7 +2045,7 @@ through XeTeX.
 % \begin{macro}{\mathbi}
 % Math bold italic letters
 %    \begin{macrocode}
-\def\mathbi#1{\textbf{\em #1}}
+\NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
 %    \end{macrocode}
 % \end{macro}
 %
