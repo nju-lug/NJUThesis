@@ -2,8 +2,7 @@
 
 ## Overview
 
-This package is intended for typesetting Nanjing University thesis with LaTeX, providing support for bachelor, master, and doctoral thesis. Compilation of this class requires either `xelatex` or `lualatex` engine.
-
+The njuthesis class is intended for typesetting Nanjing University dissertations with LaTeX, providing support for bachelor, masters, and doctoral thesis. Compilation of this class requires either `xelatex` or `lualatex` engine.
 ## License
 
 -----
