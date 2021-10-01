@@ -147,9 +147,9 @@ through XeTeX.
 % \changes{v0.7}{2021/09/12}{将njuthesis发布在CTAN。}
 % \changes{v0.8}{2021/09/12}{修复已知问题，进行公开宣传。}
 % \changes{v0.9}{2021/09/15}{使用DocStrip合并模板文件。}
+% \changes{v0.9}{2021/09/15}{大幅度修改宏名称以符合\hologo{LaTeX3}规范。}
 % \changes{v0.9}{2021/09/15}{进一步完善文档。}
 % \changes{v0.10}{2021/09/24}{删除了生成自述文件的代码。}
-% \changes{v0.10}{2021/09/25}{躺着。}
 %
 % \maketitle
 %
@@ -552,8 +552,6 @@ through XeTeX.
 % 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。
 %
 % \subsection{个人信息}
-% \changes{v0.6}{2021/09/10}{改用键值对输入信息。}
-% \changes{v0.10}{2021/10/01}{将个人信息变量名改为小写字母加连字符的形式。}
 %
 % \begin{function}[added=2021-09-10]{\njusetup}
 %   \begin{syntax}
@@ -573,8 +571,7 @@ through XeTeX.
 %     titlec = \Arg{第三行标题}
 %     title* = \Arg{英文标题}
 %   \end{syntax}
-% 题目。ABC是用来对过长题目进行手动换行。
-% 推荐单行长度为15个中文字符，如果不需要二三行，留空即可。
+% 题目。由于封面上提供给中文题目的横线长度有限（单行最长为15个汉字），这里将中文题目进行手动拆分，请自行选择合适的断行处。如果题目较短不需要二三行，留空即可。
 % \end{function}
 %
 % \begin{function}{info/keywords,info/keywords*}
@@ -582,7 +579,7 @@ through XeTeX.
 %     keywords = \Arg{关键词}
 %     keywords* = \Arg{英文关键词}
 %   \end{syntax}
-% 关键词，用英文半角逗号隔开。
+% 关键词列表。关键词之间需要使用英文半角逗号隔开，含有空格的关键字需要使用花括号包裹以避免歧义。可以参照示例模板中的填写方式。
 % \end{function}
 %
 % \begin{function}{info/grade}
@@ -656,7 +653,7 @@ through XeTeX.
 %     chairman = \Arg{答辩主席}
 %     reviewer = \Arg{评委姓名职称}
 %   \end{syntax}
-% 答辩相关的内容，只对研究生有效，包括答辩日期，评审委员会主席及四位成员的姓名加职称。
+% 答辩相关的内容，只对研究生有效，包括答辩日期，评审委员会主席及四位成员的姓名加职称。其中，四位评审成员是以列表的形式存储的，填写方法同关键词。
 % \end{function}
 %
 % \begin{function}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
@@ -666,7 +663,7 @@ through XeTeX.
 %     udc = \Arg{udc}
 %     supervisor-contact = \Arg{导师联系方式}
 %   \end{syntax}
-% 国家图书馆封面相关，包括分类号、密级和udc。
+% 国家图书馆封面相关，包括中图分类号、密级和udc。
 % \end{function}
 %
 % 本科生可以参考如下列表输入个人信息。注意不能有空行。
@@ -940,7 +937,7 @@ through XeTeX.
 %
 %
 % \subsubsection{摘要页}
-% \changes{v0.10}{2021/10/01}{简化了摘要的编写方式。}
+% \changes{v0.11}{2021/10/01}{简化了摘要的编写方式。}
 %
 % 
 % \begin{ctexexam}
@@ -1260,7 +1257,7 @@ through XeTeX.
 % \end{macro}
 %
 % \begin{macro}{info/keywords,info/keywords*}
-% \changes{v0.10}{2021/10/01}{使用njusetup添加关键词。}
+% \changes{v0.11}{2021/10/01}{修改了添加关键词的方式。}
 % 关键词
 %    \begin{macrocode}
 keywords         .clist_set:N = \l_@@_info_keywords_clist,
@@ -1272,9 +1269,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 年级、学号、姓名
 %    \begin{macrocode}
   grade             .tl_set:N = \l_@@_info_grade_tl,
-  student-id         .tl_set:N = \l_@@_info_id_tl,
-  author       .tl_set:N = \l_@@_info_author_tl,
-  author*      .tl_set:N = \l_@@_info_author_en_tl,
+  student-id        .tl_set:N = \l_@@_info_id_tl,
+  author            .tl_set:N = \l_@@_info_author_tl,
+  author*           .tl_set:N = \l_@@_info_author_en_tl,
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -1295,8 +1292,8 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
   supervisora       .tl_set:N = \l_@@_info_supv_a_tl,
   supervisora*      .tl_set:N = \l_@@_info_supv_a_en_tl,
-  supervisora-title  .tl_set:N = \l_@@_info_supv_a_title_tl,
-  supervisora-title* .tl_set:N = \l_@@_info_supv_a_title_en_tl,
+  supervisora-title .tl_set:N = \l_@@_info_supv_a_title_tl,
+  supervisora-title*.tl_set:N = \l_@@_info_supv_a_title_en_tl,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1305,16 +1302,16 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
   supervisorb       .tl_set:N = \l_@@_info_supv_b_tl,
   supervisorb*      .tl_set:N = \l_@@_info_supv_b_en_tl,
-  supervisorb-title  .tl_set:N = \l_@@_info_supv_b_title_tl,
-  supervisorb-title* .tl_set:N = \l_@@_info_supv_b_title_en_tl,
+  supervisorb-title .tl_set:N = \l_@@_info_supv_b_title_tl,
+  supervisorb-title*.tl_set:N = \l_@@_info_supv_b_title_en_tl,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/submit-date,info/submit-date*}
   % 提交日期
 %    \begin{macrocode}
-  submit-date        .tl_set:N = \l_@@_submit_date_tl,
-  submit-date*       .tl_set:N = \l_@@_submit_date_en_tl,
+  submit-date       .tl_set:N = \l_@@_submit_date_tl,
+  submit-date*      .tl_set:N = \l_@@_submit_date_en_tl,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1323,26 +1320,30 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
   defend-date       .tl_set:N = \l_@@_defend_date_tl,
   chairman          .tl_set:N = \l_@@_info_chairman_tl,
-  reviewer         .clist_set:N = \l_@@_info_reviewer_clist,
+  reviewer       .clist_set:N = \l_@@_info_reviewer_clist,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
 % 国家图书馆封面相关
 %    \begin{macrocode}
-  clc    .tl_set:N = \l_@@_info_clc_tl,
-  secret-level     .tl_set:N = \l_@@_info_seclv_tl,
+  clc               .tl_set:N = \l_@@_info_clc_tl,
+  secret-level      .tl_set:N = \l_@@_info_seclv_tl,
   udc               .tl_set:N = \l_@@_info_udc_tl,
-  supervisor-contact .tl_set:N = \l_@@_info_supv_cont_tl,
+  supervisor-contact.tl_set:N = \l_@@_info_supv_cont_tl,
 }
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\njusetup}
+% \changes{v0.6}{2021/09/10}{改用键值对输入信息。}
+% \changes{v0.11}{2021/10/01}{将个人信息变量名改为小写字母加连字符的形式。}
 % 定义用于设置个人信息的命令
 %    \begin{macrocode}
 \NewDocumentCommand \njusetup { m }
 { \keys_set:nn { nju } { #1 } }
 %    \end{macrocode}
+% \end{macro}
 %
 %
 % \subsection{载入宏包}
@@ -2000,7 +2001,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \end{macrocode}
 %
 % \pkg{hyperref} 
-% \changes{v0.10}{2021/10/01}{写入PDF元数据。}
+% \changes{v0.11}{2021/10/01}{写入PDF元数据。}
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
 {
@@ -2533,38 +2534,37 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   \end{center}
 
   % 底部
-  \vskip\stretch{1}
-  {
-    \kaishu\zihao{4}
-    \bgroup
-      \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
-      \@@_cover_uline_nl:nn {94pt}{\l_@@_info_supv_a_tl}\par
-      \noindent \@@_cover_uline_nl:nn {\textwidth}{%
-      \l_@@_info_supv_cont_tl}\par
-      \noindent 申请学位级别%
-      \@@_cover_uline_nl:nn {9em}{\l_@@_name_degree_tl}%
-      \noindent 专业名称%
-      \uline{\hfill\l_@@_major_tl\hfill}\par
-      \noindent 论文提交日期%
-      \@@_cover_uline_nl:nn {9em}{\l_@@_submit_date_tl}%
-      \noindent 论文答辩日期%
-      \uline{\hfill\l_@@_defend_date_tl\hfill}\par
-      \noindent 学位授予单位和日期\uline{\hfill}\par
-    \egroup
-    \begin{flushright}
-      答辩委员会主席：
-      \@@_cover_uline_nl:nn {9em}{\l_@@_info_chairman_tl}\par
-      评阅人：
-      \@@_cover_uline_nl:nn {9em}{\clist_item:Nn \l_@@_info_reviewer_clist {1}}\par
-      \@@_cover_uline_nl:nn {9em}{\clist_item:Nn \l_@@_info_reviewer_clist {2}}\par
-      \@@_cover_uline_nl:nn {9em}{\clist_item:Nn \l_@@_info_reviewer_clist {3}}\par
-      \@@_cover_uline_nl:nn {9em}{\clist_item:Nn \l_@@_info_reviewer_clist {4}}\par
-    \end{flushright}
-    \begin{center}
-      \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
-    \end{center}
-    \vskip -10mm
-    }
+  \vskip\stretch{1}\kaishu\zihao{4}
+  \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
+  \@@_cover_uline_nl:nn {94pt}{\l_@@_info_supv_a_tl}\par
+  \noindent \@@_cover_uline_nl:nn {\textwidth}{%
+  \l_@@_info_supv_cont_tl}\par
+  \noindent 申请学位级别%
+  \@@_cover_uline_nl:nn {9em}{\l_@@_name_degree_tl}%
+  \noindent 专业名称%
+  \uline{\hfill\l_@@_major_tl\hfill}\par
+  \noindent 论文提交日期%
+  \@@_cover_uline_nl:nn {9em}{\l_@@_submit_date_tl}%
+  \noindent 论文答辩日期%
+  \uline{\hfill\l_@@_defend_date_tl\hfill}\par
+  \noindent 学位授予单位和日期\uline{\hfill}\par
+  \begin{flushright}
+    答辩委员会主席：
+    \@@_cover_uline_nl:nn {9em}{ \l_@@_info_chairman_tl }\par
+    评阅人：
+    \@@_cover_uline_nl:nn {9em}
+      { \clist_item:Nn \l_@@_info_reviewer_clist {1} }\par
+    \@@_cover_uline_nl:nn {9em}
+      { \clist_item:Nn \l_@@_info_reviewer_clist {2} }\par
+    \@@_cover_uline_nl:nn {9em}
+      { \clist_item:Nn \l_@@_info_reviewer_clist {3} }\par
+    \@@_cover_uline_nl:nn {9em}
+      { \clist_item:Nn \l_@@_info_reviewer_clist {4} }\par
+  \end{flushright}
+  \begin{center}
+    \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
+  \end{center}
+  \vskip -10mm
   \cleardoublepage
 }
 %    \end{macrocode}
