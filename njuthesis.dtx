@@ -99,7 +99,7 @@ through XeTeX.
 %
 %<class|visual>\NeedsTeXFormat{LaTeX2e}
 %<class|visual>\RequirePackage{expl3}
-%<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.10.1 2021-09-26 17:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.11.0 2021-10-01 19:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<visual>  { LaTeX3 Package for NJU Visual Identity }
@@ -134,7 +134,7 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.10.1 \\ Released 2021-09-26}
+% \date{v0.11.0 \\ Released 2021-10-01}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -1008,13 +1008,12 @@ through XeTeX.
 % 
 % 
 % \subsubsection{成果列表}
-% \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
 %
 % \begin{function}{\njupaperlist,\njupaperlist*}
 %   \begin{syntax}
 %     \tn{njupaperlist}\Arg{文献}
 %   \end{syntax}
-% 成果列表文献
+% 成果列表，分别为发表文章目录与合作文章目录。\Arg{文献}的填写方式同\tn{cite}，多个文献需要使用英文半角逗号隔开。
 % \end{function}
 %
 % \subsection{参考文献}
@@ -1030,22 +1029,16 @@ through XeTeX.
 % \end{function}
 %
 % 
-%
-% 
-%
 % \subsubsection{使用EndNote}
 %
 % 南京大学信息化建设管理服务中心已购买\href{https://itsc.nju.edu.cn/EndNote/list.htm}{EndNote}供全校师生免费试用，最新版为EndNote 20。
 %
 %
-%
-% 
-%
 % \subsubsection{使用Zotero}
 %
 % \href{https://www.zotero.org/}{Zotero}是一款免费的文献管理软件，支持所有桌面平台。
 %
-% 在保持Zotero程序运行的情况下，点击浏览器工具栏的Zotero Connector插件即可自动从网页抓取参考文件信息。Zotero也有知网插件
+% 在保持Zotero程序运行的情况下，点击浏览器工具栏的Zotero Connector插件即可自动从网页抓取参考文件信息。Zotero可以通过\href{https://github.com/l0o0/jasminum}{jasminum插件}支持中文参考文献的识别。在选中希望使用的文献后右键导出文献条目即可生成\file{.bib}文件。
 %
 % \subsubsection{文段内引用}
 %
@@ -1075,8 +1068,7 @@ through XeTeX.
 %   \begin{syntax}
 %     \tn{njuemblem}\oarg{颜色}\Arg{宽度}\Arg{高度}
 %   \end{syntax}
-%
-% 生成指定颜色和大小的南京大学校徽
+% 生成指定颜色和大小的南京大学校徽。
 % \end{function}
 %
 % \begin{function}[added=2021-09-24]{\njuname,\njuname*}
@@ -1084,8 +1076,7 @@ through XeTeX.
 %     \tn{njuname}\oarg{颜色}\Arg{宽度}\Arg{高度}
 %     \tn{njuname*}\oarg{颜色}\Arg{宽度}\Arg{高度}
 %   \end{syntax}
-%
-% 生成指定颜色和大小的南京大学校名，加星号的为英文校名
+% 生成指定颜色和大小的南京大学校名，加星号的为英文校名。
 % \end{function}
 %
 % 
@@ -1093,8 +1084,7 @@ through XeTeX.
 %   \begin{syntax}
 %     \tn{njumotto}\oarg{颜色}\Arg{宽度}\Arg{高度}
 %   \end{syntax}
-%
-% 生成指定颜色和大小的南京大学校训
+% 生成指定颜色和大小的南京大学校训。
 % \end{function}
 %
 %
@@ -1102,8 +1092,7 @@ through XeTeX.
 %   \begin{syntax}
 %     \tn{njuspirit}\oarg{颜色}\Arg{宽度}\Arg{高度}
 %   \end{syntax}
-%
-% 生成指定颜色和大小的南京大学校徽
+% 生成指定颜色和大小的南京大学校徽。
 % \end{function}
 %
 %
@@ -1115,7 +1104,7 @@ through XeTeX.
 % \section{代码实现}
 % \changes{v0.10}{2021/09/26}{对代码实现部分进行了整理。}
 %
-% @@在l3docstrip中表示名空间，在生成cls时会被相应字段替换，譬如在\pkg{njuthesis}中|@@=nju|。
+% |@@| 在 \pkg{l3docstrip} 中表示名空间，在删除注释生成格式文件时会被等号后的字段替换，譬如在本模板\pkg{njuthesis}中 |@@=nju|。
 % 尖括号包裹的|<*class>||</class>|用来指定某段代码属于哪个文件。
 %
 %    \begin{macrocode}
@@ -1452,7 +1441,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 生成用于测试的大段填充文字。
 %    \begin{macrocode}
 \RequirePackage{blindtext,zhlipsum} 
-% \RequirePackage{showframe} 
 %    \end{macrocode}
 %
 % \subsection{字体设置}
@@ -1467,8 +1455,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 \bool_new:N \g_@@_load_system_fontset_bool
 %    \end{macrocode}
 % \end{variable}
-%
-% 判断用户是否自定义了中英文字体，如果其中任意一种未被定义，
+% 判断用户是否自定义了中英文字体。如果其中任意一种未被定义，
 % 则使用系统预装字体覆盖字体选项。
 %    \begin{macrocode}
 \tl_if_empty:NTF \g_@@_latin_fontset_tl
@@ -1527,9 +1514,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_latin_font_macos:
 {
-\setmainfont{Times~New~Roman}
-\setsansfont{Arial}
-\setmonofont{Menlo}[Scale=MatchLowercase]
+  \setmainfont{Times~New~Roman}
+  \setsansfont{Arial}
+  \setmonofont{Menlo}[Scale=MatchLowercase]
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1540,26 +1527,26 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_latin_font_gyre:
 {
-\setmainfont{texgyretermes}[
-  Extension=.otf,
-  UprightFont=*-regular,
-  BoldFont=*-bold,
-  ItalicFont=*-italic,
-  BoldItalicFont=*-bolditalic]
-\setsansfont{texgyreheros}[
-  Extension=.otf,
-  UprightFont=*-regular,
-  BoldFont=*-bold,
-  ItalicFont=*-italic,
-  BoldItalicFont=*-bolditalic]
-\setmonofont{texgyrecursor}[
-  Extension=.otf,
-  UprightFont=*-regular,
-  BoldFont=*-bold,
-  ItalicFont=*-italic,
-  BoldItalicFont=*-bolditalic,
-  Scale=MatchLowercase,
-  Ligatures=CommonOff]
+  \setmainfont{texgyretermes}[
+    Extension=.otf,
+    UprightFont=*-regular,
+    BoldFont=*-bold,
+    ItalicFont=*-italic,
+    BoldItalicFont=*-bolditalic]
+  \setsansfont{texgyreheros}[
+    Extension=.otf,
+    UprightFont=*-regular,
+    BoldFont=*-bold,
+    ItalicFont=*-italic,
+    BoldItalicFont=*-bolditalic]
+  \setmonofont{texgyrecursor}[
+    Extension=.otf,
+    UprightFont=*-regular,
+    BoldFont=*-bold,
+    ItalicFont=*-italic,
+    BoldItalicFont=*-bolditalic,
+    Scale=MatchLowercase,
+    Ligatures=CommonOff]
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1762,11 +1749,11 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \subsubsection{页眉页脚}
 %
 % 
-% 本科生页眉页脚 
+% 本科生页眉页脚。要求无页眉，页脚居中，页码使用五号新罗马体数字。
 %    \begin{macrocode}
-\fancypagestyle{njuplain}{%
+\fancypagestyle{njuplain}{
    \fancyhead{}               
-   \fancyfoot[C]{\zihao{5}\thepage} % 页脚居中 五号新罗马体数字
+   \fancyfoot[C]{\zihao{5}\thepage}
 }
 %    \end{macrocode}
 %
@@ -1779,7 +1766,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 }
 %    \end{macrocode}
 %
-% 载入页眉页脚设置。
+% 载入页眉页脚设置。此处\tn{flushbottom}是为了防止目录页出现underfull \tn{vbox}信息。
 %    \begin{macrocode}
 \str_if_eq:NNTF {\l_@@_info_degree_tl} { ug } 
 {
@@ -1795,7 +1782,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   % the footer line
   \tl_set:Nn \footrulewidth {0pt}
   \setlength{\headheight}{20pt}
-  % \AtBeginDocument{\pagestyle{njuplain}} % 无页眉页脚
   \AtBeginDocument{\pagestyle{fancy}\flushbottom} % 研究生有页眉页脚
 }
 %    \end{macrocode}
@@ -1814,7 +1800,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \end{macrocode}
 %
 % \subsection{目录格式}
-% 目录标题名称
+% 设定目录标题名称。
 %    \begin{macrocode}
 \ctexset{
     contentsname = 目录,
@@ -1823,7 +1809,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 }
 %    \end{macrocode}
 %
-% \pkg{tocloft}定制目录文字格式
+% 使用\pkg{tocloft}定制目录文字格式。
 %    \begin{macrocode}
 \cftsetpnumwidth{2em}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
@@ -1834,7 +1820,8 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 \setlength{\cftsubsecnumwidth}{2em}
 %    \end{macrocode}
 %
-% 重定义目录命令，修改标题格式并插入书签。
+% \begin{macro}{\tableofcontents}
+  % 重定义目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
 \renewcommand\tableofcontents{%
   \cleardoublepage
@@ -1851,7 +1838,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   \@starttoc{toc}%
 }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\listoffigures}
 % 重定义插图目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
 \renewcommand\listoffigures{%
@@ -1867,7 +1856,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   \@starttoc{lof}%
 }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\listoftables}
 % 重定义表格目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
 \renewcommand\listoftables{%
@@ -1883,11 +1874,11 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   \@starttoc{lot}%
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{前言致谢}
 % 
 % \begin{environment}{preface}
-%
 % 单独制作的前言页。
 %    \begin{macrocode}
 \NewDocumentEnvironment{preface}{}
@@ -1911,7 +1902,8 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %
 %
 % \begin{macro}{\njupaperlist}
-% 发表文章目录
+% \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
+% 发表文章目录与合作文章目录。
 %    \begin{macrocode}
 \NewDocumentCommand\njupaperlist { t* m }
 {  
@@ -2493,7 +2485,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 
 % \begin{macro}{\@@_print_cover_nl:}
 % 按需绘制国家图书馆封面，修改自胡海星模板
-% 
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_cover_nl:
 {
