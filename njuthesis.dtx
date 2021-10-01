@@ -1004,6 +1004,7 @@ through XeTeX.
 % 
 % 
 % \subsubsection{成果列表}
+% \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
 %
 % \begin{function}{\njupaperlist,\njupaperlist*}
 %   \begin{syntax}
@@ -1691,6 +1692,8 @@ through XeTeX.
 \@@_load_font:
 %    \end{macrocode}
 %
+% \changes{v0.10}{2021/09/28}{修正了数学字体。}
+%
 % 设置数学字体 (XITS, 或者 STIX, 与 Times New Roman 最为相近)
 %    \begin{macrocode}
 % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
@@ -1952,6 +1955,28 @@ through XeTeX.
 % \crefname{condition}{条件}{条件}
 % \crefname{conclusion}{结论}{结论}
 % \crefname{assumption}{假设}{假设}
+%    \end{macrocode}
+%
+% \pkg{hyperref} 
+% \changes{v0.10}{2021/10/01}{写入PDF元数据。}
+%    \begin{macrocode}
+\tl_const:Nn { \c_@@_name_pdf_creator_tl } { LaTeX~ with~ njuthesis~ class }
+\ctex_at_end_preamble:n
+{
+  \hypersetup
+    {
+      bookmarksnumbered = true,
+      psdextra          = true,
+      unicode           = true,
+%    \end{macrocode}
+% 填写 PDF 元信息。
+%    \begin{macrocode}
+      pdftitle    = \l_@@_info_title_tl,
+      pdfauthor   = \l_@@_info_author_tl,
+      % pdfkeywords = \l_@@_info_keywords_clist,
+      pdfcreator  = \c_@@_name_pdf_creator_tl
+    }
+}
 %    \end{macrocode}
 %
 % \subsection{图表浮动体}
