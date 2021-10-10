@@ -338,25 +338,27 @@ through XeTeX.
 %
 % \subsubsection{编译顺序}
 % 假设即将使用的文件名为\file{mynjuthesis.tex}
-% 应采用以下命令顺序进行编译，以生成正确的目录、编号和参考文献条目。
+% 应采用以下命令顺序进行编译，以生成正确的目录、编号和参考文献条目，以下几种命令可任选一种。
+% 使用 \pkg{xelatex}
 % \begin{ctexexam}
 %   xelatex mynjuthesis
 %   biber mynjuthesis
 %   xelatex mynjuthesis
 %   xelatex mynjuthesis
 % \end{ctexexam}
-% 使用 \pkg{latexmk}
+% 使用 \pkg{latexmk} 并指定编译器为 \pkg{xelatex}
 % \begin{ctexexam}
 %   latexmk -xelatex mynjuthesis
 % \end{ctexexam}
 %
+% 使用 \pkg{lualatex}
 % \begin{ctexexam}
 %   lualatex mynjuthesis
 %   biber mynjuthesis
 %   lualatex mynjuthesis
 %   lualatex mynjuthesis
 % \end{ctexexam}
-% 使用 \pkg{latexmk}
+% 使用 \pkg{latexmk} 并指定编译器为 \pkg{lualatex}
 % \begin{ctexexam}
 %   latexmk -lualatex mynjuthesis
 % \end{ctexexam}
