@@ -547,10 +547,10 @@ through XeTeX.
 %
 % 若要手动选择字体，则需将字体设置为 \opt{none}，再通过 \pkg{fontspec} 宏包或 \pkg{ctex} 宏包中给出的命令来实现。
 %
-% 最后，出于统一格式的需要，本模板还选取了与正文字体相似度最高的数学字体（\href{https://www.stixfonts.org}{STIX 字体}）用于公式排版。
+% 最后，出于统一格式的需要，本模板还选取了与正文字体相似度最高的数学字体（\href{https://github.com/aliftype/xits}{XITS 字体}）用于公式排版。
 %
 % 本节提及的字库中，中文字库只有方正书宋、方正黑体、方正楷体、方正仿宋、两种思源字体和四种Fandol字体能够\emph{免费商用}；
-% 英文字库中只有 Times New Roman、STIX 和三种\Hologo{TeX} Gyre字体能够\emph{免费商用}。
+% 英文字库中只有 Times New Roman、XITS 和三种\Hologo{TeX} Gyre字体能够\emph{免费商用}。
 % 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。
 %
 % \subsection{个人信息}
@@ -1094,7 +1094,7 @@ through XeTeX.
 %   \begin{syntax}
 %     \tn{njuspirit}\oarg{颜色}\Arg{宽度}\Arg{高度}
 %   \end{syntax}
-% 生成指定颜色和大小的南京大学校徽。
+% 生成指定颜色和大小的南京大学校风。
 % \end{function}
 %
 %
@@ -1726,7 +1726,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %
 % \changes{v0.10}{2021/09/28}{修正了数学字体。}
 %
-% 设置数学字体 (XITS, 或者 STIX, 与 Times New Roman 最为相近)
+% 设置数学字体 (XITS, 或者 \href{https://www.stixfonts.org}{STIX}, 与 Times New Roman 最为相近)
 %    \begin{macrocode}
 % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
 \setmathfont{XITSMath-Regular}[
