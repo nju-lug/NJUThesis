@@ -206,7 +206,7 @@ through XeTeX.
 % \end{enumerate}
 % 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
 %
-% 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼顾友校\href{https://ctan.org/pkg/thuthesis}{thuthesis}、\href{https://ctan.org/pkg/njuthesis}{njuthesis}等优秀项目，构建了这一全新模板，力求通过\hologo{LaTeX3}语法和清晰的接口实现良好的易用性和可维护性。
+% 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼顾友校\href{https://ctan.org/pkg/thuthesis}{thuthesis}、\href{https://ctan.org/pkg/fduthesis}{fduthesis}等优秀项目，构建了这一全新模板，力求通过\hologo{LaTeX3}语法和清晰的接口实现良好的易用性和可维护性。
 %
 % 目前，本模板的主要维护者包括：
 %
@@ -217,7 +217,7 @@ through XeTeX.
 % \end{itemize}
 %
 % \subsection{君\hologo{LaTeX}本当上手}
-% \hologo{LaTeX}并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须要面对的情况。目前，中文互联网上的\hologo{LaTeX}写作教程不能说屈指可数，起码也是汗牛充栋，比较著名的包括刘海洋的《\hologo{LaTeX}入门》等等都是不错的参考资料。然而如何快速准确找到所需要的用法，尤其是\hologo{LaTeX3}的新接口，需要一定的时间或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您的相关知识体系，只能\textbf{尽力做到有求必应}，在需要的地方顺带提一嘴，保证您少走点弯路。
+% \hologo{LaTeX}并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须要面对的情况。目前，中文互联网上的\hologo{LaTeX}写作教程不能说屈指可数，起码也是汗牛充栋，比较著名的包括刘海洋的《\hologo{LaTeX}入门》等等都是不错的参考资料。然而如何快速准确找到所需要的用法，尤其是\hologo{LaTeX3}的新接口，需要一定的时间或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您的相关知识体系，只能\emph{尽力做到有求必应}，在需要的地方顺带提一嘴，保证您少走点弯路。
 %
 % \subsection{关于本说明手册}
 %
@@ -332,7 +332,7 @@ through XeTeX.
 %
 % 配置完编译器后，还需要一个\textbf{文本编辑器}作为前端来完成\file{.tex}文件内容的写作。
 %
-% 至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\textbf{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio 等，顺手就行。
+% 至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\emph{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio 等，顺手就行。
 %
 % 若使用 \hologo{LaTeX} Workshop 插件，本项目在|.vscode/|中提供一份简易配置，可以省略初始配置步骤直接使用。
 %
@@ -1115,9 +1115,9 @@ through XeTeX.
 % “|*|”和“|/|”的 guard 出现在行号右侧，它们用来确定
 % 单独一行代码的归属。这些 guard 的颜色深浅不一，用以明确嵌套关系。
 %
-% 另有若干包含|@@|的guard，在 \pkg{l3docstrip} 中表示名空间（模块），
+% 另有若干包含|@@|的guard，在 \pkg{l3docstrip} 中表示名空间（模块）。
 % 在删除注释生成格式文件时，变量名称中的|@@|会被等号后的字段替换，
-% 譬如在本模板\cls{njuthesis}中 |@@=nju|，\pkg{njuvisual}中 |@@=njuvis|。
+% 譬如在本模板\cls{njuthesis}中 |@@=nju|，视觉识别系统\pkg{njuvisual}中 |@@=njuvis|。
 %
 % \subsection{准备}
 %
@@ -1126,6 +1126,7 @@ through XeTeX.
 %<*class>
 %    \end{macrocode}
 %
+% \changes{v0.11}{2021/10/23}{添加了若干环境检查与警告信息。}
 % 检查 \hologo{LaTeX3} 编程环境。
 %    \begin{macrocode}
 \RequirePackage { xparse, xtemplate, l3keys2e }
@@ -1144,7 +1145,7 @@ through XeTeX.
 
 %    \end{macrocode}
 %
-% 目前 \cls{njuthesis} 仅支持 \hologo{\XeTeX} 和 \hologo{\LuaTeX}。
+% 目前 \cls{njuthesis} 仅支持 \hologo{XeTeX} 和 \hologo{LuaTeX}。
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { unsupported-engine }
   {
@@ -2396,7 +2397,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 }
 %    \end{macrocode}
 % \begin{macro}{\@@_spread_box:nn}
-% 来自\cls{njuthesis}：分散对齐的水平盒子。
+% 来自\cls{fduthesis}：分散对齐的水平盒子。
 % \begin{arguments}
 %   \item   宽度
 %   \item   内容
