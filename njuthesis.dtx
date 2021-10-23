@@ -1637,6 +1637,12 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_founder:
 {
+  \sys_if_engine_luatex:T
+  {
+    % 在 LuaTeX 中调整方正字体括号位置
+    % XeTeX 暂无好的解决方法
+    \defaultCJKfontfeatures{JFM={zh_CN/{quanjiao,fzpr}}}
+  }
   \setCJKmainfont{FZSSK}[% 方正书宋
     Extension=.ttf,
     BoldFont=FZXBSK,% 方正小标宋
@@ -1661,6 +1667,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   %   {FZYouHK_508R}[% 方正悠黑508R
   %     Extension=.ttf,
   %     BoldFont=FZYouHK_511M]% 方正悠黑511M
+  \defaultCJKfontfeatures{}
 }
 %    \end{macrocode}
 % \end{macro}
