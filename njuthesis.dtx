@@ -307,6 +307,7 @@ through XeTeX.
 % \begin{itemize}
 %     \item 为了避免不必要的麻烦，请尽可能下载 full 版本，如 texlive-full。简而言之，下载大的那个。
 %     \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题以及l3语法解释错误。
+%     \item 进行编译前，请确认各宏包已升级至最新版。对于一部分用到新版本特性的宏包，\cls{njuthesis}内置了版本检查。
 % \end{itemize}
 %
 % 下表是目前经过测试的环境。如果有其他可用不可用的环境，欢迎补充。
@@ -1133,9 +1134,10 @@ through XeTeX.
 \msg_new:nnn { njuthesis } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\\\
-    Please~ update~ an~ up-to-date~ version~ of~ the~ bundles \\
-    "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
-    manager~ or~ from~ CTAN.
+    Please~ update~ an~ up-to-date~ version~ of~ \\
+    the~ bundles "l3kernel"~ and~ "l3packages"~ \\
+    using~ your~ TeX~ package manager~ or~ from~ \\
+    CTAN.
   }
 \clist_map_inline:nn { expl3, xparse, xtemplate, l3keys2e }
   {
@@ -1149,9 +1151,11 @@ through XeTeX.
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { unsupported-engine }
   {
-    The~ njuthesis~ class~ requires~ either~ XeTeX~ or~ LuaTeX. \\\\
-    "#1"~ is~ not~ supported~ at~ present.~ You~ must~ change \\
-    your~ typesetting~ engine~ to~ "xelatex"~ or~ "lualatex".
+    The~ njuthesis~ class~ requires~ either~ \\
+    XeTeX~ or~ LuaTeX. \\\\
+    "#1"~ is~ not~ supported~ at~ present.~ \\
+    You~ must~ change your~ typesetting~ engine~ \\
+    to~ "xelatex"~ or~ "lualatex".
   }
 \sys_if_engine_xetex:F
   {
@@ -1217,7 +1221,7 @@ through XeTeX.
 %    \end{macrocode}
 %
 % \begin{macro}{degree}
-% 学位类型。
+% 学位类型。TODO: 将选项改成数字而不是字符串匹配以提升效率
 %    \begin{macrocode}
   degree            .choices:nn   =
   { ug, mg, mf, phd }
@@ -1258,7 +1262,7 @@ through XeTeX.
 % \end{macro}
 %
 % \begin{macro}{\ProcessKeysOptions}
-% 在定义完全部设置以后从tex文件导言区输入参数
+% 在定义完全部设置以后从tex文件导言区输入参数。
 %    \begin{macrocode}
 \ProcessKeysOptions { nju }
 %    \end{macrocode}
@@ -1282,7 +1286,7 @@ through XeTeX.
 %    \end{macrocode}
 %
 % \begin{macro}{info/titlea,info/titleb,info/titlec,info/title*}
-% 题目
+% 题目。以下标注星号（*）的为对应的英文字段。
 %    \begin{macrocode}
   titlea            .tl_set:N = \l_@@_info_title_a_tl,
   titleb            .tl_set:N = \l_@@_info_title_b_tl,
@@ -1293,7 +1297,7 @@ through XeTeX.
 %
 % \begin{macro}{info/keywords,info/keywords*}
 % \changes{v0.11}{2021/10/01}{修改了添加关键词的方式。}
-% 关键词
+% 关键词列表。
 %    \begin{macrocode}
 keywords         .clist_set:N = \l_@@_info_keywords_clist,
 keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
@@ -1301,7 +1305,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \end{macro}
 % 
 % \begin{macro}{info/grade,info/student-id,info/author,info/author*}
-% 年级、学号、姓名
+% 年级、学号、姓名。
 %    \begin{macrocode}
   grade             .tl_set:N = \l_@@_info_grade_tl,
   student-id        .tl_set:N = \l_@@_info_id_tl,
@@ -1343,7 +1347,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \end{macro}
 %
 % \begin{macro}{info/submit-date,info/submit-date*}
-  % 提交日期
+% 提交日期
 %    \begin{macrocode}
   submit-date       .tl_set:N = \l_@@_submit_date_tl,
   submit-date*      .tl_set:N = \l_@@_submit_date_en_tl,
@@ -1351,7 +1355,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \end{macro}
 %
 % \begin{macro}{info/defend-date,info/chairman,info/reviewer}
-% 答辩 TODO: 用clist处理答辩委员会成员名称
+% 答辩信息。
 %    \begin{macrocode}
   defend-date       .tl_set:N = \l_@@_defend_date_tl,
   chairman          .tl_set:N = \l_@@_info_chairman_tl,
@@ -1360,7 +1364,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \end{macro}
 %
 % \begin{macro}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
-% 国家图书馆封面相关
+% 国家图书馆封面相关信息。
 %    \begin{macrocode}
   clc               .tl_set:N = \l_@@_info_clc_tl,
   secret-level      .tl_set:N = \l_@@_info_seclv_tl,
@@ -1383,7 +1387,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %
 % \subsection{载入宏包}
 % 
-% 使用\pkg{ctexbook}文档类。
+% 使用\pkg{ctexbook}作为基础文档类。
 %    \begin{macrocode}
 \LoadClass[
   a4paper,
@@ -1392,7 +1396,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   scheme=chinese,
 %    \end{macrocode}
 % 关于行距，\hologo{LaTeX}默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故
-% \[ 1.5\times\frac{1.3}{1.2} = 1.625\]
+% $1.5\times\frac{1.3}{1.2} = 1.625$
 %    \begin{macrocode}
   linespread=1.625,
 %    \end{macrocode}
@@ -1495,10 +1499,10 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 \msg_new:nnn { njuthesis } { package-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\
-    The~ njuthesis~ class~ only~ supports~ "#1"~ with~ a~ version \\
-    higher~ than~ v#2. \\\\
-    Please~ update~ an~ up-to-date~ version~ of~ it~ using~ your \\
-    TeX~ package~ manager~ or~ from~ CTAN.
+    The~ njuthesis~ class~ only~ supports~ "#1"~ with~  \\
+    a~ version higher~ than~ v#2. \\\\
+    Please~ update~ an~ up-to-date~ version~ of~ it~ \\
+    using~ your TeX~ package~ manager~ or~ from~ CTAN.
   }
 \cs_new_protected:Npn \@@_check_package:nnn #1#2#3
   {
