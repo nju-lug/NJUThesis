@@ -1508,10 +1508,10 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \end{macrocode}
 % \end{macro}
 %
-% 检查下划线所需的 \pkg{luatexja} 包版本。由于2021-09-18的更新只改动了若干个组件，因而宏包的日期实际上停留在 2021-06-07，准备发issue问问。
+% 检查绘制下划线所需的 \pkg{luatexja} 包版本。该宏包在2021-09-18的解决了下划线中断问题，然而在2021-10-24的更新才提供了正确的内嵌日期。
 %    \begin{macrocode}
 \sys_if_engine_luatex:T
-  { \@@_check_package:nnn { luatexja } { 2021/06/07 } { 20210918.0 } }
+  { \@@_check_package:nnn { luatexja } { 2021/10/24 } { 20211024.0 } }
 %    \end{macrocode}
 %
 % \subsection{字体设置}
@@ -1820,7 +1820,8 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \geometry{
   vmargin    = 2.5 cm,
-  hmargin    = 3.2 cm,
+  hmargin    = 3.2 cm, 
+  headheight = 15 pt
 }
 %    \end{macrocode}
 %
@@ -1859,7 +1860,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   \tl_set:Nn \headrulewidth {1pt}
   % the footer line
   \tl_set:Nn \footrulewidth {0pt}
-  \setlength{\headheight}{20pt}
   \AtBeginDocument{\pagestyle{fancy}\flushbottom} % 研究生有页眉页脚
 }
 %    \end{macrocode}

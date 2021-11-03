@@ -4,7 +4,8 @@
 [![overleaf](https://img.shields.io/badge/overleaf-supported-brightgreen)](https://tex.nju.edu.cn)
 ![build status](https://github.com/nju-lug/NJUThesis/actions/workflows/build.yml/badge.svg)
 
-> 此项目是基于[NJU thesis 2021](https://github.com/FengChendian/NJUThesis2021)的重构版本，目前本科生版本**已经基本重构完成**，硕博论文**正在**根据研究生院的文件重构，但研究生院的规定并不完善，因此部分格式可能会参考本科的，**如果院系另有要求，请自行修改或者提交issue**。
+> 此项目是基于[NJU thesis 2021](https://github.com/FengChendian/NJUThesis2021)的重构版本，目前本科生及研究生版本**已经基本重构完成**。
+> 然而，研究生院并未提供完善的规定，部分格式来自于本科生院。**如果院系另有要求，请提交issue**。
 
 原来的[NJU thesis 2021](https://github.com/FengChendian/NJUThesis2021)模板太过古老并且不支持硕士、博士论文，目前难以维护，因此为了模板的可持续发展，现在将对该项目进行重构，项目挂载于[NJU-LUG](https://github.com/nju-lug)组织仓库下，目前已[发布在CTAN](https://ctan.org/pkg/njuthesis)。
 
