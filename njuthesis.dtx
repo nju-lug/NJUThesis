@@ -1211,11 +1211,13 @@ through XeTeX.
 %
 % \subsection{模板选项}
 %
-% \begin{variable}{\g_@@_info_degree_int,\g_@@_info_type_int}
+% \begin{variable}{\g_@@_info_degree_int,\g_@@_info_type_int,
+%   \g_@@_info_diploma_tl}
 % 用于存储学位名称的变量，注意宏的命名，l代表局部变量，g代表全局变量
 %    \begin{macrocode}
 \int_new:N \g_@@_info_degree_int
 \int_new:N \g_@@_info_type_int
+\tl_new:N \g_@@_info_diploma_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1234,7 +1236,7 @@ through XeTeX.
 %    \end{macrocode}
 %
 % \begin{macro}{degree}
-% 学位类型。TODO: 将选项改成数字而不是字符串匹配以提升效率
+% 学位类型。
 %    \begin{macrocode}
   degree            .choices:nn   =
   { ug, mg, mf, phd }
@@ -1281,6 +1283,12 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
+% 进行学位的判断。
+%    \begin{macrocode}
+\int_compare:nTF { \g_@@_info_degree_int == 1 }
+  { \tl_set:Nn \g_@@_info_diploma_tl { ug } }
+  { \tl_set:Nn \g_@@_info_diploma_tl { g } }
+%    \end{macrocode}
 % 
 %
 %
@@ -2739,15 +2747,8 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     \vskip 15mm
   \end{spacing}
   \cleardoublepage
-}
-%    \end{macrocode}
-% \end{macro}
-% 
-% \begin{macro}{\@@_print_cover_en:}
+  
 % 研究生英文封面
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_print_cover_en:
-{
   \thispagestyle{empty}
   \pdfbookmark{英文封面}{cover-en} % 将封面插入pdf书签
   \begin{center}
@@ -2795,16 +2796,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 重定义maketitle生成封面
 %    \begin{macrocode}
 \tl_set:Nn \maketitle 
-{%
-  \int_compare:nTF { \g_@@_info_degree_int == 1 }
-    {
-      \@@_print_cover_ug: % 本科封面
-    } 
-    { 
-      \bool_if:NT \g_@@_nlcover_bool { \@@_print_cover_nl: } % 国家图书馆封面
-      \@@_print_cover_g: % 研究生封面
-      \@@_print_cover_en: % 英文封面
-    } 
+{
+  \bool_if:NT \g_@@_nlcover_bool { \@@_print_cover_nl: } % 国家图书馆封面
+  \use:c { @@_print_cover_ \g_@@_info_diploma_tl : } 
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2927,24 +2921,15 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 }
 %    \end{macrocode}
 % \end{macro}
-%
 % 
-% 判断学位
-%
+% 创建摘要环境
 %    \begin{macrocode}
-\int_compare:nTF { \g_@@_info_degree_int == 1 } 
-{   
-  \NewDocumentEnvironment{abstract} {}
-  {\@@_print_abstract_ug:}{\@@_print_keywords:\newpage}
-  \NewDocumentEnvironment{abstract*} {}
-  {\@@_print_abstract_en_ug:}{\@@_print_keywords_en:\cleardoublepage}
-}
-{
-  \NewDocumentEnvironment{abstract} {}
-  {\@@_print_abstract_g:}{\@@_print_keywords:\newpage}
-  \NewDocumentEnvironment{abstract*} {}
-  {\@@_print_abstract_en_g:}{\@@_print_keywords_en:\cleardoublepage}
-}
+\NewDocumentEnvironment{abstract} {}
+  { \use:c { @@_print_abstract_ \g_@@_info_diploma_tl : } }
+  { \@@_print_keywords: \newpage }
+\NewDocumentEnvironment{abstract*} {}
+  { \use:c { @@_print_abstract_en_ \g_@@_info_diploma_tl : } }
+  { \@@_print_keywords_en: \cleardoublepage }
 %</class>
 %    \end{macrocode}
 %
