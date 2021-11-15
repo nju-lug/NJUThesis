@@ -1170,7 +1170,7 @@ through XeTeX.
 % \subsection{定义常量}
 %
 % \begin{variable}{\c_@@_name_type_clist,\c_@@_name_diploma_clist,
-%   \c_@@_name_degree_clist}
+%   \c_@@_name_degree_clist,\c_@@_name_degree_en_clist}
 % 论文类型与学位类型。
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_type_clist
@@ -1178,7 +1178,9 @@ through XeTeX.
 \clist_const:Nn \c_@@_name_diploma_clist
   { 本科生, 研究生 }
 \clist_const:Nn \c_@@_name_degree_clist
-  { 学士, 学术型硕士, 硕士专业, 博士 }
+  { 学士, 硕士, 硕士专业, 博士 }
+\clist_const:Nn \c_@@_name_degree_en_clist
+  { Bachelor, Master, Master, Doctor~of~Philosophy }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2372,7 +2374,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 \int_compare:nTF { \g_@@_info_degree_int == 1 } 
 {
   % 本科
-  \tl_const:Nn \l_@@_name_diploma_tl { 本科 }
   \tl_const:Nn \c_@@_name_title_tl { 题\hfill 目 }
   
   \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
@@ -2388,7 +2389,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 } 
 { 
   % 本科以外都是研究生 
-  \tl_const:Nn \l_@@_name_diploma_tl { 研究生 }
   \tl_const:Nn \c_@@_name_title_tl { 论\hfill 文\hfill 题\hfill 目 }
 
   \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
@@ -2398,19 +2398,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   \tl_const:Nn \c_@@_cover_uline_bskip_tl { \hspace{1em} }
 
   \tl_const:Nn \c_@@_cover_box_len_tl { 6em }
-
-  % 研究生学位名称
-  \int_compare:nTF { \g_@@_info_degree_int == 4 } 
-  {
-    \tl_set:Nn \l_@@_name_degree_tl { 博士 }
-    \tl_set:Nn \l_@@_name_degree_en_tl { Doctor~of~Philosophy }
-  }
-  {
-    \tl_set:Nn \l_@@_name_degree_en_tl { Master }
-    \int_compare:nTF { \g_@@_info_degree_int == 2 } { mg }
-    { \tl_set:Nn \l_@@_name_degree_tl { 硕士 } }
-    { \tl_set:Nn \l_@@_name_degree_tl { 硕士专业 } }
-  }
 }
 %    \end{macrocode}
 % \begin{macro}{\@@_spread_box:nn}
@@ -2482,9 +2469,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_degree:
 {
-  { 申请 }
+  { （申请 }
   \clist_item:Nn \c_@@_name_degree_clist { \g_@@_info_degree_int }
-  { 学位 }
+  { 学位） }
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2781,11 +2768,13 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     \l_@@_info_supv_b_title_en_tl
     \hspace{.5em}\l_@@_info_supv_b_en_tl
     \vskip\stretch{1}
-    \normalsize\rmfamily{%
+    \normalsize\rmfamily{
       A~dissertation~submitted~to\\
       the~graduate~school~of~Nanjing~University\\
       in~partial~fulfilment~of~the~requirements~for~the~degree~of\\
-      {\textsc{\l_@@_name_degree_en_tl}}\\
+      \textsc{
+        \clist_item:Nn \c_@@_name_degree_en_clist { \g_@@_info_degree_int }
+        }\\
       in\\
       {\l_@@_major_en_tl}
     }
@@ -2913,7 +2902,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     毕业论文题目：\hspace{0.5em}\njuline{\l_@@_info_title_tl\hfill}\\
     \njuline{\makebox[11em]{\l_@@_major_tl}}专业
     \njuline{\makebox[4em]{\l_@@_info_grade_tl}}级
-    \int_compare:nTF { \g_@@_info_degree_int == 4} { phd } { 博 } { 硕 }
+    \int_compare:nTF { \g_@@_info_degree_int == 4} { 博 } { 硕 }
     士生姓名：\njuline{\hfill\l_@@_info_author_tl\hfill}\\
     指导教师（姓名、职称）：\njuline{\hfill\l_@@_info_supv_full_tl\hfill}\par
   \egroup
