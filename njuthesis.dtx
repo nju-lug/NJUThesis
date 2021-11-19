@@ -99,7 +99,7 @@ through XeTeX.
 %
 %<class|visual>\NeedsTeXFormat{LaTeX2e}
 %<class|visual>\RequirePackage{expl3}
-%<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.11.0 2021-10-01 19:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.11.2 2021-11-19 15:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<visual>  { LaTeX3 Package for NJU Visual Identity }
@@ -110,7 +110,6 @@ through XeTeX.
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
 \usepackage{listings,xcolor,tabularray}
-\setlist[1]{labelindent=0.5em}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
@@ -128,13 +127,13 @@ through XeTeX.
 %</driver>
 % \fi
 %
-% \title{\color{njuviolet}{The \textsc{NJuThesis} class\\ 南京大学学位论文模板}}
+% \title{\color{njuviolet}{The \cls{njuthesis} class\\ 南京大学学位论文模板}}
 % 
 % \author{^^A
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.11.0 \\ Released 2021-10-01}
+% \date{v0.11.2 \\ Released 2021-11-19}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -378,7 +377,7 @@ through XeTeX.
 % \subsubsection{南大\hologo{TeX}平台简介}
 % \changes{v0.2}{2021/09/07}{添加对南大\hologo{TeX}的支持。}
 %
-% \href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，面向南京大学全体师生开放，首次使用需凭学校邮箱自助注册账号。
+% \href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，是eScience中心为南大在校师生提供的在线\hologo{LaTeX}编译平台，首次使用需凭学校邮箱自助注册账号。
 %
 % \subsubsection{操作步骤}
 %
@@ -556,7 +555,7 @@ through XeTeX.
 %
 % \subsection{个人信息}
 %
-% \begin{function}[added=2021-09-10]{\njusetup}
+% \begin{function}[updated=2021-10-01]{\njusetup}
 %   \begin{syntax}
 %     \tn{njusetup}\Arg{键值列表}
 %   \end{syntax}
@@ -666,11 +665,12 @@ through XeTeX.
 %     udc = \Arg{udc}
 %     supervisor-contact = \Arg{导师联系方式}
 %   \end{syntax}
-% 国家图书馆封面相关，包括中图分类号、密级和udc。
+% 国家图书馆封面相关，包括中图分类号、密级、udc和导师联系方式。
 % \end{function}
 %
-% 本科生可以参考如下列表输入个人信息。注意不能有空行。
+% \subsubsection{输入示范}
 %
+% 本科生可以参考如下列表输入个人信息。注意不能有空行。
 %
 % \begin{ctexexam}
 %   \njusetup {
@@ -796,7 +796,7 @@ through XeTeX.
 % \end{ctexexam}
 %
 % 
-% 文字环绕图像，\env{wrapfigure}后面不能有空行
+% 对于较为瘦长，或者仅起到辅助作用的图像，可以使用\env{wrapfigure}实现文字环绕效果。注意这个环境后紧跟的一行不能为空。
 %
 % \begin{ctexexam}
 %   \begin{wrapfigure}{r}{0cm}
@@ -807,7 +807,7 @@ through XeTeX.
 %   <text>
 % \end{ctexexam}
 % 
-% TODO：使用\pkg{subcaption}的\env{subfigure}实现多张图片并排的效果
+% TODO：使用\pkg{subcaption}的\env{subfigure}实现多张图片并排的效果。较为老旧的\pkg{subfigure}并不在此受到支持。
 %
 % \begin{ctexexam}
 %   \begin{figure}
@@ -832,9 +832,7 @@ through XeTeX.
 %
 % \subsubsection{表格}
 %
-% 下面这个例子展示了如何插入一张表格。
-%
-% 通过\pkg{booktabs}提供的\tn{toprule}、\tn{midrule}和\tn{bottomrule}，我们可以很轻松地绘制出一张漂亮规范的三线表。
+% 下面这个例子展示了如何插入一张表格。通过\pkg{booktabs}提供的\tn{toprule}、\tn{midrule}和\tn{bottomrule}，我们可以很轻松地绘制出一张漂亮规范的三线表。
 % \begin{ctexexam}
 %   \begin{table}[htbp]
 %       \caption{我的表}
@@ -874,7 +872,7 @@ through XeTeX.
 %
 % \subsubsection{数学}
 %
-% 符号表可以参考\url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}。单位请参考\pkg{siunitx}。
+% 符号表可以参考\url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}。单位请参考\pkg{siunitx}。\pkg{siunitx}是一个更新频繁的包，可能会引发兼容性问题。
 %
 % 行内公式形如|$\mathrm{e}^{(a+2b)x}$|
 %
@@ -1210,6 +1208,7 @@ through XeTeX.
 %    \end{macrocode}
 %
 % \subsection{模板选项}
+% \changes{v0.11}{2021/11/15}{进行了效率优化。}
 %
 % \begin{variable}{\g_@@_info_degree_int,\g_@@_info_type_int,
 %   \g_@@_info_diploma_tl}
@@ -2233,7 +2232,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 \renewcommand*{\proofname}{\rm\bf\songti{\oldproofname}} 
 %    \end{macrocode}
 %
-% 
+% TODO: 简化数学环境的定义方法
 %    \begin{macrocode}
 \declaretheorem[
 	name=算法,
