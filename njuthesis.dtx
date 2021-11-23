@@ -99,7 +99,7 @@ through XeTeX.
 %
 %<class|visual>\NeedsTeXFormat{LaTeX2e}
 %<class|visual>\RequirePackage{expl3}
-%<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.11.2 2021-11-19 15:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.11.3 2021-11-23 14:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<visual>  { LaTeX3 Package for NJU Visual Identity }
@@ -110,6 +110,7 @@ through XeTeX.
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
 \usepackage{floatrow,listings,xcolor,tabularray}
+\setlist[1]{labelindent=0.5em}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
@@ -133,7 +134,7 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.11.2 \\ Released 2021-11-19}
+% \date{v0.11.3 \\ Released 2021-11-23}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -395,7 +396,7 @@ through XeTeX.
 % \subsection{在线编译}
 % \label{subsec:onlinecompile}
 %
-% 相信你在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{同一个模板在 Linux 编译可以相对 Windows 节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
+% 相信你在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{同一个模板在 Linux 编译可以相对 Windows 节省一半耗时。}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
 %
 % \subsubsection{南大\hologo{TeX}平台简介}
 % \changes{v0.2}{2021/09/07}{添加对南大\hologo{TeX}的支持。}
