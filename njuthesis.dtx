@@ -303,7 +303,7 @@ through XeTeX.
 %
 % \subsubsection{安装\hologo{TeX}发行版}
 %
-% 首先需要下载并安装 \hologo{TeX} 软件发行版，各操作系统适用情况请参考表\ref{tab:texdistribution}。第一次编译前请务必\emph{手动更新全部宏包}以避免潜在的兼容性问题。
+% 首先需要下载并安装 \hologo{TeX} 软件发行版，各操作系统适用情况请参考表\ref {tab:texdistribution}。第一次编译前请务必通过 MiKTeX Console、TeX Live Manager 等图形化程序或 \pkg{tlmgr}\emph{手动更新全部宏包}以避免潜在的兼容性问题。
 %
 % \begin{table}[H]
 %   \centering
@@ -322,35 +322,39 @@ through XeTeX.
 %
 % 以下是一些值得注意的要点：
 % \begin{itemize}
-%     \item 校园网环境中访问\href{https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南大镜像站}可以获得最佳的下载体验。
-%     \item Linux用户请尽可能下载 full 版本，如 |texlive-full|。换言之，下载最大的软件包。
-%     \item 使用最新的发行版，即版本号为2021或者21。
-%     \item 对于一部分用到新版本特性的宏包，\cls{njuthesis}内置了版本检查，请确认各宏包已升级至最新版。
+%   \item 校园网环境中访问\href{https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南大镜像站}可以获得最佳的下载体验。
+%   \item 使用最新的发行版，即版本号为2021或者21。
+%   \item 对于 Windows 和 macOS 用户，更推荐轻量化的 \hologo{MiKTeX} 套件。
+%   \item Linux用户请尽可能下载 full 版本，如 |texlive-full|。换言之，下载最大的软件包。
+%   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis}内置了版本检查，请确认各宏包已升级至最新版。
 % \end{itemize}
 %
 % \subsubsection{配置编辑器}
 % \changes{v0.11}{2021/11/23}{提供TeXstudio配置文件。}
 %
-% 配置完编译器后，还需要一个\textbf{文本编辑器}来完成\file{.tex}文件内容的写作。
+% 配置完编译器后，还需要一个\emph{文本编辑器}来完成\file{.tex}文件内容的写作。
 %
 % 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\emph{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}。你也可以根据个人的喜好随意使用 TeXworks、TeXstudio 等编辑器，顺手就行。
 %
-% \begin{itemize}
-%   \item 若使用 Visual Studio Code，本模板在\file{.vscode/}中提供一份\hologo{LaTeX} Workshop 插件的简易配置，在打开文件夹后将自动导入，可以省略初始配置步骤直接使用。
-%   \item 若使用 TeXstudio，本项目提供 \file{conf.txsprofile}，可以使用快捷键 |alt+O+P| 导入配置文件。
-% \end{itemize}
+% \cls{njuthesis} 为一些常见编辑器提供了配置文件，如
+% \begin{description}
+%   \item[Visual Studio Code] 本模板在\file{.vscode/}中提供一份\hologo{LaTeX} Workshop 插件的简易配置，在打开文件夹后将自动导入，可以省略初始配置步骤直接使用。
+%   \item[TeXstudio] 本模板提供 \file{conf.txsprofile}，可以使用快捷键 |alt+O+P| 导入配置文件。为了简化流程\footnote{当然，也可以设置为使用 \hologo{XeLaTeX} 编译，然后按照 \ref{subsubsec:compileseq} 内容使用快捷键 |F8| 手动编译参考文献。}，该配置文件使用 \pkg{latexmk}，第一次编译前请参考下一节内容安装 Perl。
+% \end{description}
 %
 % \subsubsection{编译顺序}
+% \label{subsubsec:compileseq}
 % \hologo{TeX} 本身是命令行程序，通过不同的命令调用所需的编译引擎。
-% 尽管上述的文本编辑器已经提供了自动化编译的方法，为了便于debug，以下通过终端命令简要描述编译过程。
+% 尽管上述的文本编辑器已经提供了自动化编译的方法，为了便于排查运行错误，以下通过具体终端命令简要描述编译过程。
 %
 % 编译本模板概括为如下步骤：生成初始文档，编译参考文献，生成页码、编号、目录，需要编译4次。
-% 假设即将使用的文件名为 \file{mynjuthesis.tex}，
-% 应采用以下命令顺序进行编译，以生成内容正确的\file{mynjuthesis.pdf}，这个文档位于同一目录下。
-% 请注意，以下几种命令可任选一种，但如果你不清楚\hologo{XeLaTeX}与\hologo{LuaLaTeX}的区别，我们建议优先使用|latexmk -xelatex|。
+% \emph{假设即将使用的文件名为 \file{mynjuthesis.tex}}，
+% 应采用以下命令顺序进行编译，以生成内容正确的 \file{mynjuthesis.pdf}。输出的 PDF 文档位于同一目录下。
+%
+% 编译命令具体为引擎名称加文件名，在编译\file{.tex}文件时，文件扩展名可以省略不写。现阶段 \cls{njuthesis} 仅支持 \hologo{XeLaTeX} 与 \hologo{LuaLaTeX}。请注意，几种命令的输出文件基本相同，可以任取一种；但如果你不清楚这两种编译引擎的区别，我们建议优先使用|latexmk -xelatex|。
 %
 % \subparagraph{使用 \hologo{XeLaTeX}}
-% 编译命令具体为引擎名称加文件名。在编译\file{.tex}文件时，扩展名可以省略不写。
+% 
 % \begin{ctexexam}
 %   xelatex mynjuthesis
 %   biber mynjuthesis
@@ -367,6 +371,13 @@ through XeTeX.
 % \end{ctexexam}
 %
 % \subparagraph{使用 \pkg{latexmk}}
+% \href{https://mg.readthedocs.io/latexmk.html}{\pkg{latexmk}} 是一个基于 Perl 脚本的自动编译工具，宗旨是通过单一命令简化上述的多次编译流程。在使用该命令前，请确保安装了以下软件：
+% \begin{description}
+%   \item[Perl] 一般预装于 macOS 和 Linux，而 Windows 用户需要单独安装 \href{https://strawberryperl.com/}{Strawberry Perl}。
+%   \item[\pkg{latexmk}] \hologo{MiKTeX}已预装；如果终端找不到|latexmk|命令，\hologo{TeX}\,Live 用户需使用 \pkg{tlmgr} 单独安装。
+% \end{description}
+%
+% 该命令的使用方法为
 % \begin{ctexexam}
 %   latexmk mynjuthesis
 % \end{ctexexam}
@@ -376,7 +387,7 @@ through XeTeX.
 %   latexmk -xelatex mynjuthesis
 % \end{ctexexam}
 %
-% 此外可以选择使用以下命令进行编译生成的临时文件。
+% 此外可以选择使用以下命令清理编译生成的临时文件。
 % \begin{ctexexam}
 %   latexmk -c
 % \end{ctexexam}
@@ -384,19 +395,19 @@ through XeTeX.
 % \subsection{在线编译}
 % \label{subsec:onlinecompile}
 %
-% 相信你在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{其实这三点都是对广大的Windows用户说的，同一个模板在Linux编译可以节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
+% 相信你在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{同一个模板在 Linux 编译可以相对 Windows 节省一半耗时}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
 %
 % \subsubsection{南大\hologo{TeX}平台简介}
 % \changes{v0.2}{2021/09/07}{添加对南大\hologo{TeX}的支持。}
 %
-% \href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的ShareLaTeX平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，是eScience中心为南大在校师生提供的在线\hologo{LaTeX}编译平台，首次使用需凭学校邮箱自助注册账号。
+% \href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的 ShareLaTeX 平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的 \hologo{LaTeX} 在线编译平台，首次使用需凭学校邮箱自助注册账号。
 %
 % \subsubsection{操作步骤}
 %
 % \begin{enumerate}
 %     \item 访问\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}，点击界面右上方Register，使用\emph{南京大学邮箱}注册账号并登录
 %     \item 在项目页面左上角的Menu中，将编译器改为\hologo{XeLaTeX}或者\hologo{LuaLaTeX}
-%     \item 仿照\file{njuthesis-sample.tex}编写论文
+%     \item 仿照 \file{njuthesis-sample.tex} 编写论文
 %     \item 点击Compile按钮进行编译和预览
 % \end{enumerate}
 %
@@ -404,9 +415,11 @@ through XeTeX.
 %
 % \subsubsection{关于Overleaf}
 %
-% 由于\href{https://www.overleaf.com/}{Overleaf平台}的\hologo{TeX}\,Live版本停留在2020，\texttt{cleveref}包在引用章节时会生成错误的标签，引发格式错误；而南大\hologo{TeX}通过及时更新规避了若干问题。因此\emph{请务必不要使用Overleaf官网进行编译}。
+% 由于\href{https://www.overleaf.com/}{Overleaf} 平台的\hologo{TeX}\,Live版本停留在2020，\texttt{cleveref}包在引用章节时会生成错误的标签，引发格式错误；而南大\hologo{TeX}通过及时更新规避了若干问题。因此\emph{请务必不要使用Overleaf官网进行编译}。
 %
+% \subsubsection{关于TeXPage}
 %
+% \href{https://www.texpage.com/}{TeXPage} 是国人研发的\hologo{LaTeX}在线编辑器，当前版本已具备较为完善的编辑编译功能，而且免费版相对 Overleaf 增加了公式识别、编辑历史等实用工具，也可以作为一个备选项。目前的缺憾是对于 \cls{njuthesis} 的编译速度较慢。 
 %
 % \section{使用方法}
 %
