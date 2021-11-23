@@ -109,7 +109,7 @@ through XeTeX.
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
-\usepackage{listings,xcolor,tabularray}
+\usepackage{floatrow,listings,xcolor,tabularray}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
@@ -153,7 +153,7 @@ through XeTeX.
 % \maketitle
 %
 % \begin{abstract}
-% 南京大学学位论文\hologo{LaTeX}模板基于本科生院的论文撰写规范制作，
+% 南京大学学位论文\hologo{LaTeX}模板 \cls{njuthesis} 基于本科生院的论文撰写规范制作，
 % 同时参考研究生院提供的硕士、博士学位材料包，
 % 用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文，
 % 旨在为同学提供毕业论文书写的方便。
@@ -161,7 +161,7 @@ through XeTeX.
 %
 % \def\abstractname{Abstract}
 % \begin{abstract}
-% The \textsc{NJuThesis} class is intended for 
+% The \cls{njuthesis} class is intended for 
 % typesetting Nanjing University dissertations with \hologo{LaTeX}, 
 % providing support for bachelor, masters, and doctoral thesis. 
 % \end{abstract}
@@ -186,7 +186,7 @@ through XeTeX.
 %
 %
 % \section{模板介绍}
-% \textsc{NJuThesis}，即南京大学学位论文模板，是一个由南京大学LUG组织维护的，用于处理本校学生毕业论文排版需求的\hologo{LaTeX}模板。
+% \cls{njuthesis}，即南京大学学位论文模板，是一个由南京大学LUG组织维护的，用于处理本校学生毕业论文排版需求的\hologo{LaTeX}模板。
 %
 % \subsection{历史沿革}
 %
@@ -299,72 +299,84 @@ through XeTeX.
 % \subsection{本地编译}
 % \label{subsec:localcompile}
 %
+% 本地编译的安装过程分为两个阶段：安装 \hologo{TeX} 发行版以及配置编辑器。前者提供了可以被命令行终端调用的编译程序，后者则提供了语法高亮、自动编译等人性化功能。
+%
 % \subsubsection{安装\hologo{TeX}发行版}
 %
-% 首先需要下载\hologo{TeX}软件发行版，校园网环境中使用\href{https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南大镜像站}可以获得最好的体验。\textbf{推荐使用最新的\hologo{TeX}\,Live 2021或者\hologo{MiKTeX} 21以避免潜在的兼容性问题。使用\hologo{LuaLaTeX}编译需要将\pkg{LuaTeX-ja}包更新至2021-09-19或更新的版本}
+% 首先需要下载并安装 \hologo{TeX} 软件发行版，各操作系统适用情况请参考表\ref{tab:texdistribution}。第一次编译前请务必\emph{手动更新全部宏包}以避免潜在的兼容性问题。
 %
-% \begin{itemize}
-%     \item 为了避免不必要的麻烦，请尽可能下载 full 版本，如 texlive-full。简而言之，下载大的那个。
-%     \item 并且，尽可能使用最新版（截至目前是 2021）。2020 及之前版本使用 PDF 格式的图片可能会出现加粗问题以及l3语法解释错误。
-%     \item 进行编译前，请确认各宏包已升级至最新版。对于一部分用到新版本特性的宏包，\cls{njuthesis}内置了版本检查。
-% \end{itemize}
-%
-% 下表是目前经过测试的环境。如果有其他可用不可用的环境，欢迎补充。
-% \begin{table}[ht]
-%     \centering
-%     \caption{经过测试的环境}
-%     \label{tab:1}
-%     \begin{tabular}{ccc}
-%           \toprule
-%           OS & TeX & 测试情况 \\
-%           \midrule
-%           Windows 10   & \hologo{TeX}\,Live 2020 & cref存在格式问题  \\
-%           Windows 10   & \hologo{TeX}\,Live 2021 & 通过 \\
-%           Windows 10   & \hologo{MiKTeX}         & 通过 \\
-%           macOS 10.15  & mac\hologo{TeX} 2021    & 通过 \\
-%           Ubuntu 20.04 & \hologo{TeX}\,Live 2021 & 通过 \\
-%           Arch Linux   & \hologo{TeX}\,Live 2021 & 通过 \\
-%           \bottomrule
-%     \end{tabular}
+% \begin{table}[H]
+%   \centering
+%   \caption{\hologo{TeX} 软件发行版一览}
+%   \label{tab:texdistribution}
+%   \begin{tabular}{cccc}
+%     \toprule
+%     \hologo{TeX}        & Windows   & macOS     & Linux     \\
+%     \midrule
+%     \hologo{TeX}\,Live  & $\bullet$ &           & $\bullet$ \\
+%     mac\hologo{TeX}     &           & $\bullet$ &           \\
+%     \hologo{MiKTeX}     & $\bullet$ & $\bullet$ &           \\
+%     \bottomrule
+%   \end{tabular}
 % \end{table}
 %
-% \subsubsection{选择编辑器}
+% 以下是一些值得注意的要点：
+% \begin{itemize}
+%     \item 校园网环境中访问\href{https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南大镜像站}可以获得最佳的下载体验。
+%     \item Linux用户请尽可能下载 full 版本，如 |texlive-full|。换言之，下载最大的软件包。
+%     \item 使用最新的发行版，即版本号为2021或者21。
+%     \item 对于一部分用到新版本特性的宏包，\cls{njuthesis}内置了版本检查，请确认各宏包已升级至最新版。
+% \end{itemize}
 %
-% 配置完编译器后，还需要一个\textbf{文本编辑器}作为前端来完成\file{.tex}文件内容的写作。
+% \subsubsection{配置编辑器}
+% \changes{v0.11}{2021/11/23}{提供TeXstudio配置文件。}
 %
-% 至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\emph{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}，来完成论文编写。你也可以根据个人的喜好随便使用其他编辑器，如 TeXworks、TeX Studio 等，顺手就行。
+% 配置完编译器后，还需要一个\textbf{文本编辑器}来完成\file{.tex}文件内容的写作。
 %
-% 若使用 \hologo{LaTeX} Workshop 插件，本项目在|.vscode/|中提供一份简易配置，可以省略初始配置步骤直接使用。
+% 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\emph{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}。你也可以根据个人的喜好随意使用 TeXworks、TeXstudio 等编辑器，顺手就行。
+%
+% \begin{itemize}
+%   \item 若使用 Visual Studio Code，本模板在\file{.vscode/}中提供一份\hologo{LaTeX} Workshop 插件的简易配置，在打开文件夹后将自动导入，可以省略初始配置步骤直接使用。
+%   \item 若使用 TeXstudio，本项目提供 \file{conf.txsprofile}，可以使用快捷键 |alt+O+P| 导入配置文件。
+% \end{itemize}
 %
 % \subsubsection{编译顺序}
-% 假设即将使用的文件名为\file{mynjuthesis.tex}
-% 应采用以下命令顺序进行编译，以生成正确的目录、编号和参考文献条目，以下几种命令可任选一种。
-% 使用 \pkg{xelatex}
+% \hologo{TeX} 本身是命令行程序，通过不同的命令调用所需的编译引擎。
+% 尽管上述的文本编辑器已经提供了自动化编译的方法，为了便于debug，以下通过终端命令简要描述编译过程。
+%
+% 编译本模板概括为如下步骤：生成初始文档，编译参考文献，生成页码、编号、目录，需要编译4次。
+% 假设即将使用的文件名为 \file{mynjuthesis.tex}，
+% 应采用以下命令顺序进行编译，以生成内容正确的\file{mynjuthesis.pdf}，这个文档位于同一目录下。
+% 请注意，以下几种命令可任选一种，但如果你不清楚\hologo{XeLaTeX}与\hologo{LuaLaTeX}的区别，我们建议优先使用|latexmk -xelatex|。
+%
+% \subparagraph{使用 \hologo{XeLaTeX}}
+% 编译命令具体为引擎名称加文件名。在编译\file{.tex}文件时，扩展名可以省略不写。
 % \begin{ctexexam}
 %   xelatex mynjuthesis
 %   biber mynjuthesis
 %   xelatex mynjuthesis
 %   xelatex mynjuthesis
 % \end{ctexexam}
-% 使用 \pkg{latexmk} 并指定编译器为 \pkg{xelatex}
+%
+% \subparagraph{使用 \hologo{LuaLaTeX}}
+% \begin{ctexexam}
+%   lualatex mynjuthesis
+%   biber mynjuthesis
+%   lualatex mynjuthesis
+%   lualatex mynjuthesis
+% \end{ctexexam}
+%
+% \subparagraph{使用 \pkg{latexmk}}
+% \begin{ctexexam}
+%   latexmk mynjuthesis
+% \end{ctexexam}
+%
+% 如需指定编译器，可以加入|-xelatex|或|-lualatex|参数，例如指定 \hologo{XeLaTeX} 的命令为
 % \begin{ctexexam}
 %   latexmk -xelatex mynjuthesis
 % \end{ctexexam}
 %
-% 使用 \pkg{lualatex}
-% \begin{ctexexam}
-%   lualatex mynjuthesis
-%   biber mynjuthesis
-%   lualatex mynjuthesis
-%   lualatex mynjuthesis
-% \end{ctexexam}
-% 使用 \pkg{latexmk} 并指定编译器为 \pkg{lualatex}
-% \begin{ctexexam}
-%   latexmk -lualatex mynjuthesis
-% \end{ctexexam}
-%
-% 编译产物为\file{njuthesis.pdf}，位于主目录下。此外还会生成一系列中间文件，可以选择使用以下命令进行清理。
-%
+% 此外可以选择使用以下命令进行编译生成的临时文件。
 % \begin{ctexexam}
 %   latexmk -c
 % \end{ctexexam}
@@ -832,7 +844,7 @@ through XeTeX.
 %
 % \subsubsection{表格}
 %
-% 下面这个例子展示了如何插入一张表格。通过\pkg{booktabs}提供的\tn{toprule}、\tn{midrule}和\tn{bottomrule}，我们可以很轻松地绘制出一张漂亮规范的三线表。
+% 下面这个例子展示了如何插入一张表格。通过 \pkg{booktabs} 提供的 \tn{toprule}、\tn{midrule} 和 \tn{bottomrule}，我们可以很轻松地绘制出一张漂亮规范的三线表。
 % \begin{ctexexam}
 %   \begin{table}[htbp]
 %       \caption{我的表}
