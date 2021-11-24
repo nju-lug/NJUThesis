@@ -73,7 +73,7 @@ jobs:
       
       - name: Zip Release Source
         run: |
-          zip -r njuthesis-$VERSION.zip .vscode chapters/ latexmkrc conf.txsprofile LICENSE Makefile njuthesis-sample.bib njuthesis.cls njuthesis-sample.tex njuvisual.sty README.md
+          zip -r njuthesis-$VERSION.zip .vscode chapters/ conf.txsprofile LICENSE Makefile njuthesis-sample.bib njuthesis.cls njuthesis-sample.tex njuvisual.sty README.md
 
       - name: Zip CTAN Source
         run: |
