@@ -33,7 +33,7 @@
 %</internal>
 %
 %<*install>
-\input l3docstrip.tex
+\input docstrip.tex
 \keepsilent
 \askforoverwritefalse
 
@@ -97,8 +97,7 @@ through XeTeX.
 \fi
 %</internal>
 %
-%<class|visual>\NeedsTeXFormat{LaTeX2e}
-%<class|visual>\RequirePackage{expl3}
+%<class|visual>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 %<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.11.3 2021-11-23 14:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
@@ -109,7 +108,7 @@ through XeTeX.
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
-\usepackage{floatrow,listings,xcolor,tabularray}
+\usepackage{floatrow,tabularray}
 \setlist[1]{labelindent=0.5em}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
@@ -1154,7 +1153,7 @@ through XeTeX.
 % \changes{v0.11}{2021/10/23}{添加了若干环境检查与警告信息。}
 % 检查 \hologo{LaTeX3} 编程环境。
 %    \begin{macrocode}
-\RequirePackage { xparse, xtemplate, l3keys2e }
+\RequirePackage { xtemplate, l3keys2e }
 \msg_new:nnn { njuthesis } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\\\
@@ -1163,7 +1162,7 @@ through XeTeX.
     using~ your~ TeX~ package manager~ or~ from~ \\
     CTAN.
   }
-\clist_map_inline:nn { expl3, xparse, xtemplate, l3keys2e }
+\clist_map_inline:nn { xtemplate, l3keys2e }
   {
     \@ifpackagelater {#1} { 2021/08/27 }
       { } { \msg_error:nnn { njuthesis } { l3-too-old } {#1} }
