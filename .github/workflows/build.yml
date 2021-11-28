@@ -41,7 +41,6 @@ jobs:
           path: |
             njuthesis-sample.pdf
             njuthesis.cls
-            README_EN.md
 
   release:
     needs: build_latex
@@ -73,13 +72,13 @@ jobs:
       
       - name: Zip Release Source
         run: |
-          zip -r njuthesis-$VERSION.zip .vscode chapters/ conf.txsprofile LICENSE Makefile njuthesis-sample.bib njuthesis.cls njuthesis-sample.tex njuvisual.sty README.md
+          zip -r njuthesis-$VERSION.zip .vscode chapters/ conf.txsprofile LICENSE Makefile njuthesis-sample.bib njuthesis.cls njuthesis-sample.tex README.md
 
       - name: Zip CTAN Source
         run: |
           mkdir -p njuthesis/
           cp njuthesis-$VERSION.pdf njuthesis/njuthesis.pdf
-          cp README-ctan.md njuthesis/README.md
+          cp README-CTAN.md njuthesis/README.md
           cp LICENSE njuthesis.dtx njuvisual.dtx njuthesis.ins njuthesis/
           zip -r njuthesis-ctan-$VERSION.zip njuthesis/
 

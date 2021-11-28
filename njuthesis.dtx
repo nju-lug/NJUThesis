@@ -12,6 +12,16 @@
 %
 %    https://www.latex-project.org/lppl.txt
 %
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Yu Xiong.
+%
+% This work consists of the files njuthesis.dtx,
+%           and the derived files njuthesis.ins,
+%                                 njuthesis.cls,
+%                                 njuthesis.pdf,
+%                             and README.md.
+%
 % -----------------------------------------------------------------------
 %
 % The development version of the template can be found at
@@ -60,9 +70,6 @@ through XeTeX.
 \generate{
   \usedir{tex/latex/njuthesis}
     \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
-    \file{njuvisual.sty}
-                               {\from{\jobname.dtx}{visual}
-                                \from{njuvisual.dtx}{visual}}
 %</install>
 %<*internal>
   \usedir{source/latex/njuthesis}
@@ -81,7 +88,6 @@ through XeTeX.
 \Msg{*                                                           *}
 \Msg{*     njuthesis.cls                                         *}
 \Msg{*     njuthesis.ins                                         *}
-\Msg{*     njuvisual.sty                                         *}
 \Msg{*                                                           *}
 \Msg{* To produce the documentation, run the file njuthesis.dtx  *}
 \Msg{* through XeLaTeX.                                          *}
@@ -97,30 +103,33 @@ through XeTeX.
 \fi
 %</internal>
 %
+<<<<<<< HEAD
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\RequirePackage{expl3}
+%<class>\GetIdInfo  $Id: njuthesis.dtx 0.11.3 2021-11-23 14:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+=======
 %<class|visual>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 %<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.11.3 2021-11-23 14:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+>>>>>>> 535775c075ded6dc1d8700ff96722f0480abbad4
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
-%<visual>  { LaTeX3 Package for NJU Visual Identity }
-%<visual>\ProvidesExplPackage{njuvisual}
-%<class|visual>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
+<<<<<<< HEAD
+\usepackage{floatrow,tabularray,njuvisual}
+=======
 \usepackage{floatrow,tabularray}
+>>>>>>> 535775c075ded6dc1d8700ff96722f0480abbad4
 \setlist[1]{labelindent=0.5em}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
 \DefTblrTemplate{caption-sep}{default}{\quad}
-\definecolor{njuviolet}{cmyk}{0.5,1,0,0.4}
-\definecolor{njumagenta}{cmyk}{0.05,1,0.55,0}
-\definecolor{njublue}{cmyk}{0.8,0.5,0,0}
-\definecolor{njuyellow}{cmyk}{0,0.3,1,0}
 \begin{document}
-  \DocInput{njuthesis.dtx}  
-  \DocInput{njuvisual.dtx}
+  \DocInput{njuthesis.dtx}
   \PrintChanges
   \PrintIndex
 \end{document}
@@ -149,6 +158,7 @@ through XeTeX.
 % \changes{v0.9}{2021/09/15}{大幅度修改宏名称以符合\hologo{LaTeX3}规范。}
 % \changes{v0.9}{2021/09/15}{进一步完善文档。}
 % \changes{v0.10}{2021/09/24}{删除了生成自述文件的代码。}
+% \changes{v0.11}{2021/11/28}{删除内置的 \pkg{njuvisual} 代码。}
 %
 % \maketitle
 %
@@ -289,8 +299,6 @@ through XeTeX.
 %     \color{njuyellow}\file{njuthesis.ins} & 文档类安装脚本 \\
 %     \file{njuthesis.pdf}                  & 用户手册（本文档） \\
 %     \file{njuthesis-sample.tex}           & 示例文档，不妨以此为基础撰写论文 \\
-%     \color{njuyellow}\file{njuvisual.dtx} & 视觉识别系统源代码 \\
-%     \file{njuvisual.sty}                  & 南京大学视觉识别系统 \\
 %     \file{README.md}                      & 自述文件 \\
 %     \bottomrule
 %   \end{tabular}
@@ -1078,50 +1086,18 @@ through XeTeX.
 % \end{function}
 %
 % \subsection{视觉识别系统}
-% 
-% \begin{function}[added=2021-09-24]{njuviolet,njumagenta,njublue,njuyellow}
-%   \begin{syntax}
-%     \tn{color}\Arg{颜色}
-%   \end{syntax}
-% 定义并使用南京大学视觉形象规范化标准中给定的四种标准色：
 %
-% {\color{njuviolet}紫色}\hspace{1em}{\color{njumagenta}洋红}\hspace{1em}
-% {\color{njublue}蓝色}\hspace{1em}{\color{njuyellow}黄色}
+% 视觉识别系统 \pkg{njuvisual} 现已被分离为独立宏包，基本使用方法举例如下：
+% \begin{ctexexam}
+%   \njuemblem{!}{3cm}                           % 默认生成指定大小的紫色南大校徽
+%   \njuname{4cm}{!}                             % 默认生成指定大小的紫色南大中文校名
+%   \njuname*{4cm}{!}                            % 默认生成指定大小的紫色南大英文校名
+%   \njuemblem[black]{!}{3cm}                    % 黑色的南大校徽
+%   \njuemblem[department=dii]{!}{4cm}           % 紫色匡院徽标
+%   \njuemblem[department=cs,color=blue]{!}{3cm} % 纯蓝色计科徽标
+% \end{ctexexam}
 %
-% \end{function}
-%
-% \begin{function}[added=2021-09-24]{\njuemblem}
-%   \begin{syntax}
-%     \tn{njuemblem}\oarg{颜色}\Arg{宽度}\Arg{高度}
-%   \end{syntax}
-% 生成指定颜色和大小的南京大学校徽。
-% \end{function}
-%
-% \begin{function}[added=2021-09-24]{\njuname,\njuname*}
-%   \begin{syntax}
-%     \tn{njuname}\oarg{颜色}\Arg{宽度}\Arg{高度}
-%     \tn{njuname*}\oarg{颜色}\Arg{宽度}\Arg{高度}
-%   \end{syntax}
-% 生成指定颜色和大小的南京大学校名，加星号的为英文校名。
-% \end{function}
-%
-% 
-% \begin{function}[added=2021-09-24]{\njumotto}
-%   \begin{syntax}
-%     \tn{njumotto}\oarg{颜色}\Arg{宽度}\Arg{高度}
-%   \end{syntax}
-% 生成指定颜色和大小的南京大学校训。
-% \end{function}
-%
-%
-% \begin{function}[added=2021-09-24]{\njuspirit}
-%   \begin{syntax}
-%     \tn{njuspirit}\oarg{颜色}\Arg{宽度}\Arg{高度}
-%   \end{syntax}
-% 生成指定颜色和大小的南京大学校风。
-% \end{function}
-%
-%
+% 本宏包的详细使用方法请参考其\href{http://mirrors.ctan.org/macros/latex/contrib/njuvisual/njuvisual.pdf}{说明文档}。
 %
 % \end{documentation}
 %
@@ -1141,7 +1117,7 @@ through XeTeX.
 %
 % 另有若干包含|@@|的guard，在 \pkg{l3docstrip} 中表示名空间（模块）。
 % 在删除注释生成格式文件时，变量名称中的|@@|会被等号后的字段替换，
-% 譬如在本模板\cls{njuthesis}中 |@@=nju|，视觉识别系统\pkg{njuvisual}中 |@@=njuvis|。
+% 譬如在本模板\cls{njuthesis}中 |@@=nju|。
 %
 % \subsection{准备}
 %
