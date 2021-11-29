@@ -53,7 +53,7 @@ Copyright (C) 2021
 by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
 
 This file may be distributed and/or modified under the conditions of
-the LaTeX Project Public License, either version 1.3 of this license
+the LaTeX Project Public License, either version 1.3c of this license
 or (at your option) any later version.  The latest version of this
 license is in:
 
@@ -103,14 +103,9 @@ through XeTeX.
 \fi
 %</internal>
 %
-<<<<<<< HEAD
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
 %<class>\GetIdInfo  $Id: njuthesis.dtx 0.11.3 2021-11-23 14:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
-=======
-%<class|visual>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
-%<class|visual>\GetIdInfo  $Id: njuthesis.dtx 0.11.3 2021-11-23 14:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
->>>>>>> 535775c075ded6dc1d8700ff96722f0480abbad4
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -118,11 +113,9 @@ through XeTeX.
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
-<<<<<<< HEAD
 \usepackage{floatrow,tabularray,njuvisual}
-=======
-\usepackage{floatrow,tabularray}
->>>>>>> 535775c075ded6dc1d8700ff96722f0480abbad4
+\usepackage[firstpage=true]{background}
+\backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
 \setlist[1]{labelindent=0.5em}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
@@ -185,12 +178,12 @@ through XeTeX.
 %
 % \clearpage
 %
-% \setcounter{tocdepth}{4}
 % \tableofcontents
+%
 % \clearpage
 %
+%
 % \EnableDocumentation
-%^^A \DisableDocumentation
 % 
 % \begin{documentation}
 %
