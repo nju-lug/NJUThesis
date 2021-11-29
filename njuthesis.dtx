@@ -156,24 +156,27 @@ through XeTeX.
 % \maketitle
 %
 % \begin{abstract}
-% 南京大学学位论文\hologo{LaTeX}模板 \cls{njuthesis} 基于本科生院的论文撰写规范制作，
-% 同时参考研究生院提供的硕士、博士学位材料包，
-% 用于生成符合南京大学学位论文排版要求和相应的国家规范、行业标准的学位论文，
-% 旨在为同学提供毕业论文书写的方便。
+% 南京大学学位论文 \hologo{LaTeX} 模板 \cls{njuthesis} 基于本科生院的论文撰写
+% 规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学学
+% 位论文排版要求和相应的国家规范、行业标准的学位论文，旨在为同学提供毕业论文书
+% 写的方便。
 % \end{abstract}
 %
 % \def\abstractname{Abstract}
 % \begin{abstract}
-% The \cls{njuthesis} class is intended for 
-% typesetting Nanjing University dissertations with \hologo{LaTeX}, 
-% providing support for bachelor, masters, and doctoral thesis. 
+% The \cls{njuthesis} class is intended for typesetting Nanjing University
+% dissertations with \hologo{LaTeX}, providing support for bachelor, masters,  
+% and doctoral thesis. 
 % \end{abstract}
 %
 % \vspace{2cm}
 % \def\abstractname{特别声明}
 % \begin{abstract}
-% 请注意，本模板仍未完成开发，出现bug或者文档不完善属于正常情况，提issue或Pull Request即可。
-% \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU LUG}始终欢迎您的加入与贡献！
+% 请注意，本模板仍未完成开发，出现bug或者文档不完善属于正常情况，欢迎提交
+% issue 或 Pull Request。
+% 
+% \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU LUG}始终欢迎
+% 您的加入！
 % \end{abstract}
 %
 % \clearpage
@@ -181,7 +184,6 @@ through XeTeX.
 % \tableofcontents
 %
 % \clearpage
-%
 %
 % \EnableDocumentation
 % 
@@ -1115,8 +1117,8 @@ through XeTeX.
 % \subsection{准备}
 %
 %    \begin{macrocode}
-%<@@=nju>
 %<*class>
+%<@@=nju>
 %    \end{macrocode}
 %
 % \changes{v0.11}{2021/10/23}{添加了若干环境检查与警告信息。}
@@ -2904,19 +2906,24 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \end{macrocode}
 % \end{macro}
 % 
-% 创建摘要环境
+% \begin{macro}{abstract}
+% 中文摘要环境。
 %    \begin{macrocode}
-\NewDocumentEnvironment{abstract} {}
-  { \use:c { @@_print_abstract_ \g_@@_info_diploma_tl : } }
+\NewDocumentEnvironment{abstract} { +b }
+  { \use:c { @@_print_abstract_ \g_@@_info_diploma_tl : } #1 }
   { \@@_print_keywords: \newpage }
-\NewDocumentEnvironment{abstract*} {}
-  { \use:c { @@_print_abstract_en_ \g_@@_info_diploma_tl : } }
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{abstract*}
+% 英文摘要环境。\pkg{xparse} 目前不支持合并带有星号的环境，因此需要单独定义。
+%    \begin{macrocode}
+\NewDocumentEnvironment{abstract*} { +b }
+  { \use:c { @@_print_abstract_en_ \g_@@_info_diploma_tl : } #1 }
   { \@@_print_keywords_en: \cleardoublepage }
 %</class>
 %    \end{macrocode}
-%
-%
-%
+% \end{macro}
 %
 % \end{implementation}
 %
