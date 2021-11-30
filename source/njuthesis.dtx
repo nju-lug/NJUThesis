@@ -1446,13 +1446,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 \RequirePackage[hyphens]{url} % generate better linebreaks in the url
 %    \end{macrocode}
 %
-%
-% 用于特定学科的包。
-%    \begin{macrocode}
-\RequirePackage{siunitx} % 用于书写单位符号
-\RequirePackage[version=4]{mhchem} % 用于绘制分子式
-%    \end{macrocode}
-%
 % 用于生成可以被插入书签的LaTeX logo，TODO: 使用hologo创建|latex{}|命令
 %    \begin{macrocode}
 \RequirePackage{hologo} 
@@ -2368,14 +2361,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 }
 %    \end{macrocode}
 %
-% \begin{variable}{\l_@@_name_degree_tl,\l_@@_name_degree_en_tl}
-% 用于存储学位名称的变量
-%    \begin{macrocode}
-\tl_new:N \l_@@_name_degree_tl
-\tl_new:N \l_@@_name_degree_en_tl
-%    \end{macrocode}
-% \end{variable}
-%
 % 判断学位进行命令定义
 %    \begin{macrocode}
 \int_compare:nTF { \g_@@_info_degree_int == 1 } 
@@ -2617,7 +2602,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   \noindent \@@_cover_uline_nl:nn {\textwidth}{%
   \l_@@_info_supv_cont_tl}\par
   \noindent 申请学位级别%
-  \@@_cover_uline_nl:nn {9em}{\l_@@_name_degree_tl}%
+  \@@_cover_uline_nl:nn {9em}{\clist_item:Nn \c_@@_name_degree_clist { \g_@@_info_degree_int }}%
   \noindent 专业名称%
   \uline{\hfill\l_@@_major_tl\hfill}\par
   \noindent 论文提交日期%
@@ -2658,9 +2643,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   \pdfbookmark{封面}{cover} % 将封面插入pdf书签
   \begin{spacing}{1.25}
   \noindent\null\hspace{-10mm}
-  \njuemblem{!}{3cm}\smallskip 
+  \njuemblem[black]{!}{3cm}\smallskip 
   \begin{center}
-    \njuname{!}{3.35cm}
+    \njuname[black]{!}{3.35cm}
     \vskip 10mm 
     {\zihao{1}\bf\songti\@@_spread_box:nn {9em}{本科毕业论文}}
     \vfill
@@ -2693,11 +2678,11 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   \begin{spacing}{1.25}
   \begin{center}
     \noindent\null\vskip 5mm
-    \njuemblem{!}{1.9cm}
+    \njuemblem[black]{!}{1.9cm}
     \vskip 10mm 
-    \njuname{4.4cm}{!}
+    \njuname[black]{4.4cm}{!}
     \par\vskip -2mm 
-    \njuname*{4.4cm}{!}
+    \njuname*[black]{4.4cm}{!}
     \vskip 15mm 
     \bgroup
       \zihao{1}\bf\kaishu
@@ -2768,7 +2753,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
       {\l_@@_major_en_tl}
     }
     \vskip\stretch{2}
-    \njuemblem{2.5cm}{!}\par
+    \njuemblem[black]{2.5cm}{!}\par
     \vskip 3mm
     \normalfont\l_@@_info_dept_en_tl\\
     {Nanjing~University}

@@ -1,0 +1,153 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NJU Thesis
+% 南京大学毕业论文LaTeX模板
+% Version 0.12.0 (2021-11-30)
+%
+% 请关注项目地址以获取最新变化
+% https://github.com/nju-lug/NJUThesis
+% https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis
+% https://ctan.org/pkg/njuthesis
+%
+% 贡献者
+% Yu XIONG @atxy-blip   Yichen ZHAO @FengChendian   
+% Song GAO @myandeg     Chang MA @glatavento   
+% Yilun SUN @HermitSun  Yinfeng LIN @linyinfeng
+% 
+% 许可证
+% LaTeX Project Public License（版本 1.3c 或更高）
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------
+% 一些提高使用体验的小技巧：
+%   1. 请务必使用 UTF-8 编码编写和保存本文档
+%   2. 请务必使用 XeLaTeX 或 LuaLaTeX 引擎进行编译
+%   3. 不保证接口稳定，写作前一定要读一读说明文档
+%   4. 以百分号(%)开头的内容为注释，可以随意删除
+%-------------------------------------------------
+
+\documentclass[
+    % 模板选项：
+    % degree = ug|mg|mf|phd,  % 学位类型，默认为本科
+    % type = thesis|design,   % 文档类型，默认为毕业论文
+    % nlcover = true|false,   % 是否需要国家图书馆封面，默认关闭
+    % 以下两项为字体设置，不改动则自动调用系统预装字体
+    % customlatinfont=windows|macos|linux|gyre|none,
+    % customchinesefont=windows|macos|linux|fandol|founder|noto|none,
+    ]{njuthesis}
+
+\njusetup {
+    % 设置参数
+    % 一些提醒：
+    %   1. 千万不要有空行
+    %   2. 使用英文半角空格分隔选项
+    %   3. 为防止歧义，有空格的内容请用花括号({})包裹
+    %   4. 本科生无需填写的项目已被特别标注
+    %
+    % info 类用于录入个人信息
+    info = {
+        titlea = 一种使用南京大学\hologo{LaTeX}模版,
+        titleb = 编写毕业论文的经验性方法,
+        titlec = （内容已经过时，详见说明手册）,
+        % 中文题目
+        % 这里采取手动换行方式，三个选项依次对应三行
+        % 如果只有第一行，其余两个选项就留空，以此类推
+        title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
+        % 英文题目
+        % 关键词
+        keywords = {我,就是,充数的,关键词},
+        keywords* = {Dummy,Keywords,Here,{it is}},
+        % 姓名学号
+        grade = 2018,
+        student-id = 189114514, % dz18114514,
+        author = 周煜华,
+        author* = Zhou~Yuhua,
+        % 院系专业
+        department = 拉太赫科学与技术学院,
+        department* = School~of~\hologo{LaTeX},
+        major = 拉太赫语言学,
+        major* = \hologo{LaTeX}~Linguistics,
+        field = 拉太赫语言在现当代的使用, % 研究生项
+        field* = Contemporary~Usage~of~the~\hologo{LaTeX}~Language, % 研究生项
+        % 导师
+        supervisora = 李成殿,
+        supervisora*= Li~Chengdian,
+        supervisora-title = 教授,
+        supervisora-title* = Professor,
+        % 第二导师，如无则留空
+        supervisorb = 孙赫弥,
+        supervisorb* = Sun~Hemi,
+        supervisorb-title = 副教授,
+        supervisorb-title* = Associate~professor,
+        % 提交日期
+        submit-date = 2021年8月10日,
+        submit-date* = {Aug 10, 2021}, % 研究生项
+        % 答辩，均为研究生项
+        defend-date = 2021年9月19日,
+        chairman = 张晓山~教授,
+        reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
+        % 国家图书馆封面相关，均为研究生项
+        clc = 0175.2,
+        secret-level = 限制,
+        udc = 004.72,
+        supervisor-contact = {拉太赫科学与技术学院~枝江市结丘路~19~号~114514},
+    }
+}
+
+% 设置图片存储位置
+\graphicspath{{figure/}}
+
+% 导入参考文献数据
+\addbibresource{njuthesis-sample.bib}
+
+\begin{document}
+
+%-------------------------------------------------
+%	封面、摘要、前言和目录
+%-------------------------------------------------
+
+\maketitle 
+
+\input{chapters/Abstract.tex}
+\input{chapters/Preface.tex}
+
+\tableofcontents % 生成目录
+\listoffigures % 生成图片清单
+\listoftables % 生成表格清单
+
+%-------------------------------------------------
+%	正文部分
+%-------------------------------------------------
+\mainmatter
+
+\input{chapters/Introduction.tex}
+\input{chapters/Environments.tex}
+\input{chapters/Layout.tex}
+\input{chapters/FigTabCode.tex}
+\input{chapters/Mathematics.tex}
+\input{chapters/Reference.tex}
+\input{chapters/Bibliography.tex}
+
+%-------------------------------------------------
+%	参考文献
+%-------------------------------------------------
+
+\printbibliography[
+    heading=bibintoc,% 插入目录条目
+    title=参考文献]
+
+%-------------------------------------------------
+%	致谢
+%-------------------------------------------------
+
+\input{chapters/Acknowledgement.tex}
+
+%-------------------------------------------------
+%	附录部分
+%-------------------------------------------------
+\appendix
+
+\input{chapters/Achievements.tex}
+\input{chapters/Standard.tex}
+
+\end{document}

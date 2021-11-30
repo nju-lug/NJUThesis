@@ -62,7 +62,7 @@ jobs:
           mkdir -p njuthesis/
           cp source/njuthesis-$VERSION.pdf njuthesis/njuthesis.pdf
           cp source/README-CTAN.md njuthesis/README.md
-          cp LICENSE source/njuthesis.dtx source/njuthesis.ins njuthesis/
+          cp source/njuthesis.dtx source/njuthesis.ins njuthesis/
           zip -r njuthesis-ctan-$VERSION.zip njuthesis/
 
       - uses: "marvinpinto/action-automatic-releases@latest"

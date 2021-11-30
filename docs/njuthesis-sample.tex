@@ -17,66 +17,139 @@
 % LaTeX Project Public License（版本 1.3c 或更高）
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------
+% 一些提高使用体验的小技巧：
+%   1. 请务必使用 UTF-8 编码编写和保存本文档
+%   2. 请务必使用 XeLaTeX 或 LuaLaTeX 引擎进行编译
+%   3. 不保证接口稳定，写作前一定要读一读说明文档
+%   4. 以百分号(%)开头的内容为注释，可以随意删除
+%-------------------------------------------------
+
 \documentclass[
-    degree=phd,% 默认本科(ug), mg: 学硕, mf: 专硕, phd: 博士
-    % type=design,% 默认毕业论文(thesis)，design: 毕业设计
-    nlcover,% 需要国家图书馆封面，对本科无效
-    % 若以下两项不设置则自动调用系统预装字体
-    % customlatinfont=windows,% 设置英文字符集
-    % customchinesefont=windows,% 设置中文字符集
+    % 模板选项：
+    % degree = ug|mg|mf|phd,  % 学位类型，默认为本科
+    % type = thesis|design,   % 文档类型，默认为毕业论文
+    % nlcover = true|false,   % 是否需要国家图书馆封面，默认关闭
+    %   以下两项为字体设置，不改动则自动调用系统预装字体
+    % customlatinfont=windows|macos|linux|gyre|none,
+    % customchinesefont=windows|macos|linux|fandol|founder|noto|none,
     ]{njuthesis}
 
-% 设置个人信息
 \njusetup {
-    % 本科生无需填写的项目已被特别标注
-    % 为防止歧义，有空格的内容请用花括号包裹
-    % 2021/10/01的版本对变量名进行了大幅度的修改
-    % 注意不要有空行，否则可能报错
+    % 设置参数
+    %
+    % 一些提醒：
+    %   1. 千万不要有空行
+    %   2. 使用英文半角逗号(,)分隔选项
+    %   3. 等于号(=)两侧的空格会被忽略
+    %       3.1. 为避免歧义，请用花括号({})包裹内容
+    %   4. 本科生无需填写的项目已被特别标注
+    %
+    % info 类用于录入个人信息
+    %   带*号的为对应英文字段
     info = {
-        % 题目
-        titlea = 一种使用南京大学\hologo{LaTeX}模版,
-        titleb = 编写毕业论文的经验性方法, % 没有第二行就留空
-        titlec = （内容已经过时，详见说明手册）, % 没有第三行就留空
-        title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
-        % 关键词
+        titlea = {第一行标题},
+        titleb = {第二行标题},
+        titlec = {第三行标题},
+        % 中文题目
+        % 这里采取手动换行方式，三个选项依次对应三行
+        % 如果只有第一行，其余两个选项就留空，以此类推
+        %
+        title* = {My Title in English}, 
+        % 英文题目
+        %
+        author = {姓名},
+        % 作者姓名
+        % 
+        author* = {Ming Xing},
+        % 作者英文姓名
+        % 一般使用拼音
+        % 
         keywords = {我,就是,充数的,关键词},
-        keywords* = {Dummy,Keywords,Here,{it is}},
-        % 姓名学号
-        grade = 2018,
-        student-id = 189114514, % dz18114514,
-        author = 周煜华,
-        author* = Zhou~Yuhua,
-        % 院系专业
-        department = 拉太赫科学与技术学院,
-        department* = School~of~\hologo{LaTeX},
-        major = 拉太赫语言学,
-        major* = \hologo{LaTeX}~Linguistics,
-        field = 拉太赫语言在现当代的使用, % 研究生项
-        field* = Contemporary~Usage~of~the~\hologo{LaTeX}~Language, % 研究生项
-        % 导师
-        supervisora = 李成殿,
-        supervisora*= Li~Chengdian,
-        supervisora-title = 教授,
-        supervisora-title* = Professor,
-        % 第二导师，如无则留空
-        supervisorb = 孙赫弥,
-        supervisorb* = Sun~Hemi,
-        supervisorb-title = 副教授,
-        supervisorb-title* = Associate~professor,
+        % 中文关键词列表
+        % 使用英文半角逗号(,)分隔
+        % 
+        keywords* = {Dummy,Keywords,Here,{It Is}},
+        % 英文关键词
+        % 使用英文半角逗号(,)分隔
+        %
+        grade = {2018},
+        % 年级
+        %
+        student-id = {189114514},
+        % 学号
+        % 本模板会自动更正研究生学号的大小写
+        %
+        department = {化学化工学院},
+        department* = {School of Chemistry and Chemical Engineering},
+        % 院系
+        %
+        major = {化学},
+        major* = {Chemistry},
+        % 专业
+        %
+        supervisora = {导师},
+        supervisora*= {My Mentor},
+        % 导师姓名
+        %
+        supervisora-title = {教授},
+        supervisora-title* = {Professor},
+        % 导师职称
+        %
+        supervisorb = {第二导师},
+        supervisorb* = {My Second Supervisor},
+        supervisorb-title = {副教授},
+        supervisorb-title* = {Associate professor},
+        % 第二导师
+        % 如果确实没有第二导师，留空即可
+        %
+        submit-date = {2021年8月10日},
         % 提交日期
-        submit-date = 2021年8月10日,
-        submit-date* = {Aug 10, 2021}, % 研究生项
-        % 答辩，均为研究生项
-        defend-date = 2021年9月19日,
-        chairman = 张晓山~教授,
-        reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
-        % 国家图书馆封面相关，均为研究生项
-        clc = 0175.2,
-        secret-level = 限制,
-        udc = 004.72,
-        supervisor-contact = {拉太赫科学与技术学院~枝江市结丘路~19~号~114514},
+        % 
+        % 以下均为研究生项
+        field = {理论与计算化学},
+        field* = {Theoretical and Computational Chemistry},
+        % 研究领域
+        %
+        submit-date* = {Aug 10, 2021},
+        % 提交日期（英文）
+        %
+        defend-date = {2021年9月19日},
+        % 答辩日期
+        %
+        chairman = {某某某~教授},
+        % 答辩委员会主席
+        % 推荐使用波浪号(~)分隔姓名和职称
+        %
+        reviewer = {
+            某某某~教授,
+            某某某~教授
+        },
+        % 答辩委员会成员
+        % 一共四名，使用英文半角逗号(,)分隔
+        %
+        clc = {0175.2},
+        % 中图分类号
+        %
+        secret-level = {限制},
+        % 密级
+        %
+        udc = {004.72},
+        % UDC分类号
+        %
+        supervisor-contact = {
+            南京大学化学化工学院~
+            江苏省南京市栖霞区仙林大道163号~
+            210023
+        }
+        % 导师联系方式
     }
 }
+
+% 自行使用所需宏包
+\usepackage{siunitx} % 用于书写单位符号
+\usepackage[version=4]{mhchem} % 用于绘制分子式
 
 % 设置图片存储位置
 \graphicspath{{figure/}}
@@ -84,33 +157,48 @@
 % 导入参考文献数据
 \addbibresource{njuthesis-sample.bib}
 
+% 开始编写论文
 \begin{document}
 
 %-------------------------------------------------
 %	封面、摘要、前言和目录
 %-------------------------------------------------
 
+% 生成封面页
 \maketitle 
 
-\input{chapters/Abstract.tex}
-\input{chapters/Preface.tex}
+\begin{abstract}
+    中文摘要
+\end{abstract}
 
-\tableofcontents % 生成目录
-\listoffigures % 生成图片清单
-\listoftables % 生成表格清单
+\begin{abstract*}
+    English abstract
+\end{abstract*}
+
+\begin{preface}
+    前言
+\end{preface}
+
+% 生成目录
+\tableofcontents
+% 生成图片清单
+\listoffigures
+% 生成表格清单
+\listoftables
 
 %-------------------------------------------------
 %	正文部分
 %-------------------------------------------------
 \mainmatter
 
-\input{chapters/Introduction.tex}
-\input{chapters/Environments.tex}
-\input{chapters/Layout.tex}
-\input{chapters/FigTabCode.tex}
-\input{chapters/Mathematics.tex}
-\input{chapters/Reference.tex}
-\input{chapters/Bibliography.tex}
+% 建议将论文内容拆分为多个文件
+% 即新建一个 chapters 文件夹
+% 把每一章的内容单独放入一个 tex 文件
+% 然后在这里用 \include{} 导入，例如
+%   \include{chapters/introduction}
+%   \include{chapters/environments}
+
+\chapter{引言}
 
 %-------------------------------------------------
 %	参考文献
@@ -124,14 +212,18 @@
 %	致谢
 %-------------------------------------------------
 
-\input{chapters/Acknowledgement.tex}
-
+\begin{acknowledgement}
+    感谢\href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU Linux User Group}。
+\end{acknowledgement}
+    
 %-------------------------------------------------
 %	附录部分
 %-------------------------------------------------
+
+% 附录部分使用单独的字母序号
 \appendix
 
-\input{chapters/Achievements.tex}
-\input{chapters/Standard.tex}
+% 可以在这里插入补充材料
 
+% 完工
 \end{document}
