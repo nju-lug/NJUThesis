@@ -12,24 +12,76 @@ on:
       - master
 
 jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    if: "!startsWith(github.ref, 'refs/tags/v')"
+    strategy:
+      matrix:
+        latex: [xelatex, lualatex]
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Download njuvisual package (1/2)
+        uses: wei/curl@master
+        with:
+          args: -s -o "njuvisual.dtx" "https://mirrors.rit.edu/CTAN/macros/latex/contrib/njuvisual/njuvisual.dtx"
+      
+      - name: Download njuvisual package (2/2)
+        uses: wei/curl@master
+        with:
+          args: -s -o "njuvisual-curves.dtx" "https://mirrors.rit.edu/CTAN/macros/latex/contrib/njuvisual/njuvisual-curves.dtx"
+ 
+      - name: Extract cls from njuthesis
+        uses: FengChendian/latex-dtx2cls-action@4.0.1
+        with:
+          root_file: njuthesis.dtx
+          working_directory: ./source/
+ 
+      - name: Extract sty from njuvisual
+        uses: FengChendian/latex-dtx2cls-action@4.0.1
+        with:
+          root_file: njuvisual.dtx
+          working_directory: ./
+        
+      - name: Copy files to test folder
+        run:
+          cp ./njuvisual.sty source/njuthesis.cls test/
+
+      - name: Compile to PDF
+        uses: HermitSun/latex-action@v3
+        with:
+          root_file: test.tex
+          working_directory: ./test/
+          latexmk_use_${{ matrix.latex }}: true
+          args: "-bibtex"
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v2
+        with:
+          name: PDF_${{ matrix.latex }}
+          path:
+            test/test.pdf
+
   release:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
+
       - name: Set Version
         run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
           
       - name: Download njuvisual package (1/2)
         uses: wei/curl@master
         with:
-          args: -s -o "njuvisual.dtx" "https://mirror.nju.edu.cn/CTAN/macros/latex/contrib/njuvisual/njuvisual.dtx"
+          args: -s -o "njuvisual.dtx" "https://mirrors.rit.edu/CTAN/macros/latex/contrib/njuvisual/njuvisual.dtx"
       
       - name: Download njuvisual package (2/2)
         uses: wei/curl@master
         with:
-          args: -s -o "njuvisual-curves.dtx" "https://mirror.nju.edu.cn/CTAN/macros/latex/contrib/njuvisual/njuvisual-curves.dtx"
+          args: -s -o "njuvisual-curves.dtx" "https://mirrors.rit.edu/CTAN/macros/latex/contrib/njuvisual/njuvisual-curves.dtx"
  
       - name: Extract cls from njuthesis
         uses: FengChendian/latex-dtx2cls-action@4.0.1
@@ -53,12 +105,12 @@ jobs:
           pre_compile: "xetex njuthesis.dtx"
           post_compile: "mv njuthesis.pdf njuthesis-$VERSION.pdf" 
       
-      - name: Zip Release Source
-        run: |
+      - name: Zip RELEASE package
+        run:
           zip -r njuthesis-$VERSION.zip .vscode docs/njuthesis-sample.bib docs/njuthesis-sample.tex source/njuthesis.cls njuvisual.sty conf.txsprofile LICENSE README.md        
       
-      - name: Zip CTAN Source
-        run: |
+      - name: Zip CTAN package
+        run:
           mkdir -p njuthesis/
           cp source/njuthesis-$VERSION.pdf njuthesis/njuthesis.pdf
           cp source/README-CTAN.md njuthesis/README.md
@@ -69,7 +121,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          files: |
+          files:
             source/njuthesis-v*.pdf
             njuthesis-v*.zip
             njuthesis-ctan-v*.zip
