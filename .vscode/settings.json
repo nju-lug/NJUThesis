@@ -6,6 +6,7 @@
             "command": "xelatex",
             "args": [
                 "-synctex=1",
+                "-shell-escape",
                 "-interaction=nonstopmode",
                 "-file-line-error",
                 "%DOCFILE%"
@@ -32,21 +33,6 @@
                 "%DOCFILE%"
             ]
         },
-        {
-            "name": "makedoc",
-            "command": "latexmk",
-            "args": [
-                "-xelatex",
-                "njuthesis.dtx"
-            ]
-        },
-        {
-            "name": "extractfile",
-            "command": "xetex",
-            "args": [
-                "njuthesis.dtx"
-            ]
-        }
     ],
     "latex-workshop.latex.recipes": [
         {
@@ -62,12 +48,6 @@
             ]
         },
         {
-            "name": "lualatex",
-            "tools": [
-                "lualatex"
-            ]
-        },
-        {
             "name": "xe->bib->xe->xe",
             "tools": [
                 "xelatex",
@@ -77,16 +57,19 @@
             ]
         },
         {
-            "name": "makedoc",
+            "name": "lualatex",
             "tools": [
-                "makedoc"
+                "lualatex"
             ]
         },
         {
-            "name": "extractfile",
+            "name": "lua->bib->lua->lua",
             "tools": [
-                "extractfile"
+                "lualatex",
+                "biber",
+                "lualatex",
+                "lualatex"
             ]
-        }
+        },
     ]
 }
