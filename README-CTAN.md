@@ -6,8 +6,8 @@ The `njuthesis` class is intended for typesetting Nanjing University dissertatio
 Contributing
 ------------
 
-[Issues](https://github.com/nju-lug/NJUVisual/issues) and
-[pull requests](https://github.com/nju-lug/NJUVisual/pulls)
+[Issues](https://github.com/nju-lug/NJUThesis/issues) and
+[pull requests](https://github.com/nju-lug/NJUThesis/pulls)
 are always welcome.
 
 Wiki
