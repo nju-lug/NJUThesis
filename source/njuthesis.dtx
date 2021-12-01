@@ -325,7 +325,7 @@ through XeTeX.
 %     \midrule
 %     \hologo{TeX}\,Live  & $\bullet$ & $\bullet$ & $\bullet$ \\
 %     mac\hologo{TeX}     &           & $\bullet$ &           \\
-%     \hologo{MiKTeX}     & $\bullet$ & $\bullet$ &           \\
+%     \hologo{MiKTeX}     & $\bullet$ & $\bullet$ & $\bullet$ \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -336,7 +336,7 @@ through XeTeX.
 %   \item 使用最新的发行版，即版本号为2021或者21。
 %   \item 对于 Windows 和 macOS 用户，更推荐轻量化的 \hologo{MiKTeX} 套件。
 %   \item Linux用户请尽可能下载 full 版本，如 |texlive-full|。换言之，下载最大的软件包。
-%   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis}内置了版本检查，请确认各宏包已升级至最新版。
+%   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis}内置了版本检查\footnote{譬如遇到l3过时问题请运行 |tlmgr update l3packages|。}，请确认各宏包已升级至最新版。
 % \end{itemize}
 %
 % \subsubsection{配置编辑器}
@@ -358,26 +358,27 @@ through XeTeX.
 % 尽管上述的文本编辑器已经提供了自动化编译的方法，为了便于排查运行错误，以下通过具体终端命令简要描述编译过程。
 %
 % 编译本模板概括为如下步骤：生成初始文档，编译参考文献，生成页码、编号、目录，需要编译4次。
-% \emph{假设即将使用的文件名为 \file{mynjuthesis.tex}}，
-% 应采用以下命令顺序进行编译，以生成内容正确的 \file{mynjuthesis.pdf}。输出的 PDF 文档位于同一目录下。
+% \emph{假设即将使用的文件名为 \file{njuthesis-sample.tex}}，
+% 应采用以下命令顺序进行编译，以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF 文档位于同一目录下。
 %
-% 编译命令具体为引擎名称加文件名，在编译\file{.tex}文件时，文件扩展名可以省略不写。现阶段 \cls{njuthesis} 仅支持 \hologo{XeLaTeX} 与 \hologo{LuaLaTeX}。请注意，几种命令的输出文件基本相同，可以任取一种；但如果你不清楚这两种编译引擎的区别，我们建议优先使用|latexmk -xelatex|。
+% 编译命令具体为引擎名称加文件名，在编译 \file{.tex} 文件时，文件扩展名可以省略不写。
+% 现阶段 \cls{njuthesis} 仅支持 \hologo{XeLaTeX} 与 \hologo{LuaLaTeX}。请注意，几种命令的输出文件基本相同，可以任取一种；但如果你不清楚这两种编译引擎的区别，我们建议优先使用|latexmk -xelatex|。
 %
 % \subparagraph{使用 \hologo{XeLaTeX}}
 % 
 % \begin{ctexexam}
-%   xelatex mynjuthesis
-%   biber mynjuthesis
-%   xelatex mynjuthesis
-%   xelatex mynjuthesis
+%   xelatex njuthesis-sample
+%   biber njuthesis-sample
+%   xelatex njuthesis-sample
+%   xelatex njuthesis-sample
 % \end{ctexexam}
 %
 % \subparagraph{使用 \hologo{LuaLaTeX}}
 % \begin{ctexexam}
-%   lualatex mynjuthesis
-%   biber mynjuthesis
-%   lualatex mynjuthesis
-%   lualatex mynjuthesis
+%   lualatex njuthesis-sample
+%   biber njuthesis-sample
+%   lualatex njuthesis-sample
+%   lualatex njuthesis-sample
 % \end{ctexexam}
 %
 % \subparagraph{使用 \pkg{latexmk}}
@@ -389,12 +390,12 @@ through XeTeX.
 %
 % 该命令的使用方法为
 % \begin{ctexexam}
-%   latexmk mynjuthesis
+%   latexmk njuthesis-sample
 % \end{ctexexam}
 %
 % 如需指定编译器，可以加入|-xelatex|或|-lualatex|参数，例如指定 \hologo{XeLaTeX} 的命令为
 % \begin{ctexexam}
-%   latexmk -xelatex mynjuthesis
+%   latexmk -xelatex njuthesis-sample
 % \end{ctexexam}
 %
 % 此外可以选择使用以下命令清理编译生成的临时文件。
@@ -1137,7 +1138,7 @@ through XeTeX.
     Package~ "#1"~ is~ too~ old. \\\\
     Please~ update~ an~ up-to-date~ version~ of~ \\
     the~ bundles "l3kernel"~ and~ "l3packages"~ \\
-    using~ your~ TeX~ package manager~ or~ from~ \\
+    using~ your~ TeX~ package~ manager~ or~ from~ \\
     CTAN.
   }
 \clist_map_inline:nn { xtemplate, l3keys2e }
