@@ -43,9 +43,9 @@
     ```shell
     NJUThesis/
     │
-    │ njuthesis.bib
-    │ njuthesis.cls
+    │ njuthesis-sample.bib
     │ njuthesis-sample.tex
+    │ njuthesis.cls
     │ njuvisual.sty
     ```
 
