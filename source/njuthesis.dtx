@@ -471,23 +471,21 @@ through XeTeX.
 %   \begin{syntax}
 %     degree = <(ug)|mg|mf|phd>
 %   \end{syntax}
-%
 % 选择学位，分别为学士、学术型硕士、专业硕士、博士。
 % \end{function}
-% 
+%
 % \begin{function}[added=2021-09-07]{nlcover}
 %   \begin{syntax}
 %     nlcover = <\TTF>
 %   \end{syntax}
-%
-% 通过此项可选择是否添加国家图书馆封面。由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
+% 通过此项可选择是否用国家图书馆封面替换普通封面。
+% 由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
 % \end{function}  
 %
 % \begin{function}[added=2021-09-07]{type}
 %   \begin{syntax}
 %     type = <(thesis)|design>
 %   \end{syntax}
-%
 % 用于选择文档类型并将相关字段输出在封面和摘要页，可选值分别为毕业论文和毕业设计。
 % 
 % \end{function}
@@ -505,7 +503,6 @@ through XeTeX.
 %     customchinesefont = <(windows)|macos|fandol|founder|noto|none>
 %     customlatinfont = <(windows)|macos|gyre|none>
 %   \end{syntax}
-%
 % 手动指定字体。
 % \end{function}
 %
@@ -968,7 +965,7 @@ through XeTeX.
 %
 % 用于生成封面。
 % 本科生仅会生成中文封面；研究生会生成中英文封面。
-% 如果选择了\opt{nlcover}，也会生成研究生的国家图书馆封面。
+% 如果选择了\opt{nlcover}，仅会生成研究生的国家图书馆封面和原创性声明页。
 % 
 % \end{function}
 %
@@ -1122,6 +1119,7 @@ through XeTeX.
 % 在删除注释生成格式文件时，变量名称中的|@@|会被等号后的字段替换，
 % 譬如在本模板\cls{njuthesis}中 |@@=nju|。
 %
+%
 % \subsection{准备}
 %
 %    \begin{macrocode}
@@ -1169,6 +1167,7 @@ through XeTeX.
   }
 %    \end{macrocode}
 %
+%
 % \subsection{定义常量}
 %
 % \begin{variable}{\c_@@_name_type_clist,
@@ -1210,6 +1209,21 @@ through XeTeX.
   }
   { \@@_define_name:nnn #1 }
 %    \end{macrocode}
+%
+% \begin{variable}{\c_@@_orig_decl_text_tl}
+% 学位论文原创性声明。
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_orig_decl_text_tl
+  {
+    本人郑重声明，所提交的学位论文是本人在导师指导下独立进行科学研究工作
+    所取得的成果。除本论文中已经注明引用的内容外，本论文不包含其他个人或
+    集体已经发表或撰写过的研究成果，也不包含为获得南京大学或其他教育机构
+    的学位证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，均已
+    在论文的致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
+  }
+%    \end{macrocode}
+% \end{variable}
+%
 %
 % \subsection{模板选项}
 % \changes{v0.11}{2021/11/15}{进行了效率优化。}
@@ -2557,6 +2571,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %
 % 
 % \begin{macro}{\@@_print_cover_nl:}
+% \changes{v0.12}{2021/12/02}{选择|nlcover|时不生成普通封面。}
 % 按需绘制国家图书馆封面，修改自胡海星模板
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_cover_nl:
@@ -2633,6 +2648,22 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@@_print_declaration:}
+% 原创性声明。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_print_declaration:
+  {
+    \chapter*{南京大学学位论文原创性声明}
+    \c_@@_orig_decl_text_tl
+    \vfil
+    \begin{flushright}
+      {研究生签名：} \uline{\makebox[5em]{}}
+      {日期：} \uline{\makebox[5em]{}}
+    \end{flushright}
+    \vfil
+    \cleardoublepage
+  }
+%    \end{macrocode}
 %
 % \begin{macro}{\@@_print_cover_ug:}
 % 本科封面
@@ -2770,17 +2801,19 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %
 % 
 % \begin{macro}{\maketitle}
-% 重定义maketitle生成封面
+% 重定义 \cs{maketitle}。
+% 如果选择了 |nlcover|，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
 %    \begin{macrocode}
-\tl_set:Nn \maketitle 
-{
-  \bool_if:NT \g_@@_nlcover_bool { \@@_print_cover_nl: } % 国家图书馆封面
-  \use:c { @@_print_cover_ \g_@@_info_diploma_tl : } 
-}
+\RenewDocumentCommand \maketitle { }
+  {
+    \bool_if:NTF \g_@@_nlcover_bool 
+      { \@@_print_cover_nl: \@@_print_declaration: }
+      { \use:c { @@_print_cover_ \g_@@_info_diploma_tl : } }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{摘要绘制}
+% \subsection{摘要页}
 %
 % \begin{macro}{\@@_print_keywords:,\@@_print_keywords_en:}
 % 中英文关键词
