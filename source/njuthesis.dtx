@@ -245,39 +245,50 @@ through XeTeX.
 %
 % \subsubsection{自动安装}
 %
-% \href{https://ctan.org/pkg/njuthesis}{\cls{njuthesis}} 已经于2021年9月12日发布在CTAN（Comprehensive \hologo{TeX} Archive Network），将在明年进入\hologo{TeX}\,Live 2022。
+% \href{https://ctan.org/pkg/njuthesis}{\cls{njuthesis}} 已经于2021年9月12日发布在
+% CTAN（Comprehensive \hologo{TeX} Archive Network）.
 % \href{https://ctan.org/pkg/njuvisual}{\pkg{njuvisual}} 也已于同年11月28日发布。
-% 目前，南大\hologo{TeX}已预置本模板，详见\ref{subsec:onlinecompile}。
-% 您可以通过 \hologo{TeX}\,Live Manager 或者 \hologo{MiKTeX} Console 等
-% 图形化包管理器直接安装并使用以上两个宏包最新的稳定版，也可以使用 \pkg{tlmgr}
+% 两者将进入\hologo{TeX}\,Live 2022。目前，南大\hologo{TeX}已预先安装本模板，详见
+% \ref{subsec:onlinecompile}。
+% 您可以通过 \hologo{TeX}\,Live Manager 或者 \hologo{MiKTeX} Console 等图形化包管理器
+% 直接安装并使用以上两个宏包最新的稳定版，也可以使用 \pkg{tlmgr} 的终端命令：
 % \begin{ctexexam}
-%   tlmgr install njuthesis
-%   tlmgr install njuvisual
+%   tlmgr install njuthesis njuvisual
 % \end{ctexexam}
 % 
-% 我们强烈建议使用这一类安装方式。
+% 我们\emph{强烈建议}使用这一类安装方式。
 %
-% 另一方面，CTAN版需要开发者手动上传，版本更新具有滞后性。如果使用时遇到了问题，推荐使用以下方式获取最新正式版。
+% 另一方面，CTAN版需要开发者手动上传，版本更新具有滞后性。
+% 如果使用时遇到了问题，推荐使用以下方式获取最新正式版。
 % 
 % \subsubsection{下载正式版}
 % \label{subsubsec:downloadrtm}
 %
 % 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，下载方式包括：
-% \begin{itemize}
-%  \item \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases页面}
-%  \item \href{https://mirror.nju.edu.cn/download/app/NJUThesis%20%E8%AE%BA%E6%96%87%E6%A8%A1%E6%9D%BF}{南大镜像下载页}
-%\end{itemize}
-% 在国内使用时，后者具有显著更快的速度。
+% \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases 页面}
+% 以及 \href{https://mirror.nju.edu.cn/download/app/NJUThesis%20%E8%AE%BA%E6%96%87%E6%A8%A1%E6%9D%BF}{南大镜像下载页}
+% (在校内使用时后者具有显著更快的速度）。可供下载的文件包括：
+% \begin{description}
+%   \item[\file{njuthesis-v*.pdf}] 模板说明文档（本文件）。
+%   \item[\file{njuthesis-v*.zip}] 空白模板，包括格式文件、范本以及编辑器配置文件。可以直接用于本地或上传在线编译。
+%   \item[\file{njuthesis-ctan-v*.zip}] 用于上传 CTAN 的源码包，普通用户请忽略。
+% \end{description}
 %
-% \subsubsection{下载源代码}
+% \subsubsection{下载开发版}
 %
-% 最新开发进度会提交在位于Github仓库的源代码。
-% 请注意，如果仅仅是希望使用这个模板写论文，请无论如何都不要从编译源代码开始，这样做只会浪费生命中宝贵的数分钟时间。
-% 我们只推荐希望参与开发的同学下载\file{dtx}文件。
-% \begin{itemize}
-%  \item \href{https://github.com/nju-lug/NJUThesis/}{Github 仓库}
-%  \item \href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像}
-%\end{itemize}
+% 最新开发进度会提交在本项目的
+% \href{https://github.com/nju-lug/NJUThesis}{Github仓库}。
+% 如果由于网络原因不便访问，也可以从
+% \href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像} 下载项目工程文件。
+%
+% 仓库主目录下提供了自动安装脚本，用于释放供编译的空白模板和格式文件。Windows 用户请直接双击打
+% 开 \file{install-win.bat}；其他平台（包括 macOS 和 Linux）用户请在终端使用 bash 运行 
+% \file{install-unix.sh} 。该脚本会生成一个 \file{mythesis/} 目录以便从头写作，仓库内其
+% 余内容都可以尽情删除。
+%
+% 请注意，如果仅仅是希望使用这个模板撰写论文，请无论如何都不要从编译 \file{source/} 文件夹下
+% 的源代码开始，这样做只会浪费生命中宝贵的数分钟时间。如果遇到了问题，请优先提出 issue。我们只
+% 推荐希望参与开发的同学接触 \file{.dtx} 文件。
 %
 % \subsection{文件构成}
 %
@@ -309,11 +320,14 @@ through XeTeX.
 % \subsection{本地编译}
 % \label{subsec:localcompile}
 %
-% 本地编译的安装过程分为两个阶段：安装 \hologo{TeX} 发行版以及配置编辑器。前者提供了可以被命令行终端调用的编译程序，后者则提供了语法高亮、自动编译等人性化功能。
+% 本地编译的安装过程分为两个阶段：安装 \hologo{TeX} 发行版以及配置编辑器。前者提供了可以被命
+% 令行终端调用的编译程序，后者则提供了语法高亮、自动编译等人性化功能。
 %
 % \subsubsection{安装\hologo{TeX}发行版}
 %
-% 首先需要下载并安装 \hologo{TeX} 软件发行版，各操作系统适用情况请参考表\ref {tab:texdistribution}。第一次编译前请务必通过 MiKTeX Console、TeX Live Manager 等图形化程序或 \pkg{tlmgr}\emph{手动更新全部宏包}以避免潜在的兼容性问题。
+% 首先需要下载并安装 \hologo{TeX} 软件发行版，各操作系统适用情况请参考表
+% \ref {tab:texdistribution}。第一次编译前请务必通过 MiKTeX Console、TeX Live 
+% Manager 等图形化程序或 \pkg{tlmgr}\emph{手动更新全部宏包}以避免潜在的兼容性问题。
 %
 % \begin{table}[H]
 %   \centering
@@ -344,7 +358,9 @@ through XeTeX.
 %
 % 配置完编译器后，还需要一个\emph{文本编辑器}来完成\file{.tex}文件内容的写作。
 %
-% 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的文本编辑器，但对于本项目而言，在此诚心诚意地推荐你使用\emph{更现代更美观更多功能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件 的 \href{https://code.visualstudio.com/}{Visual Studio Code}}。你也可以根据个人的喜好随意使用 TeXworks、TeXstudio 等编辑器，顺手就行。
+% 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的文本编辑器。
+% 但对于本项目而言，在此诚心诚意地推荐你使用\emph{更现代更美观更多功能}的编辑器，譬如
+% \emph{安装了 LaTeX Workshop 插件的 \href{https://code.visualstudio.com/}{Visual Studio Code}}。你也可以根据个人的喜好随意使用 TeXworks、TeXstudio 等编辑器，顺手就行。
 %
 % \cls{njuthesis} 为一些常见编辑器提供了配置文件，如
 % \begin{description}
@@ -393,7 +409,7 @@ through XeTeX.
 %   latexmk njuthesis-sample
 % \end{ctexexam}
 %
-% 如需指定编译器，可以加入|-xelatex|或|-lualatex|参数，例如指定 \hologo{XeLaTeX} 的命令为
+% 如需指定编译器，可以加入 |-xelatex| 或 |-lualatex| 参数，例如指定 \hologo{XeLaTeX} 的命令为
 % \begin{ctexexam}
 %   latexmk -xelatex njuthesis-sample
 % \end{ctexexam}
