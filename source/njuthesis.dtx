@@ -105,7 +105,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo  $Id: njuthesis.dtx 0.12.1 2021-12-02 15:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class>\GetIdInfo  $Id: njuthesis.dtx 0.12.2 2021-12-03 23:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -135,7 +135,7 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.12.1 \\ Released 2021-12-02}
+% \date{v0.12.2 \\ Released 2021-12-03}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -794,6 +794,17 @@ through XeTeX.
 %
 % 与导言区相对的是正文，位于\env{document}环境内。
 % 
+% \begin{function}{\mainmatter}
+%   \cs{mainmatter} 标志着正文的开始，重新开始字号计数并设置页眉。
+% \end{function}
+%
+% \begin{function}{\chapter,\section,\subsection,\subsubsection}
+%   \begin{syntax}
+%     \tn{chapter}\oarg{短描述}\marg{完整的长标题}
+%   \end{syntax}
+% \pkg{ctex} 宏集提供了其中用于处理长标题的可选参数。对于过长的标题，目录中会使用其短描述。
+% \end{function}
+%
 % \begin{ctexexam}
 %   \begin{document}
 %     text
@@ -801,7 +812,6 @@ through XeTeX.
 % \end{ctexexam}
 %
 % 加上空行就可以另起一段。
-%
 % 
 % 在页面布局方面，本科生无页眉，页面编号居中位于页脚；研究生无页脚，页眉包括章节名和页面编号（尚未确定）。
 %
@@ -1880,33 +1890,55 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 
 % 本科生页眉页脚。要求无页眉，页脚居中，页码使用五号新罗马体数字。
 %    \begin{macrocode}
-\fancypagestyle{njuplain}{
-   \fancyhead{}               
-   \fancyfoot[C]{\zihao{5}\thepage}
-   \renewcommand{\headrulewidth}{0pt}
-   \renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{
+  \fancyhf{}       
+  \fancyfoot[C]{\zihao{5}\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
 }
 %    \end{macrocode}
 %
 % 研究生页眉页脚。奇数页为章名，偶数页为节名。 
 %    \begin{macrocode}
-\fancypagestyle{njuheadings}{
-  \fancyhead{}
-  \fancyfoot{}
+\fancypagestyle{headings}{
+  \fancyhf{}
   \fancyhead[CO]{\leftmark}
   \fancyhead[CE]{\rightmark}
   \fancyfoot[C]{\zihao{5}\thepage}
-  \renewcommand{\headrulewidth}{0.4pt}
   \renewcommand{\footrulewidth}{0pt}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \setlength{\headheight}{20pt}
 }
 %    \end{macrocode}
 %
-% 载入页眉页脚设置。此处\tn{flushbottom}是为了防止目录页出现underfull \tn{vbox}信息。
+% \begin{macro}{\frontmatter}
+% 重定义 \cs{frontmatter}，清空页眉页脚以及页码设置。
+% 此命令仅为解决原 \cls{book} 类中使用小写罗马字母序号的冲突，并不建议使用。
 %    \begin{macrocode}
-\int_compare:nTF { \g_@@_info_degree_int == 1 } 
-  { \AtBeginDocument{\pagestyle{njuplain}} }
-  { \AtBeginDocument{\pagestyle{njuheadings}} }
+\RenewDocumentCommand \frontmatter { }
+  { 
+    \cleardoublepage
+    \pagestyle{empty}
+    \pagenumbering{Roman}
+  }
 %    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mainmatter}
+% \changes{v0.12}{2021/12/03}{修复了正文字体和页眉问题。}
+% 重定义 \cs{mainmatter}，在论文主体部分载入页眉页脚设置，并重新进行数字编号。
+%    \begin{macrocode}
+\RenewDocumentCommand \mainmatter { }
+  {
+    \cleardoublepage
+    \int_compare:nTF { \g_@@_info_degree_int == 1 } 
+    { \pagestyle{plain} }
+    { \pagestyle{headings} }
+    \pagenumbering{arabic}
+    \normalfont\normalsize
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \subsection{章节标题格式}
 % 
@@ -1947,7 +1979,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \RenewDocumentCommand \tableofcontents { }
   {
-    \cleardoublepage
     \raggedbottom
     \group_begin:
       \ctexset{
@@ -1968,7 +1999,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \RenewDocumentCommand \listoffigures { }
   {
-    \cleardoublepage
     \group_begin:
       \ctexset{
         chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
@@ -1987,7 +2017,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \RenewDocumentCommand \listoftables { }
   {
-    \cleardoublepage
     \group_begin:
       \ctexset{
         chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
@@ -1996,7 +2025,8 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     \group_end:
     \addcontentsline{toc}{chapter}{\listtablename}
     \vskip 20pt 
-    \@starttoc{lot}%
+    \@starttoc{lot}
+    \vfill
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2351,14 +2381,17 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \subsection{封面}
 %
 % \subsubsection{内部命令}
+%
+% \begin{variable}{\l_@@_info_title_tl }
 % 拼合标题
 %    \begin{macrocode}
-\tl_const:Nn \l_@@_info_title_tl 
-{
-  \l_@@_info_title_a_tl
-  \l_@@_info_title_b_tl
-  \l_@@_info_title_c_tl
-}
+\tl_new:N \l_@@_info_title_tl
+%    \end{macrocode}
+% \end{variable}
+% 将多行标题合并为完整标题。
+%    \begin{macrocode}
+\tl_set:Nn \l_@@_info_title_tl 
+  { \l_@@_info_title_a_tl \l_@@_info_title_b_tl \l_@@_info_title_c_tl }
 %    \end{macrocode}
 %
 % \begin{variable}{\l_@@_info_supv_full_tl,\l_@@_info_supv_full_en_tl}
@@ -2368,55 +2401,50 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 \tl_new:N \l_@@_info_supv_full_en_tl
 %    \end{macrocode}
 % \end{variable}
-%
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
 \tl_set:Nn \l_@@_info_supv_full_tl
-{
-  \l_@@_info_supv_a_tl\ 
-  \l_@@_info_supv_a_title_tl\ \ 
-  \l_@@_info_supv_b_tl\ 
-  \l_@@_info_supv_b_title_tl
-}
+  {
+    \l_@@_info_supv_a_tl\quad\l_@@_info_supv_a_title_tl\qquad
+    \l_@@_info_supv_b_tl\quad\l_@@_info_supv_b_title_tl
+  }
 \tl_set:Nn \l_@@_info_supv_full_en_tl
-{
-  \l_@@_info_supv_a_title_en_tl\ 
-  \l_@@_info_supv_a_en_tl\ \ 
-  \l_@@_info_supv_b_title_en_tl\ 
-  \l_@@_info_supv_b_en_tl
-}
+  {
+    \l_@@_info_supv_a_title_en_tl\quad\l_@@_info_supv_a_en_tl\qquad
+    \l_@@_info_supv_b_title_en_tl\quad\l_@@_info_supv_b_en_tl
+  }
 %    \end{macrocode}
 %
 % 判断学位进行命令定义
 %    \begin{macrocode}
 \int_compare:nTF { \g_@@_info_degree_int == 1 } 
-{
-  % 本科
-  \tl_const:Nn \c_@@_name_title_tl { 题\hfill 目 }
-  
-  \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
-  \tl_const:Nn \c_@@_cover_uline_len_b_tl { 90pt }
-  \tl_const:Nn \c_@@_cover_uline_font_tl { \songti }
-  \tl_const:Nn \c_@@_cover_uline_style_tl { \bf }
-  \tl_const:Nn \c_@@_cover_uline_bskip_tl {}
+  {
+    % 本科
+    \tl_const:Nn \c_@@_name_title_tl { 题\hfill 目 }
+    
+    \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
+    \tl_const:Nn \c_@@_cover_uline_len_b_tl { 90pt }
+    \tl_const:Nn \c_@@_cover_uline_font_tl { \songti }
+    \tl_const:Nn \c_@@_cover_uline_style_tl { \bf }
+    \tl_const:Nn \c_@@_cover_uline_bskip_tl {}
 
-  \tl_const:Nn \c_@@_cover_box_len_tl { 4.2em }
+    \tl_const:Nn \c_@@_cover_box_len_tl { 4.2em }
 
-  % 本科强制不打印国家图书馆封面
-  \bool_set_false:N \g_@@_nlcover_bool
-} 
-{ 
-  % 本科以外都是研究生 
-  \tl_const:Nn \c_@@_name_title_tl { 论\hfill 文\hfill 题\hfill 目 }
+    % 本科强制不打印国家图书馆封面
+    \bool_set_false:N \g_@@_nlcover_bool
+  } 
+  { 
+    % 本科以外都是研究生 
+    \tl_const:Nn \c_@@_name_title_tl { 论\hfill 文\hfill 题\hfill 目 }
 
-  \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
-  \tl_const:Nn \c_@@_cover_uline_len_b_tl { 14em }
-  \tl_const:Nn \c_@@_cover_uline_font_tl { \kaishu }
-  \tl_const:Nn \c_@@_cover_uline_style_tl {}
-  \tl_const:Nn \c_@@_cover_uline_bskip_tl { \hspace{1em} }
+    \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
+    \tl_const:Nn \c_@@_cover_uline_len_b_tl { 14em }
+    \tl_const:Nn \c_@@_cover_uline_font_tl { \kaishu }
+    \tl_const:Nn \c_@@_cover_uline_style_tl {}
+    \tl_const:Nn \c_@@_cover_uline_bskip_tl { \hspace{1em} }
 
-  \tl_const:Nn \c_@@_cover_box_len_tl { 6em }
-}
+    \tl_const:Nn \c_@@_cover_box_len_tl { 6em }
+  }
 %    \end{macrocode}
 % \begin{macro}{\@@_spread_box:nn}
 % 来自\cls{fduthesis}：分散对齐的水平盒子。
@@ -2441,21 +2469,21 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \begin{macro}{\@@_cover_uline_a:n}
 % 在封面绘制下划线
 %    \begin{macrocode}
-\cs_new:Npn \@@_cover_uline_a:n #1
-{
-  \uline{\makebox[\c_@@_cover_uline_len_a_tl]
-    {\rm\c_@@_cover_uline_font_tl #1 }}
-}
-\cs_new:Npn \@@_cover_uline_b:n #1
-{
-  \uline{\makebox[\c_@@_cover_uline_len_b_tl]
-    {\rm\c_@@_cover_uline_font_tl #1 }}
-}
-\cs_new:Npn \@@_cover_uline_nl:nn #1 #2
-{
-  \uline{\makebox[#1]
-    {\rm\c_@@_cover_uline_font_tl #2 }}
-}
+\cs_new_protected:Npn \@@_cover_uline_a:n #1
+  {
+    \uline{\makebox[\c_@@_cover_uline_len_a_tl]
+      {\rm\c_@@_cover_uline_font_tl #1 }}
+  }
+\cs_new_protected:Npn \@@_cover_uline_b:n #1
+  {
+    \uline{\makebox[\c_@@_cover_uline_len_b_tl]
+      {\rm\c_@@_cover_uline_font_tl #1 }}
+  }
+\cs_new_protected:Npn \@@_cover_uline_nl:nn #1 #2
+  {
+    \uline{\makebox[#1]
+      {\rm\c_@@_cover_uline_font_tl #2 }}
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2463,11 +2491,11 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \begin{macro}{\@@_cover_box:n}
 % 封面表格边框
 %    \begin{macrocode}
-\cs_new:Npn \@@_cover_box:n #1 
-{
-  \makebox[\c_@@_cover_box_len_tl][s]{
-    #1\c_@@_cover_uline_bskip_tl}
-}
+\cs_new_protected:Npn \@@_cover_box:n #1 
+  {
+    \makebox[\c_@@_cover_box_len_tl][s]{
+      #1\c_@@_cover_uline_bskip_tl}
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2475,11 +2503,11 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 学位类型。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_degree:
-{
-  { （申请 }
-  \clist_item:Nn \c_@@_name_degree_clist { \g_@@_info_degree_int }
-  { 学位） }
-}
+  {
+    { （申请 }
+    \clist_item:Nn \c_@@_name_degree_clist { \g_@@_info_degree_int }
+    { 学位） }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2489,25 +2517,25 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 对标题进行自动判断，如果某行标题空则不输出接下来的若干行，得到多行标题。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_title_breakline:
-{
-  \@@_cover_box:n {\c_@@_name_title_tl}
-  & \@@_cover_uline_a:n 
-  { \c_@@_cover_uline_style_tl \l_@@_info_title_a_tl } \\
-  \tl_if_empty:NF \l_@@_info_title_b_tl
   {
-    \tl_if_empty:NTF \l_@@_info_title_c_tl
-      { 
-        & \@@_cover_uline_a:n  
-        {\c_@@_cover_uline_style_tl \l_@@_info_title_b_tl } \\ 
-      }
-      {
-        & \@@_cover_uline_a:n  
-        { \c_@@_cover_uline_style_tl \l_@@_info_title_b_tl } \\
-        & \@@_cover_uline_a:n  
-        { \c_@@_cover_uline_style_tl \l_@@_info_title_c_tl } \\
-      }
+    \@@_cover_box:n {\c_@@_name_title_tl}
+    & \@@_cover_uline_a:n 
+    { \c_@@_cover_uline_style_tl \l_@@_info_title_a_tl } \\
+    \tl_if_empty:NF \l_@@_info_title_b_tl
+    {
+      \tl_if_empty:NTF \l_@@_info_title_c_tl
+        { 
+          & \@@_cover_uline_a:n  
+          {\c_@@_cover_uline_style_tl \l_@@_info_title_b_tl } \\ 
+        }
+        {
+          & \@@_cover_uline_a:n  
+          { \c_@@_cover_uline_style_tl \l_@@_info_title_b_tl } \\
+          & \@@_cover_uline_a:n  
+          { \c_@@_cover_uline_style_tl \l_@@_info_title_c_tl } \\
+        }
+    }
   }
-}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2576,9 +2604,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \end{macro}
 %
 % 
-%
 % \subsubsection{绘制封面}
-%
 % 
 % \begin{macro}{\@@_print_cover_nl:}
 % \changes{v0.12}{2021/12/02}{选择|nlcover|时不生成普通封面。}
@@ -2586,7 +2612,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_cover_nl:
 {
-  \thispagestyle{empty}
   \pdfbookmark[0]{国家图书馆封面}{nl}
   {
     % 顶端
@@ -2654,7 +2679,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
   \end{center}
   \vskip -10mm
-  \cleardoublepage
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2663,7 +2687,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_declaration:
   {
+    \normalfont\normalsize
     \chapter*{南京大学学位论文原创性声明}
+    \thispagestyle{empty}
     \c_@@_orig_decl_text_tl
     \vfil
     \begin{flushright}
@@ -2671,7 +2697,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
       {日期：} \uline{\makebox[5em]{}}
     \end{flushright}
     \vfil
-    \cleardoublepage
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2680,32 +2705,28 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 本科封面
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_cover_ug:
-{
-  \thispagestyle{empty}
-  \pagenumbering{Roman}
-  % Start
-  \pdfbookmark{封面}{cover} % 将封面插入pdf书签
-  \begin{spacing}{1.25}
-  \noindent\null\hspace{-10mm}
-  \njuemblem[black]{!}{3cm}\smallskip 
-  \begin{center}
-    \njuname[black]{!}{3.35cm}
-    \vskip 10mm 
-    {\zihao{1}\bf\songti\@@_spread_box:nn {9em}{本科毕业论文}}
-    \vfill
-    \vskip\stretch{0}
-    {\bgroup
-    \kaishu\zihao{3}
-    \def\tabcolsep{1pt}
-    \def\arraystretch{1.5}
-    % 绘制信息框
-    \@@_print_covertab: 
-    \egroup}
-    \vfill
-  \end{center}
-  \end{spacing}
-  \cleardoublepage
-}
+  {
+    \pdfbookmark{封面}{cover} % 将封面插入pdf书签
+    \begin{spacing}{1.25}
+    \noindent\null\hspace{-10mm}
+    \njuemblem[black]{!}{3cm}\smallskip 
+    \begin{center}
+      \njuname[black]{!}{3.35cm}
+      \vskip 10mm 
+      {\zihao{1}\bf\songti\@@_spread_box:nn {9em}{本科毕业论文}}
+      \vfill
+      \vskip\stretch{0}
+      {\bgroup
+      \kaishu\zihao{3}
+      \def\tabcolsep{1pt}
+      \def\arraystretch{1.5}
+      % 绘制信息框
+      \@@_print_covertab: 
+      \egroup}
+      \vfill
+    \end{center}
+    \end{spacing}
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2715,9 +2736,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_cover_g:
 {
-  \thispagestyle{empty}
-  \pagenumbering{Roman}
-  % Start
   \pdfbookmark{封面}{cover} % 将封面插入pdf书签
   \begin{spacing}{1.25}
   \begin{center}
@@ -2744,15 +2762,15 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     \egroup
     \vfill
     \vskip 10mm
-    \bf\kaishu\zihao{4}\l_@@_submit_date_tl
+    \bgroup
+      \bf\kaishu\zihao{4}\l_@@_submit_date_tl
+    \egroup
     \vskip 15mm
   \end{center}
   \end{spacing}
 
   \newpage % 封面背面
-  \thispagestyle{empty}
   \begin{spacing}{1.625}
-    % TODO: 等待调整格式
     \null\vfill
     {\bgroup
     \kaishu\zihao{3}
@@ -2765,10 +2783,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     \egroup}
     \vskip 15mm
   \end{spacing}
-  \cleardoublepage
   
 % 研究生英文封面
-  \thispagestyle{empty}
+  \newpage
   \pdfbookmark{英文封面}{cover-en} % 将封面插入pdf书签
   \begin{center}
     \noindent\vspace*{20pt}
@@ -2804,8 +2821,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     \vskip 30pt
     \normalfont\normalsize\l_@@_submit_date_en_tl
   \end{center}
-  \normalfont
-  \cleardoublepage
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2817,9 +2832,17 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \RenewDocumentCommand \maketitle { }
   {
+    \pagestyle{empty}
     \bool_if:NTF \g_@@_nlcover_bool 
       { \@@_print_cover_nl: \@@_print_declaration: }
       { \use:c { @@_print_cover_ \g_@@_info_diploma_tl : } }
+%    \end{macrocode}
+% 在标题页后使用罗马字母页码。
+%    \begin{macrocode}
+    \cleardoublepage
+    \pagestyle{plain}
+    \pagenumbering{Roman}
+    \normalfont\normalsize      
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2830,25 +2853,21 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 中英文关键词
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_keywords:
-{
-  \par\vspace{2ex}
-  \bgroup
-    \noindent
-    \c_@@_name_keywords_tl
-    \clist_use:Nn \l_@@_info_keywords_clist {；} 
-    \par
-  \egroup
-}
+  {
+    \par\vspace{2ex}
+    \group_begin: 
+      \noindent \c_@@_name_keywords_tl
+      \clist_use:Nn \l_@@_info_keywords_clist {；} 
+    \group_end: 
+  }
 \cs_new_protected:Npn \@@_print_keywords_en:
-{
-  \par\vspace{2ex}
-  \bgroup
-    \noindent
-    \c_@@_name_keywords_en_tl\hspace{0.5em}
-    \clist_use:Nn \l_@@_info_keywords_en_clist {；}
-    \par
-  \egroup
-}
+  {
+    \par\vspace{2ex}
+    \group_begin: 
+      \noindent \c_@@_name_keywords_en_tl\hspace{0.5em}
+      \clist_use:Nn \l_@@_info_keywords_en_clist {；}
+    \group_end: 
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2858,7 +2877,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_abstract_ug:
 {
-  \thispagestyle{plain}
   \pdfbookmark[0]{中文摘要}{abstract-zh}
   \begin{center}
     \kaishu\zihao{-2}{\textbf{
@@ -2872,28 +2890,23 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     本科生姓名： \l_@@_info_author_tl \\
     指导教师（姓名、职称）：\l_@@_info_supv_full_tl \\
     摘要：
-  \egroup
-  \kaishu\zihao{-4}\par%
+  \egroup\par
 }
 \cs_new_protected:Npn \@@_print_abstract_en_ug:
 {
-  \thispagestyle{plain}
   \pdfbookmark[0]{英文摘要}{abstract-en}
   \begin{center}
       \kaishu\zihao{-2}{\textbf{\uuline{
         南京大学本科生毕业论文（设计、作品）英文摘要}}}
   \end{center}
-  {
-    \bgroup
+  \bgroup
     THESIS: ~~\l_@@_info_title_en_tl \\
     DEPARTMENT: ~~\l_@@_info_dept_en_tl \\
     SPECIALIZATION: ~~\l_@@_major_en_tl \\
     UNDERGRADUATE:~~\l_@@_info_author_en_tl \\
     MENTOR:~~\l_@@_info_supv_full_en_tl \\
     ABSTRACT:
-    \egroup
-  }
-  \zihao{-4}\par%
+  \egroup\par
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2904,7 +2917,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_abstract_g:
 {
-  \thispagestyle{plain}
   \pdfbookmark[0]{中文摘要}{abstract-zh}
   \begin{center}
     \kaishu\zihao{-2}{\textbf{\uuline{
@@ -2917,28 +2929,23 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     \njuline{\makebox[4em]{\l_@@_info_grade_tl}}级
     \int_compare:nTF { \g_@@_info_degree_int == 4} { 博 } { 硕 }
     士生姓名：\njuline{\hfill\l_@@_info_author_tl\hfill}\\
-    指导教师（姓名、职称）：\njuline{\hfill\l_@@_info_supv_full_tl\hfill}\par
-  \egroup
-  \kaishu\zihao{4}\par%
+    指导教师（姓名、职称）：\njuline{\hfill\l_@@_info_supv_full_tl\hfill}
+  \egroup\par
 }
 \cs_new_protected:Npn \@@_print_abstract_en_g:
 {
-  \thispagestyle{plain}
   \pdfbookmark[0]{英文摘要}{abstract-en}
   \begin{center}
       \kaishu\zihao{-2}{\textbf{\uuline{
         南京大学研究生毕业论文英文摘要首页用纸}}}
   \end{center}
-  {
-    \bgroup
+  \bgroup
     \zihao{4}
     THESIS: ~~\l_@@_info_title_en_tl \\
     SPECIALIZATION: ~~\l_@@_major_en_tl \\
     POSTGRADUATE:~~\l_@@_info_author_en_tl \\
-    MENTOR:~~\l_@@_info_supv_full_en_tl\par
-    \egroup
-  }
-  \zihao{4}\par%
+    MENTOR:~~\l_@@_info_supv_full_en_tl
+  \egroup\par
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2947,8 +2954,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 中文摘要环境。
 %    \begin{macrocode}
 \NewDocumentEnvironment{abstract} { +b }
-  { \use:c { @@_print_abstract_ \g_@@_info_diploma_tl : } #1 }
-  { \@@_print_keywords: \newpage }
+  { \newpage \use:c { @@_print_abstract_ \g_@@_info_diploma_tl : } 
+    \group_begin: \kaishu \zihao{-4} #1 }
+  { \@@_print_keywords: \group_end: }
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -2956,8 +2964,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 英文摘要环境。\pkg{xparse} 目前不支持合并带有星号的环境，因此需要单独定义。
 %    \begin{macrocode}
 \NewDocumentEnvironment{abstract*} { +b }
-  { \use:c { @@_print_abstract_en_ \g_@@_info_diploma_tl : } #1 }
-  { \@@_print_keywords_en: \cleardoublepage }
+  { \newpage \use:c { @@_print_abstract_en_ \g_@@_info_diploma_tl : } 
+    \group_begin: \zihao{-4} #1 }
+  { \@@_print_keywords_en: \group_end: }
 %</class>
 %    \end{macrocode}
 % \end{macro}

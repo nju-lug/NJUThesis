@@ -2,7 +2,10 @@
 % 本文档用于测试 njuthesis 是否正常工作
 % 其内容不具有任何参考意义
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[degree=phd,nlcover]{njuthesis}
+% \documentclass{njuthesis}
+% \documentclass[degree=mg]{njuthesis}
+\documentclass[degree=mf]{njuthesis}
+% \documentclass[degree=phd,nlcover]{njuthesis}
 
 \njusetup {
     info = {
@@ -46,6 +49,7 @@
 
 \begin{document}
 
+% \frontmatter
 \maketitle 
 
 \input{chapters/Abstract}
@@ -57,9 +61,14 @@
 
 \mainmatter
 
-\input{chapters/Introduction}
-\input{chapters/Environments}
-\input{chapters/Layout}
+% \flushbottom
+
+\chapter[非常长的标题不好看]{如果标题非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长会怎样呢}
+\section[还是用短点的吧]{如果标题非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长会怎样呢}
+答案是使用可选参数：\verb+\chapter[短描述]{完整的长标题}+
+
+\zhlipsum[1-20][name=zhufu]
+
 \input{chapters/FigTabCode}
 \input{chapters/Mathematics}
 \input{chapters/Reference}
