@@ -1283,8 +1283,14 @@ through XeTeX.
 % 学位类型。
 %    \begin{macrocode}
   degree            .choices:nn   =
-  { ug, mg, mf, phd }
-  { \int_set_eq:NN \g_@@_info_degree_int \l_keys_choice_int },  
+    { ug, mg, mf, phd }
+    { \int_set_eq:NN \g_@@_info_degree_int \l_keys_choice_int  
+%    \end{macrocode}
+% 进行学位的判断。
+%    \begin{macrocode}
+      \int_compare:nTF { \g_@@_info_degree_int == 1 }
+        { \tl_set:Nn \g_@@_info_diploma_tl { ug } }
+        { \tl_set:Nn \g_@@_info_diploma_tl { g  } } },
   degree            .initial:n    =   ug,
 %    \end{macrocode}
 % \end{macro}
@@ -1293,8 +1299,8 @@ through XeTeX.
 % 论文类型。
 %    \begin{macrocode}
   type              .choices:nn   =
-  { thesis, design }
-  { \int_set_eq:NN \g_@@_info_type_int   \l_keys_choice_int }, 
+    { thesis, design }
+    { \int_set_eq:NN \g_@@_info_type_int   \l_keys_choice_int },
   type              .initial:n    =   thesis,
 %    \end{macrocode}
 % \end{macro}
@@ -1326,14 +1332,6 @@ through XeTeX.
 \ProcessKeysOptions { nju }
 %    \end{macrocode}
 % \end{macro}
-%
-% 进行学位的判断。
-%    \begin{macrocode}
-\int_compare:nTF { \g_@@_info_degree_int == 1 }
-  { \tl_set:Nn \g_@@_info_diploma_tl { ug } }
-  { \tl_set:Nn \g_@@_info_diploma_tl { g } }
-%    \end{macrocode}
-% 
 %
 %
 % \subsection{个人信息}
@@ -1500,24 +1498,24 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \end{macrocode}
 %
 % \begin{macro}{\njuline}
-% 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。\pkg{lua-ul}中需要在结尾使用\tn{null}保护尾部空白。
+% 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。\pkg{lua-ul} 中需要在结尾使用\tn{null}保护尾部空白。
 %    \begin{macrocode}
 \sys_if_engine_xetex:T
-{
+  {
     \RequirePackage{xeCJKfntef,microtype}
-    \newcommand{\njuline}[1]{\CJKunderline{#1}}
-}
+    \NewDocumentCommand \njuline { m } { \CJKunderline{#1} }
+  }
 \sys_if_engine_luatex:T
-{
+  {
     \RequirePackage{lua-ul,dashundergaps}
-    \newcommand{\njuline}[1]{\underLine{#1}\null}
-}
+    \NewDocumentCommand \njuline { m } { \underLine{#1} \null }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
-% 数学，\pkg{amsmath}必须在\pkg{unicode-math}前加载。
-% \pkg{unicode-math}指定了\hologo{XeTeX}和\hologo{LuaTeX}下所使用的数学字体。
-% 用于配置数学环境的\pkg{mathtools}会与\pkg{unicode-math}发生冲突，此处手动消除其警告。
+% 数学，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
+% \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的数学字体。
+% 用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math} 发生冲突，此处手动消除其警告。
 %    \begin{macrocode}
 \RequirePackage{amsmath,amsthm,mathtools,thmtools}
 \RequirePackage[
@@ -1529,9 +1527,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %
 % 配置图片、表格、代码、列表环境
 %    \begin{macrocode}
-\RequirePackage{graphicx,subcaption,wrapfig,tikz}
+\RequirePackage{graphicx,wrapfig,tikz}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
-\RequirePackage{booktabs,multirow,multicol,listings,enumitem}
+\RequirePackage{booktabs,multirow,listings,enumitem}
 %    \end{macrocode}
 %
 % 必须以该顺序加载以下两个关于引用的包。
@@ -1577,7 +1575,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %
 % \subsection{字体设置}
 %
-% \pkg{fontspec}已在C\hologo{TeX}套件中包含，无需另外载入。
+% \pkg{fontspec} 已在 C\hologo{TeX} 套件中包含，无需另外载入。
 %
 % \subsubsection{操作系统检测}
 %
@@ -1604,24 +1602,16 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 这两种情况外的系统被判断为 Linux，一律使用自由字体。
 %    \begin{macrocode}
 \bool_if:NT \g_@@_load_system_fontset_bool
-{
-  \sys_if_platform_windows:TF
-  {
-    \tl_set:Nn \g_@@_latin_fontset_tl { windows }
-    \tl_set:Nn \g_@@_cjk_fontset_tl   { windows }
+  { 
+    \sys_if_platform_windows:TF
+      { \tl_set:Nn \g_@@_latin_fontset_tl   { windows }
+        \tl_set:Nn \g_@@_cjk_fontset_tl     { windows } }
+      { \ctex_if_platform_macos:TF
+        { \tl_set:Nn \g_@@_latin_fontset_tl { macos   }
+          \tl_set:Nn \g_@@_cjk_fontset_tl   { macos   } }
+        { \tl_set:Nn \g_@@_latin_fontset_tl { gyre    }
+          \tl_set:Nn \g_@@_cjk_fontset_tl   { fandol  } } } 
   }
-  {
-    \ctex_if_platform_macos:TF
-    {
-      \tl_set:Nn \g_@@_latin_fontset_tl { macos }
-      \tl_set:Nn \g_@@_cjk_fontset_tl   { macos }
-    }
-    {
-      \tl_set:Nn \g_@@_latin_fontset_tl { gyre }
-      \tl_set:Nn \g_@@_cjk_fontset_tl { fandol }
-    }
-  }
-}
 %    \end{macrocode}
 %
 % \subsubsection{定义英文字库}
@@ -1632,54 +1622,52 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % Windows 西文字体
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_latin_font_windows:
-{
-  \setmainfont{Times~New~Roman}
-  \setsansfont{Arial}
-  \setmonofont{Courier~New}[Scale=MatchLowercase]
-}
+  {
+    \setmainfont{Times~New~Roman}
+    \setsansfont{Arial}
+    \setmonofont{Courier~New}[Scale=MatchLowercase]
+  }
 %    \end{macrocode}
 % \end{macro}
-%
 %
 % \begin{macro}{\@@_load_latin_font_macos:}
 % macOS 西文字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_latin_font_macos:
-{
-  \setmainfont{Times~New~Roman}
-  \setsansfont{Arial}
-  \setmonofont{Menlo}[Scale=MatchLowercase]
-}
+  {
+    \setmainfont{Times~New~Roman}
+    \setsansfont{Arial}
+    \setmonofont{Menlo}[Scale=MatchLowercase]
+  }
 %    \end{macrocode}
 % \end{macro}
-%
 %
 % \begin{macro}{\@@_load_latin_font_gyre:}
 % 开源的 gyre 西文字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_latin_font_gyre:
-{
-  \setmainfont{texgyretermes}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic]
-  \setsansfont{texgyreheros}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic]
-  \setmonofont{texgyrecursor}[
-    Extension=.otf,
-    UprightFont=*-regular,
-    BoldFont=*-bold,
-    ItalicFont=*-italic,
-    BoldItalicFont=*-bolditalic,
-    Scale=MatchLowercase,
-    Ligatures=CommonOff]
-}
+  {
+    \setmainfont{texgyretermes}[
+      Extension=.otf,
+      UprightFont=*-regular,
+      BoldFont=*-bold,
+      ItalicFont=*-italic,
+      BoldItalicFont=*-bolditalic]
+    \setsansfont{texgyreheros}[
+      Extension=.otf,
+      UprightFont=*-regular,
+      BoldFont=*-bold,
+      ItalicFont=*-italic,
+      BoldItalicFont=*-bolditalic]
+    \setmonofont{texgyrecursor}[
+      Extension=.otf,
+      UprightFont=*-regular,
+      BoldFont=*-bold,
+      ItalicFont=*-italic,
+      BoldItalicFont=*-bolditalic,
+      Scale=MatchLowercase,
+      Ligatures=CommonOff]
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1689,116 +1677,109 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % Windows 中文字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_windows:
-{
-  \setCJKmainfont{SimSun}[
-    AutoFakeBold=2.17, 
-    ItalicFont=KaiTi]
-  \setCJKsansfont{SimHei}
-  \setCJKmonofont{FangSong}
-  \setCJKfamilyfont{zhsong}{SimSun}[AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhhei}{SimHei}
-  \setCJKfamilyfont{zhfs}{FangSong}
-  \setCJKfamilyfont{zhkai}{KaiTi}[AutoFakeBold=2.17]
-  % \setCJKfamilyfont{zhnewhei}{Microsoft~YaHei}[
-  %   BoldFont=Microsoft~YaHei~Bold]
-}
+  {
+    \setCJKmainfont{SimSun}[
+      AutoFakeBold=2.17, 
+      ItalicFont=KaiTi]
+    \setCJKsansfont{SimHei}
+    \setCJKmonofont{FangSong}
+    \setCJKfamilyfont{zhsong}{SimSun}[AutoFakeBold=2.17]
+    \setCJKfamilyfont{zhhei}{SimHei}
+    \setCJKfamilyfont{zhfs}{FangSong}
+    \setCJKfamilyfont{zhkai}{KaiTi}[AutoFakeBold=2.17]
+  }
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \begin{macro}{\@@_load_cjk_font_macos:}
 % macOS 字体。
-% TODO: 参考CTeX手册第9节 LuaLATEX 下的中文支持方式解决 issue \#5 问题。
+% TODO: 修复 macOS 字体支持，实现开箱即用。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_macos:
-{
-  % 移除 does not contain script "CJK" 警告
-  \msg_redirect_name:nnn {fontspec} {no-script} {info} 
-  \setCJKmainfont{Songti~SC~Light}[
-    BoldFont=Songti~SC~Bold,
-    ItalicFont=Kaiti~SC,
-    BoldItalicFont=Kaiti~SC~Bold]
-  \setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-  \setCJKmonofont{STFangsong}
-  \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
-  \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-  \setCJKfamilyfont{zhfs}{STFangsong}
-  \setCJKfamilyfont{zhkai}{Kaiti~SC}[BoldFont=Kaiti~SC~Bold]
-  \setCJKfamilyfont{zhnewhei}{PingFang~SC}
-}
+  {
+    % 移除 does not contain script "CJK" 警告
+    \msg_redirect_name:nnn {fontspec} {no-script} {info} 
+    \setCJKmainfont{Songti~SC~Light}[
+      BoldFont=Songti~SC~Bold,
+      ItalicFont=Kaiti~SC,
+      BoldItalicFont=Kaiti~SC~Bold]
+    \setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+    \setCJKmonofont{STFangsong}
+    \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
+    \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
+    \setCJKfamilyfont{zhfs}{STFangsong}
+    \setCJKfamilyfont{zhkai}{Kaiti~SC}[BoldFont=Kaiti~SC~Bold]
+    \setCJKfamilyfont{zhnewhei}{PingFang~SC}
+  }
 %    \end{macrocode}
 % \end{macro}
-%
 %
 % \begin{macro}{\@@_load_cjk_font_fandol:}
 % Fandol 字体
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_fandol:
-{
-  % 移除 does not contain script "CJK" 警告
-  \msg_redirect_name:nnn {fontspec} {no-script} {info} 
-  \setCJKmainfont{FandolSong-Regular}[
-    Extension=.otf,
-    BoldFont=FandolSong-Bold,
-    ItalicFont=FandolKai-Regular]
-  \setCJKsansfont{FandolHei-Regular}[
-    Extension=.otf,
-    BoldFont=FandolHei-Bold]
-  \setCJKmonofont{FandolFang-Regular}[Extension=.otf]
-  \setCJKfamilyfont{zhsong}{FandolSong-Regular}[
-    Extension=.otf,
-    BoldFont=FandolSong-Bold]
-  \setCJKfamilyfont{zhhei}{FandolHei-Regular}[
-    Extension=.otf,
-    BoldFont=FandolHei-Bold]
-  \setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
-  \setCJKfamilyfont{zhkai}{FandolKai-Regular}[
-    Extension=.otf,
-    AutoFakeBold=2.17]
-}
+  {
+    % 移除 does not contain script "CJK" 警告
+    \msg_redirect_name:nnn {fontspec} {no-script} {info} 
+    \setCJKmainfont{FandolSong-Regular}[
+      Extension=.otf,
+      BoldFont=FandolSong-Bold,
+      ItalicFont=FandolKai-Regular]
+    \setCJKsansfont{FandolHei-Regular}[
+      Extension=.otf,
+      BoldFont=FandolHei-Bold]
+    \setCJKmonofont{FandolFang-Regular}[Extension=.otf]
+    \setCJKfamilyfont{zhsong}{FandolSong-Regular}[
+      Extension=.otf,
+      BoldFont=FandolSong-Bold]
+    \setCJKfamilyfont{zhhei}{FandolHei-Regular}[
+      Extension=.otf,
+      BoldFont=FandolHei-Bold]
+    \setCJKfamilyfont{zhfs}{FandolFang-Regular}[Extension=.otf]
+    \setCJKfamilyfont{zhkai}{FandolKai-Regular}[
+      Extension=.otf,
+      AutoFakeBold=2.17]
+  }
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \begin{macro}{\@@_load_cjk_font_founder:}
 % 方正字库（简繁扩展）
-% FZYouHK_508R \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑508R} 设计师非商免费，
-% FZYouHK_511M \href{http://www.foundertype.com/index.php/FontInfo/index/id/244}{方正悠黑511M} 设计师非商免费
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_founder:
-{
-  \sys_if_engine_luatex:T
   {
-    % 在 LuaTeX 中调整方正字体括号位置
-    % XeTeX 暂无好的解决方法
-    \defaultCJKfontfeatures{JFM={zh_CN/{quanjiao,fzpr}}}
+    \sys_if_engine_luatex:T
+    {
+%    \end{macrocode}
+% 在 LuaTeX 中调整方正字体括号位置
+% XeTeX 暂无好的解决方法
+%    \begin{macrocode}
+      \defaultCJKfontfeatures{JFM={zh_CN/{quanjiao,fzpr}}}
+    }
+    \setCJKmainfont{FZSSK}[% 方正书宋
+      Extension=.ttf,
+      BoldFont=FZXBSK,% 方正小标宋
+      ItalicFont=FZKTK]% 方正楷体
+    \setCJKsansfont{FZXH1K}[% 方正细黑一
+      Extension=.ttf,
+      BoldFont=FZHTK]% FZHTK 方正黑体
+    \setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
+    \setCJKfamilyfont{zhsong}
+      {FZSSK}[
+        Extension=.ttf,
+        BoldFont=FZXBSK]
+    \setCJKfamilyfont{zhhei}
+      {FZHTK}[
+        Extension=.ttf,
+        AutoFakeBold=2.17]
+    \setCJKfamilyfont{zhfs}
+      {FZFSK}[Extension=.ttf]
+    \setCJKfamilyfont{zhkai}
+      {FZKTK}[Extension=.ttf]
+    \defaultCJKfontfeatures{}
   }
-  \setCJKmainfont{FZSSK}[% 方正书宋
-    Extension=.ttf,
-    BoldFont=FZXBSK,% 方正小标宋
-    ItalicFont=FZKTK]% 方正楷体
-  \setCJKsansfont{FZXH1K}[% 方正细黑一
-    Extension=.ttf,
-    BoldFont=FZHTK]% FZHTK 方正黑体
-  \setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
-  \setCJKfamilyfont{zhsong}
-    {FZSSK}[
-      Extension=.ttf,
-      BoldFont=FZXBSK]
-  \setCJKfamilyfont{zhhei}
-    {FZHTK}[
-      Extension=.ttf,
-      AutoFakeBold=2.17]
-  \setCJKfamilyfont{zhfs}
-    {FZFSK}[Extension=.ttf]
-  \setCJKfamilyfont{zhkai}
-    {FZKTK}[Extension=.ttf]
-  % \setCJKfamilyfont{zhnewhei}
-  %   {FZYouHK_508R}[% 方正悠黑508R
-  %     Extension=.ttf,
-  %     BoldFont=FZYouHK_511M]% 方正悠黑511M
-  \defaultCJKfontfeatures{}
-}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1807,34 +1788,34 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 思源字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_noto:
-{
-  % 思源宋体
-  \setCJKmainfont[
-    UprightFont=NotoSerifSC-Regular,
-    BoldFont=NotoSerifSC-Bold,
-    ItalicFont=NotoSerifSC-Regular,
-    BoldItalicFont=NotoSerifSC-Bold,
-    ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Serif~SC}
+  {
+    % 思源宋体
+    \setCJKmainfont[
+      UprightFont=NotoSerifSC-Regular,
+      BoldFont=NotoSerifSC-Bold,
+      ItalicFont=NotoSerifSC-Regular,
+      BoldItalicFont=NotoSerifSC-Bold,
+      ItalicFeatures=FakeSlant,
+      BoldItalicFeatures=FakeSlant]{Noto~Serif~SC}
 
-  % 思源黑体
-  \setCJKsansfont[
-    UprightFont=NotoSansSC-Regular,
-    BoldFont=NotoSansSC-Bold,
-    ItalicFont=NotoSansSC-Regular,
-    BoldItalicFont=NotoSansSC-Bold,
-    ItalicFeatures=FakeSlant,
-    BoldItalicFeatures=FakeSlant]{Noto~Sans~SC}
+    % 思源黑体
+    \setCJKsansfont[
+      UprightFont=NotoSansSC-Regular,
+      BoldFont=NotoSansSC-Bold,
+      ItalicFont=NotoSansSC-Regular,
+      BoldItalicFont=NotoSansSC-Bold,
+      ItalicFeatures=FakeSlant,
+      BoldItalicFeatures=FakeSlant]{Noto~Sans~SC}
 
-  \setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
+    \setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
 
-  \setCJKfamilyfont{zhsong}{Noto~Serif~SC}
-  \setCJKfamilyfont{zhhei}{Noto~Sans~SC}
-  \setCJKfamilyfont{zhfs}
-    {FZFSK}[Extension=.ttf]
-  \setCJKfamilyfont{zhkai}
-    {FZKTK}[Extension=.ttf]
-}
+    \setCJKfamilyfont{zhsong}{Noto~Serif~SC}
+    \setCJKfamilyfont{zhhei}{Noto~Sans~SC}
+    \setCJKfamilyfont{zhfs}
+      {FZFSK}[Extension=.ttf]
+    \setCJKfamilyfont{zhkai}
+      {FZKTK}[Extension=.ttf]
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1843,17 +1824,17 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % 载入字体命令。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_font:
-{
-  \use:c { @@_load_latin_font_ \g_@@_latin_fontset_tl : }
-  \use:c { @@_load_cjk_font_   \g_@@_cjk_fontset_tl   : }
+  {
+    \use:c { @@_load_latin_font_ \g_@@_latin_fontset_tl : }
+    \use:c { @@_load_cjk_font_   \g_@@_cjk_fontset_tl   : }
 %    \end{macrocode}
 % 自行定义C\hologo{TeX}中的四类字体命令。
 %    \begin{macrocode}
-  \NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
-  \NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
-  \NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
-  \NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
-}
+    \NewDocumentCommand \songti   { } { \CJKfamily{zhsong} }
+    \NewDocumentCommand \heiti    { } { \CJKfamily{zhhei}  }
+    \NewDocumentCommand \fangsong { } { \CJKfamily{zhfs}   }
+    \NewDocumentCommand \kaishu   { } { \CJKfamily{zhkai}  }
+  }
 %    \end{macrocode}
 %
 % 载入设置的字体。
@@ -1933,8 +1914,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
   {
     \cleardoublepage
     \int_compare:nTF { \g_@@_info_degree_int == 1 } 
-    { \pagestyle{plain} }
-    { \pagestyle{headings} }
+      { \pagestyle{plain} } { \pagestyle{headings} }
     \pagenumbering{arabic}
     \normalfont\normalsize
   }
@@ -2003,7 +1983,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     \group_begin:
       \ctexset{
         chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
-      }%
+      }
       \chapter*{\listfigurename}
     \group_end:
     \addcontentsline{toc}{chapter}{\listfigurename}
@@ -2149,21 +2129,21 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \changes{v0.11}{2021/10/01}{写入PDF元数据。}
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
-{
-  \hypersetup
-    {
-      bookmarksnumbered = true,
-      psdextra          = true,
-      unicode           = true,
+  {
+    \hypersetup
+      {
+        bookmarksnumbered = true,
+        psdextra          = true,
+        unicode           = true,
 %    \end{macrocode}
 % 填写 PDF 元信息。
 %    \begin{macrocode}
-      pdftitle    = \l_@@_info_title_tl,
-      pdfauthor   = \l_@@_info_author_tl,
-      pdfkeywords = \l_@@_info_keywords_clist,
-      pdfcreator  = \c_@@_name_pdf_creator_tl
-    }
-}
+        pdftitle    = \l_@@_info_title_tl,
+        pdfauthor   = \l_@@_info_author_tl,
+        pdfkeywords = \l_@@_info_keywords_clist,
+        pdfcreator  = \c_@@_name_pdf_creator_tl
+      }
+  }
 %    \end{macrocode}
 %
 %
@@ -2228,17 +2208,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 	xleftmargin=2em,xrightmargin=2em,% set the width of the code environment
 }
 %    \end{macrocode}
-%
-% 
-%    \begin{macrocode}
-\lstdefinestyle{LaTeX}{
-  language=TeX,
-  morekeywords={
-    begin, caption, label, mathrm, frac, 
-    toprule, midrule, bottomrule, includegraphics}
-}
-%    \end{macrocode}
-%
 % 
 % \subsubsection{列表}
 % 
@@ -2246,7 +2215,6 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \begin{macrocode}
 \renewcommand{\labelitemi}{\tiny$\blacktriangleright$}
 \renewcommand{\labelitemii}{\textbullet}
-
 \setlist[itemize]{noitemsep}
 \setlist[enumerate]{noitemsep}
 \setlist[description]{noitemsep}

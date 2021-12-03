@@ -28,8 +28,8 @@ Math bold italic letters: $\mathbi{A}$
   \end{dcases}
 \end{equation}
 
-你可以使用\lstinline|equation|环境插入公式，如\cref{eq:dewitt}，代码如下:
-\begin{lstlisting}[style=LaTeX]
+你可以使用\verb|equation|环境插入公式，如\cref{eq:dewitt}，代码如下:
+\begin{lstlisting}
 \begin{equation}
     \int \mathrm{e}^{ax} \tanh {bx} \, \mathrm{d}x =
     \begin{dcases}
@@ -43,13 +43,6 @@ Math bold italic letters: $\mathbi{A}$
     \end{dcases}
 \end{equation}
 \end{lstlisting}
-
-使用mathtools包会与unicode-math包产生一些命令的冲突，直接引用会输出以下两条警告
-\begin{lstlisting}
-Using \overbracket and \underbracket from `mathtools' package. Use \Uoverbracket and \Uunderbracket for original `unicode-math' definition.
-I'm going to overwrite the following commands from the `mathtools' package: \dblcolon, \coloneqq, \Coloneqq, \eqqcolon.
-\end{lstlisting}
-这些警告已被手动抑制。
 
 \section{定理环境}
 
