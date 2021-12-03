@@ -1883,35 +1883,29 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 \fancypagestyle{njuplain}{
    \fancyhead{}               
    \fancyfoot[C]{\zihao{5}\thepage}
+   \renewcommand{\headrulewidth}{0pt}
+   \renewcommand{\footrulewidth}{0pt}
 }
 %    \end{macrocode}
 %
-% 
-% TODO: 研究生页眉页脚 
+% 研究生页眉页脚。奇数页为章名，偶数页为节名。 
 %    \begin{macrocode}
-\fancypagestyle{njuheadings}{%
-   \fancyhead{}               
-   \fancyfoot[C]{\zihao{5}\thepage}        
+\fancypagestyle{njuheadings}{
+  \fancyhead{}
+  \fancyfoot{}
+  \fancyhead[CO]{\leftmark}
+  \fancyhead[CE]{\rightmark}
+  \fancyfoot[C]{\zihao{5}\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
 }
 %    \end{macrocode}
 %
 % 载入页眉页脚设置。此处\tn{flushbottom}是为了防止目录页出现underfull \tn{vbox}信息。
 %    \begin{macrocode}
 \int_compare:nTF { \g_@@_info_degree_int == 1 } 
-{
-  % the header line
-  \tl_set:Nn \headrulewidth {0pt}
-  % the footer line
-  \tl_set:Nn \footrulewidth {0pt}
-  \AtBeginDocument{\pagestyle{njuplain}\flushbottom} % 本科无页眉页脚
-}
-{
-  % the header line
-  \tl_set:Nn \headrulewidth {1pt}
-  % the footer line
-  \tl_set:Nn \footrulewidth {0pt}
-  \AtBeginDocument{\pagestyle{fancy}\flushbottom} % 研究生有页眉页脚
-}
+  { \AtBeginDocument{\pagestyle{njuplain}} }
+  { \AtBeginDocument{\pagestyle{njuheadings}} }
 %    \end{macrocode}
 %
 % \subsection{章节标题格式}
@@ -1951,56 +1945,59 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \begin{macro}{\tableofcontents}
   % 重定义目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
-\renewcommand\tableofcontents{%
-  \cleardoublepage
-  \raggedbottom
-  \begingroup
-    \ctexset{
-      contentsname = {目\hspace{2em}录},
-      chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
-    }%
-    \chapter*{\contentsname}%
-  \endgroup
-  \addcontentsline{toc}{chapter}{\contentsname}
-  \vskip 20pt 
-  \@starttoc{toc}%
-}
+\RenewDocumentCommand \tableofcontents { }
+  {
+    \cleardoublepage
+    \raggedbottom
+    \group_begin:
+      \ctexset{
+        contentsname = {目\hspace{2em}录},
+        chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
+      }
+      \chapter*{\contentsname}
+    \group_end:
+    \addcontentsline{toc}{chapter}{\contentsname}
+    \vskip 20pt 
+    \@starttoc{toc}
+  }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\listoffigures}
 % 重定义插图目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
-\renewcommand\listoffigures{%
-  \cleardoublepage
-  \begingroup
-  \ctexset{
-    chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
-  }%
-  \chapter*{\listfigurename}%
-  \endgroup
-  \addcontentsline{toc}{chapter}{\listfigurename}
-  \vskip 20pt 
-  \@starttoc{lof}%
-}
+\RenewDocumentCommand \listoffigures { }
+  {
+    \cleardoublepage
+    \group_begin:
+      \ctexset{
+        chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
+      }%
+      \chapter*{\listfigurename}
+    \group_end:
+    \addcontentsline{toc}{chapter}{\listfigurename}
+    \vskip 20pt 
+    \@starttoc{lof}
+  }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\listoftables}
 % 重定义表格目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
-\renewcommand\listoftables{%
-  \cleardoublepage
-  \begingroup
-  \ctexset{
-    chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
-  }%
-  \chapter*{\listtablename}%
-  \endgroup
-  \addcontentsline{toc}{chapter}{\listtablename}
-  \vskip 20pt 
-  \@starttoc{lot}%
-}
+\RenewDocumentCommand \listoftables { }
+  {
+    \cleardoublepage
+    \group_begin:
+      \ctexset{
+        chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
+      }
+      \chapter*{\listtablename}
+    \group_end:
+    \addcontentsline{toc}{chapter}{\listtablename}
+    \vskip 20pt 
+    \@starttoc{lot}%
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2009,39 +2006,36 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \begin{environment}{preface}
 % 单独制作的前言页。
 %    \begin{macrocode}
-\NewDocumentEnvironment{preface}{}
-{%
-  \chapter*{前言}
-  \addcontentsline{toc}{chapter}{前言}
-}{\cleardoublepage}
+\NewDocumentEnvironment{preface} { +b }
+  { \chapter*{前言}
+    \addcontentsline{toc}{chapter}{前言} #1 }
+  { \cleardoublepage }
 %    \end{macrocode}
 % \end{environment}
 %
 % \begin{environment}{acknowledgement}
 % 单独制作的致谢页。
 %    \begin{macrocode}
-\NewDocumentEnvironment{acknowledgement}{}
-{%
-  \chapter*{致谢}
-  \addcontentsline{toc}{chapter}{致谢}
-}{\cleardoublepage}
+\NewDocumentEnvironment{acknowledgement} { +b }
+  { \chapter*{致谢}
+    \addcontentsline{toc}{chapter}{致谢} #1 }
+  { \cleardoublepage }
 %    \end{macrocode}
 % \end{environment}
-%
 %
 % \begin{macro}{\njupaperlist}
 % \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
 % 发表文章目录与合作文章目录。
 %    \begin{macrocode}
 \NewDocumentCommand\njupaperlist { t* m }
-{  
-  \begin{refsection} 
-    \nocite{#2}
-    \IfBooleanTF {#1}
-    { \printbibliography[heading=subbibliography,title=合作文章目录] }
-    { \printbibliography[heading=subbibliography,title=发表文章目录] }
-  \end{refsection}
-}
+  {  
+    \begin{refsection} 
+      \nocite{#2}
+      \IfBooleanTF {#1}
+      { \printbibliography[heading=subbibliography,title=合作文章目录] }
+      { \printbibliography[heading=subbibliography,title=发表文章目录] }
+    \end{refsection}
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2087,9 +2081,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 	\clearfield{pmid}
 	\clearfield{eprint}
 	\ifentrytype{online}{}{\ifentrytype{misc}{}{\clearfield{url}}}
-	% \ifentrytype{book}{\clearfield{doi}}{}
 }
 %    \end{macrocode}
+%
 %
 % \subsection{引用}
 % 
@@ -2140,6 +2134,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
     }
 }
 %    \end{macrocode}
+%
 %
 % \subsection{图表浮动体}
 % 
