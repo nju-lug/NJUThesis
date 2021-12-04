@@ -475,12 +475,11 @@ through XeTeX.
 %   \end{document}
 % \end{ctexexam}
 %
+%
 % \subsection{模板选项}
 %
 % 模板选项位于\tn{documentclass}后的方括号内，用于指定模板的行为。
 % 下文中尖括号内列出了若干个允许的选项，其中加粗的为默认选项。
-%
-%
 % 
 % \subsubsection{学位信息}
 % \begin{function}[added=2021-09-07]{degree}
@@ -505,7 +504,6 @@ through XeTeX.
 % 用于选择文档类型并将相关字段输出在封面和摘要页，可选值分别为毕业论文和毕业设计。
 % 
 % \end{function}
-%   
 %
 %
 % \subsubsection{指定字体}
@@ -602,20 +600,19 @@ through XeTeX.
 % 英文字库中只有 Times New Roman、XITS 和三种\Hologo{TeX} Gyre字体能够\emph{免费商用}。
 % 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。
 %
+%
 % \subsection{个人信息}
 %
-% \begin{function}[updated=2021-10-01]{\njusetup}
+% \begin{function}[added=2021-09-10]{\njusetup}
 %   \begin{syntax}
-%     \tn{njusetup}\Arg{键值列表}
-%   \end{syntax}
-% 
-%
-% 以下为各项个人信息，其中带星号的为对应的英文名称。
-% 有空格的内容需要将空格替换为波浪线或者两端加上大括号，不需要的项目不填即可。
-%
+%     \tn{njusetup} \Arg{键值列表}
+%   \end{syntax} 
+% 是 \cls{njuthesis} 文档类的通用设置命令，用来设置各项功能。\tn{njusetup} 的参数是一个使用英文半角逗号分隔的键值列表，通常形如 \meta{key}|=|\meta{value}。
 % \end{function}
 %
-% \begin{function}{info/titlea,info/titleb,info/titlec,info/title*}
+% 目前，\tn{njusetup} 仅包含用于设置个人信息的 |info| 类。以下为全部的个人信息参数，其中带有星号的为对应的英文字段。
+% 
+% \begin{function}[updated=2021-10-01]{info/titlea,info/titleb,info/titlec,info/title*}
 %   \begin{syntax}
 %     titlea = \Arg{第一行标题}
 %     titleb = \Arg{第二行标题}
@@ -625,7 +622,7 @@ through XeTeX.
 % 题目。由于封面上提供给中文题目的横线长度有限（单行最长为15个汉字），这里将中文题目进行手动拆分，请自行选择合适的断行处。如果题目较短不需要二三行，留空即可。
 % \end{function}
 %
-% \begin{function}{info/keywords,info/keywords*}
+% \begin{function}[updated=2021-10-01]{info/keywords,info/keywords*}
 %   \begin{syntax}
 %     keywords = \Arg{关键词}
 %     keywords* = \Arg{英文关键词}
@@ -633,21 +630,21 @@ through XeTeX.
 % 关键词列表。关键词之间需要使用英文半角逗号隔开，含有空格的关键字需要使用花括号包裹以避免歧义。可以参照示例模板中的填写方式。
 % \end{function}
 %
-% \begin{function}{info/grade}
+% \begin{function}[updated=2021-10-01]{info/grade}
 %   \begin{syntax}
 %     grade = \Arg{20XX}
 %   \end{syntax}
 % 年级，推荐格式为“20XX”。
 % \end{function}
 %
-% \begin{function}{info/student-id}
+% \begin{function}[updated=2021-10-01]{info/student-id}
 %   \begin{syntax}
 %     student-id = \Arg{学号}
 %   \end{syntax}
 % 学号。南京大学本科生为9位数字学号，研究生为两位大写字母标识加上八位数字组成的学号。
 % \end{function}
 %
-% \begin{function}{info/author,info/author*}
+% \begin{function}[updated=2021-10-01]{info/author,info/author*}
 %   \begin{syntax}
 %     author = \Arg{你的名字}
 %     author* = \Arg{姓名拼音}
@@ -655,7 +652,7 @@ through XeTeX.
 % 姓名。
 % \end{function}
 % 
-% \begin{function}{info/department,info/department*}
+% \begin{function}[updated=2021-10-01]{info/department,info/department*}
 %   \begin{syntax}
 %     department = \Arg{院系}
 %     department* = \Arg{院系}
@@ -663,7 +660,7 @@ through XeTeX.
 % 院系。
 % \end{function}
 % 
-% \begin{function}{info/major,info/major*}
+% \begin{function}[updated=2021-10-01]{info/major,info/major*}
 %   \begin{syntax}
 %     major = \Arg{专业}
 %     major* = \Arg{专业}
@@ -671,7 +668,7 @@ through XeTeX.
 % 专业。
 % \end{function}
 % 
-% \begin{function}{info/field,info/field*}
+% \begin{function}[updated=2021-10-01]{info/field,info/field*}
 %   \begin{syntax}
 %     field = \Arg{方向}
 %     field* = \Arg{方向}
@@ -679,7 +676,7 @@ through XeTeX.
 % 研究领域。只有研究生有研究领域的说法。
 % \end{function}
 %  
-% \begin{function}{info/supervisora,info/supervisora*,info/supervisora-title,info/supervisora-title*}
+% \begin{function}[updated=2021-10-01]{info/supervisora,info/supervisora*,info/supervisora-title,info/supervisora-title*}
 %   \begin{syntax}
 %     supervisora = \Arg{导师}
 %     supervisora* = \Arg{导师}
@@ -690,7 +687,7 @@ through XeTeX.
 % \end{function}
 %
 %
-% \begin{function}{info/submit-date,info/submit-date*}
+% \begin{function}[updated=2021-10-01]{info/submit-date,info/submit-date*}
 %   \begin{syntax}
 %     submit-date = \Arg{提交日期}
 %     submit-date* = \Arg{提交日期}
@@ -698,54 +695,50 @@ through XeTeX.
 % 提交日期。
 % \end{function}
 %
-% \begin{function}{info/defend-date,info/chairman,info/reviewer}
+% \begin{function}[updated=2021-10-01]{info/defend-date,info/chairman,info/reviewer}
 %   \begin{syntax}
 %     defend-date = \Arg{答辩日期}
 %     chairman = \Arg{答辩主席}
 %     reviewer = \Arg{评委姓名职称}
 %   \end{syntax}
-% 答辩相关的内容，只对研究生有效，包括答辩日期，评审委员会主席及四位成员的姓名加职称。其中，四位评审成员是以列表的形式存储的，填写方法同关键词。
+% 答辩相关的内容，只对研究生有效，包括答辩日期，评审委员会主席及四位成员的姓名加职称。其中，四位评审成员是以列表的形式存储的，填写方法同关键词。如果是盲审，填入“盲审”二字即可。
 % \end{function}
 %
-% \begin{function}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
+% \begin{function}[updated=2021-10-01]{info/clc,info/secret-level,info/udc,info/supervisor-contact}
 %   \begin{syntax}
 %     clc = \Arg{中图分类号}
 %     secret-level = <不涉密|秘密|机密|绝密>
 %     udc = \Arg{udc}
 %     supervisor-contact = \Arg{导师联系方式}
 %   \end{syntax}
-% 国家图书馆封面相关，包括中图分类号、密级、udc和导师联系方式。
+% 国家图书馆封面相关，包括中图分类号、密级、UDC 分类号和导师联系方式。
 % \end{function}
 %
 % \subsubsection{输入示范}
 %
-% 本科生可以参考如下列表输入个人信息。注意不能有空行。
+% 本科生可以参考如下范例输入个人信息。注意不能有空行。
 %
 % \begin{ctexexam}
 %   \njusetup {
 %       info = {
-%           titlea = 第一行标题,
-%           titleb = 第二行标题,
+%           titlea = {第一行标题},
+%           titleb = {第二行标题},
 %           title* = {My title in English}, 
 %           keywords = {我,就是,充数的,关键词},
 %           keywords* = {Dummy,Keywords,Here,{it is}},
-%           grade = 2018,
-%           student-id = 189114514,
-%           author = 周煜华,
-%           author* = Zhou~Yuhua,
-%           department = 拉太赫科学与技术学院,
-%           department* = School~of~\hologo{LaTeX},
-%           major = 拉太赫语言学,
-%           major* = \hologo{LaTeX}~Linguistics,
-%           supervisora = 李成殿,
-%           supervisora*= Li~Chengdian,
-%           supervisora-title = 教授,
-%           supervisora-title* = Professor,
-%           supervisorb = 孙赫弥,
-%           supervisorb* = Sun~Hemi,
-%           supervisorb-title = 副教授,
-%           supervisorb-title* = Associate professor,
-%           submit-date = 2021年8月10日,
+%           grade = {2018},
+%           student-id = {189114514},
+%           author = {周煜华},
+%           author* = {Zhou Yuhua},
+%           department = {拉太赫科学与技术学院},
+%           department* = {School of \hologo{LaTeX}},
+%           major = {拉太赫语言学},
+%           major* = {\hologo{LaTeX} Linguistics},
+%           supervisora = {李成殿},
+%           supervisora*= {Li Chengdian},
+%           supervisora-title = {教授},
+%           supervisora-title* = {Professor},
+%           submit-date = {2021年8月10日},
 %       }
 %   }
 % \end{ctexexam}
@@ -755,39 +748,38 @@ through XeTeX.
 % \begin{ctexexam}
 %   \njusetup {
 %       info = {
-%           titlea = 第一行标题,
-%           titleb = 第二行标题,
-%           titlec = 第三行标题,
+%           titlea = {第一行标题},
+%           titleb = {第二行标题},
+%           titlec = {第三行标题},
 %           title* = {My title in English}, 
 %           keywords = {我,就是,充数的,关键词},
 %           keywords* = {Dummy,Keywords,Here,{it is}},
-%           grade = 2018,
-%           student-id = dz18114514,
-%           author = 周煜华,
-%           author* = Zhou~Yuhua,
-%           department = 拉太赫科学与技术学院,
-%           department* = School~of~\hologo{LaTeX},
-%           major = 拉太赫语言学,
-%           major* = \hologo{LaTeX}~Linguistics,
-%           field = 拉太赫语言在现当代的使用, 
-%           field* = Contemporary~Usage~of~the~\hologo{LaTeX}~Language, 
-%           supervisora = 李成殿,
-%           supervisora*= Li~Chengdian,
-%           supervisora-title = 教授,
-%           supervisora-title* = Professor,
-%           submit-date = 2021年8月10日,
+%           grade = {2018},
+%           student-id = {dz18114514},
+%           author = {周煜华},
+%           author* = {Zhou Yuhua},
+%           department = {拉太赫科学与技术学院},
+%           department* = {School of \hologo{LaTeX}},
+%           major = {拉太赫语言学},
+%           major* = {\hologo{LaTeX} Linguistics},
+%           field = {拉太赫语言在现当代的使用}, 
+%           field* = {Contemporary Usage of the \hologo{LaTeX}~Language}, 
+%           supervisora = {李成殿},
+%           supervisora*= {Li Chengdian},
+%           supervisora-title = {教授},
+%           supervisora-title* = {Professor},
+%           submit-date = {2021年8月10日},
 %           submit-date* = {Aug 10, 2021}, 
-%           defend-date = 2021年9月19日,
-%           chairman = 张晓山~教授,
+%           defend-date = {2021年9月19日},
+%           chairman = {张晓山~教授},
 %           reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
-%           clc = 0175.2,
-%           secret-level = 限制,
-%           udc = 004.72,
+%           clc = {0175.2},
+%           secret-level = {限制},
+%           udc = {004.72},
 %           supervisor-contact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514},
 %       }
 %   }
 % \end{ctexexam}
-%
 %
 %
 % \subsection{编写正文}
@@ -798,22 +790,25 @@ through XeTeX.
 %   \cs{mainmatter} 标志着正文的开始，重新开始字号计数并设置页眉。
 % \end{function}
 %
+% 在页面布局方面，页面编号居中位于页脚，本科生无页眉，研究生页眉包括章名（奇数页）和节名（偶数页）。
+%
 % \begin{function}{\chapter,\section,\subsection,\subsubsection}
 %   \begin{syntax}
-%     \tn{chapter}\oarg{短描述}\marg{完整的长标题}
+%     \tn{chapter}\oarg{短描述}\marg{完整的章标题}
+%     \tn{section}\oarg{短描述}\marg{完整的节标题}
+%     \tn{subsection}\oarg{短描述}\marg{完整的节标题}
+%     \tn{subsection}\oarg{短描述}\marg{完整的节标题}
 %   \end{syntax}
 % \pkg{ctex} 宏集提供了其中用于处理长标题的可选参数。对于过长的标题，目录中会使用其短描述。
 % \end{function}
 %
 % \begin{ctexexam}
 %   \begin{document}
-%     text
+%       \chapter[短描述]{我的标题}
+%       我的正文
 %   \end{document}
 % \end{ctexexam}
-%
-% 加上空行就可以另起一段。
 % 
-% 在页面布局方面，本科生无页眉，页面编号居中位于页脚；研究生无页脚，页眉包括章节名和页面编号（尚未确定）。
 %
 % \subsubsection{文字}
 %
@@ -829,7 +824,6 @@ through XeTeX.
 %   \begin{syntax}
 %     \tn{footnote}\Arg{脚注}
 %   \end{syntax}
-%
 % 添加脚注
 % \end{function}
 %
@@ -866,7 +860,7 @@ through XeTeX.
 %   <text>
 % \end{ctexexam}
 % 
-% TODO：使用\pkg{subcaption}的\env{subfigure}实现多张图片并排的效果。较为老旧的\pkg{subfigure}并不在此受到支持。
+% 使用 \pkg{caption} 内置的 \pkg{subcaption} 提供 \env{subfigure} 环境，实现多张图片并排的效果。较为老旧的 \pkg{subfigure} 并不在此受到支持。
 %
 % \begin{ctexexam}
 %   \begin{figure}
@@ -888,6 +882,7 @@ through XeTeX.
 %       \caption{subfigures}
 %   \end{figure}
 % \end{ctexexam}
+%
 %
 % \subsubsection{表格}
 %
@@ -926,7 +921,8 @@ through XeTeX.
 %   \end{lstlisting}
 % \end{ctexexam}
 %
-% 行间代码|\lstinline!<code>!|，其中包裹代码的两个感叹号并不是绝对的，可以替换成任何两个相同的没有在这段代码中出现过的符号。
+% 行间代码可以使用抄录环境 \tn{verb} （或者 \pkg{listings} 提供的 \tn{lstinline}），
+% 格式如 |\verb!<code>!|。其中包裹代码的两个感叹号并不是绝对的，可以替换成任何两个相同的没有在这段代码中出现过的符号。
 %
 %
 % \subsubsection{数学}
@@ -944,7 +940,7 @@ through XeTeX.
 %
 % 如不需要编号，可以用\env{equation*}或者 |\[<eq>\]|
 %
-% 本模板也提供了一系列的数学环境。证明环境会在结尾添加证毕符号
+% 本模板也提供了一系列的数学环境。证明环境会在结尾添加证毕符号。
 % \begin{ctexexam}
 %   \begin{proof}
 %       证明我是我
@@ -988,17 +984,14 @@ through XeTeX.
 % \subsubsection{封面}
 %
 % \begin{function}{\maketitle}
-%
 % 用于生成封面。
 % 本科生仅会生成中文封面；研究生会生成中英文封面。
 % 如果选择了\opt{nlcover}，仅会生成研究生的国家图书馆封面和原创性声明页。
-% 
 % \end{function}
 %
 %
 % \subsubsection{摘要页}
 % \changes{v0.11}{2021/10/01}{简化了摘要的编写方式。}
-%
 % 
 % \begin{ctexexam}
 %   \begin{abstract}
@@ -1031,9 +1024,7 @@ through XeTeX.
 % \subsubsection{目录页}
 %
 % \begin{function}{\tableofcontents,\listoffigures,\listoftables}
-%
 % 分别生成目录、图片清单和表格清单。
-% 
 % \end{function}
 % 
 %
@@ -1049,6 +1040,7 @@ through XeTeX.
 %   \end{acknowledgement}
 % \end{ctexexam}
 %
+%
 % \subsubsection{参考文献页}
 %
 % 使用以下命令，\opt{bibintoc}可以将参考文献页插入目录
@@ -1056,7 +1048,8 @@ through XeTeX.
 % \begin{ctexexam}
 %   \printbibliography[heading=bibintoc,title=参考文献]
 % \end{ctexexam}
-% 
+%
+%
 % \subsubsection{附录页}
 %
 % \begin{function}{\appendix}
@@ -1907,7 +1900,8 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 % \end{macro}
 %
 % \begin{macro}{\mainmatter}
-% \changes{v0.12}{2021/12/03}{修复了正文字体和页眉问题。}
+% \changes{v0.12}{2021/12/03}{修复了摘要页字体格式泄漏到正文的问题。}
+% \changes{v0.12}{2021/12/03}{修复了页眉上长标题重叠的问题。}
 % 重定义 \cs{mainmatter}，在论文主体部分载入页眉页脚设置，并重新进行数字编号。
 %    \begin{macrocode}
 \RenewDocumentCommand \mainmatter { }
@@ -2651,7 +2645,9 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 }
 %    \end{macrocode}
 % \end{macro}
+%
 % \begin{macro}{\@@_print_declaration:}
+% \changes{v0.12}{2021/12/02}{添加原创性声明页面。}
 % 原创性声明。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_declaration:
@@ -2796,6 +2792,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %
 % 
 % \begin{macro}{\maketitle}
+% \changes{v0.12}{2021/12/01}{仅会生成国家图书馆封面或者普通封面之一。}
 % 重定义 \cs{maketitle}。
 % 如果选择了 |nlcover|，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
 %    \begin{macrocode}
@@ -2806,7 +2803,7 @@ keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
       { \@@_print_cover_nl: \@@_print_declaration: }
       { \use:c { @@_print_cover_ \g_@@_info_diploma_tl : } }
 %    \end{macrocode}
-% 在标题页后使用罗马字母页码。
+% 在标题页后使用大写罗马字母页码。
 %    \begin{macrocode}
     \cleardoublepage
     \pagestyle{plain}
