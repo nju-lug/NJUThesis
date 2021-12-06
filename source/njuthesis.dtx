@@ -113,7 +113,7 @@ through XeTeX.
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
-\usepackage{floatrow,listings,tabularray,njuvisual}
+\usepackage{listings,tabularray,njuvisual}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
 \setlist[1]{labelindent=0.5em}
@@ -369,7 +369,7 @@ through XeTeX.
 % \ref {tab:texdistribution}。第一次编译前请务必通过 MiKTeX Console、TeX Live 
 % Manager 等图形化程序或 \pkg{tlmgr}\emph{手动更新全部宏包}以避免潜在的兼容性问题。
 %
-% \begin{table}[H]
+% \begin{table}[ht]
 %   \centering
 %   \caption{\hologo{TeX} 软件发行版一览}
 %   \label{tab:texdistribution}
@@ -872,6 +872,7 @@ through XeTeX.
 %
 % \begin{latexexample}[moretexcs={\includegraphics},emph={[1]figure}]
 %   \begin{figure}[h]
+%       \centering
 %       \includegraphics[width=0.5\textwidth]{myfig}
 %       \caption{我的图}
 %       \label{fig:myfig}
@@ -883,6 +884,7 @@ through XeTeX.
 %
 % \begin{latexexample}[moretexcs={\includegraphics},emph={[1]wrapfigure}]
 %   \begin{wrapfigure}{r}{0cm}
+%       \centering
 %       \includegraphics[width=0.15\textwidth]{myfig}
 %       \caption{我的图}
 %       \label{fig:myfig}
@@ -919,6 +921,7 @@ through XeTeX.
 % 下面这个例子展示了如何插入一张表格。通过 \pkg{booktabs} 提供的 \tn{toprule}、\tn{midrule} 和 \tn{bottomrule}，我们可以很轻松地绘制出一张漂亮规范的三线表。
 % \begin{latexexample}[moretexcs={\toprule,\midrule,\bottomrule},emph={[1]table,tabular}]
 %   \begin{table}[htbp]
+%       \centering
 %       \caption{我的表}
 %       \label{tab:testtab}
 %       \begin{tabular}{ccc}
@@ -1494,7 +1497,6 @@ through XeTeX.
   {
     geometry,
     caption,
-    floatrow,
     setspace,
     emptypage,
     fancyhdr,
@@ -2169,34 +2171,18 @@ through XeTeX.
 % 
 % \subsubsection{图片表格}
 % 
-% 图表位置调整
-%    \begin{macrocode}
-\floatsetup[figure]{ % Captions for figures
-	capposition=bottom,%
-	margins=centering,%
-	floatwidth=\textwidth%
-}
-\floatsetup[table]{ % Captions for tables
-	capposition=above,%
-	margins=centering,%
-	floatwidth=\textwidth%
-}
-%    \end{macrocode}
-% 
+% \changes{v0.12}{2021/12/06}{删除了可能导致冲突的 \pkg{floatrow}。}
 % 图表标题样式
 %    \begin{macrocode}
-\DeclareCaptionFont{songticap}{\zihao{5}\bf\songti}
-\captionsetup{
-  font=small,%
-  labelfont=songticap,
-	textfont=songticap,
-	strut=no,%
-	hypcap=true, % Links point to the top of the figure
-	% indention=0pt, % Suppress indentation
-	% % parindent=0pt, % Suppress space between paragraphs
-	aboveskip=6pt, % Increase the space between the figure and the caption
-	belowskip=6pt, % Increase the space between the caption and the table
-}
+\DeclareCaptionStyle{njucap}
+  {
+    font          = small,
+    labelfont     = bf,
+    labelsep      = quad,
+    justification = centering
+  }
+\captionsetup [ figure ] { style = njucap }
+\captionsetup [ table  ] { style = njucap }
 %    \end{macrocode}
 %
 % 
@@ -2204,26 +2190,22 @@ through XeTeX.
 % 
 % 代码样式
 %    \begin{macrocode}
-\floatsetup[lstlisting]{ % Captions for lstlistings
-	capposition=above,%
-	margins=centering,%
-	floatwidth=\textwidth%
-}
 \lstset{
 	basicstyle=\ttfamily\linespread{1}\small\selectfont,
-    keywordstyle=\bfseries,% use bold style for keywords
-    commentstyle=\rmfamily\itshape,% use italic style for comments
-    stringstyle=\ttfamily,% 字符串风格
-    flexiblecolumns,% ?
-    numbers=left,% left-aligned numbering
-    showspaces=false,% hide markers for spaces
-    showstringspaces=false,
-    captionpos=t,% place the caption at the top
+  keywordstyle=\bfseries,% use bold style for keywords
+  commentstyle=\rmfamily\itshape,% use italic style for comments
+  stringstyle=\ttfamily,% 字符串风格
+  flexiblecolumns,% ?
+  numbers=left,% left-aligned numbering
+  showspaces=false,% hide markers for spaces
+  showstringspaces=false,
+  captionpos=t,% place the caption at the top
 	% frame=lrtb,% show all four sides of the frame
 	% linewidth=.8\textwidth,
 	% breakatwhitespace=true,
 	breaklines=true,
-	xleftmargin=2em,xrightmargin=2em,% set the width of the code environment
+	xleftmargin=2em,
+  xrightmargin=2em,% set the width of the code environment
 }
 %    \end{macrocode}
 % 
@@ -2272,13 +2254,6 @@ through XeTeX.
 %
 % TODO: 简化数学环境的定义方法
 %    \begin{macrocode}
-\declaretheorem[
-	name=算法,
-	style=njuthm,
-	refname={算法,算法},
-	Refname={算法,算法},
-	% numberwithin=section,
-]{algorithm}
 \declaretheorem[
 	name=假设,
 	style=njuthm,

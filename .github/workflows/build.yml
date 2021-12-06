@@ -14,7 +14,7 @@ on:
 
 env:
   CTAN_URL: https://mirrors.rit.edu/CTAN
-  TL_PACKAGES: alphalph auxhook background biber biblatex biblatex-gb7714-2015 bibtex blindtext booktabs caption cleveref cm-unicode colortbl csquotes ctex dashundergaps diagbox emptypage enumitem everypage fancyhdr fancyvrb fandol floatrow footmisc gbt7714 hologo hycolor hypdoc hyperref l3build latexmk libertinus-fonts listings lm-math lua-ul lualatex-math luatex85 makecell makeindex mathtools mhchem microtype multirow natbib ninecolors njuvisual ntheorem pict2e preview psnfss setspace siunitx standalone symbol tabularray tex-gyre tex-gyre-math thmtools threeparttable tocloft translator underscore unicode-math url wrapfig xits xstring zhlipsum zref
+  TL_PACKAGES: algorithms alphalph auxhook background biber biblatex biblatex-gb7714-2015 bibtex blindtext booktabs caption cleveref cm-unicode colortbl csquotes ctex dashundergaps diagbox emptypage enumitem everypage fancyhdr fancyvrb fandol float footmisc gbt7714 hologo hycolor hypdoc hyperref l3build latexmk libertinus-fonts listings lm-math lua-ul lualatex-math luatex85 makecell makeindex mathtools mhchem microtype multirow natbib ninecolors njuvisual ntheorem pict2e preview psnfss setspace siunitx standalone symbol tabularray tex-gyre tex-gyre-math thmtools threeparttable tocloft translator underscore unicode-math url wrapfig xits xstring zhlipsum zref
 
 jobs:
   build-on-ubuntu:
