@@ -7,7 +7,7 @@
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\textwidth]{test.png}
-    \caption{火热劲爆阿卡抑}
+    \caption{火热劲爆 Arcaea}
     \label{fig:arcaea}
 \end{figure}
 \zhlipsum[3][name=xiangyu]
@@ -73,12 +73,16 @@ the code and can be replaced by any character not in the code;
 
 使用\lstinline!\lstinline|\textit{<Your code>}|!，只要使用在代码中未出现的符号将代码包括在内即可。
 
-算法示例。
+使用 {algoritm} 和 {algoritm} 的算法示例\footnote{两者均位于 {algoritms} 下}。
 
 \begin{algorithm}[htbp]
     \caption{Temp}
-    \begin{algorithmic}[1]
-    \STATE Temp
+    \begin{algorithmic}
+        \IF{$i\leq0$}
+        \STATE $i\gets1$
+        \ELSE\IF{$i\geq0$}
+        \STATE $i\gets0$
+        \ENDIF\ENDIF
     \end{algorithmic}
 \end{algorithm}
 

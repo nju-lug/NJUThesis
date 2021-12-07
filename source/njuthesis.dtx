@@ -1469,51 +1469,123 @@ through XeTeX.
 %
 %
 % \subsection{载入宏包}
-% 
-% 使用\pkg{ctexbook}作为基础文档类。
+%
+% \changes{v0.12}{2021/12/07}{重新组织宏包载入顺序。}
+% 将选项传入 \cls{ctexbook} 文档类。
 %    \begin{macrocode}
-\LoadClass[
-  a4paper,
-  twoside,
-  UTF8,
-  scheme=chinese,
+\PassOptionsToClass
+  {
+    a4paper,
+    twoside,
+    UTF8,
+    scheme=chinese,
 %    \end{macrocode}
-% 关于行距，\hologo{LaTeX}默认1.2行距，word默认行距是1.3，要求1.5倍word行距，故
+% 关于行距，\hologo{LaTeX} 默认1.2行距，word 默认行距是1.3，要求1.5倍 word 行距，故
 % $1.5\times\frac{1.3}{1.2} = 1.625$
 %    \begin{macrocode}
-  linespread=1.625,
+    linespread=1.625,
 %    \end{macrocode}
-% 默认不载入任何字体，供模板自行设置
+% 默认不载入任何字体，供本模板自行设置。
 %    \begin{macrocode}
-  fontset=none,
-  zihao=-4
-  ]{ctexbook}[2018/04/01]
+    fontset=none,
+%    \end{macrocode}
+% 正文字体设置为小四号。
+%    \begin{macrocode}
+    zihao=-4
+  }
+  { ctexbook }
+%    \end{macrocode}
+%
+% 传入各宏包选项。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { no-math           } { fontspec },
+    { perpage           } { footmisc },
+    % { amsmath, thmmarks } { ntheorem },
+    { titles            } { tocloft  },
+    { hyphens           } { url      },
+    { warnings-off={ mathtools-colon, mathtools-overbracket } }
+                          { unicode-math },
+    { capitalise, nameinlink, noabbrev }
+                          { cleveref }
+  }
+  { \PassOptionsToPackage #1 }
+%    \end{macrocode}
+%
+% 使用\pkg{ctexbook}作为基础文档类。
+%    \begin{macrocode}
+\LoadClass { ctexbook } [ 2018/04/01 ]
 %    \end{macrocode}
 %
 % 载入各种宏包。
-% \pkg{emptypage}用于清除空白页的页码。
 %    \begin{macrocode}
 \RequirePackage
   {
     geometry,
     caption,
     setspace,
-    emptypage,
     fancyhdr,
-    hologo
+    hologo,
+%    \end{macrocode}
+% \pkg{tocloft} 用于定制目录样式。
+%    \begin{macrocode}
+    tocloft,
+%    \end{macrocode}
+% \pkg{url} 用于生成链接文本。
+%    \begin{macrocode}
+    url,
+%    \end{macrocode}
+% \pkg{emptypage} 用于清除空白页的页码。
+%    \begin{macrocode}
+    emptypage,
+%    \end{macrocode}
+% 南京大学视觉形象化标准宏包 \pkg{njuvisual} 用于绘制学校 logo。
+%    \begin{macrocode}
+    njuvisual,
+%    \end{macrocode}
+% 数学，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
+% \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的数学字体。
+% 用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math} 发生冲突，此处手动消除其警告。
+%    \begin{macrocode}
+    amsmath,
+    amsthm,
+    mathtools,
+    thmtools,
+    unicode-math,
+%    \end{macrocode}
+% 图片与表格。
+%    \begin{macrocode}
+    graphicx,
+    wrapfig,
+    booktabs,
+    multirow,
+%    \end{macrocode}
+% 列表环境
+%    \begin{macrocode}
+    listings,
+    enumitem,
+%    \end{macrocode}
+% 按以下顺序加载两个关于引用的包。
+% \pkg{hyperref} 覆写了大量命令，因此需要在其他包最后载入。
+% 仅有 \pkg{cleveref} 需要在 \pkg{hyperref} 后载入，否则会报错。
+%    \begin{macrocode}
+    hyperref,
+    cleveref
   }
-\RequirePackage[titles]{tocloft}
-\RequirePackage[hyphens]{url} % generate better linebreaks in the url
 %    \end{macrocode}
 %
 % \begin{macro}{\njuline}
-% 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。\pkg{lua-ul} 中需要在结尾使用\tn{null}保护尾部空白。
+% 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。
 %    \begin{macrocode}
 \sys_if_engine_xetex:T
   {
     \RequirePackage{xeCJKfntef,microtype}
     \NewDocumentCommand \njuline { m } { \CJKunderline{#1} }
   }
+%    \end{macrocode}
+% \pkg{lua-ul} 中需要在结尾使用 \tn{null} 保护尾部空白。
+%    \begin{macrocode}
 \sys_if_engine_luatex:T
   {
     \RequirePackage{lua-ul,dashundergaps}
@@ -1521,41 +1593,6 @@ through XeTeX.
   }
 %    \end{macrocode}
 % \end{macro}
-%
-% 数学，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
-% \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的数学字体。
-% 用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math} 发生冲突，此处手动消除其警告。
-%    \begin{macrocode}
-\RequirePackage{amsmath,amsthm,mathtools,thmtools}
-\RequirePackage[
-    warnings-off={
-        mathtools-colon,
-        mathtools-overbracket}
-        ]{unicode-math}
-%    \end{macrocode}
-%
-% 配置图片、表格、代码、列表环境
-%    \begin{macrocode}
-\RequirePackage{graphicx,wrapfig,tikz}
-\DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
-\RequirePackage{booktabs,multirow,listings,enumitem}
-%    \end{macrocode}
-%
-% 必须以该顺序加载以下两个关于引用的包。
-%    \begin{macrocode}
-\RequirePackage[hidelinks,bookmarksnumbered=true]{hyperref}
-\RequirePackage[capitalise,nameinlink,noabbrev]{cleveref}
-%    \end{macrocode}
-%
-% 载入南京大学识别视觉系统。
-%    \begin{macrocode}
-\RequirePackage{njuvisual}
-%    \end{macrocode}
-% 
-% 生成用于测试的大段填充文字。
-%    \begin{macrocode}
-\RequirePackage{blindtext,zhlipsum} 
-%    \end{macrocode}
 %
 % \begin{macro}{\@@_check_package:nnn}
 % 检查过时宏包。
@@ -1576,11 +1613,12 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% 检查绘制下划线所需的 \pkg{luatexja} 包版本。该宏包在2021-09-18的解决了下划线中断问题，然而在2021-10-24的更新才提供了正确的内嵌日期。
+% 检查绘制下划线所需的 \pkg{luatexja} 包版本。该宏包在2021-09-18的更新解决了下划线中断问题，然而在2021-10-24的更新才提供了正确的内嵌日期。
 %    \begin{macrocode}
 \sys_if_engine_luatex:T
   { \@@_check_package:nnn { luatexja } { 2021/10/24 } { 20211024.0 } }
 %    \end{macrocode}
+%
 %
 % \subsection{字体设置}
 %
@@ -1622,6 +1660,7 @@ through XeTeX.
           \tl_set:Nn \g_@@_cjk_fontset_tl   { fandol  } } } 
   }
 %    \end{macrocode}
+%
 %
 % \subsubsection{定义英文字库}
 %
@@ -1820,10 +1859,8 @@ through XeTeX.
 
     \setCJKfamilyfont{zhsong}{Noto~Serif~SC}
     \setCJKfamilyfont{zhhei}{Noto~Sans~SC}
-    \setCJKfamilyfont{zhfs}
-      {FZFSK}[Extension=.ttf]
-    \setCJKfamilyfont{zhkai}
-      {FZKTK}[Extension=.ttf]
+    \setCJKfamilyfont{zhfs}{FZFSK}[Extension=.ttf]
+    \setCJKfamilyfont{zhkai}{FZKTK}[Extension=.ttf]
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1933,25 +1970,35 @@ through XeTeX.
 %
 % \subsection{章节标题格式}
 % 
+% \begin{macro}{\@@_sec_title_style:}
+% 各部分标题设置为四号黑体。
 %    \begin{macrocode}
-\ctexset{
-    chapter/format = \zihao{4}\heiti\centering\selectfont,
-    chapter/beforeskip = 10pt,
-    chapter/afterskip = 60pt,
-    section/format = \zihao{4}\heiti\raggedright\selectfont,
-    subsection/format = \zihao{4}\heiti\raggedright\selectfont,
-    subsubsection/format = \zihao{4}\heiti\raggedright\selectfont,
-}
+\cs_new_protected:Npn \@@_sec_title_style:
+  { \heiti \zihao{4} \selectfont }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\ctexset
+  {
+    chapter/beforeskip   = 10 pt,
+    chapter/afterskip    = 60 pt,
+    chapter/format       = \centering \@@_sec_title_style:,
+    section/format       = \@@_sec_title_style:,
+    subsection/format    = \@@_sec_title_style:,
+    subsubsection/format = \@@_sec_title_style:
+  }
 %    \end{macrocode}
 %
 % \subsection{目录格式}
 % 设定目录标题名称。
 %    \begin{macrocode}
-\ctexset{
-    contentsname = 目录,
-    listfigurename = 插图清单, 
-    listtablename = 表格清单,
-}
+\ctexset
+  {
+    contentsname   = {目录},
+    listfigurename = {插图清单}, 
+    listtablename  = {表格清单},
+  }
 %    \end{macrocode}
 %
 % 使用\pkg{tocloft}定制目录文字格式。
@@ -1965,6 +2012,14 @@ through XeTeX.
 \setlength{\cftsubsecnumwidth}{2em}
 %    \end{macrocode}
 %
+% \begin{macro}{\@@_toc_title_style:}
+% 目录页单独设置三号粗宋体标题。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_toc_title_style:
+  { \centering \songti \bf \zihao{3} \selectfont }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\tableofcontents}
 % 重定义目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
@@ -1972,10 +2027,9 @@ through XeTeX.
   {
     \raggedbottom
     \group_begin:
-      \ctexset{
-        contentsname = {目\hspace{2em}录},
-        chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
-      }
+      \ctexset
+        { contentsname   = {目\hspace{2em}录},
+          chapter/format = \@@_toc_title_style: }
       \chapter*{\contentsname}
     \group_end:
     \addcontentsline{toc}{chapter}{\contentsname}
@@ -1991,9 +2045,7 @@ through XeTeX.
 \RenewDocumentCommand \listoffigures { }
   {
     \group_begin:
-      \ctexset{
-        chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
-      }
+      \ctexset { chapter/format = \@@_toc_title_style: }
       \chapter*{\listfigurename}
     \group_end:
     \addcontentsline{toc}{chapter}{\listfigurename}
@@ -2009,9 +2061,7 @@ through XeTeX.
 \RenewDocumentCommand \listoftables { }
   {
     \group_begin:
-      \ctexset{
-        chapter/format = {\centering\songti\bf\zihao{3}\selectfont},
-      }
+      \ctexset { chapter/format = \@@_toc_title_style: }
       \chapter*{\listtablename}
     \group_end:
     \addcontentsline{toc}{chapter}{\listtablename}
@@ -2052,7 +2102,7 @@ through XeTeX.
   {  
     \begin{refsection} 
       \nocite{#2}
-      \IfBooleanTF {#1}
+      \bool_if:NTF { #1 }
       { \printbibliography[heading=subbibliography,title=合作文章目录] }
       { \printbibliography[heading=subbibliography,title=发表文章目录] }
     \end{refsection}
@@ -2117,35 +2167,8 @@ through XeTeX.
 %
 %
 % \subsection{引用}
-% 
-% 修改标签名称。默认在名称后面添加空格，删除公式编号的括号
-%    \begin{macrocode}
-\crefdefaultlabelformat{#2#1#3\,}
-
-\crefname{figure}{图}{图}
-\crefname{table}{表}{表}
-% \crefname{equation}{公式}{公式}
-\crefformat{equation}{公式~#2#1#3~}
-
-\crefformat{chapter}{第#2#1#3章}
-\crefformat{section}{第~#2#1#3~节}
-\crefformat{subsection}{第~#2#1#3~小节}
-\crefformat{subsubsection}{第~#2#1#3~小节}
-\crefname{appendix}{附录}{附录}
-
-% \crefname{definition}{定义}{定义}
-% \crefname{axiom}{公理}{公理}
-% \crefname{property}{性质}{性质}
-% \crefname{proposition}{命题}{命题}
-% \crefname{lemma}{引理}{引理}
-% \crefname{corollary}{推论}{推论}
-% \crefname{remark}{注解}{注解}
-% \crefname{condition}{条件}{条件}
-% \crefname{conclusion}{结论}{结论}
-% \crefname{assumption}{假设}{假设}
-%    \end{macrocode}
 %
-% \pkg{hyperref} 覆写了大量命令，因此需要在最后载入。
+% \pkg{hyperref} 设置。
 % \changes{v0.11}{2021/10/01}{写入PDF元数据。}
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
@@ -2155,6 +2178,7 @@ through XeTeX.
         bookmarksnumbered = true,
         psdextra          = true,
         unicode           = true,
+        hidelinks,
 %    \end{macrocode}
 % 填写 PDF 元信息。
 %    \begin{macrocode}
@@ -2165,14 +2189,41 @@ through XeTeX.
       }
   }
 %    \end{macrocode}
+% 修改 \pkg{cleverref} 的标签名称。默认在名称后面添加空格，删除公式编号的括号
+%    \begin{macrocode}
+\crefdefaultlabelformat{#2#1#3\,}
+\crefname { figure   } { 图   } { 图 }
+\crefname { table    } { 表   } { 表 }
+\crefname { appendix } { 附录 } { 附录 }
+\crefformat { equation      } { 公式~#2#1#3~   }
+\crefformat { chapter       } { 第#2#1#3章     }
+\crefformat { section       } { 第~#2#1#3~节   }
+\crefformat { subsection    } { 第~#2#1#3~小节 }
+\crefformat { subsubsection } { 第~#2#1#3~小节 }
+% \crefname{assumption}{假设}{假设}
+% \crefname{axiom}{公理}{公理}
+% \crefname{conclusion}{结论}{结论}
+% \crefname{condition}{条件}{条件}
+% \crefname{corollary}{推论}{推论}
+% \crefname{definition}{定义}{定义}
+% \crefname{lemma}{引理}{引理}
+% \crefname{property}{性质}{性质}
+% \crefname{proposition}{命题}{命题}
+% \crefname{remark}{注解}{注解}
+%    \end{macrocode}
 %
 %
 % \subsection{图表浮动体}
 % 
 % \subsubsection{图片表格}
+%
+% 设置默认图片扩展名，允许在不键入扩展名时自动进行补全。
+%    \begin{macrocode}
+\DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
+%    \end{macrocode}
 % 
 % \changes{v0.12}{2021/12/06}{删除了可能导致冲突的 \pkg{floatrow}。}
-% 图表标题样式
+% 图表标题样式。文字设置为五号宋体，标签设置为粗体，间隔一个全角空格。
 %    \begin{macrocode}
 \DeclareCaptionStyle{njucap}
   {
@@ -2186,38 +2237,31 @@ through XeTeX.
 %    \end{macrocode}
 %
 % 
-% \subsubsection{代码}
+% \subsubsection{代码环境}
 % 
-% 代码样式
+% 使用 \pkg{listings} 提供的 \tn{lstset} 设置代码环境基本样式。
 %    \begin{macrocode}
-\lstset{
-	basicstyle=\ttfamily\linespread{1}\small\selectfont,
-  keywordstyle=\bfseries,% use bold style for keywords
-  commentstyle=\rmfamily\itshape,% use italic style for comments
-  stringstyle=\ttfamily,% 字符串风格
-  flexiblecolumns,% ?
-  numbers=left,% left-aligned numbering
-  showspaces=false,% hide markers for spaces
-  showstringspaces=false,
-  captionpos=t,% place the caption at the top
-	% frame=lrtb,% show all four sides of the frame
-	% linewidth=.8\textwidth,
-	% breakatwhitespace=true,
-	breaklines=true,
-	xleftmargin=2em,
-  xrightmargin=2em,% set the width of the code environment
-}
+\lstset
+  {
+    basewidth    = 0.5 em,
+    lineskip     = 3 pt,
+    basicstyle   = \small\ttfamily,
+    keywordstyle = \bfseries,
+    commentstyle = \itshape,
+    numbers      = left,
+    captionpos   = t,
+    breaklines   = true,
+    xleftmargin  = 2 em,
+    xrightmargin = 2 em,
+    flexiblecolumns
+  }
 %    \end{macrocode}
-% 
-% \subsubsection{列表}
-% 
-% 列表环境
+%
+%
+% \subsubsection{列表环境}
+% \changes{v0.12}{2021/12/07}{删除了 \pkg{enumitem} 的部分列表环境设置。}
 %    \begin{macrocode}
-\renewcommand{\labelitemi}{\tiny$\blacktriangleright$}
-\renewcommand{\labelitemii}{\textbullet}
-\setlist[itemize]{noitemsep}
-\setlist[enumerate]{noitemsep}
-\setlist[description]{noitemsep}
+\setlist { noitemsep }
 %    \end{macrocode}
 %
 % 
@@ -2252,8 +2296,8 @@ through XeTeX.
 \renewcommand*{\proofname}{\rm\bf\songti{\oldproofname}} 
 %    \end{macrocode}
 %
-% TODO: 简化数学环境的定义方法
 %    \begin{macrocode}
+% TODO: 简化数学环境的定义方法
 \declaretheorem[
 	name=假设,
 	style=njuthm,
