@@ -1,0 +1,70 @@
+name: Release
+
+on: 
+  push:
+    branches:
+      - master
+
+    tags:
+      - v*
+
+  pull_request:
+    branches:
+      - master
+
+env:
+  CTAN_URL: https://mirrors.rit.edu/CTAN
+  TL_PACKAGES: alphalph auxhook background biber biblatex biblatex-gb7714-2015 bibtex booktabs caption cm-unicode colortbl csquotes ctex dashundergaps diagbox everypage fancyhdr fancyvrb fandol footmisc gbt7714 hologo hycolor hypdoc hyperref l3build latexmk libertinus-fonts listings lm-math makecell makeindex microtype multirow natbib ninecolors njuvisual pict2e preview psnfss setspace siunitx symbol tabularray tex-gyre tex-gyre-math thmtools threeparttable translator underscore unicode-math url xits xstring zref
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    env:
+      SET_PATH: |
+        export PATH=/tmp/texlive/bin/x86_64-linux:$PATH
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Set Version
+        run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Install TeX Live
+        run: |
+          ${{ env.SET_PATH }}
+          wget ${{ env.CTAN_URL }}/systems/texlive/tlnet/install-tl-unx.tar.gz
+          tar -xzf install-tl-unx.tar.gz
+          cd install-tl-20* && ./install-tl --profile ../.github/workflows/texlive.profile
+          tlmgr install ${{ env.TL_PACKAGES }}
+          tlmgr update --self --all --no-auto-install --repository=${{ env.CTAN_URL }}/systems/texlive/tlnet/
+      
+      - name: Download njuvisual package
+        run: |
+          wget ${{ env.CTAN_URL }}/macros/latex/contrib/njuvisual/njuvisual.dtx
+          wget ${{ env.CTAN_URL }}/macros/latex/contrib/njuvisual/njuvisual-curves.dtx
+
+      - name: Zip CTAN package
+        run: |
+          ${{ env.SET_PATH }}
+          l3build ctan
+          mv njuthesis-ctan.zip njuthesis-ctan-$VERSION.zip
+          cp build/doc/njuthesis.pdf njuthesis-$VERSION.pdf
+
+      - name: Zip RELEASE package
+        run: |
+          ${{ env.SET_PATH }}
+          xetex njuvisual.dtx
+          mv build/unpacked/njuthesis.cls njuthesis.cls
+          mv docs/njuthesis-sample.bib njuthesis-sample.bib
+          mv docs/njuthesis-sample.tex njuthesis-sample.tex
+          zip -r njuthesis-$VERSION.zip .vscode njuthesis-sample.tex njuthesis-sample.bib njuthesis.cls njuvisual.sty conf.txsprofile LICENSE README.md
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            njuthesis-v*.pdf
+            njuthesis-v*.zip
+            njuthesis-ctan-v*.zip

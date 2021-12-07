@@ -3,6 +3,8 @@
 [![njuthesis](https://img.shields.io/badge/njuthesis-latex-blue)](https://git.nju.edu.cn/nju-lug/nju-latex-templates)
 [![overleaf](https://img.shields.io/badge/overleaf-supported-brightgreen)](https://tex.nju.edu.cn)
 ![build status](https://github.com/nju-lug/NJUThesis/actions/workflows/build.yml/badge.svg)
+[![CTAN](https://img.shields.io/ctan/v/njuthesis.svg)](https://www.ctan.org/pkg/njuthesis)
+[![GitHub release](https://img.shields.io/github/release/nju-lug/NJUThesis/all.svg)](https://github.com/nju-lug/NJUThesis/releases/latest)
 
 > 此项目是基于[NJU thesis 2021](https://github.com/FengChendian/NJUThesis2021)的重构版本，目前本科生及研究生版本**已经基本重构完成**。
 > 然而，研究生院并未提供完善的规定，部分格式来自于本科生院。**如果院系另有要求，请提交issue**。

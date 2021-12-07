@@ -16,6 +16,5 @@ xetex "njuvisual.dtx" > NUL
 DEL "*.dtx"
 DEL "*.ins"
 DEL "*.log"
-DEL "*.md"
 
 CD ..
