@@ -15,6 +15,8 @@
 
 ## 快速开始
 
+请首先阅读 [Releases](https://github.com/nju-lug/NJUThesis/releases/latest) 中附带的 `njuthesis.pdf` ，这份说明文档详尽阐述了模板的特性和使用方法。
+
 对于普通用户，推荐使用下述的**南大TeX编译方法**。
 
 ### 本地编译
@@ -65,19 +67,13 @@ DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发�
 
 请注意，由于文件重名原因，项目中的示例论文模板已被重命名为`njuthesis-sample.tex`。
 
-### 其他
-
-更多内容请参见项目Wiki中的[使用说明](https://github.com/nju-lug/NJUThesis/wiki/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)。
-
-你也可以下载[Release](https://github.com/nju-lug/NJUThesis/releases/latest)中附带的`njuthesis.pdf`，里面详尽阐述了模板的特性和使用方法。
-
 ## 常见问题
 
 请参见[常见问题](https://github.com/nju-lug/NJUThesis/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)。
 
 ## 贡献
 
-如果你发现了模板的问题，欢迎在Github中[提交issue](https://github.com/nju-lug/NJUThesis/issues)或者PR。
+如果你发现了模板的问题，欢迎在 Github 中提交 [issue](https://github.com/nju-lug/NJUThesis/issues)或者 [PR](https://github.com/nju-lug/NJUThesis/pulls。
 
 ## 许可
 

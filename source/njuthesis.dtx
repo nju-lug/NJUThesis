@@ -105,7 +105,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo  $Id: njuthesis.dtx 0.12.2 2021-12-03 23:40:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class>\GetIdInfo  $Id: njuthesis.dtx 0.12.3 2021-12-07 21:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -174,7 +174,7 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.12.2 \\ Released 2021-12-03}
+% \date{v0.12.3 \\ Released 2021-12-07}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -230,13 +230,13 @@ through XeTeX.
 %
 % \clearpage
 %
-% \EnableDocumentation
 % 
 % \begin{documentation}
 %
-%
 % \section{模板介绍}
+%
 % \cls{njuthesis}，即南京大学学位论文模板，是一个由南京大学 LUG 组织维护的，用于处理本校学生毕业论文排版需求的 \hologo{LaTeX} 模板。
+%
 %
 % \subsection{历史沿革}
 %
@@ -255,27 +255,35 @@ through XeTeX.
 % \end{enumerate}
 % 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
 %
-% 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼顾友校\href{https://ctan.org/pkg/thuthesis}{thuthesis}、\href{https://ctan.org/pkg/fduthesis}{fduthesis}等优秀项目，构建了这一全新模板，力求通过\hologo{LaTeX3}语法和清晰的接口实现良好的易用性和可维护性。
+% 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼顾友校\href{https://ctan.org/pkg/thuthesis}{\textsc{THuThesis}}、\href{https://ctan.org/pkg/fduthesis}{\pkg{fduthesis}}等优秀项目，构建了这一全新模板，力求通过 \hologo{LaTeX3} 语法和清晰的接口实现良好的易用性和可维护性。
 %
 % 目前，本模板的主要维护者包括：
-%
 % \begin{itemize}
 %     \item 赵懿晨
 %     \item 熊煜
 %     \item 马畅
 % \end{itemize}
 %
+%
 % \subsection{君\hologo{LaTeX}本当上手}
-% \hologo{LaTeX}并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须要面对的情况。目前，中文互联网上的 \hologo{LaTeX} 写作教程不能说屈指可数，起码也是汗牛充栋，比较著名的包括刘海洋的《\hologo{LaTeX}入门》等等都是不错的参考资料。然而如何快速准确找到所需要的用法，尤其是 \hologo{LaTeX3} 的新接口，需要一定的时间或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您的相关知识体系，只能\emph{尽力做到有求必应}，在需要的地方顺带提一嘴，保证您少走点弯路。
+%
+% \hologo{LaTeX} 并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须要面对的情况。目前，中文互联网上的 \hologo{LaTeX} 写作教程可谓汗牛充栋，然而如何快速准确找到所需要的用法，尤其是 \hologo{LaTeX3} 的新接口，需要一定的时间或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您的相关知识体系，只能\emph{尽力做到有求必应}，在需要的地方顺带提一嘴，以期使您少走点弯路。
+%
+% 如果您希望在使用本模板前了解一些关于这个排版软件的基础知识，在此尝试列举一些有所帮助的资料：
+% \begin{description}
+%   \item[《\hologo{LaTeX} 入门》] 刘海洋著。
+% \end{description}
+%
 %
 % \subsection{关于本说明手册}
 %
-% 本模板通过\textsc{DocStrip}进行维护，实际上是一种\emph{文学编程}。文学编程的本体是那些用来说明的文字，按写书写文章的方式组织。
-% \file{njuthesis.dtx}包含njuthesis模板的所有信息。前半部分为模板说明，即各种常用命令与必要的使用方法；后半部分为代码实现，为带有详细注释的\hologo{TeX}源代码。后者配合附录，为有意了解本模板细节的同学提供简明的指引。
+% 本模板通过 \textsc{DocStrip} 进行维护，实际上是一种\emph{文学编程}。文学编程的本体是那些用来说明的文字，按写书写文章的方式组织。
+% \file{njuthesis.dtx} 包含 \cls{njuthesis} 文档类的所有信息。前半部分为模板说明，即各种常用命令与必要的使用方法；后半部分为代码实现，为带有详细注释的 \hologo{TeX} 源代码。后者配合附录，为有意了解本模板实现细节的同学提供S指引。
 %
-% 下文中将出现若干特殊格式，用来指示代码组件。譬如，\file{file-example.xxx}为文件名，\pkg{pkg-example}为宏包名，\opt{opt-example}为选项名，\env{env-example}为需要|\begin{}|和|\end{}|的环境名，等。
+% 下文中将出现若干特殊格式，用来指示代码组件。譬如，无衬线字体的 \pkg{pkg-example} 为宏包名，等宽字体的 \file{file-example.xxx} 为文件名，等宽字体的 \opt{opt-example}为选项名，等宽字体的 \env{env-example}为需要|\begin{}|和|\end{}|的环境名，等。本手册提供的代码示例中，左侧边线呈现南大标准洋红色 {\color{njumagenta}$\blacksquare$} 的属于终端命令，呈南大标准蓝色 {\color{njublue}$\blacksquare$} 的属于 \hologo{LaTeX} 源代码。
 %
-% 如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过GitHub issue或者QQ群聊联系LUG。
+% 如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过 GitHub issue 或者 QQ 群聊联系 NJU LUG。
+%
 %
 % \section{安装}
 % \label{sec:setup}
@@ -283,51 +291,56 @@ through XeTeX.
 % 
 % \subsection{获取模板}
 %
-% \subsubsection{自动安装}
+% \cls{njuthesis} 目前处于积极的维护中，其文件主要可通过以下途径获取：
 %
-% \href{https://ctan.org/pkg/njuthesis}{\cls{njuthesis}} 已经于2021年9月12日发布在
-% CTAN（Comprehensive \hologo{TeX} Archive Network）.
-% \href{https://ctan.org/pkg/njuvisual}{\pkg{njuvisual}} 也已于同年11月28日发布。
-% 两者将进入\hologo{TeX}\,Live 2022。目前，南大\hologo{TeX}已预先安装本模板，详见
-% \ref{subsec:onlinecompile}。
+% \subparagraph{CTAN} \href{https://ctan.org/}{CTAN}\footnote{The Comprehensive \hologo{TeX} Archive Network} 是所有 \hologo{TeX} 相关材料的中枢。\href{https://ctan.org/pkg/njuthesis}{本模板的 CTAN 页面}\footnote{\cls{njuthesis} 已经于2021年9月12日发布在 CTAN，用于绘制南大图标的 \href{https://ctan.org/pkg/njuvisual}{\pkg{njuvisual}} 也已于同年11月28日发布，两者将进入\hologo{TeX}\,Live 2022。}上提供基本的介绍信息，可以下载说明文档（本文档）和宏包源代码。当然，使用这一来源时并不需要接触后者，请参考 \ref{subsubsec:standard-installation} 的标准安装方法。
+%
+% \subparagraph{GitHub 仓库} 最新开发进度会提交在本项目的 \href{https://github.com/nju-lug/NJUThesis}{Github仓库}。仓库内仅包含源代码、空白模板及测试文件，不可直接用于写作。这些文件对应的使用方法请参考 \ref{subsubsec:on-the-fly-installation}。如果由于网络原因不便访问主仓库，也可以从\href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像} 获取项目工程文件。
+%
+% \subparagraph{GitHub Releases} 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，赋以更改后的版本号，发布在 \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases 页面}。可供下载的文件包括下列三种：
+%   \begin{description}
+%     \item[\file{njuthesis-v*.pdf}] 模板说明文档（本文档）。
+%     \item[\file{njuthesis-v*.zip}] 完整模板包，包括格式文件、范本以及编辑器配置文件。可以解压后用于本地编译或直接上传用于在线编译。
+%     \item[\file{njuthesis-ctan-v*.zip}] 用于上传 CTAN 的源码包，普通用户请忽略。
+%   \end{description}
+%
+%
+% \subsection{本地安装}
+%
+% \subsubsection{标准安装}
+% \label{subsubsec:standard-installation}
+%
+% 我们\emph{始终建议}使用宏包管理器将 \cls{njuthesis} 安装到您的 \hologo{TeX} 系统。
 % 您可以通过 \hologo{TeX}\,Live Manager 或者 \hologo{MiKTeX} Console 等图形化包管理器
-% 直接安装并使用以上两个宏包最新的稳定版，也可以使用 \pkg{tlmgr} 的终端命令：
+% 直接搜索并安装 \cls{njuthesis} （及其依赖的 \pkg{njuvisual}）最新的稳定版。同时，您也可以使用终端命令。例如，假设您使用的是 \hologo{TeX}\,Live，键入下述 \pkg{tlmgr} 的命令（很可能需要管理员权限）：
 % \begin{shellexample}[morekeywords={tlmgr,install}]
 %   tlmgr install njuthesis njuvisual
 % \end{shellexample}
+% 即可完成安装，无需额外准备 \file{.cls} 文件。
 % 
-% 我们\emph{强烈建议}使用这一类安装方式。
+% 另一方面，CTAN 依赖开发者手动上传更新，版本更新具有滞后性。
+% 如果使用时遇到了问题，不妨使用下一小节的\emph{即时安装方法}优先载入较新的格式文件。
 %
-% 另一方面，CTAN版需要开发者手动上传，版本更新具有滞后性。
-% 如果使用时遇到了问题，推荐使用以下方式获取最新正式版。
-% 
-% \subsubsection{下载正式版}
-% \label{subsubsec:downloadrtm}
+% {\color{red}|[!]|} 如果您使用的是 Linux 系统而且具备相关经验，可以在下载仓库内全部文件后，于该目录下运行
+% \begin{shellexample}[morekeywords={l3build,install}]
+%   l3build install
+% \end{shellexample}
+% 来安装本模板的最新版。
 %
-% 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，下载方式包括：
-% \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases 页面}
-% 以及 \href{https://mirror.nju.edu.cn/download/app/NJUThesis%20%E8%AE%BA%E6%96%87%E6%A8%A1%E6%9D%BF}{南大镜像下载页}
-% (在校内使用时后者具有显著更快的速度）。可供下载的文件包括：
-% \begin{description}
-%   \item[\file{njuthesis-v*.pdf}] 模板说明文档（本文件）。
-%   \item[\file{njuthesis-v*.zip}] 空白模板，包括格式文件、范本以及编辑器配置文件。可以直接用于本地或上传在线编译。
-%   \item[\file{njuthesis-ctan-v*.zip}] 用于上传 CTAN 的源码包，普通用户请忽略。
-% \end{description}
+% \subsubsection{即时安装}
+% \label{subsubsec:on-the-fly-installation}
 %
-% \subsubsection{下载开发版}
+% 在某些情况下（例如需要上传至在线编译平台、新版本提供了急需的错误修复），您可能需要独立的 \file{.cls} 格式文件。此时请前往前述的 Releases 页面下载\emph{完整模板包}。
 %
-% 最新开发进度会提交在本项目的
-% \href{https://github.com/nju-lug/NJUThesis}{Github仓库}。
-% 如果由于网络原因不便访问，也可以从
-% \href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像} 下载项目工程文件。
+% 对于希望使用主仓库中版本的用户，本模板也提供了扁平化安装脚本，用于释放供编译的空白模板和格式文件。Windows 用户请直接双击打
+% 开 \file{install-win.bat}；其他平台（包括 macOS 和 Linux）用户请在此目录下运行
+% \begin{shellexample}[morekeywords={bash}]
+%   bash install-unix.sh
+% \end{shellexample}
+% 该脚本会生成一个 \file{mythesis/} 目录以便从头写作，仓库内除此文件夹以外的内容都可以尽情删除。
 %
-% 仓库主目录下提供了自动安装脚本，用于释放供编译的空白模板和格式文件。Windows 用户请直接双击打
-% 开 \file{install-win.bat}；其他平台（包括 macOS 和 Linux）用户请在终端使用 bash 运行 
-% \file{install-unix.sh} 。该脚本会生成一个 \file{mythesis/} 目录以便从头写作，仓库内其
-% 余内容都可以尽情删除。
-%
-% 请注意，如果仅仅是希望使用这个模板撰写论文，请无论如何都不要从编译 \file{source/} 文件夹下
-% 的源代码开始，这样做只会浪费生命中宝贵的数分钟时间。如果遇到了问题，请优先提出 issue。我们只
+% {\color{red}|[!]|} 请注意，如果仅仅是希望使用这个模板撰写论文，请无论如何都不要从手动编译 \file{source/} 文件夹下
+% 的源代码开始，这样做只会浪费生命中宝贵的数分钟时间。如果遇到了问题，请前往 GitHub 仓库提出 issue。我们只
 % 推荐希望参与开发的同学接触 \file{.dtx} 文件。
 %
 % \subsection{文件构成}
@@ -483,13 +496,14 @@ through XeTeX.
 %
 % 注意，由于南大\hologo{TeX}已预装\cls{njuthesis}，可以直接编写正文，无需\file{.cls}等格式文件。如果需要使用新版模板，也可以点击New Project -> Upload Project上传 \ref{subsubsec:downloadrtm} 得到的压缩文件。
 %
-% \subsubsection{关于Overleaf}
+% \subsubsection{其他平台}
 %
-% 由于\href{https://www.overleaf.com/}{Overleaf} 平台的\hologo{TeX}\,Live版本停留在2020，\texttt{cleveref}包在引用章节时会生成错误的标签，引发格式错误；而南大\hologo{TeX}通过及时更新规避了若干问题。因此\emph{请务必不要使用Overleaf官网进行编译}。
+% \subparagraph{Overleaf}
+% \changes{v0.12}{2021/12/07}{更新了对 Overleaf 的支持情况。}
+% \pkg{njuthesis} 现已支持 \href{https://www.overleaf.com/}{Overleaf} 平台。
 %
-% \subsubsection{关于TeXPage}
-%
-% \href{https://www.texpage.com/}{TeXPage} 是国人研发的\hologo{LaTeX}在线编辑器，当前版本已具备较为完善的编辑编译功能，而且免费版相对 Overleaf 增加了公式识别、编辑历史等实用工具，也可以作为一个备选项。目前的缺憾是对于 \cls{njuthesis} 的编译速度较慢。 
+% \subparagraph{TeXPage}
+% \href{https://www.texpage.com/}{TeXPage} 是国人研发的\hologo{LaTeX}在线编辑器，当前版本已具备较为完善的编辑编译功能，而且免费版相对 Overleaf 增加了公式识别、编辑历史等实用工具，也可以作为一个备选项。
 %
 % \section{使用方法}
 %
@@ -1184,9 +1198,9 @@ through XeTeX.
 \RequirePackage { xtemplate, l3keys2e }
 \msg_new:nnn { njuthesis } { l3-too-old }
   {
-    Package~ "#1"~ is~ too~ old. \\\\
-    Please~ update~ an~ up-to-date~ version~ of~ \\
-    the~ bundles "l3kernel"~ and~ "l3packages"~ \\
+    Package~ "#1"~ is~ too~ old. \\
+    Please~ update~ an~ up-to-date~ version~ of~
+    the~ bundles "l3kernel"~ and~ "l3packages"~
     using~ your~ TeX~ package~ manager~ or~ from~ \\
     CTAN.
   }
@@ -1202,10 +1216,10 @@ through XeTeX.
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { unsupported-engine }
   {
-    The~ njuthesis~ class~ requires~ either~ \\
-    XeTeX~ or~ LuaTeX. \\\\
-    "#1"~ is~ not~ supported~ at~ present.~ \\
-    You~ must~ change your~ typesetting~ engine~ \\
+    The~ njuthesis~ class~ requires~ either~ 
+    XeTeX~ or~ LuaTeX. \\
+    "#1"~ is~ not~ supported~ at~ present.~ 
+    You~ must~ change your~ typesetting~ engine~
     to~ "xelatex"~ or~ "lualatex".
   }
 \sys_if_engine_xetex:F
@@ -1600,9 +1614,9 @@ through XeTeX.
 \msg_new:nnn { njuthesis } { package-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\
-    The~ njuthesis~ class~ only~ supports~ "#1"~ with~  \\
-    a~ version higher~ than~ v#2. \\\\
-    Please~ update~ an~ up-to-date~ version~ of~ it~ \\
+    The~ njuthesis~ class~ only~ supports~ "#1"~ with~
+    a~ version higher~ than~ v#2.\\
+    Please~ update~ an~ up-to-date~ version~ of~ it~
     using~ your TeX~ package~ manager~ or~ from~ CTAN.
   }
 \cs_new_protected:Npn \@@_check_package:nnn #1#2#3
