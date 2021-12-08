@@ -116,6 +116,7 @@ through XeTeX.
 \usepackage{listings,tabularray,njuvisual}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
+\newcommand*\scite[1]{\textsuperscript{\cite{#1}}}
 \setlist[1]{labelindent=0.5em}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
@@ -255,7 +256,11 @@ through XeTeX.
 % \end{enumerate}
 % 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
 %
-% 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼顾友校\href{https://ctan.org/pkg/thuthesis}{\textsc{THuThesis}}、\href{https://ctan.org/pkg/fduthesis}{\pkg{fduthesis}}等优秀项目，构建了这一全新模板，力求通过 \hologo{LaTeX3} 语法和清晰的接口实现良好的易用性和可维护性。
+% 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南
+% 京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼
+% 顾友校\href{https://ctan.org/pkg/thuthesis}{\textsc{THuThesis}}、
+% \href{https://ctan.org/pkg/fduthesis}{\pkg{fduthesis}}等优秀项目，构建了这一全
+% 新模板，力求通过 \hologo{LaTeX3} 语法和清晰的接口实现良好的易用性和可维护性。
 %
 % 目前，本模板的主要维护者包括：
 % \begin{itemize}
@@ -267,22 +272,38 @@ through XeTeX.
 %
 % \subsection{君\hologo{LaTeX}本当上手}
 %
-% \hologo{LaTeX} 并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须要面对的情况。目前，中文互联网上的 \hologo{LaTeX} 写作教程可谓汗牛充栋，然而如何快速准确找到所需要的用法，尤其是 \hologo{LaTeX3} 的新接口，需要一定的时间或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您的相关知识体系，只能\emph{尽力做到有求必应}，在需要的地方顺带提一嘴，以期使您少走点弯路。
+% \hologo{LaTeX} 并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听
+% 到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须
+% 要面对的情况。目前，中文互联网上的 \hologo{LaTeX} 写作教程可谓汗牛充栋，然而
+% 如何快速准确找到所需要的用法，尤其是 \hologo{LaTeX3} 的新接口，需要一定的时间
+% 或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您
+% 的相关知识体系，只能\emph{尽力做到有求必应}，在需要的地方顺带提一嘴，以期使您
+% 少走点弯路。
 %
 % 如果您希望在使用本模板前了解一些关于这个排版软件的基础知识，在此尝试列举一些有所帮助的资料：
 % \begin{description}
 %   \item[《\hologo{LaTeX} 入门》] 刘海洋著。
+%   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，可以参考英文版\scite{lshort}及其中文翻译版\scite{lshort-zh-cn}。
 % \end{description}
 %
 %
 % \subsection{关于本说明手册}
 %
-% 本模板通过 \textsc{DocStrip} 进行维护，实际上是一种\emph{文学编程}。文学编程的本体是那些用来说明的文字，按写书写文章的方式组织。
-% \file{njuthesis.dtx} 包含 \cls{njuthesis} 文档类的所有信息。前半部分为模板说明，即各种常用命令与必要的使用方法；后半部分为代码实现，为带有详细注释的 \hologo{TeX} 源代码。后者配合附录，为有意了解本模板实现细节的同学提供S指引。
+% 本模板通过 \textsc{DocStrip} 进行维护，实际上是一种\emph{文学编程}。文学编程的
+% 本体是那些用来说明的文字，按写书写文章的方式组织。\file{njuthesis.dtx} 包含
+% \cls{njuthesis} 文档类的所有信息。前半部分为模板说明，即各种常用命令与必要的使
+% 用方法；后半部分为代码实现，为带有详细注释的 \hologo{TeX} 源代码。后者配合附
+% 录，为有意了解本模板实现细节的同学提供必要指引。
 %
-% 下文中将出现若干特殊格式，用来指示代码组件。譬如，无衬线字体的 \pkg{pkg-example} 为宏包名，等宽字体的 \file{file-example.xxx} 为文件名，等宽字体的 \opt{opt-example}为选项名，等宽字体的 \env{env-example}为需要|\begin{}|和|\end{}|的环境名，等。本手册提供的代码示例中，左侧边线呈现南大标准洋红色 {\color{njumagenta}$\blacksquare$} 的属于终端命令，呈南大标准蓝色 {\color{njublue}$\blacksquare$} 的属于 \hologo{LaTeX} 源代码。
+% 下文中将出现若干特殊格式，用来指示代码组件。譬如，无衬线字体的
+% \pkg{pkg-example} 为宏包名，等宽字体的 \file{file-example.xxx} 为文件名，等宽
+% 字体的 \opt{opt-example}为选项名，等宽字体的 \env{env-example}为需要
+%  |\begin{}|和|\end{}|的环境名，等。本手册提供的代码示例中，左侧边线呈现南大标
+% 准洋红色 {\color{njumagenta}$\blacksquare$} 的属于终端命令，呈南大标准蓝色
+% {\color{njublue}$\blacksquare$} 的属于 \hologo{LaTeX} 源代码。
 %
-% 如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过 GitHub issue 或者 QQ 群聊联系 NJU LUG。
+% 如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过
+% GitHub issue 或者 QQ 群聊联系 NJU LUG。
 %
 %
 % \section{安装}
@@ -310,16 +331,18 @@ through XeTeX.
 % \subsubsection{标准安装}
 % \label{subsubsec:standard-installation}
 %
-% 我们\emph{始终建议}使用宏包管理器将 \cls{njuthesis} 安装到您的 \hologo{TeX} 系统。
-% 您可以通过 \hologo{TeX}\,Live Manager 或者 \hologo{MiKTeX} Console 等图形化包管理器
-% 直接搜索并安装 \cls{njuthesis} （及其依赖的 \pkg{njuvisual}）最新的稳定版。同时，您也可以使用终端命令。例如，假设您使用的是 \hologo{TeX}\,Live，键入下述 \pkg{tlmgr} 的命令（很可能需要管理员权限）：
+% 我们\emph{始终建议}使用宏包管理器将 \cls{njuthesis} 安装到您的 \hologo{TeX} 系
+% 统。您可以通过 \hologo{TeX}\,Live Manager 或者 \hologo{MiKTeX} Console 等图形
+% 化包管理器直接搜索并安装 \cls{njuthesis} （及其依赖的 \pkg{njuvisual}）最新的
+% 稳定版。同时，您也可以使用终端命令。例如，假设您使用的是 \hologo{TeX}\,Live，
+% 键入下述 \pkg{tlmgr} 的命令（很可能需要管理员权限）：
 % \begin{shellexample}[morekeywords={tlmgr,install}]
 %   tlmgr install njuthesis njuvisual
 % \end{shellexample}
 % 即可完成安装，无需额外准备 \file{.cls} 文件。
 % 
-% 另一方面，CTAN 依赖开发者手动上传更新，版本更新具有滞后性。
-% 如果使用时遇到了问题，不妨使用下一小节的\emph{即时安装方法}优先载入较新的格式文件。
+% 另一方面，CTAN 依赖开发者手动上传更新，版本更新具有滞后性。如果使用时遇到了问
+% 题，不妨使用下一小节的\emph{即时安装方法}优先载入较新的格式文件。
 %
 % {\color{red}|[!]|} 如果您使用的是 Linux 系统而且具备相关经验，可以在下载仓库内全部文件后，于该目录下运行
 % \begin{shellexample}[morekeywords={l3build,install}]
@@ -330,18 +353,23 @@ through XeTeX.
 % \subsubsection{即时安装}
 % \label{subsubsec:on-the-fly-installation}
 %
-% 在某些情况下（例如需要上传至在线编译平台、新版本提供了急需的错误修复），您可能需要独立的 \file{.cls} 格式文件。此时请前往前述的 Releases 页面下载\emph{完整模板包}。
+% 在某些情况下（例如需要上传至在线编译平台、新版本提供了急需的错误修复），您可能
+% 需要独立的 \file{.cls} 格式文件。此时请前往前述的 Releases 页面下载
+% \emph{完整模板包}。
 %
-% 对于希望使用主仓库中版本的用户，本模板也提供了扁平化安装脚本，用于释放供编译的空白模板和格式文件。Windows 用户请直接双击打
-% 开 \file{install-win.bat}；其他平台（包括 macOS 和 Linux）用户请在此目录下运行
+% 对于希望使用主仓库中版本的用户，本模板也提供了扁平化安装脚本，用于释放供编译的
+% 空白模板和格式文件。Windows 用户请直接双击打开 \file{install-win.bat}；其他平
+% 台（包括 macOS 和 Linux）用户请在此目录下运行
 % \begin{shellexample}[morekeywords={bash}]
 %   bash install-unix.sh
 % \end{shellexample}
-% 该脚本会生成一个 \file{mythesis/} 目录以便从头写作，仓库内除此文件夹以外的内容都可以尽情删除。
+% 该脚本会生成一个 \file{mythesis/} 目录以便从头写作，仓库内除此文件夹以外的内容
+% 都可以尽情删除。
 %
-% {\color{red}|[!]|} 请注意，如果仅仅是希望使用这个模板撰写论文，请无论如何都不要从手动编译 \file{source/} 文件夹下
-% 的源代码开始，这样做只会浪费生命中宝贵的数分钟时间。如果遇到了问题，请前往 GitHub 仓库提出 issue。我们只
-% 推荐希望参与开发的同学接触 \file{.dtx} 文件。
+% {\color{red}|[!]|} 请注意，如果仅仅是希望使用这个模板撰写论文，请无论如何都不
+% 要从手动编译 \file{source/} 文件夹下的源代码开始，这样做只会浪费生命中宝贵的数
+% 分钟时间。如果遇到了问题，请前往 GitHub 仓库提出 issue。我们只推荐希望参与开发
+% 的同学接触 \file{.dtx} 文件。
 %
 % \subsection{文件构成}
 %
@@ -354,18 +382,18 @@ through XeTeX.
 %   \centering
 %   \begin{tabular}{lp{18em}}
 %     \toprule
-%     名称 & 说明 \\
+%     名称                                  & 说明                             \\
 %     \midrule
-%     \file{.vscode}                        & Visual Studio Code 配置文件 \\
-%     \file{latexmkrc}                      & latexmk 配置文件 \\
-%     \file{LICENSE}                        & 许可证 \\
-%     \file{njuthesis.bib}                  & 示例参考文献列表 \\
-%     \file{njuthesis.cls}                  & 模板文档类 \\
-%     \color{njuyellow}\file{njuthesis.dtx} & 文档类源代码 \\
-%     \color{njuyellow}\file{njuthesis.ins} & 文档类安装脚本 \\
-%     \file{njuthesis.pdf}                  & 用户手册（本文档） \\
+%     \file{.vscode}                        & Visual Studio Code 配置文件      \\
+%     \file{latexmkrc}                      & latexmk 配置文件                 \\
+%     \file{LICENSE}                        & 许可证                           \\
+%     \file{njuthesis.cls}                  & 模板文档类                       \\
+%     \color{njuyellow}\file{njuthesis.dtx} & 文档类源代码                     \\
+%     \color{njuyellow}\file{njuthesis.ins} & 文档类安装脚本                   \\
+%     \file{njuthesis.pdf}                  & 用户手册（本文档）               \\
+%     \file{njuthesis-sample.bib}           & 示例参考文献列表                 \\
 %     \file{njuthesis-sample.tex}           & 示例文档，不妨以此为基础撰写论文 \\
-%     \file{README.md}                      & 自述文件 \\
+%     \file{README.md}                      & 自述文件                         \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -378,10 +406,8 @@ through XeTeX.
 %
 % \subsubsection{安装\hologo{TeX}发行版}
 %
-% 首先需要下载并安装 \hologo{TeX} 软件发行版，各操作系统适用情况请参考表
-% \ref {tab:texdistribution}。第一次编译前请务必通过 MiKTeX Console、TeX Live 
-% Manager 等图形化程序或 \pkg{tlmgr}\emph{手动更新全部宏包}以避免潜在的兼容性问题。
-%
+% 首先需要下载并安装 \hologo{TeX} 软件发行版，其中包括引擎、宏包、字体、文档等。各操作系统适用情况请参考表~\ref {tab:texdistribution}。第一次编译前请务必通过 MiKTeX Console、TeX Live 
+% Manager 等图形化程序或 \pkg{tlmgr} \emph{手动更新全部宏包}以避免潜在的兼容性问题。
 % \begin{table}[ht]
 %   \centering
 %   \caption{\hologo{TeX} 软件发行版一览}
@@ -390,7 +416,7 @@ through XeTeX.
 %     \toprule
 %     \hologo{TeX}        & Windows   & macOS     & Linux     \\
 %     \midrule
-%     \hologo{TeX}\,Live  & $\bullet$ & $\bullet$ & $\bullet$ \\
+%     \hologo{TeX}\,Live  & $\bullet$ &           & $\bullet$ \\
 %     mac\hologo{TeX}     &           & $\bullet$ &           \\
 %     \hologo{MiKTeX}     & $\bullet$ & $\bullet$ & $\bullet$ \\
 %     \bottomrule
@@ -399,11 +425,12 @@ through XeTeX.
 %
 % 以下是一些值得注意的要点：
 % \begin{itemize}
-%   \item 校园网环境中访问\href{https://mirror.nju.edu.cn/download/app/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南大镜像站}可以获得最佳的下载体验。
+%   \item 可以参照这份\href{https://ctan.org/pkg/install-latex-guide-zh-cn}{手把手的教程}。
+%   \item 校园网环境中访问\href{https://mirror.nju.edu.cn/download/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南京大学开源软件镜像站}可以获得最佳的下载体验。
 %   \item 使用最新的发行版，即版本号为2021或者21。
 %   \item 对于 Windows 和 macOS 用户，更推荐轻量化的 \hologo{MiKTeX} 套件。
-%   \item Linux用户请尽可能下载 full 版本，如 |texlive-full|。换言之，下载最大的软件包。
-%   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis}内置了版本检查\footnote{譬如遇到l3过时问题请运行 |tlmgr update l3packages|。}，请确认各宏包已升级至最新版。
+%   \item Linux 用户请尽可能下载 full 版本，如 |texlive-full|。换言之，下载最大的软件包。
+%   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis} 内置了版本检查\footnote{譬如遇到l3过时问题请运行 |tlmgr update l3packages|。}，请确认各宏包已升级至最新版。
 % \end{itemize}
 %
 % \subsubsection{配置编辑器}
@@ -411,9 +438,9 @@ through XeTeX.
 %
 % 配置完编译器后，还需要一个\emph{文本编辑器}来完成\file{.tex}文件内容的写作。
 %
-% 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的文本编辑器。
-% 但对于本项目而言，在此诚心诚意地推荐你使用\emph{更现代更美观更多功能}的编辑器，譬如
-% \emph{安装了 LaTeX Workshop 插件的 \href{https://code.visualstudio.com/}{Visual Studio Code}}。你也可以根据个人的喜好随意使用 TeXworks、TeXstudio 等编辑器，顺手就行。
+% 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的
+% 文本编辑器。但对于本项目而言，在此诚心诚意地推荐您使用\emph{更现代更美观更多功
+% 能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件的 \href{https://code.visualstudio.com/}{Visual Studio Code}}。您也可以根据个人的喜好随意使用 TeXworks、TeXstudio 等编辑器，顺手就行。
 %
 % \cls{njuthesis} 为一些常见编辑器提供了配置文件，如
 % \begin{description}
@@ -423,15 +450,19 @@ through XeTeX.
 %
 % \subsubsection{编译顺序}
 % \label{subsubsec:compileseq}
-% \hologo{TeX} 本身是命令行程序，通过不同的命令调用所需的编译引擎。
-% 尽管上述的文本编辑器已经提供了自动化编译的方法，为了便于排查运行错误，以下通过具体终端命令简要描述编译过程。
+% \hologo{TeX} 本身是命令行程序，通过不同的命令调用所需的编译引擎，编辑器提供的
+% 快捷按钮实际只是做了包装。为了便于排查运行错误，以下通过具体终端命令简要描述编
+% 译过程。
 %
-% 编译本模板概括为如下步骤：生成初始文档，编译参考文献，生成页码、编号、目录，需要编译4次。
-% \emph{假设即将使用的文件名为 \file{njuthesis-sample.tex}}，
-% 应采用以下命令顺序进行编译，以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF 文档位于同一目录下。
+% 编译本模板概括为如下步骤：生成初始文档，编译参考文献，生成页码、编号、目录，需
+% 要编译4次。\emph{假设即将使用的文件名为 \file{njuthesis-sample.tex}}，应采用以
+% 下命令顺序进行编译，以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF 
+% 文档位于同一目录下。该目录下同时会生成若干中间文件。
 %
-% 编译命令具体为引擎名称加文件名，在编译 \file{.tex} 文件时，文件扩展名可以省略不写。
-% 现阶段 \cls{njuthesis} 仅支持 \hologo{XeLaTeX} 与 \hologo{LuaLaTeX}。请注意，几种命令的输出文件基本相同，可以任取一种；但如果你不清楚这两种编译引擎的区别，我们建议优先使用|latexmk -xelatex|。
+% 编译命令具体为引擎名称加文件名，在编译 \file{.tex} 文件时，文件扩展名可以省略
+% 不写。现阶段 \cls{njuthesis} 仅支持 \hologo{XeLaTeX} 与 \hologo{LuaLaTeX}。请
+% 注意，几种命令的输出文件基本相同，可以任取一种；但如果您不清楚这两种编译引擎的
+% 区别，或者对多步编译感到困惑，我们建议优先使用 |latexmk -xelatex|。
 %
 % \subparagraph{使用 \hologo{XeLaTeX}} 
 % 标准的 \hologo{XeLaTeX} 引擎编译方法。
@@ -454,7 +485,7 @@ through XeTeX.
 % \end{shellexample}
 %
 % \subparagraph{使用 \pkg{latexmk}}
-% \href{https://mg.readthedocs.io/latexmk.html}{\pkg{latexmk}} 是一个基于 Perl 脚本的自动编译工具，宗旨是通过单一命令简化上述的多次编译流程。在使用该命令前，请确保安装了以下软件：
+% \pkg{latexmk}\scite{latexmk} 是一个基于 Perl 脚本的自动编译工具，宗旨是通过单一命令简化上述的多次编译流程。在使用该命令前，请确保安装了以下软件：
 % \begin{description}
 %   \item[Perl] 一般预装于 macOS 和 Linux，而 Windows 用户需要单独安装 \href{https://strawberryperl.com/}{Strawberry Perl}。
 %   \item[\pkg{latexmk}] \hologo{MiKTeX}已预装；如果终端找不到|latexmk|命令，\hologo{TeX}\,Live 用户需使用 \pkg{tlmgr} 单独安装。
@@ -478,12 +509,13 @@ through XeTeX.
 % \subsection{在线编译}
 % \label{subsec:onlinecompile}
 %
-% 相信你在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{同一个模板在 Linux 编译可以相对 Windows 节省一半耗时。}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
+% 相信您在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{同一个模板在 Linux 编译可以相对 Windows 节省一半耗时。}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
 %
 % \subsubsection{南大\hologo{TeX}平台简介}
 % \changes{v0.2}{2021/09/07}{添加对南大\hologo{TeX}的支持。}
 %
 % \href{https://tex.nju.edu.cn}{南大\hologo{TeX}}基于开源的 ShareLaTeX 平台\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的 \hologo{LaTeX} 在线编译平台，首次使用需凭学校邮箱自助注册账号。
+%
 %
 % \subsubsection{操作步骤}
 %
@@ -505,6 +537,7 @@ through XeTeX.
 % \subparagraph{TeXPage}
 % \href{https://www.texpage.com/}{TeXPage} 是国人研发的\hologo{LaTeX}在线编辑器，当前版本已具备较为完善的编辑编译功能，而且免费版相对 Overleaf 增加了公式识别、编辑历史等实用工具，也可以作为一个备选项。
 %
+%
 % \section{使用方法}
 %
 % \subsection{标准结构}
@@ -524,7 +557,7 @@ through XeTeX.
 %   \end{document}
 % \end{latexexample}
 %
-% 如果你尝试编译上面的代码，会发现自己得到了一个5页的 PDF 文档，是一份空白的本科生论文。
+% 如果您尝试编译上面的代码，会发现自己得到了一个5页的 PDF 文档，是一份空白的本科生论文。
 % 当然，这个文档实际上没有任何内容，接下来将会介绍具体填写内容的方法。
 % 
 %
@@ -675,7 +708,7 @@ through XeTeX.
 %
 % \begin{function}[updated=2021-10-01]{info/keywords,info/keywords*}
 %   \begin{syntax}
-%     keywords = \Arg{关键词}
+%     keywords  = \Arg{关键词}
 %     keywords* = \Arg{英文关键词}
 %   \end{syntax}
 % 关键词列表。关键词之间需要使用英文半角逗号隔开，含有空格的关键字需要使用花括号包裹以避免歧义。可以参照示例模板中的填写方式。
@@ -697,7 +730,7 @@ through XeTeX.
 %
 % \begin{function}[updated=2021-10-01]{info/author,info/author*}
 %   \begin{syntax}
-%     author = \Arg{你的名字}
+%     author  = \Arg{你的名字}
 %     author* = \Arg{姓名拼音}
 %   \end{syntax}
 % 姓名。
@@ -705,7 +738,7 @@ through XeTeX.
 % 
 % \begin{function}[updated=2021-10-01]{info/department,info/department*}
 %   \begin{syntax}
-%     department = \Arg{院系}
+%     department  = \Arg{院系}
 %     department* = \Arg{院系}
 %   \end{syntax}
 % 院系。
@@ -713,7 +746,7 @@ through XeTeX.
 % 
 % \begin{function}[updated=2021-10-01]{info/major,info/major*}
 %   \begin{syntax}
-%     major = \Arg{专业}
+%     major  = \Arg{专业}
 %     major* = \Arg{专业}
 %   \end{syntax}
 % 专业。
@@ -740,7 +773,7 @@ through XeTeX.
 %
 % \begin{function}[updated=2021-10-01]{info/submit-date,info/submit-date*}
 %   \begin{syntax}
-%     submit-date = \Arg{提交日期}
+%     submit-date  = \Arg{提交日期}
 %     submit-date* = \Arg{提交日期}
 %   \end{syntax}
 % 提交日期。
@@ -1161,6 +1194,43 @@ through XeTeX.
 % \end{latexexample}
 %
 % 本宏包的详细使用方法请参考其\href{http://mirrors.ctan.org/macros/latex/contrib/njuvisual/njuvisual.pdf}{说明文档}。
+%
+%
+% \begin{thebibliography}{99}
+%
+% \newcommand\urlprefix{\newline\hspace*{\fill}}
+% \let\OldUrl=\url
+% \renewcommand\url[2][]{{\small\textit{#1}~\OldUrl{#2}}}
+% \newcommand\CTANurl[2][]{{^^A
+%   \small\textit{#1}~\href{http://mirror.ctan.org/#2}{\texttt{CTAN://#2}}}}
+%
+% \bibitem{latexmk}
+% \textsc{Collins J}.
+% \newblock \textit{Fully automated \hologo{LaTeX} document generation} [EB/OL].
+% \newblock version 4.76,
+% \newblock (2021-11-20)
+% \urlprefix\url{https://www.ctan.org/pkg/latexmk}
+% \urlprefix\CTANurl[文档：]{support/latexmk/latexmk.pdf}
+%
+% \bibitem{lshort}
+% \textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
+% \newblock \textit{The Not So Short Introduction to \hologo{LaTeXe}: Or \hologo{LaTeXe} in 139 minutes} [EB/OL].
+% \newblock version 6.4,
+% \newblock (2021-03-09)
+% \urlprefix\url{https://ctan.org/pkg/lshort-english}
+% \urlprefix\CTANurl[文档：]{info/lshort/english/lshort.pdf}
+%
+% \bibitem{lshort-zh-cn}
+% \textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
+% \newblock \textit{一份（不太）简短的 \hologo{LaTeXe} 介绍: 或 111 分钟了解 \hologo{LaTeXe}} [EB/OL].
+% \newblock \CTeX{} 开发小组, 译.
+% \newblock 原版版本 version 6.4, 中文版本 version 6.03,
+% \newblock (2021-11-21)
+% \urlprefix\url{https://ctan.org/pkg/lshort-zh-cn}
+% \urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
+%
+% \end{thebibliography}
+%
 %
 % \end{documentation}
 %
