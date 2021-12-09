@@ -113,11 +113,12 @@ through XeTeX.
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass{ctxdoc}
-\usepackage{listings,tabularray,njuvisual}
+\usepackage{listings,njuvisual,tabularray}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
 \newcommand*\scite[1]{\textsuperscript{\cite{#1}}}
 \setlist[1]{labelindent=0.5em}
+\hypersetup{pdftitle={The njuthesis class – LaTeX thesis template for Nanjing University}}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
@@ -133,6 +134,7 @@ through XeTeX.
     xleftmargin     = 2 em,
     xrightmargin    = 3 em,
     escapeinside    = {(*}{*)},
+    breaklines      = true,
     basicstyle      = \small\ttfamily,
     keywordstyle    = \bfseries\color{njuviolet},
     commentstyle    = \itshape\color{white!50!gray},
@@ -1184,10 +1186,10 @@ through XeTeX.
 % \subsection{视觉识别系统}
 %
 % 视觉识别系统 \pkg{njuvisual} 现已被分离为独立宏包，基本使用方法举例如下：
-% \begin{latexexample}[moretexcs={\njuemblem}]
-%   \njuemblem{!}{3cm}                           % 默认生成指定大小的紫色南大校徽
-%   \njuname{4cm}{!}                             % 默认生成指定大小的紫色南大中文校名
-%   \njuname*{4cm}{!}                            % 默认生成指定大小的紫色南大英文校名
+% \begin{latexexample}[moretexcs={\njuemblem,\njuname}]
+%   \njuemblem{!}{3cm}                           % 生成指定大小的紫色南大校徽
+%   \njuname{4cm}{!}                             % 生成指定大小的紫色南大中文校名
+%   \njuname*{4cm}{!}                            % 生成指定大小的紫色南大英文校名
 %   \njuemblem[black]{!}{3cm}                    % 黑色的南大校徽
 %   \njuemblem[department=dii]{!}{4cm}           % 紫色匡院徽标
 %   \njuemblem[department=cs,color=blue]{!}{3cm} % 纯蓝色计科徽标
@@ -2505,415 +2507,40 @@ through XeTeX.
   }
 %    \end{macrocode}
 %
-% 判断学位进行命令定义
+% 使用 \pkg{xtemplate} 重构封面模板
 %    \begin{macrocode}
-\int_compare:nTF { \g_@@_info_degree_int == 1 } 
-  {
-    % 本科
-    \tl_const:Nn \c_@@_name_title_tl { 题\hfill 目 }
-    
-    \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
-    \tl_const:Nn \c_@@_cover_uline_len_b_tl { 90pt }
-    \tl_const:Nn \c_@@_cover_uline_font_tl { \songti }
-    \tl_const:Nn \c_@@_cover_uline_style_tl { \bf }
-    \tl_const:Nn \c_@@_cover_uline_bskip_tl {}
-
-    \tl_const:Nn \c_@@_cover_box_len_tl { 4.2em }
-
-    % 本科强制不打印国家图书馆封面
-    \bool_set_false:N \g_@@_nlcover_bool
-  } 
-  { 
-    % 本科以外都是研究生 
-    \tl_const:Nn \c_@@_name_title_tl { 论\hfill 文\hfill 题\hfill 目 }
-
-    \tl_const:Nn \c_@@_cover_uline_len_a_tl { 250pt }
-    \tl_const:Nn \c_@@_cover_uline_len_b_tl { 14em }
-    \tl_const:Nn \c_@@_cover_uline_font_tl { \kaishu }
-    \tl_const:Nn \c_@@_cover_uline_style_tl {}
-    \tl_const:Nn \c_@@_cover_uline_bskip_tl { \hspace{1em} }
-
-    \tl_const:Nn \c_@@_cover_box_len_tl { 6em }
-  }
-%    \end{macrocode}
-% \begin{macro}{\@@_spread_box:nn}
-% 来自\cls{fduthesis}：分散对齐的水平盒子。
-% \begin{arguments}
-%   \item   宽度
-%   \item   内容
-% \end{arguments}
-% 利用 \cs{tl_map_inline:nn} 在字符间插入 \tn{hfil}；紧随其后的 \tn{unskip}
-% 将会去掉最后一个 \tn{hfil}。见 \url{https://tex.stackexchange.com/q/169689}。
-% |#2| 需要完全展开以避免 underfull 警告。
-%    \begin{macrocode}
-\cs_generate_variant:Nn \tl_map_inline:nn       { xn }
-\cs_new_protected:Npn \@@_spread_box:nn #1#2
-  {
-    \mode_leave_vertical:
-    \hbox_to_wd:nn {#1}
-      { \tl_map_inline:xn {#2} { ##1 \hfil } \unskip }
-  }
-%    \end{macrocode}
-% \end{macro}
+% 声明封面对象。
+% \DeclareObjectType {⟨object type⟩} {⟨no. of args⟩}
+\DeclareObjectType { nju / cover } { \c_zero_int }
 %
-% \begin{macro}{\@@_cover_uline_a:n}
-% 在封面绘制下划线
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_uline_a:n #1
+% 声明封面模板。
+% \DeclareTemplateInterface {⟨object type⟩} {⟨template⟩} {⟨no. of args⟩} {⟨key list⟩}
+\DeclareTemplateInterface { nju / cover } { undergraduate } { \c_zero_int }
   {
-    \uline{\makebox[\c_@@_cover_uline_len_a_tl]
-      {\rm\c_@@_cover_uline_font_tl #1 }}
+    format      : tokenlist
   }
-\cs_new_protected:Npn \@@_cover_uline_b:n #1
+\tl_new:N \l_@@_ug_format_tl
+% \DeclareTemplateCode {⟨object type⟩} {⟨template⟩} {⟨no. of args⟩} {⟨key bindings⟩} {⟨code⟩}
+\DeclareTemplateCode { nju / cover } { undergraduate } { \c_zero_int } 
   {
-    \uline{\makebox[\c_@@_cover_uline_len_b_tl]
-      {\rm\c_@@_cover_uline_font_tl #1 }}
+    format      = \l_@@_ug_format_tl
   }
-\cs_new_protected:Npn \@@_cover_uline_nl:nn #1 #2
   {
-    \uline{\makebox[#1]
-      {\rm\c_@@_cover_uline_font_tl #2 }}
+    \AssignTemplateKeys
+    \chapter*{TITLE PAGE}
+    \tl_use:c {\l_@@_ug_format_tl }
+    { Random words}
   }
-%    \end{macrocode}
-% \end{macro}
 %
-% 
-% \begin{macro}{\@@_cover_box:n}
-% 封面表格边框
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_box:n #1 
+% \DeclareInstance {⟨object type ⟩} {⟨instance ⟩} {⟨template ⟩} {⟨parameters ⟩}
+\DeclareInstance { nju / cover } { cover-ug } { undergraduate } 
   {
-    \makebox[\c_@@_cover_box_len_tl][s]{
-      #1\c_@@_cover_uline_bskip_tl}
+    format      = centering
   }
-%    \end{macrocode}
-% \end{macro}
 %
-% \begin{macro}{\@@_cover_degree:}
-% 学位类型。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_degree:
-  {
-    { （申请 }
-    \clist_item:Nn \c_@@_name_degree_clist { \g_@@_info_degree_int }
-    { 学位） }
-  }
-%    \end{macrocode}
-% \end{macro}
+% \UseInstance {⟨object type ⟩} {⟨instance ⟩} ⟨arguments ⟩
+% \UseTemplate {⟨object type ⟩} {⟨template ⟩} {⟨settings ⟩} ⟨arguments ⟩
 %
-% \subsubsection{封面组件}
-%
-% \begin{macro}{\@@_cover_title_breakline:}
-% 对标题进行自动判断，如果某行标题空则不输出接下来的若干行，得到多行标题。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_title_breakline:
-  {
-    \@@_cover_box:n {\c_@@_name_title_tl}
-    & \@@_cover_uline_a:n 
-    { \c_@@_cover_uline_style_tl \l_@@_info_title_a_tl } \\
-    \tl_if_empty:NF \l_@@_info_title_b_tl
-    {
-      \tl_if_empty:NTF \l_@@_info_title_c_tl
-        { 
-          & \@@_cover_uline_a:n  
-          {\c_@@_cover_uline_style_tl \l_@@_info_title_b_tl } \\ 
-        }
-        {
-          & \@@_cover_uline_a:n  
-          { \c_@@_cover_uline_style_tl \l_@@_info_title_b_tl } \\
-          & \@@_cover_uline_a:n  
-          { \c_@@_cover_uline_style_tl \l_@@_info_title_c_tl } \\
-        }
-    }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_print_covertab:}
-% 封面信息栏
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_print_covertab:
-{%
-\int_compare:nTF { \g_@@_info_degree_int == 1 } 
-  {
-    \begin{tabular}{p{4.2em}c}
-      \@@_cover_box:n {院\hfill 系}
-      & \@@_cover_uline_a:n  {\l_@@_info_dept_tl} \\
-      \@@_cover_box:n {专\hfill 业}
-      & \@@_cover_uline_a:n  {\l_@@_major_tl} \\
-      \@@_cover_title_breakline:
-    \end{tabular}\\
-  
-    \begin{tabular}{p{4.2em}cp{4.2em}c}
-      \@@_cover_box:n {年\hfill 级}
-      & \@@_cover_uline_b:n {\l_@@_info_grade_tl}
-      & \@@_cover_box:n {学\hfill 号}
-      & \@@_cover_uline_b:n {\l_@@_info_id_tl}\\
-    \end{tabular}\\
-    
-    \begin{tabular}{p{4.2em}c}
-      \@@_cover_box:n {学\hfill 生\hfill 姓\hfill 名}
-      & \@@_cover_uline_a:n  {\l_@@_info_author_tl}
-    \end{tabular}\\
-    \begin{tabular}{p{4.2em}cp{4.2em}c}
-      \@@_cover_box:n {导\hfill 师}
-      & \@@_cover_uline_b:n {\l_@@_info_supv_a_tl}
-      & \@@_cover_box:n {职\hfill 称}
-      & \@@_cover_uline_b:n {\l_@@_info_supv_a_title_tl}\\
-  
-      % 第二导师
-      \tl_if_empty:NF \l_@@_info_supv_b_tl
-      {
-        \@@_cover_box:n {第\hfill 二\hfill 导\hfill 师}
-        & \@@_cover_uline_b:n {\l_@@_info_supv_b_tl}
-        & \@@_cover_box:n {职\hfill 称}
-        & \@@_cover_uline_b:n {\l_@@_info_supv_b_title_tl}\\
-      }
-    \end{tabular}\\
-  
-    \begin{tabular}{p{4.2em}c}
-      \@@_cover_box:n {提\hfill 交\hfill 日\hfill 期}
-      & \@@_cover_uline_a:n  {\l_@@_submit_date_tl}\\
-    \end{tabular}  
-  } 
-  { 
-    \begin{tabular}{p{6em}c}    
-      \@@_cover_title_breakline:
-      \@@_cover_box:n {作\hfill 者\hfill 姓\hfill 名}
-      & \@@_cover_uline_a:n  {\@@_spread_box:nn {4em}{\l_@@_info_author_tl}}\\
-      \@@_cover_box:n {专\hfill 业\hfill 名\hfill 称}
-      & \@@_cover_uline_a:n  {\l_@@_major_tl}\\
-      \@@_cover_box:n {研\hfill 究\hfill 方\hfill 向}
-      & \@@_cover_uline_a:n  {\l_@@_field_tl}\\
-      \@@_cover_box:n {指\hfill 导\hfill 教\hfill 师}
-      & \@@_cover_uline_a:n  {\l_@@_info_supv_full_tl}\\
-    \end{tabular}
-  } 
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% 
-% \subsubsection{绘制封面}
-% 
-% \begin{macro}{\@@_print_cover_nl:}
-% \changes{v0.12}{2021/12/02}{选择|nlcover|时不生成普通封面。}
-% 按需绘制国家图书馆封面，修改自胡海星模板
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_print_cover_nl:
-{
-  \pdfbookmark[0]{国家图书馆封面}{nl}
-  {
-    % 顶端
-    \noindent\null\vskip -20mm \hskip -15mm
-    \songti\zihao{-4}
-    \makebox[40pt][l]{分类号}
-    \@@_cover_uline_b:n {\l_@@_info_clc_tl}
-    \hfill
-    \makebox[40pt][l]{密级}
-    \@@_cover_uline_b:n {\l_@@_info_seclv_tl}
-    \vskip 10pt \hskip -15mm
-    \makebox[40pt][l]{udc}
-    \@@_cover_uline_b:n {\l_@@_info_udc_tl}
-  }
-
-  % 中部
-  \vskip\stretch{2}
-  \begin{center}
-    \def\ULthickness{1pt}
-    {\kaishu\zihao{-0} 学\hspace{0.5em}位\hspace{0.5em}论\hspace{0.5em}文}
-    {
-      \kaishu\zihao{1}
-      \vskip \stretch{1}
-      \@@_cover_uline_b:n {\l_@@_info_title_a_tl}\\
-      \@@_cover_uline_b:n {\l_@@_info_title_b_tl}\\
-      \@@_cover_uline_b:n {\l_@@_info_title_c_tl}\\
-    }
-    \vskip \stretch{1}
-    {\kaishu\zihao{4}（题名和副题名）}
-    \vskip \stretch{1} \vskip 5mm
-    {\kaishu\zihao{1}\uline{\makebox{\l_@@_info_author_tl}}}
-    \vskip \stretch{1}
-    {\kaishu\zihao{4}（作者姓名）}
-  \end{center}
-
-  % 底部
-  \vskip\stretch{1}\kaishu\zihao{4}
-  \noindent 指导教师姓名、职务、职称、学位、单位名称及地址%
-  \@@_cover_uline_nl:nn {94pt}{\l_@@_info_supv_a_tl}\par
-  \noindent \@@_cover_uline_nl:nn {\textwidth}{%
-  \l_@@_info_supv_cont_tl}\par
-  \noindent 申请学位级别%
-  \@@_cover_uline_nl:nn {9em}{\clist_item:Nn \c_@@_name_degree_clist { \g_@@_info_degree_int }}%
-  \noindent 专业名称%
-  \uline{\hfill\l_@@_major_tl\hfill}\par
-  \noindent 论文提交日期%
-  \@@_cover_uline_nl:nn {9em}{\l_@@_submit_date_tl}%
-  \noindent 论文答辩日期%
-  \uline{\hfill\l_@@_defend_date_tl\hfill}\par
-  \noindent 学位授予单位和日期\uline{\hfill}\par
-  \begin{flushright}
-    答辩委员会主席：
-    \@@_cover_uline_nl:nn {9em}{ \l_@@_info_chairman_tl }\par
-    评阅人：
-    \@@_cover_uline_nl:nn {9em}
-      { \clist_item:Nn \l_@@_info_reviewer_clist {1} }\par
-    \@@_cover_uline_nl:nn {9em}
-      { \clist_item:Nn \l_@@_info_reviewer_clist {2} }\par
-    \@@_cover_uline_nl:nn {9em}
-      { \clist_item:Nn \l_@@_info_reviewer_clist {3} }\par
-    \@@_cover_uline_nl:nn {9em}
-      { \clist_item:Nn \l_@@_info_reviewer_clist {4} }\par
-  \end{flushright}
-  \begin{center}
-    \kaishu\zihao{3}\hspace{2em} 年\hspace{1em} 月\hspace{1em} 日
-  \end{center}
-  \vskip -10mm
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_print_declaration:}
-% \changes{v0.12}{2021/12/02}{添加原创性声明页面。}
-% 原创性声明。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_print_declaration:
-  {
-    \normalfont\normalsize
-    \chapter*{南京大学学位论文原创性声明}
-    \thispagestyle{empty}
-    \c_@@_orig_decl_text_tl
-    \vfil
-    \begin{flushright}
-      {研究生签名：} \uline{\makebox[5em]{}}
-      {日期：} \uline{\makebox[5em]{}}
-    \end{flushright}
-    \vfil
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_print_cover_ug:}
-% 本科封面
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_print_cover_ug:
-  {
-    \pdfbookmark{封面}{cover} % 将封面插入pdf书签
-    \begin{spacing}{1.25}
-    \noindent\null\hspace{-10mm}
-    \njuemblem[black]{!}{3cm}\smallskip 
-    \begin{center}
-      \njuname[black]{!}{3.35cm}
-      \vskip 10mm 
-      {\zihao{1}\bf\songti\@@_spread_box:nn {9em}{本科毕业论文}}
-      \vfill
-      \vskip\stretch{0}
-      {\bgroup
-      \kaishu\zihao{3}
-      \def\tabcolsep{1pt}
-      \def\arraystretch{1.5}
-      % 绘制信息框
-      \@@_print_covertab: 
-      \egroup}
-      \vfill
-    \end{center}
-    \end{spacing}
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% 
-% \begin{macro}{\@@_print_cover_g:}
-% 研究生封面
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_print_cover_g:
-{
-  \pdfbookmark{封面}{cover} % 将封面插入pdf书签
-  \begin{spacing}{1.25}
-  \begin{center}
-    \noindent\null\vskip 5mm
-    \njuemblem[black]{!}{1.9cm}
-    \vskip 10mm 
-    \njuname[black]{4.4cm}{!}
-    \par\vskip -2mm 
-    \njuname*[black]{4.4cm}{!}
-    \vskip 15mm 
-    \bgroup
-      \zihao{1}\bf\kaishu
-      \@@_spread_box:nn {10em}{研究生毕业论文}
-      \vskip 5mm
-      \@@_cover_degree:
-    \egroup
-    \par\vfill\vskip\stretch{0}
-    \bgroup
-      \bf\kaishu\zihao{3}
-      \def\tabcolsep{1pt}
-      \def\arraystretch{1.5}
-      \vskip 10mm
-      \@@_print_covertab:
-    \egroup
-    \vfill
-    \vskip 10mm
-    \bgroup
-      \bf\kaishu\zihao{4}\l_@@_submit_date_tl
-    \egroup
-    \vskip 15mm
-  \end{center}
-  \end{spacing}
-
-  \newpage % 封面背面
-  \begin{spacing}{1.625}
-    \null\vfill
-    {\bgroup
-    \kaishu\zihao{3}
-    \makebox[6em][s]{\bf\kaishu 学\hfill 号}：\MakeUppercase{\l_@@_info_id_tl}
-    \par
-    \makebox[6em][s]{\bf\kaishu 论文答辩日期}：\l_@@_defend_date_tl
-    \par
-    \makebox[6em][s]{\bf\kaishu 指\hfill 导\hfill 教\hfill 师}：\hspace{50mm}（签字）
-    \par
-    \egroup}
-    \vskip 15mm
-  \end{spacing}
-  
-% 研究生英文封面
-  \newpage
-  \pdfbookmark{英文封面}{cover-en} % 将封面插入pdf书签
-  \begin{center}
-    \noindent\vspace*{20pt}
-    \bf\sffamily\zihao{2}\l_@@_info_title_en_tl
-    \vskip \stretch{1}
-    \normalfont\rmfamily\zihao{4}{by}
-    \vskip 3pt
-    \bf\sffamily\zihao{4}\l_@@_info_author_en_tl
-    \vskip\stretch{1}
-    \normalfont\rmfamily\zihao{4}{Supervised~by}
-    \vskip 3pt
-    \normalfont\sffamily\zihao{4}
-    \l_@@_info_supv_a_title_en_tl
-    \hspace{.5em}\l_@@_info_supv_a_en_tl\\
-    \l_@@_info_supv_b_title_en_tl
-    \hspace{.5em}\l_@@_info_supv_b_en_tl
-    \vskip\stretch{1}
-    \normalsize\rmfamily{
-      A~dissertation~submitted~to\\
-      the~graduate~school~of~Nanjing~University\\
-      in~partial~fulfilment~of~the~requirements~for~the~degree~of\\
-      \textsc{
-        \clist_item:Nn \c_@@_name_degree_en_clist { \g_@@_info_degree_int }
-        }\\
-      in\\
-      {\l_@@_major_en_tl}
-    }
-    \vskip\stretch{2}
-    \njuemblem[black]{2.5cm}{!}\par
-    \vskip 3mm
-    \normalfont\l_@@_info_dept_en_tl\\
-    {Nanjing~University}
-    \vskip 30pt
-    \normalfont\normalsize\l_@@_submit_date_en_tl
-  \end{center}
-}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2926,9 +2553,10 @@ through XeTeX.
 \RenewDocumentCommand \maketitle { }
   {
     \pagestyle{empty}
-    \bool_if:NTF \g_@@_nlcover_bool 
-      { \@@_print_cover_nl: \@@_print_declaration: }
-      { \use:c { @@_print_cover_ \g_@@_info_diploma_tl : } }
+    \UseInstance { nju / cover } { cover-ug }
+    % \bool_if:NTF \g_@@_nlcover_bool 
+    %   { \@@_print_cover_nl: \@@_print_declaration: }
+    %   { \use:c { @@_print_cover_ \g_@@_info_diploma_tl : } }
 %    \end{macrocode}
 % 在标题页后使用大写罗马字母页码。
 %    \begin{macrocode}
