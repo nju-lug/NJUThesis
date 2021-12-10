@@ -2,16 +2,14 @@
 % 本文档用于测试 njuthesis 是否正常工作
 % 其内容不具有任何参考意义
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \documentclass{njuthesis}
+\documentclass{njuthesis}
 % \documentclass[degree=mg]{njuthesis}
-\documentclass[degree=mf]{njuthesis}
+% \documentclass[degree=mf]{njuthesis}
 % \documentclass[degree=phd,nlcover]{njuthesis}
 
 \njusetup {
     info = {
-        titlea = {一种使用南京大学\hologo{LaTeX}模版},
-        titleb = {编写毕业论文的经验性方法},
-        titlec = {（仅供测试使用）},
+        title = {一种使用南京大学模版!编写毕业论文的经验性方法},
         title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
         keywords = {我,就是,充数的,关键词},
         keywords* = {Dummy,Keywords,Here,{it is}},
@@ -25,6 +23,8 @@
         major* = {\hologo{LaTeX}~Linguistics},
         field = {拉太赫语言在现当代的使用},
         field* = {Contemporary~Usage~of~the~\hologo{LaTeX}~Language},
+        supervisor = {李成殿},
+        supervisor-title = {教授},
         supervisora = {李成殿},
         supervisora*= {Li~Chengdian},
         supervisora-title = {教授},
@@ -49,64 +49,64 @@
 \usepackage{algorithm,algorithmic}
 \usepackage{blindtext,zhlipsum}
 
-\addbibresource{test.bib}
+% \addbibresource{test.bib}
 
 \begin{document}
 
 % \frontmatter
 \maketitle 
 
-\input{chapters/Abstract}
-\input{chapters/Preface}
+% \input{chapters/Abstract}
+% \input{chapters/Preface}
 
-\tableofcontents
-\listoffigures
-\listoftables
+% \tableofcontents
+% \listoffigures
+% \listoftables
 
-\mainmatter
+% \mainmatter
 
-% \flushbottom
+% % \flushbottom
 
-\chapter[非常长的标题不好看]{如果标题非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长会怎样呢}
-\label{ch:longtitle}
-\section[还是用短点的吧]{如果标题非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长会怎样呢}
-\cref{ch:longtitle}答案是使用可选参数：\verb+\chapter[短描述]{完整的长标题}+
+% \chapter[非常长的标题不好看]{如果标题非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长会怎样呢}
+% \label{ch:longtitle}
+% \section[还是用短点的吧]{如果标题非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长会怎样呢}
+% \cref{ch:longtitle}答案是使用可选参数：\verb+\chapter[短描述]{完整的长标题}+
 
-\zhlipsum[1-20][name=zhufu]
+% \zhlipsum[1-20][name=zhufu]
 
-\njuchapter{列表环境}
+% \njuchapter{列表环境}
 
-\begin{itemize}
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-\end{itemize}
+% \begin{itemize}
+%     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+%     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+%     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+%     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+% \end{itemize}
 
-\begin{enumerate}
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-\end{enumerate}
+% \begin{enumerate}
+%     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+%     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+%     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+%     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+% \end{enumerate}
 
-\begin{description}
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-\end{description}
-\input{chapters/FigTabCode}
-\input{chapters/Mathematics}
-\input{chapters/Bibliography}
+% \begin{description}
+%     \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+%     \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+%     \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+%     \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+% \end{description}
+% \input{chapters/FigTabCode}
+% \input{chapters/Mathematics}
+% \input{chapters/Bibliography}
 
-\printbibliography
+% \printbibliography
 
-\input{chapters/Acknowledgement}
+% \input{chapters/Acknowledgement}
 
-\appendix
+% \appendix
 
-\input{chapters/Achievements}
-\input{chapters/Standard}
+% \input{chapters/Achievements}
+% \input{chapters/Standard}
 
 \end{document}

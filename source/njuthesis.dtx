@@ -1305,7 +1305,14 @@ through XeTeX.
 %    \end{macrocode}
 %
 %
-% \subsection{定义常量}
+% \subsection{定义变量}
+%
+%    \begin{macrocode}
+\clist_new:N \l_@@_tmpa_clist
+\clist_new:N \l_@@_tmpb_clist
+\seq_new:N   \l_@@_tmpa_seq
+\tl_new:N    \l_@@_tmpa_tl
+%    \end{macrocode}
 %
 % \begin{variable}{\c_@@_name_type_clist,
 %   \c_@@_name_degree_clist,\c_@@_name_degree_en_clist}
@@ -1337,6 +1344,16 @@ through XeTeX.
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
+    { title     } {题目},
+    { author     } {学生姓名},
+    { major     } {专业},
+    { dept     }  {院系},
+    { grade     } {年级},
+    { id     } {学号},
+    { submit_date     } {提交日期},
+    { supv     } {导师},
+    { supv_title     } {职称},
+    { supv_ii     }  {第二导师},
     { pdf_creator     } { LaTeX~ with~ njuthesis~ class },
   }
   { \@@_define_name:nn #1 }
@@ -1458,6 +1475,7 @@ through XeTeX.
 % \begin{macro}{info/titlea,info/titleb,info/titlec,info/title*}
 % 题目。以下标注星号（*）的为对应的英文字段。
 %    \begin{macrocode}
+    title             .tl_set:N = \l_@@_info_title_tl,
     titlea            .tl_set:N = \l_@@_info_title_a_tl,
     titleb            .tl_set:N = \l_@@_info_title_b_tl,
     titlec            .tl_set:N = \l_@@_info_title_c_tl,
@@ -1469,8 +1487,8 @@ through XeTeX.
 % \changes{v0.11}{2021/10/01}{修改了添加关键词的方式。}
 % 关键词列表。
 %    \begin{macrocode}
-  keywords         .clist_set:N = \l_@@_info_keywords_clist,
-  keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
+    keywords       .clist_set:N = \l_@@_info_keywords_clist,
+    keywords*      .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -1489,16 +1507,18 @@ through XeTeX.
 %    \begin{macrocode}
     department        .tl_set:N = \l_@@_info_dept_tl,
     department*       .tl_set:N = \l_@@_info_dept_en_tl,
-    major             .tl_set:N = \l_@@_major_tl,
-    major*            .tl_set:N = \l_@@_major_en_tl,
-    field             .tl_set:N = \l_@@_field_tl,
-    field*            .tl_set:N = \l_@@_field_en_tl,
+    major             .tl_set:N = \l_@@_info_major_tl,
+    major*            .tl_set:N = \l_@@_info_major_en_tl,
+    field             .tl_set:N = \l_@@_info_field_tl,
+    field*            .tl_set:N = \l_@@_info_field_en_tl,
 %    \end{macrocode}
 % \end{macro}
 %  
 % \begin{macro}{info/supervisora,info/supervisora*,info/supervisora-title,info/supervisora-title*}
 % 导师
 %    \begin{macrocode}
+supervisor       .tl_set:N = \l_@@_info_supv_tl,
+supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
     supervisora       .tl_set:N = \l_@@_info_supv_a_tl,
     supervisora*      .tl_set:N = \l_@@_info_supv_a_en_tl,
     supervisora-title .tl_set:N = \l_@@_info_supv_a_title_tl,
@@ -1519,15 +1539,15 @@ through XeTeX.
 % \begin{macro}{info/submit-date,info/submit-date*}
 % 提交日期
 %    \begin{macrocode}
-    submit-date       .tl_set:N = \l_@@_submit_date_tl,
-    submit-date*      .tl_set:N = \l_@@_submit_date_en_tl,
+    submit-date       .tl_set:N = \l_@@_info_submit_date_tl,
+    submit-date*      .tl_set:N = \l_@@_info_submit_date_en_tl,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/defend-date,info/chairman,info/reviewer}
 % 答辩信息。
 %    \begin{macrocode}
-    defend-date       .tl_set:N = \l_@@_defend_date_tl,
+    defend-date       .tl_set:N = \l_@@_info_defend_date_tl,
     chairman          .tl_set:N = \l_@@_info_chairman_tl,
     reviewer       .clist_set:N = \l_@@_info_reviewer_clist,
 %    \end{macrocode}
@@ -2053,7 +2073,7 @@ through XeTeX.
 % \subsection{章节标题格式}
 % 
 % \begin{macro}{\c_@@_section_format_tl}
-% 各部分&目录中章标题的格式。设置为四号、不加粗、黑体。
+% 各部分章节以及目录中章标题的格式。设置为四号、不加粗、黑体。
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_section_format_tl { \large \normalfont \sffamily }
 %    \end{macrocode}
@@ -2314,18 +2334,6 @@ through XeTeX.
 %
 % \subsubsection{内部命令}
 %
-% \begin{variable}{\l_@@_info_title_tl }
-% 拼合标题
-%    \begin{macrocode}
-\tl_new:N \l_@@_info_title_tl
-%    \end{macrocode}
-% \end{variable}
-% 将多行标题合并为完整标题。
-%    \begin{macrocode}
-\tl_set:Nn \l_@@_info_title_tl 
-  { \l_@@_info_title_a_tl \l_@@_info_title_b_tl \l_@@_info_title_c_tl }
-%    \end{macrocode}
-%
 % \begin{variable}{\l_@@_info_supv_full_tl,\l_@@_info_supv_full_en_tl}
 % 用于存储导师姓名加职称的变量，旧版编译器不支持字符串中含有|\hspace{.5em}|这样的空白空间命令
 %    \begin{macrocode}
@@ -2347,40 +2355,119 @@ through XeTeX.
   }
 %    \end{macrocode}
 %
-% 使用 \pkg{xtemplate} 重构封面模板
 %    \begin{macrocode}
-% 声明封面对象。
-% \DeclareObjectType {⟨object type⟩} {⟨no. of args⟩}
-\DeclareObjectType { nju / cover } { \c_zero_int }
-%
-% 声明封面模板。
-% \DeclareTemplateInterface {⟨object type⟩} {⟨template⟩} {⟨no. of args⟩} {⟨key list⟩}
-\DeclareTemplateInterface { nju / cover } { undergraduate } { \c_zero_int }
+% underlined horizontal box #2:format
+\cs_new_protected:Npn \_@@_ulined_center_box:nn #1#2
   {
-    format      : tokenlist
+    \mode_leave_vertical:
+    \rule [ -0.7 ex ] { #1 } { 0.4 pt }
+    \skip_horizontal:n { -#1 }
+    \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
   }
-\tl_new:N \l_@@_ug_format_tl
-% \DeclareTemplateCode {⟨object type⟩} {⟨template⟩} {⟨no. of args⟩} {⟨key bindings⟩} {⟨code⟩}
-\DeclareTemplateCode { nju / cover } { undergraduate } { \c_zero_int } 
-  {
-    format      = \l_@@_ug_format_tl
-  }
-  {
-    \AssignTemplateKeys
-    \chapter*{TITLE PAGE}
-    % \tl_use:c {\l_@@_ug_format_tl }
-    { Random words}
-  }
+%    \end{macrocode}
 %
-% \DeclareInstance {⟨object type ⟩} {⟨instance ⟩} {⟨template ⟩} {⟨parameters ⟩}
-\DeclareInstance { nju / cover } { cover-ug } { undergraduate } 
+%    \begin{macrocode}
+\cs_generate_variant:Nn \tl_map_inline:nn { xn }
+\cs_new_protected:Npn \_@@_spread_box:nnn #1#2#3 %#2:format
   {
-    format      = centering
+    \mode_leave_vertical:
+    \hbox_to_wd:nn {#1}
+      { #2 \tl_map_inline:xn {#3} { ##1 \hfil } \unskip }
   }
+%    \end{macrocode}
 %
-% \UseInstance {⟨object type ⟩} {⟨instance ⟩} ⟨arguments ⟩
-% \UseTemplate {⟨object type ⟩} {⟨template ⟩} {⟨settings ⟩} ⟨arguments ⟩
+%    \begin{macrocode}
+% seq implementation
+\cs_new_protected:Npn \_@@_put_inempty_seg:nnn #1#2#3
+  {
+    \tl_set:Nx \l_@@_tmpa_tl { \tl_range:Nnn { #1 } { #2 } { #2 + #3 - 1 } }
+    \tl_if_empty:NF \l_@@_tmpa_tl { \clist_put_right:NV \l_@@_tmpa_clist { \l_@@_tmpa_tl } }
+  }
+%    \end{macrocode}
 %
+%    \begin{macrocode}
+\cs_new_protected:Npn \_@@_split_title:n #1
+  {
+    % 从英文感叹号进行分割
+    \tl_if_in:VnTF { #1 } { ! }
+      {
+        \seq_set_split:NnV \l_@@_tmpa_seq { ! } { #1 }
+        \clist_set_from_seq:NN \l_@@_tmpa_clist \l_@@_tmpa_seq
+      }
+      { 
+        % 如果没找到感叹号，则手动进行分割
+        \__put_inempty_seg:nnn { #1 } { 1  } { 15 }
+        \__put_inempty_seg:nnn { #1 } { 16 } { 15 }
+        \__put_inempty_seg:nnn { #1 } { 31 } { 15 }
+      }
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\cs_new_protected:Npn \_@@_print_info_entry:nnn #1#2#3
+  {
+    \_@@_spread_box:nnn { #2 } { \kaishu } { \tl_use:c { c_@@_name_ #1 _tl } }
+    \skip_horizontal:n { 0.3 em }
+    \_@@_ulined_center_box:nn  { #3 }  { \bf \tl_use:c { l_@@_info_ #1 _tl } }
+    \skip_vertical:n   { 1 ex   }
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\cs_new_protected:Npn \_@@_print_info_bientry:nnnn #1#2#3#4
+  { 
+    \_@@_spread_box:nnn { #3 } { \kaishu } { \tl_use:c { c_@@_name_ #1 _tl } }
+    \skip_horizontal:n { 0.3 em }
+    \_@@_ulined_center_box:nn  { #4 }  { \bf \tl_use:c { l_@@_info_ #1 _tl } }
+    \skip_horizontal:n { 0.5 em }
+    \_@@_spread_box:nnn { #3 } { \kaishu } { \tl_use:c { c_@@_name_ #2 _tl } }
+    \skip_horizontal:n { 0.3 em }
+    \_@@_ulined_center_box:nn  { #4 }  { \bf \tl_use:c { l_@@_info_ #2 _tl } }
+    \skip_vertical:n   { 1 ex   }
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\cs_new_protected:Npn \_@@_print_multiline_title:nn #1#2
+  {    
+    \_@@_split_title:n { \l_@@_info_title_tl }
+    \_@@_spread_box:nnn { #1 } { \kaishu } { \c_@@_name_title_tl }
+    \skip_horizontal:n { 0.3 em }
+    \clist_map_inline:Nn \l_@@_tmpa_clist
+      {
+        \_@@_ulined_center_box:nn { #2 } { \bf ##1 } 
+        \skip_vertical:n { 1 ex }
+      }
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_info_ug:
+  {
+    \begin{minipage}[ c ] { 20.5em }
+      \raggedleft
+      \_@@_print_info_entry:nnn { dept        } { 4.2 em } { 16 em }
+      \_@@_print_info_entry:nnn { major       } { 4.2 em } { 16 em }
+      \_@@_print_multiline_title:nn             { 4.2 em } { 16 em }
+      \_@@_print_info_bientry:nnnn { grade    } { id         } { 4.2 em } { 5.5 em }
+      \_@@_print_info_entry:nnn { author      } { 4.2 em } { 16 em }
+      \_@@_print_info_bientry:nnnn { supv     } { supv_title } { 4.2 em } { 5.5 em }
+      \_@@_print_info_entry:nnn { submit_date } { 4.2 em } { 16 em }
+    \end{minipage} 
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_make_cover_ug:
+{
+  \newpage
+  \null \skip_horizontal:n { -1 cm } \njuemblem[black]{!}{3.35cm}
+  \begin{center}      
+    \skip_vertical:n { 1 ex } \njuname[black]{!}{3cm} \skip_vertical:n { 0.7 cm }
+    \group_begin: \zihao { -1 } \_@@_spread_box:nnn { 9em } { \bf } { 本科毕业论文 } \group_end:
+    \skip_vertical:n { 1 cm }\vfil \zihao{3} \_@@_cover_info_ug: \vfil 
+  \end{center}
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2393,7 +2480,7 @@ through XeTeX.
 \RenewDocumentCommand \maketitle { }
   {
     \pagestyle{empty}
-    \UseInstance { nju / cover } { cover-ug }
+    \@@_make_cover_ug:
     % \bool_if:NTF \g_@@_nlcover_bool 
     %   { \@@_print_cover_nl: \@@_print_declaration: }
     %   { \use:c { @@_print_cover_ \g_@@_info_diploma_tl : } }
@@ -2447,7 +2534,7 @@ through XeTeX.
     \noindent\kaishu\zihao{-4}
     题目： \l_@@_info_title_tl \\
     院系： \l_@@_info_dept_tl \\
-    专业： \l_@@_major_tl \\
+    专业： \l_@@_info_major_tl \\
     本科生姓名： \l_@@_info_author_tl \\
     指导教师（姓名、职称）：\l_@@_info_supv_full_tl \\
     摘要：
@@ -2463,7 +2550,7 @@ through XeTeX.
   \bgroup
     THESIS: ~~\l_@@_info_title_en_tl \\
     DEPARTMENT: ~~\l_@@_info_dept_en_tl \\
-    SPECIALIZATION: ~~\l_@@_major_en_tl \\
+    SPECIALIZATION: ~~\l_@@_info_major_en_tl \\
     UNDERGRADUATE:~~\l_@@_info_author_en_tl \\
     MENTOR:~~\l_@@_info_supv_full_en_tl \\
     ABSTRACT:
@@ -2486,7 +2573,7 @@ through XeTeX.
   \bgroup
     \noindent\kaishu\zihao{4}
     毕业论文题目：\hspace{0.5em}\njuline{\l_@@_info_title_tl\hfill}\\
-    \njuline{\makebox[11em]{\l_@@_major_tl}}专业
+    \njuline{\makebox[11em]{\l_@@_info_major_tl}}专业
     \njuline{\makebox[4em]{\l_@@_info_grade_tl}}级
     \int_compare:nTF { \g_@@_info_degree_int == 4} { 博 } { 硕 }
     士生姓名：\njuline{\hfill\l_@@_info_author_tl\hfill}\\
@@ -2503,7 +2590,7 @@ through XeTeX.
   \bgroup
     \zihao{4}
     THESIS: ~~\l_@@_info_title_en_tl \\
-    SPECIALIZATION: ~~\l_@@_major_en_tl \\
+    SPECIALIZATION: ~~\l_@@_info_major_en_tl \\
     POSTGRADUATE:~~\l_@@_info_author_en_tl \\
     MENTOR:~~\l_@@_info_supv_full_en_tl
   \egroup\par
@@ -2536,7 +2623,7 @@ through XeTeX.
 % \subsection{前言致谢}
 % 
 % \begin{environment}{preface,acknowledgement}
-% 单独制作的前言\致谢页。
+% 单独制作的前言致谢页。
 %    \begin{macrocode}
 \NewDocumentEnvironment{preface}         { +b }
   { \njuchapter { 前\hspace{2em}言 } #1 } { }
