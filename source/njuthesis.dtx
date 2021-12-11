@@ -189,8 +189,8 @@ through XeTeX.
 % \changes{v0.7}{2021/09/11}{增加对研究生模板的支持}
 % \changes{v0.7}{2021/09/12}{将njuthesis发布在CTAN。}
 % \changes{v0.8}{2021/09/12}{修复已知问题，进行公开宣传。}
-% \changes{v0.9}{2021/09/15}{使用DocStrip合并模板文件。}
-% \changes{v0.9}{2021/09/15}{大幅度修改宏名称以符合\hologo{LaTeX3}规范。}
+% \changes{v0.9}{2021/09/15}{使用 DocStrip 合并模板文件。}
+% \changes{v0.9}{2021/09/15}{大幅度修改宏名称以符合 \hologo{LaTeX3} 规范。}
 % \changes{v0.9}{2021/09/15}{进一步完善文档。}
 % \changes{v0.10}{2021/09/24}{删除了生成自述文件的代码。}
 % \changes{v0.12}{2021/11/28}{删除内置的 \pkg{njuvisual} 代码。}
@@ -1307,12 +1307,16 @@ through XeTeX.
 %
 % \subsection{定义变量}
 %
+% \begin{variable}{\l_@@_tmpa_clist,\l_@@_tmpb_clist,\l_@@_tmpa_seq,\l_@@_tmpa_tl,\l_@@_tmpb_tl}
+% 临时变量。
 %    \begin{macrocode}
 \clist_new:N \l_@@_tmpa_clist
 \clist_new:N \l_@@_tmpb_clist
 \seq_new:N   \l_@@_tmpa_seq
 \tl_new:N    \l_@@_tmpa_tl
+\tl_new:N    \l_@@_tmpb_tl
 %    \end{macrocode}
+% \end{variable}
 %
 % \begin{variable}{\c_@@_name_type_clist,
 %   \c_@@_name_degree_clist,\c_@@_name_degree_en_clist}
@@ -1327,6 +1331,52 @@ through XeTeX.
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\g_@@_info_degree_int,\l_@@_info_type_tl,
+%   \g_@@_info_diploma_tl}
+% 用于存储学位名称的变量。l代表局部变量，g代表全局变量。
+%    \begin{macrocode}
+\int_new:N \g_@@_info_degree_int
+\int_new:N \l_@@_info_diploma_int
+\tl_new:N  \g_@@_info_diploma_tl
+\tl_new:N  \l_@@_info_type_tl
+\tl_new:N  \l_@@_info_degree_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\l_@@_info_supv_full_tl,\l_@@_info_supv_full_en_tl}
+% 用于存储导师姓名加职称的变量。
+%    \begin{macrocode}
+\tl_new:N \l_@@_info_supv_full_tl
+\tl_new:N \l_@@_info_supv_full_en_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_latin_fontset_tl,\g_@@_cjk_fontset_tl}
+% 用于存储所使用字体名称的全局变量
+%    \begin{macrocode}
+\tl_new:N \g_@@_latin_fontset_tl
+\tl_new:N \g_@@_cjk_fontset_tl
+%    \end{macrocode}
+% \end{variable}
+%
+%
+% \subsection{内部函数}
+%
+% \begin{macro}{\@@_quad:,\@@_qquad:}
+% 等价于 \LaTeXe{} 中的 \tn{quad} 和 \tn{qquad}。
+%    \begin{macrocode}
+\cs_new:Nn \@@_quad:  { \skip_horizontal:n { 1 em } }
+\cs_new:Nn \@@_qquad: { \skip_horizontal:n { 2 em } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_vskip:,\@@_hskip:}
+% 生成一个较小的 skip。
+%    \begin{macrocode}
+\cs_new:Nn \@@_vskip: { \skip_vertical:n   { 1   ex } }
+\cs_new:Nn \@@_hskip: { \skip_horizontal:n { 0.3 em } }
+%    \end{macrocode}
+%
 % \begin{macro}{\@@_define_name:nn,\@@_define_name:nnn}
 % 用来定义默认名称的辅助函数。
 %    \begin{macrocode}
@@ -1340,23 +1390,129 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% 默认名称。注意空格是忽略掉的。
+%
+% \subsection{模板选项}
+% \changes{v0.11}{2021/11/15}{进行了效率优化。}
+%
+% 学位信息的设置
+%    \begin{macrocode}
+\keys_define:nn { nju }
+  {
+%    \end{macrocode}
+%
+% \begin{macro}{degree}
+% 学位类型。
+%    \begin{macrocode}
+    degree            .choices:nn   = { ug, mg, mf, phd }
+      { \int_set_eq:NN \g_@@_info_degree_int \l_keys_choice_int  
+        \tl_set:Nn \l_@@_info_degree_tl
+          { \clist_item:Nn \c_@@_name_degree_clist { \g_@@_info_degree_int } }
+%    \end{macrocode}
+% 进行学位的判断。
+%    \begin{macrocode}
+        \int_compare:nTF { \g_@@_info_degree_int == 1 }
+          { \tl_set:Nn \g_@@_info_diploma_tl { ug } }
+          { \tl_set:Nn \g_@@_info_diploma_tl { g  } } },
+    degree            .initial:n    = ug,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{type}
+% 论文类型。\cs{l_keys_choice_int} 需要被展开以获取正确的序号。
+%    \begin{macrocode}
+    type              .choices:nn   = { thesis, design }
+      { \tl_set:Nx \l_@@_info_type_tl
+          { \clist_item:Nn \c_@@_name_type_clist { \l_keys_choice_int } }
+        \tl_put_left:Nn \l_@@_info_type_tl 
+          { \tl_use:c { c_@@_name_ \g_@@_info_diploma_tl _tl } } },
+    type              .initial:n    =   thesis,
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{nlcover}
+% 是否需要国家图书馆封面的设置。
+%    \begin{macrocode}
+    nlcover           .bool_set:N   = \g_@@_nlcover_bool,
+    nlcover           .initial:n    = false,
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{customlatinfont,customchinesefont}
+% 定义字体选项
+%    \begin{macrocode}
+    customlatinfont   .choices:nn   =
+    { gyre, macos, windows, none }
+    { \tl_set_eq:NN \g_@@_latin_fontset_tl \l_keys_choice_tl },  
+    customchinesefont .choices:nn   =
+    { fandol, founder, macos, noto, windows, none }
+    { \tl_set_eq:NN \g_@@_cjk_fontset_tl   \l_keys_choice_tl },
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 在定义完全部设置以后从导言区输入参数。
+%    \begin{macrocode}
+\ProcessKeysOptions { nju }
+%    \end{macrocode}
+%
+%
+% \subsection{配置常量}
+% TODO: 分离为单独文件
+% 通用默认名称。注意空格是忽略掉的。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { title     } {题目},
-    { author     } {学生姓名},
-    { major     } {专业},
+    { ug } { 本科  },
+    { g }  { 研究生 },
     { dept     }  {院系},
     { grade     } {年级},
     { id     } {学号},
     { submit_date     } {提交日期},
-    { supv     } {导师},
-    { supv_title     } {职称},
     { supv_ii     }  {第二导师},
+    { supv_full   }  {指导教师},
+    { supv_title     } {职称},
     { pdf_creator     } { LaTeX~ with~ njuthesis~ class },
   }
   { \@@_define_name:nn #1 }
+%    \end{macrocode}
+%
+% 针对学位的特定名称。需要放在 \cs{ProcessKeysOptions} 导入设置选项后，以使用学位信息。
+%    \begin{macrocode}
+\int_compare:nTF { \g_@@_info_degree_int == 1 }
+  {
+%    \end{macrocode}
+% 本科默认名称。
+%    \begin{macrocode}
+    \clist_map_inline:nn
+      {
+        { title     } {题目},
+        { author     } {学生姓名},
+        { major     } {专业},
+        { supv     } {导师},
+      }
+      { \@@_define_name:nn #1 }
+  }
+%    \end{macrocode}
+% 研究生默认名称。
+%    \begin{macrocode}
+  {
+    \clist_map_inline:nn
+      {
+        { supv     } {导师},
+        { title     } {论文题目},
+        { author     } {作者姓名},
+        { major }  {专业方向},
+        { field }  {研究方向},
+        { defend_date     } {论文答辩日期},
+        { degree_l }  {（申请},
+        { degree_r }  {学位）},
+        { sign }  {（签字）},
+      }
+      { \@@_define_name:nn #1 }
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \clist_map_inline:nn
   {
     { keywords } { 关键词：    } { Keywords:         },
@@ -1379,88 +1535,6 @@ through XeTeX.
 % \end{variable}
 %
 %
-% \subsection{模板选项}
-% \changes{v0.11}{2021/11/15}{进行了效率优化。}
-%
-% \begin{variable}{\g_@@_info_degree_int,\g_@@_info_type_int,
-%   \g_@@_info_diploma_tl}
-% 用于存储学位名称的变量，注意宏的命名，l代表局部变量，g代表全局变量
-%    \begin{macrocode}
-\int_new:N \g_@@_info_degree_int
-\int_new:N \g_@@_info_type_int
-\tl_new:N \g_@@_info_diploma_tl
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\g_@@_latin_fontset_tl,\g_@@_cjk_fontset_tl}
-% 用于存储所使用字体名称的全局变量
-%    \begin{macrocode}
-\tl_new:N \g_@@_latin_fontset_tl
-\tl_new:N \g_@@_cjk_fontset_tl
-%    \end{macrocode}
-% \end{variable}
-%
-% 学位信息的设置
-%    \begin{macrocode}
-\keys_define:nn { nju }
-  {
-%    \end{macrocode}
-%
-% \begin{macro}{degree}
-% 学位类型。
-%    \begin{macrocode}
-    degree            .choices:nn   =
-      { ug, mg, mf, phd }
-      { \int_set_eq:NN \g_@@_info_degree_int \l_keys_choice_int  
-%    \end{macrocode}
-% 进行学位的判断。
-%    \begin{macrocode}
-        \int_compare:nTF { \g_@@_info_degree_int == 1 }
-          { \tl_set:Nn \g_@@_info_diploma_tl { ug } }
-          { \tl_set:Nn \g_@@_info_diploma_tl { g  } } },
-    degree            .initial:n    =   ug,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{type}
-% 论文类型。
-%    \begin{macrocode}
-    type              .choices:nn   =
-      { thesis, design }
-      { \int_set_eq:NN \g_@@_info_type_int   \l_keys_choice_int },
-    type              .initial:n    =   thesis,
-%    \end{macrocode}
-% \end{macro}
-% 
-% \begin{macro}{nlcover}
-% 是否需要国家图书馆封面的设置。
-%    \begin{macrocode}
-    nlcover           .bool_set:N   =   \g_@@_nlcover_bool,
-    nlcover           .initial:n    =   false,
-%    \end{macrocode}
-% \end{macro}
-% 
-% \begin{macro}{customlatinfont,customchinesefont}
-% 定义字体选项
-%    \begin{macrocode}
-    customlatinfont   .choices:nn   =
-    { gyre, macos, windows, none }
-    { \tl_set_eq:NN \g_@@_latin_fontset_tl \l_keys_choice_tl },  
-    customchinesefont .choices:nn   =
-    { fandol, founder, macos, noto, windows, none }
-    { \tl_set_eq:NN \g_@@_cjk_fontset_tl   \l_keys_choice_tl },
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\ProcessKeysOptions}
-% 在定义完全部设置以后从tex文件导言区输入参数。
-%    \begin{macrocode}
-\ProcessKeysOptions { nju }
-%    \end{macrocode}
-% \end{macro}
-%
-%
 % \subsection{个人信息}
 % 输入个人信息的区域。
 %    \begin{macrocode}
@@ -1472,14 +1546,14 @@ through XeTeX.
   {
 %    \end{macrocode}
 %
-% \begin{macro}{info/titlea,info/titleb,info/titlec,info/title*}
+% \begin{macro}{info/title,info/title*}
 % 题目。以下标注星号（*）的为对应的英文字段。
 %    \begin{macrocode}
-    title             .tl_set:N = \l_@@_info_title_tl,
-    titlea            .tl_set:N = \l_@@_info_title_a_tl,
-    titleb            .tl_set:N = \l_@@_info_title_b_tl,
-    titlec            .tl_set:N = \l_@@_info_title_c_tl,
-    title*            .tl_set:N = \l_@@_info_title_en_tl,
+    title               .tl_set:N = \l_@@_info_title_tl,
+    title*              .tl_set:N = \l_@@_info_title_en_tl,
+    titlea                .code:n = { },
+    titleb                .code:n = { },
+    titlec                .code:n = { },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1487,79 +1561,86 @@ through XeTeX.
 % \changes{v0.11}{2021/10/01}{修改了添加关键词的方式。}
 % 关键词列表。
 %    \begin{macrocode}
-    keywords       .clist_set:N = \l_@@_info_keywords_clist,
-    keywords*      .clist_set:N = \l_@@_info_keywords_en_clist,
+    keywords         .clist_set:N = \l_@@_info_keywords_clist,
+    keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \end{macrocode}
 % \end{macro}
 % 
 % \begin{macro}{info/grade,info/student-id,info/author,info/author*}
 % 年级、学号、姓名。
 %    \begin{macrocode}
-    grade             .tl_set:N = \l_@@_info_grade_tl,
-    student-id        .tl_set:N = \l_@@_info_id_tl,
-    author            .tl_set:N = \l_@@_info_author_tl,
-    author*           .tl_set:N = \l_@@_info_author_en_tl,
+    grade               .tl_set:N = \l_@@_info_grade_tl,
+    student-id          .tl_set:N = \l_@@_info_id_tl,
+    author              .tl_set:N = \l_@@_info_author_tl,
+    author*             .tl_set:N = \l_@@_info_author_en_tl,
 %    \end{macrocode}
 % \end{macro}
 % 
 % \begin{macro}{info/department,info/department*,info/major,info/major*,info/field,info/field*}
 % 院系、专业、方向。
 %    \begin{macrocode}
-    department        .tl_set:N = \l_@@_info_dept_tl,
-    department*       .tl_set:N = \l_@@_info_dept_en_tl,
-    major             .tl_set:N = \l_@@_info_major_tl,
-    major*            .tl_set:N = \l_@@_info_major_en_tl,
-    field             .tl_set:N = \l_@@_info_field_tl,
-    field*            .tl_set:N = \l_@@_info_field_en_tl,
+    department          .tl_set:N = \l_@@_info_dept_tl,
+    department*         .tl_set:N = \l_@@_info_dept_en_tl,
+    major               .tl_set:N = \l_@@_info_major_tl,
+    major*              .tl_set:N = \l_@@_info_major_en_tl,
+    field               .tl_set:N = \l_@@_info_field_tl,
+    field*              .tl_set:N = \l_@@_info_field_en_tl,
 %    \end{macrocode}
 % \end{macro}
 %  
-% \begin{macro}{info/supervisora,info/supervisora*,info/supervisora-title,info/supervisora-title*}
+% \begin{macro}{info/supervisor,info/supervisor*,info/supervisor-title,info/supervisor-title*}
+% \changes{v0.13}{2021/12/11}{修改了导师键值对的名称。}
 % 导师
 %    \begin{macrocode}
-supervisor       .tl_set:N = \l_@@_info_supv_tl,
-supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
-    supervisora       .tl_set:N = \l_@@_info_supv_a_tl,
-    supervisora*      .tl_set:N = \l_@@_info_supv_a_en_tl,
-    supervisora-title .tl_set:N = \l_@@_info_supv_a_title_tl,
-    supervisora-title*.tl_set:N = \l_@@_info_supv_a_title_en_tl,
+    supervisor          .tl_set:N = \l_@@_info_supv_tl,
+    supervisor*         .tl_set:N = \l_@@_info_supv_en_tl,
+    supervisor-title    .tl_set:N = \l_@@_info_supv_title_tl,
+    supervisor-title*   .tl_set:N = \l_@@_info_supv_title_en_tl,
+    supervisora           .code:n = { },
+    supervisora*          .code:n = { },
+    supervisora-title     .code:n = { },
+    supervisora-title*    .code:n = { },
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{info/supervisorb,info/supervisorb*,info/supervisorb-title,info/supervisorb-title*}
+% \begin{macro}{info/supervisor-ii,info/supervisor-ii*,info/supervisor-ii-title,info/supervisor-ii-title*}
 % 第二导师
 %    \begin{macrocode}
-    supervisorb       .tl_set:N = \l_@@_info_supv_b_tl,
-    supervisorb*      .tl_set:N = \l_@@_info_supv_b_en_tl,
-    supervisorb-title .tl_set:N = \l_@@_info_supv_b_title_tl,
-    supervisorb-title*.tl_set:N = \l_@@_info_supv_b_title_en_tl,
+    supervisor-ii       .tl_set:N = \l_@@_info_supv_ii_tl,
+    supervisor-ii*      .tl_set:N = \l_@@_info_supv_ii_en_tl,
+    supervisor-ii-title .tl_set:N = \l_@@_info_supv_ii_title_tl,
+    supervisor-ii-title*.tl_set:N = \l_@@_info_supv_ii_title_en_tl,
+    supervisorb           .code:n = { },
+    supervisorb*          .code:n = { },
+    supervisorb-title     .code:n = { },
+    supervisorb-title*    .code:n = { },
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/submit-date,info/submit-date*}
 % 提交日期
 %    \begin{macrocode}
-    submit-date       .tl_set:N = \l_@@_info_submit_date_tl,
-    submit-date*      .tl_set:N = \l_@@_info_submit_date_en_tl,
+    submit-date         .tl_set:N = \l_@@_info_submit_date_tl,
+    submit-date*        .tl_set:N = \l_@@_info_submit_date_en_tl,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/defend-date,info/chairman,info/reviewer}
 % 答辩信息。
 %    \begin{macrocode}
-    defend-date       .tl_set:N = \l_@@_info_defend_date_tl,
-    chairman          .tl_set:N = \l_@@_info_chairman_tl,
-    reviewer       .clist_set:N = \l_@@_info_reviewer_clist,
+    defend-date         .tl_set:N = \l_@@_info_defend_date_tl,
+    chairman            .tl_set:N = \l_@@_info_chairman_tl,
+    reviewer         .clist_set:N = \l_@@_info_reviewer_clist,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
 % 国家图书馆封面相关信息。
 %    \begin{macrocode}
-    clc               .tl_set:N = \l_@@_info_clc_tl,
-    secret-level      .tl_set:N = \l_@@_info_seclv_tl,
-    udc               .tl_set:N = \l_@@_info_udc_tl,
-    supervisor-contact.tl_set:N = \l_@@_info_supv_cont_tl,
+    clc                 .tl_set:N = \l_@@_info_clc_tl,
+    secret-level        .tl_set:N = \l_@@_info_seclv_tl,
+    udc                 .tl_set:N = \l_@@_info_udc_tl,
+    supervisor-contact  .tl_set:N = \l_@@_info_supv_cont_tl,
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1573,6 +1654,19 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
 %    \end{macrocode}
 % \end{macro}
 %
+% 拼合双导师的姓名和职称。
+%    \begin{macrocode}
+\tl_set:Nn \l_@@_info_supv_full_tl
+  {
+    \l_@@_info_supv_tl \@@_quad: \l_@@_info_supv_title_tl { 、} \@@_quad:
+    \l_@@_info_supv_ii_tl \@@_quad: \l_@@_info_supv_ii_title_tl
+  }
+\tl_set:Nn \l_@@_info_supv_full_en_tl
+  {
+    \l_@@_info_supv_title_en_tl \@@_quad: \l_@@_info_supv_en_tl { , } \@@_quad:
+    \l_@@_info_supv_ii_title_en_tl \@@_quad: \l_@@_info_supv_ii_en_tl
+  }
+%    \end{macrocode}
 %
 % \subsection{载入宏包}
 %
@@ -2017,28 +2111,29 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
 %
 % \subsubsection{页眉页脚}
 %
-% 
 % 本科生页眉页脚。要求无页眉，页脚居中，页码使用五号新罗马体数字。
 %    \begin{macrocode}
-\fancypagestyle{plain}{
-  \fancyhf{}       
-  \fancyfoot[C]{\zihao{5}\thepage}
-  \renewcommand{\headrulewidth}{0pt}
-  \renewcommand{\footrulewidth}{0pt}
-}
+\fancypagestyle { plain }
+  {
+    \fancyhf { }       
+    \fancyfoot [ C ] { \zihao{5} \thepage }
+    \RenewDocumentCommand \headrulewidth { } { 0 pt }
+    \RenewDocumentCommand \footrulewidth { } { 0 pt }
+  }
 %    \end{macrocode}
 %
 % 研究生页眉页脚。奇数页为章名，偶数页为节名。 
 %    \begin{macrocode}
-\fancypagestyle{headings}{
-  \fancyhf{}
-  \fancyhead[CO]{\leftmark}
-  \fancyhead[CE]{\rightmark}
-  \fancyfoot[C]{\zihao{5}\thepage}
-  \renewcommand{\footrulewidth}{0pt}
-  \renewcommand{\headrulewidth}{0.4pt}
-  \setlength{\headheight}{20pt}
-}
+\fancypagestyle{headings}
+  {
+    \fancyhf { }
+    \fancyhead [ CO ] { \leftmark          }
+    \fancyhead [ CE ] { \rightmark         }
+    \fancyfoot [ C  ] { \zihao{5} \thepage }
+    \RenewDocumentCommand \headrulewidth { } { 0   pt }
+    \RenewDocumentCommand \footrulewidth { } { 0.4 pt }
+    \setlength { \headheight } { 20 pt } 
+  }
 %    \end{macrocode}
 %
 % \begin{macro}{\frontmatter}
@@ -2099,8 +2194,9 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
 % 将无编号章插入目录。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_chapter_in_toc:n #1
-  { \addcontentsline { toc } { chapter } { \c_@@_section_format_tl #1} }
+  { \addcontentsline { toc } { chapter } { \c_@@_section_format_tl #1 } }
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\njuchapter}
 % 含有目录和 PDF 标签的无编号章。
@@ -2128,7 +2224,7 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
 %    \end{macrocode}
 %
 % \begin{macro}{\c_@@_toc_title_tl}
-% 目录页单独设置三号粗宋体标题。
+% 目录页标题格式，单独设置为三号粗宋体。
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_toc_title_tl { \centering \zihao{3} \bf }
 %    \end{macrocode}
@@ -2224,6 +2320,11 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
+%    \end{macrocode}
+% 清除标题中用于手动换行的 |!| 控制符。
+%    \begin{macrocode}
+    \tl_set_eq:NN \l_@@_tmpb_tl \l_@@_info_title_tl
+    \tl_remove_all:Nn \l_@@_tmpb_tl { ! }
     \hypersetup
       {
         bookmarksnumbered = true,
@@ -2233,7 +2334,7 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
 %    \end{macrocode}
 % 填写 PDF 元信息。
 %    \begin{macrocode}
-        pdftitle    = \l_@@_info_title_tl,
+        pdftitle    = \l_@@_tmpb_tl,
         pdfauthor   = \l_@@_info_author_tl,
         pdfkeywords = \l_@@_info_keywords_clist,
         pdfcreator  = \c_@@_name_pdf_creator_tl
@@ -2334,29 +2435,13 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
 %
 % \subsubsection{内部命令}
 %
-% \begin{variable}{\l_@@_info_supv_full_tl,\l_@@_info_supv_full_en_tl}
-% 用于存储导师姓名加职称的变量，旧版编译器不支持字符串中含有|\hspace{.5em}|这样的空白空间命令
+% \begin{macro}{\_@@_ulined_center_box:nn}
+% 带有下划线的水平盒子。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+%   \item 内容，可带有格式
+% \end{arguments}
 %    \begin{macrocode}
-\tl_new:N \l_@@_info_supv_full_tl
-\tl_new:N \l_@@_info_supv_full_en_tl
-%    \end{macrocode}
-% \end{variable}
-% 拼合双导师的姓名和职称。
-%    \begin{macrocode}
-\tl_set:Nn \l_@@_info_supv_full_tl
-  {
-    \l_@@_info_supv_a_tl\quad\l_@@_info_supv_a_title_tl\qquad
-    \l_@@_info_supv_b_tl\quad\l_@@_info_supv_b_title_tl
-  }
-\tl_set:Nn \l_@@_info_supv_full_en_tl
-  {
-    \l_@@_info_supv_a_title_en_tl\quad\l_@@_info_supv_a_en_tl\qquad
-    \l_@@_info_supv_b_title_en_tl\quad\l_@@_info_supv_b_en_tl
-  }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-% underlined horizontal box #2:format
 \cs_new_protected:Npn \_@@_ulined_center_box:nn #1#2
   {
     \mode_leave_vertical:
@@ -2365,7 +2450,15 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
     \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
   }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\_@@_spread_box:nnn}
+% 分散对齐的水平盒子。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+%   \item 格式
+%   \item 内容，不可带有格式
+% \end{arguments}
 %    \begin{macrocode}
 \cs_generate_variant:Nn \tl_map_inline:nn { xn }
 \cs_new_protected:Npn \_@@_spread_box:nnn #1#2#3 %#2:format
@@ -2375,103 +2468,222 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
       { #2 \tl_map_inline:xn {#3} { ##1 \hfil } \unskip }
   }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\_@@_put_inempty_seg:nnn}
+% 将固定长度的非空字符串插入 |clist|。
+% \begin{arguments}
+%   \item 原始字符串
+%   \item 起始位置
+%   \item 长度
+% \end{arguments}
 %    \begin{macrocode}
-% seq implementation
 \cs_new_protected:Npn \_@@_put_inempty_seg:nnn #1#2#3
   {
     \tl_set:Nx \l_@@_tmpa_tl { \tl_range:Nnn { #1 } { #2 } { #2 + #3 - 1 } }
     \tl_if_empty:NF \l_@@_tmpa_tl { \clist_put_right:NV \l_@@_tmpa_clist { \l_@@_tmpa_tl } }
   }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\_@@_split_title:n}
+% 分割标题。
 %    \begin{macrocode}
 \cs_new_protected:Npn \_@@_split_title:n #1
   {
-    % 从英文感叹号进行分割
     \tl_if_in:VnTF { #1 } { ! }
       {
+%    \end{macrocode}
+% 从英文感叹号进行分割，存入 |clist|。
+%    \begin{macrocode}
         \seq_set_split:NnV \l_@@_tmpa_seq { ! } { #1 }
         \clist_set_from_seq:NN \l_@@_tmpa_clist \l_@@_tmpa_seq
       }
       { 
-        % 如果没找到感叹号，则手动进行分割
-        \__put_inempty_seg:nnn { #1 } { 1  } { 15 }
-        \__put_inempty_seg:nnn { #1 } { 16 } { 15 }
-        \__put_inempty_seg:nnn { #1 } { 31 } { 15 }
+%    \end{macrocode}
+% 如果没找到感叹号，则手动进行分割固定宽度的字符。
+%    \begin{macrocode}
+        \_@@_put_inempty_seg:nnn { #1 } { 1  } { 15 }
+        \_@@_put_inempty_seg:nnn { #1 } { 16 } { 15 }
+        \_@@_put_inempty_seg:nnn { #1 } { 31 } { 15 }
       }
   }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\cs_new_protected:Npn \_@@_print_info_entry:nnn #1#2#3
-  {
-    \_@@_spread_box:nnn { #2 } { \kaishu } { \tl_use:c { c_@@_name_ #1 _tl } }
-    \skip_horizontal:n { 0.3 em }
-    \_@@_ulined_center_box:nn  { #3 }  { \bf \tl_use:c { l_@@_info_ #1 _tl } }
-    \skip_vertical:n   { 1 ex   }
-  }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\cs_new_protected:Npn \_@@_print_info_bientry:nnnn #1#2#3#4
-  { 
-    \_@@_spread_box:nnn { #3 } { \kaishu } { \tl_use:c { c_@@_name_ #1 _tl } }
-    \skip_horizontal:n { 0.3 em }
-    \_@@_ulined_center_box:nn  { #4 }  { \bf \tl_use:c { l_@@_info_ #1 _tl } }
-    \skip_horizontal:n { 0.5 em }
-    \_@@_spread_box:nnn { #3 } { \kaishu } { \tl_use:c { c_@@_name_ #2 _tl } }
-    \skip_horizontal:n { 0.3 em }
-    \_@@_ulined_center_box:nn  { #4 }  { \bf \tl_use:c { l_@@_info_ #2 _tl } }
-    \skip_vertical:n   { 1 ex   }
-  }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\cs_new_protected:Npn \_@@_print_multiline_title:nn #1#2
-  {    
-    \_@@_split_title:n { \l_@@_info_title_tl }
-    \_@@_spread_box:nnn { #1 } { \kaishu } { \c_@@_name_title_tl }
-    \skip_horizontal:n { 0.3 em }
-    \clist_map_inline:Nn \l_@@_tmpa_clist
-      {
-        \_@@_ulined_center_box:nn { #2 } { \bf ##1 } 
-        \skip_vertical:n { 1 ex }
-      }
-  }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_info_ug:
-  {
-    \begin{minipage}[ c ] { 20.5em }
-      \raggedleft
-      \_@@_print_info_entry:nnn { dept        } { 4.2 em } { 16 em }
-      \_@@_print_info_entry:nnn { major       } { 4.2 em } { 16 em }
-      \_@@_print_multiline_title:nn             { 4.2 em } { 16 em }
-      \_@@_print_info_bientry:nnnn { grade    } { id         } { 4.2 em } { 5.5 em }
-      \_@@_print_info_entry:nnn { author      } { 4.2 em } { 16 em }
-      \_@@_print_info_bientry:nnnn { supv     } { supv_title } { 4.2 em } { 5.5 em }
-      \_@@_print_info_entry:nnn { submit_date } { 4.2 em } { 16 em }
-    \end{minipage} 
-  }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_cover_ug:
-{
-  \newpage
-  \null \skip_horizontal:n { -1 cm } \njuemblem[black]{!}{3.35cm}
-  \begin{center}      
-    \skip_vertical:n { 1 ex } \njuname[black]{!}{3cm} \skip_vertical:n { 0.7 cm }
-    \group_begin: \zihao { -1 } \_@@_spread_box:nnn { 9em } { \bf } { 本科毕业论文 } \group_end:
-    \skip_vertical:n { 1 cm }\vfil \zihao{3} \_@@_cover_info_ug: \vfil 
-  \end{center}
-}
 %    \end{macrocode}
 % \end{macro}
 %
-% 
+% \begin{macro}{\_@@_print_entry:nnn}
+% 生成单项信息条目。
+% \begin{arguments}
+%   \item 条目
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 内容盒子宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \_@@_print_entry:nnn #1#2#3
+  {
+    \_@@_spread_box:nnn { #2 } { \kaishu } { \tl_use:c { c_@@_name_ #1 _tl } }
+    \@@_hskip:
+    \_@@_ulined_center_box:nn  { #3 }      { \tl_use:c { l_@@_info_ #1 _tl } }
+    \@@_vskip:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\_@@_print_bientry:nnnn}
+% 生成两项信息条目，仅用于本科生封面。
+% \begin{arguments}
+%   \item 左侧条目
+%   \item 右侧条目
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 内容盒子宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \_@@_print_bientry:nnnn #1#2#3#4
+  {
+    \_@@_spread_box:nnn { #3 } { \kaishu } { \tl_use:c { c_@@_name_ #1 _tl } }
+    \@@_hskip:
+    \_@@_ulined_center_box:nn  { #4 }      { \tl_use:c { l_@@_info_ #1 _tl } }
+    \skip_horizontal:n { 0.5 em }
+    \_@@_spread_box:nnn { #3 } { \kaishu } { \tl_use:c { c_@@_name_ #2 _tl } }
+    \@@_hskip:
+    \_@@_ulined_center_box:nn  { #4 }      { \tl_use:c { l_@@_info_ #2 _tl } }
+    \@@_vskip:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\_@@_print_multiline_title:nnn}
+% 生成多行标题。
+% \begin{arguments}
+%   \item 内容格式
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 内容盒子宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \_@@_print_multiline_title:nnn #1#2#3
+  {    
+    \_@@_split_title:n { \l_@@_info_title_tl }
+    \_@@_spread_box:nnn { #2 } { \kaishu } { \c_@@_name_title_tl }
+    \@@_hskip:
+    \clist_map_inline:Nn \l_@@_tmpa_clist
+      { \_@@_ulined_center_box:nn { #3 } { #1 ##1 } \@@_vskip: }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_info_ug:nnn}
+% 本科生封面信息栏。
+% \begin{arguments}
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 长内容盒子宽度，|dim| 型变量
+%   \item 短内容盒子宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_info_ug:nnn #1#2#3
+  {
+    \begin{minipage} [ c ] { #1 + #2 + 0.3 em }
+      \raggedleft
+      \_@@_print_entry:nnn { dept            } { #1 } { #2 }
+      \_@@_print_entry:nnn { major           } { #1 } { #2 }
+      \_@@_print_multiline_title:nnn   { \bf } { #1 } { #2 }
+      \_@@_print_bientry:nnnn { grade } { id } { #1 } { #3 }
+      \_@@_print_entry:nnn { author          } { #1 } { #2 }
+      \_@@_print_bientry:nnnn { supv } { supv_title } { #1 } { #3 }
+      \tl_if_blank:VF { \l_@@_info_supv_ii_tl }
+        { \_@@_print_bientry:nnnn { supv_ii } { supv_title } { #1 } { #3 } }
+      \_@@_print_entry:nnn { submit_date     } { #1 } { #2 }
+    \end{minipage} 
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_info_g:nn}
+% 研究生封面信息栏。
+% \begin{arguments}
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 内容盒子宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_info_g:nn #1#2
+  {
+    \begin{minipage} [ c ] { #1 + #2 + 0.3 em }
+      \raggedleft
+      \_@@_print_multiline_title:nnn { } { #1 } { #2 }
+      \clist_put_right:Nn \l_@@_tmpb_clist { author, major, field, supv_full }
+      \clist_map_inline:Nn \l_@@_tmpb_clist
+        { \_@@_print_entry:nnn { ##1 } { #1 } { #2 } }
+    \end{minipage}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \subsubsection{绘制封面}
+%
+% \begin{macro}{\@@_make_cover_ug:}
+% \changes{v0.13}{2021/12/10}{使用 \hologo{LaTeX3} 语法重构本科生封面。}
+% 生成本科生封面。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_make_cover_ug:
+  {
+    \newpage
+    \null \skip_horizontal:n { -1 cm } \njuemblem[black]{!}{3.35cm}
+    \begin{center}      
+      \njuname[black]{!}{3cm} \@@_vskip:
+      \group_begin: \zihao { -1 } 
+        \_@@_spread_box:nnn { 9em } { \bf } { \l_@@_info_type_tl } \group_end:
+      \skip_vertical:n { 1.5 cm } \vfil 
+      \zihao{3} \_@@_cover_info_ug:nnn { 4.2 em } { 16 em } { 5.5 em } \vfil 
+    \end{center}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_make_cover_g:}
+% \changes{v0.13}{2021/12/11}{使用 \hologo{LaTeX3} 语法重构研究生封面。}
+% 生成研究生封面。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_make_cover_g:
+  {    
+    \newpage
+    \begin{center}
+      \null \skip_vertical:n { 1 cm }
+      \njuemblem [ black ] { ! } { 1.9 cm } \skip_vertical:n { 0.5 cm }
+      \njuname   [ black ] { 4.4 cm } { ! } \@@_vskip:
+      \group_begin:
+        \zihao { -1 } \bf \kaishu
+        \_@@_spread_box:nnn { 9em } { } { \l_@@_info_type_tl }
+        \@@_vskip:
+        \c_@@_name_degree_l_tl \l_@@_info_degree_tl \c_@@_name_degree_r_tl
+      \group_end:
+      \skip_vertical:n { 3 cm } \vfil 
+      \group_begin:
+        \zihao { 3 } \kaishu
+        \_@@_cover_info_g:nn { 6.2 em } { 18 em } \vfil
+        \skip_vertical:n { 2 cm } \l_@@_info_submit_date_tl
+      \group_end:
+    \end{center}
+%    \end{macrocode}
+% 背面。
+%    \begin{macrocode}
+    \newpage
+    \null \skip_vertical:n { 18 cm }
+    \group_begin:
+      \zihao { 3 } \kaishu
+      \_@@_spread_box:nnn { 6.2 em } { \kaishu } { \c_@@_name_id_tl }
+      { : \@@_quad: } \l_@@_info_id_tl
+      \@@_vskip:
+      \_@@_spread_box:nnn { 6.2 em } { \kaishu } { \c_@@_name_defend_date_tl }
+      { : \@@_quad: } \l_@@_info_defend_date_tl
+      \@@_vskip:
+      \_@@_spread_box:nnn { 6.2 em } { \kaishu } { \c_@@_name_supv_full_tl }
+      { : \@@_quad: } \skip_horizontal:n { 8 em } \c_@@_name_sign_tl
+      \@@_vskip:
+    \group_end:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\maketitle}
 % \changes{v0.12}{2021/12/01}{仅会生成国家图书馆封面或者普通封面之一。}
 % 重定义 \cs{maketitle}。
@@ -2480,10 +2692,10 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
 \RenewDocumentCommand \maketitle { }
   {
     \pagestyle{empty}
-    \@@_make_cover_ug:
-    % \bool_if:NTF \g_@@_nlcover_bool 
-    %   { \@@_print_cover_nl: \@@_print_declaration: }
-    %   { \use:c { @@_print_cover_ \g_@@_info_diploma_tl : } }
+    \bool_if:NTF \g_@@_nlcover_bool 
+      { \@@_print_cover_nl: \@@_print_declaration: }
+      { \use:c { @@_make_cover_ \g_@@_info_diploma_tl : } }
+      \tl_remove_all:Nn \l_@@_info_title_tl { ! }
 %    \end{macrocode}
 % 在标题页后使用大写罗马字母页码。
 %    \begin{macrocode}
@@ -2494,6 +2706,7 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
   }
 %    \end{macrocode}
 % \end{macro}
+%
 %
 % \subsection{摘要页}
 %
@@ -2647,6 +2860,7 @@ supervisor-title .tl_set:N = \l_@@_info_supv_title_tl,
   }
 %    \end{macrocode}
 % \end{macro}
+%
 %
 % \end{implementation}
 %
