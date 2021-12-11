@@ -2468,7 +2468,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_ulined_center_box:nn #1#2
   {
     \mode_leave_vertical:
-    \rule [ -0.7 ex ] { #1 } { 0.4 pt }
+    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
     \skip_horizontal:n { -#1 }
     \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
   }
@@ -2867,8 +2867,8 @@ through XeTeX.
           % 1em=14.05249pt.
           % textwidth =415.41043pt
           % width =98.36743pt
-          \njuline{ \l_@@_info_title_tl \hfill } \\
-          ?
+          \@@_uline:n {317 pt} \hfil \tl_range:Nnn \l_@@_info_title_tl { 1 } { 20 } \hfil \\
+          \@@_uline:n {\textwidth} \@@_qquad: \tl_range:Nnn \l_@@_info_title_tl { 21 } { -1 }
         }
         { \clist_item:cn { c_@@_name_type #1 _clist } { \l_@@_info_type_int } }
       %#2 \tl_use:c { l_@@_info_title #1 _tl } \\
