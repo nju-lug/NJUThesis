@@ -105,7 +105,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo  $Id: njuthesis.dtx 0.12.3 2021-12-07 21:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class>\GetIdInfo  $Id: njuthesis.dtx 0.13.0 2021-12-12 18:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -177,7 +177,7 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.12.3 \\ Released 2021-12-07}
+% \date{v0.13.0 \\ Released 2021-12-12}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -697,16 +697,14 @@ through XeTeX.
 % 是 \cls{njuthesis} 文档类的通用设置命令，用来设置各项功能。\tn{njusetup} 的参数是一个使用英文半角逗号分隔的键值列表，通常形如 \meta{key}|=|\meta{value}。
 % \end{function}
 %
-% 目前，\tn{njusetup} 仅包含用于设置个人信息的 |info| 类。以下为全部的个人信息参数，其中带有星号的为对应的英文字段。
-% 
-% \begin{function}[updated=2021-10-01]{info/titlea,info/titleb,info/titlec,info/title*}
+% 目前，\tn{njusetup} 仅包含用于设置个人信息的 |info| 类。以下为全部的个人信息参数，其中带有星号的为对应的英文字段。请注意，部分参数已被弃置，列于后方。
+%
+% \begin{function}[updated=2021-12-12]{info/title,info/title*}
 %   \begin{syntax}
-%     titlea = \Arg{第一行标题}
-%     titleb = \Arg{第二行标题}
-%     titlec = \Arg{第三行标题}
+%     title  = \Arg{标题}
 %     title* = \Arg{英文标题}
 %   \end{syntax}
-% 题目。由于封面上提供给中文题目的横线长度有限（单行最长为15个汉字），这里将中文题目进行手动拆分，请自行选择合适的断行处。如果题目较短不需要二三行，留空即可。
+% 题目。由于封面上提供给中文题目的横线长度有限（单行最长为15个汉字），默认会自动对标题进行换行。如果需要手动制定换行位点，请使用英文半角感叹号 |!|，最多两处。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/keywords,info/keywords*}
@@ -762,17 +760,26 @@ through XeTeX.
 %   \end{syntax}
 % 研究领域。只有研究生有研究领域的说法。
 % \end{function}
-%  
-% \begin{function}[updated=2021-10-01]{info/supervisora,info/supervisora*,info/supervisora-title,info/supervisora-title*}
+%
+% \begin{function}[updated=2021-12-12]{info/supervisor,info/supervisor*,info/supervisor-title,info/supervisor-title*}
 %   \begin{syntax}
-%     supervisora = \Arg{导师}
-%     supervisora* = \Arg{导师}
-%     supervisora-title = \Arg{导师职称}
-%     supervisora-title* = \Arg{导师职称}
+%     supervisor = \Arg{导师}
+%     supervisor* = \Arg{导师}
+%     supervisor-title = \Arg{导师职称}
+%     supervisor-title* = \Arg{导师职称}
 %   \end{syntax}
-% 导师，如果有第二导师，填写第二导师时将A替换为B即可。
+% 导师。
 % \end{function}
 %
+% \begin{function}[updated=2021-12-12]{info/supervisor-ii,info/supervisor-ii*,info/supervisor-ii-title,info/supervisor-ii-title*}
+%   \begin{syntax}
+%     supervisor-ii = \Arg{第二导师}
+%     supervisor-ii* = \Arg{第二导师}
+%     supervisor-ii-title = \Arg{第二导师职称}
+%     supervisor-ii-title* = \Arg{第二导师职称}
+%   \end{syntax}
+% 第二导师。
+% \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/submit-date,info/submit-date*}
 %   \begin{syntax}
@@ -801,6 +808,10 @@ through XeTeX.
 % 国家图书馆封面相关，包括中图分类号、密级、UDC 分类号和导师联系方式。
 % \end{function}
 %
+% \begin{function}[deprecated=2021-12-12]{info/titlea,info/titleb,info/titlec,info/supervisora,info/supervisora*,info/supervisora-title,info/supervisora-title*,info/supervisorb,info/supervisorb*,info/supervisorb-title,info/supervisorb-title*}
+% 这些选项已在 v0.13 弃置，请不要使用。
+% \end{function}
+%
 % \subsubsection{输入示范}
 %
 % 本科生可以参考如下范例输入个人信息。注意不能有空行。
@@ -808,8 +819,7 @@ through XeTeX.
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
 %   \njusetup {
 %       info = {
-%           titlea = {第一行标题},
-%           titleb = {第二行标题},
+%           title = {第一行标题!第二行标题},
 %           title* = {My title in English}, 
 %           keywords = {我,就是,充数的,关键词},
 %           keywords* = {Dummy,Keywords,Here,{it is}},
@@ -821,10 +831,10 @@ through XeTeX.
 %           department* = {School of \hologo{LaTeX}},
 %           major = {拉太赫语言学},
 %           major* = {\hologo{LaTeX} Linguistics},
-%           supervisora = {李成殿},
-%           supervisora*= {Li Chengdian},
-%           supervisora-title = {教授},
-%           supervisora-title* = {Professor},
+%           supervisor = {李成殿},
+%           supervisor*= {Li Chengdian},
+%           supervisor-title = {教授},
+%           supervisor-title* = {Professor},
 %           submit-date = {2021年8月10日},
 %       }
 %   }
@@ -835,9 +845,7 @@ through XeTeX.
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
 %   \njusetup {
 %       info = {
-%           titlea = {第一行标题},
-%           titleb = {第二行标题},
-%           titlec = {第三行标题},
+%           title = {第一行标题!第二行标题!第三行标题},
 %           title* = {My title in English}, 
 %           keywords = {我,就是,充数的,关键词},
 %           keywords* = {Dummy,Keywords,Here,{it is}},
@@ -851,10 +859,10 @@ through XeTeX.
 %           major* = {\hologo{LaTeX} Linguistics},
 %           field = {拉太赫语言在现当代的使用}, 
 %           field* = {Contemporary Usage of the \hologo{LaTeX}~Language}, 
-%           supervisora = {李成殿},
-%           supervisora*= {Li Chengdian},
-%           supervisora-title = {教授},
-%           supervisora-title* = {Professor},
+%           supervisor = {李成殿},
+%           supervisor*= {Li Chengdian},
+%           supervisor-title = {教授},
+%           supervisor-title* = {Professor},
 %           submit-date = {2021年8月10日},
 %           submit-date* = {Aug 10, 2021}, 
 %           defend-date = {2021年9月19日},
@@ -867,7 +875,6 @@ through XeTeX.
 %       }
 %   }
 % \end{latexexample}
-%
 %
 % \subsection{编写正文}
 %
@@ -1809,9 +1816,6 @@ through XeTeX.
     title               .tl_set:N = \l_@@_info_title_tl,
     title              .initial:n = { 空 },
     title*              .tl_set:N = \l_@@_info_title_en_tl,
-    titlea                .code:n = { },
-    titleb                .code:n = { },
-    titlec                .code:n = { },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1854,10 +1858,6 @@ through XeTeX.
     supervisor*         .tl_set:N = \l_@@_info_supv_en_tl,
     supervisor-title    .tl_set:N = \l_@@_info_supv_ttl_tl,
     supervisor-title*   .tl_set:N = \l_@@_info_supv_ttl_en_tl,
-    supervisora           .code:n = { },
-    supervisora*          .code:n = { },
-    supervisora-title     .code:n = { },
-    supervisora-title*    .code:n = { },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1866,12 +1866,8 @@ through XeTeX.
 %    \begin{macrocode}
     supervisor-ii       .tl_set:N = \l_@@_info_supv_ii_tl,
     supervisor-ii*      .tl_set:N = \l_@@_info_supv_ii_en_tl,
-    supervisor-ii-title .tl_set:N = \l_@@_info_supv_ii_title_tl,
-    supervisor-ii-title*.tl_set:N = \l_@@_info_supv_ii_title_en_tl,
-    supervisorb           .code:n = { },
-    supervisorb*          .code:n = { },
-    supervisorb-title     .code:n = { },
-    supervisorb-title*    .code:n = { },
+    supervisor-ii-title .tl_set:N = \l_@@_info_supv_ii_ttl_tl,
+    supervisor-ii-title*.tl_set:N = \l_@@_info_supv_ii_ttl_en_tl,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1923,7 +1919,7 @@ through XeTeX.
     \bool_if:NT \l_@@_second_supv_bool
       { 
         \@@_quad: \l_@@_info_supv_ii_tl 
-        \@@_hskip: \l_@@_info_supv_ii_title_tl
+        \@@_hskip: \l_@@_info_supv_ii_ttl_tl
       }
   }
 \tl_set:Nn \l_@@_info_supv_full_en_tl
@@ -1932,11 +1928,12 @@ through XeTeX.
     \l_@@_info_supv_en_tl
     \bool_if:NT \l_@@_second_supv_bool
       { 
-        \@@_quad: \l_@@_info_supv_ii_title_en_tl
+        \@@_quad: \l_@@_info_supv_ii_ttl_en_tl
         \@@_hskip: \l_@@_info_supv_ii_en_tl
       }
   }
 %    \end{macrocode}
+%
 %
 % \subsection{载入宏包}
 %
@@ -2744,7 +2741,7 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_print_entry:nnn}
+% \begin{macro}{\@@_cover_entry:nnn}
 % 生成单项信息条目。
 % \begin{arguments}
 %   \item 条目
@@ -2752,7 +2749,7 @@ through XeTeX.
 %   \item 内容盒子宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_print_entry:nnn #1#2#3
+\cs_new_protected:Npn \@@_cover_entry:nnn #1#2#3
   {
     \@@_spread_box:nnn { #2 } { \kaishu } { \@@_name:n { #1 } }
     \@@_hskip:
@@ -2762,7 +2759,7 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_print_bientry:nnnn}
+% \begin{macro}{\@@_cover_bientry:nnnn}
 % 生成两项信息条目，仅用于本科生封面。
 % \begin{arguments}
 %   \item 左侧条目
@@ -2771,7 +2768,7 @@ through XeTeX.
 %   \item 内容盒子宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_print_bientry:nnnn #1#2#3#4
+\cs_new_protected:Npn \@@_cover_bientry:nnnn #1#2#3#4
   {
     \@@_spread_box:nnn { #3 } { \kaishu } { \@@_name:n { #1 } }
     \@@_hskip:
@@ -2808,15 +2805,15 @@ through XeTeX.
   {
     \begin{minipage} [ c ] { #1 + #2 + 0.3 em }
       \raggedleft
-      \@@_print_entry:nnn { dept            } { #1 } { #2 }
-      \@@_print_entry:nnn { major           } { #1 } { #2 }
+      \@@_cover_entry:nnn { dept            } { #1 } { #2 }
+      \@@_cover_entry:nnn { major           } { #1 } { #2 }
       \@@_multiline_title:nnn   { \bf } { #1 } { #2 }
-      \@@_print_bientry:nnnn { grade } { id } { #1 } { #3 }
-      \@@_print_entry:nnn { author          } { #1 } { #2 }
-      \@@_print_bientry:nnnn { supv } { supv_ttl } { #1 } { #3 }
+      \@@_cover_bientry:nnnn { grade } { id } { #1 } { #3 }
+      \@@_cover_entry:nnn { author          } { #1 } { #2 }
+      \@@_cover_bientry:nnnn { supv } { supv_ttl } { #1 } { #3 }
       \tl_if_blank:VF { \l_@@_info_supv_ii_tl }
-        { \@@_print_bientry:nnnn { supv_ii } { supv_ttl } { #1 } { #3 } }
-      \@@_print_entry:nnn { sm_date     } { #1 } { #2 }
+        { \@@_cover_bientry:nnnn { supv_ii } { supv_ttl } { #1 } { #3 } }
+      \@@_cover_entry:nnn { sm_date     } { #1 } { #2 }
     \end{minipage} 
   }
 %    \end{macrocode}
@@ -2847,7 +2844,7 @@ through XeTeX.
       \@@_multiline_title:nnn { } { #1 } { #2 }
       \clist_put_right:Nn \l_@@_tmpb_clist { author, major, field, supv_full }
       \clist_map_inline:Nn \l_@@_tmpb_clist
-        { \@@_print_entry:nnn { ##1 } { #1 } { #2 } }
+        { \@@_cover_entry:nnn { ##1 } { #1 } { #2 } }
     \end{minipage}
   }
 %    \end{macrocode}
@@ -3262,7 +3259,7 @@ through XeTeX.
 % \end{macro}
 %
 % \begin{macro}{\@@_abs_info_g:nn}
-% 输出研究生摘要信息栏。
+% 绘制研究生摘要信息栏。
 % \begin{arguments}
 %   \item 语言，空置为中文，|_en| 为英文
 %   \item 分隔符

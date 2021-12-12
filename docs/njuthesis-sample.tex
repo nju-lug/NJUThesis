@@ -49,12 +49,11 @@
     % info 类用于录入个人信息
     %   带*号的为对应英文字段
     info = {
-        titlea = {第一行标题},
-        titleb = {第二行标题},
-        titlec = {第三行标题},
+        title = {第一行标题!第二行标题!第三行标题},
         % 中文题目
-        % 这里采取手动换行方式，三个选项依次对应三行
-        % 如果只有第一行，其余两个选项就留空，以此类推
+        % 新版删除了原先的三个手动换行选项
+        % 直接填写标题就是自动换行
+        % 可以使用英文半角感叹号(!)手动指定换行位置
         %
         title* = {My Title in English}, 
         % 英文题目
@@ -89,28 +88,31 @@
         major* = {Chemistry},
         % 专业
         %
-        supervisora = {导师},
-        supervisora*= {My Supervisor},
+        supervisor = {导师},
+        supervisor*= {My Supervisor},
         % 导师姓名
+        % 新版对选项名称进行了改动
         %
-        supervisora-title = {教授},
-        supervisora-title* = {Professor},
+        supervisor-title = {教授},
+        supervisor-title* = {Professor},
         % 导师职称
+        % 新版对选项名称进行了改动
         %
-        supervisorb = {第二导师},
-        supervisorb* = {My Second Supervisor},
-        supervisorb-title = {副教授},
-        supervisorb-title* = {Associate professor},
+        supervisor-ii = {第二导师},
+        supervisor-ii* = {My Second Supervisor},
+        supervisor-ii-title = {副教授},
+        supervisor-ii-title* = {Associate professor},
         % 第二导师
-        % 如果确实没有第二导师，留空即可
+        % 新版对选项名称进行了改动
+        % 如果确实没有第二导师，不填写即可
         %
         submit-date = {2021年8月10日},
         % 提交日期
         % 
         %
         % 以下均为研究生项
-        field = {理论与计算化学},
-        field* = {Theoretical and Computational Chemistry},
+        field = {物理化学},
+        field* = {Physical Chemistry},
         % 研究领域
         %
         submit-date* = {Aug 10, 2021},
@@ -140,7 +142,6 @@
         % UDC分类号
         %
         supervisor-contact = {
-            博士～
             南京大学~
             江苏省南京市栖霞区仙林大道163号
         }
@@ -218,7 +219,7 @@
 %-------------------------------------------------
 
 \begin{acknowledgement}
-    感谢\href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU Linux User Group}。
+    感谢 \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU Linux User Group}。
 \end{acknowledgement}
     
 %-------------------------------------------------
