@@ -433,7 +433,7 @@ through XeTeX.
 %   \item 使用最新的发行版，即版本号为2021或者21。
 %   \item 对于 Windows 和 macOS 用户，更推荐轻量化的 \hologo{MiKTeX} 套件。
 %   \item Linux 用户请尽可能下载 full 版本，如 |texlive-full|。换言之，下载最大的软件包。
-%   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis} 内置了版本检查\footnote{譬如遇到l3过时问题请运行 |tlmgr update l3packages|。}，请确认各宏包已升级至最新版。
+%   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis} 内置了版本检查\footnote{譬如遇到 l3 过时问题请运行 |tlmgr update l3packages|。}，请确认各宏包已升级至最新版。
 % \end{itemize}
 %
 % \subsubsection{配置编辑器}
@@ -529,7 +529,8 @@ through XeTeX.
 %     \item 点击Compile按钮进行编译和预览
 % \end{enumerate}
 %
-% 注意，由于南大\hologo{TeX}已预装\cls{njuthesis}，可以直接编写正文，无需\file{.cls}等格式文件。如果需要使用新版模板，也可以点击New Project -> Upload Project上传 \ref{subsubsec:downloadrtm} 得到的压缩文件。
+% 注意，由于南大 \hologo{TeX} 已预装 \cls{njuthesis}，可以直接编写正文，无需 \file{.cls} 等格式文件。如果需要使用新版模板，也可以点击New Project -> Upload Project上传 \ref{subsubsec:on-the-fly-installation} 得到的压缩文件。
+%
 %
 % \subsubsection{其他平台}
 %
@@ -545,7 +546,7 @@ through XeTeX.
 %
 % \subsection{标准结构}
 %
-% 典型的\cls{njuthesis}主文件结构应该如下所示：
+% 典型的 \cls{njuthesis} 主文件结构应该如下所示：
 %
 % \begin{latexexample}[moretexcs={\njusetup,\graphicspath,\addbibresource,\maketitle,\tableofcontents,\listoffigures,\listoftables,\mainmatter,\chapter,\printbibliography,\appendix},emph={[1]document}]
 %   \documentclass{njuthesis}
@@ -684,7 +685,7 @@ through XeTeX.
 % 最后，出于统一格式的需要，本模板还选取了与正文字体相似度最高的数学字体（\href{https://github.com/aliftype/xits}{XITS 字体}）用于公式排版。
 %
 % 本节提及的字库中，中文字库只有方正书宋、方正黑体、方正楷体、方正仿宋、两种思源字体和四种Fandol字体能够\emph{免费商用}；
-% 英文字库中只有 Times New Roman、XITS 和三种\Hologo{TeX} Gyre字体能够\emph{免费商用}。
+% 英文字库中只有 Times New Roman、XITS 和三种 \Hologo{TeX} Gyre字体能够\emph{免费商用}。
 % 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。
 %
 %
@@ -812,6 +813,7 @@ through XeTeX.
 % 这些选项已在 v0.13 弃置，请不要使用。
 % \end{function}
 %
+%
 % \subsubsection{输入示范}
 %
 % 本科生可以参考如下范例输入个人信息。注意不能有空行。
@@ -876,6 +878,7 @@ through XeTeX.
 %   }
 % \end{latexexample}
 %
+%
 % \subsection{编写正文}
 %
 % 与导言区相对的是正文，位于\env{document}环境内。
@@ -936,7 +939,6 @@ through XeTeX.
 %   \end{figure}
 % \end{latexexample}
 %
-% 
 % 对于较为瘦长，或者仅起到辅助作用的图像，可以使用\env{wrapfigure}实现文字环绕效果。注意这个环境后紧跟的一行不能为空。
 %
 % \begin{latexexample}[moretexcs={\includegraphics},emph={[1]wrapfigure}]
@@ -1002,9 +1004,10 @@ through XeTeX.
 %
 % \end{function}
 %
+%
 % \subsubsection{代码}
 %
-% 由\pkg{listings}提供代码排版。代码块\env{lstlisting}，注意这个环境中的缩进空格会如实输出
+% 由 \pkg{listings} 提供代码排版。代码块 \env{lstlisting}，注意这个环境中的缩进空格会如实输出
 % \begin{latexexample}[emph={[1]lstlisting}]
 %   \begin{lstlisting}
 %   <code>
@@ -1028,7 +1031,7 @@ through XeTeX.
 %   \end{equation}
 % \end{latexexample}
 %
-% 如不需要编号，可以用\env{equation*}或者 |\[<eq>\]|
+% 如不需要编号，可以用 \env{equation*} 或者 |\[|\meta{公式}|\]|，请不要使用可能引发行距问题的 |$$|\meta{公式}|$$|。
 %
 % 本模板也提供了一系列的数学环境。证明环境会在结尾添加证毕符号。
 % \begin{latexexample}
@@ -1052,7 +1055,7 @@ through XeTeX.
 %     \tn{cref}\Arg{标签}
 %   \end{syntax}
 %
-% 使用\pkg{cleveref}宏包实现了带图、表等项目名称的智能引用。
+% 使用 \pkg{cleveref} 宏包实现了带图、表等项目名称的智能引用。
 % 
 % \end{function}
 %
@@ -1062,7 +1065,7 @@ through XeTeX.
 %     \tn{url}\Arg{链接}
 %   \end{syntax}
 %
-% 超链接。\tn{href}会将特定字符显示为可点击的超链接，\tn{url}会输出可点击的链接原文。
+% 超链接。\tn{href} 会将特定字符显示为可点击的超链接，\tn{url} 会输出可点击的链接原文。
 % 
 % \end{function}
 % 
@@ -1076,7 +1079,7 @@ through XeTeX.
 % \begin{function}{\maketitle}
 % 用于生成封面。
 % 本科生仅会生成中文封面；研究生会生成中英文封面。
-% 如果选择了\opt{nlcover}，仅会生成研究生的国家图书馆封面和原创性声明页。
+% 如果选择了 \opt{nlcover}，仅会生成研究生的国家图书馆封面和原创性声明页。
 % \end{function}
 %
 %
@@ -1149,7 +1152,7 @@ through XeTeX.
 %   \begin{syntax}
 %     \tn{njupaperlist}\Arg{文献}
 %   \end{syntax}
-% 成果列表，分别为发表文章目录与合作文章目录。\Arg{文献}的填写方式同\tn{cite}，多个文献需要使用英文半角逗号隔开。
+% 成果列表，分别为发表文章目录与合作文章目录。\Arg{文献} 的填写方式同 \tn{cite}，多个文献需要使用英文半角逗号隔开。
 % \end{function}
 %
 % \subsection{参考文献}
@@ -2331,7 +2334,7 @@ through XeTeX.
     \use:c { @@_load_latin_font_ \g_@@_latin_font_tl : }
     \use:c { @@_load_cjk_font_   \g_@@_cjk_font_tl   : }
 %    \end{macrocode}
-% 自行定义C\hologo{TeX}中的四类字体命令。
+% 自行定义 C\hologo{TeX} 中的四类字体命令。
 %    \begin{macrocode}
     \NewDocumentCommand \songti   { } { \CJKfamily{zhsong} }
     \NewDocumentCommand \heiti    { } { \CJKfamily{zhhei}  }
@@ -2386,7 +2389,7 @@ through XeTeX.
   }
 %    \end{macrocode}
 %
-% 研究生页眉页脚。奇数页为章名，偶数页为节名。 
+% 研究生页眉页脚。页眉为横线，奇数页显示章名，偶数页显示节名；页脚为页码。 
 %    \begin{macrocode}
 \fancypagestyle{headings}
   {
@@ -2394,8 +2397,8 @@ through XeTeX.
     \fancyhead [ CO ] { \leftmark          }
     \fancyhead [ CE ] { \rightmark         }
     \fancyfoot [ C  ] { \zihao{5} \thepage }
-    \RenewDocumentCommand \headrulewidth { } { 0   pt }
-    \RenewDocumentCommand \footrulewidth { } { 0.4 pt }
+    \RenewDocumentCommand \headrulewidth { } { 0.4 pt }
+    \RenewDocumentCommand \footrulewidth { } { 0   pt }
     \setlength { \headheight } { 20 pt } 
   }
 %    \end{macrocode}
