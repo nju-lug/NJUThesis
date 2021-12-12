@@ -197,7 +197,7 @@ through XeTeX.
 % \changes{v0.12}{2021/11/29}{更新了说明文档封面设计。}
 % \changes{v0.12}{2021/11/30}{区分测试文件和空白模板。}
 % \changes{v0.12}{2021/12/06}{修改了说明文档的代码呈现样式。}
-% \changes{v0.13}{2021/12/12}{显著提升编译速度。}
+% \changes{v0.13}{2021/12/12}{优化了编译速度。}
 %
 % \maketitle
 %
@@ -599,10 +599,10 @@ through XeTeX.
 %
 % 如果希望更改本模板使用的字体，请填写以下两个选项以覆盖操作系统检测得到的设置。
 % 
-% \begin{function}[added=2021-09-07]{customchinesefont,customlatinfont}
+% \begin{function}[added=2021-09-07,updated=2021-12-12]{cjk-font,latin-font}
 %   \begin{syntax}
-%     customchinesefont = <(windows)|macos|fandol|founder|noto|none>
-%     customlatinfont = <(windows)|macos|gyre|none>
+%     cjk-font = <(win)|mac|fandol|founder|noto|none>
+%     latin-font = <(win)|mac|gyre|none>
 %   \end{syntax}
 % 手动指定字体。
 % \end{function}
@@ -1377,18 +1377,18 @@ through XeTeX.
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_load_system_fontset_bool}
+% \begin{variable}{\g_@@_load_sys_font_bool}
 % 定义用于判断是否需要载入系统预装字体的变量。
 %    \begin{macrocode}
-\bool_new:N \g_@@_load_system_fontset_bool
+\bool_new:N \g_@@_load_sys_font_bool
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_latin_fontset_tl,\g_@@_cjk_fontset_tl}
+% \begin{variable}{\g_@@_latin_font_tl,\g_@@_cjk_font_tl}
 % 用于存储所使用字体名称的全局变量
 %    \begin{macrocode}
-\tl_new:N \g_@@_latin_fontset_tl
-\tl_new:N \g_@@_cjk_fontset_tl
+\tl_new:N \g_@@_latin_font_tl
+\tl_new:N \g_@@_cjk_font_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1619,7 +1619,7 @@ through XeTeX.
 % \begin{macro}{degree}
 % 学位类型。
 %    \begin{macrocode}
-    degree            .choices:nn   = { ug, mg, mf, phd }
+    degree     .choices:nn   = { ug, mg, mf, phd }
       { \int_set_eq:NN \g_@@_info_degree_int \l_keys_choice_int  
         \tl_set:Nn \l_@@_info_degree_tl
           { \clist_item:Nn \c_@@_name_degree_clist { \g_@@_info_degree_int } }
@@ -1629,20 +1629,20 @@ through XeTeX.
         \int_compare:nTF { \g_@@_info_degree_int == 1 }
           { \tl_set:Nn \g_@@_info_diploma_tl { ug } }
           { \tl_set:Nn \g_@@_info_diploma_tl { g  } } },
-    degree            .initial:n    = ug,
+    degree     .initial:n    = ug,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{type}
 % 论文类型。\cs{l_keys_choice_int} 需要被展开以获取正确的序号。
 %    \begin{macrocode}
-    type              .choices:nn   = { thesis, design }
+    type       .choices:nn   = { thesis, design }
       { \int_set_eq:NN \l_@@_info_type_int \l_keys_choice_int
         \tl_set:Nn \l_@@_info_type_tl
           { \clist_item:Nn \c_@@_name_type_clist { \l_@@_info_type_int } }
         \tl_put_left:Nn \l_@@_info_type_tl 
           { \tl_use:c { c_@@_name_ \g_@@_info_diploma_tl _tl } } },
-    type              .initial:n    = thesis,
+    type       .initial:n    = thesis,
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -1654,15 +1654,16 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 % 
-% \begin{macro}{customlatinfont,customchinesefont}
+% \begin{macro}{latin-font,cjk-font}
+% \changes{v0.13}{2021/12/12}{简化字体选项名称。}
 % 定义字体选项
 %    \begin{macrocode}
-    customlatinfont   .choices:nn   =
-    { gyre, macos, windows, none }
-    { \tl_set_eq:NN \g_@@_latin_fontset_tl \l_keys_choice_tl },  
-    customchinesefont .choices:nn   =
-    { fandol, founder, macos, noto, windows, none }
-    { \tl_set_eq:NN \g_@@_cjk_fontset_tl   \l_keys_choice_tl },
+    latin-font .choices:nn   =
+    { gyre, mac, win, none }
+    { \tl_set_eq:NN \g_@@_latin_font_tl \l_keys_choice_tl },  
+    cjk-font   .choices:nn   =
+    { fandol, founder, mac, noto, win, none }
+    { \tl_set_eq:NN \g_@@_cjk_font_tl   \l_keys_choice_tl },
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2050,7 +2051,7 @@ through XeTeX.
 %    \begin{macrocode}
 \sys_if_engine_luatex:T
   {
-    \RequirePackage{lua-ul,dashundergaps}
+    \RequirePackage{lua-ul}
     \NewDocumentCommand \njuline { m } { \underLine{#1} \null }
   }
 %    \end{macrocode}
@@ -2091,11 +2092,11 @@ through XeTeX.
 % 判断用户是否自定义了中英文字体。如果其中任意一种未被定义，
 % 则使用系统预装字体覆盖字体选项。
 %    \begin{macrocode}
-\tl_if_empty:NTF \g_@@_latin_fontset_tl
-  { \bool_gset_true:N \g_@@_load_system_fontset_bool }  
+\tl_if_empty:NTF \g_@@_latin_font_tl
+  { \bool_gset_true:N \g_@@_load_sys_font_bool }  
   {  
-    \tl_if_empty:NT \g_@@_cjk_fontset_tl
-      { \bool_gset_true:N \g_@@_load_system_fontset_bool }  
+    \tl_if_empty:NT \g_@@_cjk_font_tl
+      { \bool_gset_true:N \g_@@_load_sys_font_bool }  
   }
 %    \end{macrocode}
 %
@@ -2104,16 +2105,16 @@ through XeTeX.
 % 检测 macOS 的命令由\pkg{ctex}提供，
 % 这两种情况外的系统被判断为 Linux，一律使用自由字体。
 %    \begin{macrocode}
-\bool_if:NT \g_@@_load_system_fontset_bool
+\bool_if:NT \g_@@_load_sys_font_bool
   { 
     \sys_if_platform_windows:TF
-      { \tl_set:Nn \g_@@_latin_fontset_tl   { windows }
-        \tl_set:Nn \g_@@_cjk_fontset_tl     { windows } }
+      { \tl_set:Nn \g_@@_latin_font_tl   { win    }
+        \tl_set:Nn \g_@@_cjk_font_tl     { win    } }
       { \ctex_if_platform_macos:TF
-        { \tl_set:Nn \g_@@_latin_fontset_tl { macos   }
-          \tl_set:Nn \g_@@_cjk_fontset_tl   { macos   } }
-        { \tl_set:Nn \g_@@_latin_fontset_tl { gyre    }
-          \tl_set:Nn \g_@@_cjk_fontset_tl   { fandol  } } } 
+        { \tl_set:Nn \g_@@_latin_font_tl { mac    }
+          \tl_set:Nn \g_@@_cjk_font_tl   { mac    } }
+        { \tl_set:Nn \g_@@_latin_font_tl { gyre   }
+          \tl_set:Nn \g_@@_cjk_font_tl   { fandol } } } 
   }
 %    \end{macrocode}
 %
@@ -2122,10 +2123,10 @@ through XeTeX.
 %
 % 接下来逐个定义所需要使用的字库。
 %
-% \begin{macro}{\@@_load_latin_font_windows:}
+% \begin{macro}{\@@_load_latin_font_win:}
 % Windows 西文字体
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_load_latin_font_windows:
+\cs_new_protected:Npn \@@_load_latin_font_win:
   {
     \setmainfont{Times~New~Roman}
     \setsansfont{Arial}
@@ -2134,10 +2135,10 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_load_latin_font_macos:}
+% \begin{macro}{\@@_load_latin_font_mac:}
 % macOS 西文字体。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_load_latin_font_macos:
+\cs_new_protected:Npn \@@_load_latin_font_mac:
   {
     \setmainfont{Times~New~Roman}
     \setsansfont{Arial}
@@ -2177,10 +2178,10 @@ through XeTeX.
 %
 % \subsubsection{定义中文字库}
 %
-% \begin{macro}{\@@_load_cjk_font_windows:}
+% \begin{macro}{\@@_load_cjk_font_win:}
 % Windows 中文字体。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_load_cjk_font_windows:
+\cs_new_protected:Npn \@@_load_cjk_font_win:
   {
     \setCJKmainfont{SimSun}[
       AutoFakeBold=2.17, 
@@ -2196,11 +2197,11 @@ through XeTeX.
 % \end{macro}
 %
 %
-% \begin{macro}{\@@_load_cjk_font_macos:}
+% \begin{macro}{\@@_load_cjk_font_mac:}
 % macOS 字体。
 % TODO: 修复 macOS 字体支持，实现开箱即用。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_load_cjk_font_macos:
+\cs_new_protected:Npn \@@_load_cjk_font_mac:
   {
     % 移除 does not contain script "CJK" 警告
     \msg_redirect_name:nnn {fontspec} {no-script} {info} 
@@ -2327,8 +2328,8 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_font:
   {
-    \use:c { @@_load_latin_font_ \g_@@_latin_fontset_tl : }
-    \use:c { @@_load_cjk_font_   \g_@@_cjk_fontset_tl   : }
+    \use:c { @@_load_latin_font_ \g_@@_latin_font_tl : }
+    \use:c { @@_load_cjk_font_   \g_@@_cjk_font_tl   : }
 %    \end{macrocode}
 % 自行定义C\hologo{TeX}中的四类字体命令。
 %    \begin{macrocode}
@@ -3115,8 +3116,8 @@ through XeTeX.
     \c_@@_orig_decl_text_tl
     \vfil
     \begin{flushright}
-      { \c_@@_name_orig_sign_tl } \@@_uline:n { 7 em } \@@_vskip:
-      { \c_@@_name_orig_date_tl } \@@_uline:n { 7 em }
+      \@@_name:n { orig_sign } \@@_uline:n { 7 em } \@@_vskip:
+      \@@_name:n { orig_date } \@@_uline:n { 7 em }
     \end{flushright}
     \vfil
   }
@@ -3310,7 +3311,8 @@ through XeTeX.
 %    \begin{macrocode}
       { 
         \@@_full_uline:NV \l_@@_tmp_dim
-          { \clist_item:cn { c_@@_name_type #1 _clist } { \l_@@_info_type_int } # 2 }
+          { \clist_item:cn { c_@@_name_type #1 _clist }
+              { \l_@@_info_type_int } # 2 }
         \@@_ulined_center_box:nn { \l_@@_tmp_dim }
           { \tl_range:Nnn \l_@@_info_title_en_tl { 1 } { 40 } } \\
         \@@_uline:n { \textwidth } \@@_qquad:
