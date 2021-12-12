@@ -197,6 +197,7 @@ through XeTeX.
 % \changes{v0.12}{2021/11/29}{更新了说明文档封面设计。}
 % \changes{v0.12}{2021/11/30}{区分测试文件和空白模板。}
 % \changes{v0.12}{2021/12/06}{修改了说明文档的代码呈现样式。}
+% \changes{v0.13}{2021/12/12}{显著提升编译速度。}
 %
 % \maketitle
 %
@@ -1075,6 +1076,10 @@ through XeTeX.
 % \subsubsection{摘要页}
 % \changes{v0.11}{2021/10/01}{简化了摘要的编写方式。}
 % 
+% \begin{function}{abstract,abstract*}
+% 摘要。带星号的会生成英文摘要。
+% \end{function}
+%
 % \begin{latexexample}[emph={[1]abstract,abstract*}]
 %   \begin{abstract}
 %       我的中文摘要
@@ -1088,8 +1093,8 @@ through XeTeX.
 %
 % \subsubsection{前言页}
 % 
-% \begin{function}{preface}       
-% 使用\env{preface}环境定义
+% \begin{function}{preface}
+% 使用 \env{preface} 环境定义。
 % \end{function}
 % 
 % \begin{latexexample}[emph={[1]preface,flushright}]
@@ -1103,6 +1108,7 @@ through XeTeX.
 %   \end{preface}
 % \end{latexexample}
 %
+%
 % \subsubsection{目录页}
 %
 % \begin{function}{\tableofcontents,\listoffigures,\listoftables}
@@ -1113,7 +1119,7 @@ through XeTeX.
 % \subsubsection{致谢页}
 %
 % \begin{function}{acknowledgement}
-% 同前言，使用\env{acknowledgement}环境
+% 同前言，使用 \env{acknowledgement} 环境。
 % \end{function}
 % 
 % \begin{latexexample}[emph={[1]acknowledgement}]
@@ -1310,13 +1316,14 @@ through XeTeX.
 % \begin{variable}{\l_@@_tmpa_clist,\l_@@_tmpb_clist,\l_@@_tmpa_seq,\l_@@_tmpa_tl,\l_@@_tmpb_tl}
 % 临时变量。
 %    \begin{macrocode}
+\box_new:N   \l_@@_tmpa_box
 \clist_new:N \l_@@_tmpa_clist
 \clist_new:N \l_@@_tmpb_clist
+\dim_new:N   \l_@@_tmp_dim
+\int_new:N   \l_@@_tmpa_int
 \seq_new:N   \l_@@_tmpa_seq
 \tl_new:N    \l_@@_tmpa_tl
 \tl_new:N    \l_@@_tmpb_tl
-\dim_new:N \l_@@_tmpa_dim
-\box_new:N \l_@@_tmpa_box
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1410,6 +1417,188 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_name:n,\@@_info:n}
+% 调用名称和内容信息。
+%    \begin{macrocode}
+\cs_new:Npn \@@_name:n #1 { \tl_use:c { c_@@_name_ #1 _tl } }
+\cs_new:Npn \@@_info:n #1 { \tl_use:c { l_@@_info_ #1 _tl } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_ulined_center_box:nn}
+% 带有下划线的水平盒子。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+%   \item 内容，可带有格式
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_ulined_center_box:nn #1#2
+  {
+    \mode_leave_vertical:
+    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
+    \skip_horizontal:n { -#1 }
+    \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_spread_box:nnn}
+% 分散对齐的水平盒子。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+%   \item 格式
+%   \item 内容，不可带有格式
+% \end{arguments}
+%    \begin{macrocode}
+\cs_generate_variant:Nn \tl_map_inline:nn { xn }
+\cs_new_protected:Npn \@@_spread_box:nnn #1#2#3
+  {
+    \mode_leave_vertical:
+    \hbox_to_wd:nn {#1}
+      { #2 \tl_map_inline:xn {#3} { ##1 \hfil } \unskip }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_multiline_box:nnnn}
+% 多行固定长度的下划线内容。
+% \begin{arguments}
+%   \item 用于循环的 |int| 型变量
+%   \item 内容，|clist| 型变量
+%   \item 行数
+%   \item 宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_multiline_box:nnnn #1#2#3#4
+  {
+    \int_set:Nn #1 { 1 }
+    \int_do_until:nn { #1 > #3 }
+      { 
+        \@@_ulined_center_box:nn { #4 } 
+          { \clist_item:Nn #2 { #1 } } \\
+        \int_incr:N #1
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_put_inempty_seg:nnn}
+% 将固定长度的非空字符串插入 |clist|。
+% \begin{arguments}
+%   \item 原始字符串
+%   \item 起始位置
+%   \item 长度
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_put_inempty_seg:nnn #1#2#3
+  {
+    \tl_set:Nx \l_@@_tmpa_tl { \tl_range:Nnn { #1 } { #2 } { #2 + #3 - 1 } }
+    \tl_if_empty:NF \l_@@_tmpa_tl { \clist_put_right:NV \l_@@_tmpa_clist { \l_@@_tmpa_tl } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_uline:n}
+% 指定宽度的下划线。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_uline:n #1
+  {
+    \mode_leave_vertical:
+    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
+    \skip_horizontal:n { -#1 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_uuline:n}
+% 指定宽度的双层下划线。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_uuline:n #1
+  {
+    \mode_leave_vertical:
+    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
+    \skip_horizontal:n { -#1 }
+    \rule [ -0.6 ex ] { #1 } { 0.4 pt }
+    \skip_horizontal:n { -#1 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_get_text_width:Nn,\@@_get_text_width:NV}
+% 获取文本宽度。
+% \begin{arguments}
+%   \item 存储宽度的 |dim| 型变量
+%   \item 文本
+% \end{arguments}
+% 将内容放入 \tn{hbox} 后读取其宽度，存入 |dim| 型变量。
+%    \begin{macrocode}
+\cs_new:Npn \@@_get_text_width:Nn #1#2
+  {
+    \hbox_set:Nn \l_@@_tmpa_box {#2}
+    \dim_set:Nn #1 { \box_wd:N \l_@@_tmpa_box }
+  }
+\cs_generate_variant:Nn \@@_get_text_width:Nn { NV }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_full_uline:Nn,\@@_full_uline:NV}
+% 横跨整页的下划线。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+%   \item 文本
+% \end{arguments}
+% 先使用 \cs{@@_get_text_width:Nn} 获取文本内容宽度，该宽度存储在调用的 |dim| 型变量中。随后输出文本内容。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_full_uline:Nn #1#2
+  {
+    \@@_get_text_width:Nn #1 { #2 }
+    \dim_set:Nn #1 { \textwidth - #1 } #2 
+  }
+\cs_generate_variant:Nn \@@_full_uline:Nn { NV }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_uline_entry:nnnn}
+% 生成占整页宽度的下划线条目。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+%   \item 文本
+%   \item 文本
+%   \item 分隔符
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_uline_entry:nnnn #1#2#3#4
+  {
+    \@@_full_uline:NV #1 { \@@_name:n { #2 } #4 }
+    \@@_ulined_center_box:nn { #1 } { \@@_info:n { #3 } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_uline_bientry:nnnn}
+% 生成占半页宽度的下划线条目。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+%   \item 文本
+%   \item 文本
+%   \item 分隔符
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_uline_bientry:nnnn #1#2#3#4
+  {
+    \@@_full_uline:NV #1 { \@@_name:n { #2 } #4 }
+    \dim_sub:Nn #1 { \textwidth / 2 }
+    \@@_ulined_center_box:nn { #1 } { \@@_info:n { #3 } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 %
 % \subsection{模板选项}
 % \changes{v0.11}{2021/11/15}{进行了效率优化。}
@@ -1483,13 +1672,26 @@ through XeTeX.
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { id          } { 学号     },
-    { supv_ii     } { 第二导师 },
-    { supv_title  } { 职称     },
-    { submit_date } { 提交日期 },
-    { pdf_creator } { LaTeX~ with~ njuthesis~ class }
+    { id          } { 学号                          },
+    { orig_decl   } { 学位论文原创性声明            },
+    { pdf_creator } { LaTeX~ with~ njuthesis~ class },
+    { supv_ii     } { 第二导师                      },
+    { supv_ttl    } { 职称                          }
   }
   { \@@_define_name:nn #1 }
+%    \end{macrocode}
+%
+% 定义同时使用到中英文名称的常量。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { abstract  } { 摘要     } { ABSTRACT            },
+    { dept      } { 院系     } { DEPARTMENT          },
+    { keywords  } { 关键词： } { Keywords:~          },
+    { lang      } { 中文     } { 英文                },
+    { nju       } { 南京大学 } { Nanjing~ University }
+  }
+  { \@@_define_name:nnn #1 }
 %    \end{macrocode}
 %
 % 针对学位的特定名称。需要放在 \cs{ProcessKeysOptions} 导入设置选项后，以使用学位信息。
@@ -1501,19 +1703,20 @@ through XeTeX.
 %    \begin{macrocode}
     \clist_map_inline:nn
       {
-        { grade       } { 年级     },
-        { title     } { 题目     },
-        { ug        } { 本科     },
-        { supv      } { 导师     },
-        { author_full } { 本科生姓名 },
-        { type      } { 本科生毕业论文（设计、作品）}
+        { author_full } { 本科生姓名                  },
+        { grade       } { 年级                        },
+        { sm_date     } { 提交日期                    },
+        { supv        } { 导师                        },
+        { title       } { 题目                        },
+        { type        } { 本科生毕业论文（设计、作品）},
+        { ug          } { 本科                        }
       }
       { \@@_define_name:nn #1 }
       \clist_map_inline:nn
         {
-          { author    } { 学生姓名 } { UNDERGRADUATE },
-          { major     } { 专业     } { SPECIALIZATION },
-          { supv_full } { 指导教师（姓名、职称） } { MENTOR }
+          { author    } { 学生姓名               } { UNDERGRADUATE  },
+          { major     } { 专业                   } { SPECIALIZATION },
+          { supv_full } { 指导教师（姓名、职称） } { MENTOR         }
         }
         { \@@_define_name:nnn #1 }
   }
@@ -1523,49 +1726,56 @@ through XeTeX.
   {
     \clist_map_inline:nn
       {
-        { g           } { 研究生       },
-        { supv        } { 导师         },
-        { title       } { 论文题目     },
-        { title_s     } { 题目         },
-        { major_s     } { 专业         },
-        { field       } { 研究方向     },
-        { grade       } { 级     },
-        { supv_r      } { （姓名、职称） },
-        { author_r    } { 士生姓名 },
-        { defend_date } { 论文答辩日期 },
-        { degree_l    } {（申请        },
-        { degree_r    } { 学位）       },
-        { sign        } {（签字）      },
-        { abstract_r  } { 摘要首页用纸 },
-        { note } 
-          { A~ dissertation~ submitted~ to \\ 
-            the~ graduate~ school~ of~ Nanjing~ University \\
-            in~ partial~ fulfilment~ of~ the~ requirements~ 
-            for~ the~ degree~ of }
+        { abstract_r  } { 摘要首页用纸       },
+        { author_r    } { 士生姓名           },
+        { chairman    } { 答辩委员会主席：   },
+        { clc         } { 分类号             },
+        { confer      } { 学位授予单位和日期 },
+        { df_date     } { 论文答辩日期       },
+        { degree      } { 申请学位级别       },
+        { degree_l    } { （申请             },
+        { degree_r    } { 学位）             },
+        { field       } { 研究方向           },
+        { g           } { 研究生             },
+        { grade       } { 级                 },
+        { major_s     } { 专业               },
+        { major_nl    } { 专业名称           },
+        { orig_sign   } { 研究生签名：       },
+        { orig_date   } { 日期：             },
+        { reviewer    } { 评阅人：           },
+        { seclv       } { 密级               },
+        { sign        } { （签字）           },
+        { sm_date     } { 论文提交日期       },
+        { supv        } { 导师               },
+        { supv_r      } { （姓名、职称）     },
+        { supv_info   } { 指导教师姓名、职务、
+                  职称、学位、单位名称及地址 },
+        { title       } { 论文题目           },
+        { title_nl    } { （题名和副题名）   },
+        { title_s     } { 题目               },
+        { udc         } { U D C              }
       }
       { \@@_define_name:nn #1 }
       \clist_map_inline:nn
         {
+          { author    } { 作者姓名 } { POSTGRADUATE   },
           { major     } { 专业方向 } { SPECIALIZATION },
-          { author    } { 作者姓名 } { POSTGRADUATE },
-          { supv_full } { 指导教师 } { MENTOR }
+          { supv_full } { 指导教师 } { MENTOR         }
         }
         { \@@_define_name:nnn #1 }
-  }
 %    \end{macrocode}
-%
-% 定义同时使用到中英文名称的常量。
+% \begin{variable}{\c_@@_cover_en_text_tl}
+% 英文封面字样。
 %    \begin{macrocode}
-\clist_map_inline:nn
-  {
-    { lang      } { 中文     } { 英文               },
-    { nju       } { 南京大学 } { Nanjing University },
-    { dept      } { 院系     } { DEPARTMENT         },
-    { abstract  } { 摘要     } { ABSTRACT           },
-    { keywords  } { 关键词： } { Keywords:~         }
+    \tl_const:Nn \c_@@_cover_en_text_tl
+      {
+        A~ dissertation~ submitted~ to \\ 
+        the~ graduate~ school~ of~ Nanjing~ University \\
+        in~ partial~ fulfilment~ of~ the~ requirements~ for~ the~ degree~ of
+      }
   }
-  { \@@_define_name:nnn #1 }
 %    \end{macrocode}
+% \end{variable}
 %
 % \begin{variable}{\c_@@_orig_decl_text_tl}
 % 学位论文原创性声明。
@@ -1642,8 +1852,8 @@ through XeTeX.
 %    \begin{macrocode}
     supervisor          .tl_set:N = \l_@@_info_supv_tl,
     supervisor*         .tl_set:N = \l_@@_info_supv_en_tl,
-    supervisor-title    .tl_set:N = \l_@@_info_supv_title_tl,
-    supervisor-title*   .tl_set:N = \l_@@_info_supv_title_en_tl,
+    supervisor-title    .tl_set:N = \l_@@_info_supv_ttl_tl,
+    supervisor-title*   .tl_set:N = \l_@@_info_supv_ttl_en_tl,
     supervisora           .code:n = { },
     supervisora*          .code:n = { },
     supervisora-title     .code:n = { },
@@ -1668,15 +1878,15 @@ through XeTeX.
 % \begin{macro}{info/submit-date,info/submit-date*}
 % 提交日期
 %    \begin{macrocode}
-    submit-date         .tl_set:N = \l_@@_info_submit_date_tl,
-    submit-date*        .tl_set:N = \l_@@_info_submit_date_en_tl,
+    submit-date         .tl_set:N = \l_@@_info_sm_date_tl,
+    submit-date*        .tl_set:N = \l_@@_info_sm_date_en_tl,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/defend-date,info/chairman,info/reviewer}
 % 答辩信息。
 %    \begin{macrocode}
-    defend-date         .tl_set:N = \l_@@_info_defend_date_tl,
+    defend-date         .tl_set:N = \l_@@_info_df_date_tl,
     chairman            .tl_set:N = \l_@@_info_chairman_tl,
     reviewer         .clist_set:N = \l_@@_info_reviewer_clist,
 %    \end{macrocode}
@@ -1709,7 +1919,7 @@ through XeTeX.
 \tl_set:Nn \l_@@_info_supv_full_tl
   {
     \l_@@_info_supv_tl \@@_hskip:
-    \l_@@_info_supv_title_tl
+    \l_@@_info_supv_ttl_tl
     \bool_if:NT \l_@@_second_supv_bool
       { 
         \@@_quad: \l_@@_info_supv_ii_tl 
@@ -1718,7 +1928,7 @@ through XeTeX.
   }
 \tl_set:Nn \l_@@_info_supv_full_en_tl
   {
-    \l_@@_info_supv_title_en_tl \@@_hskip:
+    \l_@@_info_supv_ttl_en_tl \@@_hskip:
     \l_@@_info_supv_en_tl
     \bool_if:NT \l_@@_second_supv_bool
       { 
@@ -2156,11 +2366,12 @@ through XeTeX.
 %
 % 使用\pkg{geometry}设置页边距。
 %    \begin{macrocode}
-\geometry{
-  vmargin    = 2.5 cm,
-  hmargin    = 3.2 cm, 
-  headheight = 15 pt
-}
+\geometry
+  {
+    vmargin    = 2.5 cm,
+    hmargin    = 3.2 cm, 
+    headheight = 15 pt
+  }
 %    \end{macrocode}
 %
 % \subsubsection{页眉页脚}
@@ -2489,57 +2700,6 @@ through XeTeX.
 %
 % \subsubsection{内部命令}
 %
-% \begin{macro}{\@@_ulined_center_box:nn}
-% 带有下划线的水平盒子。
-% \begin{arguments}
-%   \item 宽度，|dim| 型变量
-%   \item 内容，可带有格式
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_ulined_center_box:nn #1#2
-  {
-    \mode_leave_vertical:
-    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
-    \skip_horizontal:n { -#1 }
-    \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_spread_box:nnn}
-% 分散对齐的水平盒子。
-% \begin{arguments}
-%   \item 宽度，|dim| 型变量
-%   \item 格式
-%   \item 内容，不可带有格式
-% \end{arguments}
-%    \begin{macrocode}
-\cs_generate_variant:Nn \tl_map_inline:nn { xn }
-\cs_new_protected:Npn \@@_spread_box:nnn #1#2#3 %#2:format
-  {
-    \mode_leave_vertical:
-    \hbox_to_wd:nn {#1}
-      { #2 \tl_map_inline:xn {#3} { ##1 \hfil } \unskip }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_put_inempty_seg:nnn}
-% 将固定长度的非空字符串插入 |clist|。
-% \begin{arguments}
-%   \item 原始字符串
-%   \item 起始位置
-%   \item 长度
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_put_inempty_seg:nnn #1#2#3
-  {
-    \tl_set:Nx \l_@@_tmpa_tl { \tl_range:Nnn { #1 } { #2 } { #2 + #3 - 1 } }
-    \tl_if_empty:NF \l_@@_tmpa_tl { \clist_put_right:NV \l_@@_tmpa_clist { \l_@@_tmpa_tl } }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_split_title:n}
 % 分割标题。
 %    \begin{macrocode}
@@ -2574,7 +2734,7 @@ through XeTeX.
 % \end{arguments}
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_multiline_title:nnn #1#2#3
-  {    
+  {
     \@@_split_title:n { \l_@@_info_title_tl }
     \@@_spread_box:nnn { #2 } { \kaishu } { \c_@@_name_title_tl }
     \@@_hskip:
@@ -2594,9 +2754,9 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_entry:nnn #1#2#3
   {
-    \@@_spread_box:nnn { #2 } { \kaishu } { \tl_use:c { c_@@_name_ #1 _tl } }
+    \@@_spread_box:nnn { #2 } { \kaishu } { \@@_name:n { #1 } }
     \@@_hskip:
-    \@@_ulined_center_box:nn  { #3 }      { \tl_use:c { l_@@_info_ #1 _tl } }
+    \@@_ulined_center_box:nn  { #3 }      { \@@_info:n { #1 } }
     \@@_vskip:
   }
 %    \end{macrocode}
@@ -2613,13 +2773,13 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_bientry:nnnn #1#2#3#4
   {
-    \@@_spread_box:nnn { #3 } { \kaishu } { \tl_use:c { c_@@_name_ #1 _tl } }
+    \@@_spread_box:nnn { #3 } { \kaishu } { \@@_name:n { #1 } }
     \@@_hskip:
-    \@@_ulined_center_box:nn  { #4 }      { \tl_use:c { l_@@_info_ #1 _tl } }
+    \@@_ulined_center_box:nn  { #4 }      { \@@_info:n { #1 } }
     \skip_horizontal:n { 0.5 em }
-    \@@_spread_box:nnn { #3 } { \kaishu } { \tl_use:c { c_@@_name_ #2 _tl } }
+    \@@_spread_box:nnn { #3 } { \kaishu } { \@@_name:n { #2 } }
     \@@_hskip:
-    \@@_ulined_center_box:nn  { #4 }      { \tl_use:c { l_@@_info_ #2 _tl } }
+    \@@_ulined_center_box:nn  { #4 }      { \@@_info:n { #2 } }
     \@@_vskip:
   }
 %    \end{macrocode}
@@ -2627,6 +2787,14 @@ through XeTeX.
 %
 %
 % \subsubsection{绘制部件}
+%
+% \begin{macro}{\@@_cover_title_ug:}
+% 本科生封面标题。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_title_ug:
+  { \@@_spread_box:nnn { 9em } { \bf } { \l_@@_info_type_tl } }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_cover_info_ug:nnn}
 % 本科生封面信息栏。
@@ -2645,11 +2813,22 @@ through XeTeX.
       \@@_multiline_title:nnn   { \bf } { #1 } { #2 }
       \@@_print_bientry:nnnn { grade } { id } { #1 } { #3 }
       \@@_print_entry:nnn { author          } { #1 } { #2 }
-      \@@_print_bientry:nnnn { supv } { supv_title } { #1 } { #3 }
+      \@@_print_bientry:nnnn { supv } { supv_ttl } { #1 } { #3 }
       \tl_if_blank:VF { \l_@@_info_supv_ii_tl }
-        { \@@_print_bientry:nnnn { supv_ii } { supv_title } { #1 } { #3 } }
-      \@@_print_entry:nnn { submit_date     } { #1 } { #2 }
+        { \@@_print_bientry:nnnn { supv_ii } { supv_ttl } { #1 } { #3 } }
+      \@@_print_entry:nnn { sm_date     } { #1 } { #2 }
     \end{minipage} 
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_title_g:}
+% 研究生封面标题。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_title_g:
+  {
+    \@@_spread_box:nnn { 9em } { } { \l_@@_info_type_tl } \@@_vskip:
+    \c_@@_name_degree_l_tl \l_@@_info_degree_tl \c_@@_name_degree_r_tl
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2674,6 +2853,136 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_cover_back_g:}
+% 研究生封面背面信息。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_back_g:
+  {
+    \@@_spread_box:nnn { 6.2 em } { \kaishu } { \c_@@_name_id_tl }
+    { : \@@_quad: } \l_@@_info_id_tl
+    \@@_vskip:
+    \@@_spread_box:nnn { 6.2 em } { \kaishu } { \c_@@_name_df_date_tl }
+    { : \@@_quad: } \l_@@_info_df_date_tl
+    \@@_vskip:
+    \@@_spread_box:nnn { 6.2 em } { \kaishu } { \c_@@_name_supv_full_tl }
+    { : \@@_quad: } \skip_horizontal:n { 8 em } \c_@@_name_sign_tl
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_en_g:}
+% 研究生英文封面。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_en_g:
+  {
+%    \end{macrocode}
+% 标题。
+%    \begin{macrocode}
+      \parbox { \textwidth }
+        { \centering \bf \sffamily \zihao { 2 } \l_@@_info_title_en_tl }
+      \skip_vertical:n { 1 cm }
+%    \end{macrocode}
+% 作者。
+%    \begin{macrocode}
+      \group_begin: \zihao { 4 } { by } \group_end: \@@_vskip:
+      \group_begin: 
+        \bf \sffamily \zihao { 4 } \l_@@_info_author_en_tl
+      \group_end: \skip_vertical:n { 1 cm }
+%    \end{macrocode}
+% 导师。
+%    \begin{macrocode}
+      \group_begin: \zihao { 4 } { Supervised~ by } \group_end: \@@_vskip:
+      \group_begin:
+        \sffamily \zihao { 4 } \l_@@_info_supv_full_en_tl
+      \group_end: \vfill
+%    \end{macrocode}
+% 学位信息。
+%    \begin{macrocode}
+      \c_@@_cover_en_text_tl \@@_vskip:
+      \textsc { \clist_item:Nn \c_@@_name_degree_en_clist
+                  { \g_@@_info_degree_int } }
+      \@@_vskip: { in } \@@_vskip: 
+      \l_@@_info_major_en_tl \skip_vertical:n { 1 cm }
+%    \end{macrocode}
+% 校徽。
+%    \begin{macrocode}
+      \njuemblem [ black ] { ! } { 2.5 cm } \@@_vskip:
+      \l_@@_info_dept_en_tl \\ \c_@@_name_nju_en_tl
+      \skip_vertical:n { 1 cm }
+%    \end{macrocode}
+% 提交日期。
+%    \begin{macrocode}
+      \l_@@_info_sm_date_en_tl
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_top_nl:}
+% 国家图书馆封面顶部信息。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_top_nl:
+  {
+    \@@_spread_box:nnn { 3.2 em } { } { \c_@@_name_clc_tl   } \@@_hskip:
+    \@@_ulined_center_box:nn { 9 em } { \l_@@_info_clc_tl   } \hfill
+    \@@_spread_box:nnn { 3.2 em } { } { \c_@@_name_seclv_tl } \@@_hskip:
+    \@@_ulined_center_box:nn { 9 em } { \l_@@_info_seclv_tl } \\
+    \@@_spread_box:nnn { 3.2 em } { } { \c_@@_name_udc_tl   } \@@_hskip:
+    \@@_ulined_center_box:nn { 9 em } { \l_@@_info_udc_tl   } \hfill \null
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_title_nl:}
+% 国家图书馆封面标题。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_title_nl:
+  {
+    \@@_split_title:n { \l_@@_info_title_tl }
+    \noindent \kaishu \zihao { -0 } \skip_vertical:n { -1 cm }
+    \@@_spread_box:nnn { 6 em } { } { \c_@@_name_title_tl }
+    \@@_vskip: \zihao { 1 }
+    \@@_multiline_box:nnnn { \l_@@_tmpa_int }
+      \l_@@_tmpa_clist { 3 } { 15 em }
+    \@@_vskip: \zihao{4} \c_@@_name_title_nl_tl
+    \@@_vskip: \zihao{1} 
+    \@@_ulined_center_box:nn { 4.5 em } { \l__nju_info_author_tl }
+    \@@_vskip: \zihao{4} { ( } \c_@@_name_author_tl { ) }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_info_nl:}
+% 国家图书馆封面信息栏。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_info_nl:
+  {
+    \@@_uline_entry:nnnn \l_@@_tmp_dim { supv_info } { supv } { } \\
+    \@@_ulined_center_box:nn { \textwidth } 
+      { \@@_info:n { supv_ttl } \@@_quad: \@@_info:n { supv_cont } } \\
+    \@@_uline_bientry:nnnn \l_@@_tmp_dim { degree   } { degree  } { }
+    \@@_uline_bientry:nnnn \l_@@_tmp_dim { major_nl } { major   } { } \\ 
+    \@@_uline_bientry:nnnn \l_@@_tmp_dim { sm_date  } { sm_date } { }
+    \@@_uline_bientry:nnnn \l_@@_tmp_dim { df_date  } { df_date } { } \\
+    \@@_full_uline:Nn \l_@@_tmp_dim { \c_@@_name_confer_tl }
+    \@@_uline:n { \l_@@_tmp_dim }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_bottom_nl:}
+% 国家图书馆封面底部信息。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_bottom_nl:
+  {
+    \@@_name:n { chairman } \@@_hskip:
+    \@@_ulined_center_box:nn { 9 em } { \@@_info:n { chairman } } \\
+    \@@_name:n { reviewer } \@@_hskip:
+    \@@_multiline_box:nnnn { \l_@@_tmpa_int }
+      { \l_@@_info_reviewer_clist } { 4 } { 9 em }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 %
 % \subsubsection{绘制封面}
 %
@@ -2694,8 +3003,7 @@ through XeTeX.
 %    \end{macrocode}
 % 学位信息。
 %    \begin{macrocode}
-      \group_begin: \zihao { -1 } 
-        \@@_spread_box:nnn { 9em } { \bf } { \l_@@_info_type_tl } \group_end:
+      \group_begin: \zihao { -1 } \@@_cover_title_ug: \group_end:
       \skip_vertical:n { 1.5 cm } \vfil
 %    \end{macrocode}
 % 信息栏。
@@ -2724,10 +3032,7 @@ through XeTeX.
 % 学位信息。
 %    \begin{macrocode}
       \group_begin:
-        \zihao { -1 } \bf \kaishu
-        \@@_spread_box:nnn { 9em } { } { \l_@@_info_type_tl }
-        \@@_vskip:
-        \c_@@_name_degree_l_tl \l_@@_info_degree_tl \c_@@_name_degree_r_tl
+        \zihao { -1 } \bf \kaishu \@@_cover_title_g:
       \group_end:
       \skip_vertical:n { 3 cm } \vfil 
 %    \end{macrocode}
@@ -2736,25 +3041,16 @@ through XeTeX.
       \group_begin:
         \zihao { 3 } \kaishu
         \@@_cover_info_g:nn { 6.2 em } { 18 em } \vfil
-        \skip_vertical:n { 2 cm } \l_@@_info_submit_date_tl
+        \skip_vertical:n { 2 cm } \l_@@_info_sm_date_tl
       \group_end:
     \end{center}
 %    \end{macrocode}
 % 背面。格式存在变化，没有使用循环来简化。
 %    \begin{macrocode}
     \newpage
-    \null \skip_vertical:n { 18 cm }
+    \noindent \null \skip_vertical:n { 18 cm }
     \group_begin:
-      \zihao { 3 } \kaishu
-      \@@_spread_box:nnn { 6.2 em } { \kaishu } { \c_@@_name_id_tl }
-      { : \@@_quad: } \l_@@_info_id_tl
-      \@@_vskip:
-      \@@_spread_box:nnn { 6.2 em } { \kaishu } { \c_@@_name_defend_date_tl }
-      { : \@@_quad: } \l_@@_info_defend_date_tl
-      \@@_vskip:
-      \@@_spread_box:nnn { 6.2 em } { \kaishu } { \c_@@_name_supv_full_tl }
-      { : \@@_quad: } \skip_horizontal:n { 8 em } \c_@@_name_sign_tl
-      \@@_vskip:
+      \zihao { 3 } \kaishu \@@_cover_back_g:
     \group_end:
 %    \end{macrocode}
 % 英文封面。
@@ -2762,31 +3058,75 @@ through XeTeX.
     \newpage
     \noindent \null \skip_vertical:n { 2 cm }
     \begin{center}
-      \group_begin:
-        \bf \sffamily \zihao { 2 } \l_@@_info_title_en_tl
-      \group_end:
-      \@@_vskip:
-      \group_begin:
-        \normalfont \rm \zihao { 4 } { by }
-      \group_end:
-      \@@_vskip:
-      \group_begin:
-        \bf \sffamily \zihao { 2 } \l_@@_info_author_en_tl
-      \group_end:
-      \@@_vskip:
-      \group_begin:
-        \normalfont \rm \zihao { 4 } { Supervised by }
-      \group_end:
-      \@@_vskip:
-      \group_begin:
-        \bf \sffamily \zihao { 2 } \l_@@_info_supv_full_en_tl
-      \group_end:
-      \@@_vskip:
-      \njuemblem [ black ] { ! } { 1.9 cm }
+      \@@_cover_en_g:
     \end{center}
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{macro}{\@@_make_cover_nl:}
+% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构国家图书馆封面。}
+% 生成研究生的国家图书馆封面。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_make_cover_nl:
+  {
+    \pdfbookmark [ 0 ] { 国家图书馆封面 } { nlcover }
+    \noindent \null
+%    \end{macrocode}
+% 顶部，包括密级、分类号、UDC。
+%    \begin{macrocode}
+    \begin{center}
+      \zihao{ -4 } \skip_vertical:n { -2 cm }
+      \@@_cover_top_nl:
+    \end{center}
+%    \end{macrocode}
+% 标题。
+%    \begin{macrocode}
+    \begin{center}
+      \skip_vertical:n { -2 cm }
+      \@@_cover_title_nl:
+    \end{center}
+%    \end{macrocode}
+% 中部信息栏。
+%    \begin{macrocode}
+    \group_begin: 
+      \kaishu \zihao { 4 } \noindent \@@_cover_info_nl:
+    \group_end:
+%    \end{macrocode}
+% 底部答辩信息。
+%    \begin{macrocode}
+    \begin{flushright}
+      \@@_cover_bottom_nl:
+    \end{flushright}
+    \begin{center}
+      \kaishu \zihao{3} \@@_qquad: 年 \@@_quad: 月 \@@_quad: 日
+    \end{center}
+    \skip_vertical:n { -1 cm }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_make_orig_decl: }
+% 生成学位论文原创性声明。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_make_orig_decl: 
+  {
+    \normalfont \normalsize
+    \njuchapter { \c_@@_name_nju_tl \c_@@_name_orig_decl_tl }
+    \thispagestyle { empty }
+    \c_@@_orig_decl_text_tl
+    \vfil
+    \begin{flushright}
+      { \c_@@_name_orig_sign_tl } \@@_uline:n { 7 em } \@@_vskip:
+      { \c_@@_name_orig_date_tl } \@@_uline:n { 7 em }
+    \end{flushright}
+    \vfil
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \subsubsection{用户接口}
 %
 % \begin{macro}{\maketitle}
 % \changes{v0.12}{2021/12/01}{仅会生成国家图书馆封面或者普通封面之一。}
@@ -2798,7 +3138,7 @@ through XeTeX.
   {
     \pagestyle{empty}
     \bool_if:NTF \g_@@_nlcover_bool 
-      { \@@_print_cover_nl: \@@_print_declaration: }
+      { \@@_make_cover_nl: \@@_make_orig_decl: }
       { \use:c { @@_make_cover_ \g_@@_info_diploma_tl : } }
 %    \end{macrocode}
 % 生成封面后清除标题中的换行控制符。
@@ -2820,74 +3160,8 @@ through XeTeX.
 %
 % \subsubsection{内部命令}
 %
-% \begin{macro}{\@@_uline:n}
-% 指定宽度的下划线。
-% \begin{arguments}
-%   \item 宽度，|dim| 型变量
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline:n #1
-  {
-    \mode_leave_vertical:
-    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
-    \skip_horizontal:n { -#1 }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_uuline:n}
-% 指定宽度的双层下划线。
-% \begin{arguments}
-%   \item 宽度，|dim| 型变量
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_uuline:n #1
-  {
-    \mode_leave_vertical:
-    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
-    \skip_horizontal:n { -#1 }
-    \rule [ -0.6 ex ] { #1 } { 0.4 pt }
-    \skip_horizontal:n { -#1 }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_get_text_width:Nn,\@@_get_text_width:NV}
-% 获取文本宽度。
-% \begin{arguments}
-%   \item 存储宽度的 |dim| 型变量
-%   \item 文本
-% \end{arguments}
-% 将内容放入 \tn{hbox} 后读取其宽度，存入 |dim| 型变量。
-%    \begin{macrocode}
-\cs_new:Npn \@@_get_text_width:Nn #1#2
-  {
-    \hbox_set:Nn \l_@@_tmpa_box {#2}
-    \dim_set:Nn #1 { \box_wd:N \l_@@_tmpa_box }
-  }
-\cs_generate_variant:Nn \@@_get_text_width:Nn { NV }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_full_uline:Nn,\@@_full_uline:NV}
-% 横跨整页的下划线。
-% \begin{arguments}
-%   \item 宽度，|dim| 型变量
-%   \item 文本
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new:Npn \@@_full_uline:Nn #1#2
-  {
-    \@@_get_text_width:Nn #1 { #2 }
-    \dim_set:Nn #1 { \textwidth - #1 }
-    #2 \@@_uline:n { #1 }
-  }
-\cs_generate_variant:Nn \@@_full_uline:Nn { NV }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_abs_title_style:n}
-% 摘要标题格式。
+% 摘要标题双层下划线格式。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 % \end{arguments}
@@ -2919,16 +3193,31 @@ through XeTeX.
 \cs_new_protected:Npn \@@_abs_bookmark:n #1
   {
     \pdfbookmark [ 0 ] 
-      { \tl_use:c { c_@@_name_abstract #1 _tl } } { abstract #1 }
+      { \@@_name:n { abstract #1 } } { abstract #1 }
   }
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{绘制部件}
-%   
+%
+% \begin{macro}{\@@_abs_title_ug:n}
+% 绘制本科生摘要标题。
+% \begin{arguments}
+%   \item 语言，空置为中文，|_en| 为英文
+% \end{arguments}
+%    \begin{macrocode}
+\cs_generate_variant:Nn \clist_map_inline:nn { Vn }
+\cs_new_protected:Npn \@@_abs_title_ug:n #1
+  { 
+    \@@_name:n { nju     } \@@_name:n { type     }
+    \@@_name:n { lang #1 } \@@_name:n { abstract }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_abs_info_ug:nn}
-% 输出本科摘要信息栏。
+% 绘制本科生摘要信息栏。
 % \begin{arguments}
 %   \item 语言，空置为中文，|_en| 为英文
 %   \item 分隔符
@@ -2937,35 +3226,37 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_ug:nn #1#2
   {
-    \begin{center}
-      \@@_abs_title_style:n { 22 em } \c_@@_name_nju_tl \c_@@_name_type_tl
-      \tl_use:c { c_@@_name_lang #1 _tl } \c_@@_name_abstract_tl
-    \end{center}
-    \group_begin:
-      \@@_abs_info_style:n { -4 }
 %    \end{macrocode}
 % 确定标题类型。
 %    \begin{macrocode}
-      \tl_if_blank:eTF { #1 }
-        { \c_@@_name_title_tl }
-        { \clist_item:Nn \c_@@_name_type_en_clist { \l_@@_info_type_int } }
-      #2 \tl_use:c { l_@@_info_title #1 _tl } \\
+    \tl_if_blank:eTF { #1 }
+      { \c_@@_name_title_tl }
+      { \clist_item:Nn \c_@@_name_type_en_clist { \l_@@_info_type_int } }
+    #2 \tl_use:c { l_@@_info_title #1 _tl } \\
 %    \end{macrocode}
 % 由于作者姓名使用的字样发生了变动，这里进行替换以便嵌入循环。
 %    \begin{macrocode}
-      \tl_set_eq:NN \c_@@_name_author_tl \c_@@_name_author_full_tl
+    \tl_set_eq:NN \c_@@_name_author_tl \c_@@_name_author_full_tl
 %    \end{macrocode}
 % 使用循环输出院系、专业、作者、导师信息。
 %    \begin{macrocode}
-      \clist_clear:N \l_@@_tmpb_clist
-      \clist_put_right:Nn \l_@@_tmpb_clist { dept, major, author, supv_full }
-      \clist_map_inline:Nn \l_@@_tmpb_clist
-        { 
-          \tl_use:c { c_@@_name_ ##1 #1 _tl } #2
-          \tl_use:c { l_@@_info_ ##1 #1 _tl } \\
-        }
-      \tl_use:c { c_@@_name_abstract #1 _tl } #2
-    \group_end: \@@_vskip:
+    \clist_map_inline:nn { dept, major, author, supv_full }
+      { \@@_name:n { ##1 #1 } #2 \@@_info:n { ##1 #1 } \\ }
+    \@@_name:n { abstract #1 } #2
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_abs_title_g:n}
+% 绘制研究生摘要标题。
+% \begin{arguments}
+%   \item 语言，空置为中文，|_en| 为英文
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_abs_title_g:n #1
+  { 
+    \@@_name:n { nju     } \@@_info:n { type     }
+    \@@_name:n { lang #1 } \@@_name:n { abstract }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2980,72 +3271,60 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_g:nn #1#2
   {
-    \begin{center}
-      \@@_abs_title_style:n { 19 em } \c_@@_name_nju_tl
-      \l_@@_info_type_tl \c_@@_name_lang_tl \c_@@_name_abstract_r_tl
-    \end{center}
-    \group_begin:
-      \@@_abs_info_style:n { 4 }
-      \tl_if_blank:eTF { #1 }
-        {
+    \tl_if_blank:eTF { #1 }
+      {
 %    \end{macrocode}
 % 中文摘要环境，使用 \cs{@@_full_uline:NV} 确定内容宽度后，调用 \cs{@@_uline:n} 或 \cs{@@_ulined_center_box:nn} 命令以绘制横穿页面的下划线。前两行为标题。
 %    \begin{macrocode}
-          \@@_full_uline:NV \l_@@_tmpa_dim
-            {
-              \clist_item:Nn \c_@@_name_type_clist { \l_@@_info_type_int }
-              \c_@@_name_title_s_tl #2
-            }
-          \@@_ulined_center_box:nn { \l_@@_tmpa_dim }
-            { \tl_range:Nnn \l_@@_info_title_tl { 1 } { 20 } } \\
-          \@@_uline:n { \textwidth } \@@_qquad:
-          \tl_range:Nnn \l_@@_info_title_tl { 21 } { -1 } \\
+        \@@_full_uline:NV \l_@@_tmp_dim
+          {
+            \clist_item:Nn \c_@@_name_type_clist { \l_@@_info_type_int }
+            \c_@@_name_title_s_tl #2
+          }
+        \@@_ulined_center_box:nn { \l_@@_tmp_dim }
+          { \tl_range:Nnn \l_@@_info_title_tl { 1 } { 20 } } \\
+        \@@_uline:n { \textwidth } \@@_qquad:
+        \tl_range:Nnn \l_@@_info_title_tl { 21 } { -1 } \\
 %    \end{macrocode}
 % 专业、年级、姓名。
 %    \begin{macrocode}
-          \@@_full_uline:NV \l_@@_tmpa_dim
-            {
-              \@@_ulined_center_box:nn { 11 em } { \l_@@_info_major_tl }
-              \c_@@_name_major_s_tl
-              \@@_ulined_center_box:nn { 4 em } { \l_@@_info_grade_tl }
-              \c_@@_name_grade_tl
-              \int_compare:nTF { \g_@@_info_degree_int == 4} { 博 } { 硕 }
-              \c_@@_name_author_r_tl #2 
-            }
-          \@@_ulined_center_box:nn { \l_@@_tmpa_dim }
-            { \l_@@_info_author_tl } \\
+        \@@_full_uline:NV \l_@@_tmp_dim
+          {
+            \@@_ulined_center_box:nn { 11 em } { \l_@@_info_major_tl }
+            \c_@@_name_major_s_tl
+            \@@_ulined_center_box:nn { 4 em } { \l_@@_info_grade_tl }
+            \c_@@_name_grade_tl
+            \int_compare:nTF { \g_@@_info_degree_int == 4} { 博 } { 硕 }
+            \c_@@_name_author_r_tl #2 
+          }
+        \@@_ulined_center_box:nn { \l_@@_tmp_dim }
+          { \l_@@_info_author_tl } \\
 %    \end{macrocode}
 % 导师姓名、职称。
 %    \begin{macrocode}
-          \@@_full_uline:NV \l_@@_tmpa_dim
-            { \c_@@_name_supv_full_tl \c_@@_name_supv_r_tl #2 }
-          \@@_ulined_center_box:nn { \l_@@_tmpa_dim }
-            { \l_@@_info_supv_full_tl }
-        }
+        \@@_full_uline:NV \l_@@_tmp_dim
+          { \c_@@_name_supv_full_tl \c_@@_name_supv_r_tl #2 }
+        \@@_ulined_center_box:nn { \l_@@_tmp_dim }
+          { \l_@@_info_supv_full_tl }
+      }
 %    \end{macrocode}
 % 英文摘要环境。前两行为标题。
 %    \begin{macrocode}
-        { 
-          \@@_full_uline:NV \l_@@_tmpa_dim
-            { \clist_item:cn { c_@@_name_type #1 _clist } { \l_@@_info_type_int } # 2 }
-          \@@_ulined_center_box:nn { \l_@@_tmpa_dim }
-            { \tl_range:Nnn \l_@@_info_title_en_tl { 1 } { 40 } } \\
-          \@@_uline:n { \textwidth } \@@_qquad:
-          \tl_range:Nnn \l_@@_info_title_en_tl { 41 } { -1 }
+      { 
+        \@@_full_uline:NV \l_@@_tmp_dim
+          { \clist_item:cn { c_@@_name_type #1 _clist } { \l_@@_info_type_int } # 2 }
+        \@@_ulined_center_box:nn { \l_@@_tmp_dim }
+          { \tl_range:Nnn \l_@@_info_title_en_tl { 1 } { 40 } } \\
+        \@@_uline:n { \textwidth } \@@_qquad:
+        \tl_range:Nnn \l_@@_info_title_en_tl { 41 } { -1 }
 %    \end{macrocode}
-% 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，以避免末尾生成多余的换行符产生 Underfull \tn{vbox} 信息。
+% 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，以避免末尾生成多余的换行符产生 |Underfull \vbox| 信息。
 %    \begin{macrocode}
-          \clist_clear:N \l_@@_tmpb_clist
-          \clist_put_right:Nn \l_@@_tmpb_clist { major, author, supv_full }
-          \clist_map_inline:Nn \l_@@_tmpb_clist
-            { \\ 
-              \@@_full_uline:NV \l_@@_tmpa_dim
-                { \tl_use:c { c_@@_name_ ##1 _en_tl } #2 }
-              \@@_ulined_center_box:nn { \l_@@_tmpa_dim }
-                { \tl_use:c { l_@@_info_ ##1 _en_tl } }
-            }
-        }
-    \group_end: \@@_vskip:
+        \clist_map_inline:nn { major, author, supv_full }
+          { \\ 
+            \@@_uline_entry:nnnn \l_@@_tmp_dim { ##1 _en } { ##1 _en } { #2 }
+          }
+      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3073,7 +3352,54 @@ through XeTeX.
 % \end{macro}
 %
 %
-% \subsubsection{定义环境}
+% \subsubsection{绘制摘要}
+%
+% \begin{macro}{\@@_make_abs_ug:nn}
+% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构本科生摘要。}
+% \begin{arguments}
+%   \item 语言，空置为中文，|_en| 为英文
+%   \item 关键词分隔符
+% \end{arguments}
+% 生成本科生摘要。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_make_abs_ug:nn #1#2
+  {
+    \begin{center}
+      \@@_abs_title_style:n { 22 em }
+      \@@_abs_title_ug:n { #1 }
+    \end{center}
+    \group_begin:
+      \@@_abs_info_style:n { -4 }
+      \@@_abs_info_ug:nn { #1 } { #2 }
+    \group_end: \@@_vskip:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_make_abs_g:nn}
+% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构研究生摘要。}
+% \begin{arguments}
+%   \item 语言，空置为中文，|_en| 为英文
+%   \item 关键词分隔符
+% \end{arguments}
+% 生成研究生摘要。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_make_abs_g:nn #1#2
+  {
+    \begin{center}
+      \@@_abs_title_style:n { 19 em }
+      \@@_abs_title_g:n { #1 } 
+    \end{center}
+    \group_begin:
+      \@@_abs_info_style:n { 4 }
+      \@@_abs_info_g:nn { #1 } { #2 }
+    \group_end: \@@_vskip:    
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \subsubsection{用户接口}
 % 
 % \begin{environment}{abstract}
 % \changes{v0.13}{2021/12/12}{重新绘制摘要。}
@@ -3083,7 +3409,7 @@ through XeTeX.
   { 
     \newpage
     \@@_abs_bookmark:n { }
-    \use:c { @@_abs_info_ \g_@@_info_diploma_tl :nn } { } { ： }
+    \use:c { @@_make_abs_ \g_@@_info_diploma_tl :nn } { } { ： }
     \group_begin: \normalfont \zihao { -4 } #1
   }
   { \@@_print_keywords:nn { } { ； } \group_end: }
@@ -3097,7 +3423,7 @@ through XeTeX.
   { 
     \newpage
     \@@_abs_bookmark:n { _en }
-    \use:c { @@_abs_info_ \g_@@_info_diploma_tl :nn } { _en } { :~ }
+    \use:c { @@_make_abs_ \g_@@_info_diploma_tl :nn } { _en } { :~ }
     \group_begin: \normalfont \zihao{ -4 } #1
     }
   { \@@_print_keywords:nn { _en } { ;~ } \group_end: }
@@ -3107,7 +3433,8 @@ through XeTeX.
 %
 % \subsection{前言致谢}
 % 
-% \begin{environment}{preface,acknowledgement}
+% \begin{environment}{preface}
+% \begin{environment}{acknowledgement}
 % 单独制作的前言致谢页。
 %    \begin{macrocode}
 \NewDocumentEnvironment{preface}         { +b }
@@ -3115,6 +3442,7 @@ through XeTeX.
 \NewDocumentEnvironment{acknowledgement} { +b }
   { \njuchapter { 致\hspace{2em}谢 } #1 } { }
 %    \end{macrocode}
+% \end{environment}
 % \end{environment}
 %
 % \begin{macro}{\njupaperlist}
