@@ -1323,17 +1323,16 @@ through XeTeX.
 %
 % \subsection{定义变量}
 %
-% \begin{variable}{\l_@@_tmpa_clist,\l_@@_tmpb_clist,\l_@@_tmpa_seq,\l_@@_tmpa_tl,\l_@@_tmpb_tl}
+% \begin{variable}{\l_@@_tmp_box,\l_@@_tmp_clist,\l_@@_tmp_dim,
+%   \l_@@_tmp_int,\l_@@_tmp_seq,\l_@@_tmp_tl}
 % 临时变量。
 %    \begin{macrocode}
-\box_new:N   \l_@@_tmpa_box
-\clist_new:N \l_@@_tmpa_clist
-\clist_new:N \l_@@_tmpb_clist
+\box_new:N   \l_@@_tmp_box
+\clist_new:N \l_@@_tmp_clist
 \dim_new:N   \l_@@_tmp_dim
-\int_new:N   \l_@@_tmpa_int
-\seq_new:N   \l_@@_tmpa_seq
-\tl_new:N    \l_@@_tmpa_tl
-\tl_new:N    \l_@@_tmpb_tl
+\int_new:N   \l_@@_tmp_int
+\seq_new:N   \l_@@_tmp_seq
+\tl_new:N    \l_@@_tmp_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1352,14 +1351,15 @@ through XeTeX.
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_info_degree_int,\l_@@_info_type_tl,
-%   \g_@@_info_diploma_tl}
+% \begin{variable}{\l_@@_info_degree_int,\l_@@_info_degree_tl,
+%   \l_@@_info_diploma_int,\l_@@_info_diploma_tl,
+%   \l_@@_info_type_int,\l_@@_info_type_tl}
 % 用于存储学位名称的变量。l代表局部变量，g代表全局变量。
 %    \begin{macrocode}
-\int_new:N \g_@@_info_degree_int
+\int_new:N \l_@@_info_degree_int
 \tl_new:N  \l_@@_info_degree_tl
 \int_new:N \l_@@_info_diploma_int
-\tl_new:N  \g_@@_info_diploma_tl
+\tl_new:N  \l_@@_info_diploma_tl
 \int_new:N \l_@@_info_type_int
 \tl_new:N  \l_@@_info_type_tl
 %    \end{macrocode}
@@ -1428,7 +1428,7 @@ through XeTeX.
 % \end{macro}
 %
 % \begin{macro}{\@@_name:n,\@@_info:n}
-% 调用名称和内容信息。
+% 根据变量名调用名称和内容信息。
 %    \begin{macrocode}
 \cs_new:Npn \@@_name:n #1 { \tl_use:c { c_@@_name_ #1 _tl } }
 \cs_new:Npn \@@_info:n #1 { \tl_use:c { l_@@_info_ #1 _tl } }
@@ -1502,8 +1502,8 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_put_inempty_seg:nnn #1#2#3
   {
-    \tl_set:Nx \l_@@_tmpa_tl { \tl_range:Nnn { #1 } { #2 } { #2 + #3 - 1 } }
-    \tl_if_empty:NF \l_@@_tmpa_tl { \clist_put_right:NV \l_@@_tmpa_clist { \l_@@_tmpa_tl } }
+    \tl_set:Nx \l_@@_tmp_tl { \tl_range:Nnn { #1 } { #2 } { #2 + #3 - 1 } }
+    \tl_if_empty:NF \l_@@_tmp_tl { \clist_put_right:NV \l_@@_tmp_clist { \l_@@_tmp_tl } }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1550,8 +1550,8 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new:Npn \@@_get_text_width:Nn #1#2
   {
-    \hbox_set:Nn \l_@@_tmpa_box {#2}
-    \dim_set:Nn #1 { \box_wd:N \l_@@_tmpa_box }
+    \hbox_set:Nn \l_@@_tmp_box {#2}
+    \dim_set:Nn #1 { \box_wd:N \l_@@_tmp_box }
   }
 \cs_generate_variant:Nn \@@_get_text_width:Nn { NV }
 %    \end{macrocode}
@@ -1623,15 +1623,15 @@ through XeTeX.
 % 学位类型。
 %    \begin{macrocode}
     degree     .choices:nn   = { ug, mg, mf, phd }
-      { \int_set_eq:NN \g_@@_info_degree_int \l_keys_choice_int  
+      { \int_set_eq:NN \l_@@_info_degree_int \l_keys_choice_int  
         \tl_set:Nn \l_@@_info_degree_tl
-          { \clist_item:Nn \c_@@_name_degree_clist { \g_@@_info_degree_int } }
+          { \clist_item:Nn \c_@@_name_degree_clist { \l_@@_info_degree_int } }
 %    \end{macrocode}
 % 进行学位的判断。
 %    \begin{macrocode}
-        \int_compare:nTF { \g_@@_info_degree_int == 1 }
-          { \tl_set:Nn \g_@@_info_diploma_tl { ug } }
-          { \tl_set:Nn \g_@@_info_diploma_tl { g  } } },
+        \int_compare:nTF { \l_@@_info_degree_int == 1 }
+          { \tl_set:Nn \l_@@_info_diploma_tl { ug } }
+          { \tl_set:Nn \l_@@_info_diploma_tl { g  } } },
     degree     .initial:n    = ug,
 %    \end{macrocode}
 % \end{macro}
@@ -1644,7 +1644,7 @@ through XeTeX.
         \tl_set:Nn \l_@@_info_type_tl
           { \clist_item:Nn \c_@@_name_type_clist { \l_@@_info_type_int } }
         \tl_put_left:Nn \l_@@_info_type_tl 
-          { \tl_use:c { c_@@_name_ \g_@@_info_diploma_tl _tl } } },
+          { \tl_use:c { c_@@_name_ \l_@@_info_diploma_tl _tl } } },
     type       .initial:n    = thesis,
 %    \end{macrocode}
 % \end{macro}
@@ -1707,7 +1707,7 @@ through XeTeX.
 %
 % 针对学位的特定名称。需要放在 \cs{ProcessKeysOptions} 导入设置选项后，以使用学位信息。
 %    \begin{macrocode}
-\int_compare:nTF { \g_@@_info_degree_int == 1 }
+\int_compare:nTF { \l_@@_info_degree_int == 1 }
   {
 %    \end{macrocode}
 % 本科默认名称。
@@ -1738,7 +1738,7 @@ through XeTeX.
     \clist_map_inline:nn
       {
         { abstract_r  } { 摘要首页用纸       },
-        { author_r    } { 士生姓名           },
+        { author_r    } { 生姓名             },
         { chairman    } { 答辩委员会主席：   },
         { clc         } { 分类号             },
         { confer      } { 学位授予单位和日期 },
@@ -2424,7 +2424,7 @@ through XeTeX.
 \RenewDocumentCommand \mainmatter { }
   {
     \cleardoublepage
-    \int_compare:nTF { \g_@@_info_degree_int == 1 } 
+    \int_compare:nTF { \l_@@_info_degree_int == 1 } 
       { \pagestyle{plain} } { \pagestyle{headings} }
     \pagenumbering{arabic}
     \normalfont\normalsize
@@ -2469,8 +2469,11 @@ through XeTeX.
 % 含有目录和 PDF 标签的无编号章。
 %    \begin{macrocode}
 \NewDocumentCommand \njuchapter { m }
-  { \chapter*{#1} \addcontentsline { toc } { chapter }
-      { \c_@@_section_format_tl #1} }
+  { 
+    \chapter*{#1}
+    \addcontentsline { toc } { chapter } { \c_@@_section_format_tl #1}
+    \@mkboth{#1}{#1}
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2504,7 +2507,7 @@ through XeTeX.
 {
   \group_begin:
     \ctexset { chapter/format = \c_@@_toc_title_tl }
-    \njuchapter{#1}
+    \njuchapter { #1 }
   \group_end:
   \@starttoc{#2}
 }
@@ -2560,9 +2563,10 @@ through XeTeX.
 %    \begin{macrocode}
 \ctexset{ bibname = {参考文献} }
 %    \end{macrocode}
-% 将参考文献插入目录
+% 修改参考文献的头部样式并插入目录。
 %    \begin{macrocode}
-\DeclarePrintbibliographyDefaults{ heading = bibintoc }
+\defbibheading { njubib } [ \bibname ] { \njuchapter { #1 } }
+\DeclarePrintbibliographyDefaults { heading = njubib }
 %    \end{macrocode}
 %
 % 忽略不需要的文献信息。
@@ -2590,8 +2594,8 @@ through XeTeX.
 %    \end{macrocode}
 % 清除标题中用于手动换行的 |!| 控制符。
 %    \begin{macrocode}
-    \tl_set_eq:NN \l_@@_tmpb_tl \l_@@_info_title_tl
-    \tl_remove_all:Nn \l_@@_tmpb_tl { ! }
+    \tl_set_eq:NN \l_@@_tmp_tl \l_@@_info_title_tl
+    \tl_remove_all:Nn \l_@@_tmp_tl { ! }
     \hypersetup
       {
         bookmarksnumbered = true,
@@ -2601,7 +2605,7 @@ through XeTeX.
 %    \end{macrocode}
 % 填写 PDF 元信息。
 %    \begin{macrocode}
-        pdftitle    = \l_@@_tmpb_tl,
+        pdftitle    = \l_@@_tmp_tl,
         pdfauthor   = \l_@@_info_author_tl,
         pdfkeywords = \l_@@_info_keywords_clist,
         pdfcreator  = \c_@@_name_pdf_creator_tl
@@ -2712,8 +2716,8 @@ through XeTeX.
 %    \end{macrocode}
 % 从英文感叹号进行分割，存入 |clist|。
 %    \begin{macrocode}
-        \seq_set_split:NnV \l_@@_tmpa_seq { ! } { #1 }
-        \clist_set_from_seq:NN \l_@@_tmpa_clist \l_@@_tmpa_seq
+        \seq_set_split:NnV \l_@@_tmp_seq { ! } { #1 }
+        \clist_set_from_seq:NN \l_@@_tmp_clist \l_@@_tmp_seq
       }
       { 
 %    \end{macrocode}
@@ -2740,7 +2744,7 @@ through XeTeX.
     \@@_split_title:n { \l_@@_info_title_tl }
     \@@_spread_box:nnn { #2 } { \kaishu } { \c_@@_name_title_tl }
     \@@_hskip:
-    \clist_map_inline:Nn \l_@@_tmpa_clist
+    \clist_map_inline:Nn \l_@@_tmp_clist
       { \@@_ulined_center_box:nn { #3 } { #1 ##1 } \@@_vskip: }
   }
 %    \end{macrocode}
@@ -2847,8 +2851,7 @@ through XeTeX.
     \begin{minipage} [ c ] { #1 + #2 + 0.3 em }
       \raggedleft
       \@@_multiline_title:nnn { } { #1 } { #2 }
-      \clist_put_right:Nn \l_@@_tmpb_clist { author, major, field, supv_full }
-      \clist_map_inline:Nn \l_@@_tmpb_clist
+      \clist_map_inline:nn { author, major, field, supv_full }
         { \@@_cover_entry:nnn { ##1 } { #1 } { #2 } }
     \end{minipage}
   }
@@ -2902,7 +2905,7 @@ through XeTeX.
 %    \begin{macrocode}
       \c_@@_cover_en_text_tl \@@_vskip:
       \textsc { \clist_item:Nn \c_@@_name_degree_en_clist
-                  { \g_@@_info_degree_int } }
+                  { \l_@@_info_degree_int } }
       \@@_vskip: { in } \@@_vskip: 
       \l_@@_info_major_en_tl \skip_vertical:n { 1 cm }
 %    \end{macrocode}
@@ -2939,12 +2942,11 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_title_nl:
   {
-    \@@_split_title:n { \l_@@_info_title_tl }
     \noindent \kaishu \zihao { -0 } \skip_vertical:n { -1 cm }
     \@@_spread_box:nnn { 6 em } { } { \c_@@_name_title_tl }
     \@@_vskip: \zihao { 1 }
-    \@@_multiline_box:nnnn { \l_@@_tmpa_int }
-      \l_@@_tmpa_clist { 3 } { 15 em }
+    \@@_split_title:n { \l_@@_info_title_tl }
+    \@@_multiline_box:nnnn { \l_@@_tmp_int } \l_@@_tmp_clist { 3 } { 15 em }
     \@@_vskip: \zihao{4} \c_@@_name_title_nl_tl
     \@@_vskip: \zihao{1} 
     \@@_ulined_center_box:nn { 4.5 em } { \l__nju_info_author_tl }
@@ -2958,9 +2960,9 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_info_nl:
   {
-    \@@_uline_entry:nnnn \l_@@_tmp_dim { supv_info } { supv } { } \\
-    \@@_ulined_center_box:nn { \textwidth } 
-      { \@@_info:n { supv_ttl } \@@_quad: \@@_info:n { supv_cont } } \\
+    \@@_uline_entry:nnnn   \l_@@_tmp_dim { supv_info } { supv   } { } \\
+    \@@_ulined_center_box:nn { \textwidth } { \@@_info:n { supv_ttl }
+    \@@_quad: \@@_info:n  { supv_cont } }                             \\
     \@@_uline_bientry:nnnn \l_@@_tmp_dim { degree   } { degree  } { }
     \@@_uline_bientry:nnnn \l_@@_tmp_dim { major_nl } { major   } { } \\ 
     \@@_uline_bientry:nnnn \l_@@_tmp_dim { sm_date  } { sm_date } { }
@@ -2979,7 +2981,7 @@ through XeTeX.
     \@@_name:n { chairman } \@@_hskip:
     \@@_ulined_center_box:nn { 9 em } { \@@_info:n { chairman } } \\
     \@@_name:n { reviewer } \@@_hskip:
-    \@@_multiline_box:nnnn { \l_@@_tmpa_int }
+    \@@_multiline_box:nnnn { \l_@@_tmp_int }
       { \l_@@_info_reviewer_clist } { 4 } { 9 em }
   }
 %    \end{macrocode}
@@ -3114,7 +3116,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_make_orig_decl: 
   {
     \normalfont \normalsize
-    \njuchapter { \c_@@_name_nju_tl \c_@@_name_orig_decl_tl }
+    \chapter*{ \c_@@_name_nju_tl \c_@@_name_orig_decl_tl }
     \thispagestyle { empty }
     \c_@@_orig_decl_text_tl
     \vfil
@@ -3141,7 +3143,7 @@ through XeTeX.
     \pagestyle{empty}
     \bool_if:NTF \g_@@_nlcover_bool 
       { \@@_make_cover_nl: \@@_make_orig_decl: }
-      { \use:c { @@_make_cover_ \g_@@_info_diploma_tl : } }
+      { \use:c { @@_make_cover_ \l_@@_info_diploma_tl : } }
 %    \end{macrocode}
 % 生成封面后清除标题中的换行控制符。
 %    \begin{macrocode}
@@ -3257,8 +3259,8 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_title_g:n #1
   { 
-    \@@_name:n { nju     } \@@_info:n { type     }
-    \@@_name:n { lang #1 } \@@_name:n { abstract }
+    \@@_name:n { nju     } \@@_info:n { type       }
+    \@@_name:n { lang #1 } \@@_name:n { abstract_r }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3296,7 +3298,7 @@ through XeTeX.
             \c_@@_name_major_s_tl
             \@@_ulined_center_box:nn { 4 em } { \l_@@_info_grade_tl }
             \c_@@_name_grade_tl
-            \int_compare:nTF { \g_@@_info_degree_int == 4} { 博 } { 硕 }
+            \tl_item:nn { \l_@@_info_degree_tl } { 1 }
             \c_@@_name_author_r_tl #2 
           }
         \@@_ulined_center_box:nn { \l_@@_tmp_dim }
@@ -3412,7 +3414,7 @@ through XeTeX.
   { 
     \newpage
     \@@_abs_bookmark:n { }
-    \use:c { @@_make_abs_ \g_@@_info_diploma_tl :nn } { } { ： }
+    \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { } { ： }
     \group_begin: \normalfont \zihao { -4 } #1
   }
   { \@@_print_keywords:nn { } { ； } \group_end: }
@@ -3426,7 +3428,7 @@ through XeTeX.
   { 
     \newpage
     \@@_abs_bookmark:n { _en }
-    \use:c { @@_make_abs_ \g_@@_info_diploma_tl :nn } { _en } { :~ }
+    \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { _en } { :~ }
     \group_begin: \normalfont \zihao{ -4 } #1
     }
   { \@@_print_keywords:nn { _en } { ;~ } \group_end: }
