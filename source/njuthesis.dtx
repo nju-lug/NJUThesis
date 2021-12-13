@@ -105,7 +105,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo  $Id: njuthesis.dtx 0.13.0 2021-12-12 18:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class>\GetIdInfo  $Id: njuthesis.dtx 0.13.0 2021-12-13 16:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -177,7 +177,7 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.13.0 \\ Released 2021-12-12}
+% \date{v0.13.0 \\ Released 2021-12-13}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -1009,8 +1009,8 @@ through XeTeX.
 %
 % 由 \pkg{listings} 提供代码排版。代码块 \env{lstlisting}，注意这个环境中的缩进空格会如实输出。
 % 如需指定语言，可以使用 |language| 选项。如需自定义关键字，可以使用 |morekeywords| 选项
-% \begin{latexexample}[emph={[1]lstlisting}]
-%   \begin{lstlisting}[<key>=<option>]
+% \begin{latexexample}[emph={[1]lstlisting},emph={[2]language}]
+%   \begin{lstlisting}[language=python]
 %   <code>
 %   \end{lstlisting}
 % \end{latexexample}
@@ -1018,10 +1018,9 @@ through XeTeX.
 % 行间代码可以使用抄录环境 \tn{verb} ，
 % 格式如 |\verb!<code>!|。其中包裹代码的两个感叹号并不是绝对的，可以替换成任何两个相同的没有在这段代码中出现过的符号。
 % 同时，也可以使用简写的行内代码环境，使用两条竖线包裹代码即可。请注意，\pkg{listings} 提供的 \tn{lstinline} 会被全局的字号设置污染。如果需要在行内代码指定语言，请参考如下设置：
-% \begin{latexexample}[emph={[1]lstlisting}]
-%   \lstinline[language=[LaTeX]TeX,basicstyle=\tt]!\usepackage{njuvisual}!
+% \begin{latexexample}[moretexcs={\lstinline,\tt},deletetexcs={\usepackage},emph={[2]language,basicstyle}]
+%   \lstinline[language=[LaTeX]TeX, basicstyle=\tt]!\usepackage{njuvisual}!
 % \end{latexexample}
-% \changes{v0.12}{2021/12/13}{提供简写的抄录环境。}
 %
 %
 % \subsubsection{数学}
@@ -1039,14 +1038,32 @@ through XeTeX.
 %
 % 如不需要编号，可以用 \env{equation*} 或者 |\[|\meta{公式}|\]|，请不要使用可能引发问题的 |$$|\meta{公式}|$$|\footnote{\url{https://tex.stackexchange.com/questions/503/why-is-preferable-to}}。
 %
-% 本模板也提供了一系列的数学环境。证明环境会在结尾添加证毕符号。
+% 本模板也提供了一系列的数学环境。
+% 全部预定义的数学环境如表~\ref{tab:mathenv} 所示。其中证明环境较为特殊，会在结尾添加证毕符号（\mdwhtsquare）。
+% 
+% \begin{table}[htbp]
+%   \centering
+%   \caption{数学环境}
+%   \label{tab:mathenv}
+%   \begin{tabular}{cc|cc}
+%     \toprule
+%     标签       & 名称 & 标签       & 名称 \\
+%     \midrule
+%     axiom      & 公理 & lemma      & 引理 \\
+%     corollary  & 推论 & proof      & 证明 \\
+%     definition & 定义 & theorem    & 定理 \\
+%     example    & 例   &            &      \\
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+% 使用示例如下。
 % \begin{latexexample}
 %   \begin{proof}
 %       证明我是我
 %   \end{proof}
 % \end{latexexample}
-%
-% 普通环境
+% 普通环境。
 % \begin{latexexample}
 %   \begin{definition}[他人]
 %       定义他人即地狱
@@ -1060,9 +1077,7 @@ through XeTeX.
 %   \begin{syntax}
 %     \tn{cref}\Arg{标签}
 %   \end{syntax}
-%
 % 使用 \pkg{cleveref} 宏包实现了带图、表等项目名称的智能引用。
-% 
 % \end{function}
 %
 % \begin{function}{\href,\url}
@@ -1070,9 +1085,7 @@ through XeTeX.
 %     \tn{href}\Arg{链接}\Arg{名称}
 %     \tn{url}\Arg{链接}
 %   \end{syntax}
-%
 % 超链接。\tn{href} 会将特定字符显示为可点击的超链接，\tn{url} 会输出可点击的链接原文。
-% 
 % \end{function}
 % 
 % 
@@ -1228,13 +1241,7 @@ through XeTeX.
 % \newcommand\CTANurl[2][]{{^^A
 %   \small\textit{#1}~\href{http://mirror.ctan.org/#2}{\texttt{CTAN://#2}}}}
 %
-% \bibitem{latexmk}
-% \textsc{Collins J}.
-% \newblock \textit{Fully automated \hologo{LaTeX} document generation} [EB/OL].
-% \newblock version 4.76,
-% \newblock (2021-11-20)
-% \urlprefix\url{https://www.ctan.org/pkg/latexmk}
-% \urlprefix\CTANurl[文档：]{support/latexmk/latexmk.pdf}
+% \subsubsection{书籍}
 %
 % \bibitem{lshort}
 % \textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
@@ -1252,6 +1259,17 @@ through XeTeX.
 % \newblock (2021-11-21)
 % \urlprefix\url{https://ctan.org/pkg/lshort-zh-cn}
 % \urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
+%
+%
+% \subsubsection{宏包、模版}
+%
+% \bibitem{latexmk}
+% \textsc{Collins J}.
+% \newblock \textit{Fully automated \hologo{LaTeX} document generation} [EB/OL].
+% \newblock version 4.76,
+% \newblock (2021-11-20)
+% \urlprefix\url{https://www.ctan.org/pkg/latexmk}
+% \urlprefix\CTANurl[文档：]{support/latexmk/latexmk.pdf}
 %
 % \end{thebibliography}
 %
@@ -2730,6 +2748,7 @@ through XeTeX.
   }
 %    \end{macrocode}
 %
+% \changes{v0.13}{2021/12/13}{提供简化的行内代码环境。}
 % 上述调整会污染 \tn{lstinline} 的字体大小，因此单独设置用于生成行内代码的简略抄录环境。
 % 此处由于使用到了单独的字符，需要暂时关闭 \hologo{LaTeX3} 语法。
 %    \begin{macrocode}
@@ -2774,7 +2793,7 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare}绘制\footnote{对应于 U+25A1 WHITE SQUARE 字符，参考 \url{https://tex.stackexchange.com/questions/567135/how-get-box-like-symbol-with-xelatex}}。
+% 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare}绘制，对应于 |U+25A1| 字符\footnote{\url{https://tex.stackexchange.com/questions/567135/how-get-box-like-symbol-with-xelatex}}。
 %    \begin{macrocode}
 \theoremsymbol { \ensuremath { \mdwhtsquare } }
 \newtheorem* { proof } { \c_@@_name_proof_tl }
