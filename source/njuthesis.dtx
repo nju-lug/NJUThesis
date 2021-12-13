@@ -809,7 +809,7 @@ through XeTeX.
 % 国家图书馆封面相关，包括中图分类号、密级、UDC 分类号和导师联系方式。
 % \end{function}
 %
-% \begin{function}[deprecated=2021-12-12]{info/titlea,info/titleb,info/titlec,info/supervisora,info/supervisora*,info/supervisora-title,info/supervisora-title*,info/supervisorb,info/supervisorb*,info/supervisorb-title,info/supervisorb-title*}
+% \begin{function}{info/titlea,info/titleb,info/titlec,info/supervisora,info/supervisora*,info/supervisora-title,info/supervisora-title*,info/supervisorb,info/supervisorb*,info/supervisorb-title,info/supervisorb-title*}
 % 这些选项已在 v0.13 弃置，请不要使用。
 % \end{function}
 %
@@ -1007,15 +1007,21 @@ through XeTeX.
 %
 % \subsubsection{代码}
 %
-% 由 \pkg{listings} 提供代码排版。代码块 \env{lstlisting}，注意这个环境中的缩进空格会如实输出
+% 由 \pkg{listings} 提供代码排版。代码块 \env{lstlisting}，注意这个环境中的缩进空格会如实输出。
+% 如需指定语言，可以使用 |language| 选项。如需自定义关键字，可以使用 |morekeywords| 选项
 % \begin{latexexample}[emph={[1]lstlisting}]
-%   \begin{lstlisting}
+%   \begin{lstlisting}[<key>=<option>]
 %   <code>
 %   \end{lstlisting}
 % \end{latexexample}
 %
-% 行间代码可以使用抄录环境 \tn{verb} （或者 \pkg{listings} 提供的 \tn{lstinline}），
+% 行间代码可以使用抄录环境 \tn{verb} ，
 % 格式如 |\verb!<code>!|。其中包裹代码的两个感叹号并不是绝对的，可以替换成任何两个相同的没有在这段代码中出现过的符号。
+% 同时，也可以使用简写的行内代码环境，使用两条竖线包裹代码即可。请注意，\pkg{listings} 提供的 \tn{lstinline} 会被全局的字号设置污染。如果需要在行内代码指定语言，请参考如下设置：
+% \begin{latexexample}[emph={[1]lstlisting}]
+%   \lstinline[language=[LaTeX]TeX,basicstyle=\tt]!\usepackage{njuvisual}!
+% \end{latexexample}
+% \changes{v0.12}{2021/12/13}{提供简写的抄录环境。}
 %
 %
 % \subsubsection{数学}
@@ -1031,7 +1037,7 @@ through XeTeX.
 %   \end{equation}
 % \end{latexexample}
 %
-% 如不需要编号，可以用 \env{equation*} 或者 |\[|\meta{公式}|\]|，请不要使用可能引发行距问题的 |$$|\meta{公式}|$$|。
+% 如不需要编号，可以用 \env{equation*} 或者 |\[|\meta{公式}|\]|，请不要使用可能引发问题的 |$$|\meta{公式}|$$|\footnote{\url{https://tex.stackexchange.com/questions/503/why-is-preferable-to}}。
 %
 % 本模板也提供了一系列的数学环境。证明环境会在结尾添加证毕符号。
 % \begin{latexexample}
@@ -1323,6 +1329,8 @@ through XeTeX.
 %
 % \subsection{定义变量}
 %
+% l代表局部变量，g代表全局变量。
+%
 % \begin{variable}{\l_@@_tmp_box,\l_@@_tmp_clist,\l_@@_tmp_dim,
 %   \l_@@_tmp_int,\l_@@_tmp_seq,\l_@@_tmp_tl}
 % 临时变量。
@@ -1336,7 +1344,7 @@ through XeTeX.
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\c_@@_name_type_clist,
+% \begin{variable}{\c_@@_name_type_clist,\c_@@_name_type_en_clist,
 %   \c_@@_name_degree_clist,\c_@@_name_degree_en_clist}
 % 论文类型与学位类型。
 %    \begin{macrocode}
@@ -1354,7 +1362,7 @@ through XeTeX.
 % \begin{variable}{\l_@@_info_degree_int,\l_@@_info_degree_tl,
 %   \l_@@_info_diploma_int,\l_@@_info_diploma_tl,
 %   \l_@@_info_type_int,\l_@@_info_type_tl}
-% 用于存储学位名称的变量。l代表局部变量，g代表全局变量。
+% 用于存储学位名称的变量。
 %    \begin{macrocode}
 \int_new:N \l_@@_info_degree_int
 \tl_new:N  \l_@@_info_degree_tl
@@ -1418,7 +1426,7 @@ through XeTeX.
 % 用来定义默认名称的辅助函数。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_define_name:nn #1#2
-  { \tl_const:cn { c_@@_name_ #1 _tl } {#2} }
+  { \tl_const:cn { c_@@_name_ #1    _tl } {#2} }
 \cs_new_protected:Npn \@@_define_name:nnn #1#2#3
   {
     \tl_const:cn { c_@@_name_ #1    _tl } {#2}
@@ -1697,10 +1705,13 @@ through XeTeX.
 \clist_map_inline:nn
   {
     { abstract  } { 摘要     } { ABSTRACT            },
+    { appendix  } { 附录     } { appendix            },
     { dept      } { 院系     } { DEPARTMENT          },
+    { figure    } { 图       } { figure              },
     { keywords  } { 关键词： } { Keywords:~          },
     { lang      } { 中文     } { 英文                },
-    { nju       } { 南京大学 } { Nanjing~ University }
+    { nju       } { 南京大学 } { Nanjing~ University },
+    { table     } { 表       } { table               }
   }
   { \@@_define_name:nnn #1 }
 %    \end{macrocode}
@@ -1802,6 +1813,28 @@ through XeTeX.
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\c_@@_theorem_type_clist}
+% 默认定理类型。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_theorem_type_clist
+  { axiom, corollary, definition, example, lemma, theorem }
+%    \end{macrocode}
+% \end{variable}
+%
+% 默认定理头名称。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { axiom      } { 公理 } { Axiom      },
+    { corollary  } { 推论 } { Corollary  },
+    { definition } { 定义 } { Definition },
+    { example    } { 例   } { Example    },
+    { lemma      } { 引理 } { Lemma      },
+    { proof      } { 证明 } { Proof      },
+    { theorem    } { 定理 } { Theorem    }
+  }
+  { \@@_define_name:nnn #1 }
+%    \end{macrocode}
 %
 % \subsection{个人信息}
 % 输入个人信息的区域。
@@ -1973,7 +2006,7 @@ through XeTeX.
   {
     { no-math           } { fontspec },
     { perpage           } { footmisc },
-    % { amsmath, thmmarks } { ntheorem },
+    { amsmath, thmmarks } { ntheorem },
     { hyphens           } { url      },
     { warnings-off={ mathtools-colon, mathtools-overbracket } }
                           { unicode-math },
@@ -2010,15 +2043,15 @@ through XeTeX.
 %    \begin{macrocode}
     njuvisual,
 %    \end{macrocode}
+% \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除 \pkg{amsthm} 和 \pkg{thmtools}。}
 % 数学，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
 % \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的数学字体。
 % 用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math} 发生冲突，此处手动消除其警告。
 %    \begin{macrocode}
     amsmath,
-    amsthm,
     mathtools,
-    thmtools,
     unicode-math,
+    ntheorem,
 %    \end{macrocode}
 % 图片与表格。
 %    \begin{macrocode}
@@ -2041,12 +2074,13 @@ through XeTeX.
   }
 %    \end{macrocode}
 %
+% \changes{v0.13}{2021/12/13}{删除会与 \pkg{ntheorem} 冲突的 \pkg{microtype}。}
 % \begin{macro}{\njuline}
 % 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。
 %    \begin{macrocode}
 \sys_if_engine_xetex:T
   {
-    \RequirePackage{xeCJKfntef,microtype}
+    \RequirePackage{xeCJKfntef}
     \NewDocumentCommand \njuline { m } { \CJKunderline{#1} }
   }
 %    \end{macrocode}
@@ -2340,7 +2374,7 @@ through XeTeX.
     \NewDocumentCommand \heiti    { } { \CJKfamily{zhhei}  }
     \NewDocumentCommand \fangsong { } { \CJKfamily{zhfs}   }
     \NewDocumentCommand \kaishu   { } { \CJKfamily{zhkai}  }
-    \RenewDocumentCommand \large { } { \zihao{4} }
+    \RenewDocumentCommand \large  { } { \zihao{4}          }
   }
 %    \end{macrocode}
 %
@@ -2434,10 +2468,10 @@ through XeTeX.
 %
 % \subsection{章节标题格式}
 % 
-% \begin{macro}{\c_@@_section_format_tl}
+% \begin{macro}{\c_@@_sec_format_tl}
 % 各部分章节以及目录中章标题的格式。设置为四号、不加粗、黑体。
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_section_format_tl { \large \normalfont \sffamily }
+\tl_const:Nn \c_@@_sec_format_tl { \large \normalfont \sffamily }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2446,10 +2480,10 @@ through XeTeX.
   {
     chapter/beforeskip   = 10 pt,
     chapter/afterskip    = 60 pt,
-    chapter/format       = \centering \c_@@_section_format_tl,
-    section/format       = \c_@@_section_format_tl,
-    subsection/format    = \c_@@_section_format_tl,
-    subsubsection/format = \c_@@_section_format_tl
+    chapter/format       = \centering \c_@@_sec_format_tl,
+    section/format       = \c_@@_sec_format_tl,
+    subsection/format    = \c_@@_sec_format_tl,
+    subsubsection/format = \c_@@_sec_format_tl
   }
 %    \end{macrocode}
 %
@@ -2461,7 +2495,7 @@ through XeTeX.
 % 将无编号章插入目录。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_chapter_in_toc:n #1
-  { \addcontentsline { toc } { chapter } { \c_@@_section_format_tl #1 } }
+  { \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1 } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2471,7 +2505,7 @@ through XeTeX.
 \NewDocumentCommand \njuchapter { m }
   { 
     \chapter*{#1}
-    \addcontentsline { toc } { chapter } { \c_@@_section_format_tl #1}
+    \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1}
     \@mkboth{#1}{#1}
   }
 %    \end{macrocode}
@@ -2489,7 +2523,7 @@ through XeTeX.
 %    \end{macrocode}
 % 设置目录中章标题的样式。
 %    \begin{macrocode}
-    chapter / tocline = \c_@@_section_format_tl \CTEXnumberline {#1} #2
+    chapter / tocline = \c_@@_sec_format_tl \CTEXnumberline {#1} #2
   }
 %    \end{macrocode}
 %
@@ -2571,16 +2605,13 @@ through XeTeX.
 %
 % 忽略不需要的文献信息。
 %    \begin{macrocode}
-\AtEveryBibitem{
-	\clearfield{abstract}
-	\clearfield{issn}
-	\clearfield{isbn}
-	\clearfield{archivePrefix}
-	\clearfield{arxivId}
-	\clearfield{pmid}
-	\clearfield{eprint}
-	\ifentrytype{online}{}{\ifentrytype{misc}{}{\clearfield{url}}}
-}
+\AtEveryBibitem
+  {
+    \clist_map_inline:nn
+      { abstract, issn, isbn, archivePrefix, arxivId, pmid, eprint }
+      { \clearfield { #1 } }
+    \ifentrytype{online}{}{\ifentrytype{misc}{}{\clearfield{url}}}
+  }
 %    \end{macrocode}
 %
 %
@@ -2612,27 +2643,38 @@ through XeTeX.
       }
   }
 %    \end{macrocode}
-% 修改 \pkg{cleverref} 的标签名称。默认在名称后面添加空格，删除公式编号的括号
+%
+% \begin{macro}{\@@_cref_name:n,\@@_cref_name:N }
+% 用于修改 \pkg{cleverref} 的标签名称的辅助函数。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cref_name:n #1
+  {
+    \clist_map_inline:nn { #1 }
+      { \crefname { ##1 } { \@@_name:n { ##1 } } { \@@_name:n { ##1 _en } } }
+  }
+\cs_new_protected:Npn \@@_cref_name:N #1
+  {
+    \clist_map_inline:Nn #1
+      { \crefname { ##1 } { \@@_name:n { ##1 } } { \@@_name:n { ##1 _en } } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 修改 \pkg{cleverref} 的标签格式。
+% 默认在名称后面添加空格，删除公式编号的括号。
 %    \begin{macrocode}
 \crefdefaultlabelformat{#2#1#3\,}
-\crefname { figure   } { 图   } { 图 }
-\crefname { table    } { 表   } { 表 }
-\crefname { appendix } { 附录 } { 附录 }
 \crefformat { equation      } { 公式~#2#1#3~   }
 \crefformat { chapter       } { 第#2#1#3章     }
 \crefformat { section       } { 第~#2#1#3~节   }
 \crefformat { subsection    } { 第~#2#1#3~小节 }
 \crefformat { subsubsection } { 第~#2#1#3~小节 }
-% \crefname{assumption}{假设}{假设}
-% \crefname{axiom}{公理}{公理}
-% \crefname{conclusion}{结论}{结论}
-% \crefname{condition}{条件}{条件}
-% \crefname{corollary}{推论}{推论}
-% \crefname{definition}{定义}{定义}
-% \crefname{lemma}{引理}{引理}
-% \crefname{property}{性质}{性质}
-% \crefname{proposition}{命题}{命题}
-% \crefname{remark}{注解}{注解}
+%    \end{macrocode}
+%
+% 修改 \pkg{cleverref} 的标签名称。
+%    \begin{macrocode}
+\@@_cref_name:n { figure, table, appendix, proof }
+\@@_cref_name:N \c_@@_theorem_type_clist
 %    \end{macrocode}
 %
 %
@@ -2662,22 +2704,41 @@ through XeTeX.
 % 
 % \subsubsection{代码环境}
 % 
-% 使用 \pkg{listings} 提供的 \tn{lstset} 设置代码环境基本样式。
+% 使用 \pkg{listings} 设置代码环境基本样式。
 %    \begin{macrocode}
-\lstset
+\lstdefinestyle { njulisting }
   {
     basewidth    = 0.5 em,
     lineskip     = 3 pt,
-    basicstyle   = \small\ttfamily,
-    keywordstyle = \bfseries,
-    commentstyle = \itshape,
+    basicstyle   = \tiny\tt,
+    keywordstyle = \bf,
+    commentstyle = \it\color{gray},
     numbers      = left,
     captionpos   = t,
     breaklines   = true,
     xleftmargin  = 2 em,
-    xrightmargin = 2 em,
+    xrightmargin = 2 em
+  }
+%    \end{macrocode}
+%
+% 设置代码环境通用样式。
+%    \begin{macrocode}
+\lstset
+  {
+    style        = njulisting,
     flexiblecolumns
   }
+%    \end{macrocode}
+%
+% 上述调整会污染 \tn{lstinline} 的字体大小，因此单独设置用于生成行内代码的简略抄录环境。
+% 此处由于使用到了单独的字符，需要暂时关闭 \hologo{LaTeX3} 语法。
+%    \begin{macrocode}
+\ExplSyntaxOff
+\lstMakeShortInline[
+  style=njulisting,
+  basicstyle=\normalsize\tt,
+  columns=fixed]|
+\ExplSyntaxOn
 %    \end{macrocode}
 %
 %
@@ -2697,8 +2758,31 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_new_theorem:N}
+% 用于定义普通定理环境的辅助函数。
+% \begin{arguments}
+%   \item 定理名称列表，|clist| 型变量
+% \end{arguments}
+% 除证明以外的环境都不需要证毕符号，在此清空其设置。
 %    \begin{macrocode}
-% TODO: 简化数学环境的定义方法
+\cs_new_protected:Npn \@@_new_theorem:N #1
+  { 
+    \theoremsymbol { }
+    \clist_map_inline:Nn #1
+      { \newtheorem { ##1 } { \@@_name:n { ##1 } } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare}绘制\footnote{对应于 U+25A1 WHITE SQUARE 字符，参考 \url{https://tex.stackexchange.com/questions/567135/how-get-box-like-symbol-with-xelatex}}。
+%    \begin{macrocode}
+\theoremsymbol { \ensuremath { \mdwhtsquare } }
+\newtheorem* { proof } { \c_@@_name_proof_tl }
+%    \end{macrocode}
+%
+% 定义普通定理环境。
+%    \begin{macrocode}
+\@@_new_theorem:N \c_@@_theorem_type_clist
 %    \end{macrocode}
 %
 %
@@ -3116,7 +3200,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_make_orig_decl: 
   {
     \normalfont \normalsize
-    \chapter*{ \c_@@_name_nju_tl \c_@@_name_orig_decl_tl }
+    \chapter* { \c_@@_name_nju_tl \c_@@_name_orig_decl_tl }
     \thispagestyle { empty }
     \c_@@_orig_decl_text_tl
     \vfil
@@ -3164,13 +3248,13 @@ through XeTeX.
 %
 % \subsubsection{内部命令}
 %
-% \begin{macro}{\@@_abs_title_style:n}
+% \begin{macro}{\@@_abs_title_uuline:n}
 % 摘要标题双层下划线格式。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_title_style:n #1 
+\cs_new_protected:Npn \@@_abs_title_uuline:n #1 
   { \bf \kaishu \zihao { -2 } \@@_uuline:n { #1 } }
 %    \end{macrocode}
 % \end{macro}
@@ -3370,7 +3454,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_make_abs_ug:nn #1#2
   {
     \begin{center}
-      \@@_abs_title_style:n { 22 em }
+      \@@_abs_title_uuline:n { 22 em }
       \@@_abs_title_ug:n { #1 }
     \end{center}
     \group_begin:
@@ -3392,7 +3476,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_make_abs_g:nn #1#2
   {
     \begin{center}
-      \@@_abs_title_style:n { 19 em }
+      \@@_abs_title_uuline:n { 19 em }
       \@@_abs_title_g:n { #1 } 
     \end{center}
     \group_begin:

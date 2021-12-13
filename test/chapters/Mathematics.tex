@@ -23,6 +23,8 @@ Math bold italic letters: $\mathbi{A}$
     =\underbrace{\widetilde{\left\langle \frac{\notin \emptyset}{\varpi\alpha_{k\uparrow}}\middle\vert \frac{\partial_\mu T_{\mu\nu}}{2}\right\rangle}}_{\mathrm{K}_3\mathrm{Fe}(\mathrm{CN})_6} ,\forall z \in \mathbb{R}
 \]
 
+你可以使用\verb|equation|环境插入公式，如\cref{eq:dewitt}
+
 \begin{equation}\label{eq:dewitt}
     \int \mathrm{e}^{ax} \tanh {bx} \, \mathrm{d}x =
     \begin{dcases}
@@ -36,55 +38,35 @@ Math bold italic letters: $\mathbi{A}$
   \end{dcases}
 \end{equation}
 
-你可以使用\verb|equation|环境插入公式，如\cref{eq:dewitt}，代码如下:
-\begin{lstlisting}
-\begin{equation}
-    \int \mathrm{e}^{ax} \tanh {bx} \, \mathrm{d}x =
-    \begin{dcases}
-        \begin{multlined}
-            \frac{\mathrm{e}^{(a+2b)x}}{(a + 2b)} \,
-            {{}_2F_1} \left( 1 + \frac{a}{2b}, 1, 2+\frac{a}{2b}, -\mathrm{e}^{2bx} \right) \\
-            - \frac{1}{a} \mathrm{e}^{ax} \, {{}_2F_1} \left( 1, \frac{a}{2b}, 1 + \frac{a}{2b}, -\mathrm{e}^{2bx} \right)
-        \end{multlined}
-        & a \ne b \\
-    \frac{e^{ax} - 2 \tan^{-1}(\mathrm{e}^{ax})}{a} & a = b
-    \end{dcases}
-\end{equation}
-\end{lstlisting}
-
 \section{定理环境}
 
-% \begin{proof}
-%     证明我是我
-% \end{proof}
+\cref{pf:me}\cref{def:others}
 
-% \begin{definition}[他人]
-%     定义他人即地狱
-% \end{definition}
+\begin{proof}\label{pf:me}
+    证明我是我
+\end{proof}
 
-% 全部数学环境如下所示
+\begin{definition}[他人]\label{def:others}
+    定义他人即地狱
+\end{definition}
 
-% \begin{table}[htbp]
-%     \caption{数学环境}
-%     \label{tab:mathenv}
-%     \begin{tabular}{cc}
-%         \toprule
-%         标签 & 名称 \\
-%         \midrule
-%         algorithm & 算法 \\
-%         assumption & 假设 \\
-%         axiom & 公理 \\
-%         conclusion & 结论 \\
-%         condition & 条件 \\
-%         corollary & 推论 \\
-%         definition & 定义 \\
-%         example & 例 \\ 
-%         lemma & 引理 \\
-%         proof & 证明 \\
-%         property & 性质 \\
-%         proposition & 命题 \\
-%         remark & 注解 \\
-%         theorem & 定理 \\
-%         \bottomrule
-%     \end{tabular}
-% \end{table}
+全部预定义的数学环境如\cref{tab:mathenv}所示。
+
+\begin{table}[htbp]
+    \centering
+    \caption{数学环境}
+    \label{tab:mathenv}
+    \begin{tabular}{cc}
+        \toprule
+        标签 & 名称 \\
+        \midrule
+        axiom & 公理 \\
+        corollary & 推论 \\
+        definition & 定义 \\
+        example & 例 \\ 
+        lemma & 引理 \\
+        proof & 证明 \\
+        theorem & 定理 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

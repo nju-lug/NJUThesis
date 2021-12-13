@@ -45,7 +45,7 @@
     
 \section{表格}
 
-你可以使用\lstinline|table|环境插入标准三线表，如\cref{tab:testtab}所示
+你可以使用 |table| 环境插入标准三线表，如\cref{tab:testtab}所示
 
 \begin{table}[htbp]
     \centering
@@ -67,13 +67,63 @@
 \section{代码}
 
 \subsection{行内代码}
-The new command pretty-prints the code. The exclamation marks delimit
-the code and can be replaced by any character not in the code;
-\verb$var i:integer;$ gives the same result.
 
-使用\lstinline!\lstinline|\textit{<Your code>}|!，只要使用在代码中未出现的符号将代码包括在内即可。
+一共有三种方法可以生成行内代码：
+\begin{itemize}
+    \item 使用 \texttt{\textbackslash verb} 抄录环境：\verb!<Your code>!
+    \item 使用 \texttt{\textbackslash lstinline} 行内代码环境：\lstinline[basicstyle=\tt]+<Your code>+
+    \item 使用简写的行内代码环境：|<Your code>|
+\end{itemize}
+在前两者中，只要使用在代码中未出现的符号将代码包括在内即可。
 
-使用 {algorithm} 和 {algorithmic} 的算法示例\footnote{两者均位于 {algoritms} 下}。
+\subsection{代码块}
+
+代码示例。在构建 \textsf{njuvisual} 宏包时，使用 inkscape 程序从矢量图导出的 \textsf{tikz} 曲线代码并不美观，需要缩进、对齐，因而拜托鄢老师编写了如下的 Python 脚本。
+\begin{lstlisting}[language=Python,morekeywords={startswith,endswith,split,strip,join,find,append,replace}]
+def deal_tuple(s):
+if s.startswith("("):
+    # s be like (x,y)
+    return "( {0:>9}, {1:>9} )".format(*s[1:-1].split(","))
+else:
+    return s
+
+
+indent = len(".. controls (    0.0000,    0.0000 )") - 1
+
+
+def deal_line(s):
+    s = " ".join(map(deal_tuple, s.split()))
+    if s.find(")") != -1:
+        s = " " * (indent - s.find(")")) + s
+    return s
+
+
+try:
+    while True:
+        s = input().strip()
+        if s.startswith("\path"):
+            l = []
+            while not s.endswith(";"):
+                l.append(s)  # use this instead of += for speedup
+                s = input().strip()
+            l.append(s[:-1])  # remove trailing ;
+            # NOTE: all strings in l should be newline-free
+            head, rp, body = " ".join(l).replace(".. controls", "\n.. controls").replace(
+                "--", "\n--").replace(")(", ")\n(").replace("cycle(", "cycle\n(").partition("]")
+
+            # force the program to keep newlines added manually
+            result = "\n".join(map(deal_line, body.splitlines()))
+
+            print(head, rp, "\n", result, ";", sep="")
+        else:
+            print(s)
+except EOFError as e:
+    pass
+\end{lstlisting}
+
+\subsection{算法块}
+
+使用 {algorithm} 和 {algorithmic} 的算法示例\footnote{两者均位于 \textsf{algorithms} 下}。
 
 \begin{algorithm}[htbp]
     \caption{Temp}
@@ -85,9 +135,3 @@ the code and can be replaced by any character not in the code;
         \ENDIF\ENDIF
     \end{algorithmic}
 \end{algorithm}
-
-代码示例。
-
-\begin{lstlisting}[language=python]
-print(helloworld)
-\end{lstlisting}

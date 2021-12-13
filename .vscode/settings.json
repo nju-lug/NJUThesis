@@ -1,5 +1,6 @@
 {
     "latex-workshop.latex.autoBuild.run": "never", // 禁止自动编译
+    "latex-workshop.latex.recipe.default": "lastUsed", // 使用前一次的编译方法
     "latex-workshop.latex.tools": [
         {
             "name": "xelatex",
