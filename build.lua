@@ -3,18 +3,20 @@
 -- Build script for njuthesis.
 -- run with `l3build`
 
-module = "njuthesis"
+module        = "njuthesis"
 
-checkengines = {"xetex", "luatex"}
-checkopts    = "-interaction=batchmode"
+checkengines  = {"xetex", "luatex"}
+checkopts     = "-interaction=batchmode"
 
-ctanreadme = "README-CTAN.md"
+textfiles     = {"LICENSE", "*.md"}
+ctanreadme    = "README-CTAN.md"
 
-sourcefiles  = {"source/*.dtx"}
-installfiles = {"*.cls"}
+sourcefiledir = "source"
+sourcefiles   = {"*.dtx"}
+installfiles  = {"*.cls"}
 
-typesetexe   = "xelatex"
-typesetfiles = {"njuthesis.dtx"}
+typesetexe    = "xelatex"
+typesetfiles  = {"njuthesis.dtx"}
 
-unpackfiles = {"njuthesis.dtx"}
-unpackexe   = "xetex"
+unpackexe     = "xetex"
+unpackfiles   = {"njuthesis.dtx"}
