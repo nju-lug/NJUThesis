@@ -1141,7 +1141,7 @@ through XeTeX.
 % \subsubsection{目录页}
 %
 % \begin{function}{\tableofcontents,\listoffigures,\listoftables}
-% 分别生成目录、图片清单和表格清单。
+% 分别生成目录\footnote{一说应该使用“目次”这一称呼。}、图片清单和表格清单。
 % \end{function}
 % 
 %
@@ -1241,7 +1241,7 @@ through XeTeX.
 % \newcommand\CTANurl[2][]{{^^A
 %   \small\textit{#1}~\href{http://mirror.ctan.org/#2}{\texttt{CTAN://#2}}}}
 %
-% \subsubsection{书籍}
+% \subsection*{书籍}
 %
 % \bibitem{lshort}
 % \textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
@@ -1261,7 +1261,7 @@ through XeTeX.
 % \urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
 %
 %
-% \subsubsection{宏包、模版}
+% \subsection*{宏包、模版}
 %
 % \bibitem{latexmk}
 % \textsc{Collins J}.
@@ -2044,14 +2044,9 @@ through XeTeX.
 \RequirePackage
   {
     geometry,
-    caption,
-    setspace,
     fancyhdr,
     hologo,
-%    \end{macrocode}
-% \pkg{url} 用于生成链接文本。
-%    \begin{macrocode}
-    url,
+    setspace,
 %    \end{macrocode}
 % \pkg{emptypage} 用于清除空白页的页码。
 %    \begin{macrocode}
@@ -2073,15 +2068,21 @@ through XeTeX.
 %    \end{macrocode}
 % 图片与表格。
 %    \begin{macrocode}
-    graphicx,
-    wrapfig,
     booktabs,
+    caption,
+    graphicx,
     multirow,
+    subcaption,
+    wrapfig,
 %    \end{macrocode}
 % 列表环境
 %    \begin{macrocode}
-    listings,
     enumitem,
+    listings,
+%    \end{macrocode}
+% \pkg{url} 用于生成链接文本。
+%    \begin{macrocode}
+    url,
 %    \end{macrocode}
 % 按以下顺序加载两个关于引用的包。
 % \pkg{hyperref} 覆写了大量命令，因此需要在其他包最后载入。
@@ -2535,9 +2536,9 @@ through XeTeX.
 %    \end{macrocode}
 % 设置目录标题名称。
 %    \begin{macrocode}
-    contentsname   = {目\hspace{2em}录},
-    listfigurename = {插图清单}, 
-    listtablename  = {表格清单},
+    contentsname   = { 目\hspace{2em}录},
+    listfigurename = { 插图清单 }, 
+    listtablename  = { 表格清单 },
 %    \end{macrocode}
 % 设置目录中章标题的样式。
 %    \begin{macrocode}
@@ -2769,13 +2770,6 @@ through XeTeX.
 %
 % 
 % \subsection{定理环境}
-%
-% \begin{macro}{\mathbi}
-% Math bold italic letters
-%    \begin{macrocode}
-\NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
-%    \end{macrocode}
-% \end{macro}
 %
 % \begin{macro}{\@@_new_theorem:N}
 % 用于定义普通定理环境的辅助函数。
@@ -3533,7 +3527,7 @@ through XeTeX.
     \@@_abs_bookmark:n { _en }
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { _en } { :~ }
     \group_begin: \normalfont \zihao{ -4 } #1
-    }
+  }
   { \@@_print_keywords:nn { _en } { ;~ } \group_end: }
 %    \end{macrocode}
 % \end{environment}

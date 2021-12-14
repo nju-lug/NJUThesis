@@ -10,7 +10,7 @@
     \caption{火热劲爆 Arcaea}
     \label{fig:arcaea}
 \end{figure}
-\zhlipsum[3][name=xiangyu]
+\zhlipsum[3][name=aspirin]
 
 \subsection{文字环绕图像}
 % wrapfigure后面不能有空行
@@ -19,29 +19,29 @@
     \includegraphics[width=.15\textwidth]{test.png}
     \caption{闊靛緥婧愮偣}
 \end{wrapfigure}
-\zhlipsum[2][name=xiangyu]
+\zhlipsum[2][name=simp]
 
-% \begin{figure}[htbp]
-%     \begin{subfigure}{.32\textwidth}
-%         \centering
-%         % \includegraphics[width=\textwidth]{njuemblem} 
-%         \resizebox{\textwidth}{!}{\input{njuemblem.tikz}} 
-%         \caption{logo1}
-%     \end{subfigure}
-%     \begin{subfigure}{.32\textwidth}
-%         \centering
-%         % \includegraphics[width=\textwidth]{njuemblem}  
-%         \resizebox{\textwidth}{!}{\input{njuemblem.tikz}} 
-%         \caption{logo2}
-%     \end{subfigure}
-%     \begin{subfigure}{.32\textwidth}
-%         \centering
-%         % \includegraphics[width=\textwidth]{njuemblem}  
-%         \resizebox{\textwidth}{!}{\input{njuemblem.tikz}} 
-%         \caption{logo3}
-%     \end{subfigure}
-%     \caption{njuemblems}
-% \end{figure}
+\subsection{多个图像}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{test.png}
+        \caption{闊靛緥婧愮偣}
+    \end{subfigure}
+    \begin{subfigure}{.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{test.png}
+        \caption{Arcaea}
+    \end{subfigure}
+
+    \begin{subfigure}{.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{test.png}
+        \caption{闊虫父}
+    \end{subfigure}
+    \caption{新概念空间立体节奏游戏}
+\end{figure}
     
 \section{表格}
 
@@ -126,12 +126,16 @@ except EOFError as e:
 使用 {algorithm} 和 {algorithmic} 的算法示例\footnote{两者均位于 \textsf{algorithms} 下}。
 
 \begin{algorithm}[htbp]
-    \caption{Temp}
+    \caption{Lanczos Algorithm}
     \begin{algorithmic}
-        \IF{$i\leq0$}
-        \STATE $i\gets1$
-        \ELSE\IF{$i\geq0$}
-        \STATE $i\gets0$
-        \ENDIF\ENDIF
+        \STATE - Choose an initial state $\vec{b}_0$ and a maximum iteration number $m$
+        \FOR{$n=0,\ldots m$}
+        \STATE - Construct the space $K = \spn\{\vec{b}_0 , \ldots \vec{b}_n \}$
+        \STATE - Obtain $\vec{C} = \hat{H} \vec{b}_n$
+        \IF{$\vec{C} \in K$}
+        \STATE Set $\vec{b}_{n+1}$ to a random vector orthogonal to $K$
+        \ELSE
+        \STATE Orthogonalize $\vec{C}$ against $K$, yielding $\vec{b}_{n+1}$
+        \ENDIF\ENDFOR
     \end{algorithmic}
 \end{algorithm}

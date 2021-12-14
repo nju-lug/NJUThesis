@@ -4,10 +4,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \documentclass{njuthesis}
 % \documentclass[type=design]{njuthesis}
-% \documentclass[degree=mg]{njuthesis}
+\documentclass[degree=mg]{njuthesis}
 % \documentclass[degree=mf]{njuthesis}
 % \documentclass[degree=phd]{njuthesis}
-\documentclass[degree=phd,nlcover]{njuthesis}
+% \documentclass[degree=phd,nlcover]{njuthesis}
 
 \njusetup {
     info = {
@@ -50,6 +50,11 @@
 \usepackage{blindtext,zhlipsum}
 
 \addbibresource{test.bib}
+
+% https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
+\DeclareMathOperator{\spn}{span}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
 
 \begin{document}
 

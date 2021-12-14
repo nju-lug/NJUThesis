@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NJU Thesis
 % 南京大学毕业论文LaTeX模板
-% Version 0.12.0 (2021-11-30)
+% Version 0.13.x (2021-12-13)
 %
 % 请关注项目地址以获取最新变化
 % https://github.com/nju-lug/NJUThesis
@@ -152,12 +152,20 @@
 % 自行使用所需宏包
 \usepackage{siunitx} % 用于书写单位符号
 \usepackage[version=4]{mhchem} % 用于绘制分子式
+\usepackage{algorithm,algorithmic} % 用于展示算法
 
 % 设置图片存储位置
 \graphicspath{{figure/}}
 
 % 导入参考文献数据
 \addbibresource{njuthesis-sample.bib}
+
+% 在导言区随意定制所需命令
+% https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
+\DeclareMathOperator{\spn}{span}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
+
 
 % 开始编写论文
 \begin{document}
