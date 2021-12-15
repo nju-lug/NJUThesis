@@ -267,9 +267,9 @@ through XeTeX.
 %
 % 目前，本模板的主要维护者包括：
 % \begin{itemize}
-%     \item 赵懿晨
-%     \item 熊煜
-%     \item 马畅
+%   \item 赵懿晨
+%   \item 熊煜
+%   \item 马畅
 % \end{itemize}
 %
 %
@@ -575,23 +575,44 @@ through XeTeX.
 %   \begin{syntax}
 %     degree = <(ug)|mg|mf|phd>
 %   \end{syntax}
-% 选择学位，分别为学士、学术型硕士、专业硕士、博士。
+% 选择学位，分别为学士、学术型硕士、专业硕士、博士，默认为学士（即本科生）。
+% \end{function}
+%
+% \begin{function}[added=2021-09-07]{type}
+%   \begin{syntax}
+%     type = <(thesis)|design>
+%   \end{syntax}
+% 用于选择文档类型并将相关字段输出在封面和摘要页，可选值分别为毕业论文和毕业设计，默认为毕业论文。
 % \end{function}
 %
 % \begin{function}[added=2021-09-07]{nlcover}
 %   \begin{syntax}
 %     nlcover = <\TTF>
 %   \end{syntax}
-% 通过此项可选择是否用国家图书馆封面替换普通封面。
-% 由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
+% 选择是否使用国家图书馆封面，默认关闭。
 % \end{function}  
 %
-% \begin{function}[added=2021-09-07]{type}
+% 通过此项可用国家图书馆封面替换普通封面。
+% 由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
+%
+%
+% \subsubsection{草稿模式}
+% 
+% \begin{function}[added=2021-09-07,updated=2021-12-12]{cjk-font,latin-font}
 %   \begin{syntax}
-%     type = <(thesis)|design>
+%     draft = <\TFF>
 %   \end{syntax}
-% 用于选择文档类型并将相关字段输出在封面和摘要页，可选值分别为毕业论文和毕业设计。
+% 选择是否开启草稿模式，默认关闭。
 % \end{function}
+%
+% 草稿模式为全局选项，有助于提升编译速度以及检查格式问题，建议在定稿前始终开启。启用这一选项将产生以下影响：
+% \begin{itemize}
+%   \item 禁用封面绘制
+%   \item 显示页面文字范围边框以及页眉页脚线
+%   \item 将超出宽度的内容显示为黑色方块
+%   \item 不再渲染图片，使用含有图片路径的空白盒子占位
+%   \item 不再渲染超链接及生成 PDF 书签
+% \end{itemize}
 %
 %
 % \subsubsection{指定字体}
@@ -1362,21 +1383,6 @@ through XeTeX.
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\c_@@_name_type_clist,\c_@@_name_type_en_clist,
-%   \c_@@_name_degree_clist,\c_@@_name_degree_en_clist}
-% 论文类型与学位类型。
-%    \begin{macrocode}
-\clist_const:Nn \c_@@_name_type_clist
-  { 毕业论文, 毕业设计 }
-\clist_const:Nn \c_@@_name_type_en_clist
-  { THESIS, DESIGN }
-\clist_const:Nn \c_@@_name_degree_clist
-  { 学士, 硕士, 硕士专业, 博士 }
-\clist_const:Nn \c_@@_name_degree_en_clist
-  { Bachelor, Master, Master, Doctor~of~Philosophy }
-%    \end{macrocode}
-% \end{variable}
-%
 % \begin{variable}{\l_@@_info_degree_int,\l_@@_info_degree_tl,
 %   \l_@@_info_diploma_int,\l_@@_info_diploma_tl,
 %   \l_@@_info_type_int,\l_@@_info_type_tl}
@@ -1418,6 +1424,21 @@ through XeTeX.
 %    \begin{macrocode}
 \tl_new:N \g_@@_latin_font_tl
 \tl_new:N \g_@@_cjk_font_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\c_@@_name_type_clist,\c_@@_name_type_en_clist,
+%   \c_@@_name_degree_clist,\c_@@_name_degree_en_clist}
+% 论文类型与学位类型。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_name_type_clist
+  { 毕业论文, 毕业设计 }
+\clist_const:Nn \c_@@_name_type_en_clist
+  { THESIS, DESIGN }
+\clist_const:Nn \c_@@_name_degree_clist
+  { 学士, 硕士, 硕士专业, 博士 }
+\clist_const:Nn \c_@@_name_degree_en_clist
+  { Bachelor, Master, Master, Doctor~of~Philosophy }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1648,7 +1669,7 @@ through XeTeX.
 % \begin{macro}{degree}
 % 学位类型。
 %    \begin{macrocode}
-    degree     .choices:nn   = { ug, mg, mf, phd }
+    degree     .choices:nn = { ug, mg, mf, phd }
       { \int_set_eq:NN \l_@@_info_degree_int \l_keys_choice_int  
         \tl_set:Nn \l_@@_info_degree_tl
           { \clist_item:Nn \c_@@_name_degree_clist { \l_@@_info_degree_int } }
@@ -1658,14 +1679,14 @@ through XeTeX.
         \int_compare:nTF { \l_@@_info_degree_int == 1 }
           { \tl_set:Nn \l_@@_info_diploma_tl { ug } }
           { \tl_set:Nn \l_@@_info_diploma_tl { g  } } },
-    degree     .initial:n    = ug,
+    degree     .initial:n  = ug,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{type}
 % 论文类型。\cs{l_keys_choice_int} 需要被展开以获取正确的序号。
 %    \begin{macrocode}
-    type       .choices:nn   = { thesis, design }
+    type       .choices:nn = { thesis, design }
       { \int_set_eq:NN \l_@@_info_type_int \l_keys_choice_int
         \tl_set:Nn \l_@@_info_type_tl
           { \clist_item:Nn \c_@@_name_type_clist { \l_@@_info_type_int } }
@@ -1676,12 +1697,20 @@ through XeTeX.
 % \end{macro}
 % 
 % \begin{macro}{nlcover}
-% 是否需要国家图书馆封面的设置。
+% 是否需要国家图书馆封面（仅对研究生有效，默认关闭）。
 %    \begin{macrocode}
-    nlcover           .bool_set:N   = \g_@@_nlcover_bool,
-    nlcover           .initial:n    = false,
+    nlcover   .bool_set:N  = \g_@@_nlcover_bool,
+    nlcover    .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
+
+% \begin{macro}{draft}
+% \changes{v0.13}{2021/12/15}{新增草稿模式选项。}
+% 是否开启草稿模式（默认关闭）。
+%    \begin{macrocode}
+    draft     .bool_set:N  = \g_@@_draft_bool,
+    draft      .initial:n  = false,
+%    \end{macrocode}
 % 
 % \begin{macro}{latin-font,cjk-font}
 % \changes{v0.13}{2021/12/12}{简化字体选项名称。}
@@ -2000,6 +2029,7 @@ through XeTeX.
     a4paper,
     twoside,
     UTF8,
+    \bool_if:NT \g_@@_draft_bool { draft, }
     scheme=chinese,
 %    \end{macrocode}
 % 关于行距，\hologo{LaTeX} 默认1.2行距，word 默认行距是1.3，要求1.5倍 word 行距，故
@@ -2427,6 +2457,11 @@ through XeTeX.
     hmargin    = 3.2 cm, 
     headheight = 15 pt
   }
+%    \end{macrocode}
+%
+% 草稿模式下显示页面文字范围边界以及页眉、页脚线。
+%    \begin{macrocode}
+\bool_if:NT \g_@@_draft_bool { \geometry { showframe } }
 %    \end{macrocode}
 %
 % \subsubsection{页眉页脚}
@@ -3232,15 +3267,20 @@ through XeTeX.
 % \begin{macro}{\maketitle}
 % \changes{v0.12}{2021/12/01}{仅会生成国家图书馆封面或者普通封面之一。}
 % \changes{v0.13}{2021/12/12}{重新绘制封面。}
+% \changes{v0.13}{2021/12/15}{草稿模式下不绘制封面。}
 % 重定义 \cs{maketitle} 以生成封面。
-% 如果选择了 |nlcover|，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
+% 在草稿模式下，封面绘制将被禁用，有助于提升编译速度。
+% 如果在研究生模板中选择了 |nlcover|，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
 %    \begin{macrocode}
 \RenewDocumentCommand \maketitle { }
   {
-    \pagestyle{empty}
-    \bool_if:NTF \g_@@_nlcover_bool 
-      { \@@_make_cover_nl: \@@_make_orig_decl: }
-      { \use:c { @@_make_cover_ \l_@@_info_diploma_tl : } }
+    \bool_if:NF \g_@@_draft_bool
+      {
+        \pagestyle { empty }
+        \bool_if:NTF \g_@@_nlcover_bool 
+          { \@@_make_cover_nl: \@@_make_orig_decl: }
+          { \use:c { @@_make_cover_ \l_@@_info_diploma_tl : } }
+      }
 %    \end{macrocode}
 % 生成封面后清除标题中的换行控制符。
 %    \begin{macrocode}
@@ -3249,8 +3289,8 @@ through XeTeX.
 % 在标题页后使用大写罗马字母页码，恢复正常字体设置。
 %    \begin{macrocode}
     \cleardoublepage
-    \pagestyle{plain}
-    \pagenumbering{Roman}
+    \pagestyle     { plain }
+    \pagenumbering { Roman }
     \normalfont \normalsize      
   }
 %    \end{macrocode}
