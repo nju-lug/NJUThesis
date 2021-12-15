@@ -3601,11 +3601,11 @@ through XeTeX.
 % 中文摘要环境。
 %    \begin{macrocode}
 \NewDocumentEnvironment{abstract} { +b }
-  { 
-    \newpage
+  {
+    \cleardoublepage
     \@@_abs_bookmark:n { }
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { } { ： }
-    \group_begin: \normalfont \zihao { -4 } #1
+    \group_begin: \kaishu \zihao { -4 } #1
   }
   { \@@_print_keywords:nn { } { ； } \group_end: }
 %    \end{macrocode}
@@ -3615,11 +3615,11 @@ through XeTeX.
 % 英文摘要环境。\pkg{xparse} 目前不支持合并带有星号的环境，因此需要单独定义。
 %    \begin{macrocode}
 \NewDocumentEnvironment{abstract*} { +b }
-  { 
-    \newpage
+  {
+    \cleardoublepage
     \@@_abs_bookmark:n { _en }
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { _en } { :~ }
-    \group_begin: \normalfont \zihao{ -4 } #1
+    \group_begin: \kaishu \zihao{ -4 } #1
   }
   { \@@_print_keywords:nn { _en } { ;~ } \group_end: }
 %    \end{macrocode}
