@@ -105,7 +105,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo  $Id: njuthesis.dtx 0.13.0 2021-12-13 16:30:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class>\GetIdInfo  $Id: njuthesis.dtx 0.13.1 2021-12-15 14:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -177,7 +177,7 @@ through XeTeX.
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.13.0 \\ Released 2021-12-13}
+% \date{v0.13.1 \\ Released 2021-12-15}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -198,6 +198,7 @@ through XeTeX.
 % \changes{v0.12}{2021/11/30}{区分测试文件和空白模板。}
 % \changes{v0.12}{2021/12/06}{修改了说明文档的代码呈现样式。}
 % \changes{v0.13}{2021/12/12}{优化了编译速度。}
+% \changes{v0.13}{2021/12/15}{适配2022届本科生毕业毕业论文（设计）规范。}
 %
 % \maketitle
 %
@@ -240,6 +241,8 @@ through XeTeX.
 % \section{模板介绍}
 %
 % \cls{njuthesis}，即南京大学学位论文模板，是一个由南京大学 LUG 组织维护的，用于处理本校学生毕业论文排版需求的 \hologo{LaTeX} 模板。
+%
+% 本模板使用的本科生毕业论文模板格式依据《\href{https://jw.nju.edu.cn/7c/86/c26263a556166/page.htm}{关于启动南京大学2022届本科毕业论文（设计）工作的通知}》，研究生学位论文格式依据研究生院提供的材料包。
 %
 %
 % \subsection{历史沿革}
@@ -587,18 +590,27 @@ through XeTeX.
 %
 % \begin{function}[added=2021-09-07]{nlcover}
 %   \begin{syntax}
-%     nlcover = <\TTF>
+%     nlcover = <\TFF>
 %   \end{syntax}
-% 选择是否使用国家图书馆封面，默认关闭。
+% 是否使用国家图书馆封面，默认关闭。
 % \end{function}  
 %
 % 通过此项可用国家图书馆封面替换普通封面。
 % 由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
 %
+% \begin{function}[added=2021-12-15]{orig-decl}
+%   \begin{syntax}
+%     orig-decl = <\TFF>
+%   \end{syntax}
+% 是否需要诚信承诺书或原创性声明，默认关闭。
+% \end{function}  
+%
+% 通过此项可在封面后添加本科生的诚信承诺书或研究生的原创性声明。
+%
 %
 % \subsubsection{草稿模式}
 % 
-% \begin{function}[added=2021-09-07,updated=2021-12-12]{cjk-font,latin-font}
+% \begin{function}[added=2021-12-15]{draft}
 %   \begin{syntax}
 %     draft = <\TFF>
 %   \end{syntax}
@@ -607,7 +619,7 @@ through XeTeX.
 %
 % 草稿模式为全局选项，有助于提升编译速度以及检查格式问题，建议在定稿前始终开启。启用这一选项将产生以下影响：
 % \begin{itemize}
-%   \item 禁用封面绘制
+%   \item 禁用封面的绘制（包括承诺和声明）
 %   \item 显示页面文字范围边框以及页眉页脚线
 %   \item 将超出宽度的内容显示为黑色方块
 %   \item 不再渲染图片，使用含有图片路径的空白盒子占位
@@ -1703,7 +1715,16 @@ through XeTeX.
     nlcover    .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
-
+%
+% \begin{macro}{orig-decl}
+% \changes{v0.13}{2021/12/15}{新增诚信承诺书选项。}
+% 是否需要诚信承诺书或原创性声明（默认关闭）。
+%    \begin{macrocode}
+    orig-decl .bool_set:N  = \g_@@_orig_decl_bool,
+    orig-decl  .initial:n  = false, 
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{draft}
 % \changes{v0.13}{2021/12/15}{新增草稿模式选项。}
 % 是否开启草稿模式（默认关闭）。
@@ -1711,6 +1732,7 @@ through XeTeX.
     draft     .bool_set:N  = \g_@@_draft_bool,
     draft      .initial:n  = false,
 %    \end{macrocode}
+% \end{macro}
 % 
 % \begin{macro}{latin-font,cjk-font}
 % \changes{v0.13}{2021/12/12}{简化字体选项名称。}
@@ -1739,7 +1761,7 @@ through XeTeX.
 \clist_map_inline:nn
   {
     { id          } { 学号                          },
-    { orig_decl   } { 学位论文原创性声明            },
+    { orig_date   } { 日期                          },
     { pdf_creator } { LaTeX~ with~ njuthesis~ class },
     { supv_ii     } { 第二导师                      },
     { supv_ttl    } { 职称                          }
@@ -1772,13 +1794,15 @@ through XeTeX.
 %    \begin{macrocode}
     \clist_map_inline:nn
       {
-        { author_full } { 本科生姓名                  },
-        { grade       } { 年级                        },
-        { sm_date     } { 提交日期                    },
-        { supv        } { 导师                        },
-        { title       } { 题目                        },
-        { type        } { 本科生毕业论文（设计、作品）},
-        { ug          } { 本科                        }
+        { author_full } { 本科生姓名                      },
+        { grade       } { 年级                            },
+        { orig_decl   } { 本科毕业论文（设计）诚信承诺书  },
+        { orig_sign   } { 作者签名                        },
+        { sm_date     } { 提交日期                        },
+        { supv        } { 导师                            },
+        { title       } { 题目                            },
+        { type        } { 本科生毕业论文（设计、作品）    },
+        { ug          } { 本科                            }
       }
       { \@@_define_name:nn #1 }
       \clist_map_inline:nn
@@ -1788,8 +1812,23 @@ through XeTeX.
           { supv_full } { 指导教师（姓名、职称） } { MENTOR         }
         }
         { \@@_define_name:nnn #1 }
+%    \end{macrocode}
+%
+% \begin{variable}{\c_@@_orig_decl_text_tl}
+% 学位论文诚信承诺书。
+%    \begin{macrocode}
+      \tl_const:Nn \c_@@_orig_decl_text_tl
+        {
+          本人郑重承诺：所呈交的毕业论文（设计）（题目：）是在指导教师的指导下
+          严格按照学校和院系有关规定由本人独立完成的。本毕业论文（设计）中引用
+          他人观点及参考资源的内容均已标注引用，如出现侵犯他人知识产权的行为，
+          由本人承担相应法律责任。本人承诺不存在抄袭、伪造、篡改、代写、买卖毕
+          业论文（设计）等违纪行为。
+        }
   }
 %    \end{macrocode}
+% \end{variable}
+%
 % 研究生默认名称。
 %    \begin{macrocode}
   {
@@ -1809,8 +1848,8 @@ through XeTeX.
         { grade       } { 级                 },
         { major_s     } { 专业               },
         { major_nl    } { 专业名称           },
-        { orig_sign   } { 研究生签名：       },
-        { orig_date   } { 日期：             },
+        { orig_decl   } { 学位论文原创性声明 },
+        { orig_sign   } { 研究生签名         },
         { reviewer    } { 评阅人：           },
         { seclv       } { 密级               },
         { sign        } { （签字）           },
@@ -1833,6 +1872,7 @@ through XeTeX.
         }
         { \@@_define_name:nnn #1 }
 %    \end{macrocode}
+%
 % \begin{variable}{\c_@@_cover_en_text_tl}
 % 英文封面字样。
 %    \begin{macrocode}
@@ -1842,20 +1882,20 @@ through XeTeX.
         the~ graduate~ school~ of~ Nanjing~ University \\
         in~ partial~ fulfilment~ of~ the~ requirements~ for~ the~ degree~ of
       }
-  }
 %    \end{macrocode}
 % \end{variable}
 %
 % \begin{variable}{\c_@@_orig_decl_text_tl}
 % 学位论文原创性声明。
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_orig_decl_text_tl
-  {
-    本人郑重声明，所提交的学位论文是本人在导师指导下独立进行科学研究工作
-    所取得的成果。除本论文中已经注明引用的内容外，本论文不包含其他个人或
-    集体已经发表或撰写过的研究成果，也不包含为获得南京大学或其他教育机构
-    的学位证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，均已
-    在论文的致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
+    \tl_const:Nn \c_@@_orig_decl_text_tl
+      {
+        本人郑重声明，所提交的学位论文是本人在导师指导下独立进行科学研究工作
+        所取得的成果。除本论文中已经注明引用的内容外，本论文不包含其他个人或
+        集体已经发表或撰写过的研究成果，也不包含为获得南京大学或其他教育机构
+        的学位证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，均已
+        在论文的致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
+      }
   }
 %    \end{macrocode}
 % \end{variable}
@@ -2029,8 +2069,11 @@ through XeTeX.
     a4paper,
     twoside,
     UTF8,
-    \bool_if:NT \g_@@_draft_bool { draft, }
     scheme=chinese,
+%    \end{macrocode}
+% 开启草稿模式后传入 |draft| 选项。
+%    \begin{macrocode}
+    \bool_if:NT \g_@@_draft_bool { draft, }
 %    \end{macrocode}
 % 关于行距，\hologo{LaTeX} 默认1.2行距，word 默认行距是1.3，要求1.5倍 word 行距，故
 % $1.5\times\frac{1.3}{1.2} = 1.625$
@@ -3243,6 +3286,7 @@ through XeTeX.
 % \end{macro}
 %
 % \begin{macro}{\@@_make_orig_decl: }
+% \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
 % 生成学位论文原创性声明。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_orig_decl: 
@@ -3253,8 +3297,11 @@ through XeTeX.
     \c_@@_orig_decl_text_tl
     \vfil
     \begin{flushright}
-      \@@_name:n { orig_sign } \@@_uline:n { 7 em } \@@_vskip:
-      \@@_name:n { orig_date } \@@_uline:n { 7 em }
+      \clist_set:Nn \l_@@_tmp_clist { orig_sign, id, orig_date }
+      \int_compare:nF { \l_@@_info_degree_int == 1 }
+        { \clist_remove_all:Nn \l_@@_tmp_clist { id } }
+      \clist_map_inline:Nn \l_@@_tmp_clist
+        { \@@_vskip: \@@_name:n { ##1 } ： \@@_uline:n { 7 em } }
     \end{flushright}
     \vfil
   }
@@ -3270,16 +3317,22 @@ through XeTeX.
 % \changes{v0.13}{2021/12/15}{草稿模式下不绘制封面。}
 % 重定义 \cs{maketitle} 以生成封面。
 % 在草稿模式下，封面绘制将被禁用，有助于提升编译速度。
-% 如果在研究生模板中选择了 |nlcover|，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
 %    \begin{macrocode}
 \RenewDocumentCommand \maketitle { }
   {
     \bool_if:NF \g_@@_draft_bool
       {
         \pagestyle { empty }
+%    \end{macrocode}
+% 如果在研究生模板中选择了 |nlcover|，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
+%    \begin{macrocode}
         \bool_if:NTF \g_@@_nlcover_bool 
-          { \@@_make_cover_nl: \@@_make_orig_decl: }
+          { \@@_make_cover_nl: }
           { \use:c { @@_make_cover_ \l_@@_info_diploma_tl : } }
+%    \end{macrocode}
+% 如果在选择了 |orig-decl|，就生成本科生的诚信承诺书或研究生的原创性声明。
+%    \begin{macrocode}
+        \bool_if:NT \g_@@_orig_decl_bool { \@@_make_orig_decl: }
       }
 %    \end{macrocode}
 % 生成封面后清除标题中的换行控制符。
