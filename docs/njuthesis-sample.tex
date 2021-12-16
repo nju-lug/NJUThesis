@@ -85,7 +85,8 @@
         %
         student-id = {189114514},
         % 学号
-        % 本模板会自动更正研究生学号的大小写
+        % 研究生请使用大写字母填写学号
+        % 本模板并不能自动更正大小写
         %
         department = {化学化工学院},
         department* = {School of Chemistry and Chemical Engineering},
@@ -157,9 +158,10 @@
 }
 
 % 自行使用所需宏包
-\usepackage{siunitx} % 用于书写单位符号
-\usepackage[version=4]{mhchem} % 用于绘制分子式
-\usepackage{algorithm,algorithmic} % 用于展示算法
+% \usepackage{siunitx} % 用于书写单位符号
+% \usepackage[version=4]{mhchem} % 用于绘制分子式
+% \usepackage{listings} % 用于展示代码
+% \usepackage{algorithm,algorithmic} % 用于展示算法伪代码
 
 % 设置图片存储位置
 \graphicspath{{figure/}}
@@ -171,7 +173,7 @@
 % https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
 \DeclareMathOperator{\spn}{span}
 \renewcommand{\vec}[1]{\mathbf{#1}}
-\NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
+% \NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
 
 
 % 开始编写论文

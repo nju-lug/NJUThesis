@@ -42,7 +42,7 @@
 \csname fi\endcsname
 %</internal>
 %
-%<*install>
+%<*batchfile>
 \input docstrip.tex
 \keepsilent
 \askforoverwritefalse
@@ -64,18 +64,16 @@ and version 1.3 or later is part of all distributions of LaTeX version
 
 To produce the documentation run the original source files ending with `.dtx'
 through XeTeX.
-    
+
 \endpreamble
 
 \generate{
   \usedir{tex/latex/njuthesis}
     \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
-%</install>
 %<*internal>
   \usedir{source/latex/njuthesis}
-    \file{\jobname.ins}        {\from{\jobname.dtx}{install}}
+    \file{\jobname.ins}        {\from{\jobname.dtx}{batchfile}}
 %</internal>
-%<*install>
 }
 
 \obeyspaces
@@ -97,7 +95,7 @@ through XeTeX.
 \Msg{*************************************************************}
 
 \endbatchfile
-%</install>
+%</batchfile>
 %
 %<*internal>
 \fi
@@ -118,7 +116,7 @@ through XeTeX.
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
 \newcommand*\scite[1]{\textsuperscript{\cite{#1}}}
 \setlist[1]{labelindent=0.5em}
-\hypersetup{pdftitle={The njuthesis class – LaTeX thesis template for Nanjing University}}
+\hypersetup{pdftitle={The njuthesis class - LaTeX thesis template for Nanjing University}}
 \UseTblrLibrary{booktabs,siunitx,diagbox}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
@@ -253,21 +251,21 @@ through XeTeX.
 %  \item \href{https://github.com/fireblue}{@fireblue}基于solrex模板的的\href{https://github.com/fireblue/NJUThesis}{南京大学学位论文\hologo{LaTeX}模板}（2013）
 %  \item \href{https://github.com/wenhai-zheng}{@wenhai-zheng}的\href{https://github.com/wenhai-zheng/NJUThesis}{NJUThesis}（2013）  
 %  \item 曹增乐（\href{https://github.com/ZLCao}{@ZLCao}）的\href{https://github.com/ZLCao/NJUBachelor}{NJUBachelor}（2013-2016）
-%  \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的\href{https://github.com/Haixing-Hu/nju-thesis}{NJU-Thesis}（2013 - 2018）
+%  \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的 NJU-Thesis（2013 - 2018）\scite{haixinghu2013}
 %  \item 张楚珩（\href{https://github.com/zhangchuheng123}{@zhangchuheng123}）基于胡海星模板的\href{https://github.com/zhangchuheng123/NJUThesis}{NJUThesis}（2016）
 %  \item 蒋炎岩（\href{http://ics.nju.edu.cn/~jyy/}{@jiangyy}）的\href{https://github.com/jiangyy/njuthesis}{南京大学山寨\hologo{LyX}研究生毕业论文模板}（2017）
 %  \item \href{https://github.com/njuHan}{@njuHan}基于胡海星模板的\href{https://github.com/njuHan/njuthesis-nju-thesis-template/}{NJU-Thesis}（2018 - 2021）
-%  \item 饶安逸（\href{https://anyirao.com/}{@AnyiRao}）基于张楚珩模板的\href{https://github.com/AnyiRao/NJUThesis2018/}{NJU Thesis 2018}（2018）
-%  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于饶安逸模板的\href{https://github.com/FengChendian/NJUThesis2021}{NJU Thesis 2021}（2021）
+%  \item 饶安逸（\href{https://anyirao.com/}{@AnyiRao}）基于张楚珩模板的 NJU Thesis 2018（2018）\scite{anyirao2018}
+%  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于饶安逸模板的 NJU Thesis 2021（2021）\scite{yichenzhao2021}
 % \end{enumerate}
 % 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
 %
 % 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南
 % 京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼
-% 顾友校\href{https://ctan.org/pkg/thuthesis}{\textsc{THuThesis}}、
-% \href{https://ctan.org/pkg/fduthesis}{\pkg{fduthesis}}等优秀项目，构建了这一全
-% 新模板，力求通过 \hologo{LaTeX3} 语法和清晰的接口实现良好的易用性和可维护性。
-%
+% 顾友校 \cls{fduthesis}\scite{fduthesis}、\textsc{THuThesis}\scite{thuthesis}等
+% 优秀项目，构建了这一全新模板，力求通过 \hologo{LaTeX3} 语法和清晰的接口实现良
+% 好的易用性和可维护性。
+% 
 % 目前，本模板的主要维护者包括：
 % \begin{itemize}
 %   \item 赵懿晨
@@ -286,10 +284,11 @@ through XeTeX.
 % 的相关知识体系，只能\emph{尽力做到有求必应}，在需要的地方顺带提一嘴，以期使您
 % 少走点弯路。
 %
-% 如果您希望在使用本模板前了解一些关于这个排版软件的基础知识，在此尝试列举一些有所帮助的资料：
+% 如果您希望在使用本模板前了解一些关于这个排版软件的基础知识，在此尝试列举一些有
+% 所帮助的资料：
 % \begin{description}
-%   \item[《\hologo{LaTeX} 入门》] 刘海洋著。
 %   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，可以参考英文版\scite{lshort}及其中文翻译版\scite{lshort-zh-cn}。
+%   \item[《\hologo{LaTeX} 入门》] 刘海洋著。
 % \end{description}
 %
 %
@@ -1039,20 +1038,56 @@ through XeTeX.
 %
 %
 % \subsubsection{代码}
+% \changes{v0.13}{2021/12/13}{提供简化的行内代码环境。}
+% \changes{v0.13}{2021/12/16}{默认不加载 \pkg{listings} 宏包。}
 %
-% 由 \pkg{listings} 提供代码排版。代码块 \env{lstlisting}，注意这个环境中的缩进空格会如实输出。
-% 如需指定语言，可以使用 |language| 选项。如需自定义关键字，可以使用 |morekeywords| 选项
-% \begin{latexexample}[emph={[1]lstlisting},emph={[2]language}]
+% 如需展示代码，可以使用抄录环境 \tn{verb}，格式如 |\verb!<code>!|。其中包裹代码的两个感叹号并不是绝对的，可以替换成任何两个相同的、没有在这段代码中出现过的符号。
+%
+% 抄录环境仅会用等宽字体如实呈现代码本身，并无任何附加功能。若需格式更为多样的代码环境，可以使用 \pkg{listings} 宏包。v0.13.2 版以后，本模板默认不会调用该宏包，使用代码环境前请在导言区自行导入。
+% \begin{latexexample}
+%   \usepackage{listings}
+% \end{latexexample}
+%
+% \pkg{listings} 宏包\scite{listings}提供了 \env{lstlisting} 环境，可以生成代码块。值得注意的是这个环境中的缩进空格会如实输出。
+% 如需指定语言，可以使用 |language| 选项。如需自定义关键字，可以使用 |morekeywords| 选项。这一宏包也提供了为某种样式单独一种环境的方法，详见其手册，此处仅展示一个最简化的例子：
+% \begin{latexexample}[emph={[1]lstlisting},emph={[2]language},morekeywords={print}]
 %   \begin{lstlisting}[language=python]
-%   <code>
+%   print("Hello World")
 %   \end{lstlisting}
 % \end{latexexample}
 %
-% 行间代码可以使用抄录环境 \tn{verb} ，
-% 格式如 |\verb!<code>!|。其中包裹代码的两个感叹号并不是绝对的，可以替换成任何两个相同的没有在这段代码中出现过的符号。
-% 同时，也可以使用简写的行内代码环境，使用两条竖线包裹代码即可。请注意，\pkg{listings} 提供的 \tn{lstinline} 会被全局的字号设置污染。如果需要在行内代码指定语言，请参考如下设置：
+% 当然，默认提供的代码样式在本模板中并不和谐。可以参照以下代码在导言区设置代码环境通用样式。
+% \begin{latexexample}[moretexcs={\lstdefinestyle,\lstset},emph={[2]basewidth,lineskip,basicstyle,keywordstyle,commentstyle,numbers,captionpos,breaklines,xleftmargin,xrightmargin,style,flexiblecolumns}]
+%   \lstdefinestyle { njulisting }
+%     {
+%       basewidth    = 0.5 em,           % 单个字体宽度
+%       lineskip     = 3 pt,             % 在代码行中间添加额外行距
+%       basicstyle   = \tiny\tt,         % 基本字体样式，小号等宽
+%       keywordstyle = \bf,              % 关键词样式，粗体
+%       commentstyle = \it\color{gray},  % 注释样式，灰色斜体
+%       numbers      = left,             % 行号位置，左侧
+%       captionpos   = t,                % 题注位置，顶部
+%       breaklines   = true,             % 是否允许自动折行
+%       xleftmargin  = 2 em,             % 左侧边距
+%       xrightmargin = 2 em              % 右侧边距
+%     }
+%   \lstset{
+%       style        = njulisting,       % 调用上述样式
+%       flexiblecolumns                  % 允许调整字符宽度
+%     }
+% \end{latexexample}
+% 
+% \pkg{listings} 同时提供了用于展示行内代码的 \tn{lstinline} 命令，用法同 \tn{verb}。但这一命令会被全局的代码字号设置污染。请参考如下使用方法：
 % \begin{latexexample}[moretexcs={\lstinline,\tt},deletetexcs={\usepackage},emph={[2]language,basicstyle}]
 %   \lstinline[language=[LaTeX]TeX, basicstyle=\tt]!\usepackage{njuvisual}!
+% \end{latexexample}
+%
+% 简便起见，不妨单独创建使用简写的行内代码环境，指定某个符号后用其包裹代码即可。这个符号不可以出现在正文及其他命令中，请谨慎设置。
+% \begin{latexexample}[moretexcs={\lstMakeShortInline},emph={[2]style,basicstyle,columns}]
+%   \lstMakeShortInline[
+%     style = njulisting,
+%     basicstyle = \normalsize\tt,
+%     columns = fixed]|
 % \end{latexexample}
 %
 %
@@ -1209,7 +1244,7 @@ through XeTeX.
 %
 % \subsection{参考文献}
 %
-% 符合GB7714-2015规范。使用\hologo{biber}作为后端。需要使用 |biber| 命令手动编译才会显示
+% 符合GB7714-2015规范。使用 \hologo{biber} 作为后端，现阶段并不支持 \hologo{BibTeX}。需要使用 |biber| 命令手动编译才会显示正确的条目序号。
 %
 % \begin{function}{\addbibresource}
 %   \begin{syntax}
@@ -1294,7 +1329,7 @@ through XeTeX.
 % \urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
 %
 %
-% \subsection*{宏包、模版}
+% \subsection*{宏包}
 %
 % \bibitem{latexmk}
 % \textsc{Collins J}.
@@ -1303,6 +1338,55 @@ through XeTeX.
 % \newblock (2021-11-20)
 % \urlprefix\url{https://www.ctan.org/pkg/latexmk}
 % \urlprefix\CTANurl[文档：]{support/latexmk/latexmk.pdf}
+%
+% \bibitem{listings}
+% \textsc{Heinz C}, \textsc{Moses B}, \textsc{Hoffmann J}.
+% \newblock \textit{Typeset source code listings using \hologo{LaTeX}} [EB/OL].
+% \newblock version 1.8d,
+% \newblock (2020-03-24)
+% \urlprefix\url{https://www.ctan.org/pkg/listings}
+% \urlprefix\CTANurl[文档：]{macros/latex/contrib/listings/listings.pdf}
+%
+%
+% \subsection*{模版}
+%
+% \bibitem{fduthesis}
+% 曾祥东.
+% \newblock \textit{fduthesis: 复旦大学论文模板} [EB/OL].
+% \newblock version 0.7e,
+% \newblock (2020-08-30)
+% \urlprefix\url{https://ctan.org/pkg/fduthesis}
+% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/fduthesis/fduthesis.pdf}
+%
+% \bibitem{thuthesis}
+% 清华大学 TUNA 协会.
+% \newblock \textit{\textsc{ThuThesis}：清华大学学位论文模板} [EB/OL].
+% \newblock version 7.2.3,
+% \newblock (2021-05-31)
+% \urlprefix\url{https://ctan.org/pkg/thuthesis}
+% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/thuthesis/thuthesis.pdf}
+%
+%
+% \emph{以下模版现已停止更新。}
+%
+% \bibitem{haixinghu2013}
+% 胡海星.
+% \newblock \textit{南京大学学位论文 \hologo{XeLaTeX} 模板} [EB/OL].
+% \newblock (2018-08-08)
+% \urlprefix\url{https://github.com/Haixing-Hu/nju-thesis}
+%
+% \bibitem{anyirao2018}
+% 饶安逸.
+% \newblock \textit{南京大学本科生毕业论文 \hologo{LaTeX} 模板 2018 新版} [EB/OL].
+% \newblock (2018-06-24)
+% \urlprefix\url{https://github.com/AnyiRao/NJUThesis2018}
+%
+% \bibitem{yichenzhao2021}
+% 赵懿晨.
+% \newblock \textit{南京大学本科生毕业论文 \hologo{LaTeX} 模板（2021版）} [EB/OL].
+% \newblock (2021-09-23)
+% \urlprefix\url{https://github.com/FengChendian/NJUThesis2021}
+%
 %
 % \end{thebibliography}
 %
@@ -2151,7 +2235,6 @@ through XeTeX.
 % 列表环境
 %    \begin{macrocode}
     enumitem,
-    listings,
 %    \end{macrocode}
 % \pkg{url} 用于生成链接文本。
 %    \begin{macrocode}
@@ -2796,47 +2879,6 @@ through XeTeX.
   }
 \captionsetup [ figure ] { style = njucap }
 \captionsetup [ table  ] { style = njucap }
-%    \end{macrocode}
-%
-% 
-% \subsubsection{代码环境}
-% 
-% 使用 \pkg{listings} 设置代码环境基本样式。
-%    \begin{macrocode}
-\lstdefinestyle { njulisting }
-  {
-    basewidth    = 0.5 em,
-    lineskip     = 3 pt,
-    basicstyle   = \tiny\tt,
-    keywordstyle = \bf,
-    commentstyle = \it\color{gray},
-    numbers      = left,
-    captionpos   = t,
-    breaklines   = true,
-    xleftmargin  = 2 em,
-    xrightmargin = 2 em
-  }
-%    \end{macrocode}
-%
-% 设置代码环境通用样式。
-%    \begin{macrocode}
-\lstset
-  {
-    style        = njulisting,
-    flexiblecolumns
-  }
-%    \end{macrocode}
-%
-% \changes{v0.13}{2021/12/13}{提供简化的行内代码环境。}
-% 上述调整会污染 \tn{lstinline} 的字体大小，因此单独设置用于生成行内代码的简略抄录环境。
-% 此处由于使用到了单独的字符，需要暂时关闭 \hologo{LaTeX3} 语法。
-%    \begin{macrocode}
-\ExplSyntaxOff
-\lstMakeShortInline[
-  style=njulisting,
-  basicstyle=\normalsize\tt,
-  columns=fixed]|
-\ExplSyntaxOn
 %    \end{macrocode}
 %
 %

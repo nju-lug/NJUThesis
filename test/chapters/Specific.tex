@@ -1,70 +1,7 @@
-\chapter{图片、表格与代码}
-
-\section{图片}
-
-插入一张图片，就像\cref{fig:arcaea}这样。
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{test.png}
-    \caption{火热劲爆 Arcaea}
-    \label{fig:arcaea}
-\end{figure}
-\zhlipsum[3][name=aspirin]
-
-\subsection{文字环绕图像}
-% wrapfigure后面不能有空行
-\begin{wrapfigure}{r}{0cm}
-    \label{fig:arcaeaedge}
-    \includegraphics[width=.15\textwidth]{test.png}
-    \caption{闊靛緥婧愮偣}
-\end{wrapfigure}
-\zhlipsum[2][name=simp]
-
-\subsection{多个图像}
-\begin{figure}[htbp]
-    \centering
-    \begin{subfigure}{.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{test.png}
-        \caption{闊靛緥婧愮偣}
-    \end{subfigure}
-    \begin{subfigure}{.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{test.png}
-        \caption{Arcaea}
-    \end{subfigure}
-
-    \begin{subfigure}{.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{test.png}
-        \caption{闊虫父}
-    \end{subfigure}
-    \caption{新概念空间立体节奏游戏}
-\end{figure}
-    
-\section{表格}
-
-你可以使用 |table| 环境插入标准三线表，如\cref{tab:testtab}所示
-
-\begin{table}[htbp]
-    \centering
-    \caption{经过测试的环境}
-    \label{tab:testtab}
-    \begin{tabular}{ccc}
-        \toprule
-        OS & TeX & 测试情况 \\
-        \midrule
-        Windows 10 & TeXLive 2021 & √ \\
-        Windows 10 & MiKTeX & √ \\
-        Windows 10 & TeXLive 2020 & ×\footnote{cleveref在引用章节时不能正常工作}  \\
-        Ubuntu 20.04 & TeXLive 2021 & √ \\
-        南大TeX & Overleaf & √ \\
-        \bottomrule
-    \end{tabular}
-\end{table}
+\chapter{学科特殊环境}
 
 \section{代码}
+% the listings package
 
 \subsection{行内代码}
 
@@ -121,7 +58,7 @@ except EOFError as e:
     pass
 \end{lstlisting}
 
-\subsection{算法块}
+\section{算法块}
 
 使用 {algorithm} 和 {algorithmic} 的算法示例\footnote{两者均位于 \textsf{algorithms} 下}。
 
@@ -139,3 +76,25 @@ except EOFError as e:
         \ENDIF\ENDFOR
     \end{algorithmic}
 \end{algorithm}
+
+
+\section{物理}
+% the physics package
+
+\begin{equation}
+    \expval{A}{\Psi}
+\end{equation}
+
+
+\section{化学}
+
+化学式：
+\begin{equation}
+    \frac{\varphi_{\ce{Ag +AgCl, Cl^{-}}}^{\ominus}-\varphi_{\ce{Ag +AgCl, Cl^{-}}}}{\varphi_{\ce{Ag +AgCl, Cl^{-}}}^{\ominus}}=\frac{0.0623}{0.8035}\times100\%=7.76\%
+\end{equation}
+
+化合物结构：
+\begin{figure}[H]
+  \centering
+  \chemfig{[:18]*5(-=(-CHO)-N-=)}
+\end{figure}

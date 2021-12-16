@@ -47,8 +47,9 @@
     }
 }
 
-% \usepackage{showframe}
-\usepackage{algorithm,algorithmic}
+\usepackage{listings,algorithm,algorithmic}
+\usepackage{siunitx,physics,chemfig}
+\usepackage[version=4]{mhchem}
 \usepackage{blindtext,zhlipsum}
 
 \addbibresource{test.bib}
@@ -57,6 +58,28 @@
 \DeclareMathOperator{\spn}{span}
 \renewcommand{\vec}[1]{\mathbf{#1}}
 \NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
+
+\lstdefinestyle{njulisting}
+  {
+    basewidth    = 0.5 em,
+    lineskip     = 3 pt,
+    basicstyle   = \tiny\tt,
+    keywordstyle = \bf,
+    commentstyle = \it\color{gray},
+    numbers      = left,
+    captionpos   = t,
+    breaklines   = true,
+    xleftmargin  = 2 em,
+    xrightmargin = 2 em
+  }
+\lstset{
+    style        = njulisting,
+    flexiblecolumns
+  }
+% \lstMakeShortInline[
+%   style=njulisting,
+%   basicstyle=\normalsize\tt,
+%   columns=fixed]|
 
 \begin{document}
 
@@ -104,7 +127,8 @@
     \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
 \end{description}
-\input{chapters/FigTabCode}
+\input{chapters/FigAndTab}
+\input{chapters/Specific}
 \input{chapters/Mathematics}
 \input{chapters/Bibliography}
 

@@ -1,0 +1,83 @@
+\chapter{图片、表格与代码}
+
+\section{图片}
+
+插入一张图片，就像\cref{fig:arcaea}这样。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{test.png}
+    \caption{火热劲爆 Arcaea}
+    \label{fig:arcaea}
+\end{figure}
+\zhlipsum[3][name=aspirin]
+
+\subsection{文字环绕图像}
+% wrapfigure后面不能有空行
+\begin{wrapfigure}{r}{0cm}
+    \label{fig:arcaeaedge}
+    \includegraphics[width=.15\textwidth]{test.png}
+    \caption{闊靛緥婧愮偣}
+\end{wrapfigure}
+\zhlipsum[2][name=simp]
+
+\subsection{多个图像}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{test.png}
+        \caption{闊靛緥婧愮偣}
+    \end{subfigure}
+    \begin{subfigure}{.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{test.png}
+        \caption{Arcaea}
+    \end{subfigure}
+
+    \begin{subfigure}{.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{test.png}
+        \caption{闊虫父}
+    \end{subfigure}
+    \caption{新概念空间立体节奏游戏}
+\end{figure}
+    
+\section{表格}
+
+你可以使用 |table| 环境插入标准三线表，如\cref{tab:testtab}所示。
+
+\begin{table}[htbp]
+    \centering
+    \caption{经过测试的环境}
+    \label{tab:testtab}
+    \begin{tabular}{ccc}
+        \toprule
+        OS           & TeX           & 测试情况 \\
+        \midrule
+        Windows 10   & TeX Live 2021 & √        \\
+        Windows 10   & MiKTeX        & √        \\
+        Windows 10   & TeX Live 2020 & ×        \\
+        Ubuntu 20.04 & TeX Live 2021 & √        \\
+        南大 TeX     & Overleaf      & √        \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+全部预定义的数学环境如\cref{tab:mathenv}所示。
+
+\begin{table}[htbp]
+    \centering
+    \caption{数学环境}
+    \label{tab:mathenv}
+    \begin{tabular}{cc|cc}
+        \toprule
+        标签       & 名称 & 标签       & 名称 \\
+        \midrule
+        axiom      & 公理 & lemma      & 引理 \\
+        corollary  & 推论 & proof      & 证明 \\
+        definition & 定义 & theorem    & 定理 \\
+        example    & 例   &            &      \\
+        \bottomrule
+    \end{tabular}
+\end{table}
