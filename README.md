@@ -73,7 +73,7 @@ DocStrip格式合并了LaTeX源代码和说明文档，更有利于宏包的发�
 
 ## 贡献
 
-如果你发现了模板的问题，欢迎在 Github 中提交 [issue](https://github.com/nju-lug/NJUThesis/issues)或者 [PR](https://github.com/nju-lug/NJUThesis/pulls。
+如果你发现了模板的问题，欢迎在 Github 中提交 [issue](https://github.com/nju-lug/NJUThesis/issues) 或者 [PR](https://github.com/nju-lug/NJUThesis/pulls)。
 
 ## 许可
 
