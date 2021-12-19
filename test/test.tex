@@ -3,7 +3,7 @@
 % 其内容不具有任何参考意义
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \documentclass{njuthesis}
-\documentclass[orig-decl]{njuthesis}
+\documentclass[orig-decl,bib/style=author-year]{njuthesis}
 % \documentclass[draft]{njuthesis}
 % \documentclass[type=design]{njuthesis}
 % \documentclass[degree=mg]{njuthesis}
@@ -44,15 +44,20 @@
         secret-level = {限制},
         udc = {004.72},
         supervisor-contact = {拉太赫科学与技术学院~枝江市结丘路~19~号~114514},
-    }
-}
+      }
+  }
 
 \usepackage{listings,algorithm,algorithmic}
 \usepackage{siunitx,physics,chemfig}
 \usepackage[version=4]{mhchem}
 \usepackage{blindtext,zhlipsum}
 
-\addbibresource{test.bib}
+\njusetup { 
+    bib = { 
+      %style = author-year,
+      source = {test.bib}
+    }
+  }
 
 % https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
 \DeclareMathOperator{\spn}{span}
@@ -80,6 +85,15 @@
 %   style=njulisting,
 %   basicstyle=\normalsize\tt,
 %   columns=fixed]|
+
+\setchemfig{
+  atom sep=14.4pt,
+  double bond sep=2.6pt,
+  bond style={line width=0.6pt},
+  cram width=2.0pt,
+  bond offset=1.6pt
+}
+\renewcommand*\printatom[1]{\small\ensuremath{\mathsf{#1}}}
 
 \begin{document}
 
