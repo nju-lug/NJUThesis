@@ -3,7 +3,7 @@
 % 其内容不具有任何参考意义
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \documentclass{njuthesis}
-\documentclass[orig-decl,bib/style=author-year]{njuthesis}
+\documentclass[orig-decl]{njuthesis}
 % \documentclass[draft]{njuthesis}
 % \documentclass[type=design]{njuthesis}
 % \documentclass[degree=mg]{njuthesis}
@@ -44,20 +44,19 @@
         secret-level = {限制},
         udc = {004.72},
         supervisor-contact = {拉太赫科学与技术学院~枝江市结丘路~19~号~114514},
-      }
+      },
+    bib = { 
+    %   style = author-year,
+      resource = {test.bib}
+    }
   }
+
+% \addbibresource{test.bib}
 
 \usepackage{listings,algorithm,algorithmic}
 \usepackage{siunitx,physics,chemfig}
 \usepackage[version=4]{mhchem}
 \usepackage{blindtext,zhlipsum}
-
-\njusetup { 
-    bib = { 
-      %style = author-year,
-      source = {test.bib}
-    }
-  }
 
 % https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
 \DeclareMathOperator{\spn}{span}

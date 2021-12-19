@@ -873,9 +873,9 @@ through XeTeX.
 %           supervisor*= {Li Chengdian},
 %           supervisor-title = {教授},
 %           supervisor-title* = {Professor},
-%           submit-date = {2021年8月10日},
-%       }
-%   }
+%           submit-date = {2021年8月10日}
+%         }
+%     }
 % \end{latexexample}
 %
 % 研究生可以参考如下列表输入个人信息
@@ -909,9 +909,9 @@ through XeTeX.
 %           clc = {0175.2},
 %           secret-level = {限制},
 %           udc = {004.72},
-%           supervisor-contact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514},
-%       }
-%   }
+%           supervisor-contact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514}
+%         }
+%     }
 % \end{latexexample}
 %
 %
@@ -1246,18 +1246,46 @@ through XeTeX.
 % 成果列表，分别为发表文章目录与合作文章目录。\Arg{文献} 的填写方式同 \tn{cite}，多个文献需要使用英文半角逗号隔开。
 % \end{function}
 %
+%
 % \subsection{参考文献}
 %
-% 符合GB7714-2015规范。使用 \hologo{biber} 作为后端，现阶段并不支持 \hologo{BibTeX}。需要使用 |biber| 命令手动编译才会显示正确的条目序号。
+% 符合 GB7714-2015 规范。本模板默认载入 \pkg{biblatex} 宏包，使用 \hologo{biber} 作为后端，现阶段并不计划支持 \hologo{BibTeX}。需要使用 |biber| 命令手动编译才会显示正确的条目序号。
+% \begin{function}[added=2021-12-19]{bib/style}
+%   \begin{syntax}
+%     style = \Arg{样式}
+%   \end{syntax}
+% 参考文献样式。分为顺序编码制 \opt{numeric} 和著者-出版年制 \opt{author-year}，默认为顺序编码制。
+% \end{function}
+%
+% 参考文献样式是一个整体的设置，会对文段内引用和参考文献页面的输出内容产生影响。
+%
+% \begin{function}[added=2021-12-19]{bib/resource}
+%   \begin{syntax}
+%     resource = \meta{文件}
+%   \end{syntax}
+% 参考文献数据源。类似于 \tn{addbibresource} 命令，但可以使用逗号分隔的列表形式。必须使用带扩展名（\file{.bib}）的完整文件名。
+% \end{function}
 %
 % \begin{function}{\addbibresource}
 %   \begin{syntax}
 %     \tn{addbibresource}\Arg{文件}
 %   \end{syntax}
-% 添加参考文献源文件。
+% 添加参考文献源文件。为了与 \pkg{biblatex} 进行兼容，也可使用本命令添加数据源。本命令不支持逗号分隔多个文件的形式，如果希望额外添加参考文献列表，需要在导言区中多次调用。
 % \end{function}
 %
-% 示例参考文献存储于 \file{njuthesis-sample.bib}，直接向其中粘贴新的参考文献即可。如果希望额外添加参考文献列表，可以在导言区中多次调用 \tn{addbibresource} 命令。注意本命令与 |\bibliography{bibfile1,bibfile2}| 不同，不可以用逗号分隔多个输入文件，且必须使用带扩展名的完整文件名。
+% 示例参考文献存储于 \file{njuthesis-sample.bib}，直接向其中粘贴新的参考文献即可。
+%
+%
+% 可以参考如下范例进行参考文献设置。
+%
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
+%   \njusetup {
+%       bib = {
+%           style = author-year,
+%           resource = {njuthesis-sample.bib}
+%         }
+%     }
+% \end{latexexample}
 %
 % \begin{function}{\printbibliography}
 % 生成参考文献列表页面。
@@ -1884,6 +1912,28 @@ through XeTeX.
 %    \end{macrocode}
 %
 %
+% \subsection{用户接口}
+%
+% \begin{macro}{info,bib}
+% 定义元（meta）键值对。
+%    \begin{macrocode}
+\keys_define:nn { nju } 
+  { 
+    info .meta:nn = { nju / info } { #1 },
+    bib  .meta:nn = { nju / bib  } { #1 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\njusetup}
+% \changes{v0.6}{2021/09/10}{改用键值对输入信息。}
+% 定义用于设置信息的命令。
+%    \begin{macrocode}
+\NewDocumentCommand \njusetup { m } { \keys_set:nn { nju } { #1 } }
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \subsection{配置常量}
 % TODO: 分离为单独文件
 % 通用默认名称。注意空格是忽略掉的。
@@ -2055,10 +2105,6 @@ through XeTeX.
 %
 % \subsection{个人信息}
 % \changes{v0.11}{2021/10/01}{将个人信息变量名改为小写字母加连字符的形式。}
-% 输入个人信息的区域。
-%    \begin{macrocode}
-\keys_define:nn { nju } { info.meta:nn = { nju / info } { #1 } }
-%    \end{macrocode}
 %
 %    \begin{macrocode}
 \keys_define:nn { nju / info }
@@ -2151,14 +2197,6 @@ through XeTeX.
     udc                 .tl_set:N = \l_@@_info_udc_tl,
     supervisor-contact  .tl_set:N = \l_@@_info_supv_cont_tl,
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\njusetup}
-% \changes{v0.6}{2021/09/10}{改用键值对输入信息。}
-% 定义用于设置信息的命令
-%    \begin{macrocode}
-\NewDocumentCommand \njusetup { m } { \keys_set:nn { nju } { #1 } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2580,6 +2618,7 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
+%
 % \subsubsection{载入指定字库}
 %
 % 载入字体命令。
@@ -2589,31 +2628,29 @@ through XeTeX.
     \use:c { @@_load_latin_font_ \g_@@_latin_font_tl : }
     \use:c { @@_load_cjk_font_   \g_@@_cjk_font_tl   : }
 %    \end{macrocode}
+% \changes{v0.10}{2021/09/28}{修正了数学字体。}
+% 设置数学字体 (XITS, 或者 \href{https://www.stixfonts.org}{STIX}, 与 Times New Roman 最为相近)
+%    \begin{macrocode}
+    % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
+    \setmathfont{XITSMath-Regular}[
+      BoldFont = XITSMath-Bold,
+      Extension = .otf]
+    \setmathfont{NewCMMath-Regular.otf}[range={cal,bb,frak}]
+    \setmathfont{NewCMMath-Regular.otf}[version=bold,range={bfcal}]
+%    \end{macrocode}
 % 自行定义 C\hologo{TeX} 中的四类字体命令。
 %    \begin{macrocode}
-    \NewDocumentCommand \songti   { } { \CJKfamily{zhsong} }
-    \NewDocumentCommand \heiti    { } { \CJKfamily{zhhei}  }
-    \NewDocumentCommand \fangsong { } { \CJKfamily{zhfs}   }
-    \NewDocumentCommand \kaishu   { } { \CJKfamily{zhkai}  }
-    \RenewDocumentCommand \large  { } { \zihao{4}          }
+    \NewDocumentCommand \songti   { } { \CJKfamily { zhsong } }
+    \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei  } }
+    \NewDocumentCommand \fangsong { } { \CJKfamily { zhfs   } }
+    \NewDocumentCommand \kaishu   { } { \CJKfamily { zhkai  } }
+    \RenewDocumentCommand \large  { } { \zihao     { 4      } }
   }
 %    \end{macrocode}
 %
 % 载入设置的字体。
 %    \begin{macrocode}
-\@@_load_font:
-%    \end{macrocode}
-%
-% \changes{v0.10}{2021/09/28}{修正了数学字体。}
-%
-% 设置数学字体 (XITS, 或者 \href{https://www.stixfonts.org}{STIX}, 与 Times New Roman 最为相近)
-%    \begin{macrocode}
-% \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
-\setmathfont{XITSMath-Regular}[
-  BoldFont = XITSMath-Bold,
-  Extension = .otf]
-\setmathfont{NewCMMath-Regular.otf}[range={cal,bb,frak}]
-\setmathfont{NewCMMath-Regular.otf}[version=bold,range={bfcal}]
+\BeforeBeginEnvironment { document } { \@@_load_font: }
 %    \end{macrocode}
 %
 %
@@ -2731,7 +2768,7 @@ through XeTeX.
 \NewDocumentCommand \njuchapter { m }
   { 
     \chapter*{#1}
-    \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1}
+    \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1 }
     \@mkboth{#1}{#1}
   }
 %    \end{macrocode}
@@ -2789,20 +2826,17 @@ through XeTeX.
 %
 % \subsection{参考文献}
 %
-% \changes{v0.12}{2021/12/06}{设置输出参考文献的默认选项。}
 % 设置参考文献名称。
 %    \begin{macrocode}
 \ctexset{ bibname = {参考文献} }
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\keys_define:nn { nju } { bib.meta:nn = { nju / bib } { #1 } }
-%    \end{macrocode}
-%    \begin{macrocode}
 \keys_define:nn { nju / bib }
   {
 %    \end{macrocode}
 % \begin{macro}{bib/style}
+% \changes{v0.13}{2021/12/19}{提供选择参考文献样式的接口。}
 % 参考文献样式。分为顺序编码制 \opt{numeric}（gb7714-2015）和著者-出版年制 \opt{author-year}（gb7714-2015ay）。
 %    \begin{macrocode}
     style             .choice:,
@@ -2811,32 +2845,52 @@ through XeTeX.
     style / author-year .code:n =
       { \clist_set:Nn \l_@@_tmp_clist { style = gb7714-2015ay } },
     style            .initial:n = numeric,
-    source         .clist_set:N = \l_@@_bib_source_clist
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{bib/resource}
+% 参考文献数据源。
+%    \begin{macrocode}
+    resource       .clist_set:N = \l_@@_bib_resource_clist
   }
 %    \end{macrocode}
+% \end{macro}
 %
-% \begin{macro}{\@@_biblatex_pre_setup:,\@@_biblatex_post_setup:}
-% 将设置传入 \pkg{biblatex} 宏包。
+% \begin{macro}{\addbibresource}
+% 由于在导言区尚未载入 \pkg{biblatex} 宏包，为了兼容用于添加参考文献数据源的 \cs{addbibresource} 命令，需要单独对其进行定义。
+%    \begin{macrocode}
+\NewDocumentCommand \addbibresource { m }
+  { \clist_gput_right:Nn \l_@@_bib_resource_clist {#1} }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_biblatex_pre_setup:}
+% 载入 \pkg{biblatex} 宏包前，需要禁用自行定义的 \cs{addbibresource} 命令，并将传入用户设置的选项。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_biblatex_pre_setup:
   {
+    \cs_undefine:N \addbibresource
     \clist_put_right:Nn \l_@@_tmp_clist { backend = biber }
     \exp_args:NV \PassOptionsToPackage \l_@@_tmp_clist { biblatex }
   }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\@@_biblatex_post_setup:}
+% \pkg{biblatex} 宏包载入后的设置，此时可正常使用 \cs{addbibresource} 命令。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_biblatex_post_setup:
   {
 %    \end{macrocode}
-% 修改参考文献的头部样式并插入目录。
+% \changes{v0.12}{2021/12/06}{设置输出参考文献的默认选项。}
+% 修改参考文献的头部样式，自动添加目录条目。
 %    \begin{macrocode}
     \defbibheading { njubib } [ \bibname ] { \njuchapter { ##1 } }
     \DeclarePrintbibliographyDefaults { heading = njubib }
 %    \end{macrocode}
 % 传入参考文献源文件。
 %    \begin{macrocode}
-    \clist_map_inline:Nn \l_@@_bib_source_clist { \addbibresource { ##1 } }
+    \clist_map_inline:Nn \l_@@_bib_resource_clist
+      { \addbibresource { ##1 } }
 %    \end{macrocode}
 % 忽略不需要的文献信息。
 %    \begin{macrocode}
@@ -2851,13 +2905,14 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
-% 导入 \pkg{biblatex}。
+% 使用 \pkg{etoolbox} 提供的 \tn{BeforeBeginEnvironment}，在 \env{document} 环境开始的钩子前载入 \pkg{biblatex} 并进行相关设置。
 %    \begin{macrocode}
-\hook_gset_rule:nnnn { begindocument/before } { . } { < } { xeCJK }
-\hook_gput_code:nnn { env/document/begin } { . }
+%\hook_gset_rule:nnnn { begindocument/before } { . } { < } { xeCJK }
+%\hook_gput_code:nnn { env/document/begin } { . }
+\BeforeBeginEnvironment { document }
   {
     \@@_biblatex_pre_setup:
-    \RequirePackage{biblatex}
+    \RequirePackage { biblatex }
     \@@_biblatex_post_setup:
   }
 %    \end{macrocode}
@@ -2925,10 +2980,8 @@ through XeTeX.
 \@@_cref_name:N \c_@@_theorem_type_clist
 %    \end{macrocode}
 %
-%
-% \subsection{图表浮动体}
 % 
-% \subsubsection{图片表格}
+% \subsection{图片表格}
 %
 % 设置默认图片扩展名，允许在不键入扩展名时自动进行补全。
 %    \begin{macrocode}
@@ -2950,7 +3003,7 @@ through XeTeX.
 %    \end{macrocode}
 %
 %
-% \subsubsection{列表环境}
+% \subsection{列表环境}
 % \changes{v0.12}{2021/12/07}{删除了 \pkg{enumitem} 的部分列表环境设置。}
 %    \begin{macrocode}
 \setlist { noitemsep }
