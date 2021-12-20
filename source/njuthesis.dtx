@@ -630,7 +630,6 @@ through XeTeX.
 %
 %
 % \subsubsection{指定字体}
-% \changes{v0.13}{2021/12/18}{使用 Adobe Source Han 替代 Google Noto 作为思源字体。}
 %
 % 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
 %
@@ -638,7 +637,7 @@ through XeTeX.
 % 
 % \begin{function}[added=2021-09-07,updated=2021-12-18]{cjk-font,latin-font}
 %   \begin{syntax}
-%     cjk-font = <win|mac|fandol|founder|source|none>
+%     cjk-font = <win|mac|fandol|founder|noto|source|none>
 %     latin-font = <win|mac|gyre|none>
 %   \end{syntax}
 % 手动指定字体。
@@ -668,7 +667,7 @@ through XeTeX.
 %     note{c} = {使用
 %       \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}{方正黑体}
 %       作为方正细黑一的粗体},
-%     note{d} = {考虑到获取字体的难易程度，采用
+%     note{d} = {在部分操作系统中可能已经预装 Google Noto 字体。考虑到获取字体的难易程度，单独安装时请采用
 %       \href{https://mirrors.nju.edu.cn/download/Adobe%20Source%20Han}{Adobe Source Han} 
 %       字体表示思源字体，请下载 Simplified Chinese（即后缀名为 SC）的版本},
 %     note{e} = {思源字体并不包含楷书和仿宋，而 Adobe 楷体和仿宋难以直接下载，
@@ -2003,7 +2002,7 @@ through XeTeX.
     { gyre, mac, win, none }
     { \tl_set_eq:NN \g_@@_latin_font_tl \l_keys_choice_tl },  
     cjk-font   .choices:nn   =
-    { fandol, founder, mac, noto, win, none }
+    { fandol, founder, mac, noto, source, win, none }
     { \tl_set_eq:NN \g_@@_cjk_font_tl   \l_keys_choice_tl },
   }
 %    \end{macrocode}
@@ -2664,61 +2663,85 @@ through XeTeX.
 %    \begin{macrocode}
       \defaultCJKfontfeatures{JFM={zh_CN/{quanjiao,fzpr}}}
     }
-    \setCJKmainfont{FZSSK}[% 方正书宋
-      Extension=.ttf,
-      BoldFont=FZXBSK,% 方正小标宋
-      ItalicFont=FZKTK]% 方正楷体
-    \setCJKsansfont{FZXH1K}[% 方正细黑一
-      Extension=.ttf,
-      BoldFont=FZHTK]% FZHTK 方正黑体
-    \setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
-    \setCJKfamilyfont{zhsong}
-      {FZSSK}[
-        Extension=.ttf,
-        BoldFont=FZXBSK]
-    \setCJKfamilyfont{zhhei}
-      {FZHTK}[
-        Extension=.ttf,
-        AutoFakeBold=2.17]
-    \setCJKfamilyfont{zhfs}
-      {FZFSK}[Extension=.ttf]
-    \setCJKfamilyfont{zhkai}
-      {FZKTK}[Extension=.ttf]
+    \setCJKmainfont { FZShuSong-Z01 }
+      [ BoldFont = FZXiaoBiaoSong-B05, ItalicFont = FZKai-Z03 ]
+    \setCJKsansfont { FZXiHeiI-Z08 } [ BoldFont = FZHei-B01 ]
+    \setCJKmonofont { FZFangSong-Z02 }
+    \setCJKfamilyfont { zhsong } { FZShuSong-Z01  }
+      [ BoldFont = FZXiaoBiaoSong-B05 ]
+    \setCJKfamilyfont { zhhei  } { FZHei-B01      }
+      [AutoFakeBold=2.17]
+    \setCJKfamilyfont { zhkai  } { FZKai-Z03      }
+      [AutoFakeBold=2.17]
+    \setCJKfamilyfont { zhfs   } { FZFangSong-Z02 }
     \defaultCJKfontfeatures{}
   }
 %    \end{macrocode}
 % \end{macro}
 %
-%
 % \begin{macro}{\@@_load_cjk_font_noto:}
-% 思源字体。
+% Noto 思源字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_noto:
   {
-    % 思源宋体
-    \setCJKmainfont[
-      UprightFont=NotoSerifSC-Regular,
-      BoldFont=NotoSerifSC-Bold,
-      ItalicFont=NotoSerifSC-Regular,
-      BoldItalicFont=NotoSerifSC-Bold,
-      ItalicFeatures=FakeSlant,
-      BoldItalicFeatures=FakeSlant]{Noto~Serif~SC}
-
-    % 思源黑体
-    \setCJKsansfont[
-      UprightFont=NotoSansSC-Regular,
-      BoldFont=NotoSansSC-Bold,
-      ItalicFont=NotoSansSC-Regular,
-      BoldItalicFont=NotoSansSC-Bold,
-      ItalicFeatures=FakeSlant,
-      BoldItalicFeatures=FakeSlant]{Noto~Sans~SC}
-
-    \setCJKmonofont{FZFSK}[Extension=.ttf]% 方正仿宋
-
-    \setCJKfamilyfont{zhsong}{Noto~Serif~SC}
-    \setCJKfamilyfont{zhhei}{Noto~Sans~SC}
-    \setCJKfamilyfont{zhfs}{FZFSK}[Extension=.ttf]
-    \setCJKfamilyfont{zhkai}{FZKTK}[Extension=.ttf]
+    \setCJKmainfont
+      [
+        UprightFont        = NotoSerifCJKsc-Regular,
+        BoldFont           = NotoSerifCJKsc-Bold,
+        ItalicFont         = NotoSerifCJKsc-Regular,
+        BoldItalicFont     = NotoSerifCJKsc-Bold,
+        ItalicFeatures     = FakeSlant,
+        BoldItalicFeatures = FakeSlant
+      ] { Noto~Serif~CJK~SC     }
+    \setCJKsansfont
+      [
+        UprightFont        = NotoSansCJKsc-Regular,
+        BoldFont           = NotoSansCJKsc-Bold,
+        ItalicFont         = NotoSansCJKsc-Regular,
+        BoldItalicFont     = NotoSansCJKsc-Bold,
+        ItalicFeatures     = FakeSlant,
+        BoldItalicFeatures = FakeSlant
+      ] { Noto~Sans~CJK~SC      }
+    \setCJKmonofont { Noto~Sans~Mono~CJK~SC }
+    \setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC }
+    \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC  }
+    \setCJKfamilyfont { zhfs   } { FZFangSong-Z02    }
+    \setCJKfamilyfont { zhkai  } { FZKai-Z03         }
+      [AutoFakeBold=2.17]
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_load_cjk_font_source:}
+% \changes{v0.13}{2021/12/20}{增加 Adobe Source Han 作为思源字体。}
+% Source Han 思源字体。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_load_cjk_font_source:
+  {
+    \setCJKmainfont
+      [
+        UprightFont        = SourceHanSerifSC-Regular,
+        BoldFont           = SourceHanSerifSC-Bold,
+        ItalicFont         = SourceHanSerifSC-Regular,
+        BoldItalicFont     = SourceHanSerifSC-Bold,
+        ItalicFeatures     = FakeSlant,
+        BoldItalicFeatures = FakeSlant
+      ] { Source~Han~Serif~SC     }
+    \setCJKsansfont
+      [
+        UprightFont        = SourceHanSansSC-Regular,
+        BoldFont           = SourceHanSansSC-Bold,
+        ItalicFont         = SourceHanSansSC-Regular,
+        BoldItalicFont     = SourceHanSansSC-Bold,
+        ItalicFeatures     = FakeSlant,
+        BoldItalicFeatures = FakeSlant
+      ] { Source~Han~Sans~SC      }
+    \setCJKmonofont { FZFangSong-Z02      }
+    \setCJKfamilyfont { zhsong } { Source~Han~Serif~SC }
+    \setCJKfamilyfont { zhhei  } { Source~Han~Sans~SC  }
+    \setCJKfamilyfont { zhfs   } { FZFangSong-Z02      }
+    \setCJKfamilyfont { zhkai  } { FZKai-Z03           }
+      [AutoFakeBold=2.17]
   }
 %    \end{macrocode}
 % \end{macro}
