@@ -132,9 +132,9 @@ through XeTeX.
     xrightmargin    = 3 em,
     escapeinside    = {(*}{*)},
     breaklines      = true,
-    basicstyle      = \small\tt,
-    keywordstyle    = \bf\color{njuviolet},
-    commentstyle    = \it\color{white!50!gray},
+    basicstyle      = \small\ttfamily,
+    keywordstyle    = \bfseries\color{njuviolet},
+    commentstyle    = \itshape\color{white!50!gray},
     stringstyle     = \color{nju-chem-red},
     backgroundcolor = \color{white!95!gray}
   }
@@ -239,7 +239,7 @@ through XeTeX.
 %
 % \cls{njuthesis}，即南京大学学位论文模板，是一个由南京大学 LUG 组织维护的，用于处理本校学生毕业论文排版需求的 \hologo{LaTeX} 模板。
 %
-% 本模板使用的本科生毕业论文模板格式依据《\href{https://jw.nju.edu.cn/7c/86/c26263a556166/page.htm}{关于启动南京大学2022届本科毕业论文（设计）工作的通知}》，研究生学位论文格式依据研究生院提供的材料包。
+% 本模板使用的本科生毕业论文模板格式依据《关于启动南京大学2022届本科毕业论文（设计）工作的通知》\scite{nju2021}，研究生学位论文格式依据研究生院提供的材料包。
 %
 %
 % \subsection{历史沿革}
@@ -322,7 +322,7 @@ through XeTeX.
 %
 % \subparagraph{GitHub 仓库} 最新开发进度会提交在本项目的 \href{https://github.com/nju-lug/NJUThesis}{Github仓库}。仓库内仅包含源代码、空白模板及测试文件，不可直接用于写作。这些文件对应的使用方法请参考 \ref{subsubsec:on-the-fly-installation}。如果由于网络原因不便访问主仓库，也可以从\href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像} 获取项目工程文件。
 %
-% \subparagraph{GitHub Releases} 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，赋以更改后的版本号，发布在 \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases 页面}。可供下载的文件包括下列三种：
+% \subparagraph{GitHub Releases} 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，赋以更改后的版本号，发布在 \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases 页面}。如果由于网络原因不便访问主仓库，也可以从\href{https://mirrors.nju.edu.cn/download/NJUThesis%20%E8%AE%BA%E6%96%87%E6%A8%A1%E6%9D%BF}{南京大学镜像站下载页面}获取。可供下载的文件包括下列三种：
 %   \begin{description}
 %     \item[\file{njuthesis-v*.pdf}] 模板说明文档（本文档）。
 %     \item[\file{njuthesis-v*.zip}] 完整模板包，包括格式文件、范本以及编辑器配置文件。可以解压后用于本地编译或直接上传用于在线编译。
@@ -459,7 +459,7 @@ through XeTeX.
 % 译过程。
 %
 % 编译本模板概括为如下步骤：生成初始文档，编译参考文献，生成页码、编号、目录，需
-% 要编译4次。\emph{假设即将使用的文件名为 \file{njuthesis-sample.tex}}，应采用以
+% 要编译三次\footnote{在这里展示的是运用 \pkg{biblatex} 的编译方法，不同于 \hologo{BibTeX}。若设置了 backref 选项，还需第四遍编译以生成后向超链接。}。\emph{假设即将使用的文件名为 \file{njuthesis-sample.tex}}，应采用以
 % 下命令顺序进行编译，以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF 
 % 文档位于同一目录下。该目录下同时会生成若干中间文件。
 %
@@ -468,8 +468,9 @@ through XeTeX.
 % 注意，几种命令的输出文件基本相同，可以任取一种；但如果您不清楚这两种编译引擎的
 % 区别，或者对多步编译感到困惑，我们建议优先使用 |latexmk -xelatex|。
 %
+%
 % \subparagraph{使用 \hologo{XeLaTeX}} 
-% 标准的 \hologo{XeLaTeX} 引擎编译方法。
+% 标准的 \hologo{XeLaTeX} 引擎四步编译方法。
 % 
 % \begin{shellexample}[morekeywords={xelatex,biber}]
 %   xelatex njuthesis-sample
@@ -478,8 +479,9 @@ through XeTeX.
 %   xelatex njuthesis-sample
 % \end{shellexample}
 %
+%
 % \subparagraph{使用 \hologo{LuaLaTeX}}
-% 标准的 \hologo{LuaLaTeX} 引擎编译方法。
+% 标准的 \hologo{LuaLaTeX} 引擎四步编译方法。
 %
 % \begin{shellexample}[morekeywords={lualatex,biber}]
 %   lualatex njuthesis-sample
@@ -487,6 +489,7 @@ through XeTeX.
 %   lualatex njuthesis-sample
 %   lualatex njuthesis-sample
 % \end{shellexample}
+%
 %
 % \subparagraph{使用 \pkg{latexmk}}
 % \pkg{latexmk}\scite{latexmk} 是一个基于 Perl 脚本的自动编译工具，宗旨是通过单一命令简化上述的多次编译流程。在使用该命令前，请确保安装了以下软件：
@@ -509,6 +512,7 @@ through XeTeX.
 % \begin{shellexample}[morekeywords={latexmk}]
 %   latexmk -c
 % \end{shellexample}
+%
 %
 % \subsection{在线编译}
 % \label{subsec:onlinecompile}
@@ -647,7 +651,7 @@ through XeTeX.
 % 由于不同操作系统自带的字库不同，在不同的操作系统上使用同一套配置会导致缺字、编译出错等后果。
 % 因此，本模板对于中文字体和西文字体都提供了多种字体配置。
 %
-% 本模板提供的中文字体配置如表 \ref{tab:chinesefontset} 所示。
+% 本模板提供的中文字体配置如表 \ref{tab:cjk-fontset} 所示。
 % 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置
 % （见表中前三行，Windows 和 macOS 以外的系统采用 Fandol 配置）。
 % 此外，我们也单独提供了方正和思源两套中文字体配置。
@@ -655,43 +659,43 @@ through XeTeX.
 % \begin{table}[htbp]
 %   \centering
 %   \begin{talltblr}[
-%   caption = {中文字体配置列表},
-%   label = {tab:chinesefontset},
-%   note{a} = {请下载简繁扩展（即 GBK 编码）版本},
-%   note{b} = {使用
-%     \href{http://www.foundertype.com/index.php/FontInfo/index/id/164}{方正小标宋}
-%     作为方正书宋的粗体},
-%   note{c} = {使用
-%     \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}{方正黑体}
-%     作为方正细黑一的粗体},
-%   note{d} = {考虑到获取字体的难易程度，采用
-%     \href{https://mirrors.nju.edu.cn/download/Adobe%20Source%20Han}{Adobe Source Han} 
-%     字体表示思源字体，请下载 Simplified Chinese（即后缀名为 SC）的版本},
-%   note{e} = {思源字体并不包含楷书和仿宋，而 Adobe 楷体和仿宋难以直接下载，
-%     因此使用方正字体代替},
+%     caption = {中文字体配置列表},
+%     label = {tab:cjk-fontset},
+%     note{a} = {请下载简繁扩展（即 GBK 编码）版本},
+%     note{b} = {使用
+%       \href{http://www.foundertype.com/index.php/FontInfo/index/id/164}{方正小标宋}
+%       作为方正书宋的粗体},
+%     note{c} = {使用
+%       \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}{方正黑体}
+%       作为方正细黑一的粗体},
+%     note{d} = {考虑到获取字体的难易程度，采用
+%       \href{https://mirrors.nju.edu.cn/download/Adobe%20Source%20Han}{Adobe Source Han} 
+%       字体表示思源字体，请下载 Simplified Chinese（即后缀名为 SC）的版本},
+%     note{e} = {思源字体并不包含楷书和仿宋，而 Adobe 楷体和仿宋难以直接下载，
+%       因此使用方正字体代替},
 %   ] { cell{2}{2,4} = {white!70!njuyellow}, cell{4}{4} = {white!70!njuyellow}, colspec = {ccccc} }
 %   \toprule
-%   配置名称   & 宋体        & 黑体        & 楷书        & 仿宋                       \\
+%     \bf 配置名称 & \bf 宋体    & \bf 黑体    & \bf 楷书    & \bf 仿宋                 \\
 %   \midrule
-%   Windows    & 中易宋体    & 中易黑体    & 中易楷体    & 中易仿宋                   \\
-%   macOS      & 华文宋体    & 华文黑体    & 华文楷体    & 华文仿宋                   \\
-%   \href{https://www.ctan.org/pkg/fandol} {Fandol}           
-%              & Fandol宋体  & Fandol黑体  & Fandol楷体  & Fandol仿宋                 \\
-%   \href{https://www.foundertype.com}{方正}\TblrNote{a}
-%     & \href{http://www.foundertype.com/index.php/FontInfo/index/id/151}{方正书宋}\TblrNote{b}
-%     & \href{http://www.foundertype.com/index.php/FontInfo/index/id/161}{方正细黑一}\TblrNote{c}
-%     & \href{http://www.foundertype.com/index.php/FontInfo/index/id/137}{方正楷体}
-%     & \href{http://www.foundertype.com/index.php/FontInfo/index/id/128}{方正仿宋}   \\
-%   \href{https://github.com/adobe-fonts}{思源}\TblrNote{d} 
-%     & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/}{思源宋体}
-%     & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-sans/OTF/SimplifiedChinese/}{思源黑体}
-%                                          & 方正楷体\TblrNote{e}  & 方正仿宋         \\
+%     Windows      & 中易宋体    & 中易黑体    & 中易楷体    & 中易仿宋                 \\
+%     macOS        & 华文宋体    & 华文黑体    & 华文楷体    & 华文仿宋                 \\
+%     \href{https://www.ctan.org/pkg/fandol} {Fandol}           
+%                  & Fandol宋体  & Fandol黑体  & Fandol楷体  & Fandol仿宋               \\
+%     \href{https://www.foundertype.com}{方正}\TblrNote{a}
+%       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/151}{方正书宋}\TblrNote{b}
+%       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/161}{方正细黑一}\TblrNote{c}
+%       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/137}{方正楷体}
+%       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/128}{方正仿宋}   \\
+%     \href{https://github.com/adobe-fonts}{思源}\TblrNote{d} 
+%       & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/}{思源宋体}
+%       & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-sans/OTF/SimplifiedChinese/}{思源黑体}
+%                                              & 方正楷体\TblrNote{e}  & 方正仿宋       \\
 %   \bottomrule
 %   \end{talltblr}
 % \end{table}
 %
 % 由于各操作系统对自带字体的支持程度不同，本模板对不同字体加粗的方式有所差别，
-% 表 \ref{tab:chinesefontset} 中，黄色底色的字体采用算法加粗。
+% 表 \ref{tab:cjk-fontset} 中，黄色底色的字体采用算法加粗。
 % 除此以外，各种字体在设计上也存在差异，因此本模板在不同操作系统下编译的结果可能存在细微不同，使用时请注意。
 % 若想要获得与 Word 版本模板最为贴近的体验，
 % 可以通过手动安装 Windows 自带的中易宋体、中易黑体、中易楷体和中易仿宋，并设置使用 Windows 字体来实现。
@@ -705,14 +709,14 @@ through XeTeX.
 %   \caption{西文字体清单}
 %   \label{tab:latinfontset}
 %   \begin{tabular}{cccc}
-%       \toprule
-%       配置名称 & 衬线体 & 无衬线体 & 等宽字体 \\
-%       \midrule
-%       Windows  & Times~New~Roman           & Arial                   & Courier~New \\
-%       macOS    & Times~New~Roman           & Arial                   & Menlo \\
+%     \toprule
+%       \bf 配置名称 & \bf 衬线体                & \bf 无衬线体            & \bf 等宽字体             \\
+%     \midrule
+%       Windows      & Times~New~Roman           & Arial                   & Courier~New              \\
+%       macOS        & Times~New~Roman           & Arial                   & Menlo                    \\
 %       \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{gyre} 
-%                & \Hologo{TeX}~Gyre~Termes  & \Hologo{TeX}~Gyre~Heros & \Hologo{TeX}~Gyre~Cursor \\
-%       \bottomrule
+%                    & \Hologo{TeX}~Gyre~Termes  & \Hologo{TeX}~Gyre~Heros & \Hologo{TeX}~Gyre~Cursor \\
+%     \bottomrule
 %   \end{tabular}
 % \end{table}
 %
@@ -1064,20 +1068,20 @@ through XeTeX.
 % \begin{latexexample}[moretexcs={\lstdefinestyle,\lstset},emph={[2]basewidth,lineskip,basicstyle,keywordstyle,commentstyle,numbers,captionpos,breaklines,xleftmargin,xrightmargin,style,flexiblecolumns}]
 %   \lstdefinestyle { njulisting }
 %     {
-%       basewidth    = 0.5 em,           % 单个字体宽度
-%       lineskip     = 3 pt,             % 在代码行中间添加额外行距
-%       basicstyle   = \tiny\tt,         % 基本字体样式，小号等宽
-%       keywordstyle = \bf,              % 关键词样式，粗体
-%       commentstyle = \it\color{gray},  % 注释样式，灰色斜体
-%       numbers      = left,             % 行号位置，左侧
-%       captionpos   = t,                % 题注位置，顶部
-%       breaklines   = true,             % 是否允许自动折行
-%       xleftmargin  = 2 em,             % 左侧边距
-%       xrightmargin = 2 em              % 右侧边距
+%       basewidth    = 0.5 em,               % 单个字体宽度
+%       lineskip     = 3 pt,                 % 在代码行间添加额外行距
+%       basicstyle   = \tiny\ttfamily,       % 基本字体样式，小号等宽
+%       keywordstyle = \bfseries,            % 关键词样式，粗体
+%       commentstyle = \itshape\color{gray}, % 注释样式，灰色斜体
+%       numbers      = left,                 % 行号位置，左侧
+%       captionpos   = t,                    % 题注位置，顶部
+%       breaklines   = true,                 % 是否允许自动折行
+%       xleftmargin  = 2 em,                 % 左侧边距
+%       xrightmargin = 2 em                  % 右侧边距
 %     }
 %   \lstset{
-%       style        = njulisting,       % 调用上述样式
-%       flexiblecolumns                  % 允许调整字符宽度
+%       style        = njulisting,           % 调用上述样式
+%       flexiblecolumns                      % 允许调整字符宽度
 %     }
 % \end{latexexample}
 % 
@@ -1119,12 +1123,12 @@ through XeTeX.
 %   \label{tab:mathenv}
 %   \begin{tabular}{cc|cc}
 %     \toprule
-%     标签       & 名称 & 标签       & 名称 \\
+%     \bf 标签   & \bf 名称 & \bf 标签   & \bf 名称 \\
 %     \midrule
-%     axiom      & 公理 & lemma      & 引理 \\
-%     corollary  & 推论 & proof      & 证明 \\
-%     definition & 定义 & theorem    & 定理 \\
-%     example    & 例   &            &      \\
+%     axiom      & 公理     & lemma      & 引理     \\
+%     corollary  & 推论     & proof      & 证明     \\
+%     definition & 定义     & theorem    & 定理     \\
+%     example    & 例       &            &          \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -1172,6 +1176,8 @@ through XeTeX.
 % 本科生仅会生成中文封面；研究生会生成中英文封面。
 % 如果选择了 \opt{nlcover}，仅会生成研究生的国家图书馆封面和原创性声明页。
 % \end{function}
+%
+% 封面中校徽及校名的绘制依赖 \pkg{tikz} 宏包，耗时较长。在启用草稿模式后封面绘制将被禁用以提升编译速度。
 %
 %
 % \subsubsection{摘要页}
@@ -1239,29 +1245,64 @@ through XeTeX.
 % 
 % \subsubsection{成果列表}
 %
-% \begin{function}{\njupaperlist,\njupaperlist*}
+% \begin{function}[added=2021-09-29,updated=2021-12-20]{\njupaperlist}
 %   \begin{syntax}
-%     \tn{njupaperlist}\Arg{文献}
+%     \tn{njupaperlist}\oarg{标题}\marg{文献}
 %   \end{syntax}
-% 成果列表，分别为发表文章目录与合作文章目录。\Arg{文献} 的填写方式同 \tn{cite}，多个文献需要使用英文半角逗号隔开。
+% 成果列表，默认标题为发表文章目录。\Arg{文献} 的填写方式同 \tn{cite}，多个文献需要使用英文半角逗号隔开。
 % \end{function}
+%
+% 为了便于识别，成果列表中默认对发表年份进行加粗处理。而对作者姓名的处理较为复杂。利用 \pkg{biblatex} 的数据注解机制可以实现对特定文献信息的样式修改\footnote{\url{https://blog.csdn.net/xenonhu/article/details/120853247}}，在此可以用来实现指定作者姓名的突出。经过注解后的一则参考文献条目如下所示：
+% \begin{latexexample}[emph={[1]@inproceedings},emph={[2]author}]
+%   @inproceedings{Nemec1997-209-214,
+%     title = {Force control of redundant robots},
+%     author = {B Nemec and Zhao, Mou Mou},
+%     author+an = {2=thesisauthor},
+%     booktitle = {Processings of Symposium on Robot Control},
+%     shortbooktitle = {(PSRC)},
+%     pages = {209-214},
+%     country = {Nantes France},
+%     year = {1997}
+%   }
+% \end{latexexample}
+% 其中 |author+an| 提供了注解的标记，格式为 \meta{序号}|=|\meta{标签}，以上条目中即是将第二名作者加入了指定论文作者的注解。\tn{njupaperlist} 会识别 |thesisauthor| 标签，为其指代的作者姓名进行加粗下划线处理。
+%
+% 除手动进行标记以外，以下也提供一种自动化处理办法。下载 \href{https://github.com/hushidong/biblatex-map}{bibmap} 全部文件后，修改主目录下的 \file{bibmapaddauthoran.py} 中 |fieldsource| 为需要匹配的姓名，将需要进行标记的 \file{.bib} 文件拷贝至本目录（此处使用 \file{test.bib} 进行示范），运行以下命令生成的参考文献数据源即可被成果列表识别加粗。
+%
+% \begin{shellexample}[morekeywords={python}]
+%   python bibmap.py test.bib -m bibmapaddauthoran.py
+% \end{shellexample}
 %
 %
 % \subsection{参考文献}
 %
-% 符合 GB7714-2015 规范。本模板默认载入 \pkg{biblatex} 宏包，使用 \hologo{biber} 作为后端，现阶段并不计划支持 \hologo{BibTeX}。需要使用 |biber| 命令手动编译才会显示正确的条目序号。
+% 本模板默认载入 \pkg{biblatex} 宏包，使用 \hologo{biber} 作为后端\footnote{出于简化命令的考虑，现阶段并不计划支持 \hologo{BibTeX}。}，通过 \pkg{biblatex-gb7714-2015}\scite{biblatex-gb7714-2015} 实现 GB/T 7714--2015\scite{gb-t-7714-2015} 规定的参考文献著录规则国家标准。
+% 
+% 需要使用 |biber| 命令编译才会显示正确的条目序号，详情请参照 \ref{subsubsec:compileseq}。
+%
+% 
+% \subsubsection{选项}
+%
 % \begin{function}[added=2021-12-19]{bib/style}
 %   \begin{syntax}
-%     style = \Arg{样式}
+%     style = <(numeric)|author-year>
 %   \end{syntax}
 % 参考文献样式。分为顺序编码制 \opt{numeric} 和著者-出版年制 \opt{author-year}，默认为顺序编码制。
 % \end{function}
 %
-% 参考文献样式是一个整体的设置，会对文段内引用和参考文献页面的输出内容产生影响。
+% 参考文献样式是一个整体的设置，会对正文中引用的文献的标注方法和参考文献表的输出格式产生影响。根据国家规定\scite{gb-t-7714-2015}，可以按照参考文献表的组织方式分为以下两种样式：
+%
+% \subparagraph{顺序编码制}
+% 顺序编码制是按正文中引用的文献出现的先后顺序连续编码，将序号置于方括号中。参考文献表采用顺序编码制组织时，各篇文献应按正文部分标注的序号依次列出。
+%
+% \subparagraph{著者-出版年制}
+% 正文引用的文献采用著者-出版年制时，各篇文献的标注内容由著者姓氏与出版年构成，并置于"()"内。参考文献表采用著者-出版年制组织时，各篇文献首先按文种集中，然后按著者字顺和出版年排列。
+%
+% 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号表示”\scite{nju2021}，符合顺序编码制的格式，保持默认设置即可。
 %
 % \begin{function}[added=2021-12-19]{bib/resource}
 %   \begin{syntax}
-%     resource = \meta{文件}
+%     resource = \Arg{文件}
 %   \end{syntax}
 % 参考文献数据源。类似于 \tn{addbibresource} 命令，但可以使用逗号分隔的列表形式。必须使用带扩展名（\file{.bib}）的完整文件名。
 % \end{function}
@@ -1288,34 +1329,74 @@ through XeTeX.
 % \end{latexexample}
 %
 % \begin{function}{\printbibliography}
-% 生成参考文献列表页面。
+% 生成参考文献表页面。
 % \end{function}
 %
 %
-% \subsubsection{文段内引用}
+% \subsubsection{正文引用}
 %
-% \begin{function}{\cite,\citeauthor,\citeyear}
+% \begin{function}{\cite}
 %   \begin{syntax}
-%     \tn{cite}\Arg{文献}
-%     \tn{citeauthor}\Arg{文献}
-%     \tn{citeyear}\Arg{文献}
+%     \tn{cite}\marg{文献}
+%     \tn{cite}\oarg{页码}\marg{文献}
 %   \end{syntax}
-% 引用文献
+% 在正文中引用参考文献。
 % \end{function}
+%
+% 引用命令 \tn{cite} 含有多个变体，以便使用文献条目中不同的信息域。在两种参考文献样式下，这些命令的行为具体存在一些差异，详见表 \ref{tab:numeric-style} 和表 \ref{tab:author-year-style}。
 % 
+% \begin{table}[ht]
+%   \caption{顺序编码制下的引用样式}
+%   \label{tab:numeric-style}
+%   \centering
+%   \begin{tblr}{cll}
+%     \toprule
+%       \bf 引用方式      & \bf 命令           & \bf 排版效果                   \\
+%     \midrule
+%       单篇文献          & \tn{cite}          & 上标可设置页码             \\
+%       单篇文献          & \tn{parencite}     & 非上标可设置页码           \\
+%       多篇文献          & \tn{cite}          & 上标，逗号隔开或短横线连接 \\
+%       标注页码          & \tn{pagescite}     & 上标加自动页码             \\
+%       标注作者          & \tn{textcite}      & 作者为主语加非上标编号     \\
+%       标注作者          & \tn{authornumcite} & 作者为主语加上标编号       \\
+%       完整脚注          & \tn{footfullcite}  & 脚注方式                   \\
+%     \bottomrule
+%   \end{tblr}
+% \end{table}
+%
+% \begin{table}[ht]
+%   \centering
+%   \begin{talltblr}[
+%     caption = {著者-出版年制下的引用样式},
+%     label = {tab:author-year-style},
+%     note{a} = {在此样式下 \tn{parencite} 效果等同于 \tn{cite}} ] {cll}
+%     \toprule
+%       \bf 引用方式      & \bf 命令              & \bf 排版效果                   \\
+%     \midrule
+%       单篇文献          & \tn{cite}\TblrNote{a} & 作者加年份用括号包围可设置页码 \\
+%       多篇文献          & \tn{cite}             & 分号隔开                       \\
+%       标注页码          & \tn{pagescite}        & 作者加年份用括号包围自动页码   \\
+%       标注年份          & \tn{yearcite}         & 用括号包围的年份               \\
+%       标注年份、页码    & \tn{yearpagescite}    & 提供年份用括号包围自动页码     \\
+%       标注作者          & \tn{textcite}         & 作者为主语加加括号包围年份     \\
+%       完整脚注          & \tn{footfullcite}     & 脚注方式                       \\
+%     \bottomrule
+%   \end{talltblr}
+% \end{table}
+%
 %
 % \subsubsection{文献管理}
 %
 % \subparagraph{使用EndNote}
 %
-% 南京大学信息化建设管理服务中心已购买\href{https://itsc.nju.edu.cn/EndNote/list.htm}{EndNote}供全校师生免费试用，最新版为EndNote 20。
+% 南京大学信息化建设管理服务中心已购买 \href{https://itsc.nju.edu.cn/EndNote/list.htm}{EndNote} 供全校师生免费使用，最新版为 EndNote 20。
 %
 %
 % \subparagraph{使用Zotero}
 %
 % \href{https://www.zotero.org/}{Zotero}是一款免费的文献管理软件，支持所有桌面平台。
 %
-% 在保持Zotero程序运行的情况下，点击浏览器工具栏的Zotero Connector插件即可自动从网页抓取参考文件信息。Zotero可以通过\href{https://github.com/l0o0/jasminum}{jasminum插件}支持中文参考文献的识别。在选中希望使用的文献后右键导出文献条目即可生成\file{.bib}文件。
+% 在保持 Zotero 程序运行的情况下，点击浏览器工具栏的 Zotero Connector 插件即可自动从网页抓取参考文件信息。Zotero 可以通过\href{https://github.com/l0o0/jasminum}{jasminum插件}支持中文参考文献的识别。在选中希望使用的文献后右键导出文献条目即可生成 \file{.bib} 文件。
 %
 %
 % \subsection{视觉识别系统}
@@ -1361,7 +1442,29 @@ through XeTeX.
 % \urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
 %
 %
+% \subsection{标准、规范}
+%
+% \bibitem{gb-t-7714-2015}
+% 全国信息与文献标准化技术委员会.
+% \newblock \textit{信息与文献\quad 参考文献著录规则: GB/T 7714--2015} [S].
+% \newblock 北京: 中国标准出版社, 2015
+%
+% \bibitem{nju2021}
+% 南京大学本科生院.
+% \newblock \textit{关于启动南京大学2022届本科毕业论文（设计）工作的通知} [EB/OL].
+% \newblock (2021-12-14)
+% \urlprefix\url{https://jw.nju.edu.cn/7c/86/c26263a556166/page.htm}
+%
+%
 % \subsection*{宏包}
+%
+% \bibitem{biblatex-gb7714-2015}
+% 胡振震.
+% \newblock \textit{符合 GB/T 7714-2015 标准的 biblatex 参考文献样式} [EB/OL].
+% \newblock version 1.1b,
+% \newblock (2021-12-11)
+% \urlprefix\url{https://ctan.org/pkg/biblatex-gb7714-2015}
+% \urlprefix\CTANurl[文档：]{biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf}
 %
 % \bibitem{latexmk}
 % \textsc{Collins J}.
@@ -1942,6 +2045,7 @@ through XeTeX.
   {
     { id          } { 学号                          },
     { orig_date   } { 日期                          },
+    { paperlist   } { 发表文章目录                  },
     { pdf_creator } { LaTeX~ with~ njuthesis~ class },
     { supv_ii     } { 第二导师                      },
     { supv_ttl    } { 职称                          }
@@ -2472,6 +2576,7 @@ through XeTeX.
 %    \end{macrocode}
 % \end{macro}
 %
+%
 % \subsubsection{定义中文字库}
 %
 % \begin{macro}{\@@_load_cjk_font_win:}
@@ -2619,6 +2724,25 @@ through XeTeX.
 % \end{macro}
 %
 %
+% \subsubsection{定义数学字库}
+%
+% \begin{macro}{\@@_load_math_font:}
+% 设置数学字体 (XITS, 或者 \href{https://www.stixfonts.org}{STIX}, 与 Times New Roman 最为相近)
+% 通用数学字体。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_load_math_font:
+  {
+    % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
+    \setmathfont{XITSMath-Regular}[
+      BoldFont = XITSMath-Bold,
+      Extension = .otf]
+    \setmathfont{NewCMMath-Regular.otf}[range={cal,bb,frak}]
+    \setmathfont{NewCMMath-Regular.otf}[version=bold,range={bfcal}]
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \subsubsection{载入指定字库}
 %
 % 载入字体命令。
@@ -2629,14 +2753,8 @@ through XeTeX.
     \use:c { @@_load_cjk_font_   \g_@@_cjk_font_tl   : }
 %    \end{macrocode}
 % \changes{v0.10}{2021/09/28}{修正了数学字体。}
-% 设置数学字体 (XITS, 或者 \href{https://www.stixfonts.org}{STIX}, 与 Times New Roman 最为相近)
 %    \begin{macrocode}
-    % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
-    \setmathfont{XITSMath-Regular}[
-      BoldFont = XITSMath-Bold,
-      Extension = .otf]
-    \setmathfont{NewCMMath-Regular.otf}[range={cal,bb,frak}]
-    \setmathfont{NewCMMath-Regular.otf}[version=bold,range={bfcal}]
+    \@@_load_math_font:
 %    \end{macrocode}
 % 自行定义 C\hologo{TeX} 中的四类字体命令。
 %    \begin{macrocode}
@@ -2644,13 +2762,17 @@ through XeTeX.
     \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei  } }
     \NewDocumentCommand \fangsong { } { \CJKfamily { zhfs   } }
     \NewDocumentCommand \kaishu   { } { \CJKfamily { zhkai  } }
+%    \end{macrocode}
+% 重定义字号命令。
+%    \begin{macrocode}
     \RenewDocumentCommand \large  { } { \zihao     { 4      } }
   }
 %    \end{macrocode}
 %
-% 载入设置的字体。
+% 载入设置的字体。此处设置与文档类一同载入，否则在导言区后载入字体可能导致一部分覆盖字体的命令失效。
 %    \begin{macrocode}
-\BeforeBeginEnvironment { document } { \@@_load_font: }
+% \BeforeBeginEnvironment { document } { \@@_load_font: }
+\@@_load_font:
 %    \end{macrocode}
 %
 %
@@ -2672,6 +2794,7 @@ through XeTeX.
 %    \begin{macrocode}
 \bool_if:NT \g_@@_draft_bool { \geometry { showframe } }
 %    \end{macrocode}
+%
 %
 % \subsubsection{页眉页脚}
 %
@@ -2728,6 +2851,7 @@ through XeTeX.
   }
 %    \end{macrocode}
 % \end{macro}
+%
 %
 % \subsection{章节标题格式}
 % 
@@ -3805,16 +3929,31 @@ through XeTeX.
 %
 % \begin{macro}{\njupaperlist}
 % \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
-% 发表文章目录与合作文章目录。
+% \changes{v0.13}{2021/12/20}{成果列表中可突出指定作者姓名及年份。}
+% 成果列表。
 %    \begin{macrocode}
-\NewDocumentCommand\njupaperlist { t* m }
-  {  
+\NewDocumentCommand\njupaperlist { O { \c_@@_name_paperlist_tl } m }
+  { 
+    \group_begin:
+%    \end{macrocode}
+% 修改姓名的显示方式，使被注解的姓名可被加粗下划线表示。
+%    \begin{macrocode}
+    \RenewDocumentCommand \mkbibnamegiven  { m }
+      { \ifitemannotation { thesisauthor } 
+          { \njuline { \bf ##1 } } { ##1 } }
+    \RenewDocumentCommand \mkbibnamefamily { m }
+      { \ifitemannotation { thesisauthor } 
+          { \njuline { \bf ##1 } } { ##1 } }
+%    \end{macrocode}
+% 修改年份的显示方式，默认进行加粗。
+%    \begin{macrocode}
+    \RenewDocumentCommand \mkbibdateshort  { m m m }
+      { \textbf{ \thefield { ##1 } } }
     \begin{refsection} 
       \nocite{#2}
-      \bool_if:NTF { #1 }
-      { \printbibliography[heading=subbibliography,title=合作文章目录] }
-      { \printbibliography[heading=subbibliography,title=发表文章目录] }
+      \printbibliography[heading=subbibliography,title=#1]
     \end{refsection}
+    \group_end:
   }
 %</class>
 %    \end{macrocode}

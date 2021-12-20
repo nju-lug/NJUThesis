@@ -46,7 +46,7 @@
         supervisor-contact = {拉太赫科学与技术学院~枝江市结丘路~19~号~114514},
       },
     bib = { 
-    %   style = author-year,
+      % style = author-year,
       resource = {test.bib}
     }
   }
@@ -58,18 +58,21 @@
 \usepackage[version=4]{mhchem}
 \usepackage{blindtext,zhlipsum}
 
-% https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
-\DeclareMathOperator{\spn}{span}
-\renewcommand{\vec}[1]{\mathbf{#1}}
-\NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
-
+\setmonofont{cmun}[
+  Extension      = .otf,
+  UprightFont    = *btl,
+  BoldFont       = *tb,
+  ItalicFont     = *bto,
+  BoldItalicFont = *tx,
+  HyphenChar     = None]
 \lstdefinestyle{njulisting}
   {
     basewidth    = 0.5 em,
     lineskip     = 3 pt,
-    basicstyle   = \tiny\tt,
-    keywordstyle = \bf,
-    commentstyle = \it\color{gray},
+    basicstyle   = \tiny\ttfamily,
+    keywordstyle = \bfseries\ttfamily\color{njuviolet},
+    commentstyle = \itshape\ttfamily\color{gray},
+    stringstyle  = \color{njumagenta},
     numbers      = left,
     captionpos   = t,
     breaklines   = true,
@@ -94,6 +97,12 @@
 }
 \renewcommand*\printatom[1]{\small\ensuremath{\mathsf{#1}}}
 
+% https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
+\DeclareMathOperator{\spn}{span}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+% \RenewDocumentCommand\vec{m}{\mathbf{#1}}
+\NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
+
 \begin{document}
 
 % \frontmatter
@@ -116,12 +125,11 @@
 \section[还是用短点的吧]{如果标题非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长会怎样呢}
 \cref{ch:longtitle}答案是使用可选参数：\verb+\chapter[短描述]{完整的长标题}+
 
-\zhlipsum[1-20][name=zhufu]
+\zhlipsum[1-10][name=zhufu]
 
 \chapter{列表环境}
 
 \begin{itemize}
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
@@ -131,15 +139,14 @@
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
 \end{enumerate}
 
 \begin{description}
     \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
 \end{description}
+
 \input{chapters/FigAndTab}
 \input{chapters/Specific}
 \input{chapters/Mathematics}
