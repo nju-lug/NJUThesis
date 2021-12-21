@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NJU Thesis
 % 南京大学毕业论文LaTeX模板
-% Version 0.13.x (2021-12-13)
+% Version 0.14.x (2021-12-21)
 %
 % 请关注项目地址以获取最新变化
 % https://github.com/nju-lug/NJUThesis
@@ -154,10 +154,27 @@
             江苏省南京市栖霞区仙林大道163号
         }
         % 导师联系方式
+    },
+    %
+    %
+    % bib 类用于参考文献设置
+    bib = {
+        % style = author-year,
+        % 参考文献样式
+        % 默认为顺序编码制（numeric）
+        % 可选著者-出版年制（author-year）
+        %
+        resource = {njuthesis-sample.bib}
+        % 参考文献数据源
+        % 需要带扩展名的完整文件名
+        % 可使用逗号分隔多个文件
+        % 此条等效于 \addbibresource 命令
     }
 }
 
-% 自行使用所需宏包
+% 自行载入所需宏包
+% \usepackage{subcaption} % 用于嵌套小幅图像，比 subfig 和 subfigure 好用
+% \usepackage{wrapfig} % 用于生成文字环绕的图片
 % \usepackage{siunitx} % 用于书写单位符号
 % \usepackage[version=4]{mhchem} % 用于绘制分子式
 % \usepackage{listings} % 用于展示代码
@@ -165,9 +182,6 @@
 
 % 设置图片存储位置
 \graphicspath{{figure/}}
-
-% 导入参考文献数据
-\addbibresource{njuthesis-sample.bib}
 
 % 在导言区随意定制所需命令
 % https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
@@ -191,6 +205,10 @@
 % 如需抑制这些信息，可以反注释以下命令
 % \raggedbottom
 
+\begin{preface}
+    前言
+\end{preface}
+
 \begin{abstract}
     中文摘要
 \end{abstract}
@@ -198,10 +216,6 @@
 \begin{abstract*}
     English abstract
 \end{abstract*}
-
-\begin{preface}
-    前言
-\end{preface}
 
 % 生成目录
 \tableofcontents
@@ -223,6 +237,10 @@
 %   \input{chapters/environments}
 
 \chapter{引言}
+
+\section{tDMRG}
+
+矩阵乘积态也被用于含时薛定谔方程的求解，形成了含时密度矩阵重整化群方法\cite{schollwock2011}。
 
 %-------------------------------------------------
 %	参考文献

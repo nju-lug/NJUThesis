@@ -56,6 +56,14 @@
 
 % \addbibresource{test.bib}
 
+\ctexset{
+  contentsname   = { 目\hspace{2em}次 },
+%   listfigurename = { 插图清单 }, 
+%   listtablename  = { 表格清单 }
+}
+
+\usepackage{hologo}
+\usepackage{multirow,wrapfig,subcaption}
 \usepackage{listings,algorithm,algorithmic}
 \usepackage{siunitx,physics,chemfig}
 \usepackage[version=4]{mhchem}
@@ -68,6 +76,7 @@
   ItalicFont     = *bto,
   BoldItalicFont = *tx,
   HyphenChar     = None]
+
 \lstdefinestyle{njulisting}
   {
     basewidth    = 0.5 em,
@@ -111,8 +120,8 @@
 % \frontmatter
 \maketitle
 
-\input{chapters/Abstract}
 \input{chapters/Preface}
+\input{chapters/Abstract}
 
 \raggedbottom
 % \flushbottom
