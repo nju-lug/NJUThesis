@@ -220,7 +220,7 @@ through XeTeX.
 % \vspace{2cm}
 % \def\abstractname{特别声明}
 % \begin{abstract}
-% 请注意，本模板仍未完成开发，出现bug或者文档不完善属于正常情况，欢迎提交
+% 请注意，本模板仍未完成开发，出现 bug 或者文档不完善属于正常情况，欢迎提交
 % issue 或 Pull Request。
 %
 % 本模板未经学校官方部门的审核，作者不对使用本模板产生的格式审查问题负责。
@@ -646,11 +646,11 @@ through XeTeX.
 % 通过此项可用国家图书馆封面替换普通封面。
 % 由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
 %
-% \begin{function}[added=2021-12-15]{orig-decl}
+% \begin{function}[updated=2021-12-23]{declaration}
 %   \begin{syntax}
-%     orig-decl = <\TFF>
+%     declaration = <\TFF>
 %   \end{syntax}
-% 是否需要诚信承诺书或原创性声明，默认关闭。
+% 是否需要诚信承诺书或原创性声明页面，默认关闭。
 % \end{function}  
 %
 % 通过此项可在封面后添加本科生的诚信承诺书或研究生的原创性声明。
@@ -1136,12 +1136,12 @@ through XeTeX.
 %
 % \paragraph{定理环境}
 %
-% 本模板也提供了一系列的定理数学环境。
-% 全部预定义的数学环境如表~\ref{tab:mathenv} 所示。其中证明环境较为特殊，会在结尾添加证毕符号（\mdwhtsquare）。用户也可以选择使用 \tn{newtheorem} 定义新的定理环境。
+% 本模板也提供了一系列的数学定理环境。
+% 全部预定义的数学定理环境如表~\ref{tab:mathenv} 所示。其中证明环境较为特殊，会在结尾添加证毕符号（\mdwhtsquare）。用户也可以选择使用 \tn{newtheorem} 定义新的定理环境。
 % 
 % \begin{table}[htbp]
 %   \centering
-%   \caption{数学环境}
+%   \caption{数学定理环境}
 %   \label{tab:mathenv}
 %   \begin{tabular}{cc|cc}
 %     \toprule
@@ -1175,7 +1175,7 @@ through XeTeX.
 %
 % 如需展示代码，可以使用抄录环境 \tn{verb}，格式如 |\verb!<code>!|。其中包裹代码的两个感叹号并不是绝对的，可以替换成任何两个相同的、没有在这段代码中出现过的符号。
 %
-% 抄录环境仅会用等宽字体如实呈现代码本身，并无任何附加功能。若需格式更为多样的代码环境，可以使用 \pkg{listings} 宏包。v0.13.2 版以后，本模板默认不会调用该宏包，使用代码环境前请在导言区自行导入。
+% 抄录环境仅会用等宽字体如实呈现代码本身，并无任何附加功能。若需格式更为多样的代码环境，可以使用 \pkg{listings} 宏包。v0.14.0 版以后，本模板默认不会调用该宏包，使用代码环境前请在导言区自行导入。
 % \begin{latexexample}
 %   \usepackage{listings}
 % \end{latexexample}
@@ -1353,6 +1353,8 @@ through XeTeX.
 %
 % \subsubsection{文献管理}
 %
+% 参考文献数据源理应是通过文献管理软件导出的，而不是逐条手动填写的。
+%
 % \subparagraph{使用EndNote}
 %
 % 南京大学信息化建设管理服务中心已购买 \href{https://itsc.nju.edu.cn/EndNote/list.htm}{EndNote} 供全校师生免费使用，最新版为 EndNote 20。
@@ -1373,12 +1375,31 @@ through XeTeX.
 % \subsubsection{封面}
 %
 % \begin{function}{\maketitle}
-% 用于生成封面。
-% 本科生仅会生成中文封面；研究生会生成中英文封面。
-% 如果选择了 \opt{nlcover}，仅会生成研究生的国家图书馆封面和原创性声明页。
+% 生成封面。
 % \end{function}
 %
-% 封面中校徽及校名的绘制依赖 \pkg{tikz} 宏包，耗时较长。在启用草稿模式后封面绘制将被禁用以提升编译速度。
+% 本科生模板仅会生成中文封面；研究生模板会生成中英文封面。
+% 如果选择了 \opt{nlcover}，仅会生成研究生的国家图书馆封面。
+% 如果选择了 \opt{declaration}，会在封面后生成本科生的诚信承诺书或研究生的原创性声明。
+% 在启用草稿模式后封面绘制将被禁用。
+%
+% \paragraph{封面图片}
+%
+% \begin{function}[added=2021-12-23]{style/emblem-img}
+%   \begin{syntax}
+%     emblem-img = \Arg{文件}
+%   \end{syntax}
+% 校徽图片文件。
+% \end{function}
+%
+% \begin{function}[added=2021-12-23]{style/name-img}
+%   \begin{syntax}
+%     name-img = \Arg{文件}
+%   \end{syntax}
+% 校名图片文件。
+% \end{function}
+%
+% 通过以上两个选项可以使用外置的校徽和校名图片。本模板封面中校徽及校名的绘制默认依赖 \pkg{njuvisual} 宏包提供的 \pkg{tikz} 矢量曲线，耗时较长，在替换为外置图片后可节省约1秒的编译时长。
 %
 %
 % \subsubsection{摘要页}
@@ -2046,7 +2067,7 @@ through XeTeX.
 % \begin{macro}{degree}
 % 学位类型，默认为本科。
 %    \begin{macrocode}
-    degree     .choices:nn = { ug, mg, mf, phd }
+    degree       .choices:nn = { ug, mg, mf, phd }
       { 
         \int_set_eq:NN \l_@@_info_degree_int \l_keys_choice_int  
         \tl_set:Nn \l_@@_info_degree_tl
@@ -2061,14 +2082,14 @@ through XeTeX.
           { \tl_set:Nn \l_@@_info_diploma_tl { ug } }
           { \tl_set:Nn \l_@@_info_diploma_tl { g  } } 
       },
-    degree     .initial:n  = ug,
+    degree       .initial:n  = ug,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{type}
 % 论文类型，默认为毕业论文。
 %    \begin{macrocode}
-    type       .choices:nn = { thesis, design }
+    type         .choices:nn = { thesis, design }
       { 
         \int_set_eq:NN \l_@@_info_type_int \l_keys_choice_int
         \tl_set:Nn \l_@@_info_type_tl
@@ -2076,24 +2097,24 @@ through XeTeX.
         \tl_put_left:Nn \l_@@_info_type_tl 
           { \tl_use:c { c_@@_name_ \l_@@_info_diploma_tl _tl } }
       },
-    type       .initial:n    = thesis,
+    type         .initial:n    = thesis,
 %    \end{macrocode}
 % \end{macro}
 % 
 % \begin{macro}{nlcover}
 % 是否需要国家图书馆封面（仅对研究生有效，默认关闭）。
 %    \begin{macrocode}
-    nlcover   .bool_set:N  = \g_@@_nlcover_bool,
-    nlcover    .initial:n  = false,
+    nlcover     .bool_set:N  = \g_@@_nlcover_bool,
+    nlcover      .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{orig-decl}
+% \begin{macro}{declaration}
 % \changes{v0.13}{2021/12/15}{新增诚信承诺书选项。}
 % 是否需要诚信承诺书或原创性声明（默认关闭）。
 %    \begin{macrocode}
-    orig-decl .bool_set:N  = \g_@@_orig_decl_bool,
-    orig-decl  .initial:n  = false, 
+    declaration .bool_set:N  = \g_@@_orig_decl_bool,
+    declaration  .initial:n  = false, 
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2101,8 +2122,8 @@ through XeTeX.
 % \changes{v0.13}{2021/12/15}{新增草稿模式选项。}
 % 是否开启草稿模式（默认关闭）。
 %    \begin{macrocode}
-    draft     .bool_set:N  = \g_@@_draft_bool,
-    draft      .initial:n  = false,
+    draft       .bool_set:N  = \g_@@_draft_bool,
+    draft        .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -2110,10 +2131,10 @@ through XeTeX.
 % \changes{v0.14}{2021/12/12}{简化字体选项名称。}
 % 定义字体选项。
 %    \begin{macrocode}
-    latin-font .choices:nn   =
+    latin-font   .choices:nn   =
       { gyre, mac, win, none }
       { \tl_set_eq:NN \g_@@_latin_font_tl \l_keys_choice_tl },
-    cjk-font   .choices:nn   =
+    cjk-font     .choices:nn   =
       { fandol, founder, mac, noto, source, win, none }
       { \tl_set_eq:NN \g_@@_cjk_font_tl   \l_keys_choice_tl },
   }
@@ -2133,8 +2154,9 @@ through XeTeX.
 %    \begin{macrocode}
 \keys_define:nn { nju } 
   { 
-    info .meta:nn = { nju / info } { #1 },
-    bib  .meta:nn = { nju / bib  } { #1 }
+    bib   .meta:nn = { nju / bib   } { #1 },
+    info  .meta:nn = { nju / info  } { #1 },
+    style .meta:nn = { nju / style } { #1 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3299,6 +3321,7 @@ through XeTeX.
 %
 % \subsection{封面}
 %
+%
 % \subsubsection{内部命令}
 %
 % \begin{macro}{\@@_split_title:n}
@@ -3389,6 +3412,47 @@ through XeTeX.
 %
 % \subsubsection{绘制部件}
 %
+%    \begin{macrocode}
+\keys_define:nn { nju / style }
+  {
+%    \end{macrocode}
+% \begin{macro}{style/emblem-img}
+% \changes{v0.14}{2021/12/23}{提供选择外置校徽图片的接口。}
+% 校徽图片路径。
+%    \begin{macrocode}
+    emblem-img .tl_set:N = \l_@@_emblem_img_tl,
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{style/name-img}
+% \changes{v0.14}{2021/12/23}{提供选择外置校名图片的接口。}
+% 校名图片路径。
+%    \begin{macrocode}
+    name-img   .tl_set:N = \l_@@_name_img_tl
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\njuemblem,\njuname}
+% 如果用户在导言区自定义了图片的路径，则覆盖 \pkg{njuvisual} 提供的绘制命令。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \tl_if_empty:NF \l_@@_emblem_img_tl
+      {
+        \RenewDocumentCommand \njuemblem { o m m }
+          { \includegraphics [ width = #2, height = #3 ]
+              { \l_@@_emblem_img_tl } }
+      }
+    \tl_if_empty:NF \l_@@_name_img_tl
+      {
+        \RenewDocumentCommand \njuname { o m m }
+          { \includegraphics [ width = #2, height = #3 ]
+              { \l_@@_name_img_tl } }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_cover_title_ug:}
 % 本科生封面标题。
 %    \begin{macrocode}
@@ -3411,13 +3475,13 @@ through XeTeX.
       \raggedleft
       \@@_cover_entry:nnn { dept            } { #1 } { #2 }
       \@@_cover_entry:nnn { major           } { #1 } { #2 }
-      \@@_multiline_title:nnn   { \bf } { #1 } { #2 }
+      \@@_multiline_title:nnn         { \bf } { #1 } { #2 }
       \@@_cover_bientry:nnnn { grade } { id } { #1 } { #3 }
       \@@_cover_entry:nnn { author          } { #1 } { #2 }
       \@@_cover_bientry:nnnn { supv } { supv_ttl } { #1 } { #3 }
       \tl_if_blank:VF { \l_@@_info_supv_ii_tl }
         { \@@_cover_bientry:nnnn { supv_ii } { supv_ttl } { #1 } { #3 } }
-      \@@_cover_entry:nnn { sm_date     } { #1 } { #2 }
+      \@@_cover_entry:nnn { sm_date         } { #1 } { #2 }
     \end{minipage} 
   }
 %    \end{macrocode}
@@ -3707,7 +3771,7 @@ through XeTeX.
 %
 % \begin{macro}{\@@_make_orig_decl: }
 % \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
-% 生成学位论文原创性声明。
+% 生成生成本科生的诚信承诺书或研究生的学位论文原创性声明。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_orig_decl: 
   {
@@ -3744,13 +3808,13 @@ through XeTeX.
       {
         \pagestyle { empty }
 %    \end{macrocode}
-% 如果在研究生模板中选择了 |nlcover|，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
+% 如果在研究生模板中选择了 \opt{nlcover}，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
 %    \begin{macrocode}
         \bool_if:NTF \g_@@_nlcover_bool 
           { \@@_make_cover_nl: }
           { \use:c { @@_make_cover_ \l_@@_info_diploma_tl : } }
 %    \end{macrocode}
-% 如果在选择了 |orig-decl|，就生成本科生的诚信承诺书或研究生的原创性声明。
+% 如果在选择了 \opt{declaration}，就生成本科生的诚信承诺书或研究生的原创性声明。
 %    \begin{macrocode}
         \bool_if:NT \g_@@_orig_decl_bool { \@@_make_orig_decl: }
       }

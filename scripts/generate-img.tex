@@ -1,0 +1,13 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 本文件用于生成黑色的校徽和校名图片
+% 编译命令为 pdflatex --shell-escape generate-img
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\usepackage{njuvisual}
+\usetikzlibrary{backgrounds,external}
+\tikzexternalize[prefix=nju-]
+\let\FIG=\tikzsetnextfilename
+\begin{document}
+\tikzsetnextfilename{emblem}\njuemblem[black]{!}{!}
+\tikzsetnextfilename{name}\njuname[black]{!}{!}
+\end{document}

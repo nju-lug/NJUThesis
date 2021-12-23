@@ -6,11 +6,11 @@
 % \documentclass[cjk-font=noto,latin-font=gyre]{njuthesis}
 % \documentclass[cjk-font=source,latin-font=gyre]{njuthesis}
 % \documentclass[cjk-font=founder,latin-font=gyre]{njuthesis}
-% \documentclass[orig-decl]{njuthesis}
+% \documentclass[declaration]{njuthesis}
 % \documentclass[draft]{njuthesis}
 % \documentclass[type=design]{njuthesis}
 % \documentclass[degree=mg]{njuthesis}
-% \documentclass[degree=mf,orig-decl]{njuthesis}
+% \documentclass[degree=mf,declaration]{njuthesis}
 % \documentclass[degree=phd,draft]{njuthesis}
 % \documentclass[degree=phd,nlcover]{njuthesis}
 
@@ -51,6 +51,10 @@
     bib = { 
       % style = author-year,
       resource = {test.bib}
+    },
+    style = {
+        emblem-img = {nju-emblem},
+        name-img = {nju-name}
     }
   }
 
@@ -62,52 +66,51 @@
 %   listtablename  = { 表格清单 }
 }
 
-\usepackage{hologo}
-\usepackage{multirow,wrapfig,subcaption}
-\usepackage{listings,algorithm,algorithmic}
-\usepackage{siunitx,physics,chemfig}
-\usepackage[version=4]{mhchem}
-\usepackage{blindtext,zhlipsum}
+\usepackage{multirow,tabularray,wrapfig,subcaption}
+% \usepackage{listings,algorithm,algorithmic}
+% \usepackage{siunitx,physics,chemfig}
+% \usepackage[version=4]{mhchem}
+\usepackage{hologo,blindtext,zhlipsum}
 
-\setmonofont{cmun}[
-  Extension      = .otf,
-  UprightFont    = *btl,
-  BoldFont       = *tb,
-  ItalicFont     = *bto,
-  BoldItalicFont = *tx,
-  HyphenChar     = None]
+% \setmonofont{cmun}[
+%   Extension      = .otf,
+%   UprightFont    = *btl,
+%   BoldFont       = *tb,
+%   ItalicFont     = *bto,
+%   BoldItalicFont = *tx,
+%   HyphenChar     = None]
 
-\lstdefinestyle{njulisting}
-  {
-    basewidth    = 0.5 em,
-    lineskip     = 3 pt,
-    basicstyle   = \tiny\ttfamily,
-    keywordstyle = \bfseries\ttfamily\color{njuviolet},
-    commentstyle = \itshape\ttfamily\color{gray},
-    stringstyle  = \color{njumagenta},
-    numbers      = left,
-    captionpos   = t,
-    breaklines   = true,
-    xleftmargin  = 2 em,
-    xrightmargin = 2 em
-  }
-\lstset{
-    style        = njulisting,
-    flexiblecolumns
-  }
-% \lstMakeShortInline[
-%   style=njulisting,
-%   basicstyle=\normalsize\tt,
-%   columns=fixed]|
+% \lstdefinestyle{njulisting}
+%   {
+%     basewidth    = 0.5 em,
+%     lineskip     = 3 pt,
+%     basicstyle   = \tiny\ttfamily,
+%     keywordstyle = \bfseries\ttfamily\color{njuviolet},
+%     commentstyle = \itshape\ttfamily\color{gray},
+%     stringstyle  = \color{njumagenta},
+%     numbers      = left,
+%     captionpos   = t,
+%     breaklines   = true,
+%     xleftmargin  = 2 em,
+%     xrightmargin = 2 em
+%   }
+% \lstset{
+%     style        = njulisting,
+%     flexiblecolumns
+%   }
+% % \lstMakeShortInline[
+% %   style=njulisting,
+% %   basicstyle=\normalsize\tt,
+% %   columns=fixed]|
 
-\setchemfig{
-  atom sep=14.4pt,
-  double bond sep=2.6pt,
-  bond style={line width=0.6pt},
-  cram width=2.0pt,
-  bond offset=1.6pt
-}
-\renewcommand*\printatom[1]{\small\ensuremath{\mathsf{#1}}}
+% \setchemfig{
+%   atom sep=14.4pt,
+%   double bond sep=2.6pt,
+%   bond style={line width=0.6pt},
+%   cram width=2.0pt,
+%   bond offset=1.6pt
+% }
+% \renewcommand*\printatom[1]{\small\ensuremath{\mathsf{#1}}}
 
 % https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
 \DeclareMathOperator{\spn}{span}
@@ -120,7 +123,7 @@
 % \frontmatter
 \maketitle
 
-\input{chapters/Preface}
+% \input{chapters/Preface}
 \input{chapters/Abstract}
 
 \raggedbottom
@@ -154,13 +157,34 @@
 \end{enumerate}
 
 \begin{description}
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测
+    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测
+    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测
 \end{description}
 
+\chapter{脚注}
+
+测试脚注的编号效果%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+
 \input{chapters/FigAndTab}
-\input{chapters/Specific}
+% \input{chapters/Specific}
 \input{chapters/Mathematics}
 \input{chapters/Bibliography}
 
@@ -171,6 +195,6 @@
 \appendix
 
 \input{chapters/Achievements}
-\input{chapters/Standard}
+% \input{chapters/Standard}
 
 \end{document}

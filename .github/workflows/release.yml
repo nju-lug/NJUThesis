@@ -56,8 +56,10 @@ jobs:
           ${{ env.SET_PATH }}
           xetex njuvisual.dtx
           mv docs/* .
+          mv scripts/* .
           mv build/unpacked/njuthesis.cls .
-          zip -r njuthesis-user-$VERSION.zip njuthesis-sample.tex njuthesis-sample.bib njuthesis.cls njuvisual.sty LICENSE README.md
+          pdflatex --shell-escape "generate-img.tex"
+          zip -r njuthesis-user-$VERSION.zip njuthesis-sample.tex njuthesis-sample.bib njuthesis.cls njuvisual.sty nju-emblem.pdf nju-name.pdf LICENSE README.md
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
