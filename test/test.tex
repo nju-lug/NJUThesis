@@ -6,18 +6,18 @@
 % \documentclass[cjk-font=noto,latin-font=gyre]{njuthesis}
 % \documentclass[cjk-font=source,latin-font=gyre]{njuthesis}
 % \documentclass[cjk-font=founder,latin-font=gyre]{njuthesis}
-% \documentclass[declaration]{njuthesis}
+% \documentclass[decl-page]{njuthesis}
 % \documentclass[draft]{njuthesis}
 % \documentclass[type=design]{njuthesis}
 % \documentclass[degree=mg]{njuthesis}
-% \documentclass[degree=mf,declaration]{njuthesis}
+% \documentclass[degree=mf,decl-page]{njuthesis}
 % \documentclass[degree=phd,draft]{njuthesis}
 % \documentclass[degree=phd,nlcover]{njuthesis}
 
 \njusetup {
     info = {
         title = {一种使用南京大学 \hologo{LaTeX} 模板!编写毕业论文的经验性方法},
-        title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
+        title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template},
         keywords = {我,就是,充数的,关键词},
         keywords* = {Dummy,Keywords,Here,{it is}},
         grade = {2018},
@@ -48,7 +48,7 @@
         udc = {004.72},
         supervisor-contact = {拉太赫科学与技术学院~枝江市结丘路~19~号~114514},
       },
-    bib = { 
+    bib = {
       % style = author-year,
       resource = {test.bib}
     },
@@ -62,7 +62,7 @@
 
 \ctexset{
   contentsname   = { 目\hspace{2em}次 },
-%   listfigurename = { 插图清单 }, 
+%   listfigurename = { 插图清单 },
 %   listtablename  = { 表格清单 }
 }
 
@@ -188,6 +188,7 @@
 \input{chapters/Mathematics}
 \input{chapters/Bibliography}
 
+% \emergencystretch=1em
 \printbibliography
 
 \input{chapters/Acknowledgement}

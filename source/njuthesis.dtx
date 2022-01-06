@@ -2,9 +2,9 @@
 % !TeX program  = XeLaTeX
 % !TeX encoding = UTF-8
 %
-% Copyright (C) 2021 
+% Copyright (C) 2021
 % by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
-% 
+%
 % It may be distributed and/or modified under the conditions of the
 % LaTeX Project Public License (LPPL), either version 1.3c of this
 % license or (at your option) any later version.  The latest version
@@ -49,7 +49,7 @@
 
 \preamble
 
-Copyright (C) 2021 
+Copyright (C) 2021
 by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
 
 This file may be distributed and/or modified under the conditions of
@@ -103,7 +103,7 @@ through XeTeX.
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo  $Id: njuthesis.dtx 0.14.0 2021-12-21 16:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
+%<class>\GetIdInfo  $Id: njuthesis.dtx 0.14.0 2022-01-06 20:00:00 +0800  NJU LUG <nju.lug@yaoge123.cn> $
 %<class>  { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -114,13 +114,12 @@ through XeTeX.
 \usepackage{listings,njuvisual,tabularray}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
-\newcommand*\scite[1]{\textsuperscript{\cite{#1}}}
-\hypersetup{pdftitle={The njuthesis class - LaTeX thesis template for Nanjing University}}
 \hypersetup{%
+  pdftitle  = {The njuthesis class - LaTeX thesis template for Nanjing University},
   citecolor = njublue,
   linkcolor = njuviolet,
   urlcolor  = njumagenta}
-\UseTblrLibrary{booktabs,siunitx,diagbox}
+\UseTblrLibrary{booktabs,diagbox,siunitx}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
 \DefTblrTemplate{caption-sep}{default}{\quad}
@@ -173,12 +172,12 @@ through XeTeX.
 % \fi
 %
 % \title{\color{njuviolet}{The \cls{njuthesis} class\\ 南京大学学位论文模板}}
-% 
+%
 % \author{^^A
 % Nanjing University Linux User Group
 % \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
 %
-% \date{v0.14.0 \\ Released 2021-12-21}
+% \date{v0.14.0 \quad 2022-01-21}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -201,6 +200,7 @@ through XeTeX.
 % \changes{v0.13}{2021/12/12}{优化了编译速度。}
 % \changes{v0.13}{2021/12/15}{适配2022届本科生毕业毕业论文（设计）规范。}
 %
+%
 % \maketitle
 %
 % \begin{abstract}
@@ -213,89 +213,102 @@ through XeTeX.
 % \def\abstractname{Abstract}
 % \begin{abstract}
 % The \cls{njuthesis} class is intended for typesetting Nanjing University
-% dissertations with \hologo{LaTeX}, providing support for bachelor, masters,  
-% and doctoral thesis. 
+% dissertations with \hologo{LaTeX}, providing support for bachelor, master,
+% and doctoral thesis.
 % \end{abstract}
 %
 % \vspace{2cm}
 % \def\abstractname{特别声明}
 % \begin{abstract}
-% 请注意，本模板仍未完成开发，出现 bug 或者文档不完善属于正常情况，欢迎提交
-% issue 或 Pull Request。
+% 在使用本模板时，我们默认您同意以下内容：
+% \begin{enumerate}
+%   \item 本模板通过 LPPL 1.3c 协议开放源代码，您可以随意使用编译出的 PDF 文件。
+%   \item 本模板与学校官方部门并不存在合作关系，作者不对使用本模板产生的格式审查问题负责。
+%   \item 遇到本文档没有覆盖的问题属于正常情况，欢迎提交反馈意见。
+% \end{enumerate}
 %
-% 本模板未经学校官方部门的审核，作者不对使用本模板产生的格式审查问题负责。
-% 
-% \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU LUG}始终欢迎
+% 我们的 \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{Linux 用户组}始终欢迎
 % 您的加入！
 % \end{abstract}
 %
 % \clearpage
+%
 %
 % \setcounter{tocdepth}{4}
 % \tableofcontents
 %
 % \clearpage
 %
-% 
+%
 % \begin{documentation}
 %
 % \section{模板介绍}
 %
-% \cls{njuthesis}，即南京大学学位论文模板，是一个由南京大学 LUG 组织维护的，用于处理本校学生毕业论文排版需求的 \hologo{LaTeX} 模板。
+% \cls{njuthesis}，即南京大学学位论文模板，是一个由南京大学 Linux 用户组维护的，用于处理本校学生毕业论文排版需求的 \hologo{LaTeX} 模板。
 %
-% 本模板使用的本科生毕业论文模板格式依据《关于启动南京大学2022届本科毕业论文（设计）工作的通知》\scite{nju2021}，研究生学位论文格式依据研究生院提供的材料包。
+% 本模板使用的本科生毕业论文模板格式依据《关于启动南京大学2022届本科毕业论文（设计）工作的通知》\cite{nju2021}，研究生学位论文格式依据研究生院提供的材料包。
 %
 %
 % \subsection{开始之前}
 %
-% 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \hologo{LaTeX} 排版系统。话不多说，请先完整体验一遍下述的工作流程：
+% 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \hologo{TeX} 排版系统。话不多说，请先完整体验一遍下述的工作流程：
 %
 % \bigskip
 % \fcolorbox{njublue}{gray!5}{\parbox{\textwidth-5em}{%
 % \begin{enumerate}
 %  \item 访问 \url{https://tex.nju.edu.cn}
 %  \item 点击右上角 Register，用南大邮箱注册账号
-%  \item 登录账号
-%  \item 点击左上角 New Project，选择 {\color{njuviolet}NJUThesis}
-%  \item 随意取名，点击 Create
+%  \item 登录您的账号
+%  \item 点击左上角 New Project 按钮，选择 \textcolor{njuviolet}{NJUThesis Project}
+%  \item 随意取名，点击 Create 按钮
 % \end{enumerate}}}
 %
 % \bigskip
-% 稍等片刻，您会在浏览器右侧发现一份新生成的论文。如果它的效果令您满意，不妨以此为基础开始写作。
+% 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。如果它的效果令您满意，不妨以此为基础开始写作。
 %
 % \subparagraph{我一定要体验上述流程吗？}
-%   是，但也不一定。有人坚持认为应该做一些直观、清晰、有手就行、一条路走到底的教程，而不是长篇累牍的精细介绍，其核心论据在于：现代人类总体上需要快速取得成就感，而且大部分可能用到本模板的同学不会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，尤其是在您可能早已掌握基本用法的情况下。但，不论如何，这番操作总会使您预览到 \cls{njuthesis} 论文模板的实际样式。
+% 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一条路走到底}的教程，而不是
+% \emph{长篇累牍的精细介绍}，其核心论据在于：现代人类总体上需要快速取得成就感，而且大部分可能用
+% 到本模板的同学不会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，尤其是在您
+% 可能早已掌握基本用法的情况下。但，不论如何，这番操作总会使您预览到 \cls{njuthesis} 论文模板的
+% 实际样式。
 %
 % \subparagraph{我并没有见到理想的结果。}
-%   具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果\emph{不能访问前文提到的在线编译网站}，请考虑检查网络连接，咨询本校信息化管理建设服务中心；如果\emph{报错}，请点击左上角的菜单按钮，查看编译器是否显示为 XeLaTeX；再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个相当有益的结论：\emph{也许 Word 模板更适合您}。这可以节省下阅读本文剩余部分的宝贵时间。
+% 具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果\emph{不能访问前文提到的在
+% 线编译网站}，请考虑检查网络连接，依次咨询本校
+% \href{https://itsc.nju.edu.cn}{信息化管理建设服务中心} 和该网站的维护者
+% \href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请点击左上角的菜单按钮，查看编译器是
+% 否显示为 |XeLaTeX|；再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个相当有益的
+% 结论：\emph{也许 Word 模板更加适合您}。这可以节省下掌握 \hologo{TeX} 排版软件使用方法所需的可
+% 观时间。
 %
 % \subparagraph{但我依然对 \hologo{LaTeX} 一无所知！}
-%   这意味着您也许得花些时间在长篇累牍的精细介绍上。请接着向后阅读，有需要时善用搜索。
+% 这意味着您也许得花些时间在\emph{长篇累牍的精细介绍}上。请接着向后阅读，有需要时善用搜索。
 %
 %
 % \subsection{历史沿革}
 %
 % 十几年来，多位热心校友发布过自己编写的模板，在 GitHub 网站上可考的包括：
 % \begin{enumerate}
-%  \item 杨文博（\href{http://yangwenbo.com/}{@solrex}）的 njuthesis（2010 - 2018） \scite{wenboyang2013}
-%  \item \href{https://github.com/fireblue}{@fireblue} 基于杨文博模板的 NJUThesis（2013）\scite{fireblue2013}
-%  \item \href{https://github.com/wenhai-zheng}{@wenhai-zheng} 的 NJUThesis（2013）\scite{wenhai-zheng2013}
-%  \item 曹增乐（\href{https://github.com/ZLCao}{@ZLCao}）的 NJUBachelor（2013 - 2016）\scite{zenglecao2013}
-%  \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的 NJU-Thesis（2013 - 2018）\scite{haixinghu2013}
-%  \item 张楚珩（\href{https://github.com/zhangchuheng123}{@zhangchuheng123}）基于胡海星模板的 NJUThesis（2016）\scite{chuhengzhang2016}
-%  \item 蒋炎岩（\href{http://ics.nju.edu.cn/~jyy/}{@jiangyy}）的 njuthesis（2017 - 2019）\scite{yanyanjiang2017}
+%  \item 杨文博（\href{http://yangwenbo.com/}{@solrex}）的 njuthesis（2010 - 2018） \cite{wenboyang2013}
+%  \item \href{https://github.com/fireblue}{@fireblue} 基于杨文博模板的 NJUThesis（2013）\cite{fireblue2013}
+%  \item \href{https://github.com/wenhai-zheng}{@wenhai-zheng} 的 NJUThesis（2013）\cite{wenhai-zheng2013}
+%  \item 曹增乐（\href{https://github.com/ZLCao}{@ZLCao}）的 NJUBachelor（2013 - 2016）\cite{zenglecao2013}
+%  \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的 NJU-Thesis（2013 - 2018）\cite{haixinghu2013}
+%  \item 张楚珩（\href{https://github.com/zhangchuheng123}{@zhangchuheng123}）基于胡海星模板的 NJUThesis（2016）\cite{chuhengzhang2016}
+%  \item 蒋炎岩（\href{http://ics.nju.edu.cn/~jyy/}{@jiangyy}）的 njuthesis（2017 - 2019）\cite{yanyanjiang2017}
 %  \item \href{https://github.com/njuHan}{@njuHan} 基于胡海星模板的 NJU-Thesis（2018 - 2021）
-%  \item 饶安逸（\href{https://anyirao.com/}{@AnyiRao}）基于张楚珩模板的 NJU Thesis 2018（2018）\scite{anyirao2018}
-%  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于饶安逸模板的 NJU Thesis 2021（2021）\scite{yichenzhao2021}
+%  \item 饶安逸（\href{https://anyirao.com/}{@AnyiRao}）基于张楚珩模板的 NJU Thesis 2018（2018）\cite{anyirao2018}
+%  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于饶安逸模板的 NJU Thesis 2021（2021）\cite{yichenzhao2021}
 % \end{enumerate}
 % 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
 %
 % 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南
 % 京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼
-% 顾友校 \cls{fduthesis}\scite{fduthesis}、\textsc{THuThesis}\scite{thuthesis} 等
+% 顾友校 \cls{fduthesis}\cite{fduthesis}、\textsc{THuThesis}\cite{thuthesis} 等
 % 优秀项目，构建了这一全新模板，力求通过 \hologo{LaTeX3} 语法和清晰的接口实现良
 % 好的易用性和可维护性。
-% 
+%
 % 目前，本模板的主要维护者包括：
 % \begin{itemize}
 %   \item 赵懿晨
@@ -317,7 +330,7 @@ through XeTeX.
 % 如果您希望在使用本模板前了解一些关于这个排版软件的基础知识，在此尝试列举一些有
 % 所帮助的资料：
 % \begin{description}
-%   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，可以参考英文版\scite{lshort}及其中文翻译版\scite{lshort-zh-cn}。
+%   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，可以参考英文版\cite{lshort}及其中文翻译版\cite{lshort-zh-cn}。
 %   \item[《\hologo{LaTeX} 入门》] 刘海洋著。
 % \end{description}
 %
@@ -355,7 +368,7 @@ through XeTeX.
 % \section{安装}
 % \label{sec:setup}
 % 本节主要介绍本宏包的获取、安装以及编译方式。
-% 
+%
 % \subsection{获取模板}
 %
 % \cls{njuthesis} 目前处于积极的维护中，其文件主要可通过以下途径获取：
@@ -372,6 +385,34 @@ through XeTeX.
 %   \end{description}
 %
 %
+% \subsubsection{文件构成}
+%
+% 本模板由数量众多的文件组成，\emph{所有可能遇到的}文件如表 \ref{tab:njuthesisfiles} 所示。
+% 其中标注为黄色的内容仅供开发使用，并不会在发行版中出现。
+%
+% \begin{table}[ht]
+%   \caption{\cls{njuthesis}文件构成}
+%   \label{tab:njuthesisfiles}
+%   \centering
+%   \begin{tabular}{lp{18em}}
+%     \toprule
+%     名称                                  & 说明                             \\
+%     \midrule
+%     \file{.vscode}                        & Visual Studio Code 配置文件      \\
+%     \file{latexmkrc}                      & latexmk 配置文件                 \\
+%     \file{LICENSE}                        & 许可证                           \\
+%     \file{njuthesis.cls}                  & 模板文档类                       \\
+%     \color{njuyellow}\file{njuthesis.dtx} & 文档类源代码                     \\
+%     \color{njuyellow}\file{njuthesis.ins} & 文档类安装脚本                   \\
+%     \file{njuthesis.pdf}                  & 用户手册（本文档）               \\
+%     \file{njuthesis-sample.bib}           & 示例参考文献列表                 \\
+%     \file{njuthesis-sample.tex}           & 示例文档，不妨以此为基础撰写论文 \\
+%     \file{README.md}                      & 自述文件                         \\
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+%
 % \subsection{本地安装}
 %
 % \subsubsection{标准安装}
@@ -386,7 +427,7 @@ through XeTeX.
 %   tlmgr install njuthesis njuvisual
 % \end{shellexample}
 % 即可完成安装，无需额外准备 \file{.cls} 文件。
-% 
+%
 % 另一方面，CTAN 依赖开发者手动上传更新，版本更新具有滞后性。如果使用时遇到了问
 % 题，不妨使用下一小节的\emph{即时安装方法}优先载入较新的格式文件。
 %
@@ -419,34 +460,6 @@ through XeTeX.
 % 的同学接触 \file{.dtx} 文件。
 %
 %
-% \subsection{文件构成}
-%
-% \cls{njuthesis}由数量众多的文件组成，\emph{所有可能遇到的}文件如表 \ref{tab:njuthesisfiles} 所示。
-% 其中标注为黄色的内容仅供开发使用，并不会在发行版中出现。
-%
-% \begin{table}[ht]
-%   \caption{\cls{njuthesis}文件构成}
-%   \label{tab:njuthesisfiles}
-%   \centering
-%   \begin{tabular}{lp{18em}}
-%     \toprule
-%     名称                                  & 说明                             \\
-%     \midrule
-%     \file{.vscode}                        & Visual Studio Code 配置文件      \\
-%     \file{latexmkrc}                      & latexmk 配置文件                 \\
-%     \file{LICENSE}                        & 许可证                           \\
-%     \file{njuthesis.cls}                  & 模板文档类                       \\
-%     \color{njuyellow}\file{njuthesis.dtx} & 文档类源代码                     \\
-%     \color{njuyellow}\file{njuthesis.ins} & 文档类安装脚本                   \\
-%     \file{njuthesis.pdf}                  & 用户手册（本文档）               \\
-%     \file{njuthesis-sample.bib}           & 示例参考文献列表                 \\
-%     \file{njuthesis-sample.tex}           & 示例文档，不妨以此为基础撰写论文 \\
-%     \file{README.md}                      & 自述文件                         \\
-%     \bottomrule
-%   \end{tabular}
-% \end{table}
-%
-%
 % \subsection{本地编译}
 % \label{subsec:localcompile}
 %
@@ -455,7 +468,7 @@ through XeTeX.
 %
 % \subsubsection{安装\hologo{TeX}发行版}
 %
-% 首先需要下载并安装 \hologo{TeX} 软件发行版，其中包括引擎、宏包、字体、文档等。各操作系统适用情况请参考表~\ref {tab:texdistribution}。第一次编译前请务必通过 MiKTeX Console、TeX Live 
+% 首先需要下载并安装 \hologo{TeX} 软件发行版，其中包括引擎、宏包、字体、文档等。各操作系统适用情况请参考表~\ref {tab:texdistribution}。第一次编译前请务必通过 MiKTeX Console、TeX Live
 % Manager 等图形化程序或 \pkg{tlmgr} \emph{手动更新全部宏包}以避免潜在的兼容性问题。
 % \begin{table}[ht]
 %   \centering
@@ -507,7 +520,7 @@ through XeTeX.
 %
 % 编译本模板概括为如下步骤：生成初始文档，编译参考文献，生成页码、编号、目录，需
 % 要编译三次\footnote{在这里展示的是运用 \pkg{biblatex} 的编译方法，不同于 \hologo{BibTeX}。若设置了 backref 选项，还需第四遍编译以生成后向超链接。}。\emph{假设即将使用的文件名为 \file{njuthesis-sample.tex}}，应采用以
-% 下命令顺序进行编译，以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF 
+% 下命令顺序进行编译，以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF
 % 文档位于同一目录下。该目录下同时会生成若干中间文件。
 %
 % 编译命令具体为引擎名称加文件名，在编译 \file{.tex} 文件时，文件扩展名可以省略
@@ -516,9 +529,9 @@ through XeTeX.
 % 区别，或者对多步编译感到困惑，我们建议优先使用 |latexmk -xelatex|。
 %
 %
-% \subparagraph{使用 \hologo{XeLaTeX}} 
+% \subparagraph{使用 \hologo{XeLaTeX}}
 % 标准的 \hologo{XeLaTeX} 引擎四步编译方法。
-% 
+%
 % \begin{shellexample}[morekeywords={xelatex,biber}]
 %   xelatex njuthesis-sample
 %   biber njuthesis-sample
@@ -539,7 +552,7 @@ through XeTeX.
 %
 %
 % \subparagraph{使用 \pkg{latexmk}}
-% \pkg{latexmk}\scite{latexmk} 是一个基于 Perl 脚本的自动编译工具，宗旨是通过单一命令简化上述的多次编译流程。在使用该命令前，请确保安装了以下软件：
+% \pkg{latexmk}\cite{latexmk} 是一个基于 Perl 脚本的自动编译工具，宗旨是通过单一命令简化上述的多次编译流程。在使用该命令前，请确保安装了以下软件：
 % \begin{description}
 %   \item[Perl] 一般预装于 macOS 和 Linux，而 Windows 用户需要单独安装 \href{https://strawberryperl.com/}{Strawberry Perl}。
 %   \item[\pkg{latexmk}] \hologo{MiKTeX}已预装；如果终端找不到|latexmk|命令，\hologo{TeX}\,Live 用户需使用 \pkg{tlmgr} 单独安装。
@@ -574,10 +587,10 @@ through XeTeX.
 % \subsubsection{操作步骤}
 %
 % \begin{enumerate}
-%     \item 访问\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}，点击界面右上方 Register，使用\emph{南京大学邮箱}注册账号并登录
-%     \item 在项目页面左上角的Menu中，将编译器改为\hologo{XeLaTeX}或者\hologo{LuaLaTeX}
-%     \item 仿照 \file{njuthesis-sample.tex} 编写论文
-%     \item 点击Compile按钮进行编译和预览
+%   \item 访问\href{https://tex.nju.edu.cn}{南大\hologo{TeX}}，点击界面右上方 Register，使用\emph{南京大学邮箱}注册账号并登录
+%   \item 在项目页面左上角的Menu中，将编译器改为\hologo{XeLaTeX}或者\hologo{LuaLaTeX}
+%   \item 仿照 \file{njuthesis-sample.tex} 编写论文
+%   \item 点击Compile按钮进行编译和预览
 % \end{enumerate}
 %
 % 注意，由于南大 \hologo{TeX} 已预装 \cls{njuthesis}，可以直接编写正文，无需 \file{.cls} 等格式文件。如果需要使用新版模板，也可以点击New Project -> Upload Project上传 \ref{subsubsec:on-the-fly-installation} 得到的压缩文件。
@@ -590,7 +603,21 @@ through XeTeX.
 % \pkg{njuthesis} 现已支持 \href{https://www.overleaf.com/}{Overleaf} 平台。
 %
 % \subparagraph{TeXPage}
-% \href{https://www.texpage.com/}{TeXPage} 是国人研发的\hologo{LaTeX}在线编辑器，当前版本已具备较为完善的编辑编译功能，而且免费版相对 Overleaf 增加了公式识别、编辑历史等实用工具，也可以作为一个备选项。
+% \href{https://www.texpage.com/}{TeXPage} 是国人研发的 \hologo{LaTeX} 在线编辑器，当前版本已具备较为完善的编辑编译功能，而且免费版相对 Overleaf 增加了公式识别、编辑历史等实用工具，也可以作为一个备选项。
+%
+%
+% \subsection{版本升级}
+%
+% 考虑到本模板仍在开发中，将不断发布新版本，您可能需要不定期进行更新以得到对于已知问题的修复补丁。考虑到安装和编译方式的差异，不妨直接将论文内容迁移至新版的 \file{njuthesis-sample.tex}\footnote{请赞美 \hologo{TeX} 系统“样式与内容分离”的原则！}，然后按照当前工作文件夹内是否有 \file{.cls} 文件分别进行更新操作。
+%
+% \subparagraph{有}
+% 迁移至 \file{njuthesis-user-v*.zip} 提供的新内容。
+%
+% \subparagraph{没有}
+% 如果使用的是南大 \hologo{TeX}，更新内置模板时会进行公告，一般为上传 CTAN 后一周。如果是本地安装，请直接使用包管理器进行更新：
+% \begin{shellexample}[morekeywords={tlmgr},emph={update}]
+%   tlmgr update all
+% \end{shellexample}
 %
 %
 % \section{使用方法}
@@ -614,13 +641,13 @@ through XeTeX.
 %
 % 如果您尝试编译上面的代码，会发现自己得到了一个5页的 PDF 文档，是一份空白的本科生论文。
 % 当然，这个文档实际上没有任何内容，接下来将会介绍具体填写内容的方法。
-% 
+%
 %
 % \subsection{模板选项}
 %
 % 模板选项位于 \tn{documentclass} 后的方括号内，用于指定模板的行为。
 % 下文中尖括号内列出了若干个允许的选项，其中加粗的为默认选项。
-% 
+%
 % \subsubsection{学位信息}
 % \begin{function}[added=2021-09-07]{degree}
 %   \begin{syntax}
@@ -641,23 +668,23 @@ through XeTeX.
 %     nlcover = <\TFF>
 %   \end{syntax}
 % 是否使用国家图书馆封面，默认关闭。
-% \end{function}  
+% \end{function}
 %
 % 通过此项可用国家图书馆封面替换普通封面。
 % 由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
 %
-% \begin{function}[updated=2021-12-23]{declaration}
+% \begin{function}[updated=2022-01-06]{decl-page}
 %   \begin{syntax}
-%     declaration = <\TFF>
+%     decl-page = <\TFF>
 %   \end{syntax}
 % 是否需要诚信承诺书或原创性声明页面，默认关闭。
-% \end{function}  
+% \end{function}
 %
 % 通过此项可在封面后添加本科生的诚信承诺书或研究生的原创性声明。
 %
 %
 % \subsubsection{草稿模式}
-% 
+%
 % \begin{function}[added=2021-12-15]{draft}
 %   \begin{syntax}
 %     draft = <\TFF>
@@ -682,7 +709,7 @@ through XeTeX.
 % 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
 %
 % 如果希望更改本模板使用的字体，请填写以下两个选项以覆盖操作系统检测得到的设置。
-% 
+%
 % \begin{function}[added=2021-09-07,updated=2021-12-18]{cjk-font,latin-font}
 %   \begin{syntax}
 %     cjk-font = <win|mac|fandol|founder|noto|source|none>
@@ -716,7 +743,7 @@ through XeTeX.
 %       \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}{方正黑体}
 %       作为方正细黑一的粗体},
 %     note{d} = {在部分操作系统中可能已经预装 Google Noto 字体。考虑到获取字体的难易程度，单独安装时请采用
-%       \href{https://mirrors.nju.edu.cn/download/Adobe%20Source%20Han}{Adobe Source Han} 
+%       \href{https://mirrors.nju.edu.cn/download/Adobe%20Source%20Han}{Adobe Source Han}
 %       字体表示思源字体，请下载 Simplified Chinese（即后缀名为 SC）的版本},
 %     note{e} = {思源字体并不包含楷书和仿宋，而 Adobe 楷体和仿宋难以直接下载，
 %       因此使用方正字体代替},
@@ -726,14 +753,14 @@ through XeTeX.
 %   \midrule
 %     Windows      & 中易宋体    & 中易黑体    & 中易楷体    & 中易仿宋                 \\
 %     macOS        & 华文宋体    & 华文黑体    & 华文楷体    & 华文仿宋                 \\
-%     \href{https://www.ctan.org/pkg/fandol} {Fandol}           
+%     \href{https://www.ctan.org/pkg/fandol} {Fandol}
 %                  & Fandol宋体  & Fandol黑体  & Fandol楷体  & Fandol仿宋               \\
 %     \href{https://www.foundertype.com}{方正}\TblrNote{a}
 %       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/151}{方正书宋}\TblrNote{b}
 %       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/161}{方正细黑一}\TblrNote{c}
 %       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/137}{方正楷体}
 %       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/128}{方正仿宋}   \\
-%     \href{https://github.com/adobe-fonts}{思源}\TblrNote{d} 
+%     \href{https://github.com/adobe-fonts}{思源}\TblrNote{d}
 %       & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/}{思源宋体}
 %       & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-sans/OTF/SimplifiedChinese/}{思源黑体}
 %                                              & 方正楷体\TblrNote{e}  & 方正仿宋       \\
@@ -761,7 +788,7 @@ through XeTeX.
 %     \midrule
 %       Windows      & Times~New~Roman           & Arial                   & Courier~New              \\
 %       macOS        & Times~New~Roman           & Arial                   & Menlo                    \\
-%       \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{gyre} 
+%       \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{gyre}
 %                    & \Hologo{TeX}~Gyre~Termes  & \Hologo{TeX}~Gyre~Heros & \Hologo{TeX}~Gyre~Cursor \\
 %     \bottomrule
 %   \end{tabular}
@@ -781,7 +808,7 @@ through XeTeX.
 % \begin{function}[added=2021-09-10]{\njusetup}
 %   \begin{syntax}
 %     \tn{njusetup} \Arg{键值列表}
-%   \end{syntax} 
+%   \end{syntax}
 % 是 \cls{njuthesis} 文档类的通用设置命令，用来设置各项功能。\tn{njusetup} 的参数是一个使用英文半角逗号分隔的键值列表，通常形如 \meta{key}|=|\meta{value}。
 % \end{function}
 %
@@ -824,7 +851,7 @@ through XeTeX.
 %   \end{syntax}
 % 姓名。
 % \end{function}
-% 
+%
 % \begin{function}[updated=2021-10-01]{info/department,info/department*}
 %   \begin{syntax}
 %     department  = \Arg{院系}
@@ -832,7 +859,7 @@ through XeTeX.
 %   \end{syntax}
 % 院系。
 % \end{function}
-% 
+%
 % \begin{function}[updated=2021-10-01]{info/major,info/major*}
 %   \begin{syntax}
 %     major  = \Arg{专业}
@@ -840,7 +867,7 @@ through XeTeX.
 %   \end{syntax}
 % 专业。
 % \end{function}
-% 
+%
 % \begin{function}[updated=2021-10-01]{info/field,info/field*}
 %   \begin{syntax}
 %     field = \Arg{方向}
@@ -909,7 +936,7 @@ through XeTeX.
 %   \njusetup {
 %       info = {
 %           title = {第一行标题!第二行标题},
-%           title* = {My title in English}, 
+%           title* = {My title in English},
 %           keywords = {我,就是,充数的,关键词},
 %           keywords* = {Dummy,Keywords,Here,{it is}},
 %           grade = {2018},
@@ -935,7 +962,7 @@ through XeTeX.
 %   \njusetup {
 %       info = {
 %           title = {第一行标题!第二行标题!第三行标题},
-%           title* = {My title in English}, 
+%           title* = {My title in English},
 %           keywords = {我,就是,充数的,关键词},
 %           keywords* = {Dummy,Keywords,Here,{it is}},
 %           grade = {2018},
@@ -946,14 +973,14 @@ through XeTeX.
 %           department* = {School of \hologo{LaTeX}},
 %           major = {拉太赫语言学},
 %           major* = {\hologo{LaTeX} Linguistics},
-%           field = {拉太赫语言在现当代的使用}, 
-%           field* = {Contemporary Usage of the \hologo{LaTeX}~Language}, 
+%           field = {拉太赫语言在现当代的使用},
+%           field* = {Contemporary Usage of the \hologo{LaTeX}~Language},
 %           supervisor = {李成殿},
 %           supervisor*= {Li Chengdian},
 %           supervisor-title = {教授},
 %           supervisor-title* = {Professor},
 %           submit-date = {2021年8月10日},
-%           submit-date* = {Aug 10, 2021}, 
+%           submit-date* = {Aug 10, 2021},
 %           defend-date = {2021年9月19日},
 %           chairman = {张晓山~教授},
 %           reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
@@ -969,7 +996,7 @@ through XeTeX.
 % \subsection{编写正文}
 %
 % 与导言区相对的是正文，位于\env{document}环境内。
-% 
+%
 % \begin{function}{\mainmatter}
 %   \cs{mainmatter} 标志着正文的开始，重新开始字号计数并设置页眉。
 % \end{function}
@@ -985,7 +1012,7 @@ through XeTeX.
 %   \end{syntax}
 % \pkg{ctex} 宏集提供了其中用于处理长标题的可选参数。对于过长的标题，目录中会使用其短描述。
 % \end{function}
-% 
+%
 %
 % \subsubsection{文字}
 %
@@ -1004,7 +1031,7 @@ through XeTeX.
 % 添加脚注
 % \end{function}
 %
-% 
+%
 % \subsubsection{图片}
 %
 % \begin{function}{\graphicspath}
@@ -1031,7 +1058,7 @@ through XeTeX.
 %   \end{figure}
 % \end{latexexample}
 %
-% 以下功能的实现均需要手动载入相关宏包。
+% \emph{以下图片相关功能的实现均需要手动载入相关宏包}。
 %
 %
 % \paragraph{文字环绕}
@@ -1049,23 +1076,23 @@ through XeTeX.
 %
 %
 % \paragraph{多张嵌套}
-% 
+%
 % 使用 \pkg{subcaption} 宏包提供的 \env{subfigure} 环境可以实现多张图片嵌套的效果。
 % \begin{latexexample}[moretexcs={\includegraphics},emph={[1]figure,subfigure}]
 %   \begin{figure}
 %       \begin{subfigure}{.32\textwidth}
 %          \centering
-%          \includegraphics[width=\textwidth]{fig1}  
+%          \includegraphics[width=\textwidth]{fig1}
 %          \caption{fig1}
 %       \end{subfigure}
 %       \begin{subfigure}{.32\textwidth}
 %          \centering
-%           \includegraphics[width=\textwidth]{fig2}  
+%           \includegraphics[width=\textwidth]{fig2}
 %           \caption{fig2}
 %       \end{subfigure}
 %       \begin{subfigure}{.32\textwidth}
 %           \centering
-%           \includegraphics[width=\textwidth]{fig3}  
+%           \includegraphics[width=\textwidth]{fig3}
 %           \caption{fig3}
 %       \end{subfigure}
 %       \caption{subfigures}
@@ -1093,7 +1120,7 @@ through XeTeX.
 %   \end{table}
 % \end{latexexample}
 %
-% 以下功能的实现均需要手动载入相关宏包。
+% \emph{以下表格功能的实现均需要手动载入相关宏包。}
 %
 %
 % \paragraph{合并单元格}
@@ -1138,7 +1165,7 @@ through XeTeX.
 %
 % 本模板也提供了一系列的数学定理环境。
 % 全部预定义的数学定理环境如表~\ref{tab:mathenv} 所示。其中证明环境较为特殊，会在结尾添加证毕符号（\mdwhtsquare）。用户也可以选择使用 \tn{newtheorem} 定义新的定理环境。
-% 
+%
 % \begin{table}[htbp]
 %   \centering
 %   \caption{数学定理环境}
@@ -1167,7 +1194,7 @@ through XeTeX.
 %       定义他人即地狱
 %   \end{definition}
 % \end{latexexample}
-% 
+%
 %
 % \subsubsection{代码}
 % \changes{v0.13}{2021/12/13}{提供简化的行内代码环境。}
@@ -1180,7 +1207,7 @@ through XeTeX.
 %   \usepackage{listings}
 % \end{latexexample}
 %
-% \pkg{listings} 宏包\scite{listings}提供了 \env{lstlisting} 环境，可以生成代码块，提供语法高亮功能，会如实输出缩进空格。且值得注意的是这个环境中的代码不会在草稿模式下显示。
+% \pkg{listings} 宏包\cite{listings}提供了 \env{lstlisting} 环境，可以生成代码块，提供语法高亮功能，会如实输出缩进空格。且值得注意的是这个环境中的代码不会在草稿模式下显示。
 % 如需指定语言，可以使用 |language| 选项。如需自定义关键字，可以使用 |morekeywords| 选项。这一宏包也提供了为某种样式单独一种环境的方法，详见其手册，此处仅展示一个最简化的例子：
 % \begin{latexexample}[emph={[1]lstlisting},emph={[2]language},morekeywords={print}]
 %   \begin{lstlisting}[language=python]
@@ -1208,7 +1235,7 @@ through XeTeX.
 %       flexiblecolumns                      % 允许调整字符宽度
 %     }
 % \end{latexexample}
-% 
+%
 % \pkg{listings} 同时提供了用于展示行内代码的 \tn{lstinline} 命令，用法同 \tn{verb}。但这一命令会被全局的代码字号设置污染。请参考如下使用方法：
 % \begin{latexexample}[moretexcs={\lstinline,\tt},deletetexcs={\usepackage},emph={[2]language,basicstyle}]
 %   \lstinline[language=[LaTeX]TeX, basicstyle=\tt]!\usepackage{njuvisual}!
@@ -1222,9 +1249,9 @@ through XeTeX.
 %     columns = fixed]|
 % \end{latexexample}
 %
-% 
+%
 % \subsubsection{引用}
-% 
+%
 % \begin{function}{\cref}
 %   \begin{syntax}
 %     \tn{cref}\Arg{标签}
@@ -1243,11 +1270,11 @@ through XeTeX.
 %
 % \subsection{参考文献}
 %
-% 本模板默认载入 \pkg{biblatex} 宏包，使用 \hologo{biber} 作为后端\footnote{出于简化命令的考虑，现阶段并不计划支持 \hologo{BibTeX}。}，通过 \pkg{biblatex-gb7714-2015}\scite{biblatex-gb7714-2015} 实现 GB/T 7714--2015\scite{gb-t-7714-2015} 规定的参考文献著录规则国家标准。
-% 
+% 本模板默认载入 \pkg{biblatex} 宏包，使用 \hologo{biber} 作为后端\footnote{出于简化命令的考虑，现阶段并不计划支持 \hologo{BibTeX}。}，通过 \pkg{biblatex-gb7714-2015}\cite{biblatex-gb7714-2015} 实现 GB/T 7714--2015\cite{gb-t-7714-2015} 规定的参考文献著录规则国家标准。
+%
 % 需要使用 |biber| 命令编译才会显示正确的条目序号，详情请参照 \ref{subsubsec:compileseq}。
 %
-% 
+%
 % \subsubsection{选项}
 %
 % \begin{function}[added=2021-12-19]{bib/style}
@@ -1257,7 +1284,7 @@ through XeTeX.
 % 参考文献样式。分为顺序编码制 \opt{numeric} 和著者-出版年制 \opt{author-year}，默认为顺序编码制。
 % \end{function}
 %
-% 参考文献样式是一个整体的设置，会对正文中引用的文献的标注方法和参考文献表的输出格式产生影响。根据国家规定\scite{gb-t-7714-2015}，可以按照参考文献表的组织方式分为以下两种样式：
+% 参考文献样式是一个整体的设置，会对正文中引用的文献的标注方法和参考文献表的输出格式产生影响。根据国家规定\cite{gb-t-7714-2015}，可以按照参考文献表的组织方式分为以下两种样式：
 %
 % \subparagraph{顺序编码制}
 % 顺序编码制是按正文中引用的文献出现的先后顺序连续编码，将序号置于方括号中。参考文献表采用顺序编码制组织时，各篇文献应按正文部分标注的序号依次列出。
@@ -1265,7 +1292,7 @@ through XeTeX.
 % \subparagraph{著者-出版年制}
 % 正文引用的文献采用著者-出版年制时，各篇文献的标注内容由著者姓氏与出版年构成，并置于"()"内。参考文献表采用著者-出版年制组织时，各篇文献首先按文种集中，然后按著者字顺和出版年排列。
 %
-% 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号表示”\scite{nju2021}，符合顺序编码制的格式，保持默认设置即可。
+% 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号表示”\cite{nju2021}，符合顺序编码制的格式，保持默认设置即可。
 %
 % \begin{function}[added=2021-12-19]{bib/resource}
 %   \begin{syntax}
@@ -1298,6 +1325,16 @@ through XeTeX.
 % 生成参考文献表页面。
 % \end{function}
 %
+% 显然只有被引用过的条目才会被输出至参考文献表。
+%
+% 如果开启了草稿模式，您可能会注意到部分条目存在超宽的问题，这时就要果断假装没有看到。
+% 该问题的产生是由于 \hologo{LaTeX} 中只有固定的字母组合中间可以断行。使条目右侧平齐的方法有如下两种：
+% \footnote{很不行，\pkg{microtype} 与 \pkg{babel} 没能在我们的模板中解决问题。}
+% \begin{itemize}
+%   \item 自行在 \file{.bib} 文件中设置断行点，例如可以将 graphene 一词修改为 graph|\-|ene。缺点是需要逐条手动排查，建议在定稿时进行修改。
+%   \item 在 |\printbibliography| 前添加 |\emergencystretch=1em| 命令拉伸词间距，缺点是可能降低美观度。
+% \end{itemize}
+%
 %
 % \subsubsection{正文引用}
 %
@@ -1310,7 +1347,7 @@ through XeTeX.
 % \end{function}
 %
 % 引用命令 \tn{cite} 含有多个变体，以便使用文献条目中不同的信息域。在两种参考文献样式下，这些命令的行为具体存在一些差异，详见表 \ref{tab:numeric-style} 和表 \ref{tab:author-year-style}。
-% 
+%
 % \begin{table}[ht]
 %   \caption{顺序编码制下的引用样式}
 %   \label{tab:numeric-style}
@@ -1365,10 +1402,10 @@ through XeTeX.
 % \href{https://www.zotero.org/}{Zotero}是一款免费的文献管理软件，支持所有桌面平台。
 %
 % 在保持 Zotero 程序运行的情况下，点击浏览器工具栏的 Zotero Connector 插件即可自动从网页抓取参考文件信息。Zotero 可以通过\href{https://github.com/l0o0/jasminum}{jasminum插件}支持中文参考文献的识别。在选中希望使用的文献后右键导出文献条目即可生成 \file{.bib} 文件。
-% 
-% 
+%
+%
 % \subsection{特殊页面}
-% 
+%
 % 本模板也预定义了一系列用于生成所需的特殊页面的命令与环境。
 %
 %
@@ -1380,7 +1417,7 @@ through XeTeX.
 %
 % 本科生模板仅会生成中文封面；研究生模板会生成中英文封面。
 % 如果选择了 \opt{nlcover}，仅会生成研究生的国家图书馆封面。
-% 如果选择了 \opt{declaration}，会在封面后生成本科生的诚信承诺书或研究生的原创性声明。
+% 如果选择了 \opt{decl-page}，会在封面后生成本科生的诚信承诺书或研究生的原创性声明。
 % 在启用草稿模式后封面绘制将被禁用。
 %
 % \paragraph{封面图片}
@@ -1404,7 +1441,7 @@ through XeTeX.
 %
 % \subsubsection{摘要页}
 % \changes{v0.11}{2021/10/01}{简化了摘要的编写方式。}
-% 
+%
 % \begin{function}{abstract,abstract*}
 % 摘要。带星号的会生成英文摘要。
 % \end{function}
@@ -1421,11 +1458,11 @@ through XeTeX.
 %
 %
 % \subsubsection{前言页}
-% 
+%
 % \begin{function}{preface}
 % 使用 \env{preface} 环境定义。
 % \end{function}
-% 
+%
 % \begin{latexexample}[emph={[1]preface,flushright}]
 %   \begin{preface}
 %       我的前言
@@ -1448,11 +1485,11 @@ through XeTeX.
 % \begin{latexexample}[moretexcs={\ctexset},emph={[1]contentsname,listfigurename,listtablename}]
 %   \ctexset{
 %     contentsname   = { 目\hspace{2em}次 },
-%     listfigurename = { 插图清单 }, 
+%     listfigurename = { 插图清单 },
 %     listtablename  = { 表格清单 }
 %   }
 % \end{latexexample}
-% 实际上，根据《学位论文编写规则》国家标准\scite{gb-t-7713.1-2006}，尽管“目录”这一说法已流传甚广，但学位论文中理应使用“目次”这一名称来指代篇目的列表。
+% 实际上，根据《学位论文编写规则》国家标准\cite{gb-t-7713.1-2006}，尽管“目录”这一说法已流传甚广，但学位论文中理应使用“目次”这一名称来指代篇目的列表。
 %
 %
 % \subsubsection{致谢页}
@@ -1460,7 +1497,7 @@ through XeTeX.
 % \begin{function}{acknowledgement}
 % 同前言，使用 \env{acknowledgement} 环境。
 % \end{function}
-% 
+%
 % \begin{latexexample}[emph={[1]acknowledgement}]
 %   \begin{acknowledgement}
 %       感谢NJU LUG
@@ -1473,8 +1510,8 @@ through XeTeX.
 % \begin{function}{\appendix}
 % 附录放在本命令后，以英文字母进行编号，编写方式同正文
 % \end{function}
-% 
-% 
+%
+%
 % \subsubsection{成果列表}
 %
 % \begin{function}[added=2021-09-29,updated=2021-12-20]{\njupaperlist}
@@ -1509,7 +1546,7 @@ through XeTeX.
 % \subsection{视觉识别系统}
 %
 % 视觉识别系统 \pkg{njuvisual} 现已被分离为独立宏包，基本使用方法举例如下：
-% \begin{latexexample}[moretexcs={\njuemblem,\njuname}]
+% \begin{latexexample}[moretexcs={\njuemblem,\njuname,\njuname*}]
 %   \njuemblem{!}{3cm}                           % 生成指定大小的紫色南大校徽
 %   \njuname{4cm}{!}                             % 生成指定大小的紫色南大中文校名
 %   \njuname*{4cm}{!}                            % 生成指定大小的紫色南大英文校名
@@ -1549,7 +1586,7 @@ through XeTeX.
 % \urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
 %
 %
-% \subsection{标准、规范}
+% \subsection*{标准、规范}
 %
 % \bibitem{gb-t-7713.1-2006}
 % 全国信息与文献标准化技术委员会.
@@ -1734,9 +1771,9 @@ through XeTeX.
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { unsupported-engine }
   {
-    The~ njuthesis~ class~ requires~ either~ 
+    The~ njuthesis~ class~ requires~ either~
     XeTeX~ or~ LuaTeX. \\
-    "#1"~ is~ not~ supported~ at~ present.~ 
+    "#1"~ is~ not~ supported~ at~ present.~
     You~ must~ change your~ typesetting~ engine~
     to~ "xelatex"~ or~ "lualatex".
   }
@@ -1915,8 +1952,8 @@ through XeTeX.
   {
     \int_set:Nn #1 { 1 }
     \int_do_until:nn { #1 > #3 }
-      { 
-        \@@_ulined_center_box:nn { #4 } 
+      {
+        \@@_ulined_center_box:nn { #4 }
           { \clist_item:Nn #2 { #1 } } \\
         \int_incr:N #1
       }
@@ -1936,7 +1973,7 @@ through XeTeX.
   {
     \tl_set:Nx \l_@@_tmp_tl
       { \tl_range:Nnn { #1 } { #2 } { #2 + #3 - 1 } }
-    \tl_if_empty:NF \l_@@_tmp_tl 
+    \tl_if_empty:NF \l_@@_tmp_tl
       { \clist_put_right:NV \l_@@_tmp_clist { \l_@@_tmp_tl } }
   }
 %    \end{macrocode}
@@ -2002,7 +2039,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_full_uline:Nn #1#2
   {
     \@@_get_text_width:Nn #1 { #2 }
-    \dim_set:Nn #1 { \textwidth - #1 } #2 
+    \dim_set:Nn #1 { \textwidth - #1 } #2
   }
 \cs_generate_variant:Nn \@@_full_uline:Nn { NV }
 %    \end{macrocode}
@@ -2047,7 +2084,7 @@ through XeTeX.
 % 含有目录和 PDF 标签的无编号章。
 %    \begin{macrocode}
 \NewDocumentCommand \njuchapter { m }
-  { 
+  {
     \chapter*{#1}
     \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1 }
     \@mkboth{#1}{#1}
@@ -2068,19 +2105,19 @@ through XeTeX.
 % 学位类型，默认为本科。
 %    \begin{macrocode}
     degree       .choices:nn = { ug, mg, mf, phd }
-      { 
-        \int_set_eq:NN \l_@@_info_degree_int \l_keys_choice_int  
+      {
+        \int_set_eq:NN \l_@@_info_degree_int \l_keys_choice_int
         \tl_set:Nn \l_@@_info_degree_tl
-          { 
+          {
             \clist_item:Nn \c_@@_name_degree_clist
-              { \l_@@_info_degree_int } 
+              { \l_@@_info_degree_int }
           }
 %    \end{macrocode}
 % 进行学位的判断。
 %    \begin{macrocode}
         \int_compare:nTF { \l_@@_info_degree_int == 1 }
           { \tl_set:Nn \l_@@_info_diploma_tl { ug } }
-          { \tl_set:Nn \l_@@_info_diploma_tl { g  } } 
+          { \tl_set:Nn \l_@@_info_diploma_tl { g  } }
       },
     degree       .initial:n  = ug,
 %    \end{macrocode}
@@ -2090,31 +2127,34 @@ through XeTeX.
 % 论文类型，默认为毕业论文。
 %    \begin{macrocode}
     type         .choices:nn = { thesis, design }
-      { 
+      {
         \int_set_eq:NN \l_@@_info_type_int \l_keys_choice_int
         \tl_set:Nn \l_@@_info_type_tl
           { \clist_item:Nn \c_@@_name_type_clist { \l_@@_info_type_int } }
-        \tl_put_left:Nn \l_@@_info_type_tl 
+        \tl_put_left:Nn \l_@@_info_type_tl
           { \tl_use:c { c_@@_name_ \l_@@_info_diploma_tl _tl } }
       },
     type         .initial:n    = thesis,
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{nlcover}
 % 是否需要国家图书馆封面（仅对研究生有效，默认关闭）。
+% \footnote{nl 代表 National Library。}
 %    \begin{macrocode}
     nlcover     .bool_set:N  = \g_@@_nlcover_bool,
     nlcover      .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{declaration}
+% \begin{macro}{decl-page}
 % \changes{v0.13}{2021/12/15}{新增诚信承诺书选项。}
+% \changes{v0.14}{2022/01/06}{修改选项名称。}
 % 是否需要诚信承诺书或原创性声明（默认关闭）。
+% \footnote{原创性声明的英文翻译为 Declaration of Originality，为了使选项表义更清晰同时缩减名称长度，将其修改为“声明页”这一名称。}
 %    \begin{macrocode}
-    declaration .bool_set:N  = \g_@@_orig_decl_bool,
-    declaration  .initial:n  = false, 
+    decl-page   .bool_set:N  = \g_@@_orig_decl_bool,
+    decl-page    .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2126,7 +2166,7 @@ through XeTeX.
     draft        .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{latin-font,cjk-font}
 % \changes{v0.14}{2021/12/12}{简化字体选项名称。}
 % 定义字体选项。
@@ -2149,11 +2189,11 @@ through XeTeX.
 %
 % \subsection{用户接口}
 %
-% \begin{macro}{info,bib}
+% \begin{macro}{bib,info,style}
 % 定义元（meta）键值对。
 %    \begin{macrocode}
-\keys_define:nn { nju } 
-  { 
+\keys_define:nn { nju }
+  {
     bib   .meta:nn = { nju / bib   } { #1 },
     info  .meta:nn = { nju / info  } { #1 },
     style .meta:nn = { nju / style } { #1 }
@@ -2297,7 +2337,7 @@ through XeTeX.
 %    \begin{macrocode}
     \tl_const:Nn \c_@@_cover_en_text_tl
       {
-        A~ dissertation~ submitted~ to \\ 
+        A~ dissertation~ submitted~ to \\
         the~ graduate~ school~ of~ Nanjing~ University \\
         in~ partial~ fulfilment~ of~ the~ requirements~ for~ the~ degree~ of
       }
@@ -2368,7 +2408,7 @@ through XeTeX.
     keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{info/grade,info/student-id,info/author,info/author*}
 % 年级、学号、姓名。
 %    \begin{macrocode}
@@ -2378,7 +2418,7 @@ through XeTeX.
     author*             .tl_set:N = \l_@@_info_author_en_tl,
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{info/department,info/department*,info/major,info/major*,info/field,info/field*}
 % 院系、专业、方向。
 %    \begin{macrocode}
@@ -2390,7 +2430,7 @@ through XeTeX.
     field*              .tl_set:N = \l_@@_info_field_en_tl,
 %    \end{macrocode}
 % \end{macro}
-%  
+%
 % \begin{macro}{info/supervisor,info/supervisor*,info/supervisor-title,info/supervisor-title*}
 % \changes{v0.13}{2021/12/11}{修改了导师键值对的变量名称。}
 % 导师
@@ -2450,8 +2490,8 @@ through XeTeX.
     \l_@@_info_supv_tl \@@_hskip:
     \l_@@_info_supv_ttl_tl
     \bool_if:NT \l_@@_second_supv_bool
-      { 
-        \@@_quad: \l_@@_info_supv_ii_tl 
+      {
+        \@@_quad: \l_@@_info_supv_ii_tl
         \@@_hskip: \l_@@_info_supv_ii_ttl_tl
       }
   }
@@ -2460,7 +2500,7 @@ through XeTeX.
     \l_@@_info_supv_ttl_en_tl \@@_hskip:
     \l_@@_info_supv_en_tl
     \bool_if:NT \l_@@_second_supv_bool
-      { 
+      {
         \@@_quad: \l_@@_info_supv_ii_ttl_en_tl
         \@@_hskip: \l_@@_info_supv_ii_en_tl
       }
@@ -2628,10 +2668,10 @@ through XeTeX.
 % 则使用系统预装字体覆盖字体选项。
 %    \begin{macrocode}
 \tl_if_empty:NTF \g_@@_latin_font_tl
-  { \bool_gset_true:N \g_@@_load_sys_font_bool }  
-  {  
+  { \bool_gset_true:N \g_@@_load_sys_font_bool }
+  {
     \tl_if_empty:NT \g_@@_cjk_font_tl
-      { \bool_gset_true:N \g_@@_load_sys_font_bool }  
+      { \bool_gset_true:N \g_@@_load_sys_font_bool }
   }
 %    \end{macrocode}
 %
@@ -2641,7 +2681,7 @@ through XeTeX.
 % 这两种情况外的系统被判断为 Linux，一律使用自由字体。
 %    \begin{macrocode}
 \bool_if:NT \g_@@_load_sys_font_bool
-  { 
+  {
     \sys_if_platform_windows:TF
       { \tl_set:Nn \g_@@_latin_font_tl   { win    }
         \tl_set:Nn \g_@@_cjk_font_tl     { win    } }
@@ -2649,7 +2689,7 @@ through XeTeX.
         { \tl_set:Nn \g_@@_latin_font_tl { mac    }
           \tl_set:Nn \g_@@_cjk_font_tl   { mac    } }
         { \tl_set:Nn \g_@@_latin_font_tl { gyre   }
-          \tl_set:Nn \g_@@_cjk_font_tl   { fandol } } } 
+          \tl_set:Nn \g_@@_cjk_font_tl   { fandol } } }
   }
 %    \end{macrocode}
 %
@@ -2741,7 +2781,7 @@ through XeTeX.
 %    \end{macrocode}
 % 移除 does not contain script "CJK" 警告。
 %    \begin{macrocode}
-    \msg_redirect_name:nnn { fontspec } { no-script } { info } 
+    \msg_redirect_name:nnn { fontspec } { no-script } { info }
     \setCJKmainfont{Songti~SC~Light}[
       BoldFont=Songti~SC~Bold,
       ItalicFont=Kaiti~SC,
@@ -2945,7 +2985,7 @@ through XeTeX.
 \geometry
   {
     vmargin    = 2.5 cm,
-    hmargin    = 3.2 cm, 
+    hmargin    = 3.2 cm,
     headheight = 15 pt
   }
 %    \end{macrocode}
@@ -2962,14 +3002,14 @@ through XeTeX.
 %    \begin{macrocode}
 \fancypagestyle { plain }
   {
-    \fancyhf { }       
+    \fancyhf { }
     \fancyfoot [ C ] { \zihao{5} \thepage }
     \RenewDocumentCommand \headrulewidth { } { 0 pt }
     \RenewDocumentCommand \footrulewidth { } { 0 pt }
   }
 %    \end{macrocode}
 %
-% 研究生页眉页脚。页眉为横线，奇数页显示章名，偶数页显示节名；页脚为页码。 
+% 研究生页眉页脚。页眉为横线，奇数页显示章名，偶数页显示节名；页脚为页码。
 %    \begin{macrocode}
 \fancypagestyle{headings}
   {
@@ -2979,7 +3019,7 @@ through XeTeX.
     \fancyfoot [ C  ] { \zihao{5} \thepage }
     \RenewDocumentCommand \headrulewidth { } { 0.4 pt }
     \RenewDocumentCommand \footrulewidth { } { 0   pt }
-    \setlength { \headheight } { 20 pt } 
+    \setlength { \headheight } { 20 pt }
   }
 %    \end{macrocode}
 %
@@ -2988,7 +3028,7 @@ through XeTeX.
 % 此命令仅为解决原 \cls{book} 类中使用小写罗马字母序号的冲突，并不建议使用。
 %    \begin{macrocode}
 \RenewDocumentCommand \frontmatter { }
-  { 
+  {
     \cleardoublepage
     \pagestyle{empty}
     \pagenumbering{Roman}
@@ -3004,7 +3044,7 @@ through XeTeX.
 \RenewDocumentCommand \mainmatter { }
   {
     \cleardoublepage
-    \int_compare:nTF { \l_@@_info_degree_int == 1 } 
+    \int_compare:nTF { \l_@@_info_degree_int == 1 }
       { \pagestyle{plain} } { \pagestyle{headings} }
     \pagenumbering{arabic}
     \normalfont\normalsize
@@ -3014,7 +3054,7 @@ through XeTeX.
 %
 %
 % \subsection{章节标题格式}
-% 
+%
 % \begin{macro}{\c_@@_sec_format_tl}
 % 各部分章节以及目录中章标题的格式。设置为四号、不加粗、黑体。
 %    \begin{macrocode}
@@ -3053,7 +3093,7 @@ through XeTeX.
 % 设置目录标题默认名称。
 %    \begin{macrocode}
     contentsname   = { 目\hspace{2em}录 },
-    listfigurename = { 插图目录         }, 
+    listfigurename = { 插图目录         },
     listtablename  = { 表格目录         },
 %    \end{macrocode}
 % 设置目录中章标题的样式。
@@ -3226,7 +3266,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_cref_name:n #1
   {
     \clist_map_inline:nn { #1 }
-      { 
+      {
         \crefname { ##1 }
           { \@@_name:n { ##1 } } { \@@_name:n { ##1 _en } }
       }
@@ -3234,7 +3274,7 @@ through XeTeX.
 \cs_new_protected:Npn \@@_cref_name:N #1
   {
     \clist_map_inline:Nn #1
-      { 
+      {
         \crefname { ##1 }
           { \@@_name:n { ##1 } } { \@@_name:n { ##1 _en } }
       }
@@ -3259,14 +3299,14 @@ through XeTeX.
 \@@_cref_name:N \c_@@_theorem_type_clist
 %    \end{macrocode}
 %
-% 
+%
 % \subsection{图片表格}
 %
 % 设置默认图片扩展名，允许在不键入扩展名时自动进行补全。
 %    \begin{macrocode}
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
 %    \end{macrocode}
-% 
+%
 % \changes{v0.12}{2021/12/06}{删除了可能导致冲突的 \pkg{floatrow}。}
 % 图表标题样式。文字设置为五号宋体，标签设置为粗体，间隔一个全角空格。
 %    \begin{macrocode}
@@ -3288,7 +3328,7 @@ through XeTeX.
 \setlist { noitemsep }
 %    \end{macrocode}
 %
-% 
+%
 % \subsection{定理环境}
 %
 % \begin{macro}{\@@_new_theorem:N}
@@ -3299,7 +3339,7 @@ through XeTeX.
 % 除证明以外的环境都不需要证毕符号，在此清空其设置。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_new_theorem:N #1
-  { 
+  {
     \theoremsymbol { }
     \clist_map_inline:Nn #1
       { \newtheorem { ##1 } { \@@_name:n { ##1 } } }
@@ -3337,7 +3377,7 @@ through XeTeX.
         \seq_set_split:NnV \l_@@_tmp_seq { ! } { #1 }
         \clist_set_from_seq:NN \l_@@_tmp_clist \l_@@_tmp_seq
       }
-      { 
+      {
 %    \end{macrocode}
 % 如果没找到感叹号，则手动进行分割固定宽度的字符。
 %    \begin{macrocode}
@@ -3482,7 +3522,7 @@ through XeTeX.
       \tl_if_blank:VF { \l_@@_info_supv_ii_tl }
         { \@@_cover_bientry:nnnn { supv_ii } { supv_ttl } { #1 } { #3 } }
       \@@_cover_entry:nnn { sm_date         } { #1 } { #2 }
-    \end{minipage} 
+    \end{minipage}
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3549,7 +3589,7 @@ through XeTeX.
 % 作者。
 %    \begin{macrocode}
       \group_begin: \zihao { 4 } { by } \group_end: \@@_vskip:
-      \group_begin: 
+      \group_begin:
         \bf \sffamily \zihao { 4 } \l_@@_info_author_en_tl
       \group_end: \skip_vertical:n { 1 cm }
 %    \end{macrocode}
@@ -3565,7 +3605,7 @@ through XeTeX.
       \c_@@_cover_en_text_tl \@@_vskip:
       \textsc { \clist_item:Nn \c_@@_name_degree_en_clist
                   { \l_@@_info_degree_int } }
-      \@@_vskip: { in } \@@_vskip: 
+      \@@_vskip: { in } \@@_vskip:
       \l_@@_info_major_en_tl \skip_vertical:n { 1 cm }
 %    \end{macrocode}
 % 校徽。
@@ -3607,7 +3647,7 @@ through XeTeX.
     \@@_split_title:n { \l_@@_info_title_tl }
     \@@_multiline_box:nnnn { \l_@@_tmp_int } \l_@@_tmp_clist { 3 } { 15 em }
     \@@_vskip: \zihao{4} \c_@@_name_title_nl_tl
-    \@@_vskip: \zihao{1} 
+    \@@_vskip: \zihao{1}
     \@@_ulined_center_box:nn { 4.5 em } { \l__nju_info_author_tl }
     \@@_vskip: \zihao{4} { ( } \c_@@_name_author_tl { ) }
   }
@@ -3623,7 +3663,7 @@ through XeTeX.
     \@@_ulined_center_box:nn { \textwidth } { \@@_info:n { supv_ttl }
     \@@_quad: \@@_info:n  { supv_cont } }                             \\
     \@@_uline_bientry:nnnn \l_@@_tmp_dim { degree   } { degree  } { }
-    \@@_uline_bientry:nnnn \l_@@_tmp_dim { major_nl } { major   } { } \\ 
+    \@@_uline_bientry:nnnn \l_@@_tmp_dim { major_nl } { major   } { } \\
     \@@_uline_bientry:nnnn \l_@@_tmp_dim { sm_date  } { sm_date } { }
     \@@_uline_bientry:nnnn \l_@@_tmp_dim { df_date  } { df_date } { } \\
     \@@_full_uline:Nn \l_@@_tmp_dim { \c_@@_name_confer_tl }
@@ -3661,7 +3701,7 @@ through XeTeX.
 %    \begin{macrocode}
     \null \skip_horizontal:n { -1 cm }
     \njuemblem [ black] { ! } { 3.35 cm }
-    \begin{center}      
+    \begin{center}
       \njuname[black]{!}{3cm} \@@_vskip:
 %    \end{macrocode}
 % 学位信息。
@@ -3671,7 +3711,7 @@ through XeTeX.
 %    \end{macrocode}
 % 信息栏。
 %    \begin{macrocode}
-      \zihao{3} \@@_cover_info_ug:nnn { 4.2 em } { 16 em } { 5.5 em } \vfil 
+      \zihao{3} \@@_cover_info_ug:nnn { 4.2 em } { 16 em } { 5.5 em } \vfil
     \end{center}
   }
 %    \end{macrocode}
@@ -3682,7 +3722,7 @@ through XeTeX.
 % 生成研究生封面。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_cover_g:
-  {    
+  {
     \newpage
     \begin{center}
 %    \end{macrocode}
@@ -3697,7 +3737,7 @@ through XeTeX.
       \group_begin:
         \zihao { -1 } \bf \kaishu \@@_cover_title_g:
       \group_end:
-      \skip_vertical:n { 3 cm } \vfil 
+      \skip_vertical:n { 3 cm } \vfil
 %    \end{macrocode}
 % 信息栏。
 %    \begin{macrocode}
@@ -3752,7 +3792,7 @@ through XeTeX.
 %    \end{macrocode}
 % 中部信息栏。
 %    \begin{macrocode}
-    \group_begin: 
+    \group_begin:
       \kaishu \zihao { 4 } \noindent \@@_cover_info_nl:
     \group_end:
 %    \end{macrocode}
@@ -3773,7 +3813,7 @@ through XeTeX.
 % \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
 % 生成生成本科生的诚信承诺书或研究生的学位论文原创性声明。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_orig_decl: 
+\cs_new_protected:Npn \@@_make_orig_decl:
   {
     \normalfont \normalsize
     \chapter* { \c_@@_name_nju_tl \c_@@_name_orig_decl_tl }
@@ -3810,11 +3850,11 @@ through XeTeX.
 %    \end{macrocode}
 % 如果在研究生模板中选择了 \opt{nlcover}，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
 %    \begin{macrocode}
-        \bool_if:NTF \g_@@_nlcover_bool 
+        \bool_if:NTF \g_@@_nlcover_bool
           { \@@_make_cover_nl: }
           { \use:c { @@_make_cover_ \l_@@_info_diploma_tl : } }
 %    \end{macrocode}
-% 如果在选择了 \opt{declaration}，就生成本科生的诚信承诺书或研究生的原创性声明。
+% 如果在选择了 \opt{decl-page}，就生成本科生的诚信承诺书或研究生的原创性声明。
 %    \begin{macrocode}
         \bool_if:NT \g_@@_orig_decl_bool { \@@_make_orig_decl: }
       }
@@ -3828,7 +3868,7 @@ through XeTeX.
     \cleardoublepage
     \pagestyle     { plain }
     \pagenumbering { Roman }
-    \normalfont \normalsize      
+    \normalfont \normalsize
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3844,7 +3884,7 @@ through XeTeX.
 %   \item 宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_title_uuline:n #1 
+\cs_new_protected:Npn \@@_abs_title_uuline:n #1
   { \bf \kaishu \zihao { -2 } \@@_uuline:n { #1 } }
 %    \end{macrocode}
 % \end{macro}
@@ -3855,7 +3895,7 @@ through XeTeX.
 %   \item 字号
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_info_style:n #1 
+\cs_new_protected:Npn \@@_abs_info_style:n #1
   { \noindent \zihao{ #1 } \kaishu }
 \cs_new_protected:Npn \@@_abs_info_style_en: #1
   { \zihao{ #1 } }
@@ -3892,7 +3932,7 @@ through XeTeX.
 %    \begin{macrocode}
 \cs_generate_variant:Nn \clist_map_inline:nn { Vn }
 \cs_new_protected:Npn \@@_abs_title_ug:n #1
-  { 
+  {
     \@@_name:n { nju     } \@@_name:n { type     }
     \@@_name:n { lang #1 } \@@_name:n { abstract }
   }
@@ -3937,7 +3977,7 @@ through XeTeX.
 % \end{arguments}
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_title_g:n #1
-  { 
+  {
     \@@_name:n { nju     } \@@_info:n { type       }
     \@@_name:n { lang #1 } \@@_name:n { abstract_r }
   }
@@ -3978,7 +4018,7 @@ through XeTeX.
             \@@_ulined_center_box:nn { 4 em } { \l_@@_info_grade_tl }
             \c_@@_name_grade_tl
             \tl_item:nn { \l_@@_info_degree_tl } { 1 }
-            \c_@@_name_author_r_tl #2 
+            \c_@@_name_author_r_tl #2
           }
         \@@_ulined_center_box:nn { \l_@@_tmp_dim }
           { \l_@@_info_author_tl } \\
@@ -3993,7 +4033,7 @@ through XeTeX.
 %    \end{macrocode}
 % 英文摘要环境。前两行为标题。
 %    \begin{macrocode}
-      { 
+      {
         \@@_full_uline:NV \l_@@_tmp_dim
           { \clist_item:cn { c_@@_name_type #1 _clist }
               { \l_@@_info_type_int } # 2 }
@@ -4005,7 +4045,7 @@ through XeTeX.
 % 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，以避免末尾生成多余的换行符产生 |Underfull \vbox| 信息。
 %    \begin{macrocode}
         \clist_map_inline:nn { major, author, supv_full }
-          { \\ 
+          { \\
             \@@_uline_entry:nnnn \l_@@_tmp_dim { ##1 _en } { ##1 _en } { #2 }
           }
       }
@@ -4029,8 +4069,8 @@ through XeTeX.
 %    \begin{macrocode}
       \noindent \bf \heiti
       \use:c { c_@@_name_keywords #1 _tl }
-    \group_end: 
-    \clist_use:cn { l_@@_info_keywords #1 _clist } { #2 } 
+    \group_end:
+    \clist_use:cn { l_@@_info_keywords #1 _clist } { #2 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4072,19 +4112,19 @@ through XeTeX.
   {
     \begin{center}
       \@@_abs_title_uuline:n { 19 em }
-      \@@_abs_title_g:n { #1 } 
+      \@@_abs_title_g:n { #1 }
     \end{center}
     \group_begin:
       \@@_abs_info_style:n { 4 }
       \@@_abs_info_g:nn { #1 } { #2 }
-    \group_end: \@@_vskip:    
+    \group_end: \@@_vskip:
   }
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{用户接口}
-% 
+%
 % \begin{environment}{abstract}
 % \changes{v0.13}{2021/12/12}{重新绘制摘要。}
 % 中文摘要环境。
@@ -4099,7 +4139,7 @@ through XeTeX.
   { \@@_print_keywords:nn { } { ； } \group_end: }
 %    \end{macrocode}
 % \end{environment}
-% 
+%
 % \begin{environment}{abstract*}
 % 英文摘要环境。\pkg{xparse} 目前不支持合并带有星号的环境，因此需要单独定义。
 %    \begin{macrocode}
@@ -4116,7 +4156,7 @@ through XeTeX.
 %
 %
 % \subsection{前言致谢}
-% 
+%
 % \begin{environment}{preface}
 % \begin{environment}{acknowledgement}
 % 单独制作的前言致谢页。
@@ -4136,23 +4176,23 @@ through XeTeX.
 %    \begin{macrocode}
 \NewDocumentCommand \njupaperlist
   { O { \c_@@_name_paperlist_tl } m }
-  { 
+  {
     \group_begin:
 %    \end{macrocode}
 % 修改姓名的显示方式，使被注解的姓名可被加粗下划线表示。
 %    \begin{macrocode}
     \RenewDocumentCommand \mkbibnamegiven  { m }
-      { \ifitemannotation { thesisauthor } 
+      { \ifitemannotation { thesisauthor }
           { \njuline { \bf ##1 } } { ##1 } }
     \RenewDocumentCommand \mkbibnamefamily { m }
-      { \ifitemannotation { thesisauthor } 
+      { \ifitemannotation { thesisauthor }
           { \njuline { \bf ##1 } } { ##1 } }
 %    \end{macrocode}
 % 修改年份的显示方式，默认进行加粗。
 %    \begin{macrocode}
     \RenewDocumentCommand \mkbibdateshort  { m m m }
       { \textbf{ \thefield { ##1 } } }
-    \begin{refsection} 
+    \begin{refsection}
       \nocite{#2}
       \printbibliography[heading=subbibliography,title=#1]
     \end{refsection}
