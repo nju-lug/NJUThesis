@@ -42,8 +42,6 @@ jobs:
         run: |
           ${{ env.SET_PATH }}
           cd test
-          mv ../scripts/* .
-          pdflatex --shell-escape "generate-img.tex"
           latexmk -halt-on-error -time -pdfxe  -jobname=test-xetex  test.tex
           latexmk -halt-on-error -time -pdflua -jobname=test-luatex test.tex
 

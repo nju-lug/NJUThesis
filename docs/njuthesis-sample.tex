@@ -61,11 +61,10 @@
     % info 类用于录入个人信息
     %   带*号的为对应英文字段
     info = {
-        title = {第一行标题!第二行标题!第三行标题},
+        title = {第一行标题,第二行标题,第三行标题},
         % 中文题目
-        % 新版删除了原先的三个手动换行选项
         % 直接填写标题就是自动换行
-        % 可以使用英文半角感叹号(!)手动指定换行位置
+        % 可以使用英文半角逗号(,)手动指定换行位置
         %
         title* = {My Title in English},
         % 英文题目
@@ -101,22 +100,16 @@
         major* = {Chemistry},
         % 专业
         %
-        supervisor = {导师},
-        supervisor*= {My Supervisor},
-        % 导师姓名
-        % 新版对选项名称进行了改动
+        supervisor = {导师,教授},
+        supervisor*= {Professor My Supervisor},
+        % 导师全称
+        % 新版对选项进行了改动
+        % 使用英文半角逗号(,)分隔中文姓名和职称
         %
-        supervisor-title = {教授},
-        supervisor-title* = {Professor},
-        % 导师职称
-        % 新版对选项名称进行了改动
-        %
-        % supervisor-ii = {第二导师},
-        % supervisor-ii* = {My Second Supervisor},
-        % supervisor-ii-title = {副教授},
-        % supervisor-ii-title* = {Associate professor},
-        % 第二导师
-        % 新版对选项名称进行了改动
+        % supervisor-ii = {第二导师,副教授},
+        % supervisor-ii* = {Associate professor My Second Supervisor},
+        % 第二导师全称
+        % 新版对选项进行了改动
         % 如果确实没有第二导师，不填写即可
         %
         submit-date = {2021年8月10日},
