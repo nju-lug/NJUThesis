@@ -2,7 +2,7 @@
 % !TeX program  = XeLaTeX
 % !TeX encoding = UTF-8
 %
-% Copyright (C) 2021
+% Copyright (C) 2021 - 2022
 % by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
 %
 % It may be distributed and/or modified under the conditions of the
@@ -49,7 +49,7 @@
 
 \preamble
 
-Copyright (C) 2021
+Copyright (C) 2021 - 2022
 by Nanjing University Linux User Group <nju.lug@yaoge123.cn>
 
 This file may be distributed and/or modified under the conditions of
@@ -62,8 +62,8 @@ license is in:
 and version 1.3 or later is part of all distributions of LaTeX version
 2005/12/01 or later.
 
-To produce the documentation run the original source files ending with `.dtx'
-through XeTeX.
+To produce the documentation run the original source files ending with
+`.dtx' through XeTeX.
 
 \endpreamble
 
@@ -114,6 +114,9 @@ through XeTeX.
 \usepackage{listings,njuvisual,tabularray}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
+\definecolor{olgreen}{HTML}{138a07}
+^^A \newcommand\olbutton[1]{\fcolorbox{gray!5}{olgreen}{\textcolor{white}{\footnotesize\bfseries\heiti #1}}}
+\newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
 \hypersetup{%
   pdftitle  = {The njuthesis class - LaTeX thesis template for Nanjing University},
   citecolor = njublue,
@@ -171,13 +174,13 @@ through XeTeX.
 %</driver>
 % \fi
 %
-% \title{\color{njuviolet}{The \cls{njuthesis} class\\ 南京大学学位论文模板}}
+% \title{\color{njuviolet}{The \cls{njuthesis} class\\ \textbf{南京大学学位论文模板}}}
 %
 % \author{^^A
-% Nanjing University Linux User Group
-% \thanks{E-mail: \href{mailto:nju.lug@yaoge123.cn}{nju.lug@yaoge123.cn}}}
+% 南京大学 Linux 用户组
+% \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}{git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.14.0 \quad 2022-01-21}
+% \date{v0.14.0 \quad 2022-01-11}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -187,7 +190,7 @@ through XeTeX.
 % \changes{v0.6}{2021/09/10}{封装个人信息}
 % \changes{v0.6}{2021/09/10}{实现自动打包发布。}
 % \changes{v0.7}{2021/09/11}{增加对研究生模板的支持}
-% \changes{v0.7}{2021/09/12}{将njuthesis发布在CTAN。}
+% \changes{v0.7}{2021/09/12}{将 \cls{njuthesis} 发布在 CTAN。}
 % \changes{v0.8}{2021/09/12}{修复已知问题，进行公开宣传。}
 % \changes{v0.9}{2021/09/15}{使用 DocStrip 合并模板文件。}
 % \changes{v0.9}{2021/09/15}{大幅度修改宏名称以符合 \hologo{LaTeX3} 规范。}
@@ -257,10 +260,10 @@ through XeTeX.
 % \fcolorbox{njublue}{gray!5}{\parbox{\textwidth-5em}{%
 % \begin{enumerate}
 %  \item 访问 \url{https://tex.nju.edu.cn}
-%  \item 点击右上角 Register，用南大邮箱注册账号
+%  \item 点击右上角~\olbutton{注册}，用南大邮箱注册账号
 %  \item 登录您的账号
-%  \item 点击左上角 New Project 按钮，选择 \textcolor{njuviolet}{NJUThesis Project}
-%  \item 随意取名，点击 Create 按钮
+%  \item 点击左上角~\olbutton{新建新项目}~按钮，选择~\olbutton{论文模板}
+%  \item 随意取名，点击~\olbutton{创建}~按钮
 % \end{enumerate}}}
 %
 % \bigskip
@@ -279,7 +282,7 @@ through XeTeX.
 % \href{https://itsc.nju.edu.cn}{信息化管理建设服务中心} 和该网站的维护者
 % \href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请点击左上角的菜单按钮，查看编译器是
 % 否显示为 |XeLaTeX|；再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个相当有益的
-% 结论：\emph{也许 Word 模板更加适合您}。这可以节省下掌握 \hologo{TeX} 排版软件使用方法所需的可
+% 结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉 \hologo{TeX} 排版软件使用方法所需的可
 % 观时间。
 %
 % \subparagraph{但我依然对 \hologo{LaTeX} 一无所知！}
@@ -356,7 +359,7 @@ through XeTeX.
 % \file{njuthesis.dtx} 文件以及由其直接产生的所有文件被称为 \cls{njuthesis} 文档类，或者在本文中简称为本模板。
 %
 % \subparagraph{版权信息}
-%   本模板之版权隶属于 2021 南京大学 Linux 用户组。
+%   本模板之版权隶属于 © 2021 - 2022 南京大学 Linux 用户组。
 %
 % \subparagraph{发布和修改}
 %   本模板的发布和（或）修改遵守 LaTeX Project Public License（版本 1.3c 或更高）的条款。该许可证的最新版本位于 \url{http://www.latex-project.org/lppl.txt}，1.3c 及更新的版本随附于 2003/12/01 版本以后的所有 \hologo{LaTeX} 发行版。
@@ -380,7 +383,7 @@ through XeTeX.
 % \subparagraph{GitHub Releases} 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，赋以更改后的版本号，发布在 \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases 页面}。如果由于网络原因不便访问主仓库，也可以从\href{https://mirror.nju.edu.cn/github-release/nju-lug/NJUThesis/LatestRelease/}{南京大学镜像站下载页面}获取。可供下载的文件包括下列三种：
 %   \begin{description}
 %     \item[\file{njuthesis-v*.pdf}] 模板说明文档（本文档）。
-%     \item[\file{njuthesis-user-v*.zip}] 交付给用户的完整模板包，包括格式文件和范本文档，解压后可用于本地编译，也可直接上传至在线编译网站。
+%     \item[\file{njuthesis-user-v*.zip}] 交付给用户的完整模板包，包括格式文件和范本文档，可在解压后用于本地编译，也可直接上传至在线编译网站。
 %     \item[\file{njuthesis-ctan-v*.zip}] 交付给 CTAN 的源代码包，普通用户请忽略。
 %   \end{description}
 %
@@ -519,7 +522,7 @@ through XeTeX.
 % 译过程。
 %
 % 编译本模板概括为如下步骤：生成初始文档，编译参考文献，生成页码、编号、目录，需
-% 要编译三次\footnote{在这里展示的是运用 \pkg{biblatex} 的编译方法，不同于 \hologo{BibTeX}。若设置了 backref 选项，还需第四遍编译以生成后向超链接。}。\emph{假设即将使用的文件名为 \file{njuthesis-sample.tex}}，应采用以
+% 要编译三次\footnote{在这里展示的是运用 \hologo{biber} 参考文献后端的编译方法，不同于 \hologo{BibTeX}。该方法仅在设置了 \opt{backref} 选项后需第四遍编译，用于生成后向超链接。}。\emph{假设即将使用的文件名为 \file{njuthesis-sample.tex}}，应采用以
 % 下命令顺序进行编译，以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF
 % 文档位于同一目录下。该目录下同时会生成若干中间文件。
 %
@@ -1328,11 +1331,11 @@ through XeTeX.
 % 显然只有被引用过的条目才会被输出至参考文献表。
 %
 % 如果开启了草稿模式，您可能会注意到部分条目存在超宽的问题，这时就要果断假装没有看到。
-% 该问题的产生是由于 \hologo{LaTeX} 中只有固定的字母组合中间可以断行。使条目右侧平齐的方法有如下两种：
-% \footnote{很不行，\pkg{microtype} 与 \pkg{babel} 没能在我们的模板中解决问题。}
+% 该问题的产生是由于 \hologo{LaTeX} 中只有固定的字母组合中间可以断行。使条目右侧平齐的方法有如下两种
+% \footnote{详见 \url{https://github.com/nju-lug/NJUThesis/issues/57}。很不幸，\pkg{microtype} 与 \pkg{babel} 没能在我们的模板中解决问题。}：
 % \begin{itemize}
 %   \item 自行在 \file{.bib} 文件中设置断行点，例如可以将 graphene 一词修改为 graph|\-|ene。缺点是需要逐条手动排查，建议在定稿时进行修改。
-%   \item 在 |\printbibliography| 前添加 |\emergencystretch=1em| 命令拉伸词间距，缺点是可能降低美观度。
+%   \item 在 |\printbibliography| 前添加 |\sloppy| 命令拉伸词间距，缺点是可能降低美观度。
 % \end{itemize}
 %
 %
