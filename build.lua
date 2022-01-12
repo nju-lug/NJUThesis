@@ -8,7 +8,7 @@ module        = "njuthesis"
 checkengines  = {"xetex", "luatex"}
 checkopts     = "-interaction=batchmode"
 
-textfiles     = {"LICENSE", "*.md"}
+textfiles     = {"LICENSE", "*.md", "*.ins"}
 ctanreadme    = "README-CTAN.md"
 
 sourcefiledir = "source"

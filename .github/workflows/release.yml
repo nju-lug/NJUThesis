@@ -49,16 +49,17 @@ jobs:
           ${{ env.SET_PATH }}
           l3build ctan
           mv njuthesis-ctan.zip njuthesis-ctan-$VERSION.zip
-          cp build/doc/njuthesis.pdf njuthesis-$VERSION.pdf
+          mv njuthesis.pdf njuthesis-$VERSION.pdf
 
       - name: Zip RELEASE package
         run: |
           ${{ env.SET_PATH }}
           xetex njuvisual.dtx
-          mv build/unpacked/njuthesis.cls njuthesis.cls
-          mv docs/njuthesis-sample.bib njuthesis-sample.bib
-          mv docs/njuthesis-sample.tex njuthesis-sample.tex
-          zip -r njuthesis-$VERSION.zip .vscode njuthesis-sample.tex njuthesis-sample.bib njuthesis.cls njuvisual.sty conf.txsprofile LICENSE README.md
+          mv docs/* .
+          mv scripts/* .
+          mv build/unpacked/njuthesis.cls .
+          pdflatex --shell-escape "generate-img.tex"
+          zip -r njuthesis-user-$VERSION.zip njuthesis-sample.tex njuthesis-sample.bib njuthesis.cls njuvisual.sty nju-emblem.pdf nju-name.pdf LICENSE README.md
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -66,5 +67,5 @@ jobs:
           prerelease: false
           files: |
             njuthesis-v*.pdf
-            njuthesis-v*.zip
+            njuthesis-user-v*.zip
             njuthesis-ctan-v*.zip

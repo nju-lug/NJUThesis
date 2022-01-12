@@ -2,19 +2,22 @@
 % 本文档用于测试 njuthesis 是否正常工作
 % 其内容不具有任何参考意义
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \documentclass{njuthesis}
-\documentclass[orig-decl]{njuthesis}
+\documentclass{njuthesis}
+% \documentclass[cjk-font=noto,latin-font=gyre]{njuthesis}
+% \documentclass[cjk-font=source,latin-font=gyre]{njuthesis}
+% \documentclass[cjk-font=founder,latin-font=gyre]{njuthesis}
+% \documentclass[decl-page]{njuthesis}
 % \documentclass[draft]{njuthesis}
 % \documentclass[type=design]{njuthesis}
 % \documentclass[degree=mg]{njuthesis}
-% \documentclass[degree=mf,orig-decl]{njuthesis}
+% \documentclass[degree=mf,decl-page]{njuthesis}
 % \documentclass[degree=phd,draft]{njuthesis}
 % \documentclass[degree=phd,nlcover]{njuthesis}
 
 \njusetup {
     info = {
         title = {一种使用南京大学 \hologo{LaTeX} 模板!编写毕业论文的经验性方法},
-        title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template}, 
+        title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template},
         keywords = {我,就是,充数的,关键词},
         keywords* = {Dummy,Keywords,Here,{it is}},
         grade = {2018},
@@ -44,50 +47,84 @@
         secret-level = {限制},
         udc = {004.72},
         supervisor-contact = {拉太赫科学与技术学院~枝江市结丘路~19~号~114514},
+      },
+    bib = {
+        % style = author-year,
+        resource = {test.bib}
+      },
+    style = {
+        emblem-img = {wug},
+        name-img = {name}
     }
+  }
+
+% \addbibresource{test.bib}
+
+\ctexset{
+  contentsname   = { 目\hspace{2em}次 },
+%   listfigurename = { 插图清单 },
+%   listtablename  = { 表格清单 }
 }
 
-\usepackage{listings,algorithm,algorithmic}
-\usepackage{siunitx,physics,chemfig}
-\usepackage[version=4]{mhchem}
-\usepackage{blindtext,zhlipsum}
+\usepackage{multirow,tabularray,wrapfig,subcaption}
+% \usepackage{listings,algorithm,algorithmic}
+% \usepackage{siunitx,physics,chemfig}
+% \usepackage[version=4]{mhchem}
+\usepackage{hologo,blindtext,zhlipsum}
 
-\addbibresource{test.bib}
+% \setmonofont{cmun}[
+%   Extension      = .otf,
+%   UprightFont    = *btl,
+%   BoldFont       = *tb,
+%   ItalicFont     = *bto,
+%   BoldItalicFont = *tx,
+%   HyphenChar     = None]
+
+% \lstdefinestyle{njulisting}
+%   {
+%     basewidth    = 0.5 em,
+%     lineskip     = 3 pt,
+%     basicstyle   = \tiny\ttfamily,
+%     keywordstyle = \bfseries\ttfamily\color{njuviolet},
+%     commentstyle = \itshape\ttfamily\color{gray},
+%     stringstyle  = \color{njumagenta},
+%     numbers      = left,
+%     captionpos   = t,
+%     breaklines   = true,
+%     xleftmargin  = 2 em,
+%     xrightmargin = 2 em
+%   }
+% \lstset{
+%     style        = njulisting,
+%     flexiblecolumns
+%   }
+% % \lstMakeShortInline[
+% %   style=njulisting,
+% %   basicstyle=\normalsize\tt,
+% %   columns=fixed]|
+
+% \setchemfig{
+%   atom sep=14.4pt,
+%   double bond sep=2.6pt,
+%   bond style={line width=0.6pt},
+%   cram width=2.0pt,
+%   bond offset=1.6pt
+% }
+% \renewcommand*\printatom[1]{\small\ensuremath{\mathsf{#1}}}
 
 % https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
 \DeclareMathOperator{\spn}{span}
 \renewcommand{\vec}[1]{\mathbf{#1}}
+% \RenewDocumentCommand\vec{m}{\mathbf{#1}}
 \NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
-
-\lstdefinestyle{njulisting}
-  {
-    basewidth    = 0.5 em,
-    lineskip     = 3 pt,
-    basicstyle   = \tiny\tt,
-    keywordstyle = \bf,
-    commentstyle = \it\color{gray},
-    numbers      = left,
-    captionpos   = t,
-    breaklines   = true,
-    xleftmargin  = 2 em,
-    xrightmargin = 2 em
-  }
-\lstset{
-    style        = njulisting,
-    flexiblecolumns
-  }
-% \lstMakeShortInline[
-%   style=njulisting,
-%   basicstyle=\normalsize\tt,
-%   columns=fixed]|
 
 \begin{document}
 
 % \frontmatter
 \maketitle
 
+% \input{chapters/Preface}
 \input{chapters/Abstract}
-\input{chapters/Preface}
 
 \raggedbottom
 % \flushbottom
@@ -103,12 +140,11 @@
 \section[还是用短点的吧]{如果标题非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长会怎样呢}
 \cref{ch:longtitle}答案是使用可选参数：\verb+\chapter[短描述]{完整的长标题}+
 
-\zhlipsum[1-20][name=zhufu]
+\zhlipsum[1-10][name=zhufu]
 
 \chapter{列表环境}
 
 \begin{itemize}
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
@@ -118,20 +154,42 @@
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
 \end{enumerate}
 
 \begin{description}
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测
+    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测
+    \item[测试测试] 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测
 \end{description}
+
+\chapter{脚注}
+
+测试脚注的编号效果%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+\footnote{测试测试测试测试测试测试测试测试测试测试测试测试}%
+
 \input{chapters/FigAndTab}
-\input{chapters/Specific}
+% \input{chapters/Specific}
 \input{chapters/Mathematics}
 \input{chapters/Bibliography}
 
+% \sloppy
+% \emergencystretch=1em
 \printbibliography
 
 \input{chapters/Acknowledgement}
@@ -139,6 +197,6 @@
 \appendix
 
 \input{chapters/Achievements}
-\input{chapters/Standard}
+% \input{chapters/Standard}
 
 \end{document}
