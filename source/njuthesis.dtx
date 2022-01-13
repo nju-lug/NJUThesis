@@ -3,7 +3,7 @@
 % !TeX encoding = UTF-8
 %
 % Copyright (C) 2021 - 2022
-% by Nanjing University Linux User Group 
+% by Nanjing University Linux User Group
 % <git+nju-lug-email-3104-issue-@yaoge123.cn>
 %
 % It may be distributed and/or modified under the conditions of the
@@ -105,8 +105,8 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo  $Id: njuthesis.dtx 0.14.0 2022-01-06 20:00:00 +0800  NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn> $
-%<class>  { Thesis template for Nanjing University }
+%<class>\GetIdInfo $Id: njuthesis.dtx 0.14.0 2022-01-14 00:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<class> { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
@@ -182,7 +182,7 @@ To produce the documentation run the original source files ending with
 % 南京大学 Linux 用户组
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}{git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.14.0 \quad 2022-01-11}
+% \date{v0.14.0 \quad 2022-01-14}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -204,7 +204,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.12}{2021/12/06}{修改了说明文档的代码呈现样式。}
 % \changes{v0.13}{2021/12/12}{优化了编译速度。}
 % \changes{v0.13}{2021/12/15}{适配2022届本科生毕业毕业论文（设计）规范。}
-% \changes{v0.14}{2021/01/13}{将本模板内嵌入南大 \hologo{TeX} 网站。}
+% \changes{v0.14}{2022/01/13}{将本模板内嵌入南大 \hologo{TeX} 网站。}
 %
 %
 % \maketitle
@@ -261,14 +261,16 @@ To produce the documentation run the original source files ending with
 % 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \hologo{TeX} 排版系统。话不多说，请先完整体验一遍下述的工作流程：
 %
 % \bigskip
-% \fcolorbox{njublue}{gray!5}{\parbox{\textwidth-5em}{%
+% \fcolorbox{olgreen}{gray!5}{\parbox{\textwidth-5em}{%
+% \hspace{2em}\begin{minipage}[c]{10cm}
 % \begin{enumerate}
 %  \item 访问 \url{https://tex.nju.edu.cn}
 %  \item 点击右上角~\olbutton{注册}~按钮，用南大邮箱注册账号
 %  \item 登录您的账号
 %  \item 点击左上角~\olbutton{创建新项目}~按钮，选择~\olbutton{论文模板}
 %  \item 随意取名，点击~\olbutton{创建}~按钮
-% \end{enumerate}}}
+% \end{enumerate}
+% \end{minipage}}}
 %
 % \bigskip
 % 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。如果它的效果令您满意，不妨以此为基础开始写作。
@@ -369,7 +371,7 @@ To produce the documentation run the original source files ending with
 %   本模板的发布和（或）修改遵守 LaTeX Project Public License（版本 1.3c 或更高）的条款。该许可证的最新版本位于 \url{http://www.latex-project.org/lppl.txt}，1.3c 及更新的版本随附于 2003/12/01 版本以后的所有 \hologo{LaTeX} 发行版。
 %
 % \subparagraph{联系作者}
-%   如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过 GitHub Issue 或者 QQ 群聊联系 NJU LUG。
+%   如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过 \href{https://github.com/nju-lug/NJUThesis/issues}{GitHub Issue} 或者 QQ 群聊\footnote{群号是 991559926。}联系 NJU LUG。
 %
 %
 % \section{安装}
@@ -378,9 +380,9 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{获取模板}
 %
-% \cls{njuthesis} 目前处于积极的维护中，其文件主要可通过以下途径获取：
+% \cls{njuthesis} 目前处于积极的维护中，主要可通过以下三种途径获取模板文件：
 %
-% \subparagraph{CTAN} \href{https://ctan.org/}{CTAN}\footnote{The Comprehensive \hologo{TeX} Archive Network} 是所有 \hologo{TeX} 相关材料的中枢。\href{https://ctan.org/pkg/njuthesis}{本模板的 CTAN 页面}\footnote{\cls{njuthesis} 已经于2021年9月12日发布在 CTAN，用于绘制南大图标的 \href{https://ctan.org/pkg/njuvisual}{\pkg{njuvisual}} 也已于同年11月28日发布，两者将进入\hologo{TeX}\,Live 2022。}上提供基本的介绍信息，可以下载说明文档（本文档）和宏包源代码。当然，使用这一来源时并不需要接触后者，请参考 \ref{subsubsec:standard-installation} 的标准安装方法。
+% \subparagraph{CTAN} \href{https://ctan.org/}{CTAN}\footnote{The Comprehensive \hologo{TeX} Archive Network} 是所有 \hologo{TeX} 相关材料的中枢。\href{https://ctan.org/pkg/njuthesis}{本模板的 CTAN 页面}\footnote{\cls{njuthesis} 已经于2021年9月12日发布在 CTAN，用于绘制南大图标的 \href{https://ctan.org/pkg/njuvisual}{\pkg{njuvisual}} 也已于同年11月28日发布，两者已被 \hologo{TeX}\,Live 和 \hologo{MiKTeX} 收录，将进入 \hologo{TeX}\,Live 2022 发行版。}上提供基本的介绍信息，可以下载说明文档（本文档）和宏包源代码。当然，使用这一来源时并不需要接触后者，请参考 \ref{subsubsec:standard-installation} 的标准安装方法。
 %
 % \subparagraph{GitHub 仓库} 最新开发进度会提交在本项目的 \href{https://github.com/nju-lug/NJUThesis}{Github仓库}。仓库内仅包含源代码、空白模板及测试文件，不可直接用于写作。这些文件对应的使用方法请参考 \ref{subsubsec:on-the-fly-installation}。如果由于网络原因不便访问主仓库，也可以从\href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像} 获取项目工程文件。
 %
@@ -462,7 +464,7 @@ To produce the documentation run the original source files ending with
 % 都可以尽情删除。
 %
 % {\color{red}|[!]|} 请注意，如果仅仅是希望使用这个模板撰写论文，请无论如何都不
-% 要从手动编译 \file{source/} 文件夹下的源代码开始，这样做只会浪费生命中宝贵的数
+% 要从手动编译 \file{source} 文件夹下的源代码开始，这样做只会浪费生命中宝贵的数
 % 分钟时间。如果遇到了问题，请前往 GitHub 仓库提出 issue。我们只推荐希望参与开发
 % 的同学接触 \file{.dtx} 文件。
 %
@@ -634,7 +636,7 @@ To produce the documentation run the original source files ending with
 %
 % 典型的 \cls{njuthesis} 主文件结构应该如下所示：
 %
-% \begin{latexexample}[moretexcs={\njusetup,\graphicspath,\addbibresource,\maketitle,\tableofcontents,\listoffigures,\listoftables,\mainmatter,\chapter,\printbibliography,\appendix},emph={[1]document}]
+% \begin{latexexample}[moretexcs={\njusetup,\graphicspath,\tableofcontents,\maketitle,\mainmatter,\chapter,\printbibliography},emph={[1]document}]
 %   \documentclass{njuthesis}
 %   \njusetup{}
 %   \begin{document}
@@ -704,7 +706,7 @@ To produce the documentation run the original source files ending with
 % \begin{itemize}
 %   \item 禁用封面的绘制（包括承诺和声明）
 %   \item 显示页面文字范围边框以及页眉页脚线
-%   \item 将超出宽度的内容显示为黑色方块
+%   \item 在超出宽度的内容右侧添加黑色方块标记
 %   \item 不再渲染图片，使用含有图片路径的空白盒子占位
 %   \item 不再渲染超链接及生成 PDF 书签
 % \end{itemize}
@@ -827,7 +829,7 @@ To produce the documentation run the original source files ending with
 %     title  = \Arg{标题}
 %     title* = \Arg{英文标题}
 %   \end{syntax}
-% 题目。由于封面上提供给中文题目的横线长度有限\footnote{单行最长为15个汉字，建议总长度不超过45字}，本模板默认会自动对标题进行换行。如果需要手动制定换行位点，请使用英文半角逗号 |,|，最多两处。
+% 题目。由于封面上提供给中文题目的横线长度有限\footnote{单行最长为15个汉字，建议总长度不超过45字}，本模板默认会自动对标题进行换行。如果需要手动制定换行位点，请使用英文半角逗号（|,|），最多两处。标题中需要保留的英文半角要用花括号包裹。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/keywords,info/keywords*}
@@ -835,7 +837,7 @@ To produce the documentation run the original source files ending with
 %     keywords  = \Arg{关键词}
 %     keywords* = \Arg{英文关键词}
 %   \end{syntax}
-% 关键词列表。关键词之间需要使用英文半角逗号隔开，含有空格的关键字需要使用花括号包裹以避免歧义。可以参照示例模板中的填写方式。
+% 关键词列表。关键词之间需要使用英文半角逗号隔开，含有空格的关键字需要使用花括号包裹以避免歧义。可以参照下方的填写示例。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/grade}
@@ -881,40 +883,45 @@ To produce the documentation run the original source files ending with
 %     field = \Arg{方向}
 %     field* = \Arg{方向}
 %   \end{syntax}
-% 研究领域。只有研究生有研究领域的说法。
+% 研究领域。只有研究生存在研究领域的说法，本科生无需填写。
 % \end{function}
 %
 % \begin{function}[updated=2022-01-12]{info/supervisor,info/supervisor*}
 %   \begin{syntax}
-%     supervisor = \Arg{导师,职称}
-%     supervisor* = \Arg{导师}
+%     supervisor = \Arg{导师姓名,职称}
+%     supervisor* = \Arg{导师英文全称}
 %   \end{syntax}
 % 导师全称。请使用逗号分隔导师的中文姓名与职称，英文名则不需添加逗号。
 % \end{function}
 %
 % \begin{function}[updated=2021-01-12]{info/supervisor-ii,info/supervisor-ii*}
 %   \begin{syntax}
-%     supervisor-ii = \Arg{第二导师,职称}
-%     supervisor-ii* = \Arg{第二导师}
+%     supervisor-ii = \Arg{第二导师姓名,职称}
+%     supervisor-ii* = \Arg{第二导师英文全称}
 %   \end{syntax}
 % 第二导师全称。无第二导师时不填即可。
 % \end{function}
 %
-% \begin{function}[updated=2021-10-01]{info/submit-date,info/submit-date*}
+% \begin{function}[updated=2022-01-13]{info/submit-date}
 %   \begin{syntax}
-%     submit-date  = \Arg{提交日期}
-%     submit-date* = \Arg{提交日期}
+%     submit-date = \Arg{yyyy/mm/dd}
 %   \end{syntax}
-% 提交日期。如果留空，则自动使用编译当天日期。
+% 提交日期。中英文日期格式现在可以由上述格式的字符串统一生成。如果留空，则自动使用编译当天日期。
 % \end{function}
 %
-% \begin{function}[updated=2021-10-01]{info/defend-date,info/chairman,info/reviewer}
+% \begin{function}[updated=2021-01-13]{info/defend-date}
 %   \begin{syntax}
-%     defend-date = \Arg{答辩日期}
+%     defend-date = \Arg{yyyy/mm/dd}
+%   \end{syntax}
+% 答辩日期，只对研究生有效，要求同提交日期。
+% \end{function}
+%
+% \begin{function}[updated=2021-10-01]{info/chairman,info/reviewer}
+%   \begin{syntax}
 %     chairman = \Arg{答辩主席}
 %     reviewer = \Arg{评委姓名职称}
 %   \end{syntax}
-% 答辩相关的内容，只对研究生有效，包括答辩日期，评审委员会主席及四位成员的姓名加职称。其中，四位评审成员是以列表的形式存储的，填写方法同关键词。如果是盲审，填入“盲审”二字即可。
+% 答辩相关的内容，只对研究生有效，包括答辩日期，评审委员会主席及四位成员的姓名加职称。答辩日期填写格式为 |yyyy/mm/dd|。四位评审成员是以列表的形式存储的，填写方法同关键词。如果是盲审，填入“盲审”二字即可。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/clc,info/secret-level,info/udc,info/supervisor-contact}
@@ -931,7 +938,7 @@ To produce the documentation run the original source files ending with
 % 这些选项已在 v0.13 弃置，请不要使用。
 % \end{function}
 %
-% \begin{function}{info/supervisor-title,info/supervisor-title*,info/supervisor-ii-title,info/supervisor-ii-title*}
+% \begin{function}{info/supervisor-title,info/supervisor-title*,info/supervisor-ii-title,info/supervisor-ii-title*,submit-date*}
 % 这些选项已在 v0.14 弃置，请不要使用。
 % \end{function}
 %
@@ -957,7 +964,7 @@ To produce the documentation run the original source files ending with
 %           major* = {\hologo{LaTeX} Linguistics},
 %           supervisor = {李成殿,教授},
 %           supervisor*= {Professor Li Chengdian},
-%           submit-date = {2021年8月10日}
+%           submit-date = {2021/08/10}
 %         }
 %     }
 % \end{latexexample}
@@ -983,9 +990,8 @@ To produce the documentation run the original source files ending with
 %           field* = {Contemporary Usage of the \hologo{LaTeX}~Language},
 %           supervisor = {李成殿,教授},
 %           supervisor*= {Professor Li Chengdian},
-%           submit-date = {2021年8月10日},
-%           submit-date* = {Aug 10, 2021},
-%           defend-date = {2021年9月19日},
+%           submit-date = {2021/08/10},
+%           defend-date = {2021/09/19},
 %           chairman = {张晓山~教授},
 %           reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
 %           clc = {0175.2},
@@ -1792,7 +1798,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{定义变量}
 %
-% 在变量名称中，|l| 代表局部变量，|g| 代表全局变量，最后一个下划线后的内容指示其类型。
+% 在变量名称中，|l| 代表局部变量，|g| 代表全局变量，|c| 代表常量，最后一个下划线后的内容指示其类型。
 %
 % \begin{variable}{\l_@@_tmp_box,\l_@@_tmp_clist,\l_@@_tmp_dim,
 %   \l_@@_tmp_int,\l_@@_tmpa_tl,\l_@@_tmpb_tl}
@@ -1864,6 +1870,27 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\l_@@_info_sm_date_tl,\l_@@_info_sm_date_en_tl,\l_@@_info_df_date_tl}
+% 用于存储格式化后的论文提交日期和答辩日期的变量。
+%    \begin{macrocode}
+\tl_new:N \l_@@_info_sm_date_tl
+\tl_new:N \l_@@_info_sm_date_en_tl
+\tl_new:N \l_@@_info_df_date_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\c_@@_today_tl}
+% 编译当天日期，格式为 |yyyy/mm/dd|。
+%    \begin{macrocode}
+\tl_const:Nx \c_@@_today_tl
+  {
+    \int_to_arabic:n { \c_sys_year_int  } /
+    \int_to_arabic:n { \c_sys_month_int } /
+    \int_to_arabic:n { \c_sys_day_int   }
+  }
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}{\c_@@_name_type_clist,\c_@@_name_type_en_clist,
 %   \c_@@_name_degree_clist,\c_@@_name_degree_en_clist}
 % 论文类型与学位类型。
@@ -1876,6 +1903,17 @@ To produce the documentation run the original source files ending with
   { 学士, 硕士, 硕士专业, 博士 }
 \clist_const:Nn \c_@@_name_degree_en_clist
   { Bachelor, Master, Master, Doctor~of~Philosophy }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\c_@@_month_en_clist}
+% 英文月份名称。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_month_en_clist
+  {
+    January, February, March, April, May, June,
+    July, August, September, October, November, December
+  }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2092,6 +2130,20 @@ To produce the documentation run the original source files ending with
     \dim_sub:Nn #1 { \textwidth / 2 }
     \@@_ulined_center_box:nn { #1 } { \@@_info:n { #3 } }
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_date_en:www}
+% 将形如 |yyyy/mm/dd| 的字符串转化为英文表示的月份，用于研究生英文封面。
+% \begin{arguments}
+%   \item 年份
+%   \item 月份
+%   \item 日期
+% \end{arguments}
+% 其中，变量类型 |w| 表明参数符合特定语法格式。
+%    \begin{macrocode}
+\cs_new:Npn \@@_date_en:www #1/#2/#3 \q_stop
+  { \clist_item:Nn \c_@@_month_en_clist { #2 } ~#3 , ~#1  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2466,20 +2518,27 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{info/submit-date,info/submit-date*}
+% \begin{macro}{info/submit-date}
+% \changes{v0.14}{2022/01/13}{精简提交日期选项。}
 % 提交日期，初始值为编译当天日期。
 %    \begin{macrocode}
-    submit-date         .tl_set:N = \l_@@_info_sm_date_tl,
-    submit-date        .initial:n = \today,
-    submit-date*        .tl_set:N = \l_@@_info_sm_date_en_tl,
-    submit-date*       .initial:n = \today,
+    submit-date         .tl_set:N = \l_@@_info_sm_date_raw_tl,
+    submit-date        .initial:n = \c_@@_today_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/defend-date}
+% \changes{v0.14}{2022/01/12}{精简答辩日期选项。}
+% 答辩日期。
+%    \begin{macrocode}
+    defend-date         .tl_set:N = \l_@@_info_df_date_raw_tl,
+    defend-date        .initial:n = \c_@@_today_tl,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/defend-date,info/chairman,info/reviewer}
-% 答辩信息。
+% 答辩委员会信息。
 %    \begin{macrocode}
-    defend-date         .tl_set:N = \l_@@_info_df_date_tl,
     chairman            .tl_set:N = \l_@@_info_chairman_tl,
     reviewer         .clist_set:N = \l_@@_info_reviewer_clist,
 %    \end{macrocode}
@@ -2504,8 +2563,8 @@ To produce the documentation run the original source files ending with
   {
     \clist_use:Nn \l_@@_info_supv_clist { \@@_hskip: }
     \bool_if:NT \l_@@_second_supv_bool
-      { 
-        \@@_quad: 
+      {
+        \@@_quad:
         \clist_use:Nn \l_@@_info_supv_ii_clist { \@@_hskip: }
       }
   }
@@ -3249,7 +3308,7 @@ To produce the documentation run the original source files ending with
 \ctex_at_end_preamble:n
   {
 %    \end{macrocode}
-% 清除标题中用于手动换行的 |!| 控制符。
+% 拼合完整标题，用于 PDF 标题和摘要页。
 %    \begin{macrocode}
     \tl_set:Nn \l_@@_info_title_tl
       { \clist_use:Nn \l_@@_info_title_clist { } }
@@ -3381,8 +3440,8 @@ To produce the documentation run the original source files ending with
   {
     \tl_set:Nx \l_@@_tmpa_tl
       { \clist_item:Nn \l_@@_info_title_clist { 1 } }
-    \bool_if:nT 
-      {  
+    \bool_if:nT
+      {
         \int_compare_p:n { \clist_count:N \l_@@_info_title_clist = 1 } &&
         \int_compare_p:n { \tl_count:N \l_@@_tmpa_tl > 15 }
       }
@@ -3503,11 +3562,14 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\njuemblem,\njuname}
-% 如果用户在导言区自定义了图片的路径，则覆盖 \pkg{njuvisual} 提供的绘制命令。
+% 根据导言区载入的用户设置进行一些处理。
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
+%    \end{macrocode}
+% \begin{macro}{\njuemblem,\njuname}
+% 如果用户在定义了图片的路径，则覆盖 \pkg{njuvisual} 提供的绘制命令。
+%    \begin{macrocode}
     \tl_if_empty:NF \l_@@_emblem_img_tl
       {
         \RenewDocumentCommand \njuemblem { o m m }
@@ -3520,9 +3582,33 @@ To produce the documentation run the original source files ending with
           { \includegraphics [ width = #2, height = #3 ]
               { \l_@@_name_img_tl } }
       }
-  }
 %    \end{macrocode}
 % \end{macro}
+% 使用 \pkg{zhnumber} 提供的函数将日期字符串格式化为中文日期，该字符串需要完全展开。
+%    \begin{macrocode}
+    \tl_set:Nx \l_@@_info_sm_date_tl
+      {
+        \exp_last_unbraced:Ne
+          \__zhnum_date:www \l_@@_info_sm_date_raw_tl \q_stop
+      }
+%    \end{macrocode}
+% 英文提交日期以及答辩日期仅用于研究生封面。
+%    \begin{macrocode}
+    \int_compare:nF { \l_@@_info_degree_int == 1 }
+      {
+        \tl_set:Nx \l_@@_info_sm_date_en_tl
+          {
+            \exp_last_unbraced:Ne
+              \@@_date_en:www \l_@@_info_sm_date_raw_tl \q_stop
+          }
+        \tl_set:Nx \l_@@_info_df_date_tl
+          {
+            \exp_last_unbraced:Ne
+              \__zhnum_date:www \l_@@_info_df_date_raw_tl \q_stop
+          }
+      }
+  }
+%    \end{macrocode}
 %
 % \begin{macro}{\@@_cover_title_ug:}
 % 本科生封面标题。
@@ -3690,7 +3776,7 @@ To produce the documentation run the original source files ending with
 % 国家图书馆封面信息栏。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_info_nl:
-  {    
+  {
     \tl_set:Nn \l_@@_info_supv_tl
       { \clist_item:Nn \l_@@_info_supv_clist { 1 } }
     \tl_set:Nn \l_@@_info_supv_ttl_tl
