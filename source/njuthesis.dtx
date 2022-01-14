@@ -902,16 +902,16 @@ To produce the documentation run the original source files ending with
 % 第二导师全称。无第二导师时不填即可。
 % \end{function}
 %
-% \begin{function}[updated=2022-01-13]{info/submit-date}
+% \begin{function}[updated=2022-01-14]{info/submit-date}
 %   \begin{syntax}
-%     submit-date = \Arg{yyyy/mm/dd}
+%     submit-date = \Arg{yyyy-mm-dd}
 %   \end{syntax}
-% 提交日期。中英文日期格式现在可以由上述格式的字符串统一生成。如果留空，则自动使用编译当天日期。
+% 提交日期。中英文日期现在可以由 ISO 日期格式的字符串统一生成。如果留空，则自动使用编译当天日期。
 % \end{function}
 %
-% \begin{function}[updated=2021-01-13]{info/defend-date}
+% \begin{function}[updated=2021-01-14]{info/defend-date}
 %   \begin{syntax}
-%     defend-date = \Arg{yyyy/mm/dd}
+%     defend-date = \Arg{yyyy-mm-dd}
 %   \end{syntax}
 % 答辩日期，只对研究生有效，要求同提交日期。
 % \end{function}
@@ -921,7 +921,7 @@ To produce the documentation run the original source files ending with
 %     chairman = \Arg{答辩主席}
 %     reviewer = \Arg{评委姓名职称}
 %   \end{syntax}
-% 答辩相关的内容，只对研究生有效，包括答辩日期，评审委员会主席及四位成员的姓名加职称。答辩日期填写格式为 |yyyy/mm/dd|。四位评审成员是以列表的形式存储的，填写方法同关键词。如果是盲审，填入“盲审”二字即可。
+% 答辩委员会信息，分别为评审委员会主席及四位成员的姓名加职称，只对研究生有效。四位评审成员是以列表的形式存储的，填写方法同关键词。如果是盲审，填入“盲审”二字即可。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/clc,info/secret-level,info/udc,info/supervisor-contact}
@@ -964,7 +964,7 @@ To produce the documentation run the original source files ending with
 %           major* = {\hologo{LaTeX} Linguistics},
 %           supervisor = {李成殿,教授},
 %           supervisor*= {Professor Li Chengdian},
-%           submit-date = {2021/08/10}
+%           submit-date = {2021-08-10}
 %         }
 %     }
 % \end{latexexample}
@@ -990,8 +990,8 @@ To produce the documentation run the original source files ending with
 %           field* = {Contemporary Usage of the \hologo{LaTeX}~Language},
 %           supervisor = {李成殿,教授},
 %           supervisor*= {Professor Li Chengdian},
-%           submit-date = {2021/08/10},
-%           defend-date = {2021/09/19},
+%           submit-date = {2021-08-10},
+%           defend-date = {2021-09-19},
 %           chairman = {张晓山~教授},
 %           reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
 %           clc = {0175.2},
@@ -1880,12 +1880,12 @@ To produce the documentation run the original source files ending with
 % \end{variable}
 %
 % \begin{variable}{\c_@@_today_tl}
-% 编译当天日期，格式为 |yyyy/mm/dd|。
+% 编译当天日期，格式为 |yyyy-mm-dd|。
 %    \begin{macrocode}
 \tl_const:Nx \c_@@_today_tl
   {
-    \int_to_arabic:n { \c_sys_year_int  } /
-    \int_to_arabic:n { \c_sys_month_int } /
+    \int_to_arabic:n { \c_sys_year_int  } -
+    \int_to_arabic:n { \c_sys_month_int } -
     \int_to_arabic:n { \c_sys_day_int   }
   }
 %    \end{macrocode}
@@ -2133,16 +2133,18 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_date_en:www}
-% 将形如 |yyyy/mm/dd| 的字符串转化为英文表示的月份，用于研究生英文封面。
+% \begin{macro}{\@@_date:www,\@@_date_en:www}
+% 将形如 |yyyy-mm-dd| 的 ISO 日期格式字符串转化为日期表示。该格式符合国际标准 ISO 8601 以及国内标准 GB/T 7408--2005《数据元和交换格式 信息交换 日期和时间表示法》。
 % \begin{arguments}
 %   \item 年份
 %   \item 月份
 %   \item 日期
 % \end{arguments}
-% 其中，变量类型 |w| 表明参数符合特定语法格式。
+% 中文日期表示通过封装 \pkg{zhnumber} 的内部函数实现；英文日期表示通过用于研究生英文封面。其中，变量类型 |w| 表明参数符合特定语法格式。
 %    \begin{macrocode}
-\cs_new:Npn \@@_date_en:www #1/#2/#3 \q_stop
+\cs_new:Npn \@@_date:www #1-#2-#3 \q_stop
+  { \__zhnum_date_aux:nnn { #1 } { #2 } { #3 } }
+\cs_new:Npn \@@_date_en:www #1-#2-#3 \q_stop
   { \clist_item:Nn \c_@@_month_en_clist { #2 } ~#3 , ~#1  }
 %    \end{macrocode}
 % \end{macro}
@@ -2519,20 +2521,20 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{info/submit-date}
-% \changes{v0.14}{2022/01/13}{精简提交日期选项。}
+% \changes{v0.14}{2022/01/14}{精简提交日期选项。}
 % 提交日期，初始值为编译当天日期。
 %    \begin{macrocode}
     submit-date         .tl_set:N = \l_@@_info_sm_date_raw_tl,
-    submit-date        .initial:n = \c_@@_today_tl,
+    submit-date        .initial:V = \c_@@_today_tl,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/defend-date}
-% \changes{v0.14}{2022/01/12}{精简答辩日期选项。}
+% \changes{v0.14}{2022/01/14}{精简答辩日期选项。}
 % 答辩日期。
 %    \begin{macrocode}
     defend-date         .tl_set:N = \l_@@_info_df_date_raw_tl,
-    defend-date        .initial:n = \c_@@_today_tl,
+    defend-date        .initial:V = \c_@@_today_tl,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3584,26 +3586,26 @@ To produce the documentation run the original source files ending with
       }
 %    \end{macrocode}
 % \end{macro}
-% 使用 \pkg{zhnumber} 提供的函数将日期字符串格式化为中文日期，该字符串需要完全展开。
+% 将 ISO 格式的原始日期字符串格式化为中文日期表示，该字符串需要进行展开。
 %    \begin{macrocode}
-    \tl_set:Nx \l_@@_info_sm_date_tl
+    \tl_set:Nn \l_@@_info_sm_date_tl
       {
-        \exp_last_unbraced:Ne
-          \__zhnum_date:www \l_@@_info_sm_date_raw_tl \q_stop
+        \exp_last_unbraced:NV
+          \@@_date:www \l_@@_info_sm_date_raw_tl \q_stop
       }
 %    \end{macrocode}
 % 英文提交日期以及答辩日期仅用于研究生封面。
 %    \begin{macrocode}
     \int_compare:nF { \l_@@_info_degree_int == 1 }
       {
-        \tl_set:Nx \l_@@_info_sm_date_en_tl
+        \tl_set:Nn \l_@@_info_sm_date_en_tl
           {
-            \exp_last_unbraced:Ne
+            \exp_last_unbraced:NV
               \@@_date_en:www \l_@@_info_sm_date_raw_tl \q_stop
           }
-        \tl_set:Nx \l_@@_info_df_date_tl
+        \tl_set:Nn \l_@@_info_df_date_tl
           {
-            \exp_last_unbraced:Ne
+            \exp_last_unbraced:NV
               \__zhnum_date:www \l_@@_info_df_date_raw_tl \q_stop
           }
       }
