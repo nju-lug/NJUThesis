@@ -1,6 +1,6 @@
 name: Build
 
-on: 
+on:
   push:
     branches:
       - master
@@ -42,8 +42,16 @@ jobs:
         run: |
           ${{ env.SET_PATH }}
           cd test
-          latexmk -halt-on-error -time -pdfxe  -jobname=test-xetex  test.tex
-          latexmk -halt-on-error -time -pdflua -jobname=test-luatex test.tex
+          xelatex  -halt-on-error -jobname=test-xetex-undergraduate    "\documentclass[decl-page]{njuthesis}           \input{test.tex}"
+          biber                            test-xetex-undergraduate
+          xelatex  -halt-on-error -jobname=test-xetex-undergraduate    "\documentclass[decl-page]{njuthesis}           \input{test.tex}"
+          xelatex  -halt-on-error -jobname=test-xetex-undergraduate    "\documentclass[decl-page]{njuthesis}           \input{test.tex}"
+          xelatex  -halt-on-error -jobname=test-xetex-graduate         "\documentclass[degree=mg,decl-page]{njuthesis} \input{test.tex}"
+          xelatex  -halt-on-error -jobname=test-xetex-graduate-nlcover "\documentclass[degree=phd,nlcover]{njuthesis}  \input{test.tex}"
+          lualatex -halt-on-error -jobname=test-luatex                 "\documentclass{njuthesis}                      \input{test.tex}"
+          biber                            test-luatex
+          lualatex -halt-on-error -jobname=test-luatex                 "\documentclass{njuthesis}                      \input{test.tex}"
+          lualatex -halt-on-error -jobname=test-luatex                 "\documentclass{njuthesis}                      \input{test.tex}"
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
