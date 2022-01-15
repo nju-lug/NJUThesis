@@ -105,7 +105,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo $Id: njuthesis.dtx 0.14.0 2022-01-14 00:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<class>\GetIdInfo $Id: njuthesis.dtx 0.14.0 2022-01-16 00:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class> { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -116,8 +116,8 @@ To produce the documentation run the original source files ending with
 \usepackage{listings,njuvisual,tabularray}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
+\colorlet{at@guard}{njuviolet}
 \definecolor{olgreen}{HTML}{138a07}
-^^A \newcommand\olbutton[1]{\fcolorbox{gray!5}{olgreen}{\textcolor{white}{\footnotesize\bfseries\heiti #1}}}
 \newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
 \hypersetup{%
   pdftitle  = {The njuthesis class - LaTeX thesis template for Nanjing University},
@@ -182,7 +182,7 @@ To produce the documentation run the original source files ending with
 % 南京大学 Linux 用户组
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}{git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.14.0 \quad 2022-01-14}
+% \date{v0.14.0 \quad 2022-01-16}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -340,7 +340,7 @@ To produce the documentation run the original source files ending with
 % 所帮助的资料：
 % \begin{description}
 %   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，可以参考英文版\cite{lshort}及其中文翻译版\cite{lshort-zh-cn}。
-%   \item[《\hologo{LaTeX} 入门》] 刘海洋著。
+%   \item[《\hologo{LaTeX} 入门》] 刘海洋著\cite{刘海洋2013latex入门}。
 % \end{description}
 %
 %
@@ -354,7 +354,7 @@ To produce the documentation run the original source files ending with
 %
 % 下文中将出现若干特殊格式，用来指示代码组件。譬如，无衬线字体的
 % \pkg{pkg-example} 为宏包名，等宽字体的 \file{file-example.xxx} 为文件名，等宽
-% 字体的 \opt{opt-example}为选项名，等宽字体的 \env{env-example}为需要
+% 字体的 \opt{opt-example} 为选项名，等宽字体的 \env{env-example} 为需要
 %  |\begin{}|和|\end{}|的环境名，等。本手册提供的代码示例中，左侧边线呈现南大标
 % 准洋红色 {\color{njumagenta}$\blacksquare$} 的属于终端命令，呈南大标准蓝色
 % {\color{njublue}$\blacksquare$} 的属于 \hologo{LaTeX} 源代码。
@@ -496,7 +496,7 @@ To produce the documentation run the original source files ending with
 %
 % 以下是一些值得注意的要点：
 % \begin{itemize}
-%   \item 可以参照这份\href{https://ctan.org/pkg/install-latex-guide-zh-cn}{手把手的教程}。
+%   \item 可以参照这份\emph{手把手的教程}\cite{install-latex-guide-zh-cn}。
 %   \item 校园网环境中访问\href{https://mirror.nju.edu.cn/download/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南京大学开源软件镜像站}可以获得最佳的下载体验。
 %   \item 使用最新的发行版，即版本号为2021或者21。
 %   \item 对于 Windows 和 macOS 用户，更推荐轻量化的 \hologo{MiKTeX} 套件。
@@ -733,7 +733,7 @@ To produce the documentation run the original source files ending with
 % \end{itemize}
 % 草稿模式有助于提升编译速度以及检查格式问题，建议在定稿前始终开启。
 %
-% 启用这一选项也会改变特定宏包的行为，譬如在草稿模式下 \pkg{listings} 宏包的代码环境不会显示内容。具体请参照各个宏包的说明文档。
+% 启用这一选项也会改变特定宏包的行为，譬如在草稿模式下 \pkg{listings} 宏包的代码环境不会显示内容，具体效果需要参照各个宏包的说明文档。如需抵消草稿模式的影响，请使用 \opt{final} 选项载入相关红包。
 %
 %
 % \subsubsection{指定字体}
@@ -912,7 +912,7 @@ To produce the documentation run the original source files ending with
 %     supervisor = \Arg{导师姓名,职称}
 %     supervisor* = \Arg{导师英文全称}
 %   \end{syntax}
-% 导师全称。请使用逗号分隔导师的中文姓名与职称，英文名则不需添加逗号。
+% 导师全称。请使用逗号（ |,| ）分隔导师的中文姓名与职称，英文名则不需添加逗号。
 % \end{function}
 %
 % \begin{function}[updated=2021-01-12]{info/supervisor-ii,info/supervisor-ii*}
@@ -927,7 +927,7 @@ To produce the documentation run the original source files ending with
 %   \begin{syntax}
 %     submit-date = \Arg{yyyy-mm-dd}
 %   \end{syntax}
-% 提交日期。中英文日期现在可以由 ISO 日期格式的字符串统一生成。如果留空，则自动使用编译当天日期。
+% 提交日期。中英文日期现在可以由 ISO 日期格式\cite{gb-t-7408-2005}的字符串统一生成。如果留空，则自动使用编译当天日期。
 % \end{function}
 %
 % \begin{function}[updated=2021-01-14]{info/defend-date}
@@ -979,13 +979,13 @@ To produce the documentation run the original source files ending with
 %           student-id = {189114514},
 %           author = {周煜华},
 %           author* = {Zhou Yuhua},
-%           department = {拉太赫科学与技术学院},
-%           department* = {School of \hologo{LaTeX}},
-%           major = {拉太赫语言学},
-%           major* = {\hologo{LaTeX} Linguistics},
+%           department = {化学化工学院},
+%           department* = {School of Chemistry and Chemical Engineering},
+%           major = {化学},
+%           major* = {Chemistry},
 %           supervisor = {李成殿,教授},
 %           supervisor*= {Professor Li Chengdian},
-%           submit-date = {2021-08-10}
+%           submit-date = {2021-09-12}
 %         }
 %     }
 % \end{latexexample}
@@ -1000,19 +1000,19 @@ To produce the documentation run the original source files ending with
 %           keywords = {我,就是,充数的,关键词},
 %           keywords* = {Dummy,Keywords,Here,{it is}},
 %           grade = {2018},
-%           student-id = {dz18114514},
+%           student-id = {DZ18114514},
 %           author = {周煜华},
 %           author* = {Zhou Yuhua},
-%           department = {拉太赫科学与技术学院},
-%           department* = {School of \hologo{LaTeX}},
-%           major = {拉太赫语言学},
-%           major* = {\hologo{LaTeX} Linguistics},
-%           field = {拉太赫语言在现当代的使用},
-%           field* = {Contemporary Usage of the \hologo{LaTeX}~Language},
+%           department = {化学化工学院},
+%           department* = {School of Chemistry and Chemical Engineering},
+%           major = {化学},
+%           major* = {Chemistry},
+%           field = {物理化学},
+%           field* = {Physical Chemistry},
 %           supervisor = {李成殿,教授},
 %           supervisor*= {Professor Li Chengdian},
-%           submit-date = {2021-08-10},
-%           defend-date = {2021-09-19},
+%           submit-date = {2021-09-12},
+%           defend-date = {2022-01-15},
 %           chairman = {张晓山~教授},
 %           reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
 %           clc = {0175.2},
@@ -1026,10 +1026,10 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{编写正文}
 %
-% 与导言区相对的是正文，位于\env{document}环境内。
+% 与导言区相对的是正文，位于 \env{document} 环境内。
 %
 % \begin{function}{\mainmatter}
-%   \cs{mainmatter} 标志着正文的开始，重新开始字号计数并设置页眉。
+%   \cs{mainmatter} 标志着正文的开始，使用阿拉伯数字重新进行页码编号，并设置页眉格式。
 % \end{function}
 %
 % 在页面布局方面，页面编号居中位于页脚，本科生无页眉，研究生页眉包括章名（奇数页）和节名（偶数页）。
@@ -1157,10 +1157,10 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}{\multirow,\multicolumn}
 %   \begin{syntax}
-%     \tn{multirow}\Arg{nrows}\oarg{bigstructs}\Arg{width}[\oarg{fixup}\Arg{text}
+%     \tn{multirow}\Arg{nrows}\oarg{bigstructs}\Arg{width}\oarg{fixup}\Arg{text}
 %     \tn{multicolumn}\Arg{nrows}\Arg{width}\Arg{text}
 %   \end{syntax}
-% 合并单元格
+% 合并单元格。
 % \end{function}
 %
 % TODO：\pkg{multirow} 宏包的使用方法，命令较为复杂。
@@ -1169,15 +1169,14 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{更多样式}
 %
-% TODO：使用 \pkg{tabularray} 的新语法丰富单元格样式
-%
+% \pkg{tabularray} 宏包\cite{tabularray}运用 \hologo{LaTeX3} 语法重新实现了表格的绘制，提供了简明的用户接口与丰富的单元格样式，详见其使用手册。
 %
 %
 % \subsubsection{数学}
 %
-% 符号表可以参考\url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}。
+% 符号表可以参考 \url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}。
 %
-% 单位请参考相关国家标准\footnote{GB 3100-1993, GB/T 3101-1993, GB/T 3102-1993}，使用 \pkg{siunitx} 宏包。\pkg{siunitx}是一个更新频繁的包，可能会引发兼容性问题。
+% 单位请参考相关国家标准\footnote{GB 3100-1993, GB/T 3101-1993, GB/T 3102-1993}，使用 \pkg{siunitx} 宏包。\pkg{siunitx} 是一个更新频繁的包，可能会引发兼容性问题。
 %
 % 行内公式形如|$\mathrm{e}^{(a+2b)x}$|。
 %
@@ -1315,12 +1314,10 @@ To produce the documentation run the original source files ending with
 % \end{function}
 %
 % 参考文献样式是一个整体的设置，会对正文中引用的文献的标注方法和参考文献表的输出格式产生影响。根据国家规定\cite{gb-t-7714-2015}，可以按照参考文献表的组织方式分为以下两种样式：
-%
-% \subparagraph{顺序编码制}
-% 顺序编码制是按正文中引用的文献出现的先后顺序连续编码，将序号置于方括号中。参考文献表采用顺序编码制组织时，各篇文献应按正文部分标注的序号依次列出。
-%
-% \subparagraph{著者-出版年制}
-% 正文引用的文献采用著者-出版年制时，各篇文献的标注内容由著者姓氏与出版年构成，并置于"()"内。参考文献表采用著者-出版年制组织时，各篇文献首先按文种集中，然后按著者字顺和出版年排列。
+% \begin{description}
+%   \item[顺序编码制] 顺序编码制是按正文中引用的文献出现的先后顺序连续编码，将序号置于方括号中。参考文献表采用顺序编码制组织时，各篇文献应按正文部分标注的序号依次列出。
+%   \item[著者-出版年制] 正文引用的文献采用著者-出版年制时，各篇文献的标注内容由著者姓氏与出版年构成，并置于"()"内。参考文献表采用著者-出版年制组织时，各篇文献首先按文种集中，然后按著者字顺和出版年排列。
+% \end{description}
 %
 % 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号表示”\cite{nju2021}，符合顺序编码制的格式，保持默认设置即可。
 %
@@ -1537,7 +1534,7 @@ To produce the documentation run the original source files ending with
 % \subsubsection{附录页}
 %
 % \begin{function}{\appendix}
-% 附录放在本命令后，以英文字母进行编号，编写方式同正文
+% 附录放在本命令后，以英文字母进行编号，编写方式同正文。
 % \end{function}
 %
 %
@@ -1574,7 +1571,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{视觉识别系统}
 %
-% 视觉识别系统 \pkg{njuvisual} 现已被分离为独立宏包，基本使用方法举例如下：
+% 视觉识别系统 \pkg{njuvisual} 现已被分离为独立宏包\cite{njuvisual}，基本使用方法举例如下：
 % \begin{latexexample}[moretexcs={\njuemblem,\njuname,\njuname*}]
 %   \njuemblem{!}{3cm}                           % 生成指定大小的紫色南大校徽
 %   \njuname{4cm}{!}                             % 生成指定大小的紫色南大中文校名
@@ -1584,7 +1581,7 @@ To produce the documentation run the original source files ending with
 %   \njuemblem[department=cs,color=blue]{!}{3cm} % 纯蓝色计科徽标
 % \end{latexexample}
 %
-% 本宏包的详细使用方法请参考其\href{http://mirrors.ctan.org/macros/latex/contrib/njuvisual/njuvisual.pdf}{说明文档}。
+% 本宏包的详细使用方法请参考其使用手册。
 %
 %
 % \begin{thebibliography}{99}
@@ -1614,8 +1611,26 @@ To produce the documentation run the original source files ending with
 % \urlprefix\url{https://ctan.org/pkg/lshort-zh-cn}
 % \urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
 %
+% \bibitem{install-latex-guide-zh-cn}
+% 王然.
+% \newblock \textit{一份简短的关于 \hologo{LaTeX} 安装的介绍} [EB/OL].
+% \newblock version 2021.12.1,
+% \newblock (2021-12-01)
+% \urlprefix\url{https://ctan.org/pkg/install-latex-guide-zh-cn}
+% \urlprefix\CTANurl[文档：]{info/install-latex-guide-zh-cn/install-latex-guide-zh-cn.pdf}
+%
+% \bibitem{刘海洋2013latex入门}
+% 刘海洋.
+% \newblock \textit{\hologo{LaTeX} 入门} [M].
+% \newblock 北京: 电子工业出版社, 2013
+%
 %
 % \subsection*{标准、规范}
+%
+% \bibitem{gb-t-7408-2005}
+% 全国信息与文献标准化技术委员会.
+% \newblock \textit{数据元和交换格式\quad 信息交换~ 日期和时间表示法: GB/T 7408--2005} [S].
+% \newblock 北京: 中国标准出版社, 2005
 %
 % \bibitem{gb-t-7713.1-2006}
 % 全国信息与文献标准化技术委员会.
@@ -1660,8 +1675,24 @@ To produce the documentation run the original source files ending with
 % \urlprefix\url{https://www.ctan.org/pkg/listings}
 % \urlprefix\CTANurl[文档：]{macros/latex/contrib/listings/listings.pdf}
 %
+% \bibitem{njuvisual}
+% \textsc{Yu Xiong}.
+% \newblock \textit{Display logos related to Nanjing University} [EB/OL].
+% \newblock version 0.2.1,
+% \newblock (2022-01-09)
+% \urlprefix\url{https://ctan.org/pkg/njuvisual}
+% \urlprefix\CTANurl[文档：]{macros/latex/contrib/njuvisual/njuvisual.pdf}
 %
-% \subsection*{模版}
+% \bibitem{tabularray}
+% \textsc{Jianrui Lyu}.
+% \newblock \textit{Typeset tabulars and arrays with \hologo{LaTeX3}} [EB/OL].
+% \newblock version 2021Q,
+% \newblock (2021-12-01)
+% \urlprefix\url{https://ctan.org/pkg/tabularray}
+% \urlprefix\CTANurl[文档：]{macros/latex/contrib/tabularray/tabularray.pdf}
+%
+%
+% \subsection*{模板}
 %
 % \bibitem{fduthesis}
 % 曾祥东.
@@ -1757,15 +1788,15 @@ To produce the documentation run the original source files ending with
 % 本模板使用 \hologo{LaTeX3} 语法编写，依赖 \pkg{expl3} 环境，
 % 并需调用 \pkg{l3packages} 中的相关宏包。
 %
-% 以下代码中有一些形如 |<*class>|
+% 以下代码中有一些形如 \textsf{\color{guard@series!!}〈*class〉}
 % 的标记，这是 \pkg{DocStrip} 中的“guard”，用来选择性地提取文件。
 % “|*|”和“|/|”分别表示该部分的开始和结束。不含
 % “|*|”和“|/|”的 guard 出现在行号右侧，它们用来确定
 % 单独一行代码的归属。这些 guard 的颜色深浅不一，用以明确嵌套关系。
 %
-% 另有若干包含 |@@| 的guard，用以表示名空间（模块）。
-% 在删除注释生成格式文件时，变量名称中的 |@@| 会被等号后的字段替换，
-% 譬如在本模板 \cls{njuthesis} 中 |@@=nju|。
+% 另有若干包含 \textsf{\color{at@guard}@@} 的 guard，用以表示名空间（模块）。
+% 在删除注释生成格式文件时，源代码变量名称中的 |@@| 会被等号后的字段替换，
+% 譬如在本模板中 \textsf{\color{at@guard}〈@@=nju〉}。
 %
 %
 % \subsection{准备}
@@ -2171,18 +2202,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\njuchapter}
-% 含有目录和 PDF 标签的无编号章。
-%    \begin{macrocode}
-\NewDocumentCommand \njuchapter { m }
-  {
-    \chapter*{#1}
-    \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1 }
-    \@mkboth{#1}{#1}
-  }
-%    \end{macrocode}
-% \end{macro}
-%
 %
 % \subsection{模板选项}
 % \changes{v0.11}{2021/11/15}{进行了效率优化。}
@@ -2263,9 +2282,8 @@ To produce the documentation run the original source files ending with
 % 单双面模式（默认为双面）。
 %    \begin{macrocode}
     oneside   .value_forbidden:n  = true,
-    oneside .bool_gset_inverse:N  = \g_@@_twoside_bool,
     twoside   .value_forbidden:n  = true,
-    twoside         .bool_gset:N  = \g_@@_twoside_bool,
+    oneside .bool_gset_inverse:N  = \g_@@_twoside_bool,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3147,15 +3165,15 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\mainmatter}
 % \changes{v0.12}{2021/12/03}{修复了摘要页字体格式泄漏到正文的问题。}
 % \changes{v0.12}{2021/12/03}{修复了页眉上长标题重叠的问题。}
-% 重定义 \cs{mainmatter}，在论文主体部分载入页眉页脚设置，并重新进行数字编号。
+% 重定义 \cs{mainmatter}，在论文主体部分载入页眉页脚设置，使用阿拉伯数字重新进行页码编号。
 %    \begin{macrocode}
 \RenewDocumentCommand \mainmatter { }
   {
     \cleardoublepage
     \int_compare:nTF { \l_@@_info_degree_int == 1 }
-      { \pagestyle{plain} } { \pagestyle{headings} }
-    \pagenumbering{arabic}
-    \normalfont\normalsize
+      { \pagestyle { plain } } { \pagestyle { headings } }
+    \pagenumbering { arabic }
+    \normalfont \normalsize
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3167,6 +3185,18 @@ To produce the documentation run the original source files ending with
 % 各部分章节以及目录中章标题的格式。设置为四号、不加粗、黑体。
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_sec_format_tl { \large \normalfont \sffamily }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\njuchapter}
+% 含有目录和 PDF 标签的无编号章。
+%    \begin{macrocode}
+\NewDocumentCommand \njuchapter { m }
+  {
+    \chapter* { #1 }
+    \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1 }
+    \@mkboth { #1 } { #1 }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3186,14 +3216,6 @@ To produce the documentation run the original source files ending with
 % \subsection{目录格式}
 % \changes{v0.13}{2021/12/09}{删除 \pkg{tocloft}，改用 \pkg{ctex} 内置的目录设置。}
 %
-% \begin{macro}{\@@_chapter_in_toc:n}
-% 将无编号章插入目录。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_chapter_in_toc:n #1
-  { \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1 } }
-%    \end{macrocode}
-% \end{macro}
-%
 %    \begin{macrocode}
 \ctexset
   {
@@ -3210,23 +3232,16 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\c_@@_toc_title_tl}
-% 目录页标题格式，单独设置为三号粗宋体。
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_toc_title_tl { \centering \zihao{3} \bf }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_modify_toc_title:nn}
-% 通过 group 内修改标题设置，改变标题页字体。
+% 通过 group 内修改标题设置，将目录页标题格式单独设置为三号粗宋体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_modify_toc_title:nn #1#2
 {
   \group_begin:
-    \ctexset { chapter/format = \c_@@_toc_title_tl }
+    \ctexset { chapter/format = \centering \zihao{3} \bf }
     \njuchapter { #1 }
   \group_end:
-  \@starttoc{#2}
+  \@starttoc { #2 }
 }
 %    \end{macrocode}
 % \end{macro}
@@ -3252,7 +3267,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \begin{macro}{bib/style}
 % \changes{v0.14}{2021/12/19}{提供选择参考文献样式的接口。}
-% 参考文献样式。分为顺序编码制 \opt{numeric}（gb7714-2015）和著者-出版年制 \opt{author-year}（gb7714-2015ay）。
+% 参考文献样式。分为顺序编码制 \opt{numeric}（\opt{gb7714-2015} 样式）和著者-出版年制 \opt{author-year}（\opt{gb7714-2015ay} 样式）。用户选取的样式会被加入选项列表中，以待传进 \pkg{biblatex} 宏包。
 %    \begin{macrocode}
     style             .choice:,
     style / numeric     .code:n =
@@ -3263,7 +3278,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{bib/resource}
-  % \changes{v0.14}{2021/12/19}{提供批量导入参考文献数据源的接口。}
+% \changes{v0.14}{2021/12/19}{提供批量导入参考文献数据源的接口。}
 % 参考文献数据源。
 %    \begin{macrocode}
     resource       .clist_set:N = \l_@@_bib_resource_clist
@@ -3272,15 +3287,15 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\addbibresource}
-% 由于在导言区尚未载入 \pkg{biblatex} 宏包，为了兼容用于添加参考文献数据源的 \cs{addbibresource} 命令，需要单独对其进行定义。
+% 为了吸收用户在导言区设置的选项，\pkg{biblatex} 宏包被设置在导言区末尾才会载入。此处单独定义了可以在导言区使用的 \cs{addbibresource} 命令，用于兼容传统的添加参考文献数据源的方法。
 %    \begin{macrocode}
 \NewDocumentCommand \addbibresource { m }
-  { \clist_gput_right:Nn \l_@@_bib_resource_clist {#1} }
+  { \clist_gput_right:Nn \l_@@_bib_resource_clist { #1 } }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@@_biblatex_pre_setup:}
-% 载入 \pkg{biblatex} 宏包前，需要禁用自行定义的 \cs{addbibresource} 命令，并传入用户设置的选项。
+% 载入 \pkg{biblatex} 宏包前，必须禁用自行定义的 \cs{addbibresource} 命令，并传入用户设置的选项。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_biblatex_pre_setup:
   {
@@ -3293,7 +3308,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_biblatex_post_setup:}
-% \pkg{biblatex} 宏包载入后的设置，此时可正常使用 \cs{addbibresource} 命令。
+% \pkg{biblatex} 宏包载入后的设置。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_biblatex_post_setup:
   {
@@ -3304,7 +3319,7 @@ To produce the documentation run the original source files ending with
     \defbibheading { njubib } [ \bibname ] { \njuchapter { ##1 } }
     \DeclarePrintbibliographyDefaults { heading = njubib }
 %    \end{macrocode}
-% 传入参考文献源文件。
+% 传入参考文献源文件，此时可正常使用 \cs{addbibresource} 命令。
 %    \begin{macrocode}
     \clist_map_inline:Nn \l_@@_bib_resource_clist
       { \addbibresource { ##1 } }
@@ -3382,10 +3397,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 修改 \pkg{cleverref} 的标签格式。
-% 默认在名称后面添加空格，删除公式编号的括号。
+% 修改 \pkg{cleverref} 的标签格式。默认在名称后面添加空格，删除公式编号的括号。
 %    \begin{macrocode}
-\crefdefaultlabelformat{#2#1#3\,}
+\crefdefaultlabelformat { #2#1#3\, }
 \crefformat { equation      } { 公式~#2#1#3~   }
 \crefformat { chapter       } { 第#2#1#3章     }
 \crefformat { section       } { 第~#2#1#3~节   }
@@ -3404,7 +3418,7 @@ To produce the documentation run the original source files ending with
 %
 % 设置默认图片扩展名，允许在不键入扩展名时自动进行补全。
 %    \begin{macrocode}
-\DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png}
+\DeclareGraphicsExtensions { .pdf, .eps, .jpg, .png }
 %    \end{macrocode}
 %
 % \changes{v0.12}{2021/12/06}{删除了可能导致冲突的 \pkg{floatrow}。}
@@ -3447,7 +3461,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare}绘制，对应于 |U+25A1| 字符\footnote{\url{https://tex.stackexchange.com/questions/567135/how-get-box-like-symbol-with-xelatex}}。
+% 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare} 绘制，对应于 |U+25A1| 字符\footnote{\url{https://tex.stackexchange.com/questions/567135/how-get-box-like-symbol-with-xelatex}}。
 %    \begin{macrocode}
 \theoremsymbol { \ensuremath { \mdwhtsquare } }
 \newtheorem* { proof } { \c_@@_name_proof_tl }
@@ -3460,7 +3474,6 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsection{封面}
-%
 %
 % \subsubsection{内部命令}
 %
@@ -3479,7 +3492,7 @@ To produce the documentation run the original source files ending with
       }
       {
 %    \end{macrocode}
-% 如果没找到换行符，则手动进行分割固定宽度的字符。
+% 如果没找到换行符，则手动从固定宽度的位置进行分割。
 %    \begin{macrocode}
         \@@_put_inempty_seg:nnn { #1 } { 1  } { 15 }
         \@@_put_inempty_seg:nnn { #1 } { 16 } { 15 }
@@ -3520,7 +3533,7 @@ To produce the documentation run the original source files ending with
   {
     \@@_spread_box:nnn { #2 } { \kaishu } { \@@_name:n { #1 } }
     \@@_hskip:
-    \@@_ulined_center_box:nn  { #3 }      { \@@_info:n { #1 } }
+    \@@_ulined_center_box:nn { #3 }       { \@@_info:n { #1 } }
     \@@_vskip:
   }
 %    \end{macrocode}
@@ -3539,11 +3552,11 @@ To produce the documentation run the original source files ending with
   {
     \@@_spread_box:nnn { #3 } { \kaishu } { \@@_name:n { #1 } }
     \@@_hskip:
-    \@@_ulined_center_box:nn  { #4 }      { \@@_info:n { #1 } }
+    \@@_ulined_center_box:nn { #4 }       { \@@_info:n { #1 } }
     \skip_horizontal:n { 0.5 em }
     \@@_spread_box:nnn { #3 } { \kaishu } { \@@_name:n { #2 } }
     \@@_hskip:
-    \@@_ulined_center_box:nn  { #4 }      { \@@_info:n { #2 } }
+    \@@_ulined_center_box:nn { #4 }       { \@@_info:n { #2 } }
     \@@_vskip:
   }
 %    \end{macrocode}
@@ -3648,7 +3661,7 @@ To produce the documentation run the original source files ending with
 % 本科生封面标题。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_title_ug:
-  { \@@_spread_box:nnn { 9em } { \bf } { \l_@@_info_type_tl } }
+  { \@@_spread_box:nnn { 9 em } { \bf } { \l_@@_info_type_tl } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3709,7 +3722,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_cover_back_g:}
-% 研究生封面背面信息。
+% 研究生封面背面信息。格式存在变化，没有使用循环来简化。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_back_g:
   {
@@ -3855,9 +3868,9 @@ To produce the documentation run the original source files ending with
 % 校徽、校名。
 %    \begin{macrocode}
     \null \skip_horizontal:n { -1 cm }
-    \njuemblem [ black] { ! } { 3.35 cm }
+    \njuemblem [ black ] { ! } { 3.35 cm }
     \begin{center}
-      \njuname[black]{!}{3cm} \@@_vskip:
+      \njuname [ black ] { ! } { 3 cm } \@@_vskip:
 %    \end{macrocode}
 % 学位信息。
 %    \begin{macrocode}
@@ -3903,7 +3916,7 @@ To produce the documentation run the original source files ending with
       \group_end:
     \end{center}
 %    \end{macrocode}
-% 背面。格式存在变化，没有使用循环来简化。
+% 背面。
 %    \begin{macrocode}
     \newpage
     \noindent \null \skip_vertical:n { 18 cm }
@@ -3970,7 +3983,6 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_orig_decl:
   {
-    \normalfont \normalsize
     \chapter* { \c_@@_name_nju_tl \c_@@_name_orig_decl_tl }
     \thispagestyle { empty }
     \c_@@_orig_decl_text_tl
@@ -4014,7 +4026,7 @@ To produce the documentation run the original source files ending with
         \bool_if:NT \g_@@_orig_decl_bool { \@@_make_orig_decl: }
       }
 %    \end{macrocode}
-% 生成封面后清除标题中的换行控制符。
+% 生成封面后清除标题中的换行控制符，便于在摘要中输出。
 %    \begin{macrocode}
     \tl_remove_all:Nn \l_@@_info_title_tl { \\ }
 %    \end{macrocode}
@@ -4345,18 +4357,17 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 修改年份的显示方式，默认进行加粗。
 %    \begin{macrocode}
-    \RenewDocumentCommand \mkbibdateshort  { m m m }
-      { \textbf{ \thefield { ##1 } } }
+    \RenewDocumentCommand \mkbibdateshort { m m m }
+      { \textbf { \thefield { ##1 } } }
     \begin{refsection}
-      \nocite{#2}
-      \printbibliography[heading=subbibliography,title=#1]
+      \nocite { #2 }
+      \printbibliography [ heading = subbibliography, title = #1 ]
     \end{refsection}
     \group_end:
   }
 %</class>
 %    \end{macrocode}
 % \end{macro}
-%
 %
 % \end{implementation}
 %
