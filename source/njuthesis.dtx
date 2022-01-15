@@ -3341,14 +3341,16 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{引用}
 %
-% \pkg{hyperref} 设置。
+% 在导言区末尾进行 \pkg{hyperref} 设置。
 % \changes{v0.11}{2021/10/01}{写入PDF元数据。}
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
 %    \end{macrocode}
-% 拼合完整标题，用于 PDF 标题和摘要页。
+% 忽略 PDF 字符串中的换行符，从而抑制 \pkg{hyperref} 警告。
 %    \begin{macrocode}
+    \pdfstringdefDisableCommands
+      { \cs_set_eq:NN \\ \prg_do_nothing: }
     \hypersetup
       {
         bookmarksnumbered = true,
@@ -3366,20 +3368,12 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\@@_cref_name:n,\@@_cref_name:N }
+% \begin{macro}{\@@_cref_name:n,}
 % 用于修改 \pkg{cleverref} 的标签名称的辅助函数。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cref_name:n #1
   {
     \clist_map_inline:nn { #1 }
-      {
-        \crefname { ##1 }
-          { \@@_name:n { ##1 } } { \@@_name:n { ##1 _en } }
-      }
-  }
-\cs_new_protected:Npn \@@_cref_name:N #1
-  {
-    \clist_map_inline:Nn #1
       {
         \crefname { ##1 }
           { \@@_name:n { ##1 } } { \@@_name:n { ##1 _en } }
@@ -3402,7 +3396,7 @@ To produce the documentation run the original source files ending with
 % 修改 \pkg{cleverref} 的标签名称。
 %    \begin{macrocode}
 \@@_cref_name:n { figure, table, appendix, proof }
-\@@_cref_name:N \c_@@_theorem_type_clist
+\exp_args:NV \@@_cref_name:n \c_@@_theorem_type_clist
 %    \end{macrocode}
 %
 %
