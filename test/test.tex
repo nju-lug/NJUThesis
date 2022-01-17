@@ -54,7 +54,7 @@
     style = {
         emblem-img = {wug},
         name-img = {name}
-    }
+      }
   }
 
 % \addbibresource{test.bib}
@@ -122,8 +122,25 @@
 % \frontmatter
 \maketitle
 
-% \input{chapters/Preface}
-\input{chapters/Abstract}
+\begin{preface}
+  感慨万千，一时语塞。实在不知道写啥好，表演个朗诵课文吧。
+
+  \zhlipsum[108-110][name=zhufu]
+
+  \vspace{1cm}
+  \begin{flushright}
+    某人\\
+    2021年初秋于扬州
+  \end{flushright}
+\end{preface}
+
+\begin{abstract}
+  \zhlipsum[76][name=zhufu]
+\end{abstract}
+
+\begin{abstract*}
+  \blindtext
+\end{abstract*}
 
 \raggedbottom
 % \flushbottom
@@ -137,10 +154,27 @@
 \begin{notation}[10cm]
   \item[DMRG] 密度矩阵重整化群 (Density-Matrix Reformation-Group)
   \item[DFT] 密度泛函理论 (Density functional theory)
+  \item[PCR] 聚合酶链式反应 (Polymerase Chain Reaction)
   \item[HTTP] 超文本传输协议 (Hypertext Transfer Protocol)
+  \item[CSS] 层叠样式表 (Cascading Style Sheets)
+  \item[GUI] 图形用户界面 (Graphical User Interface)
+  \item[CLI] 命令行界面 (Command-Line Interface)
+  \item[IPO] 首次公开募股 (Initial Public Offering)
+  \item[CDO] 抵押债务证券 (Collateralized Debt Obligations)
+  \item[IPR] 国内称为贷款基础利率，美国、香港等地则称为最优惠贷款利率 (Loan Prime Rate)
   \item[$k_\mathrm{B}$] 玻尔兹曼常数
   \item[$h$] 普朗克常数
-  \item[呜呜呜] 哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
+  \item[$\hbar$] 约化普朗克常数
+  \item[$c$] 光速
+  \item[$x$] 坐标
+  \item[$p$] 动量
+  \item[$t$] 时间
+  \item[$\mu$] 约化质量
+  \item[$I$] 转动惯量
+  \item[呜呜呜] 特别长会怎样呢哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
+  \item[呜呜呜] 特别长会怎样呢哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
+  \item[呜呜呜] 特别长会怎样呢哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
+  \item[呜呜呜] 特别长会怎样呢哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
 \end{notation}
 
 \chapter[非常长的标题不好看]{如果标题非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长会怎样呢}
@@ -201,13 +235,15 @@
 \input{chapters/Bibliography}
 
 \bgroup
-\sloppy
-\printbibliography
+  \sloppy
+  \printbibliography
 \egroup
 
-\input{chapters/Acknowledgement}
+\begin{acknowledgement}
+  感谢\href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU Linux User Group}。
+\end{acknowledgement}
 
-\appendix
+% \appendix
 
 % \input{chapters/Achievements}
 % \input{chapters/Standard}

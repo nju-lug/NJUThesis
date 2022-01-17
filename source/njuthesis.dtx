@@ -105,7 +105,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo $Id: njuthesis.dtx 0.14.0 2022-01-16 00:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<class>\GetIdInfo $Id: njuthesis.dtx 0.14.1 2022-01-17 15:30:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class> { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -3146,6 +3146,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \begin{macro}{\@@_set_heading_g:}
+% \changes{v0.14}{2022/01/17}{修复单页模式的页眉问题。}
+%
 % 以 \opt{plain} 样式为基础，单独设置研究生模板的页眉内容。在 \cs{fancyhead} 的可选参数中，\opt{E} 和 \opt{O} 分别表示在偶数页（even）
 % 和奇数页（odd）， 而 \opt{L}、\opt{R} 和 \opt{C} 则分别表示左
 % （left）、右（right）和中间（center）。按照通常的排版规则，
@@ -3209,15 +3211,49 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\njuchapter}
+% \begin{macro}{\@@_chapter:n,\@@_chapter:V}
 % 含有目录和 PDF 标签的无编号章。
 %    \begin{macrocode}
-\NewDocumentCommand \njuchapter { m }
+\cs_new_protected:Npn \@@_chapter:n #1
   {
-    \chapter* { #1 }
+    \chapter *           { #1 }
+    \@@_chapter_header:n { #1 }
     \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1 }
-    \@mkboth { #1 } { #1 }
   }
+\cs_generate_variant:Nn \@@_chapter:n { V }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_chapter_no_toc:n,\@@_chapter_no_toc:V}
+% 目录自身不出现在目录中，需特别处理。参考
+% \url{https://tex.stackexchange.com/a/1821}。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_chapter_no_toc:n #1
+  {
+    \chapter *           { #1 }
+    \@@_chapter_header:n { #1 }
+    \pdfbookmark [ 0 ] { #1 } { toc }
+  }
+\cs_generate_variant:Nn \@@_chapter_no_toc:n { V }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_chapter_header:n}
+% 单页模式下，目录、摘要、符号表等特殊页面的页眉中间为相应标题，左右为空。这里通过居中的 \tn{rightmark} 实现。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_chapter_header:n #1
+  {
+    \bool_if:NTF \g_@@_twoside_bool
+      { \markboth { #1 } { #1 } }
+      { \markboth { } { \hfill #1 \hfill } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\njuchapter}
+% 封装无编号章环境。
+%    \begin{macrocode}
+\NewDocumentCommand \njuchapter { m } { \@@_chapter:V { #1 } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3250,13 +3286,14 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \begin{macro}{\@@_modify_toc_title:nn}
+% \changes{v0.14}{2022/01/17}{目录自身不出现在目录中。}
 % 通过 group 内修改标题设置，将目录页标题格式单独设置为三号粗宋体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_modify_toc_title:nn #1#2
   {
     \group_begin:
       \keys_set:nn { ctex } { chapter/format = \centering \zihao { 3 } \bf }
-      \njuchapter { #1 }
+      \@@_chapter_no_toc:V { #1 }
     \group_end:
     \@starttoc { #2 }
   }
@@ -3333,7 +3370,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.12}{2021/12/06}{设置输出参考文献的默认选项。}
 % 修改参考文献的头部样式，自动添加目录条目。
 %    \begin{macrocode}
-    \defbibheading { njubib } [ \bibname ] { \njuchapter { ##1 } }
+    \defbibheading { njubib } [ \bibname ] { \@@_chapter:V { ##1 } }
     \DeclarePrintbibliographyDefaults { heading = njubib }
 %    \end{macrocode}
 % 传入参考文献源文件，此时可正常使用 \cs{addbibresource} 命令。
@@ -4348,9 +4385,9 @@ To produce the documentation run the original source files ending with
 % 单独制作的前言致谢页。
 %    \begin{macrocode}
 \NewDocumentEnvironment { preface         } { +b }
-  { \njuchapter { \c_@@_name_preface_tl         } #1 } { }
+  { \@@_chapter:V { \c_@@_name_preface_tl         } #1 } { }
 \NewDocumentEnvironment { acknowledgement } { +b }
-  { \njuchapter { \c_@@_name_acknowledgement_tl } #1 } { }
+  { \@@_chapter:V { \c_@@_name_acknowledgement_tl } #1 } { }
 %    \end{macrocode}
 % \end{environment}
 % \end{environment}
@@ -4430,9 +4467,9 @@ To produce the documentation run the original source files ending with
 %   \item 符号区域宽度，初始值为 5 em
 % \end{arguments}
 %    \begin{macrocode}
-\NewDocumentEnvironment { notation  } { O { 10 em } O { 5 em } }
+\NewDocumentEnvironment { notation } { O { 10 em } O { 5 em } }
   {
-    \njuchapter { \c_@@_name_notation_tl }
+    \@@_chapter:V { \c_@@_name_notation_tl }
     \@@_make_notation:nn { #1 } { #2 }
   }
   { \endlist }
@@ -4444,7 +4481,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \NewDocumentEnvironment { notation* } { O { 10 em } O { 5 em } }
   {
-    \chapter*   { \c_@@_name_notation_tl }
+    \chapter * { \c_@@_name_notation_tl }
     \@@_make_notation:nn { #1 } { #2 }
   }
   { \endlist }
