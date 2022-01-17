@@ -8,7 +8,7 @@
 %
 % It may be distributed and/or modified under the conditions of the
 % LaTeX Project Public License (LPPL), either version 1.3c of this
-% license or (at your option) any later version.  The latest version
+% license or (at your option) any later version. The latest version
 % of this license is in the file
 %
 %    https://www.latex-project.org/lppl.txt
@@ -1518,6 +1518,18 @@ To produce the documentation run the original source files ending with
 % 实际上，根据《学位论文编写规则》国家标准\cite{gb-t-7713.1-2006}，尽管“目录”这一说法已流传甚广，但学位论文中理应使用“目次”这一名称来指代篇目的列表。
 %
 %
+% \subsubsection{符号表}
+%
+% \begin{function}{notation,notation*}
+%   \begin{syntax}
+%     \tn{begin}\{notation\}\oarg{说明宽度}\oarg{符号宽度}
+%     \quad\tn{item}\oarg{符号} \meta{说明}
+%     \tn{end}\{notation\}
+%   \end{syntax}
+% 符号表。带有星号的符号表环境不会插入目录。
+% \end{function}
+%
+%
 % \subsubsection{致谢页}
 %
 % \begin{function}{acknowledgement}
@@ -2338,6 +2350,7 @@ To produce the documentation run the original source files ending with
   {
     { acknowledgement } { 致\hspace{2em}谢              },
     { id              } { 学号                          },
+    { notation        } { 符号表                        },
     { orig_date       } { 日期                          },
     { paperlist       } { 发表文章目录                  },
     { pdf_creator     } { LaTeX~ with~ njuthesis~ class },
@@ -2687,6 +2700,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \changes{v0.14}{2021/12/21}{移除内置的 \pkg{hologo}。}
+% \changes{v0.14}{2022/01/17}{移除内置的 \pkg{url}。}
 % 载入各种宏包。
 %    \begin{macrocode}
 \RequirePackage
@@ -2719,10 +2733,6 @@ To produce the documentation run the original source files ending with
 % 列表环境。
 %    \begin{macrocode}
     enumitem,
-%    \end{macrocode}
-% \pkg{url} 用于生成链接文本。
-%    \begin{macrocode}
-    url,
 %    \end{macrocode}
 % 按以下顺序加载两个关于引用的包。
 % \pkg{hyperref} 覆写了大量命令，因此需要在其他包最后载入。
@@ -3445,6 +3455,8 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{列表环境}
 % \changes{v0.12}{2021/12/07}{删除了 \pkg{enumitem} 的部分列表环境设置。}
+%
+% 缩减列表环境的条目间距。
 %    \begin{macrocode}
 \setlist { noitemsep }
 %    \end{macrocode}
@@ -4343,6 +4355,9 @@ To produce the documentation run the original source files ending with
 % \end{environment}
 % \end{environment}
 %
+%
+% \subsection{成果列表}
+%
 % \begin{macro}{\njupaperlist}
 % \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
 % \changes{v0.14}{2021/12/20}{成果列表中可突出指定作者姓名及年份。}
@@ -4372,9 +4387,70 @@ To produce the documentation run the original source files ending with
     \end{refsection}
     \group_end:
   }
-%</class>
 %    \end{macrocode}
 % \end{macro}
+%
+%
+% \subsection{符号表}
+%
+% \begin{macro}{\@@_notation_label:n}
+% 左对齐的标签格式，用于符号表。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_notation_label:n #1 { #1 \hfil }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_make_notation:nn}
+% 生成符号表。由于符号表只有符号和说明两列，相比于 \env{longtable} 环境，\env{description} 环境的语法更为简洁直观，且说明文字可以换行，因而此处使用 \hologo{LaTeX2e} 的列表环境进行封装，定义和语法参见 \file{source2e.pdf} 中的 File I \quad ltlists.dtx 一章。\tn{list} 环境使用宽度固定的盒子制作标签，通过指定这个盒子的宽度 \tn{labelwidth} 即可确定左侧标签区域的宽度。右侧说明文字区域的宽度无法直接指定，而是靠计算左右边距 \tn{leftmargin} 和 \tn{rightmargin} 得到的。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_make_notation:nn #1#2
+  {
+    \dim_set:Nn \l_@@_tmp_dim { \textwidth - #1 - #2 }
+    \list { }
+      {
+        \labelwidth #2
+        \itemindent \z@
+        \labelsep   \z@
+        \itemsep    \z@
+        \parsep     \z@
+        \leftmargin 0.5\l_@@_tmp_dim
+        \rightmargin \leftmargin
+        \advance \leftmargin #2
+        \let \makelabel \@@_notation_label:n
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{environment}{notation}
+% \changes{v0.14}{2022/01/17}{提供符号表环境。}
+% 符号表环境。
+% \begin{arguments}
+%   \item 说明区域宽度，初始值为 10 em。说明宽度的调整更为常见，所以放在前面。
+%   \item 符号区域宽度，初始值为 5 em
+% \end{arguments}
+%    \begin{macrocode}
+\NewDocumentEnvironment { notation  } { O { 10 em } O { 5 em } }
+  {
+    \njuchapter { \c_@@_name_notation_tl }
+    \@@_make_notation:nn { #1 } { #2 }
+  }
+  { \endlist }
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{notation*}
+% 带有星号的符号表不会插入目录。
+%    \begin{macrocode}
+\NewDocumentEnvironment { notation* } { O { 10 em } O { 5 em } }
+  {
+    \chapter*   { \c_@@_name_notation_tl }
+    \@@_make_notation:nn { #1 } { #2 }
+  }
+  { \endlist }
+%</class>
+%    \end{macrocode}
+% \end{environment}
 %
 % \end{implementation}
 %

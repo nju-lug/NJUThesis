@@ -248,6 +248,15 @@
 %---------------------------------------------------------------------
 \mainmatter
 
+% 符号表
+% 语法与 description 环境一致
+% 两个可选参数依次为说明区域宽度、符号区域宽度
+% 带星号的符号表(notation*)不会插入目录
+\begin{notation}[10cm]
+  \item[DFT] 密度泛函理论 (Density functional theory)
+  \item[DMRG] 密度矩阵重整化群 (Density-Matrix Reformation-Group)
+\end{notation}
+
 % 建议将论文内容拆分为多个文件
 % 即新建一个 chapters 文件夹
 % 把每一章的内容单独放入一个 tex 文件
