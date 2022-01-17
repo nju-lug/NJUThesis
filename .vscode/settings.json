@@ -14,10 +14,23 @@
             ]
         },
         {
-            "name": "latexmk",
+            "name": "latexmk-xe",
             "command": "latexmk",
             "args": [
-                "-xelatex"
+                "-xelatex",
+                "-time",
+                "-interaction=nonstopmode",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "latexmk-lua",
+            "command": "latexmk",
+            "args": [
+                "-lualatex",
+                "-time",
+                "-interaction=nonstopmode",
+                "%DOCFILE%"
             ]
         },
         {
@@ -31,15 +44,17 @@
             "name": "lualatex",
             "command": "lualatex",
             "args": [
+                "-interaction=nonstopmode",
+                "-file-line-error",
                 "%DOCFILE%"
             ]
         },
     ],
     "latex-workshop.latex.recipes": [
         {
-            "name": "latexmk 🔃",
+            "name": "latexmk(xe)",
             "tools": [
-                "latexmk"
+                "latexmk-xe"
             ]
         },
         {
@@ -55,6 +70,12 @@
                 "biber",
                 "xelatex",
                 "xelatex"
+            ]
+        },
+        {
+            "name": "latexmk(lua)",
+            "tools": [
+                "latexmk-lua"
             ]
         },
         {

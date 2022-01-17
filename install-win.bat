@@ -24,5 +24,6 @@ DEL "*.log"
 DEL "*.md5"
 DEL "generate-img.tex"
 DEL "generate-img.pdf"
+DEL "njuvisual-example.tex"
 
 CD ..

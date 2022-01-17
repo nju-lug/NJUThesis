@@ -3124,40 +3124,50 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{页眉页脚}
 %
-% 本科生页眉页脚。要求无页眉，页脚居中，页码使用五号新罗马体数字。
+% 重定义 \pkg{fancyhdr} 的 \opt{plain} 样式，即本科生正文和部分特殊页面使用的的页眉页脚样式。页眉无内容；页脚为居中的页码，使用五号新罗马体数字。
 %    \begin{macrocode}
 \fancypagestyle { plain }
   {
     \fancyhf { }
-    \fancyfoot [ C ] { \zihao{5} \thepage }
+    \fancyfoot [ C ] { \zihao{5} \rmfamily \thepage }
     \RenewDocumentCommand \headrulewidth { } { 0 pt }
     \RenewDocumentCommand \footrulewidth { } { 0 pt }
   }
 %    \end{macrocode}
 %
-% 研究生页眉页脚。页眉为横线，奇数页显示章名，偶数页显示节名；页脚为页码。
+% \begin{macro}{\@@_set_heading_g:}
+% 以 \opt{plain} 样式为基础，单独设置研究生模板的页眉内容。在 \cs{fancyhead} 的可选参数中，\opt{E} 和 \opt{O} 分别表示在偶数页（even）
+% 和奇数页（odd）， 而 \opt{L}、\opt{R} 和 \opt{C} 则分别表示左
+% （left）、右（right）和中间（center）。按照通常的排版规则，
+% 在双面模式下，偶数页的中间页眉文字在左，奇数页则在右。单面模式下，
+% 左右页眉都要显示。
 %    \begin{macrocode}
-\fancypagestyle{headings}
+\cs_new_protected:Npn \@@_set_heading_g:
   {
-    \fancyhf { }
-    \fancyhead [ CO ] { \leftmark          }
-    \fancyhead [ CE ] { \rightmark         }
-    \fancyfoot [ C  ] { \zihao{5} \thepage }
+    \bool_if:NTF \g_@@_twoside_bool
+      {
+        \fancyhead [ EL ] { \small \kaishu \leftmark  }
+        \fancyhead [ OR ] { \small \kaishu \rightmark }
+      }
+      {
+        \fancyhead [ L ] { \small \kaishu \leftmark  }
+        \fancyhead [ R ] { \small \kaishu \rightmark }
+      }
     \RenewDocumentCommand \headrulewidth { } { 0.4 pt }
-    \RenewDocumentCommand \footrulewidth { } { 0   pt }
     \setlength { \headheight } { 20 pt }
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\frontmatter}
 % 重定义 \cs{frontmatter}，清空页眉页脚以及页码设置。
-% 此命令仅为解决原 \cls{book} 类中使用小写罗马字母序号的冲突，并不建议使用。
+% 此命令仅为解决原 \cls{book} 类中默认使用小写罗马字母序号的冲突，并不建议使用。
 %    \begin{macrocode}
 \RenewDocumentCommand \frontmatter { }
   {
     \cleardoublepage
-    \pagestyle{empty}
-    \pagenumbering{Roman}
+    \pagestyle     { empty }
+    \pagenumbering { Roman }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3170,8 +3180,9 @@ To produce the documentation run the original source files ending with
 \RenewDocumentCommand \mainmatter { }
   {
     \cleardoublepage
-    \int_compare:nTF { \l_@@_info_degree_int == 1 }
-      { \pagestyle { plain } } { \pagestyle { headings } }
+    \pagestyle { plain }
+    \int_compare:nF { \l_@@_info_degree_int == 1 }
+      { \@@_set_heading_g: }
     \pagenumbering { arabic }
     \normalfont \normalsize
   }
@@ -3200,26 +3211,22 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% |\keys_set:nn{ctex}| 实际相当于 \cs{ctexset}。
 %    \begin{macrocode}
-\ctexset
+\keys_set:nn { ctex }
   {
-    chapter/beforeskip   = 10 pt,
-    chapter/afterskip    = 60 pt,
-    chapter/format       = \centering \c_@@_sec_format_tl,
-    section/format       = \c_@@_sec_format_tl,
-    subsection/format    = \c_@@_sec_format_tl,
-    subsubsection/format = \c_@@_sec_format_tl
-  }
+    chapter        / beforeskip = 10 pt,
+    chapter        / afterskip  = 60 pt,
+    chapter        / format     = \c_@@_sec_format_tl \centering,
+    section        / format     = \c_@@_sec_format_tl,
+    subsection     / format     = \c_@@_sec_format_tl,
+    subsubsection  / format     = \c_@@_sec_format_tl,
 %    \end{macrocode}
 %
 %
 % \subsection{目录格式}
 % \changes{v0.13}{2021/12/09}{删除 \pkg{tocloft}，改用 \pkg{ctex} 内置的目录设置。}
 %
-%    \begin{macrocode}
-\ctexset
-  {
-%    \end{macrocode}
 % 设置目录标题默认名称。
 %    \begin{macrocode}
     contentsname   = { 目\hspace{2em}录 },
@@ -3228,7 +3235,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 设置目录中章标题的样式。
 %    \begin{macrocode}
-    chapter / tocline = \c_@@_sec_format_tl \CTEXnumberline {#1} #2
+    chapter / tocline = \c_@@_sec_format_tl \CTEXnumberline { #1 } #2
   }
 %    \end{macrocode}
 %
@@ -3236,13 +3243,13 @@ To produce the documentation run the original source files ending with
 % 通过 group 内修改标题设置，将目录页标题格式单独设置为三号粗宋体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_modify_toc_title:nn #1#2
-{
-  \group_begin:
-    \ctexset { chapter/format = \centering \zihao{3} \bf }
-    \njuchapter { #1 }
-  \group_end:
-  \@starttoc { #2 }
-}
+  {
+    \group_begin:
+      \keys_set:nn { ctex } { chapter/format = \centering \zihao { 3 } \bf }
+      \njuchapter { #1 }
+    \group_end:
+    \@starttoc { #2 }
+  }
 %    \end{macrocode}
 % \end{macro}
 %

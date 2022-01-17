@@ -24,5 +24,6 @@ rm *.log
 rm *.md5
 rm generate-img.tex
 rm generate-img.pdf
+rm njuvisual-example.tex
 
 cd ..

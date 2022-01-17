@@ -13,7 +13,7 @@
 % \documentclass[draft]{njuthesis}
 % \documentclass[type=design]{njuthesis}
 % \documentclass[degree=mg]{njuthesis}
-% \documentclass[degree=mf,decl-page]{njuthesis}
+% \documentclass[degree=mf,oneside,decl-page]{njuthesis}
 % \documentclass[degree=phd,draft]{njuthesis}
 % \documentclass[degree=phd,nlcover]{njuthesis}
 
@@ -141,7 +141,11 @@
 
 \zhlipsum[1-10][name=zhufu]
 
-\chapter{列表环境}
+\subsection{测试}
+
+\zhlipsum[11-20][name=zhufu]
+
+\section{列表环境}
 
 \begin{itemize}
     \item 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
@@ -187,9 +191,10 @@
 \input{chapters/Mathematics}
 \input{chapters/Bibliography}
 
-% \sloppy
-% \emergencystretch=1em
+\bgroup
+\sloppy
 \printbibliography
+\egroup
 
 \input{chapters/Acknowledgement}
 
