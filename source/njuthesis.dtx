@@ -105,7 +105,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
-%<class>\GetIdInfo $Id: njuthesis.dtx 0.14.1 2022-01-17 15:30:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<class>\GetIdInfo $Id: njuthesis.dtx 0.15.0 2022-01-17 15:30:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class> { Thesis template for Nanjing University }
 %<class>\ProvidesExplClass{njuthesis}
 %<class>{\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -382,11 +382,27 @@ To produce the documentation run the original source files ending with
 %
 % \cls{njuthesis} 目前处于积极的维护中，主要可通过以下三种途径获取模板文件：
 %
-% \subparagraph{CTAN} \href{https://ctan.org/}{CTAN}\footnote{The Comprehensive \hologo{TeX} Archive Network} 是所有 \hologo{TeX} 相关材料的中枢。\href{https://ctan.org/pkg/njuthesis}{本模板的 CTAN 页面}\footnote{\cls{njuthesis} 已经于2021年9月12日发布在 CTAN，用于绘制南大图标的 \href{https://ctan.org/pkg/njuvisual}{\pkg{njuvisual}} 也已于同年11月28日发布，两者已被 \hologo{TeX}\,Live 和 \hologo{MiKTeX} 收录，将进入 \hologo{TeX}\,Live 2022 发行版。}上提供基本的介绍信息，可以下载说明文档（本文档）和宏包源代码。当然，使用这一来源时并不需要接触后者，请参考 \ref{subsubsec:standard-installation} 的标准安装方法。
+% \subparagraph{CTAN}
+% \href{https://ctan.org/}{CTAN}\footnote{The Comprehensive \hologo{TeX}
+% Archive Network} 是所有 \hologo{TeX} 相关材料的中枢。
+% 本模板的 CTAN 页面
+% \footnote{\href{https://ctan.org/pkg/njuthesis}{\cls{njuthesis}} 已经于2021年9
+% 月12日发布在 CTAN，用于绘制南大图标的
+% \href{https://ctan.org/pkg/njuvisual}{\pkg{njuvisual}} 也已于同年11月28日发
+% 布，两者已被 \hologo{TeX}\,Live 和 \hologo{MiKTeX} 收录，将进入 \hologo{TeX}\,
+% Live 2022 发行版。}上提供基本的介绍信息，可以下载说明文档（本文档）和宏包源代
+% 码。当然，使用这一来源时并不需要接触后者，请参考
+% \ref{subsubsec:standard-installation} 的标准安装方法。
 %
-% \subparagraph{GitHub 仓库} 最新开发进度会提交在本项目的 \href{https://github.com/nju-lug/NJUThesis}{Github仓库}。仓库内仅包含源代码、空白模板及测试文件，不可直接用于写作。这些文件对应的使用方法请参考 \ref{subsubsec:on-the-fly-installation}。如果由于网络原因不便访问主仓库，也可以从\href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像} 获取项目工程文件。
+% \subparagraph{GitHub 仓库}
+% 最新开发进度会提交在本项目的
+% \href{https://github.com/nju-lug/NJUThesis}{Github仓库}。仓库内仅包含源代码、
+% 空白模板及测试文件，不可直接用于写作。这些文件对应的使用方法请参考
+% \ref{subsubsec:on-the-fly-installation}。如果由于网络原因不便访问主仓库，也可
+% 以从\href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像} 获取项目工程文件。
 %
-% \subparagraph{GitHub Releases} 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，赋以更改后的版本号，发布在 \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases 页面}。如果由于网络原因不便访问主仓库，也可以从\href{https://mirror.nju.edu.cn/github-release/nju-lug/NJUThesis/LatestRelease/}{南京大学镜像站下载页面}获取。可供下载的文件包括下列三种：
+% \subparagraph{GitHub Releases}
+% 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，赋以更改后的版本号，发布在 \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases 页面}。如果由于网络原因不便访问主仓库，也可以从\href{https://mirror.nju.edu.cn/github-release/nju-lug/NJUThesis/LatestRelease/}{南京大学镜像站下载页面}获取。可供下载的文件包括下列三种：
 %   \begin{description}
 %     \item[\file{njuthesis-v*.pdf}] 模板说明文档（本文档）。
 %     \item[\file{njuthesis-user-v*.zip}] 交付给用户的完整模板包，包括格式文件和范本文档，可在解压后用于本地编译，也可直接上传至在线编译网站。
@@ -2700,7 +2716,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \changes{v0.14}{2021/12/21}{移除内置的 \pkg{hologo}。}
-% \changes{v0.14}{2022/01/17}{移除内置的 \pkg{url}。}
+% \changes{v0.15}{2022/01/17}{移除内置的 \pkg{url}。}
 % 载入各种宏包。
 %    \begin{macrocode}
 \RequirePackage
@@ -3134,39 +3150,48 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{页眉页脚}
 %
-% 重定义 \pkg{fancyhdr} 的 \opt{plain} 样式，即本科生正文和部分特殊页面使用的的页眉页脚样式。页眉无内容；页脚为居中的页码，使用五号新罗马体数字。
+% \begin{macro}{\@@_fancy_head:nn}
+% 页眉样式，设置为小号字体、楷书。这里对 \pkg{fancyhdr} 的命令进行了包装。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_fancy_head:nn #1#2
+  { \fancyhead [#1] { \small \kaishu \nouppercase {#2} } }
+%    \end{macrocode}
+% \end{macro}
+%
+% 重定义 \pkg{fancyhdr} 的 \opt{plain} 样式，即本科生正文和部分特殊页面使用的的
+% 页眉页脚样式。页眉无内容；页脚为居中的页码，使用五号新罗马体数字。注意标记页眉
+% 页脚横线宽度的变量并不是 |dim| 类型的，但是采取了该类型的格式。
 %    \begin{macrocode}
 \fancypagestyle { plain }
   {
     \fancyhf { }
-    \fancyfoot [ C ] { \zihao{5} \rmfamily \thepage }
-    \RenewDocumentCommand \headrulewidth { } { 0 pt }
-    \RenewDocumentCommand \footrulewidth { } { 0 pt }
+    \fancyfoot [ C ] { \zihao { 5 } \rmfamily \thepage }
+    \tl_set:Nn \headrulewidth { \c_zero_dim }
+    \tl_set:Nn \footrulewidth { \c_zero_dim }
   }
 %    \end{macrocode}
 %
 % \begin{macro}{\@@_set_heading_g:}
-% \changes{v0.14}{2022/01/17}{修复单页模式的页眉问题。}
-%
-% 以 \opt{plain} 样式为基础，单独设置研究生模板的页眉内容。在 \cs{fancyhead} 的可选参数中，\opt{E} 和 \opt{O} 分别表示在偶数页（even）
-% 和奇数页（odd）， 而 \opt{L}、\opt{R} 和 \opt{C} 则分别表示左
-% （left）、右（right）和中间（center）。按照通常的排版规则，
-% 在双面模式下，偶数页的中间页眉文字在左，奇数页则在右。单面模式下，
-% 左右页眉都要显示。
+% \changes{v0.15}{2022/01/17}{修复单页模式的页眉问题。}
+% 以 \opt{plain} 样式为基础，单独设置研究生模板的页眉内容。在 \cs{fancyhead} 的
+% 可选参数中，\opt{E} 和 \opt{O} 分别表示在偶数页（even）和奇数页（odd）， 而
+% \opt{L}、\opt{R} 和 \opt{C} 则分别表示左（left）、右（right）和中间（center）
+% 。按照通常的排版规则，在双面模式下，偶数页的中间页眉文字在左，奇数页则在右。
+% 单面模式下，左右页眉都要显示。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_set_heading_g:
   {
     \bool_if:NTF \g_@@_twoside_bool
       {
-        \fancyhead [ EL ] { \small \kaishu \leftmark  }
-        \fancyhead [ OR ] { \small \kaishu \rightmark }
+        \@@_fancy_head:nn { EL } { \leftmark  }
+        \@@_fancy_head:nn { OR } { \rightmark }
       }
       {
-        \fancyhead [ L ] { \small \kaishu \leftmark  }
-        \fancyhead [ R ] { \small \kaishu \rightmark }
+        \@@_fancy_head:nn { L  } { \leftmark  }
+        \@@_fancy_head:nn { R  } { \rightmark }
       }
-    \RenewDocumentCommand \headrulewidth { } { 0.4 pt }
-    \setlength { \headheight } { 20 pt }
+    \tl_set:Nn \headrulewidth { 0.4 pt }
+    \dim_set:Nn \headheight { 20 pt }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3187,7 +3212,8 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\mainmatter}
 % \changes{v0.12}{2021/12/03}{修复了摘要页字体格式泄漏到正文的问题。}
 % \changes{v0.12}{2021/12/03}{修复了页眉上长标题重叠的问题。}
-% 重定义 \cs{mainmatter}，在论文主体部分载入页眉页脚设置，使用阿拉伯数字重新进行页码编号。
+% 重定义 \cs{mainmatter}，在论文主体部分载入页眉页脚设置，使用阿拉伯数字重新进行
+% 页码编号。
 %    \begin{macrocode}
 \RenewDocumentCommand \mainmatter { }
   {
@@ -3239,19 +3265,20 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_chapter_header:n}
-% 单页模式下，目录、摘要、符号表等特殊页面的页眉中间为相应标题，左右为空。这里通过居中的 \tn{rightmark} 实现。
+% 单页模式下，目录、摘要、符号表等特殊页面的页眉中间为相应标题，左右为空。这里通
+% 过居中的 \tn{leftmark} 实现。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_chapter_header:n #1
   {
     \bool_if:NTF \g_@@_twoside_bool
       { \markboth { #1 } { #1 } }
-      { \markboth { } { \hfill #1 \hfill } }
+      { \markboth { \hfill #1 \hfill } { } }
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\njuchapter}
-% 封装无编号章环境。
+% 封装无编号章环境，供用户在正文中使用。
 %    \begin{macrocode}
 \NewDocumentCommand \njuchapter { m } { \@@_chapter:V { #1 } }
 %    \end{macrocode}
@@ -3271,7 +3298,7 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsection{目录格式}
-% \changes{v0.13}{2021/12/09}{删除 \pkg{tocloft}，改用 \pkg{ctex} 内置的目录设置。}
+% \changes{v0.13}{2021/12/09}{移除 \pkg{tocloft}，用 \pkg{ctex} 修改目录样式。}
 %
 % 设置目录标题默认名称。
 %    \begin{macrocode}
@@ -3286,7 +3313,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \begin{macro}{\@@_modify_toc_title:nn}
-% \changes{v0.14}{2022/01/17}{目录自身不出现在目录中。}
+% \changes{v0.15}{2022/01/17}{目录自身不出现在目录中。}
 % 通过 group 内修改标题设置，将目录页标题格式单独设置为三号粗宋体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_modify_toc_title:nn #1#2
@@ -3321,7 +3348,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \begin{macro}{bib/style}
 % \changes{v0.14}{2021/12/19}{提供选择参考文献样式的接口。}
-% 参考文献样式。分为顺序编码制 \opt{numeric}（\opt{gb7714-2015} 样式）和著者-出版年制 \opt{author-year}（\opt{gb7714-2015ay} 样式）。用户选取的样式会被加入选项列表中，以待传进 \pkg{biblatex} 宏包。
+% 参考文献样式。分为顺序编码制 \opt{numeric}（\opt{gb7714-2015} 样式）和著者-
+% 出版年制 \opt{author-year}（\opt{gb7714-2015ay} 样式）。用户选取的样式会被加入
+% 选项列表中，以待传进 \pkg{biblatex} 宏包。
 %    \begin{macrocode}
     style             .choice:,
     style / numeric     .code:n =
@@ -3341,7 +3370,9 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\addbibresource}
-% 为了吸收用户在导言区设置的选项，\pkg{biblatex} 宏包被设置在导言区末尾才会载入。此处单独定义了可以在导言区使用的 \cs{addbibresource} 命令，用于兼容传统的添加参考文献数据源的方法。
+% 为了吸收用户在导言区设置的选项，\pkg{biblatex} 宏包被设置在导言区末尾才会载
+% 入。此处单独定义了可以在导言区使用的 \cs{addbibresource} 命令，用于兼容传统的
+% 添加参考文献数据源的方法。
 %    \begin{macrocode}
 \NewDocumentCommand \addbibresource { m }
   { \clist_gput_right:Nn \l_@@_bib_resource_clist { #1 } }
@@ -3395,7 +3426,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 使用 \pkg{etoolbox} 提供的 \tn{BeforeBeginEnvironment}，在 \env{document} 环境开始的钩子前载入 \pkg{biblatex} 并进行相关设置。
+% 使用 \pkg{etoolbox} 提供的 \tn{BeforeBeginEnvironment}，在 \env{document} 环境
+% 开始的钩子前载入 \pkg{biblatex} 并进行相关设置。
 %    \begin{macrocode}
 %\hook_gset_rule:nnnn { begindocument/before } { . } { < } { xeCJK }
 %\hook_gput_code:nnn { env/document/begin } { . }
@@ -3517,7 +3549,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare} 绘制，对应于 |U+25A1| 字符\footnote{\url{https://tex.stackexchange.com/questions/567135/how-get-box-like-symbol-with-xelatex}}。
+% 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare} 绘制，对应于 |U+25A1| 字符
+% \footnote{\url{https://tex.stackexchange.com/questions/567135/how-get-box-like-symbol-with-xelatex}}。
 %    \begin{macrocode}
 \theoremsymbol { \ensuremath { \mdwhtsquare } }
 \newtheorem* { proof } { \c_@@_name_proof_tl }
@@ -4071,7 +4104,8 @@ To produce the documentation run the original source files ending with
       {
         \pagestyle { empty }
 %    \end{macrocode}
-% 如果在研究生模板中选择了 \opt{nlcover}，就生成用于申请学位的国家图书馆封面和原创性声明，反之生成普通封面。
+% 如果在研究生模板中选择了 \opt{nlcover}，就生成用于申请学位的国家图书馆封面，
+% 反之生成普通封面。
 %    \begin{macrocode}
         \bool_if:NTF \g_@@_nlcover_bool
           { \@@_make_cover_nl: }
@@ -4438,7 +4472,13 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_make_notation:nn}
-% 生成符号表。由于符号表只有符号和说明两列，相比于 \env{longtable} 环境，\env{description} 环境的语法更为简洁直观，且说明文字可以换行，因而此处使用 \hologo{LaTeX2e} 的列表环境进行封装，定义和语法参见 \file{source2e.pdf} 中的 File I \quad ltlists.dtx 一章。\tn{list} 环境使用宽度固定的盒子制作标签，通过指定这个盒子的宽度 \tn{labelwidth} 即可确定左侧标签区域的宽度。右侧说明文字区域的宽度无法直接指定，而是靠计算左右边距 \tn{leftmargin} 和 \tn{rightmargin} 得到的。
+% 生成符号表。由于符号表只有符号和说明两列，相比于 \env{longtable} 环境，
+% \env{description} 环境的语法更为简洁直观，且说明文字可以换行，因而此处使用
+% \hologo{LaTeX2e} 的列表环境进行封装，定义和语法参见 \file{source2e.pdf} 中的
+% File I \quad ltlists.dtx 一章。\tn{list} 环境使用宽度固定的盒子制作标签，通过
+% 指定这个盒子的宽度 \tn{labelwidth} 即可确定左侧标签区域的宽度。右侧说明文字区
+% 域的宽度无法直接指定，而是靠计算左右边距 \tn{leftmargin} 和 \tn{rightmargin}
+% 得到的。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_notation:nn #1#2
   {
@@ -4460,7 +4500,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{environment}{notation}
-% \changes{v0.14}{2022/01/17}{提供符号表环境。}
+% \changes{v0.15}{2022/01/17}{提供符号表环境。}
 % 符号表环境。
 % \begin{arguments}
 %   \item 说明区域宽度，初始值为 10 em。说明宽度的调整更为常见，所以放在前面。
