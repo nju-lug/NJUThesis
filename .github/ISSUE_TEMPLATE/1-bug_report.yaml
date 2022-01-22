@@ -1,0 +1,107 @@
+name: 报告问题
+description: 描述需要修复的问题
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请使用此模板来报告*模板运行问题*，并尽可能多地提供信息。
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: 先决条件
+      options:
+        - label: |
+            我已尝试更新[模板版本](https://github.com/nju-lug/NJUThesis/blob/master/CHANGELOG.md)
+          required: true
+        - label: |
+            我已检索[模板手册](http://mirrors.ctan.org/macros/unicodetex/latex/njuthesis/njuthesis.pdf)
+          required: true
+        - label: |
+            我已检索[项目 wiki](https://github.com/nju-lug/NJUThesis/wiki)
+          required: true
+        - label: |
+            我已确认这个问题没有在[其他 issues](https://github.com/tuna/issues/issues) 中提出过。
+          required: true
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: 期望的现象
+      placeholder: 本来应该是什么效果
+    validations:
+      required: true
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: 发生了什么
+      placeholder: 实际发生了什么偏差，此处不妨拖拽上传截图
+    validations:
+      required: true
+  - type: textarea
+    id: minimal_working_example
+    attributes:
+      label: 最小工作示例
+      description: |
+        一段*完整的可供编译*的 TeX 代码，用来复现上述问题。这段代码应当从 `\documentclass` 开始，到 `\end{document}` 结束。请删除*所有不会引起该问题的内容*。譬如，对于正文格式出现的问题，不必添加 `\njusetup` `\tableofcontents` 等命令。
+      placeholder: |
+        \documentclass[]{njuthesis}
+        ...
+        \end{document}
+      render: TeX
+    validations:
+      required: true
+  - type: dropdown
+    id: operating_system
+    attributes:
+      label: 操作系统
+      options:
+        - Windows
+        - macOS
+        - Linux
+  - type: dropdown
+    id: tex_distribution
+    attributes:
+      label: TeX 发行版
+      options:
+        - TeX Live 2021
+        - MiKTeX 21
+  - type: dropdown
+    id: compiler
+    attributes:
+      label: 编译引擎
+      options:
+        - XeLaTeX
+        - LuaLaTeX
+  - type: dropdown
+    id: njuthesis_version
+    attributes:
+      label: njuthesis 模板版本
+      description: 模版版本可以在 `.log` 文件中搜索 `njuthesis` 得到。
+      options:
+        - 0.14.0
+        - 0.13.0
+        - 0.12.0
+        - 快更新吧
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: 模板获取途径
+      options:
+        - 使用包管理器从 CTAN 安装
+        - 通过 GitHub Releases 或镜像站下载
+        - 从 Git 仓库下载
+  - type: textarea
+    id: more_info
+    attributes:
+      label: 额外信息
+      placeholder: 任何你认为有帮助的信息
+  - type: markdown
+    attributes:
+      value: |
+
+        -----
+
+        在提交这篇 issue 时，您将默认服从我们的[行为准则](https://github.com/nju-lug/NJUThesis/blob/master/.github/CODE_OF_CONDUCT.md)。

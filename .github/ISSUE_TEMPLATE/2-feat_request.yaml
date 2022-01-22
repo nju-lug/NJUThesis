@@ -1,0 +1,48 @@
+name: 请求新功能
+description: 提出可以改进的要点
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: 先决条件
+      options:
+        - label: |
+            我已尝试更新模板版本
+          required: true
+        - label: |
+            我已检索[模板手册](http://mirrors.ctan.org/macros/unicodetex/latex/njuthesis/njuthesis.pdf)
+          required: true
+        - label: |
+            我已检索[项目 wiki](https://github.com/nju-lug/NJUThesis/wiki)
+          required: true
+        - label: |
+            我已确认这个请求没有在[其他 issues](https://github.com/tuna/issues/issues)中提出过。
+          required: true
+  - type: textarea
+    id: inconvenience
+    attributes:
+      label: 现有模板的不便之处
+      placeholder: 你的请求是否来自于使用上有不好的体验？请简要进行描述。
+  - type: textarea
+    id: possible_solution
+    attributes:
+      label: 提出可能的解决方案
+      placeholder: 你认为需要采取什么措施，或者你希望改进后将呈现出什么效果。
+    validations:
+      required: true
+  - type: textarea
+    id: considerations
+    attributes:
+      label: 提出考虑过的方案
+      placeholder: 请描述你进行过的相关尝试。
+  - type: textarea
+    id: more_info
+    attributes:
+      label: 额外信息
+      placeholder: 任何你认为有帮助的信息
+  - type: markdown
+    attributes:
+      value: |
+        在提交这篇 issue 时，我们默认您服从我们的[行为准则](https://github.com/nju-lug/NJUThesis/blob/master/.github/CODE_OF_CONDUCT.md)。
