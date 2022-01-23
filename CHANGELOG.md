@@ -2,7 +2,7 @@
 
 本项目发生的变动均会记录于本文档。
 
-本文档格式来自[更新日志]，本项目使用[语义化版本]标记版本号。
+本文档格式来自《[更新日志]》，本项目使用《[语义化版本]》标记版本号。
 
 ## [未发布]
 
@@ -13,16 +13,21 @@
 ### 修复
 
 - 修复了单面模式下的 `fancyhdr` 宏包警告
+- 修复研究生封面上第二导师无法正确显示的问题 - [#64]
 
 ### 变动
 
-- 目录自身不出现在目录条目  中
+- 目录自身不出现在目录条目中
 - 研究生模板页眉样式及内容变动
   - 使用小号楷体
   - 双面模式下奇数页右侧为节名，偶数页左侧为章名
   - 单面模式下页眉同时显示章节名，特殊页面居中显示其名称
 - 移除内部调用的宏包
   - `url`
+
+### 杂项
+
+- 使用 GitHub 表单重构 issue 模板
 
 ## [0.14.0] - 2022-01-16
 
@@ -221,11 +226,12 @@
 [0.9.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.9.0
 [0.8.4]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.8.4
 
-[#44]: https://github.com/nju-lug/NJUThesis/issues/14
+[#14]: https://github.com/nju-lug/NJUThesis/issues/14
 [#44]: https://github.com/nju-lug/NJUThesis/issues/44
 [#52]: https://github.com/nju-lug/NJUThesis/issues/52
 [#60]: https://github.com/nju-lug/NJUThesis/issues/60
 [#61]: https://github.com/nju-lug/NJUThesis/issues/61
+[#64]: https://github.com/nju-lug/NJUThesis/issues/64
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

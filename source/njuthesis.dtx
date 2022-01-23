@@ -265,7 +265,7 @@ To produce the documentation run the original source files ending with
 % \hspace{2em}\begin{minipage}[c]{10cm}
 % \begin{enumerate}
 %  \item 访问 \url{https://tex.nju.edu.cn}
-%  \item 点击右上角~\olbutton{注册}~按钮，用南大邮箱注册账号
+%  \item 点击右上角~\olbutton{注册}~按钮，用\href{https://itsc.nju.edu.cn/1b/ce/c21586a334798/page.htm}{南大邮箱}注册账号
 %  \item 登录您的账号
 %  \item 点击左上角~\olbutton{创建新项目}~按钮，选择~\olbutton{论文模板}
 %  \item 随意取名，点击~\olbutton{创建}~按钮
@@ -705,7 +705,7 @@ To produce the documentation run the original source files ending with
 % 是否使用国家图书馆封面，默认关闭。
 % \end{function}
 %
-% 通过此项可用国家图书馆封面替换普通封面。
+% 通过此项可用国家图书馆封面\emph{替换}普通封面。
 % 由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
 %
 % \begin{function}[updated=2022-01-06]{decl-page}
@@ -2532,133 +2532,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 %
-% \subsection{个人信息}
-% \changes{v0.11}{2021/10/01}{将个人信息变量名改为小写字母加连字符的形式。}
-%
-%    \begin{macrocode}
-\keys_define:nn { nju / info }
-  {
-%    \end{macrocode}
-%
-% \begin{macro}{info/title,info/title*}
-% \changes{v0.13}{2021/12/12}{简化多行标题的输入方式。}
-% \changes{v0.14}{2022/01/14}{将标题断行控制符修改为 |\\|。}
-% 题目。中文题目可使用 |\\| 手动断行。以下标注星号（|*|）的皆为对应的英文字段。
-%    \begin{macrocode}
-    title               .tl_set:N = \l_@@_info_title_tl,
-    title              .initial:n = { 空 },
-    title*              .tl_set:N = \l_@@_info_title_en_tl,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/keywords,info/keywords*}
-% \changes{v0.11}{2021/10/01}{修改了添加关键词的方式。}
-% 关键词列表。
-%    \begin{macrocode}
-    keywords         .clist_set:N = \l_@@_info_keywords_clist,
-    keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/grade,info/student-id,info/author,info/author*}
-% 年级、学号、姓名。
-%    \begin{macrocode}
-    grade               .tl_set:N = \l_@@_info_grade_tl,
-    student-id          .tl_set:N = \l_@@_info_id_tl,
-    author              .tl_set:N = \l_@@_info_author_tl,
-    author*             .tl_set:N = \l_@@_info_author_en_tl,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/department,info/department*,info/major,info/major*,info/field,info/field*}
-% 院系、专业、方向。
-%    \begin{macrocode}
-    department          .tl_set:N = \l_@@_info_dept_tl,
-    department*         .tl_set:N = \l_@@_info_dept_en_tl,
-    major               .tl_set:N = \l_@@_info_major_tl,
-    major*              .tl_set:N = \l_@@_info_major_en_tl,
-    field               .tl_set:N = \l_@@_info_field_tl,
-    field*              .tl_set:N = \l_@@_info_field_en_tl,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/supervisor,info/supervisor*}
-% \changes{v0.13}{2021/12/11}{修改了导师选项的变量名称。}
-% \changes{v0.14}{2022/01/12}{精简导师信息选项。}
-% 导师信息。中文导师全称使用 |clist| 存储，便于在本科生封面中进行分割。
-%    \begin{macrocode}
-    supervisor       .clist_set:N = \l_@@_info_supv_clist,
-    supervisor*         .tl_set:N = \l_@@_info_supv_en_tl,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/supervisor-ii,info/supervisor-ii*}
-% 第二导师信息。
-%    \begin{macrocode}
-    supervisor-ii    .clist_set:N = \l_@@_info_supv_ii_clist,
-    supervisor-ii*      .tl_set:N = \l_@@_info_supv_ii_en_tl,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/submit-date}
-% \changes{v0.14}{2022/01/14}{精简提交日期选项。}
-% 提交日期，初始值为编译当天日期。
-%    \begin{macrocode}
-    submit-date         .tl_set:N = \l_@@_info_sm_date_raw_tl,
-    submit-date        .initial:V = \c_@@_today_tl,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/defend-date}
-% \changes{v0.14}{2022/01/14}{精简答辩日期选项。}
-% 答辩日期。
-%    \begin{macrocode}
-    defend-date         .tl_set:N = \l_@@_info_df_date_raw_tl,
-    defend-date        .initial:V = \c_@@_today_tl,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/defend-date,info/chairman,info/reviewer}
-% 答辩委员会信息。
-%    \begin{macrocode}
-    chairman            .tl_set:N = \l_@@_info_chairman_tl,
-    reviewer         .clist_set:N = \l_@@_info_reviewer_clist,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
-% 国家图书馆封面相关信息。
-%    \begin{macrocode}
-    clc                 .tl_set:N = \l_@@_info_clc_tl,
-    secret-level        .tl_set:N = \l_@@_info_seclv_tl,
-    udc                 .tl_set:N = \l_@@_info_udc_tl,
-    supervisor-contact  .tl_set:N = \l_@@_info_supv_cont_tl,
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% 拼合双导师的姓名和职称。
-%    \begin{macrocode}
-\bool_set:Nn \l_@@_second_supv_bool
-  { ! \clist_if_empty_p:N \l_@@_info_supv_ii_clist }
-\tl_set:Nn \l_@@_info_supv_full_tl
-  {
-    \clist_use:Nn \l_@@_info_supv_clist { \@@_hskip: }
-    \bool_if:NT \l_@@_second_supv_bool
-      {
-        \@@_quad:
-        \clist_use:Nn \l_@@_info_supv_ii_clist { \@@_hskip: }
-      }
-  }
-\tl_set:Nn \l_@@_info_supv_full_en_tl
-  {
-    \l_@@_info_supv_en_tl
-    \bool_if:NT \l_@@_second_supv_bool
-      { \@@_quad: \l_@@_info_supv_ii_en_tl }
-  }
-%    \end{macrocode}
-%
-%
 % \subsection{载入宏包}
 %
 % \changes{v0.12}{2021/12/07}{重新组织宏包载入顺序。}
@@ -2810,9 +2683,168 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 %
+% \subsection{个人信息}
+% \changes{v0.11}{2021/10/01}{将个人信息变量名改为小写字母加连字符的形式。}
+% \changes{v0.15}{2022/01/22}{将个人信息设置移到载入宏包后。}
+%
+%    \begin{macrocode}
+\keys_define:nn { nju / info }
+  {
+%    \end{macrocode}
+%
+% \begin{macro}{info/title,info/title*}
+% \changes{v0.13}{2021/12/12}{简化多行标题的输入方式。}
+% \changes{v0.14}{2022/01/14}{将标题断行控制符修改为 |\\|。}
+% 题目。中文题目可使用 |\\| 手动断行。以下标注星号（|*|）的皆为对应的英文字段。
+%    \begin{macrocode}
+    title               .tl_set:N = \l_@@_info_title_tl,
+    title              .initial:n = { 空 },
+    title*              .tl_set:N = \l_@@_info_title_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/keywords,info/keywords*}
+% \changes{v0.11}{2021/10/01}{修改了添加关键词的方式。}
+% 关键词列表。
+%    \begin{macrocode}
+    keywords         .clist_set:N = \l_@@_info_keywords_clist,
+    keywords*        .clist_set:N = \l_@@_info_keywords_en_clist,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/grade,info/student-id,info/author,info/author*}
+% 年级、学号、姓名。
+%    \begin{macrocode}
+    grade               .tl_set:N = \l_@@_info_grade_tl,
+    student-id          .tl_set:N = \l_@@_info_id_tl,
+    author              .tl_set:N = \l_@@_info_author_tl,
+    author*             .tl_set:N = \l_@@_info_author_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/department,info/department*,info/major,info/major*,info/field,info/field*}
+% 院系、专业、方向。
+%    \begin{macrocode}
+    department          .tl_set:N = \l_@@_info_dept_tl,
+    department*         .tl_set:N = \l_@@_info_dept_en_tl,
+    major               .tl_set:N = \l_@@_info_major_tl,
+    major*              .tl_set:N = \l_@@_info_major_en_tl,
+    field               .tl_set:N = \l_@@_info_field_tl,
+    field*              .tl_set:N = \l_@@_info_field_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/supervisor,info/supervisor*}
+% \changes{v0.13}{2021/12/11}{修改了导师选项的变量名称。}
+% \changes{v0.14}{2022/01/12}{精简导师信息选项。}
+% 导师信息。中文导师全称使用 |clist| 存储，便于在本科生封面中进行分割。
+%    \begin{macrocode}
+    supervisor       .clist_set:N = \l_@@_info_supv_clist,
+    supervisor*         .tl_set:N = \l_@@_info_supv_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/supervisor-ii,info/supervisor-ii*}
+% 第二导师信息。
+%    \begin{macrocode}
+    supervisor-ii    .clist_set:N = \l_@@_info_supv_ii_clist,
+    supervisor-ii*      .tl_set:N = \l_@@_info_supv_ii_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/submit-date}
+% \changes{v0.14}{2022/01/14}{精简提交日期选项。}
+% 提交日期，初始值为编译当天日期。
+%    \begin{macrocode}
+    submit-date         .tl_set:N = \l_@@_info_sm_date_raw_tl,
+    submit-date        .initial:V = \c_@@_today_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/defend-date}
+% \changes{v0.14}{2022/01/14}{精简答辩日期选项。}
+% 答辩日期。
+%    \begin{macrocode}
+    defend-date         .tl_set:N = \l_@@_info_df_date_raw_tl,
+    defend-date        .initial:V = \c_@@_today_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/defend-date,info/chairman,info/reviewer}
+% 答辩委员会信息。
+%    \begin{macrocode}
+    chairman            .tl_set:N = \l_@@_info_chairman_tl,
+    reviewer         .clist_set:N = \l_@@_info_reviewer_clist,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
+% 国家图书馆封面相关信息。
+%    \begin{macrocode}
+    clc                 .tl_set:N = \l_@@_info_clc_tl,
+    secret-level        .tl_set:N = \l_@@_info_seclv_tl,
+    udc                 .tl_set:N = \l_@@_info_udc_tl,
+    supervisor-contact  .tl_set:N = \l_@@_info_supv_cont_tl,
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
+% 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，应当位于载入文档类之后。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+%    \end{macrocode}
+% 拼合双导师的姓名和职称。
+%    \begin{macrocode}
+    \bool_set:Nn \l_@@_second_supv_bool
+      { ! \clist_if_empty_p:N \l_@@_info_supv_ii_clist }
+    \tl_set:Nx \l_@@_info_supv_full_tl
+      {
+        \clist_use:Nn \l_@@_info_supv_clist { \@@_hskip: }
+        \bool_if:NT \l_@@_second_supv_bool
+          {
+            \@@_quad:
+            \clist_use:Nn \l_@@_info_supv_ii_clist { \@@_hskip: }
+          }
+      }
+    \tl_set:Nx \l_@@_info_supv_full_en_tl
+      {
+        \l_@@_info_supv_en_tl
+        \bool_if:NT \l_@@_second_supv_bool
+          { \@@_quad: \l_@@_info_supv_ii_en_tl }
+      }
+%    \end{macrocode}
+% 将 ISO 格式的原始日期字符串格式化为中文日期表示，该字符串需要进行展开。
+%    \begin{macrocode}
+    \tl_set:Nn \l_@@_info_sm_date_tl
+      {
+        \exp_last_unbraced:NV
+          \@@_date:www \l_@@_info_sm_date_raw_tl \q_stop
+      }
+%    \end{macrocode}
+% 英文提交日期以及答辩日期仅用于研究生封面。
+%    \begin{macrocode}
+    \int_compare:nF { \l_@@_info_degree_int == 1 }
+      {
+        \tl_set:Nn \l_@@_info_sm_date_en_tl
+          {
+            \exp_last_unbraced:NV
+              \@@_date_en:www \l_@@_info_sm_date_raw_tl \q_stop
+          }
+        \tl_set:Nn \l_@@_info_df_date_tl
+          {
+            \exp_last_unbraced:NV
+              \@@_date:www \l_@@_info_df_date_raw_tl \q_stop
+          }
+      }
+  }
+%    \end{macrocode}
+%
+%
 % \subsection{字体设置}
 %
-% \pkg{fontspec} 已在 C\hologo{TeX} 套件中包含，无需另行载入。
+% \pkg{fontspec} 包含于 \pkg{ctex} 宏集，无需另行载入。
 %
 % \subsubsection{操作系统检测}
 %
@@ -2828,8 +2860,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % 进行系统检测。
-% 检测 Windows 的命令由\pkg{l3kernal}提供，
-% 检测 macOS 的命令由\pkg{ctex}提供，
+% 检测 Windows 的命令由 \pkg{l3kernel} 提供，
+% 检测 macOS 的命令由 \pkg{ctex} 提供，
 % 这两种情况外的系统被判断为 Linux，一律使用自由字体。
 %    \begin{macrocode}
 \bool_if:NT \g_@@_load_sys_font_bool
@@ -2906,6 +2938,14 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{定义中文字库}
 %
+% \begin{macro}{\@@_diable_no_script_msg:}
+% 移除 |does not contain script "CJK"| 警告。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_diable_no_script_msg:
+  { \msg_redirect_name:nnn { fontspec } { no-script } { info } }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_load_cjk_font_win:}
 % Windows 中文字体。
 %    \begin{macrocode}
@@ -2930,10 +2970,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_mac:
   {
-%    \end{macrocode}
-% 移除 does not contain script "CJK" 警告。
-%    \begin{macrocode}
-    \msg_redirect_name:nnn { fontspec } { no-script } { info }
+    \@@_diable_no_script_msg:
     \setCJKmainfont{Songti~SC~Light}[
       BoldFont=Songti~SC~Bold,
       ItalicFont=Kaiti~SC,
@@ -2954,8 +2991,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_fandol:
   {
-    % 移除 does not contain script "CJK" 警告
-    \msg_redirect_name:nnn {fontspec} {no-script} {info}
+    \@@_diable_no_script_msg:
     \setCJKmainfont{FandolSong-Regular}[
       Extension=.otf,
       BoldFont=FandolSong-Bold,
@@ -2984,14 +3020,13 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_founder:
   {
-    \sys_if_engine_luatex:T
-    {
 %    \end{macrocode}
-% 在 LuaTeX 中调整方正字体括号位置
-% XeTeX 暂无好的解决方法
+% 调整方正字体括号位置。\footnote{\hologo{XeTeX} 的调整方法来自 \url{https://www.zhihu.com/question/46241367/answer/101660183}。}
 %    \begin{macrocode}
-      \defaultCJKfontfeatures{JFM={zh_CN/{quanjiao,fzpr}}}
-    }
+    \sys_if_engine_xetex:T
+      { \xeCJKEditPunctStyle {quanjiao} { optimize-kerning = true } }
+    \sys_if_engine_luatex:T
+      { \defaultCJKfontfeatures { JFM = { zh_CN/{quanjiao,fzpr} } } }
     \setCJKmainfont { FZShuSong-Z01  }
       [ BoldFont = FZXiaoBiaoSong-B05, ItalicFont = FZKai-Z03 ]
     \setCJKsansfont { FZXiHeiI-Z08   } [ BoldFont = FZHei-B01 ]
@@ -3718,33 +3753,9 @@ To produce the documentation run the original source files ending with
           { \includegraphics [ width = #2, height = #3 ]
               { \l_@@_name_img_tl } }
       }
-%    \end{macrocode}
-% \end{macro}
-% 将 ISO 格式的原始日期字符串格式化为中文日期表示，该字符串需要进行展开。
-%    \begin{macrocode}
-    \tl_set:Nn \l_@@_info_sm_date_tl
-      {
-        \exp_last_unbraced:NV
-          \@@_date:www \l_@@_info_sm_date_raw_tl \q_stop
-      }
-%    \end{macrocode}
-% 英文提交日期以及答辩日期仅用于研究生封面。
-%    \begin{macrocode}
-    \int_compare:nF { \l_@@_info_degree_int == 1 }
-      {
-        \tl_set:Nn \l_@@_info_sm_date_en_tl
-          {
-            \exp_last_unbraced:NV
-              \@@_date_en:www \l_@@_info_sm_date_raw_tl \q_stop
-          }
-        \tl_set:Nn \l_@@_info_df_date_tl
-          {
-            \exp_last_unbraced:NV
-              \@@_date:www \l_@@_info_df_date_raw_tl \q_stop
-          }
-      }
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_cover_title_ug:}
 % 本科生封面标题。
@@ -3864,7 +3875,8 @@ To produce the documentation run the original source files ending with
 % 校徽。
 %    \begin{macrocode}
       \njuemblem [ black ] { ! } { 2.5 cm } \@@_vskip:
-      \l_@@_info_dept_en_tl \\ \c_@@_name_nju_en_tl
+      \l_@@_info_dept_en_tl \skip_vertical:n { \c_zero_dim }
+      \c_@@_name_nju_en_tl
       \skip_vertical:n { 1 cm }
 %    \end{macrocode}
 % 提交日期。
@@ -4490,7 +4502,7 @@ To produce the documentation run the original source files ending with
         \labelsep   \z@
         \itemsep    \z@
         \parsep     \z@
-        \leftmargin 0.5\l_@@_tmp_dim
+        \leftmargin .5\l_@@_tmp_dim
         \rightmargin \leftmargin
         \advance \leftmargin #2
         \let \makelabel \@@_notation_label:n
