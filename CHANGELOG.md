@@ -25,6 +25,10 @@
 - 移除内部调用的宏包
   - `url`
 
+### 优化
+
+- 使用 `xtemplate` 重新绘制封面 - [#46]
+
 ### 杂项
 
 - 使用 GitHub 表单重构 issue 模板
@@ -228,6 +232,7 @@
 
 [#14]: https://github.com/nju-lug/NJUThesis/issues/14
 [#44]: https://github.com/nju-lug/NJUThesis/issues/44
+[#46]: https://github.com/nju-lug/NJUThesis/issues/46
 [#52]: https://github.com/nju-lug/NJUThesis/issues/52
 [#60]: https://github.com/nju-lug/NJUThesis/issues/60
 [#61]: https://github.com/nju-lug/NJUThesis/issues/61
