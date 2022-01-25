@@ -6,6 +6,24 @@ dissertations with LaTeX, providing support for bachelor, master, and
 doctoral thesis. Compilation of this class requires either `xelatex`
 or `lualatex` engine.
 
+Usage
+-----
+
+A minimal example of this document class should look like
+
+```
+\documentclass{njuthesis}
+\njusetup{}
+\begin{document}
+\maketitle
+\tableofcontents
+\mainmatter
+\chapter{Welcome}
+Hello \LaTeX{}！
+\printbibliography
+\end{document}
+```
+
 Contributing
 ------------
 

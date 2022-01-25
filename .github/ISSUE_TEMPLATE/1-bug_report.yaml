@@ -43,7 +43,7 @@ body:
     attributes:
       label: 最小工作示例
       description: |
-        一段*完整的可供编译*的 TeX 代码，用来复现上述问题。这段代码应当从 `\documentclass` 开始，到 `\end{document}` 结束。请删除*所有不会引起该问题的内容*。譬如，对于正文格式出现的问题，不必添加 `\njusetup` `\tableofcontents` 等命令。
+        一段*完整的可供编译*的 LaTeX 代码，用来复现上述问题。这段代码应当从 `\documentclass` 开始，到 `\end{document}` 结束。请删除*所有不会引起该问题的内容*。譬如，对于正文格式出现的问题，不必添加 `\njusetup` `\tableofcontents` 等命令。删除无关内容是一个 debug 的过程，能帮助你我更准确地问题的根源 : D
       placeholder: |
         \documentclass[]{njuthesis}
         ...
@@ -90,6 +90,7 @@ body:
     attributes:
       label: 模板获取途径
       options:
+        - <https://tex.nju.edu.cn>
         - 使用包管理器从 CTAN 安装
         - 通过 GitHub Releases 或镜像站下载
         - 从 Git 仓库下载
