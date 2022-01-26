@@ -103,14 +103,12 @@ To produce the documentation run the original source files ending with
 \fi
 %</internal>
 %
-%<*class>
-\NeedsTeXFormat{LaTeX2e}
-\RequirePackage{expl3}
-\GetIdInfo $Id: njuthesis.dtx 0.15.0 2022-01-17 15:30:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
-  {Thesis template for Nanjing University}
-\ProvidesExplClass{njuthesis}
-  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
-%</class>
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\RequirePackage{expl3}
+%<class>\GetIdInfo $Id: njuthesis.dtx 0.15.0 2022-01-17 15:30:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<class>  {Thesis template for Nanjing University}
+%<class>\ProvidesExplClass{njuthesis}
+%<class>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
@@ -2194,7 +2192,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_uline_entry:nnnn}
+% \begin{macro}{\@@_uline_entry:Nnnn}
 % 生成占整页宽度的下划线条目。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
@@ -2203,7 +2201,7 @@ To produce the documentation run the original source files ending with
 %   \item 分隔符
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline_entry:nnnn #1#2#3#4
+\cs_new_protected:Npn \@@_uline_entry:Nnnn #1#2#3#4
   {
     \@@_full_uline:NV #1 { \@@_name:n { #2 } #4 }
     \@@_ulined_center_box:nn { #1 } { \@@_info:n { #3 } }
@@ -2211,7 +2209,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_uline_bientry:nnnn}
+% \begin{macro}{\@@_uline_bientry:Nnnn}
 % 生成占半页宽度的下划线条目。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
@@ -2220,7 +2218,7 @@ To produce the documentation run the original source files ending with
 %   \item 分隔符
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline_bientry:nnnn #1#2#3#4
+\cs_new_protected:Npn \@@_uline_bientry:Nnnn #1#2#3#4
   {
     \@@_full_uline:NV #1 { \@@_name:n { #2 } #4 }
     \dim_sub:Nn #1 { \textwidth / 2 }
@@ -3823,6 +3821,7 @@ To produce the documentation run the original source files ending with
 %   \item[\opt{format}] 格式，例如行距
 %   \item[\opt{top-skip}] 上间距，即与页面顶部的距离
 %   \item[\opt{bottom-skip}] 下间距，即与页面底部的距离
+% \end{description}
 %    \begin{macrocode}
 \DeclareTemplateInterface { nju } { page } { \c_zero_int }
   {
@@ -3930,6 +3929,7 @@ To produce the documentation run the original source files ending with
     align   = l
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{cover/ug/name-img}
 % 本科生封面校名图片实例。
@@ -4006,6 +4006,7 @@ To produce the documentation run the original source files ending with
     bottom-skip = 1 cm
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{cover/g/name-img}
 % 研究生封面校名图片实例。
@@ -4298,13 +4299,13 @@ To produce the documentation run the original source files ending with
       { \clist_item:Nn \l_@@_info_supv_clist { 1 } }
     \tl_set:Nn \l_@@_info_supv_ttl_tl
       { \clist_item:Nn \l_@@_info_supv_clist { 2 } }
-    \@@_uline_entry:nnnn   \l_@@_tmp_dim { supv_info } { supv   } { } \\
+    \@@_uline_entry:Nnnn   \l_@@_tmp_dim { supv_info } { supv   } { } \\
     \@@_ulined_center_box:nn { \textwidth } { \@@_info:n { supv_ttl }
     \@@_quad: \@@_info:n  { supv_cont } }                             \\
-    \@@_uline_bientry:nnnn \l_@@_tmp_dim { degree   } { degree  } { }
-    \@@_uline_bientry:nnnn \l_@@_tmp_dim { major_nl } { major   } { } \\
-    \@@_uline_bientry:nnnn \l_@@_tmp_dim { sm_date  } { sm_date } { }
-    \@@_uline_bientry:nnnn \l_@@_tmp_dim { df_date  } { df_date } { } \\
+    \@@_uline_bientry:Nnnn \l_@@_tmp_dim { degree   } { degree  } { }
+    \@@_uline_bientry:Nnnn \l_@@_tmp_dim { major_nl } { major   } { } \\
+    \@@_uline_bientry:Nnnn \l_@@_tmp_dim { sm_date  } { sm_date } { }
+    \@@_uline_bientry:Nnnn \l_@@_tmp_dim { df_date  } { df_date } { } \\
     \@@_full_uline:Nn \l_@@_tmp_dim { \c_@@_name_confer_tl }
     \@@_uline:n { \l_@@_tmp_dim }
   }
@@ -4538,6 +4539,8 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{绘制部件}
 %
+% \paragraph{本科生}
+%
 % \begin{macro}{\@@_abs_title_ug:n}
 % 绘制本科生摘要标题。
 % \begin{arguments}
@@ -4582,6 +4585,8 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% \paragraph{研究生}
 %
 % \begin{macro}{\@@_abs_title_g:n}
 % 绘制研究生摘要标题。
@@ -4659,14 +4664,17 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
         \clist_map_inline:nn { major, author, supv_full }
           { \\
-            \@@_uline_entry:nnnn \l_@@_tmp_dim { ##1 _en } { ##1 _en } { #2 }
+            \@@_uline_entry:Nnnn \l_@@_tmp_dim { ##1 _en } { ##1 _en } { #2 }
           }
       }
   }
 %    \end{macrocode}
 % \end{macro}
 %
+% \paragraph{关键词列表}
+%
 % \begin{macro}{\@@_print_keywords:nn}
+% \changes{v0.15}{2022/01/26}{为关键词列表添加悬挂缩进。}
 % 生成中英文关键词列表。
 % \begin{arguments}
 %   \item 语言，空置为中文，|_en| 为英文
@@ -4675,15 +4683,27 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_keywords:nn #1#2
   {
-    \skip_vertical:n { 2 ex }
-    \group_begin:
+    \exp_args:NNc
+      \tl_set_eq:NN \l_@@_tmp_tl { c_@@_name_keywords #1 _tl }
+    \@@_get_text_width:Nn \l_@@_tmp_dim { \l_@@_tmp_tl }
 %    \end{macrocode}
-% “关键词”字样使用加粗黑体。
+% 关键词列表的悬挂缩进样式由 \tn{list} 环境产生。
 %    \begin{macrocode}
-      \noindent \bf \heiti
-      \use:c { c_@@_name_keywords #1 _tl }
-    \group_end:
-    \clist_use:cn { l_@@_info_keywords #1 _clist } { #2 }
+    \list { }
+      {
+        \labelwidth  \l_@@_tmp_dim
+        \labelsep    \c_zero_dim
+        \leftmargin  \c_zero_dim
+        \rightmargin \c_zero_dim
+        \advance \leftmargin \l_@@_tmp_dim
+%    \end{macrocode}
+% 使用粗体作为标签样式。
+%    \begin{macrocode}
+        \cs_set_eq:NN \makelabel \textbf
+      }
+    \item [ \l_@@_tmp_tl ]
+      \clist_use:cn { l_@@_info_keywords #1 _clist } { #2 }
+    \endlist
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4742,7 +4762,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/12}{重新绘制摘要。}
 % 中文摘要环境。
 %    \begin{macrocode}
-\NewDocumentEnvironment{abstract} { +b }
+\NewDocumentEnvironment { abstract } { +b }
   {
     \cleardoublepage
     \@@_abs_bookmark:
@@ -4756,12 +4776,13 @@ To produce the documentation run the original source files ending with
 % \begin{environment}{abstract*}
 % 英文摘要环境。\pkg{xparse} 目前不支持合并带有星号的环境，因此需要单独定义。
 %    \begin{macrocode}
-\NewDocumentEnvironment{abstract*} { +b }
+\NewDocumentEnvironment { abstract* } { +b }
   {
     \cleardoublepage
+    \thispagestyle { plain }
     \@@_abs_bookmark_en:
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { _en } { :~ }
-    \group_begin: \kaishu \zihao{ -4 } #1
+    \group_begin: \zihao{ -4 } #1
   }
   { \@@_print_keywords:nn { _en } { ;~ } \group_end: }
 %    \end{macrocode}
@@ -4831,25 +4852,29 @@ To produce the documentation run the original source files ending with
 % 生成符号表。由于符号表只有符号和说明两列，相比于 \env{longtable} 环境，
 % \env{description} 环境的语法更为简洁直观，且说明文字可以换行，因而此处使用
 % \hologo{LaTeX2e} 的列表环境进行封装，定义和语法参见 \file{source2e.pdf} 中的
-% File I \quad ltlists.dtx 一章。\tn{list} 环境使用宽度固定的盒子制作标签，通过
-% 指定这个盒子的宽度 \tn{labelwidth} 即可确定左侧标签区域的宽度。右侧说明文字区
-% 域的宽度无法直接指定，而是靠计算左右边距 \tn{leftmargin} 和 \tn{rightmargin}
-% 得到的。
+% File I \quad ltlists.dtx 一章。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_notation:nn #1#2
   {
     \dim_set:Nn \l_@@_tmp_dim { \textwidth - #1 - #2 }
     \list { }
       {
+%    \end{macrocode}
+% \tn{list} 环境使用宽度固定的盒子制作标签，通过指定这个盒子的宽度
+% \tn{labelwidth} 即可确定左侧标签区域的宽度。
+%    \begin{macrocode}
         \labelwidth #2
-        \itemindent  \z@
-        \labelsep    \z@
-        \itemsep     \z@
-        \parsep      \z@
+        \labelsep   \c_zero_dim
+        \itemsep    \c_zero_dim
+        \parsep     \c_zero_dim
+%    \end{macrocode}
+% 右侧说明文字区域的宽度无法直接指定，而是靠计算左右边距 \tn{leftmargin} 和
+% \tn{rightmargin} 得到的。
+%    \begin{macrocode}
         \leftmargin  .5\l_@@_tmp_dim
         \rightmargin \leftmargin
         \advance \leftmargin #2
-        \let \makelabel \@@_notation_label:n
+        \cs_set_eq:NN \makelabel \@@_notation_label:n
       }
   }
 %    \end{macrocode}
