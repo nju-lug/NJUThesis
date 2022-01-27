@@ -119,6 +119,7 @@ To produce the documentation run the original source files ending with
 \colorlet{at@guard}{njuviolet}
 \definecolor{olgreen}{HTML}{138a07}
 \newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
+\newcommand\grd[1]{\textcolor{at@guard}{\sffamily #1}}
 \hypersetup{%
   pdftitle  = {The njuthesis class - LaTeX thesis template for Nanjing University},
   citecolor = njublue,
@@ -1822,9 +1823,9 @@ To produce the documentation run the original source files ending with
 % “|*|”和“|/|”的 guard 出现在行号右侧，它们用来确定
 % 单独一行代码的归属。这些 guard 的颜色深浅不一，用以明确嵌套关系。
 %
-% 另有若干包含 \textsf{\color{at@guard}@@} 的 guard，用以表示名空间（模块）。
+% 另有若干包含 \grd{@@} 的 guard，用以表示名空间（模块）。
 % 在删除注释生成格式文件时，源代码变量名称中的 |@@| 会被等号后的字段替换，
-% 譬如在本模板中 \textsf{\color{at@guard}〈@@=nju〉}。
+% 譬如在本模板中 \grd{〈@@=nju〉}。
 %
 %
 % \subsection{准备}
@@ -3736,17 +3737,10 @@ To produce the documentation run the original source files ending with
 \DeclareObjectType { nju } { \c_zero_int }
 %    \end{macrocode}
 %
-% \begin{variable}{\l_@@_elem_content_tl，\l_@@_elem_format_tl,
-% \l_@@_elem_begin_align_tl,\l_@@_elem_end_align_tl,\l_@@_elem_bottom_skip}
-% 用于存储元素属性的临时变量。
+% 定义元素模板。
 %    \begin{macrocode}
-\tl_new:N   \l_@@_elem_content_tl
-\tl_new:N   \l_@@_elem_format_tl
-\tl_new:N   \l_@@_elem_begin_align_tl
-\tl_new:N   \l_@@_elem_end_align_tl
-\skip_new:N \l_@@_elem_bottom_skip
+%<@@=njuelem>
 %    \end{macrocode}
-% \end{variable}
 %
 % 声明页面元素模板接口。
 % 元素是一个页面的基本组成单位，包括文段、图片等等。一个抽象的元素应当具备以下属性：
@@ -3766,52 +3760,45 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% 声明页面元素模板代码。
+% 声明页面元素模板代码。涉及的变量将被自动创建。
 %    \begin{macrocode}
 \DeclareTemplateCode { nju } { element } { \c_zero_int }
   {
-    content     = \l_@@_elem_content_tl,
-    format      = \l_@@_elem_format_tl,
-    bottom-skip = \l_@@_elem_bottom_skip,
+    content     = \l_@@_content_tl,
+    format      = \l_@@_format_tl,
+    bottom-skip = \l_@@_bottom_skip,
     align =
       {
         l =
-          { \tl_set_eq:NN \l_@@_elem_begin_align_tl \flushleft
-            \tl_set_eq:NN \l_@@_elem_end_align_tl   \endflushleft  },
+          { \tl_set_eq:NN \l_@@_begin_align_tl \flushleft
+            \tl_set_eq:NN \l_@@_end_align_tl   \endflushleft  },
         r =
-          { \tl_set_eq:NN \l_@@_elem_begin_align_tl \flushright
-            \tl_set_eq:NN \l_@@_elem_end_align_tl   \endflushright },
+          { \tl_set_eq:NN \l_@@_begin_align_tl \flushright
+            \tl_set_eq:NN \l_@@_end_align_tl   \endflushright },
         c =
-          { \tl_set_eq:NN \l_@@_elem_begin_align_tl \center
-            \tl_set_eq:NN \l_@@_elem_end_align_tl   \endcenter     },
+          { \tl_set_eq:NN \l_@@_begin_align_tl \center
+            \tl_set_eq:NN \l_@@_end_align_tl   \endcenter     },
         n =
-          { \tl_clear:N   \l_@@_elem_begin_align_tl
-            \tl_clear:N   \l_@@_elem_end_align_tl                  }
+          { \tl_clear:N   \l_@@_begin_align_tl
+            \tl_clear:N   \l_@@_end_align_tl                  }
       }
   }
   {
     \AssignTemplateKeys
     \group_begin:
-      \l_@@_elem_begin_align_tl
-      \l_@@_elem_format_tl
-      \l_@@_elem_content_tl \par
-      \l_@@_elem_end_align_tl
+      \l_@@_begin_align_tl
+      \l_@@_format_tl
+      \l_@@_content_tl \par
+      \l_@@_end_align_tl
     \group_end:
-    \@@_vskip:N \l_@@_elem_bottom_skip
+    \__nju_vskip:N \l_@@_bottom_skip
   }
 %    \end{macrocode}
 %
-% \begin{variable}{\l_@@_page_content_tl,\l_@@_page_format_tl,
-%   \l_@@_page_prefix_tl,\l_@@_page_top_skip,\l_@@_page_bottom_skip}
-% 用于存储页面属性的临时变量。
+% 定义页面模板。
 %    \begin{macrocode}
-\clist_new:N \l_@@_page_content_tl
-\tl_new:N    \l_@@_page_prefix_tl
-\tl_new:N    \l_@@_page_format_tl
-\skip_new:N  \l_@@_page_top_skip
-\skip_new:N  \l_@@_page_bottom_skip
+%<@@=njupage>
 %    \end{macrocode}
-% \end{variable}
 %
 % 声明页面模板接口。
 % 页面是元素的集合。一个抽象的页面应当具备以下属性：
@@ -3837,35 +3824,36 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \DeclareTemplateCode { nju } { page } { \c_zero_int }
   {
-    element     = \l_@@_page_element_clist,
-    prefix      = \l_@@_page_prefix_tl,
-    format      = \l_@@_page_format_tl,
-    top-skip    = \l_@@_page_top_skip,
-    bottom-skip = \l_@@_page_bottom_skip
+    element     = \l_@@_element_clist,
+    prefix      = \l_@@_prefix_tl,
+    format      = \l_@@_format_tl,
+    top-skip    = \l_@@_top_skip,
+    bottom-skip = \l_@@_bottom_skip
   }
   {
     \AssignTemplateKeys
     \newpage
-    \@@_vskip:N \l_@@_page_top_skip
+    \__nju_vskip:N \l_@@_top_skip
     \group_begin:
-      \l_@@_page_format_tl
-      \clist_map_inline:Nn \l_@@_page_element_clist
-        { \UseInstance { nju } { \l_@@_page_prefix_tl ##1 } }
+      \l_@@_format_tl
+      \clist_map_inline:Nn \l_@@_element_clist
+        { \UseInstance { nju } { \l_@@_prefix_tl ##1 } }
     \group_end:
-    \@@_vskip:N \l_@@_page_bottom_skip
+    \__nju_vskip:N \l_@@_bottom_skip
   }
+%<@@=nju>
 %    \end{macrocode}
 %
-% \begin{macro}{\@@_declare_elem_instance:nn,\@@_declare_page_instance:nn}
+% \begin{macro}{\@@_declare_element:nn,\@@_declare_page:nn}
 % 封装 \pkg{xtemplate} 提供的函数，简化创建实例的过程。
 % \begin{arguments}
 %   \item 实例名称
 %   \item 参数列表
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_declare_elem_instance:nn #1#2
+\cs_new_protected:Npn \@@_declare_element:nn #1#2
   { \DeclareInstance { nju } {#1} { element } {#2} }
-\cs_new_protected:Npn \@@_declare_page_instance:nn #1#2
+\cs_new_protected:Npn \@@_declare_page:nn    #1#2
   { \DeclareInstance { nju } {#1} { page    } {#2} }
 %    \end{macrocode}
 % \end{macro}
@@ -3922,7 +3910,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/ug/emblem-img}
 % 本科生封面校徽图片实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / ug / emblem-img }
+\@@_declare_element:nn { cover / ug / emblem-img }
   {
     content = \njuemblem [ black ] { ! } { 3.35 cm },
     bottom-skip = 1 cm,
@@ -3934,7 +3922,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/ug/name-img}
 % 本科生封面校名图片实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / ug / name-img }
+\@@_declare_element:nn { cover / ug / name-img }
   {
     content     = \njuname [ black ] { ! } { 3 cm },
     bottom-skip = 1 cm
@@ -3945,7 +3933,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/ug/title}
 % 本科生封面标题实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / ug / title }
+\@@_declare_element:nn { cover / ug / title }
   {
     content  =
       \@@_spread_box:nnn { 9 em } { \bf } { \l_@@_info_type_tl },
@@ -3958,7 +3946,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/ug/info}
 % 本科生封面信息栏实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / ug / info }
+\@@_declare_element:nn { cover / ug / info }
   {
     content  =
       \@@_cover_info_ug:nnn { 4.2 em } { 16 em } { 5.5 em },
@@ -4000,7 +3988,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/emblem-img}
 % 研究生封面校徽图片实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / emblem-img }
+\@@_declare_element:nn { cover / g / emblem-img }
   {
     content     = \njuemblem [ black ] { ! } { 1.9 cm },
     bottom-skip = 1 cm
@@ -4011,7 +3999,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/name-img}
 % 研究生封面校名图片实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / name-img }
+\@@_declare_element:nn { cover / g / name-img }
   {
     content = \njuname [ black ] { 4.4 cm } { ! },
     bottom-skip = 2 cm
@@ -4022,7 +4010,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/type}
 % 研究生封面标题实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / type }
+\@@_declare_element:nn { cover / g / type }
   {
     content     =
       \@@_spread_box:nnn { 9 em } { } { \l_@@_info_type_tl },
@@ -4035,7 +4023,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/degree}
 % 研究生封面标题实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / degree }
+\@@_declare_element:nn { cover / g / degree }
   {
     content     = \c_@@_name_apply_tl,
     format      = \zihao { -1 } \bfseries,
@@ -4047,7 +4035,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/info}
 % 研究封面信息栏实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / info }
+\@@_declare_element:nn { cover / g / info }
   {
     content     = \@@_cover_info_g:nn { 6.2 em } { 18 em },
     bottom-skip = 0 pt plus 1.5 fil
@@ -4058,7 +4046,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/date}
 % 研究封面日期实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / date }
+\@@_declare_element:nn { cover / g / date }
   { content = \l_@@_info_sm_date_tl }
 %    \end{macrocode}
 % \end{macro}
@@ -4087,7 +4075,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/back}
 % 研究生封面背面信息实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / back }
+\@@_declare_element:nn { cover / g / back }
   {
     content = \@@_cover_back_g:,
     align   = l
@@ -4117,7 +4105,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/en/title}
 % 研究生英文封面标题实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / en / title }
+\@@_declare_element:nn { cover / g / en / title }
   {
     content     = \l_@@_info_title_en_tl,
     format      = \bf \sffamily \zihao { 2 },
@@ -4129,7 +4117,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/en/top}
 % 研究生英文封面顶部信息实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / en / top }
+\@@_declare_element:nn { cover / g / en / top }
   {
     content      =
       { by }
@@ -4148,7 +4136,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/en/middle}
 % 研究生英文封面中部信息实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / en / middle }
+\@@_declare_element:nn { cover / g / en / middle }
   {
     content     =
       \c_@@_cover_en_text_tl \@@_vskip:
@@ -4164,7 +4152,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/en/emblem-img}
 % 研究生英文封面校徽图片实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / en / emblem-img }
+\@@_declare_element:nn { cover / g / en / emblem-img }
   {
     content     = \njuemblem [ black ] { ! } { 2.5 cm },
     bottom-skip = 1.5 cm
@@ -4175,7 +4163,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/en/bottom}
 % 研究生英文封面底部信息实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / g / en / bottom }
+\@@_declare_element:nn { cover / g / en / bottom }
   {
     content =
       \l_@@_info_dept_en_tl \skip_vertical:N \c_zero_skip
@@ -4190,7 +4178,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/nl/top}
 % 国家图书馆封面顶部信息实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / nl / top }
+\@@_declare_element:nn { cover / nl / top }
   {
     content     = \@@_cover_top_nl:,
     bottom-skip = 2 cm
@@ -4201,7 +4189,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/nl/name}
 % 国家图书馆封面标题名称实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / nl / name }
+\@@_declare_element:nn { cover / nl / name }
   {
     content     =
       \@@_spread_box:nnn { 6 em } { } { \c_@@_name_title_tl },
@@ -4214,7 +4202,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/nl/title}
 % 国家图书馆封面标题实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / nl / title }
+\@@_declare_element:nn { cover / nl / title }
   {
     content     = \@@_cover_title_nl:,
     format      = \zihao { 1 },
@@ -4226,7 +4214,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/nl/middle}
 % 国家图书馆封面中部信息实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / nl / middle }
+\@@_declare_element:nn { cover / nl / middle }
   {
     content     = \@@_cover_info_nl:,
     format      = \zihao { 4 },
@@ -4238,7 +4226,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/nl/bottom}
 % 国家图书馆封面底部信息实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / nl / bottom }
+\@@_declare_element:nn { cover / nl / bottom }
   {
     content     = \@@_cover_bottom_nl:,
     bottom-skip = 1 cm,
@@ -4250,7 +4238,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/nl/date}
 % 国家图书馆封面底部日期实例。
 %    \begin{macrocode}
-\@@_declare_elem_instance:nn { cover / nl / date }
+\@@_declare_element:nn { cover / nl / date }
   {
     content = \@@_qquad: 年 \@@_quad: 月 \@@_quad: 日,
     format  = \kaishu \zihao { 3 }
@@ -4338,7 +4326,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover-ug-default}
 % 默认本科生封面实例。
 %    \begin{macrocode}
-\@@_declare_page_instance:nn { cover-ug-default }
+\@@_declare_page:nn { cover-ug-default }
   {
     element     = { emblem-img, name-img, title, info },
     prefix      = cover / ug /,
@@ -4350,7 +4338,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover-g-front-default}
 % 默认研究生普通封面正面实例。
 %    \begin{macrocode}
-\@@_declare_page_instance:nn { cover-g-front-default }
+\@@_declare_page:nn { cover-g-front-default }
   {
     element  = { emblem-img, name-img, type, degree, info, date },
     prefix   = cover / g /,
@@ -4363,7 +4351,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover-g-back-default}
 % 默认研究生普通封面背面实例。
 %    \begin{macrocode}
-\@@_declare_page_instance:nn { cover-g-back-default }
+\@@_declare_page:nn { cover-g-back-default }
   {
     element  = { back },
     prefix   = cover / g /,
@@ -4376,7 +4364,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover-g-en-default}
 % 默认研究生英文封面实例。
 %    \begin{macrocode}
-\@@_declare_page_instance:nn { cover-g-en-default }
+\@@_declare_page:nn { cover-g-en-default }
   {
     element = { title, top, middle, emblem-img, bottom },
     prefix  = cover / g / en /,
@@ -4388,7 +4376,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover-nl-default}
 % 默认国家图书馆封面实例。
 %    \begin{macrocode}
-\@@_declare_page_instance:nn { cover-nl-default }
+\@@_declare_page:nn { cover-nl-default }
   {
     element     = { top, name, title, middle, bottom, date },
     prefix      = cover / nl /,
