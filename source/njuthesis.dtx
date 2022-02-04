@@ -183,7 +183,7 @@ To produce the documentation run the original source files ending with
 % 南京大学 Linux 用户组
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}{git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.14.0 \quad 2022-01-16}
+% \date{v0.15.0 \quad 2022-01-16}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -750,7 +750,7 @@ To produce the documentation run the original source files ending with
 % \end{itemize}
 % 草稿模式有助于提升编译速度以及检查格式问题，建议在定稿前始终开启。
 %
-% 启用这一选项也会改变特定宏包的行为，譬如在草稿模式下 \pkg{listings} 宏包的代码环境不会显示内容，具体效果需要参照各个宏包的说明文档。如需抵消草稿模式的影响，请使用 \opt{final} 选项载入相关红包。
+% 启用这一选项也会改变特定宏包的行为，譬如在草稿模式下 \pkg{listings} 宏包的代码环境不会显示内容，具体效果需要参照各个宏包的说明文档。如需抵消草稿模式的影响，请使用 \opt{final} 选项载入相关宏包。
 %
 %
 % \subsubsection{指定字体}
@@ -1499,6 +1499,13 @@ To produce the documentation run the original source files ending with
 %   \end{abstract*}
 % \end{latexexample}
 %
+% \begin{function}[added=2022-02-04]{style/abstract-in-toc}
+%   \begin{syntax}
+%     abstract-in-toc = <\TTF>
+%   \end{syntax}
+% 是否将摘要插入目录，默认开启。关闭此选项后摘要页将不会出现在目录中，仅保留其 PDF 书签。
+% \end{function}
+%
 %
 % \subsubsection{前言页}
 %
@@ -1533,6 +1540,13 @@ To produce the documentation run the original source files ending with
 %   }
 % \end{latexexample}
 % 实际上，根据《学位论文编写规则》国家标准\cite{gb-t-7713.1-2006}，尽管“目录”这一说法已流传甚广，但学位论文中理应使用“目次”这一名称来指代篇目的列表。
+%
+% \begin{function}[added=2022-02-04]{style/toc-in-toc}
+%   \begin{syntax}
+%     toc-in-toc = <\TTF>
+%   \end{syntax}
+% 是否在目录中显示目录自身，默认开启。关闭此选项后目录、插图目录和表格目录将不会出现在目录中，仅保留其 PDF 书签。
+% \end{function}
 %
 %
 % \subsubsection{符号表}
@@ -3286,30 +3300,25 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_add_tocline:n,\@@_add_tocline:V}
+% 添加目录条目。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_add_tocline:n #1
+  { \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1 } }
+\cs_generate_variant:Nn \@@_add_tocline:n { V }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_chapter:n,\@@_chapter:V}
 % 含有目录和 PDF 标签的无编号章。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_chapter:n #1
   {
     \chapter *           { #1 }
+    \@@_add_tocline:n    { #1 }
     \@@_chapter_header:n { #1 }
-    \addcontentsline { toc } { chapter } { \c_@@_sec_format_tl #1 }
   }
 \cs_generate_variant:Nn \@@_chapter:n { V }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_chapter_no_toc:n,\@@_chapter_no_toc:V}
-% 目录自身不出现在目录中，需特别处理。参考
-% \url{https://tex.stackexchange.com/a/1821}。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_chapter_no_toc:n #1
-  {
-    \chapter *           { #1 }
-    \@@_chapter_header:n { #1 }
-    \pdfbookmark [ 0 ] { #1 } { toc }
-  }
-\cs_generate_variant:Nn \@@_chapter_no_toc:n { V }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3361,18 +3370,41 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\@@_modify_toc_title:nn}
-% \changes{v0.15}{2022/01/17}{目录自身不出现在目录中。}
-% 通过 group 内修改标题设置，将目录页标题格式单独设置为三号粗宋体。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_modify_toc_title:nn #1#2
+\keys_define:nn { nju / style }
+  {
+%    \end{macrocode}
+% \begin{macro}{style/toc-in-toc}
+% \changes{v0.15}{2022/02/04}{可选择目录自身是否出现在目录中。}
+% 是否在目录中显示目录自身。
+%    \begin{macrocode}
+    toc-in-toc .bool_gset:N = \g_@@_toc_in_toc_bool,
+    toc-in-toc   .initial:n = true
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_make_toc:nn,\@@_make_toc:Vn}
+% 通过 group 内修改标题设置，将目录页标题格式单独设置为三号粗宋体。
+% 目录自身不出现在目录中时需特别处理。参考
+% \url{https://tex.stackexchange.com/a/1821}。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_make_toc:nn #1#2
   {
     \group_begin:
-      \keys_set:nn { ctex } { chapter/format = \centering \zihao { 3 } \bf }
-      \@@_chapter_no_toc:V { #1 }
+      \keys_set:nn { ctex }
+        { chapter/format = \centering \zihao { 3 } \bfseries }
+      \bool_if:NTF \g_@@_toc_in_toc_bool
+        { \@@_chapter:n { #1 } }
+        {
+          \chapter * { #1 }
+          \pdfbookmark [0] { #1 } { #2 }
+          \@@_chapter_header:n { #1 }
+        }
     \group_end:
     \@starttoc { #2 }
   }
+\cs_generate_variant:Nn \@@_make_toc:nn { Vn }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3380,11 +3412,11 @@ To produce the documentation run the original source files ending with
 % 重定义目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
 \RenewDocumentCommand \tableofcontents { }
-  { \@@_modify_toc_title:nn { \contentsname   } { toc } }
+  { \@@_make_toc:Vn \contentsname   { toc } }
 \RenewDocumentCommand \listoffigures   { }
-  { \@@_modify_toc_title:nn { \listfigurename } { lof } }
+  { \@@_make_toc:Vn \listfigurename { lof } }
 \RenewDocumentCommand \listoftables    { }
-  { \@@_modify_toc_title:nn { \listtablename  } { lot } }
+  { \@@_make_toc:Vn \listtablename  { lot } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4481,6 +4513,35 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{内部命令}
 %
+%    \begin{macrocode}
+\keys_define:nn { nju / style }
+  {
+%    \end{macrocode}
+% \begin{macro}{style/abstract-in-toc}
+% \changes{v0.15}{2022/02/04}{可选择摘要是否出现在目录中。}
+% 是否将摘要添加到目录。
+%    \begin{macrocode}
+    abstract-in-toc .bool_gset:N = \g_@@_abs_in_toc_bool,
+    abstract-in-toc   .initial:n = true
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_abs_bookmark:n}
+% \changes{v0.14}{2021/12/21}{将摘要插入目录。}
+% 生成摘要的目录条目。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_abs_bookmark:n #1
+  {
+    \phantomsection
+    \bool_if:NTF \g_@@_abs_in_toc_bool
+      { \@@_add_tocline:n {#1} }
+      { \pdfbookmark [0] {#1} { abstract } }
+  }
+\cs_generate_variant:Nn \@@_abs_bookmark:n { V }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_abs_title_uuline:n}
 % 摘要标题双层下划线格式。
 % \begin{arguments}
@@ -4502,25 +4563,6 @@ To produce the documentation run the original source files ending with
   { \noindent \zihao{ #1 } \kaishu }
 \cs_new_protected:Npn \@@_abs_info_style_en: #1
   { \zihao{ #1 } }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_abs_bookmark:,\@@_abs_bookmark_en:}
-% \changes{v0.14}{2021/12/21}{将摘要插入目录。}
-% 生成摘要的目录条目。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_bookmark:
-  {
-    \phantomsection
-    \addcontentsline { toc } { chapter }
-      { \c_@@_sec_format_tl \c_@@_name_lang_tl \c_@@_name_abstract_tl }
-  }
-\cs_new_protected:Npn \@@_abs_bookmark_en:
-  {
-    \phantomsection
-    \addcontentsline { toc } { chapter }
-      { \c_@@_sec_format_tl \c_@@_name_abstract_en_tl }
-  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4753,7 +4795,8 @@ To produce the documentation run the original source files ending with
 \NewDocumentEnvironment { abstract } { +b }
   {
     \cleardoublepage
-    \@@_abs_bookmark:
+    \thispagestyle { plain }
+    \@@_abs_bookmark:V { \c_@@_name_lang_tl \c_@@_name_abstract_tl }
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { } { ： }
     \group_begin: \kaishu \zihao { -4 } #1
   }
@@ -4768,7 +4811,7 @@ To produce the documentation run the original source files ending with
   {
     \cleardoublepage
     \thispagestyle { plain }
-    \@@_abs_bookmark_en:
+    \@@_abs_bookmark:V { \c_@@_name_abstract_en_tl }
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { _en } { :~ }
     \group_begin: \zihao{ -4 } #1
   }

@@ -9,6 +9,9 @@
 ### 新增
 
 - 新增符号表页面 `notation` - [#61]
+- 可选择是否隐藏特定目录条目
+  - 新增选项 `abstract-in-toc` - [#66]
+  - 新增选项 `toc-in-toc`
 
 ### 修复
 
@@ -17,7 +20,6 @@
 
 ### 变动
 
-- 目录自身不出现在目录条目中
 - 为关键词列表添加悬挂缩进
 - 研究生模板页眉样式及内容变动
   - 使用小号楷体
@@ -238,6 +240,7 @@
 [#60]: https://github.com/nju-lug/NJUThesis/issues/60
 [#61]: https://github.com/nju-lug/NJUThesis/issues/61
 [#64]: https://github.com/nju-lug/NJUThesis/issues/64
+[#64]: https://github.com/nju-lug/NJUThesis/issues/66
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
