@@ -4527,18 +4527,18 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_abs_bookmark:n}
+% \begin{macro}{\@@_abs_bookmark:nn}
 % \changes{v0.14}{2021/12/21}{将摘要插入目录。}
 % 生成摘要的目录条目。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_bookmark:n #1
+\cs_new_protected:Npn \@@_abs_bookmark:nn #1#2
   {
     \phantomsection
     \bool_if:NTF \g_@@_abs_in_toc_bool
-      { \@@_add_tocline:n {#1} }
-      { \pdfbookmark [0] {#1} { abstract } }
+      { \@@_add_tocline:n { #1 } }
+      { \pdfbookmark [0] { #1 } { #2 } }
   }
-\cs_generate_variant:Nn \@@_abs_bookmark:n { V }
+\cs_generate_variant:Nn \@@_abs_bookmark:nn { Vn }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4796,7 +4796,8 @@ To produce the documentation run the original source files ending with
   {
     \cleardoublepage
     \thispagestyle { plain }
-    \@@_abs_bookmark:V { \c_@@_name_lang_tl \c_@@_name_abstract_tl }
+    \@@_abs_bookmark:Vn
+      { \c_@@_name_lang_tl \c_@@_name_abstract_tl } { abstract }
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { } { ： }
     \group_begin: \kaishu \zihao { -4 } #1
   }
@@ -4811,7 +4812,7 @@ To produce the documentation run the original source files ending with
   {
     \cleardoublepage
     \thispagestyle { plain }
-    \@@_abs_bookmark:V { \c_@@_name_abstract_en_tl }
+    \@@_abs_bookmark:Vn { \c_@@_name_abstract_en_tl } { abstract-en }
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { _en } { :~ }
     \group_begin: \zihao{ -4 } #1
   }
