@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: 讨论
-    url: https://github.com/nju-lug/NJUThesis/issues/new
-    about: 任何与本模板相关的问题
+    url: https://github.com/nju-lug/NJUThesis/discussions/new
+    about: 使用上的疑惑可以发在论坛哦
