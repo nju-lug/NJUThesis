@@ -49,7 +49,7 @@
 
 ## 常见问题
 
-请参见[本项目 Wiki](https://github.com/nju-lug/NJUThesis/wiki)。
+请参见[本项目 Wiki](https://github.com/nju-lug/NJUThesis/wiki)，或在[论坛](https://github.com/nju-lug/NJUThesis/discussions)中提问。
 
 ## 贡献
 

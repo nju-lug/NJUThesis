@@ -12,6 +12,7 @@
 - 可选择是否隐藏特定目录条目
   - 新增选项 `abstract-in-toc` - [#66]
   - 新增选项 `toc-in-toc`
+- 可使用自定义的参考文献样式 - [#71]
 
 ### 修复
 
@@ -241,7 +242,8 @@
 [#60]: https://github.com/nju-lug/NJUThesis/issues/60
 [#61]: https://github.com/nju-lug/NJUThesis/issues/61
 [#64]: https://github.com/nju-lug/NJUThesis/issues/64
-[#64]: https://github.com/nju-lug/NJUThesis/issues/66
+[#66]: https://github.com/nju-lug/NJUThesis/issues/66
+[#71]: https://github.com/nju-lug/NJUThesis/discussions/71
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

@@ -1325,9 +1325,10 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2021-12-19]{bib/style}
 %   \begin{syntax}
-%     style = <(numeric)|author-year>
+%     style = <(numeric)|author-year|\meta{自定义样式}>
 %   \end{syntax}
-% 参考文献样式。分为顺序编码制 \opt{numeric} 和著者-出版年制 \opt{author-year}，默认为顺序编码制。
+% 参考文献样式。可选顺序编码制 \opt{numeric} 和著者-出版年制 \opt{author-year}，
+% 或自行填入任意其他 \pkg{biblatex} 样式。默认为顺序编码制。
 % \end{function}
 %
 % 参考文献样式是一个整体的设置，会对正文中引用的文献的标注方法和参考文献表的输出格式产生影响。根据国家规定\cite{gb-t-7714-2015}，可以按照参考文献表的组织方式分为以下两种样式：
@@ -1352,9 +1353,7 @@ To produce the documentation run the original source files ending with
 % 添加参考文献源文件。为了与 \pkg{biblatex} 进行兼容，也可使用本命令添加数据源。本命令不支持逗号分隔多个文件的形式，如果希望额外添加参考文献列表，需要在导言区中多次调用。
 % \end{function}
 %
-% 示例参考文献存储于 \file{njuthesis-sample.bib}，直接向其中粘贴新的参考文献即可。
-%
-% 可以参考如下范例进行参考文献设置。
+% 可以参考如下范例进行参考文献设置：
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
 %   \njusetup {
 %       bib = {
@@ -3427,23 +3426,29 @@ To produce the documentation run the original source files ending with
 \keys_define:nn { nju / bib }
   {
 %    \end{macrocode}
+%
 % \begin{macro}{bib/style}
 % \changes{v0.14}{2021/12/19}{提供选择参考文献样式的接口。}
-% 参考文献样式。分为顺序编码制 \opt{numeric}（\opt{gb7714-2015} 样式）和著者-
-% 出版年制 \opt{author-year}（\opt{gb7714-2015ay} 样式）。用户选取的样式会被加入
-% 选项列表中，以待传进 \pkg{biblatex} 宏包。
+% \changes{v0.15}{2022/02/11}{可使用国标以外的文献样式。}
+% 参考文献样式。国家标准为顺序编码制 \opt{numeric} 和著者-出版年制
+% \opt{author-year}，分别对应 \pkg{biblatex} 的 \opt{gb7714-2015}
+% 和 \opt{gb7714-2015ay} 样式。其余样式一律视作 \opt{unknown}。用户
+% 选取的样式会被加入选项列表中，以待传进 \pkg{biblatex} 宏包。
 %    \begin{macrocode}
     style             .choice:,
     style / numeric     .code:n =
-      { \clist_set:Nn \l_@@_tmp_clist { style = gb7714-2015   } },
+      { \clist_set:Nn \l_@@_tmp_clist { style = gb7714-2015      } },
     style / author-year .code:n =
-      { \clist_set:Nn \l_@@_tmp_clist { style = gb7714-2015ay } },
+      { \clist_set:Nn \l_@@_tmp_clist { style = gb7714-2015ay    } },
+    style / unknown     .code:n =
+      { \clist_set:Nx \l_@@_tmp_clist { style = \l_keys_value_tl } },
     style            .initial:n = numeric,
 %    \end{macrocode}
 % \end{macro}
+%
 % \begin{macro}{bib/resource}
 % \changes{v0.14}{2021/12/19}{提供批量导入参考文献数据源的接口。}
-% 参考文献数据源。
+% 参考文献数据源，以列表形式储存。
 %    \begin{macrocode}
     resource       .clist_set:N = \l_@@_bib_resource_clist
   }
@@ -3461,7 +3466,8 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_biblatex_pre_setup:}
-% 载入 \pkg{biblatex} 宏包前，必须禁用自行定义的 \cs{addbibresource} 命令，并传入用户设置的选项。
+% 载入 \pkg{biblatex} 宏包前，必须禁用自行定义的 \cs{addbibresource}
+% 命令，并传入用户设置的选项。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_biblatex_pre_setup:
   {
@@ -3497,11 +3503,6 @@ To produce the documentation run the original source files ending with
         \clist_map_inline:nn
           { abstract, issn, isbn, archivePrefix, arxivId, pmid, eprint }
           { \clearfield { ##1 } }
-        % \ifentrytype{online} { }
-          % {
-            % \ifentrytype{misc} { }
-            %   \clearfield{urldate} { \clearfield{url} }
-          % }
       }
   }
 %    \end{macrocode}
@@ -3510,8 +3511,6 @@ To produce the documentation run the original source files ending with
 % 使用 \pkg{etoolbox} 提供的 \tn{BeforeBeginEnvironment}，在 \env{document} 环境
 % 开始的钩子前载入 \pkg{biblatex} 并进行相关设置。
 %    \begin{macrocode}
-%\hook_gset_rule:nnnn { begindocument/before } { . } { < } { xeCJK }
-%\hook_gput_code:nnn { env/document/begin } { . }
 \BeforeBeginEnvironment { document }
   {
     \@@_biblatex_pre_setup:
@@ -3524,7 +3523,7 @@ To produce the documentation run the original source files ending with
 % \subsection{引用}
 %
 % 在导言区末尾进行 \pkg{hyperref} 设置。
-% \changes{v0.11}{2021/10/01}{写入PDF元数据。}
+% \changes{v0.11}{2021/10/01}{写入 PDF 元数据。}
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
