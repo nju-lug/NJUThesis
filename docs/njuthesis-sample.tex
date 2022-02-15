@@ -169,11 +169,20 @@
         % 默认为顺序编码制（numeric）
         % 可选著者-出版年制（author-year）
         %
-        resource = {njuthesis-sample.bib}
+        resource = {njuthesis-sample.bib},
         % 参考文献数据源
         % 需要带扩展名的完整文件名
         % 可使用逗号分隔多个文件
         % 此条等效于 \addbibresource 命令
+        %
+        % options = {
+        %     doi    = false,
+        %     isbn   = false,
+        %     url    = false,
+        %     eprint = false
+        %   }
+        % 额外的 biblatex 选项
+        % 上述选项可关闭部分无用文献信息
     },
     %
     %
@@ -185,9 +194,15 @@
         % 使用外置图片有助于减少编译时间
         % 空置时会自动使用 njuisual 宏包绘制
         %
-        name-img = {nju-name}
+        name-img = {nju-name},
         % 外置校名图片路径
         % 说明同上
+        %
+        % abstract-in-toc = false,
+        % 是否在目录中显示摘要，默认显示
+        %
+        % toc-in-toc = false
+        % 是否在目录中显示目录，默认显示
     }
 }
 

@@ -523,9 +523,9 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsubsection{配置编辑器}
-% \changes{v0.11}{2021/11/23}{提供TeXstudio配置文件。}
+% \changes{v0.11}{2021/11/23}{提供 TeXstudio 配置文件。}
 %
-% 配置完编译器后，还需要一个\emph{文本编辑器}来完成\file{.tex}文件内容的写作。
+% 配置完编译器后，还需要一个\emph{文本编辑器}来完成 \file{.tex} 文件内容的写作。
 %
 % 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的
 % 文本编辑器。但对于本项目而言，在此诚心诚意地推荐您使用\emph{更现代更美观更多功
@@ -533,7 +533,7 @@ To produce the documentation run the original source files ending with
 %
 % \cls{njuthesis} 为一些常见编辑器提供了配置文件，如
 % \begin{description}
-%   \item[Visual Studio Code] 本模板在\file{.vscode/}中提供一份\hologo{LaTeX} Workshop 插件的简易配置，在打开文件夹后将自动导入，可以省略初始配置步骤直接使用。
+%   \item[Visual Studio Code] 本模板在 \file{.vscode/} 中提供一份 \hologo{LaTeX} Workshop 插件的简易配置，在打开文件夹后将自动导入，可以省略初始配置步骤直接使用。
 %   \item[TeXstudio] 本模板提供 \file{conf.txsprofile}，可以使用快捷键 |alt+O+P| 导入配置文件。为了简化流程\footnote{当然，也可以设置为使用 \hologo{XeLaTeX} 编译，然后按照 \ref{subsubsec:compileseq} 内容使用快捷键 |F8| 手动编译参考文献。}，该配置文件使用 \pkg{latexmk}，第一次编译前请参考下一节内容安装 Perl。
 % \end{description}
 %
@@ -587,7 +587,7 @@ To produce the documentation run the original source files ending with
 % \pkg{latexmk}\cite{latexmk} 是一个基于 Perl 脚本的自动编译工具，宗旨是通过单一命令简化上述的多次编译流程。在使用该命令前，请确保安装了以下软件：
 % \begin{description}
 %   \item[Perl] 一般预装于 macOS 和 Linux，而 Windows 用户需要单独安装 \href{https://strawberryperl.com/}{Strawberry Perl}。
-%   \item[\pkg{latexmk}] \hologo{MiKTeX}已预装；如果终端找不到|latexmk|命令，\hologo{TeX}\,Live 用户需使用 \pkg{tlmgr} 单独安装。
+%   \item[\pkg{latexmk}] \hologo{MiKTeX} 已预装；如果终端找不到 |latexmk| 命令，\hologo{TeX}\,Live 用户需使用 \pkg{tlmgr} 单独安装。
 % \end{description}
 %
 % 该命令的使用方法为
@@ -608,7 +608,7 @@ To produce the documentation run the original source files ending with
 % \subsection{在线编译}
 % \label{subsec:onlinecompile}
 %
-% 相信您在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如\hologo{TeX}编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大\footnote{事实上，可以通过 |scheme-infraonly| 模式安装 \hologo{TeX}\,Live，随后利用 \pkg{tlmgr} 安装依赖宏包，这份宏包列表可以在 Git 仓库的 \file{.github/workflows/build.yml} 找到。}，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{出于文件 IO 速度的差异，同一个模板在 Linux 编译可以相对 Windows 节省约一半耗时。}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
+% 相信您在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如 \hologo{TeX} 编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大\footnote{事实上，可以通过 |scheme-infraonly| 模式安装 \hologo{TeX}\,Live，随后利用 \pkg{tlmgr} 安装依赖宏包，这份宏包列表可以在 Git 仓库的 \file{.github/workflows/build.yml} 找到。}，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{出于文件 IO 速度的差异，同一个模板在 Linux 编译可以相对 Windows 节省约一半耗时。}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
 %
 % \subsubsection{南大\hologo{TeX}平台简介}
 % \changes{v0.2}{2021/09/07}{添加对南大 \hologo{TeX} 的支持。}
@@ -641,7 +641,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{版本升级}
 %
-% 考虑到本模板仍在开发中，将不断发布新版本，您可能需要不定期进行更新以得到对于已知问题的修复补丁。考虑到安装和编译方式的差异，不妨直接将论文内容迁移至新版的 \file{njuthesis-sample.tex}\footnote{请赞美 \hologo{TeX} 系统“样式与内容分离”的原则！}，然后按照当前工作文件夹内是否有 \file{.cls} 文件分别进行更新操作。
+% 考虑到本模板仍在开发中，将不断发布新版本，您可能需要不定期进行更新以得到对于已知问题的修复补丁。每个版本的更新内容记录于 Git 仓库中的 \file{CHANGELOG.md}。考虑到安装和编译方式的差异，不妨直接将论文内容迁移至新版的 \file{njuthesis-sample.tex}\footnote{请赞美 \hologo{TeX} 系统“样式与内容分离”的原则！}，然后按照当前工作文件夹内是否有 \file{.cls} 文件分别进行更新操作。
 %
 % \subparagraph{有}
 % 迁移至 \file{njuthesis-user-v*.zip} 提供的新内容。
@@ -1339,6 +1339,15 @@ To produce the documentation run the original source files ending with
 %
 % 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号表示”\cite{nju2021}，符合顺序编码制的格式，保持默认设置即可。
 %
+% \begin{function}[added=2022-02-15]{bib/options}
+%   \begin{syntax}
+%     options = \meta{选项列表}
+%   \end{syntax}
+% 待传入 \pkg{biblatex} 宏包的额外选项列表。
+% \end{function}
+%
+% 本模板中 \pkg{biblatex} 并不是显式载入的。如需在其基础上进行一些定制，可使用本设置项载入宏包选项。
+%
 % \begin{function}[added=2021-12-19]{bib/resource}
 %   \begin{syntax}
 %     resource = \Arg{文件}
@@ -1353,12 +1362,19 @@ To produce the documentation run the original source files ending with
 % 添加参考文献源文件。为了与 \pkg{biblatex} 进行兼容，也可使用本命令添加数据源。本命令不支持逗号分隔多个文件的形式，如果希望额外添加参考文献列表，需要在导言区中多次调用。
 % \end{function}
 %
-% 可以参考如下范例进行参考文献设置：
+% 可以参考如下范例进行参考文献设置。
+% 其中 \opt{bib/options} 的内容旨在关闭部分不需显示的文献信息，可根据需要使用。
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
 %   \njusetup {
 %       bib = {
-%           style = author-year,
-%           resource = {njuthesis-sample.bib}
+%           style    = author-year,
+%           resource = {njuthesis-sample.bib}，
+%           options  = {
+%               doi    = false,
+%               isbn   = false,
+%               url    = false,
+%               eprint = false
+%             }
 %         }
 %     }
 % \end{latexexample}
@@ -3422,6 +3438,28 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{参考文献}
 %
+% \begin{variable}{\g_@@_biblatex_options_clist}
+% 存储传入 \pkg{biblatex} 的选项列表。
+%    \begin{macrocode}
+\clist_new:N \g_@@_biblatex_options_clist
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_bib_resource_clist}
+% 存储参考文献数据源列表。
+%    \begin{macrocode}
+\clist_new:N \g_@@_bib_resource_clist
+%    \end{macrocode}
+% \end{variable}
+%
+%    \begin{macrocode}
+\msg_new:nnn { njuthesis } { extra-bib-style }
+  {
+    Wrongly-placed~ bib~ style.\\
+    Please~ use~ the~ `bib/style`~ field.
+  }
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 \keys_define:nn { nju / bib }
   {
@@ -3437,12 +3475,40 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     style             .choice:,
     style / numeric     .code:n =
-      { \clist_set:Nn \l_@@_tmp_clist { style = gb7714-2015      } },
+      {
+        \clist_gput_right:Nn \g_@@_biblatex_options_clist
+          { style = gb7714-2015      }
+      },
     style / author-year .code:n =
-      { \clist_set:Nn \l_@@_tmp_clist { style = gb7714-2015ay    } },
+      {
+        \clist_gput_right:Nn \g_@@_biblatex_options_clist
+          { style = gb7714-2015ay    }
+      },
     style / unknown     .code:n =
-      { \clist_set:Nx \l_@@_tmp_clist { style = \l_keys_value_tl } },
+      {
+        \clist_gput_right:Nx \g_@@_biblatex_options_clist
+          { style = \l_keys_value_tl }
+      },
     style            .initial:n = numeric,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{bib/options}
+% \changes{v0.15}{2022/02/15}{提供传入 \pkg{biblatex} 宏包选项的接口。}
+% 待传入 \pkg{biblatex} 的额外宏包选项，以列表形式储存。
+% 更为常见的参考文献样式设置已由 \opt{bib/style} 提供，
+% 此处对重复的样式设置进行了检查。本设置项等效于在导言区使用
+% |\PassOptionsToPackage{|\meta{key}|=|\meta{value}|}{biblatex}| 命令。
+%    \begin{macrocode}
+    options             .code:n =
+      {
+        \tl_if_in:VnTF \l_keys_value_tl { style = }
+          { \msg_error:nn { njuthesis } { extra-bib-style } }
+          {
+            \clist_gput_right:NV \g_@@_biblatex_options_clist
+              \l_keys_value_tl
+          }
+      },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3450,7 +3516,11 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2021/12/19}{提供批量导入参考文献数据源的接口。}
 % 参考文献数据源，以列表形式储存。
 %    \begin{macrocode}
-    resource       .clist_set:N = \l_@@_bib_resource_clist
+    resource            .code:n =
+      {
+        \clist_gput_right:NV \g_@@_bib_resource_clist
+          \l_keys_value_tl
+      },
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3461,7 +3531,7 @@ To produce the documentation run the original source files ending with
 % 添加参考文献数据源的方法。
 %    \begin{macrocode}
 \NewDocumentCommand \addbibresource { m }
-  { \clist_gput_right:Nn \l_@@_bib_resource_clist { #1 } }
+  { \clist_gput_right:Nn \g_@@_bib_resource_clist { #1 } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3472,9 +3542,9 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_biblatex_pre_setup:
   {
     \cs_undefine:N \addbibresource
-    \clist_put_right:Nn \l_@@_tmp_clist { backend = biber }
-    \exp_args:NV \PassOptionsToPackage \l_@@_tmp_clist { biblatex }
-    \clist_clear:N \l_@@_tmp_clist
+    \clist_gput_right:Nn \g_@@_biblatex_options_clist { backend = biber }
+    \exp_args:NV \PassOptionsToPackage
+      \g_@@_biblatex_options_clist { biblatex }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3493,17 +3563,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 传入参考文献源文件，此时可正常使用 \cs{addbibresource} 命令。
 %    \begin{macrocode}
-    \clist_map_inline:Nn \l_@@_bib_resource_clist
+    \clist_map_inline:Nn \g_@@_bib_resource_clist
       { \addbibresource { ##1 } }
-%    \end{macrocode}
-% 忽略不需要的文献信息。
-%    \begin{macrocode}
-    \AtEveryBibitem
-      {
-        \clist_map_inline:nn
-          { abstract, issn, isbn, archivePrefix, arxivId, pmid, eprint }
-          { \clearfield { ##1 } }
-      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4479,7 +4540,8 @@ To produce the documentation run the original source files ending with
   {
     \bool_if:NF \g_@@_draft_bool
       {
-        \pagestyle { empty }
+        \pagestyle     { empty  }
+        \pagenumbering { gobble }
 %    \end{macrocode}
 % 如果在研究生模板中选择了 \opt{nlcover}，就生成用于申请学位的国家图书馆封面，
 % 反之生成普通封面。

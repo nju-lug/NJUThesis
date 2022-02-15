@@ -10,9 +10,12 @@
 
 - 新增符号表页面 `notation` - [#61]
 - 可选择是否隐藏特定目录条目
-  - 新增选项 `abstract-in-toc` - [#66]
-  - 新增选项 `toc-in-toc`
+  - 新增选项 `style/abstract-in-toc` - [#66]
+  - 新增选项 `style/toc-in-toc`
 - 可使用自定义的参考文献样式 - [#71]
+  - 修改选项 `bib/style`
+- 可传入自定义 `biblatex` 设置
+  - 新增选项 `bib/options`
 
 ### 修复
 
