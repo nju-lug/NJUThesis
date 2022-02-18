@@ -15,7 +15,9 @@
 - 可使用自定义的参考文献样式 - [#71]
   - 修改选项 `bib/style`
 - 可传入自定义 `biblatex` 设置
-  - 新增选项 `bib/options`
+  - 新增选项 `bib/option`
+- 增加对章末参考文献表的支持 - [#79]
+  - 感谢 [@hushidong]！
 
 ### 修复
 
@@ -247,6 +249,7 @@
 [#64]: https://github.com/nju-lug/NJUThesis/issues/64
 [#66]: https://github.com/nju-lug/NJUThesis/issues/66
 [#71]: https://github.com/nju-lug/NJUThesis/discussions/71
+[#79]: https://github.com/nju-lug/NJUThesis/issues/79
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
@@ -254,3 +257,4 @@
 [NJU Thesis 2021]: https://github.com/FengChendian/NJUThesis2021
 
 [@zepinglee]: https://github.com/zepinglee
+[@hushidong]: https://github.com/hushidong

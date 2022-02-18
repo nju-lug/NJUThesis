@@ -1339,14 +1339,15 @@ To produce the documentation run the original source files ending with
 %
 % 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号表示”\cite{nju2021}，符合顺序编码制的格式，保持默认设置即可。
 %
-% \begin{function}[added=2022-02-15]{bib/options}
+% \begin{function}[added=2022-02-15]{bib/option}
 %   \begin{syntax}
-%     options = \meta{选项列表}
+%     option = \meta{选项列表}
 %   \end{syntax}
 % 待传入 \pkg{biblatex} 宏包的额外选项列表。
 % \end{function}
 %
-% 本模板中 \pkg{biblatex} 并不是显式载入的。如需在其基础上进行一些定制，可使用本设置项载入宏包选项。
+% 本模板中 \pkg{biblatex} 并不是显式载入的。
+% 如需在其基础上进行一些定制，可使用本设置项载入宏包选项。
 %
 % \begin{function}[added=2021-12-19]{bib/resource}
 %   \begin{syntax}
@@ -1363,13 +1364,13 @@ To produce the documentation run the original source files ending with
 % \end{function}
 %
 % 可以参考如下范例进行参考文献设置。
-% 其中 \opt{bib/options} 的内容旨在关闭部分不需显示的文献信息，可根据需要使用。
+% 其中 \opt{bib/option} 的内容旨在关闭部分不需显示的文献信息，可根据需要使用。
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
 %   \njusetup {
 %       bib = {
 %           style    = author-year,
 %           resource = {njuthesis-sample.bib}，
-%           options  = {
+%           option   = {
 %               doi    = false,
 %               isbn   = false,
 %               url    = false,
@@ -1379,11 +1380,22 @@ To produce the documentation run the original source files ending with
 %     }
 % \end{latexexample}
 %
+%
+% \subsubsection{参考文献表}
+%
 % \begin{function}{\printbibliography}
-% 生成参考文献表页面。
+% 生成参考文献表。
 % \end{function}
 %
 % 显然只有被引用过的条目才会被输出至参考文献表。
+%
+% 假如需要在每章末尾附上单独的参考文献表，导言区添加以下设置，
+% 并在每章后使用 \cs{printbibliography} 即可。
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
+%   \njusetup {
+%       bib = { option = { refsection = chapter } }
+%     }
+% \end{latexexample}
 %
 % 如果开启了草稿模式，您可能会注意到部分条目存在超宽的问题，这时就要果断假装没有看到。
 % 该问题的产生是由于 \hologo{LaTeX} 中只有固定的字母组合中间可以断行。使条目右侧平齐的方法有如下两种
@@ -3438,10 +3450,10 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{参考文献}
 %
-% \begin{variable}{\g_@@_biblatex_options_clist}
+% \begin{variable}{\g_@@_biblatex_option_clist}
 % 存储传入 \pkg{biblatex} 的选项列表。
 %    \begin{macrocode}
-\clist_new:N \g_@@_biblatex_options_clist
+\clist_new:N \g_@@_biblatex_option_clist
 %    \end{macrocode}
 % \end{variable}
 %
@@ -3476,36 +3488,36 @@ To produce the documentation run the original source files ending with
     style             .choice:,
     style / numeric     .code:n =
       {
-        \clist_gput_right:Nn \g_@@_biblatex_options_clist
+        \clist_gput_right:Nn \g_@@_biblatex_option_clist
           { style = gb7714-2015      }
       },
     style / author-year .code:n =
       {
-        \clist_gput_right:Nn \g_@@_biblatex_options_clist
+        \clist_gput_right:Nn \g_@@_biblatex_option_clist
           { style = gb7714-2015ay    }
       },
     style / unknown     .code:n =
       {
-        \clist_gput_right:Nx \g_@@_biblatex_options_clist
+        \clist_gput_right:Nx \g_@@_biblatex_option_clist
           { style = \l_keys_value_tl }
       },
     style            .initial:n = numeric,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{bib/options}
+% \begin{macro}{bib/option}
 % \changes{v0.15}{2022/02/15}{提供传入 \pkg{biblatex} 宏包选项的接口。}
 % 待传入 \pkg{biblatex} 的额外宏包选项，以列表形式储存。
 % 更为常见的参考文献样式设置已由 \opt{bib/style} 提供，
 % 此处对重复的样式设置进行了检查。本设置项等效于在导言区使用
-% |\PassOptionsToPackage{|\meta{key}|=|\meta{value}|}{biblatex}| 命令。
+% |\PassoptionToPackage{|\meta{key}|=|\meta{value}|}{biblatex}| 命令。
 %    \begin{macrocode}
-    options             .code:n =
+    option              .code:n =
       {
         \tl_if_in:VnTF \l_keys_value_tl { style = }
           { \msg_error:nn { njuthesis } { extra-bib-style } }
           {
-            \clist_gput_right:NV \g_@@_biblatex_options_clist
+            \clist_gput_right:NV \g_@@_biblatex_option_clist
               \l_keys_value_tl
           }
       },
@@ -3542,9 +3554,9 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_biblatex_pre_setup:
   {
     \cs_undefine:N \addbibresource
-    \clist_gput_right:Nn \g_@@_biblatex_options_clist { backend = biber }
+    \clist_gput_right:Nn \g_@@_biblatex_option_clist { backend = biber }
     \exp_args:NV \PassOptionsToPackage
-      \g_@@_biblatex_options_clist { biblatex }
+      \g_@@_biblatex_option_clist { biblatex }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3556,10 +3568,15 @@ To produce the documentation run the original source files ending with
   {
 %    \end{macrocode}
 % \changes{v0.12}{2021/12/06}{设置输出参考文献的默认选项。}
-% 修改参考文献的头部样式，自动添加目录条目。
+% \changes{v0.15}{2022/02/17}{可在每章后附上参考文献表。}
+% 修改参考文献的头部样式，自动添加目录条目。默认为 |chapter| 级别。
+% 如果需要在每章后附上一个参考文献表，即对 \pkg{biblatex} 传入了
+%  |refsection = chapter| 选项，则默认为 |section| 级别。
 %    \begin{macrocode}
-    \defbibheading { njubib } [ \bibname ] { \@@_chapter:V { ##1 } }
-    \DeclarePrintbibliographyDefaults { heading = njubib }
+    \defbibheading { njubibintoc } [ \bibname ] { \@@_chapter:V { ##1 } }
+    \tl_if_eq:NnTF \blx@refsecreset@level { 2 }
+      { \DeclarePrintbibliographyDefaults { heading = subbibintoc } }
+      { \DeclarePrintbibliographyDefaults { heading = njubibintoc } }
 %    \end{macrocode}
 % 传入参考文献源文件，此时可正常使用 \cs{addbibresource} 命令。
 %    \begin{macrocode}
@@ -4458,8 +4475,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_page:nn { cover-g-en-default }
   {
-    element = { title, top, middle, emblem-img, bottom },
-    prefix  = cover / g / en /,
+    element  = { title, top, middle, emblem-img, bottom },
+    prefix   = cover / g / en /,
     top-skip = 0 pt plus 1.2 fil
   }
 %    \end{macrocode}
@@ -4470,9 +4487,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_page:nn { cover-nl-default }
   {
-    element     = { top, name, title, middle, bottom, date },
-    prefix      = cover / nl /,
-    format      = \kaishu
+    element = { top, name, title, middle, bottom, date },
+    prefix  = cover / nl /,
+    format  = \kaishu
   }
 %    \end{macrocode}
 % \end{macro}
