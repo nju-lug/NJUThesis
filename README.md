@@ -15,7 +15,7 @@
 
 请首先阅读[用户手册](http://mirrors.ctan.org/macros/unicodetex/latex/njuthesis/njuthesis.pdf)，其中详尽阐述了模板的特性和使用方法。
 
-对于普通用户，首要推荐使用下述的**南大TeX编译方法**。
+对于普通用户，首要推荐使用下述的**南大 TeX 编译方法**。
 
 ### 南大 TeX 编译
 

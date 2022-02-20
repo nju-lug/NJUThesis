@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [0.15.0] - 2022-02-20
+
 ### 新增
 
 - 新增符号表页面 `notation` - [#61]
@@ -229,7 +231,8 @@
 - 模板上传至 CTAN
 
 
-[unreleased]: https://github.com/nju-lug/NJUThesis/compare/v0.14.0...HEAD
+[unreleased]: https://github.com/nju-lug/NJUThesis/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.15.0
 [0.14.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.14.0
 [0.13.1]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.13.1
 [0.13.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.13.0
