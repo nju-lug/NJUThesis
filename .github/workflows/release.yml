@@ -1,6 +1,6 @@
 name: Release
 
-on: 
+on:
   push:
     branches:
       - master
@@ -38,7 +38,7 @@ jobs:
           cd install-tl-20* && ./install-tl --profile ../.github/workflows/texlive.profile
           tlmgr install ${{ env.TL_PACKAGES }}
           tlmgr update --self --all --no-auto-install --repository=${{ env.CTAN_URL }}/systems/texlive/tlnet/
-      
+
       - name: Download njuvisual package
         run: |
           wget ${{ env.CTAN_URL }}/macros/latex/contrib/njuvisual/njuvisual.dtx
@@ -59,7 +59,7 @@ jobs:
           mv scripts/* .
           mv build/unpacked/njuthesis.cls .
           pdflatex --shell-escape "generate-img.tex"
-          zip -r njuthesis-user-$VERSION.zip njuthesis-sample.tex njuthesis-sample.bib njuthesis.cls njuvisual.sty nju-emblem.pdf nju-name.pdf LICENSE README.md
+          zip -r njuthesis-user-$VERSION.zip njuthesis-sample.tex njuthesis-sample.bib njuthesis.cls njuvisual.sty nju-emblem.pdf nju-name.pdf LICENSE CHANGELOG.md README.md
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
