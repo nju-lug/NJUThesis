@@ -120,6 +120,7 @@ To produce the documentation run the original source files ending with
 \definecolor{olgreen}{HTML}{138a07}
 \newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
 \newcommand\grd[1]{\textcolor{at@guard}{\sffamily #1}}
+\newcommand\tikzlogo{Ti\emph{k}Z}
 \hypersetup{%
   pdftitle  = {The njuthesis class - LaTeX thesis template for Nanjing University},
   citecolor = njublue,
@@ -1492,23 +1493,18 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{封面图片}
 %
-% \begin{function}[added=2021-12-23]{style/emblem-img}
+% \begin{function}[added=2021-12-23,updated=2022-02-22]{
+%   style/emblem-img,style/name-img}
 %   \begin{syntax}
 %     emblem-img = \Arg{文件}
-%   \end{syntax}
-% 校徽图片文件。
-% \end{function}
-%
-% \begin{function}[added=2021-12-23]{style/name-img}
-%   \begin{syntax}
 %     name-img = \Arg{文件}
 %   \end{syntax}
-% 校名图片文件。
+% 校名、校徽图片文件路径。
 % \end{function}
 %
-% 通过以上两个选项可以使用外置的校徽和校名图片。本模板封面中校徽及校名的绘制
-% 默认依赖 \pkg{njuvisual} 宏包提供的 \pkg{tikz} 矢量曲线，耗时较长，
-% 在替换为外置图片后可节省约1秒的编译时长。
+% 通过以上选项可以使用外置的校徽和校名图片，两个选项\emph{任一留空}则不会生效。
+% 本模板封面中校徽及校名的绘制默认依赖 \pkg{njuvisual} 宏包提供的 \tikzlogo
+% 矢量曲线，耗时较长，在替换为外置图片后可节省约1秒的编译时长。
 %
 %
 % \subsubsection{摘要页}
@@ -1898,10 +1894,9 @@ To produce the documentation run the original source files ending with
 \msg_new:nnn { njuthesis } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\
-    Please~ update~ an~ up-to-date~ version~ of~
-    the~ bundles "l3kernel"~ and~ "l3packages"~
-    using~ your~ TeX~ package~ manager~ or~ from~ \\
-    CTAN.
+    Please~ update~ an~ up-to-date~ version~ of~ the~
+    bundles "l3kernel"~ and~ "l3packages"~ using~ your~
+    TeX~ package~ manager~ or~ from~ CTAN.
   }
 \clist_map_inline:nn { xtemplate, l3keys2e }
   {
@@ -2666,10 +2661,6 @@ To produce the documentation run the original source files ending with
     geometry,
     fancyhdr,
     setspace,
-%    \end{macrocode}
-% 南京大学视觉形象化标准宏包 \pkg{njuvisual} 用于绘制学校 logo。
-%    \begin{macrocode}
-    njuvisual,
 %    \end{macrocode}
 % \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除 \pkg{amsthm} 和 \pkg{thmtools}。}
 % 数学，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
@@ -3992,37 +3983,41 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2021/12/23}{提供选择外置校徽图片的接口。}
 % 校徽图片路径。
 %    \begin{macrocode}
-    emblem-img .tl_set:N = \l_@@_emblem_img_tl,
+    emblem-img .tl_set:N = \g_@@_emblem_img_tl,
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{style/name-img}
 % \changes{v0.14}{2021/12/23}{提供选择外置校名图片的接口。}
 % 校名图片路径。
 %    \begin{macrocode}
-    name-img   .tl_set:N = \l_@@_name_img_tl
+    name-img   .tl_set:N = \g_@@_name_img_tl
   }
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v0.16}{2022/02/22}{不再默认载入 \pkg{njuvisual}。}
 % 根据导言区载入的用户设置进行一些处理。
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
 %    \end{macrocode}
 % \begin{macro}{\njuemblem,\njuname}
-% 如果用户在定义了图片的路径，则覆盖 \pkg{njuvisual} 提供的绘制命令。
+% 如果校名、校徽图片其中之一的路径未被定义，
+% 则使用 \pkg{njuvisual} 提供的绘制命令。
 %    \begin{macrocode}
-    \tl_if_empty:NF \l_@@_emblem_img_tl
+    \tl_if_empty:NTF \g_@@_emblem_img_tl
+      { \RequirePackage { njuvisual } }
       {
-        \RenewDocumentCommand \njuemblem { o m m }
-          { \includegraphics [ width = #2, height = #3 ]
-              { \l_@@_emblem_img_tl } }
-      }
-    \tl_if_empty:NF \l_@@_name_img_tl
-      {
-        \RenewDocumentCommand \njuname { o m m }
-          { \includegraphics [ width = #2, height = #3 ]
-              { \l_@@_name_img_tl } }
+        \tl_if_empty:NTF \g_@@_name_img_tl
+          { \RequirePackage { njuvisual } }
+          {
+            \NewDocumentCommand \njuemblem { o m m }
+              { \includegraphics [ width = #2, height = #3 ]
+                  { \g_@@_emblem_img_tl } }
+            \NewDocumentCommand \njuname   { o m m }
+              { \includegraphics [ width = #2, height = #3 ]
+                  { \g_@@_name_img_tl   } }
+          }
       }
   }
 %    \end{macrocode}
