@@ -20,6 +20,8 @@
 % This work consists of the files njuthesis.dtx,
 %           and the derived files njuthesis.ins,
 %                                 njuthesis.cls,
+%                                 njuthesis-undergraduate.def,
+%                                 njuthesis-graduate.def,
 %                                 njuthesis.pdf,
 %                             and README.md.
 %
@@ -71,10 +73,12 @@ To produce the documentation run the original source files ending with
 
 \generate{
   \usedir{tex/latex/njuthesis}
-    \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
+    \file{\jobname.cls}               {\from{\jobname.dtx}{class}}
+    \file{\jobname-undergraduate.def} {\from{\jobname.dtx}{definition-ug}}
+    \file{\jobname-graduate.def}      {\from{\jobname.dtx}{definition-g}}
 %<*internal>
   \usedir{source/latex/njuthesis}
-    \file{\jobname.ins}        {\from{\jobname.dtx}{install}}
+    \file{\jobname.ins}               {\from{\jobname.dtx}{install}}
 %</internal>
 }
 
@@ -87,6 +91,8 @@ To produce the documentation run the original source files ending with
 \Msg{* The recommended directory is TDS:tex/latex/njuthesis      *}
 \Msg{*                                                           *}
 \Msg{*     njuthesis.cls                                         *}
+\Msg{*     njuthesis-graduate.def                                *}
+\Msg{*     njuthesis-undergraduate.def                           *}
 \Msg{*     njuthesis.ins                                         *}
 \Msg{*                                                           *}
 \Msg{* To produce the documentation, run the file njuthesis.dtx  *}
@@ -104,11 +110,16 @@ To produce the documentation run the original source files ending with
 %</internal>
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
-%<class>\RequirePackage{expl3}
-%<class>\GetIdInfo $Id: njuthesis.dtx 0.15.0 2022-02-20 10:30:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<*!(driver|install)>
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.16.0 2022-02-23 10:30:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
-%<class>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%<definition-ug>  {Undergraduate definition file for njuthesis}
+%<definition-ug>\ProvidesExplFile{njuthesis-undergraduate.def}
+%<definition-g>  {Graduate definition file for njuthesis}
+%<definition-g>\ProvidesExplFile{njuthesis-graduate.def}
+%<!driver>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%</!(driver|install)>
 %
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
@@ -184,7 +195,7 @@ To produce the documentation run the original source files ending with
 % 南京大学 Linux 用户组
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}{git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.15.0 \quad 2022-02-20}
+% \date{v0.16.0 \quad 2022-02-23}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -414,29 +425,33 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{文件构成}
 %
-% 本模板由数量众多的文件组成，\emph{所有可能遇到的}文件如表 \ref{tab:njuthesisfiles} 所示。
-% 其中标注为黄色的内容仅供开发使用，并不会在发行版中出现。
+% 本模板由数量众多的文件组成，\emph{所有可能遇到的}文件如表 \ref{tab:njuthesis-files} 所示。
 %
 % \begin{table}[ht]
-%   \caption{\cls{njuthesis}文件构成}
-%   \label{tab:njuthesisfiles}
 %   \centering
-%   \begin{tabular}{lp{18em}}
+%   \begin{talltblr}[
+%     caption = {\cls{njuthesis}文件构成},
+%     label = {tab:njuthesis-files},
+%     note{a} = {仅供开发使用，并不会在发布版本中出现。}
+%   ] {ll}
 %     \toprule
-%     名称                                  & 说明                             \\
+%     名称                               & 说明                             \\
 %     \midrule
-%     \file{.vscode}                        & Visual Studio Code 配置文件      \\
-%     \file{latexmkrc}                      & latexmk 配置文件                 \\
-%     \file{LICENSE}                        & 许可证                           \\
-%     \file{njuthesis.cls}                  & 模板文档类                       \\
-%     \color{njuyellow}\file{njuthesis.dtx} & 文档类源代码                     \\
-%     \color{njuyellow}\file{njuthesis.ins} & 文档类安装脚本                   \\
-%     \file{njuthesis.pdf}                  & 用户手册（本文档）               \\
-%     \file{njuthesis-sample.bib}           & 示例参考文献列表                 \\
-%     \file{njuthesis-sample.tex}           & 示例文档，不妨以此为基础撰写论文 \\
-%     \file{README.md}                      & 自述文件                         \\
+%     \file{.vscode}                     & Visual Studio Code 配置文件      \\
+%     \file{CHANGELOG.md}                & 修订记录                         \\
+%     \file{latexmkrc}                   & \pkg{latexmk} 配置文件           \\
+%     \file{LICENSE}                     & 许可证                           \\
+%     \file{njuthesis.cls}               & 模板文档类                       \\
+%     \file{njuthesis.dtx}\TblrNote{a}   & 文档类源代码                     \\
+%     \file{njuthesis.ins}\TblrNote{a}   & 文档类安装脚本                   \\
+%     \file{njuthesis.pdf}               & 用户手册（本文档）               \\
+%     \file{njuthesis-sample.bib}        & 示例参考文献列表                 \\
+%     \file{njuthesis-sample.tex}        & 示例文档，不妨以此为基础撰写论文 \\
+%     \file{njuthesis-graduate.def}      & 研究生参数配置文件               \\
+%     \file{njuthesis-undergraduate.def} & 本科生参数配置文件               \\
+%     \file{README.md}                   & 自述文件                         \\
 %     \bottomrule
-%   \end{tabular}
+%   \end{talltblr}
 % \end{table}
 %
 %
@@ -595,7 +610,9 @@ To produce the documentation run the original source files ending with
 % \begin{shellexample}[morekeywords={latexmk}]
 %   latexmk njuthesis-sample
 % \end{shellexample}
-% 直接运行会调用 \hologo{pdfLaTeX} 引擎导致报错。如需指定编译引擎，可以加入 |-xelatex| 或 |-lualatex| 参数，例如指定 \hologo{XeLaTeX} 的命令为
+% 直接运行会调用 \hologo{pdfLaTeX} 引擎导致报错。
+% 如需指定编译引擎，可以加入 |-xelatex| 或 |-lualatex| 参数。
+% 例如，指定 \hologo{XeLaTeX} 的命令为
 % \begin{shellexample}[morekeywords={latexmk},emph={-xelatex}]
 %   latexmk -xelatex njuthesis-sample
 % \end{shellexample}
@@ -751,14 +768,28 @@ To produce the documentation run the original source files ending with
 % \end{itemize}
 % 草稿模式有助于提升编译速度以及检查格式问题，建议在定稿前始终开启。
 %
-% 启用这一选项也会改变特定宏包的行为，譬如在草稿模式下 \pkg{listings} 宏包的代码环境不会显示内容，具体效果需要参照各个宏包的说明文档。如需抵消草稿模式的影响，请使用 \opt{final} 选项载入相关宏包。
+% 启用这一选项也会改变特定宏包的行为，譬如在草稿模式下 \pkg{listings}
+% 宏包的代码环境不会显示内容，具体效果需要参照各个宏包的说明文档。
+% 如需抵消草稿模式的影响，请使用 \opt{final} 选项载入相关宏包。
+%
+%
+% \subsubsection{配置文件}
+%
+% \begin{function}[added=2022-02-23]{config}
+%   \begin{syntax}
+%     config = \Arg{文件}
+%   \end{syntax}
+% 配置文件路径。
+% \end{function}
+%
+% 本选项可用于载入额外的用户配置文件。该文件需使用 \hologo{LaTeX3} 语法编写。
 %
 %
 % \subsubsection{指定字体}
 %
-% 学校论文格式要求使用的字体一般已经预装在各个操作系统，本模板针对不同平台进行了自动检测适配，可以开箱即用。
-%
-% 如果希望更改本模板使用的字体，请填写以下两个选项以覆盖操作系统检测得到的设置。
+% 学校论文格式要求使用的字体一般已经预装在各个操作系统，
+% 本模板针对不同平台进行了自动检测适配，可以开箱即用。
+% 如果希望更改本模板使用的字体，请填写以下两个选项以覆盖默认设置。
 %
 % \begin{function}[added=2021-09-07,updated=2021-12-18]{cjk-font,latin-font}
 %   \begin{syntax}
@@ -1894,9 +1925,10 @@ To produce the documentation run the original source files ending with
 \msg_new:nnn { njuthesis } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\
-    Please~ update~ an~ up-to-date~ version~ of~ the~
-    bundles "l3kernel"~ and~ "l3packages"~ using~ your~
-    TeX~ package~ manager~ or~ from~ CTAN.
+    Please~ update~ an~ up-to-date~ version~ of~
+    the~ bundles "l3kernel"~ and~ "l3packages"~
+    using~ your~ TeX~ package~ manager~ or~ from~ \\
+    CTAN.
   }
 \clist_map_inline:nn { xtemplate, l3keys2e }
   {
@@ -1995,14 +2027,22 @@ To produce the documentation run the original source files ending with
 % \end{variable}
 %
 % \begin{variable}{\g_@@_latin_font_tl,\g_@@_cjk_font_tl}
-% 用于存储所使用字体名称的全局变量
+% 用于存储所使用字体名称的全局变量。
 %    \begin{macrocode}
 \tl_new:N \g_@@_latin_font_tl
 \tl_new:N \g_@@_cjk_font_tl
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\l_@@_info_sm_date_tl,\l_@@_info_sm_date_en_tl,\l_@@_info_df_date_tl}
+% \begin{variable}{\g_@@_config_tl}
+% 保存配置文件名称。默认为空。
+%    \begin{macrocode}
+\tl_new:N \g_@@_config_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\l_@@_info_sm_date_tl,\l_@@_info_sm_date_en_tl,
+% \l_@@_info_df_date_tl}
 % 用于存储格式化后的论文提交日期和答辩日期的变量。
 %    \begin{macrocode}
 \tl_new:N \l_@@_info_sm_date_tl
@@ -2051,6 +2091,13 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsection{内部函数}
+%
+% \begin{macro}{\file_input:V,\tl_map_inline:xn}
+%    \begin{macrocode}
+\cs_generate_variant:Nn \file_input:n     { V  }
+\cs_generate_variant:Nn \tl_map_inline:nn { xn }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_quad:,\@@_qquad:}
 % 等价于 \LaTeXe{} 中的 \tn{quad} 和 \tn{qquad}。
@@ -2127,7 +2174,6 @@ To produce the documentation run the original source files ending with
 %   \item 内容，不可带有格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_generate_variant:Nn \tl_map_inline:nn { xn }
 \cs_new_protected:Npn \@@_spread_box:nnn #1#2#3
   {
     \mode_leave_vertical:
@@ -2309,7 +2355,7 @@ To produce the documentation run the original source files ending with
     degree            .choices:nn = { ug, mg, mf, phd }
       {
         \int_set_eq:NN \l_@@_info_degree_int \l_keys_choice_int
-        \tl_set:Nn \l_@@_info_degree_tl
+        \tl_set:Nx \l_@@_info_degree_tl
           {
             \clist_item:Nn \c_@@_name_degree_clist
               { \l_@@_info_degree_int }
@@ -2331,7 +2377,7 @@ To produce the documentation run the original source files ending with
     type              .choices:nn = { thesis, design }
       {
         \int_set_eq:NN \l_@@_info_type_int \l_keys_choice_int
-        \tl_set:Nn \l_@@_info_type_tl
+        \tl_set:Nx \l_@@_info_type_tl
           { \clist_item:Nn \c_@@_name_type_clist { \l_@@_info_type_int } }
         \tl_put_left:Nn \l_@@_info_type_tl
           { \tl_use:c { c_@@_name_ \l_@@_info_diploma_tl _tl } }
@@ -2381,7 +2427,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{latin-font,cjk-font}
 % \changes{v0.14}{2021/12/12}{简化字体选项名称。}
-% 定义字体选项。
+% 字体选项。
 %    \begin{macrocode}
     latin-font        .choices:nn =
       { gyre, mac, win, none }
@@ -2389,6 +2435,14 @@ To produce the documentation run the original source files ending with
     cjk-font          .choices:nn =
       { fandol, founder, mac, noto, source, win, none }
       { \tl_set_eq:NN \g_@@_cjk_font_tl   \l_keys_choice_tl },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{config}
+% \changes{v0.16}{2022/02/23}{新增 \opt{config} 选项。}
+% 配置文件路径。
+%    \begin{macrocode}
+    config             .tl_set:N  = \g_@@_config_tl
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2398,6 +2452,20 @@ To produce the documentation run the original source files ending with
 \ProcessKeysOptions { nju }
 %    \end{macrocode}
 %
+% 根据设置的学位信息载入相应默认参数配置文件。
+% 如果用户指定了配置文件，则覆盖默认设置。
+%    \begin{macrocode}
+\int_compare:nTF { \l_@@_info_degree_int == 1 }
+  { \file_input:n { njuthesis-undergraduate.def } }
+  { \file_input:n { njuthesis-     graduate.def } }
+\msg_new:nnn { njuthesis } { load-config }
+  { I~ am~ loading~ config~ file~ "#1". }
+\tl_if_empty:NF \g_@@_config_tl
+  {
+    \file_input:V \g_@@_config_tl
+    \msg_info:nnx { njuthesis } { load-config } { \g_@@_config_tl }
+  }
+%    \end{macrocode}
 %
 % \subsection{用户接口}
 %
@@ -2422,180 +2490,6 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 %
-% \subsection{配置常量}
-% TODO: 分离为单独文件
-% 通用默认名称。注意空格是忽略掉的。
-%    \begin{macrocode}
-\clist_map_inline:nn
-  {
-    { acknowledgement } { 致\hspace{2em}谢              },
-    { id              } { 学号                          },
-    { notation        } { 符号表                        },
-    { orig_date       } { 日期                          },
-    { paperlist       } { 发表文章目录                  },
-    { pdf_creator     } { LaTeX~ with~ njuthesis~ class },
-    { preface         } { 前\hspace{2em}言              },
-    { supv_ii         } { 第二导师                      },
-    { supv_ttl        } { 职称                          }
-  }
-  { \@@_define_name:nn #1 }
-%    \end{macrocode}
-%
-% 定义同时使用到中英文名称的常量。
-%    \begin{macrocode}
-\clist_map_inline:nn
-  {
-    { abstract  } { 摘要     } { ABSTRACT            },
-    { appendix  } { 附录     } { appendix            },
-    { dept      } { 院系     } { DEPARTMENT          },
-    { figure    } { 图       } { figure              },
-    { keywords  } { 关键词： } { Keywords:~          },
-    { lang      } { 中文     } { 英文                },
-    { nju       } { 南京大学 } { Nanjing~ University },
-    { table     } { 表       } { table               }
-  }
-  { \@@_define_name:nnn #1 }
-%    \end{macrocode}
-%
-% 针对学位的特定名称。需要放在 \cs{ProcessKeysOptions} 导入设置选项后，以使用学位信息。
-%    \begin{macrocode}
-\int_compare:nTF { \l_@@_info_degree_int == 1 }
-  {
-%    \end{macrocode}
-% 本科默认名称。
-%    \begin{macrocode}
-    \clist_map_inline:nn
-      {
-        { author_full } { 本科生姓名                      },
-        { grade       } { 年级                            },
-        { orig_decl   } { 本科毕业论文（设计）诚信承诺书  },
-        { orig_sign   } { 作者签名                        },
-        { sm_date     } { 提交日期                        },
-        { supv        } { 导师                            },
-        { title       } { 题目                            },
-        { type        } { 本科生毕业论文（设计、作品）    },
-        { ug          } { 本科                            }
-      }
-      { \@@_define_name:nn #1 }
-      \clist_map_inline:nn
-        {
-          { author    } { 学生姓名               } { UNDERGRADUATE  },
-          { major     } { 专业                   } { SPECIALIZATION },
-          { supv_full } { 指导教师（姓名、职称） } { MENTOR         }
-        }
-        { \@@_define_name:nnn #1 }
-%    \end{macrocode}
-%
-% \begin{variable}{\c_@@_orig_decl_text_tl}
-% 学位论文诚信承诺书。
-%    \begin{macrocode}
-      \tl_const:Nn \c_@@_orig_decl_text_tl
-        {
-          本人郑重承诺：所呈交的毕业论文（设计）（题目：）是在指导教师的指导下
-          严格按照学校和院系有关规定由本人独立完成的。本毕业论文（设计）中引用
-          他人观点及参考资源的内容均已标注引用，如出现侵犯他人知识产权的行为，
-          由本人承担相应法律责任。本人承诺不存在抄袭、伪造、篡改、代写、买卖毕
-          业论文（设计）等违纪行为。
-        }
-  }
-%    \end{macrocode}
-% \end{variable}
-%
-% 研究生默认名称。
-%    \begin{macrocode}
-  {
-    \clist_map_inline:nn
-      {
-        { abstract_r  } { 摘要首页用纸       },
-        { author_r    } { 生姓名             },
-        { chairman    } { 答辩委员会主席：   },
-        { clc         } { 分类号             },
-        { confer      } { 学位授予单位和日期 },
-        { df_date     } { 论文答辩日期       },
-        { degree      } { 申请学位级别       },
-        { apply       }
-        { （申请 \l_@@_info_degree_tl 学位） },
-        { field       } { 研究方向           },
-        { g           } { 研究生             },
-        { grade       } { 级                 },
-        { major_s     } { 专业               },
-        { major_nl    } { 专业名称           },
-        { orig_decl   } { 学位论文原创性声明 },
-        { orig_sign   } { 研究生签名         },
-        { reviewer    } { 评阅人：           },
-        { seclv       } { 密级               },
-        { sign        } { （签字）           },
-        { sm_date     } { 论文提交日期       },
-        { supv        } { 导师               },
-        { supv_r      } { （姓名、职称）     },
-        { supv_info   } { 指导教师姓名、职务、
-                  职称、学位、单位名称及地址 },
-        { title       } { 论文题目           },
-        { title_nl    } { （题名和副题名）   },
-        { title_s     } { 题目               },
-        { udc         } { U D C              }
-      }
-      { \@@_define_name:nn #1 }
-      \clist_map_inline:nn
-        {
-          { author    } { 作者姓名 } { POSTGRADUATE   },
-          { major     } { 专业方向 } { SPECIALIZATION },
-          { supv_full } { 指导教师 } { MENTOR         }
-        }
-        { \@@_define_name:nnn #1 }
-%    \end{macrocode}
-%
-% \begin{variable}{\c_@@_cover_en_text_tl}
-% 英文封面字样。
-%    \begin{macrocode}
-    \tl_const:Nn \c_@@_cover_en_text_tl
-      {
-        A~ dissertation~ submitted~ to \\
-        the~ graduate~ school~ of~ Nanjing~ University \\
-        in~ partial~ fulfilment~ of~ the~ requirements~ for~ the~ degree~ of
-      }
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\c_@@_orig_decl_text_tl}
-% 学位论文原创性声明。
-%    \begin{macrocode}
-    \tl_const:Nn \c_@@_orig_decl_text_tl
-      {
-        本人郑重声明，所提交的学位论文是本人在导师指导下独立进行科学研究工作
-        所取得的成果。除本论文中已经注明引用的内容外，本论文不包含其他个人或
-        集体已经发表或撰写过的研究成果，也不包含为获得南京大学或其他教育机构
-        的学位证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，均已
-        在论文的致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
-      }
-  }
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\c_@@_theorem_type_clist}
-% 默认定理类型。
-%    \begin{macrocode}
-\clist_const:Nn \c_@@_theorem_type_clist
-  { axiom, corollary, definition, example, lemma, theorem }
-%    \end{macrocode}
-% \end{variable}
-%
-% 默认定理头名称。
-%    \begin{macrocode}
-\clist_map_inline:nn
-  {
-    { axiom      } { 公理 } { Axiom      },
-    { corollary  } { 推论 } { Corollary  },
-    { definition } { 定义 } { Definition },
-    { example    } { 例   } { Example    },
-    { lemma      } { 引理 } { Lemma      },
-    { proof      } { 证明 } { Proof      },
-    { theorem    } { 定理 } { Theorem    }
-  }
-  { \@@_define_name:nnn #1 }
-%    \end{macrocode}
-%
-%
 % \subsection{载入宏包}
 %
 % \changes{v0.12}{2021/12/07}{重新组织宏包载入顺序。}
@@ -2605,7 +2499,7 @@ To produce the documentation run the original source files ending with
   {
     a4paper,
     UTF8,
-    scheme=chinese,
+    scheme = chinese,
 %    \end{macrocode}
 % 传入单双面模式选项。
 %    \begin{macrocode}
@@ -2615,18 +2509,18 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     \bool_if:NT \g_@@_draft_bool { draft, }
 %    \end{macrocode}
-% 关于行距，\hologo{LaTeX} 默认1.2行距，word 默认行距是1.3，要求1.5倍 word 行距，故
-% $1.5\times\frac{1.3}{1.2} = 1.625$
+% 关于行距，\hologo{LaTeX} 默认1.2行距，MS Word 默认行距是1.3，要求1.5倍
+% Word 行距，故 $1.5\times\frac{1.3}{1.2} = 1.625$
 %    \begin{macrocode}
-    linespread=1.625,
+    linespread = 1.625,
 %    \end{macrocode}
 % 默认不载入任何字体，供本模板自行设置。
 %    \begin{macrocode}
-    fontset=none,
+    fontset = none,
 %    \end{macrocode}
 % 正文字体设置为小四号。
 %    \begin{macrocode}
-    zihao=-4
+    zihao = -4
   }
   { ctexbook }
 %    \end{macrocode}
@@ -2662,17 +2556,20 @@ To produce the documentation run the original source files ending with
     fancyhdr,
     setspace,
 %    \end{macrocode}
-% \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除 \pkg{amsthm} 和 \pkg{thmtools}。}
-% 数学，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
-% \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的数学字体。
-% 用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math} 发生冲突，此处手动消除其警告。
+% \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除
+%   \pkg{amsthm} 和 \pkg{thmtools}。}
+% 数学相关的宏包。其中，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
+% \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的
+% 数学字体。用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math}
+% 发生冲突，此处手动消除其警告。
 %    \begin{macrocode}
     amsmath,
     mathtools,
     unicode-math,
     ntheorem,
 %    \end{macrocode}
-% \changes{v0.14}{2021/12/21}{移除内置的 \pkg{multirow}、\pkg{subcaption} 和 \pkg{wrapfig}。}
+% \changes{v0.14}{2021/12/21}{移除内置的 \pkg{multirow}、\pkg{subcaption}
+%   和 \pkg{wrapfig}。}
 % 图片与表格。
 %    \begin{macrocode}
     booktabs,
@@ -2736,7 +2633,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 检查绘制下划线所需的 \pkg{luatexja} 包版本。该宏包在2021-09-18的更新解决了下划线中断问题，然而在2021-10-24的更新才提供了正确的内嵌日期。
+% 检查绘制下划线所需的 \pkg{luatexja} 包版本。该宏包在 2021-09-18 的更新
+% 解决了下划线中断问题，然而在 2021-10-24 的更新才提供了正确的内嵌日期。
 %    \begin{macrocode}
 \sys_if_engine_luatex:T
   { \@@_check_package:nnn { luatexja } { 2021/10/24 } { 20211024.0 } }
@@ -2850,7 +2748,8 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
-% 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，应当位于载入文档类之后。
+% 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，
+% 应当位于载入文档类之后。
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
@@ -4387,7 +4286,7 @@ To produce the documentation run the original source files ending with
     \@@_split_title:n { \l_@@_info_title_tl }
     \@@_multiline_box:nnnn { \l_@@_tmp_int } \l_@@_tmp_clist { 3 } { 15 em }
     \skip_vertical:n { - 0.5 cm }
-    { \zihao { 4 } \c_@@_name_title_nl_tl }
+    { \zihao { 4 } \c_@@_name_title_b_tl }
     \skip_vertical:N \c_zero_skip
     \@@_ulined_center_box:nn { 4.5 em } { \l__nju_info_author_tl }
     \skip_vertical:n { - 0.5 cm }
@@ -4409,7 +4308,7 @@ To produce the documentation run the original source files ending with
     \@@_ulined_center_box:nn { \textwidth } { \@@_info:n { supv_ttl }
     \@@_quad: \@@_info:n  { supv_cont } }                             \\
     \@@_uline_bientry:Nnnn \l_@@_tmp_dim { degree   } { degree  } { }
-    \@@_uline_bientry:Nnnn \l_@@_tmp_dim { major_nl } { major   } { } \\
+    \@@_uline_bientry:Nnnn \l_@@_tmp_dim { major_b  } { major   } { } \\
     \@@_uline_bientry:Nnnn \l_@@_tmp_dim { sm_date  } { sm_date } { }
     \@@_uline_bientry:Nnnn \l_@@_tmp_dim { df_date  } { df_date } { } \\
     \@@_full_uline:Nn \l_@@_tmp_dim { \c_@@_name_confer_tl }
@@ -4658,20 +4557,6 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{本科生}
 %
-% \begin{macro}{\@@_abs_title_ug:n}
-% 绘制本科生摘要标题。
-% \begin{arguments}
-%   \item 语言，空置为中文，|_en| 为英文
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_title_ug:n #1
-  {
-    \clist_map_inline:nn { nju, type, lang #1, abstract }
-      { \@@_name:n { ##1 } }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_abs_info_ug:nn}
 % 绘制本科生摘要信息栏。
 % \begin{arguments}
@@ -4692,7 +4577,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 由于作者姓名使用的字样发生了变动，这里进行替换以便嵌入循环。
 %    \begin{macrocode}
-    \tl_set_eq:NN \c_@@_name_author_tl \c_@@_name_author_full_tl
+    \tl_set_eq:NN \c_@@_name_author_tl \c_@@_name_author_a_tl
 %    \end{macrocode}
 % 使用循环输出院系、专业、作者、导师信息。
 %    \begin{macrocode}
@@ -4704,20 +4589,6 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \paragraph{研究生}
-%
-% \begin{macro}{\@@_abs_title_g:n}
-% 绘制研究生摘要标题。
-% \begin{arguments}
-%   \item 语言，空置为中文，|_en| 为英文
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_title_g:n #1
-  {
-    \@@_name:n { nju     } \@@_info:n { type       }
-    \@@_name:n { lang #1 } \@@_name:n { abstract_r }
-  }
-%    \end{macrocode}
-% \end{macro}
 %
 % \begin{macro}{\@@_abs_info_g:nn}
 % 绘制研究生摘要信息栏。
@@ -4737,7 +4608,7 @@ To produce the documentation run the original source files ending with
         \@@_full_uline:NV \l_@@_tmp_dim
           {
             \clist_item:Nn \c_@@_name_type_clist { \l_@@_info_type_int }
-            \c_@@_name_title_s_tl #2
+            \c_@@_name_title_a_tl #2
           }
         \@@_ulined_center_box:nn { \l_@@_tmp_dim }
           { \tl_range:Nnn \l_@@_info_title_tl { 1 } { 20 } } \\
@@ -4749,11 +4620,9 @@ To produce the documentation run the original source files ending with
         \@@_full_uline:NV \l_@@_tmp_dim
           {
             \@@_ulined_center_box:nn { 11 em } { \l_@@_info_major_tl }
-            \c_@@_name_major_s_tl
+            \c_@@_name_major_a_tl
             \@@_ulined_center_box:nn { 4 em } { \l_@@_info_grade_tl }
-            \c_@@_name_grade_tl
-            \tl_item:nn { \l_@@_info_degree_tl } { 1 }
-            \c_@@_name_author_r_tl #2
+            \c_@@_name_grade_tl \c_@@_name_author_a_tl #2
           }
         \@@_ulined_center_box:nn { \l_@@_tmp_dim }
           { \l_@@_info_author_tl } \\
@@ -4761,7 +4630,7 @@ To produce the documentation run the original source files ending with
 % 导师姓名、职称。
 %    \begin{macrocode}
         \@@_full_uline:NV \l_@@_tmp_dim
-          { \c_@@_name_supv_full_tl \c_@@_name_supv_r_tl #2 }
+          { \c_@@_name_supv_a_tl #2 }
         \@@_ulined_center_box:nn { \l_@@_tmp_dim }
           { \l_@@_info_supv_full_tl }
       }
@@ -4840,7 +4709,7 @@ To produce the documentation run the original source files ending with
   {
     \begin{center}
       \@@_abs_title_uuline:n { 22 em }
-      \@@_abs_title_ug:n { #1 }
+      \@@_name:n { abstract_title #1 }
     \end{center}
     \group_begin:
       \@@_abs_info_style:n { -4 }
@@ -4862,7 +4731,7 @@ To produce the documentation run the original source files ending with
   {
     \begin{center}
       \@@_abs_title_uuline:n { 19 em }
-      \@@_abs_title_g:n { #1 }
+      \@@_name:n { abstract_title #1 }
     \end{center}
     \group_begin:
       \@@_abs_info_style:n { 4 }
@@ -4883,8 +4752,7 @@ To produce the documentation run the original source files ending with
   {
     \cleardoublepage
     \thispagestyle { plain }
-    \@@_abs_bookmark:Vn
-      { \c_@@_name_lang_tl \c_@@_name_abstract_tl } { abstract }
+    \@@_abs_bookmark:Vn \c_@@_name_abstract_a_tl { abstract }
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { } { ： }
     \group_begin: \kaishu \zihao { -4 } #1
   }
@@ -4899,9 +4767,9 @@ To produce the documentation run the original source files ending with
   {
     \cleardoublepage
     \thispagestyle { plain }
-    \@@_abs_bookmark:Vn { \c_@@_name_abstract_en_tl } { abstract-en }
+    \@@_abs_bookmark:Vn \c_@@_name_abstract_a_en_tl { abstract-en }
     \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { _en } { :~ }
-    \group_begin: \zihao{ -4 } #1
+    \group_begin: \zihao { -4 } #1
   }
   { \@@_print_keywords:nn { _en } { ;~ } \group_end: }
 %    \end{macrocode}
@@ -5028,6 +4896,209 @@ To produce the documentation run the original source files ending with
 %</class>
 %    \end{macrocode}
 % \end{environment}
+%
+%
+% \subsection{配置常量}
+% \changes{v0.16}{2022/02/23}{将名称常量分离为单独的 \file{.def} 文件。}
+%
+% 本节内容用于生成名称常量的默认定义文件，分为本科生和研究生模板两种。
+% 选定的配置文件会在 \cs{ProcessKeysOptions} 命令后载入。
+%
+% 由于同一名称在不同位置具有不同变体，本模板使用字母后缀名进行了区分，
+% 并在易混淆处添加了注释。
+%
+% 通用默认名称。注意空格是忽略掉的。
+%    \begin{macrocode}
+%<*(definition-ug|definition-g)>
+\clist_map_inline:nn
+  {
+    { acknowledgement } { 致\hspace{2em}谢              },
+    { id              } { 学号                          },
+    { notation        } { 符号表                        },
+    { orig_date       } { 日期                          },
+    { paperlist       } { 发表文章目录                  },
+    { pdf_creator     } { LaTeX~ with~ njuthesis~ class },
+    { preface         } { 前\hspace{2em}言              },
+    { supv_ii         } { 第二导师                      },
+    { supv_ttl        } { 职称                          }
+  }
+  { \@@_define_name:nn #1 }
+%    \end{macrocode}
+%
+% 定义同时使用到中英文名称的常量。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { abstract   } { 摘要       } { ABSTRACT            },
+    % 用于书签的摘要名称字样
+    { abstract_a } { 中文摘要   } { ABSTRACT            },
+    { appendix   } { 附录       } { appendix            },
+    { dept       } { 院系       } { DEPARTMENT          },
+    { figure     } { 图         } { figure              },
+    { keywords   } { 关键词：   } { Keywords:~          },
+    { lang       } { 中文       } { 英文                },
+    { nju        } { 南京大学   } { Nanjing~ University },
+    { table      } { 表         } { table               }
+  }
+  { \@@_define_name:nnn #1 }
+%</(definition-ug|definition-g)>
+%    \end{macrocode}
+%
+% 本科生模板默认名称。
+%    \begin{macrocode}
+%<*definition-ug>
+\clist_map_inline:nn
+  {
+    % 用于摘要的作者名称字样
+    { author_a    } { 本科生姓名                      },
+    { grade       } { 年级                            },
+    { orig_decl   } { 本科毕业论文（设计）诚信承诺书  },
+    { orig_sign   } { 作者签名                        },
+    { sm_date     } { 提交日期                        },
+    { supv        } { 导师                            },
+    { title       } { 题目                            },
+    { type        } { 本科生毕业论文（设计、作品）    },
+    { ug          } { 本科生                          }
+  }
+  { \@@_define_name:nn #1 }
+\clist_map_inline:nn
+  {
+    { abstract_title }
+      {
+        \c_@@_name_nju_tl  \c_@@_name_type_tl
+        \c_@@_name_lang_tl \c_@@_name_abstract_tl
+      }
+      {
+        \c_@@_name_nju_tl     \c_@@_name_type_tl
+        \c_@@_name_lang_en_tl \c_@@_name_abstract_tl
+      },
+    { author    } { 学生姓名               } { UNDERGRADUATE  },
+    { major     } { 专业                   } { SPECIALIZATION },
+    { supv_full } { 指导教师（姓名、职称） } { MENTOR         }
+  }
+  { \@@_define_name:nnn #1 }
+%    \end{macrocode}
+%
+% \begin{variable}{\c_@@_orig_decl_text_tl}
+% 学位论文诚信承诺书。
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_orig_decl_text_tl
+  {
+    本人郑重承诺：所呈交的毕业论文（设计）（题目：）是在指导教师的指导下
+    严格按照学校和院系有关规定由本人独立完成的。本毕业论文（设计）中引用
+    他人观点及参考资源的内容均已标注引用，如出现侵犯他人知识产权的行为，
+    由本人承担相应法律责任。本人承诺不存在抄袭、伪造、篡改、代写、买卖毕
+    业论文（设计）等违纪行为。
+  }
+%</definition-ug>
+%    \end{macrocode}
+% \end{variable}
+%
+% 研究生模板默认名称。
+%    \begin{macrocode}
+%<*definition-g>
+\clist_map_inline:nn
+  {
+    % 用于摘要的作者名称字样
+    { author_a     }
+      { \tl_item:Nn \l_@@_info_degree_tl { 2 } 生姓名  },
+    { chairman     } { 答辩委员会主席：                },
+    { clc          } { 分类号                          },
+    { confer       } { 学位授予单位和日期              },
+    { df_date      } { 论文答辩日期                    },
+    { degree       } { 申请学位级别                    },
+    { apply        }
+      { （申请 \l_@@_info_degree_tl 学位）             },
+    { field        } { 研究方向                        },
+    { g            } { 研究生                          },
+    { grade        } { 级                              },
+    % 用于摘要的专业名称字样
+    { major_a      } { 专业                            },
+    % 用于国家图书馆封面的专业名称字样
+    { major_b      } { 专业名称                        },
+    { orig_decl    } { 学位论文原创性声明              },
+    { orig_sign    } { 研究生签名                      },
+    { reviewer     } { 评阅人：                        },
+    { seclv        } { 密级                            },
+    { sign         } { （签字）                        },
+    { sm_date      } { 论文提交日期                    },
+    { supv         } { 导师                            },
+    % 用于摘要的导师名称字样
+    { supv_a       } { 指导教师（姓名、职称）          },
+    { supv_info    }
+      { 指导教师姓名、职务、职称、学位、单位名称及地址 },
+    % 用于普通封面的标题名称字样
+    { title        } { 论文题目                        },
+    % 用于摘要的标题名称字样
+    { title_a      } { 题目                            },
+    % 用于国家图书馆封面的标题名称字样
+    { title_b      } { （题名和副题名）                },
+    { udc          } { U D C                           }
+  }
+  { \@@_define_name:nn #1 }
+\clist_map_inline:nn
+  {
+    { abstract_title }
+      { 南京大学 \l_@@_info_type_tl 中文摘要首页用纸 }
+      { 南京大学 \l_@@_info_type_tl 英文摘要首页用纸 },
+    { author    } { 作者姓名 } { POSTGRADUATE        },
+    { major     } { 专业方向 } { SPECIALIZATION      },
+    { supv_full } { 指导教师 } { MENTOR              }
+  }
+  { \@@_define_name:nnn #1 }
+%    \end{macrocode}
+%
+% \begin{variable}{\c_@@_cover_en_text_tl}
+% 英文封面字样。
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_cover_en_text_tl
+  {
+    A~ dissertation~ submitted~ to \\
+    the~ graduate~ school~ of~ Nanjing~ University \\
+    in~ partial~ fulfilment~ of~ the~ requirements~ for~ the~ degree~ of
+  }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\c_@@_orig_decl_text_tl}
+% 学位论文原创性声明。
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_orig_decl_text_tl
+  {
+    本人郑重声明，所提交的学位论文是本人在导师指导下独立进行科学研究工作
+    所取得的成果。除本论文中已经注明引用的内容外，本论文不包含其他个人或
+    集体已经发表或撰写过的研究成果，也不包含为获得南京大学或其他教育机构
+    的学位证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，均已
+    在论文的致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
+  }
+%</definition-g>
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\c_@@_theorem_type_clist}
+% 默认定理类型。
+%    \begin{macrocode}
+%<*(definition-ug|definition-g)>
+\clist_const:Nn \c_@@_theorem_type_clist
+  { axiom, corollary, definition, example, lemma, theorem }
+%    \end{macrocode}
+% \end{variable}
+%
+% 默认定理头名称。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { axiom      } { 公理 } { Axiom      },
+    { corollary  } { 推论 } { Corollary  },
+    { definition } { 定义 } { Definition },
+    { example    } { 例   } { Example    },
+    { lemma      } { 引理 } { Lemma      },
+    { proof      } { 证明 } { Proof      },
+    { theorem    } { 定理 } { Theorem    }
+  }
+  { \@@_define_name:nnn #1 }
+%</(definition-ug|definition-g)>
+%    \end{macrocode}
 %
 % \end{implementation}
 %

@@ -8,13 +8,9 @@ on:
     tags:
       - v*
 
-  pull_request:
-    branches:
-      - master
-
 env:
   CTAN_URL: https://mirrors.rit.edu/CTAN
-  TL_PACKAGES: alphalph auxhook background biber biblatex biblatex-gb7714-2015 bibtex booktabs caption cm-unicode colortbl csquotes ctex dashundergaps diagbox enumitem everypage fancyhdr fancyvrb fandol footmisc gbt7714 hologo hycolor hypdoc hyperref l3build latexmk libertinus-fonts listings lm-math makecell makeindex microtype multirow natbib ninecolors njuvisual pict2e preview psnfss setspace siunitx symbol tabularray tex-gyre tex-gyre-math threeparttable translator underscore unicode-math url xits xstring zref
+  TL_PACKAGES: alphalph auxhook background bibtex bigfoot booktabs caption cm-unicode colortbl csquotes ctex dashundergaps diagbox enumitem everypage fancyhdr fancyvrb fandol footmisc hologo hycolor hypdoc hyperref l3build latexmk libertinus-fonts listings lm-math makecell makeindex natbib ninecolors njuvisual pict2e preview psnfss setspace siunitx symbol tabularray tex-gyre tex-gyre-math threeparttable translator underscore unicode-math url xits xstring zref
 
 jobs:
   release:
@@ -57,7 +53,7 @@ jobs:
           xetex njuvisual.dtx
           mv docs/* .
           mv build/unpacked/njuthesis.cls .
-          zip -r njuthesis-user-$VERSION.zip njuthesis-sample.tex njuthesis-sample.bib njuthesis.cls njuvisual.sty nju-emblem.pdf nju-name.pdf LICENSE CHANGELOG.md README.md
+          zip -r njuthesis-user-$VERSION.zip njuthesis-* njuthesis.cls njuvisual.sty nju-*.pdf LICENSE CHANGELOG.md README.md
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:

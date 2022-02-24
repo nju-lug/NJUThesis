@@ -34,7 +34,7 @@
 
 ### 典型结构
 
-```
+```LaTeX
 \documentclass{njuthesis}
 \njusetup{}
 \begin{document}

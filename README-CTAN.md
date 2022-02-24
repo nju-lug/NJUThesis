@@ -11,7 +11,7 @@ Usage
 
 A minimal example of this document class should look like
 
-```
+```LaTeX
 \documentclass{njuthesis}
 \njusetup{}
 \begin{document}

@@ -14,8 +14,9 @@
 
 ## DocStrip generated file
 *.cls
-*.sty
+*.def
 *.ins
+*.sty
 
 ## Zip file
 *.zip

@@ -13,7 +13,7 @@ ctanreadme    = "README-CTAN.md"
 
 sourcefiledir = "source"
 sourcefiles   = {"*.dtx"}
-installfiles  = {"*.cls"}
+installfiles  = {"*.cls", "*.def"}
 
 typesetexe    = "xelatex"
 typesetfiles  = {"njuthesis.dtx"}
