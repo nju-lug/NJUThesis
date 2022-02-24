@@ -2041,6 +2041,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\g_@@_theorem_type_clist}
+% 定理类型。
+%    \begin{macrocode}
+\clist_new:N \g_@@_theorem_type_clist
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}{\l_@@_info_sm_date_tl,\l_@@_info_sm_date_en_tl,
 % \l_@@_info_df_date_tl}
 % 用于存储格式化后的论文提交日期和答辩日期的变量。
@@ -2137,6 +2144,17 @@ To produce the documentation run the original source files ending with
   {
     \tl_const:cn { c_@@_name_ #1    _tl } { #2 }
     \tl_const:cn { c_@@_name_ #1 _en_tl } { #3 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_add_theorem_type:nnn}
+% 添加已知的定理环境类型。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_add_theorem_type:nnn #1#2#3
+  {
+    \clist_gput_right:Nn \g_@@_theorem_type_clist { #1 }
+    \@@_define_name:nnn { #1 } { #2 } { #3 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3531,7 +3549,7 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\@@_cref_name:n,}
+% \begin{macro}{\@@_cref_name:n,\@@_cref_name:V}
 % 用于修改 \pkg{cleverref} 的标签名称的辅助函数。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cref_name:n #1
@@ -3542,6 +3560,7 @@ To produce the documentation run the original source files ending with
           { \@@_name:n { ##1 } } { \@@_name:n { ##1 _en } }
       }
   }
+\cs_generate_variant:Nn \@@_cref_name:n { V }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3558,7 +3577,7 @@ To produce the documentation run the original source files ending with
 % 修改 \pkg{cleverref} 的标签名称。
 %    \begin{macrocode}
 \@@_cref_name:n { figure, table, appendix, proof }
-\exp_args:NV \@@_cref_name:n \c_@@_theorem_type_clist
+\@@_cref_name:V \g_@@_theorem_type_clist
 %    \end{macrocode}
 %
 %
@@ -3618,9 +3637,12 @@ To produce the documentation run the original source files ending with
 \newtheorem* { proof } { \c_@@_name_proof_tl }
 %    \end{macrocode}
 %
-% 定义普通定理环境。
+% 定义普通定理环境，需要排除 \env{proof}。
 %    \begin{macrocode}
-\@@_new_theorem:N \c_@@_theorem_type_clist
+\group_begin:
+  \clist_remove_all:Nn \g_@@_theorem_type_clist { proof }
+  \@@_new_theorem:N \g_@@_theorem_type_clist
+\group_end:
 %    \end{macrocode}
 %
 %
@@ -5075,17 +5097,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\c_@@_theorem_type_clist}
-% 默认定理类型。
+% 默认定理类型和头名称。
 %    \begin{macrocode}
 %<*(definition-ug|definition-g)>
-\clist_const:Nn \c_@@_theorem_type_clist
-  { axiom, corollary, definition, example, lemma, theorem }
-%    \end{macrocode}
-% \end{variable}
-%
-% 默认定理头名称。
-%    \begin{macrocode}
 \clist_map_inline:nn
   {
     { axiom      } { 公理 } { Axiom      },
@@ -5096,7 +5110,7 @@ To produce the documentation run the original source files ending with
     { proof      } { 证明 } { Proof      },
     { theorem    } { 定理 } { Theorem    }
   }
-  { \@@_define_name:nnn #1 }
+  { \@@_add_theorem_type:nnn #1 }
 %</(definition-ug|definition-g)>
 %    \end{macrocode}
 %
