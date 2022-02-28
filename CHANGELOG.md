@@ -15,6 +15,11 @@
 - 取消对 `njuvisual` 宏包的强制依赖
   - 简化自动安装脚本
 
+### 杂项
+
+- 说明手册中增加对 JabRef 软件的简介
+  - 感谢 [@zhoujian9410]！
+
 ## [0.15.0] - 2022-02-20
 
 ### 新增
@@ -270,3 +275,4 @@
 
 [@zepinglee]: https://github.com/zepinglee
 [@hushidong]: https://github.com/hushidong
+[@zhoujian9410]: https://github.com/zhoujian9410
