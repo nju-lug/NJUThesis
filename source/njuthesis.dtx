@@ -129,8 +129,10 @@ To produce the documentation run the original source files ending with
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
 \colorlet{at@guard}{njuviolet}
 \definecolor{olgreen}{HTML}{138a07}
+\definecolor{agrd}{HTML}{2E3191}
 \newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
-\newcommand\grd[1]{\textcolor{at@guard}{\sffamily #1}}
+\newcommand\agrd[1]{\textcolor{agrd}{\sffamily 〈#1〉}}
+\newcommand\bgrd[1]{\textcolor{at@guard}{\sffamily #1}}
 \newcommand\tikzlogo{Ti\emph{k}Z}
 \hypersetup{%
   pdftitle  = {The njuthesis class - LaTeX thesis template for Nanjing University},
@@ -218,6 +220,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/12}{优化了编译速度。}
 % \changes{v0.13}{2021/12/15}{适配2022届本科生毕业毕业论文（设计）规范。}
 % \changes{v0.14}{2022/01/13}{将本模板内嵌入南大 \hologo{TeX} 网站。}
+% \changes{v0.16}{2022/03/01}{分离本科生和研究生模板配置。}
 %
 %
 % \maketitle
@@ -1903,15 +1906,15 @@ To produce the documentation run the original source files ending with
 % 本模板使用 \hologo{LaTeX3} 语法编写，依赖 \pkg{expl3} 环境，
 % 并需调用 \pkg{l3packages} 中的相关宏包。
 %
-% 以下代码中有一些形如 \textsf{\color{guard@series!!}〈*class〉}
-% 的标记，这是 \pkg{DocStrip} 中的“guard”，用来选择性地提取文件。
+% 以下代码中有一些形如 \agrd{*class} 的标记，
+% 这是 \pkg{DocStrip} 中的“guard”，用来选择性地提取文件。
 % “|*|”和“|/|”分别表示该部分的开始和结束。不含
 % “|*|”和“|/|”的 guard 出现在行号右侧，它们用来确定
 % 单独一行代码的归属。这些 guard 的颜色深浅不一，用以明确嵌套关系。
 %
-% 另有若干包含 \grd{@@} 的 guard，用以表示名空间（模块）。
+% 另有若干包含 \bgrd{@@} 的 guard，用以表示名空间（模块）。
 % 在删除注释生成格式文件时，源代码变量名称中的 |@@| 会被等号后的字段替换，
-% 譬如在本模板中 \grd{〈@@=nju〉}。
+% 譬如在本模板主体部分中 \bgrd{〈@@=nju〉}。
 %
 %
 % \subsection{准备}
@@ -1929,17 +1932,15 @@ To produce the documentation run the original source files ending with
 \msg_new:nnn { njuthesis } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\
-    Please~ update~ an~ up-to-date~ version~ of~
-    the~ bundles "l3kernel"~ and~ "l3packages"~
-    using~ your~ TeX~ package~ manager~ or~ from~ \\
-    CTAN.
+    Please~ update~ an~ up-to-date~ version~ of~ the~
+    bundles~ "l3kernel"~ and~ "l3packages"~ using~
+    your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
 \clist_map_inline:nn { xtemplate, l3keys2e }
   {
     \@ifpackagelater {#1} { 2020/10/01 }
       { } { \msg_error:nnn { njuthesis } { l3-too-old } {#1} }
   }
-
 %    \end{macrocode}
 %
 % 目前 \cls{njuthesis} 仅支持 \hologo{XeTeX} 和 \hologo{LuaTeX}。
@@ -1952,14 +1953,10 @@ To produce the documentation run the original source files ending with
     You~ must~ change~ your~ typesetting~ engine~
     to~ "xelatex"~ or~ "lualatex".
   }
-\sys_if_engine_xetex:F
-  {
-    \sys_if_engine_luatex:F
-      {
-        \msg_fatal:nnx { njuthesis } { unsupported-engine }
-          { \c_sys_engine_str }
-      }
-  }
+\bool_lazy_or:nnF
+  { \sys_if_engine_xetex_p:  }
+  { \sys_if_engine_luatex_p: }
+  { \msg_fatal:nnx { njuthesis } { unsupported-engine } { \c_sys_engine_str } }
 %    \end{macrocode}
 %
 %
@@ -2363,6 +2360,140 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 %
+% \subsubsection{页面对象}
+% \changes{v0.15}{2022/01/24}{使用 \pkg{xtemplate} 重构封面。}
+%
+% 本模板使用 \pkg{xtemplate} 提供的面向对象方法简化封面和摘要的绘制过程。
+%
+% 以下分别从页面元素（element）和页面整体（page）的层次进行了抽象。当我们把页面部件考虑为一个对象时，它天然地只具备有限数量的属性：内容、格式、边距、对齐方式等。而具体的页面是这些对象的实例的集合，附加边距、行距等属性，创建页面只需传入一个列表调用各个 Instance 即可。通过 \pkg{xtemplate} 提供的功能，我们可以根据这些属性创建模板（template），进而能大量构建具有\emph{相似行为}的实例（instance）。这种做法能充分分离内容和样式，极大优化代码的可读性。
+%
+% 声明对象类型。此类对象不需要参数。
+%    \begin{macrocode}
+\DeclareObjectType { nju } { \c_zero_int }
+%    \end{macrocode}
+%
+% 定义元素模板。
+%    \begin{macrocode}
+%<@@=njuelem>
+%    \end{macrocode}
+%
+% 声明页面元素模板接口。
+% 元素是一个页面的基本组成单位，包括文段、图片等等。一个抽象的元素应当具备以下属性：
+% \begin{description}
+%   \item[\opt{content}] 内容，即剥离样式的元素本身
+%   \item[\opt{format}] 格式，例如字号、字体
+%   \item[\opt{bottom-skip}] 下间距，即与下一个元素的距离
+%   \item[\opt{align}] 对齐方式，包括左对齐、右对齐、居中、正常段落
+% \end{description}
+%    \begin{macrocode}
+\DeclareTemplateInterface { nju } { element } { \c_zero_int }
+  {
+    content     : tokenlist = \c_empty_tl,
+    format      : tokenlist = \c_empty_tl,
+    bottom-skip : skip      = \c_zero_skip,
+    align       : choice { l, r, c, n } = c
+  }
+%    \end{macrocode}
+%
+% 声明页面元素模板代码。涉及的变量将被自动创建。
+%    \begin{macrocode}
+\DeclareTemplateCode { nju } { element } { \c_zero_int }
+  {
+    content     = \l_@@_content_tl,
+    format      = \l_@@_format_tl,
+    bottom-skip = \l_@@_bottom_skip,
+    align =
+      {
+        l =
+          { \tl_set_eq:NN \l_@@_begin_align_tl \flushleft
+            \tl_set_eq:NN \l_@@_end_align_tl   \endflushleft  },
+        r =
+          { \tl_set_eq:NN \l_@@_begin_align_tl \flushright
+            \tl_set_eq:NN \l_@@_end_align_tl   \endflushright },
+        c =
+          { \tl_set_eq:NN \l_@@_begin_align_tl \center
+            \tl_set_eq:NN \l_@@_end_align_tl   \endcenter     },
+        n =
+          { \tl_clear:N   \l_@@_begin_align_tl
+            \tl_clear:N   \l_@@_end_align_tl                  }
+      }
+  }
+  {
+    \AssignTemplateKeys
+    \group_begin:
+      \l_@@_begin_align_tl
+      \l_@@_format_tl
+      \l_@@_content_tl \par
+      \l_@@_end_align_tl
+    \group_end:
+    \__nju_vskip:N \l_@@_bottom_skip
+  }
+%    \end{macrocode}
+%
+% 定义页面模板。
+%    \begin{macrocode}
+%<@@=njupage>
+%    \end{macrocode}
+%
+% 声明页面模板接口。
+% 页面是元素的集合。一个抽象的页面应当具备以下属性：
+% \begin{description}
+%   \item[\opt{element}] 包含的元素，这里使用的是名称列表
+%   \item[\opt{prefix}] 元素名称前缀
+%   \item[\opt{format}] 格式，例如行距
+%   \item[\opt{top-skip}] 上间距，即与页面顶部的距离
+%   \item[\opt{bottom-skip}] 下间距，即与页面底部的距离
+% \end{description}
+%    \begin{macrocode}
+\DeclareTemplateInterface { nju } { page } { \c_zero_int }
+  {
+    element     : commalist = \c_empty_clist,
+    prefix      : tokenlist = \c_empty_tl,
+    format      : tokenlist = \c_empty_tl,
+    top-skip    : skip      = \c_zero_skip,
+    bottom-skip : skip      = \c_zero_skip
+  }
+%    \end{macrocode}
+%
+% 声明页面模板代码。
+%    \begin{macrocode}
+\DeclareTemplateCode { nju } { page } { \c_zero_int }
+  {
+    element     = \l_@@_element_clist,
+    prefix      = \l_@@_prefix_tl,
+    format      = \l_@@_format_tl,
+    top-skip    = \l_@@_top_skip,
+    bottom-skip = \l_@@_bottom_skip
+  }
+  {
+    \AssignTemplateKeys
+    \newpage
+    \__nju_vskip:N \l_@@_top_skip
+    \group_begin:
+      \l_@@_format_tl
+      \clist_map_inline:Nn \l_@@_element_clist
+        { \UseInstance { nju } { \l_@@_prefix_tl ##1 } }
+    \group_end:
+    \__nju_vskip:N \l_@@_bottom_skip
+  }
+%<@@=nju>
+%    \end{macrocode}
+%
+% \begin{macro}{\@@_declare_element:nn,\@@_declare_page:nn}
+% 封装 \pkg{xtemplate} 提供的函数，简化创建实例的过程。
+% \begin{arguments}
+%   \item 实例名称
+%   \item 参数列表
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_declare_element:nn #1#2
+  { \DeclareInstance { nju } {#1} { element } {#2} }
+\cs_new_protected:Npn \@@_declare_page:nn    #1#2
+  { \DeclareInstance { nju } {#1} { page    } {#2} }
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \subsection{模板选项}
 % \changes{v0.11}{2021/11/15}{进行了效率优化。}
 %
@@ -2474,20 +2605,6 @@ To produce the documentation run the original source files ending with
 \ProcessKeysOptions { nju }
 %    \end{macrocode}
 %
-% 根据设置的学位信息载入相应默认参数配置文件。
-% 如果用户指定了配置文件，则覆盖默认设置。
-%    \begin{macrocode}
-\int_compare:nTF { \l_@@_info_degree_int == 1 }
-  { \file_input:n { njuthesis-undergraduate.def } }
-  { \file_input:n { njuthesis-     graduate.def } }
-\msg_new:nnn { njuthesis } { load-config }
-  { I~ am~ loading~ config~ file~ "#1". }
-\tl_if_empty:NF \g_@@_config_tl
-  {
-    \file_input:V \g_@@_config_tl
-    \msg_info:nnx { njuthesis } { load-config } { \g_@@_config_tl }
-  }
-%    \end{macrocode}
 %
 % \subsection{用户接口}
 %
@@ -2641,7 +2758,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { package-too-old }
   {
-    Package~ "#1"~ is~ too~ old. \\
+    Package~ "#1"~ is~ too~ old.\\
     The~ njuthesis~ class~ only~ supports~ "#1"~ with~
     a~ version higher~ than~ v#2.\\
     Please~ update~ an~ up-to-date~ version~ of~ it~
@@ -2660,6 +2777,35 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \sys_if_engine_luatex:T
   { \@@_check_package:nnn { luatexja } { 2021/10/24 } { 20211024.0 } }
+%    \end{macrocode}
+%
+%
+% \subsection{配置文件}
+%
+% \cls{njuthesis} 包含\emph{本科生}和\emph{研究生}两套区别较大的模板配置。
+% 出于定义的简洁起见，本模板将其拆分为两个单独的参数配置文件，
+% 编译过程中将会根据设置的学位信息，载入相应默认配置。
+% 注意，尽管在手册的实现细节部分封面、摘要、常量等位于靠后部分，
+% 拆分后实际上是在此处载入运行的，务必要注意逻辑顺序。
+%
+% 下文中，本科生模板配置对应 \agrd{definition-ug}，用于生成
+% \file{njuthesis-undergraduate.def}；研究生模板配置对应
+% \agrd{definition-g}，用于生成 \file{njuthesis-graduate.def}。
+%    \begin{macrocode}
+\int_compare:nTF { \l_@@_info_degree_int == 1 }
+  { \file_input:n { njuthesis-undergraduate.def } }
+  { \file_input:n { njuthesis-     graduate.def } }
+%    \end{macrocode}
+%
+% 载入用户设置，可用于对模板做额外修改。
+%    \begin{macrocode}
+\msg_new:nnn { njuthesis } { load-config }
+  { I~ am~ loading~ config~ file~ "#1". }
+\tl_if_empty:NF \g_@@_config_tl
+  {
+    \file_input:V \g_@@_config_tl
+    \msg_info:nnx { njuthesis } { load-config } { \g_@@_config_tl }
+  }
 %    \end{macrocode}
 %
 %
@@ -3760,199 +3906,21 @@ To produce the documentation run the original source files ending with
       { \clist_item:cn { l_@@_info_ #1 _clist } { 2 } }
     \@@_vskip:
   }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \subsubsection{定义对象}
-% \changes{v0.15}{2022/01/24}{使用 \pkg{xtemplate} 重构封面。}
-%
-% 本模板使用 \pkg{xtemplate} 提供的面向对象方法简化封面和摘要的绘制过程。
-%
-% 以下分别从页面元素（element）和页面整体（page）的层次进行了抽象。当我们把页面部件考虑为一个对象时，它天然地只具备有限数量的属性：内容、格式、边距、对齐方式等。而具体的页面是这些对象的实例的集合，附加边距、行距等属性，创建页面只需传入一个列表调用各个 Instance 即可。通过 \pkg{xtemplate} 提供的功能，我们可以根据这些属性创建模板（template），进而能大量构建具有\emph{相似行为}的实例（instance）。这种做法能充分分离内容和样式，极大优化代码的可读性。
-%
-% 声明对象类型。此类对象不需要参数。
-%    \begin{macrocode}
-\DeclareObjectType { nju } { \c_zero_int }
-%    \end{macrocode}
-%
-% 定义元素模板。
-%    \begin{macrocode}
-%<@@=njuelem>
-%    \end{macrocode}
-%
-% 声明页面元素模板接口。
-% 元素是一个页面的基本组成单位，包括文段、图片等等。一个抽象的元素应当具备以下属性：
-% \begin{description}
-%   \item[\opt{content}] 内容，即剥离样式的元素本身
-%   \item[\opt{format}] 格式，例如字号、字体
-%   \item[\opt{bottom-skip}] 下间距，即与下一个元素的距离
-%   \item[\opt{align}] 对齐方式，包括左对齐、右对齐、居中、正常段落
-% \end{description}
-%    \begin{macrocode}
-\DeclareTemplateInterface { nju } { element } { \c_zero_int }
-  {
-    content     : tokenlist = \c_empty_tl,
-    format      : tokenlist = \c_empty_tl,
-    bottom-skip : skip      = \c_zero_skip,
-    align       : choice { l, r, c, n } = c
-  }
-%    \end{macrocode}
-%
-% 声明页面元素模板代码。涉及的变量将被自动创建。
-%    \begin{macrocode}
-\DeclareTemplateCode { nju } { element } { \c_zero_int }
-  {
-    content     = \l_@@_content_tl,
-    format      = \l_@@_format_tl,
-    bottom-skip = \l_@@_bottom_skip,
-    align =
-      {
-        l =
-          { \tl_set_eq:NN \l_@@_begin_align_tl \flushleft
-            \tl_set_eq:NN \l_@@_end_align_tl   \endflushleft  },
-        r =
-          { \tl_set_eq:NN \l_@@_begin_align_tl \flushright
-            \tl_set_eq:NN \l_@@_end_align_tl   \endflushright },
-        c =
-          { \tl_set_eq:NN \l_@@_begin_align_tl \center
-            \tl_set_eq:NN \l_@@_end_align_tl   \endcenter     },
-        n =
-          { \tl_clear:N   \l_@@_begin_align_tl
-            \tl_clear:N   \l_@@_end_align_tl                  }
-      }
-  }
-  {
-    \AssignTemplateKeys
-    \group_begin:
-      \l_@@_begin_align_tl
-      \l_@@_format_tl
-      \l_@@_content_tl \par
-      \l_@@_end_align_tl
-    \group_end:
-    \__nju_vskip:N \l_@@_bottom_skip
-  }
-%    \end{macrocode}
-%
-% 定义页面模板。
-%    \begin{macrocode}
-%<@@=njupage>
-%    \end{macrocode}
-%
-% 声明页面模板接口。
-% 页面是元素的集合。一个抽象的页面应当具备以下属性：
-% \begin{description}
-%   \item[\opt{element}] 包含的元素，这里使用的是名称列表
-%   \item[\opt{prefix}] 元素名称前缀
-%   \item[\opt{format}] 格式，例如行距
-%   \item[\opt{top-skip}] 上间距，即与页面顶部的距离
-%   \item[\opt{bottom-skip}] 下间距，即与页面底部的距离
-% \end{description}
-%    \begin{macrocode}
-\DeclareTemplateInterface { nju } { page } { \c_zero_int }
-  {
-    element     : commalist = \c_empty_clist,
-    prefix      : tokenlist = \c_empty_tl,
-    format      : tokenlist = \c_empty_tl,
-    top-skip    : skip      = \c_zero_skip,
-    bottom-skip : skip      = \c_zero_skip
-  }
-%    \end{macrocode}
-%
-% 声明页面模板代码。
-%    \begin{macrocode}
-\DeclareTemplateCode { nju } { page } { \c_zero_int }
-  {
-    element     = \l_@@_element_clist,
-    prefix      = \l_@@_prefix_tl,
-    format      = \l_@@_format_tl,
-    top-skip    = \l_@@_top_skip,
-    bottom-skip = \l_@@_bottom_skip
-  }
-  {
-    \AssignTemplateKeys
-    \newpage
-    \__nju_vskip:N \l_@@_top_skip
-    \group_begin:
-      \l_@@_format_tl
-      \clist_map_inline:Nn \l_@@_element_clist
-        { \UseInstance { nju } { \l_@@_prefix_tl ##1 } }
-    \group_end:
-    \__nju_vskip:N \l_@@_bottom_skip
-  }
-%<@@=nju>
-%    \end{macrocode}
-%
-% \begin{macro}{\@@_declare_element:nn,\@@_declare_page:nn}
-% 封装 \pkg{xtemplate} 提供的函数，简化创建实例的过程。
-% \begin{arguments}
-%   \item 实例名称
-%   \item 参数列表
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_declare_element:nn #1#2
-  { \DeclareInstance { nju } {#1} { element } {#2} }
-\cs_new_protected:Npn \@@_declare_page:nn    #1#2
-  { \DeclareInstance { nju } {#1} { page    } {#2} }
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{绘制部件}
 %
-%    \begin{macrocode}
-\keys_define:nn { nju / style }
-  {
-%    \end{macrocode}
-% \begin{macro}{style/emblem-img}
-% \changes{v0.14}{2021/12/23}{提供选择外置校徽图片的接口。}
-% 校徽图片路径。
-%    \begin{macrocode}
-    emblem-img .tl_set:N = \g_@@_emblem_img_tl,
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{style/name-img}
-% \changes{v0.14}{2021/12/23}{提供选择外置校名图片的接口。}
-% 校名图片路径。
-%    \begin{macrocode}
-    name-img   .tl_set:N = \g_@@_name_img_tl
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \changes{v0.16}{2022/02/22}{不再默认载入 \pkg{njuvisual}。}
-% 根据导言区载入的用户设置进行一些处理。
-%    \begin{macrocode}
-\ctex_at_end_preamble:n
-  {
-%    \end{macrocode}
-% \begin{macro}{\njuemblem,\njuname}
-% 如果校名、校徽图片其中之一的路径未被定义，
-% 则使用 \pkg{njuvisual} 提供的绘制命令。
-%    \begin{macrocode}
-    \tl_if_empty:NTF \g_@@_emblem_img_tl
-      { \RequirePackage { njuvisual } }
-      {
-        \tl_if_empty:NTF \g_@@_name_img_tl
-          { \RequirePackage { njuvisual } }
-          {
-            \NewDocumentCommand \njuemblem { o m m }
-              { \includegraphics [ width = #2, height = #3 ]
-                  { \g_@@_emblem_img_tl } }
-            \NewDocumentCommand \njuname   { o m m }
-              { \includegraphics [ width = #2, height = #3 ]
-                  { \g_@@_name_img_tl   } }
-          }
-      }
-  }
-%    \end{macrocode}
-% \end{macro}
+% \changes{v0.16}{2022/03/01}{将封面部件分离到 \file{.def} 文件。}
 %
 % \paragraph{本科生}
 %
 % \begin{macro}{cover/ug/emblem-img}
 % 本科生封面校徽图片实例。
 %    \begin{macrocode}
+%<*definition-ug>
 \@@_declare_element:nn { cover / ug / emblem-img }
   {
     content = \njuemblem [ black ] { ! } { 3.35 cm },
@@ -4021,6 +3989,7 @@ To produce the documentation run the original source files ending with
       \@@_cover_entry:nnn { sm_date  } { #1 } { #2 }
     \end{minipage}
   }
+%</definition-ug>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4031,6 +4000,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover/g/emblem-img}
 % 研究生封面校徽图片实例。
 %    \begin{macrocode}
+%<*definition-g>
 \@@_declare_element:nn { cover / g / emblem-img }
   {
     content     = \njuemblem [ black ] { ! } { 1.9 cm },
@@ -4044,7 +4014,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { cover / g / name-img }
   {
-    content = \njuname [ black ] { 4.4 cm } { ! },
+    content     = \njuname [ black ] { 4.4 cm } { ! },
     bottom-skip = 2 cm
   }
 %    \end{macrocode}
@@ -4354,6 +4324,7 @@ To produce the documentation run the original source files ending with
     \@@_multiline_box:nnnn { \l_@@_tmp_int }
       { \l_@@_info_reviewer_clist } { 4 } { 9 em }
   }
+%</definition-g>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4369,18 +4340,21 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{cover-ug-default}
 % 默认本科生封面实例。
 %    \begin{macrocode}
+%<*definition-ug>
 \@@_declare_page:nn { cover-ug-default }
   {
     element     = { emblem-img, name-img, title, info },
     prefix      = cover / ug /,
     bottom-skip = 0.5 cm plus 1.5 fill
   }
+%</definition-ug>
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{cover-g-front-default}
 % 默认研究生普通封面正面实例。
 %    \begin{macrocode}
+%<*definition-g>
 \@@_declare_page:nn { cover-g-front-default }
   {
     element  = { emblem-img, name-img, type, degree, info, date },
@@ -4425,24 +4399,19 @@ To produce the documentation run the original source files ending with
     prefix  = cover / nl /,
     format  = \kaishu
   }
+%</definition-g>
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_make_cover_ug:}
-% 生成本科生封面。
+% \begin{macro}{\@@_make_cover:}
+% 生成本科生或研究生的普通封面。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_cover_ug:
-  { \UseInstance { nju } { cover-ug-default } }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_make_cover_g:}
-% 生成研究生的普通封面。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_cover_g:
+%<*(definition-ug|definition-g)>
+\cs_new_protected:Npn \@@_make_cover:
   {
-    \clist_map_inline:nn { front, back, en }
-      { \UseInstance { nju } { cover-g- ##1 -default } }
+%<definition-ug>    \UseInstance { nju } { cover-ug-default }
+%<definition-g>    \clist_map_inline:nn { front, back, en }
+%<definition-g>      { \UseInstance { nju } { cover-g- ##1 -default } }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4450,8 +4419,8 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_make_cover_nl:}
 % 生成研究生的国家图书馆封面。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_cover_nl:
-  { \UseInstance { nju } { cover-nl-default } }
+%<definition-g>\cs_new_protected:Npn \@@_make_cover_nl:
+%<definition-g>  { \UseInstance { nju } { cover-nl-default } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4461,24 +4430,88 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_orig_decl:
   {
-    \chapter* { \c_@@_name_nju_tl \c_@@_name_orig_decl_tl }
+    \chapter* { \c_@@_name_orig_decl_tl }
     \thispagestyle { empty }
     \c_@@_orig_decl_text_tl
     \vfil
     \begin{flushright}
-      \clist_set:Nn \l_@@_tmp_clist { orig_sign, id, orig_date }
-      \int_compare:nF { \l_@@_info_degree_int == 1 }
-        { \clist_remove_all:Nn \l_@@_tmp_clist { id } }
-      \clist_map_inline:Nn \l_@@_tmp_clist
+%<definition-ug>      \clist_map_inline:nn { orig_sign, id, orig_date }
+%<definition-g>      \clist_map_inline:nn { orig_sign, orig_date }
         { \@@_vskip: \@@_name:n { ##1 } ： \@@_uline:n { 7 em } }
     \end{flushright}
     \vfil
   }
+%</(definition-ug|definition-g)>
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{用户接口}
+%
+% \begin{macro}{\@@_new_img_cmd:nn,\@@_new_img_cmd:nV}
+% 用于定义插入图片命令的辅助函数。
+%    \begin{macrocode}
+%<*class>
+\cs_new_protected:Npn \@@_new_img_cmd:nn #1#2
+  {
+    \exp_args:Nc \NewDocumentCommand { #1 } { o m m }
+      { \includegraphics [ width = ##2, height = ##3 ] { #2 } }
+  }
+\cs_generate_variant:Nn \@@_new_img_cmd:nn { nV }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\keys_define:nn { nju / style }
+  {
+%    \end{macrocode}
+% \begin{macro}{style/emblem-img,\njuemblem}
+% \changes{v0.14}{2021/12/23}{提供选择外置校徽图片的接口。}
+% 校徽图片路径。
+%    \begin{macrocode}
+    emblem-img .code:n =
+      { \@@_new_img_cmd:nV { njuemblem } \l_keys_value_tl },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{style/name-img,\njuname}
+% \changes{v0.14}{2021/12/23}{提供选择外置校名图片的接口。}
+% 校名图片路径。
+%    \begin{macrocode}
+    name-img   .code:n =
+      { \@@_new_img_cmd:nV { njuname   } \l_keys_value_tl }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{v0.16}{2022/02/22}{不再默认载入 \pkg{njuvisual}。}
+% 检查 \cs{njuemblem} 和 \cs{njuname} 命令是否有定义。
+%    \begin{macrocode}
+\msg_new:nnn { njuthesis } { missing-image }
+  {
+    Local~ images~ not~ designated.\\
+    It~ seems~ that~ you~ haven't~ fill~ in~ both~
+    "style/emblem-img"~ and~ "style/name-img",~
+    therefore~ I~ am~ using~ package~ "njuvisual"~
+    instead,~ which~ may~ slow~ down~ the~ compilation.
+  }
+\ctex_at_end_preamble:n
+  {
+%    \end{macrocode}
+% 如果校名、校徽图片其中之一的路径未被定义，
+% 则全盘使用 \pkg{njuvisual} 提供的绘制命令。
+%    \begin{macrocode}
+    \bool_lazy_and:nnF
+      { \cs_if_exist_p:N \njuemblem }
+      { \cs_if_exist_p:N \njuname   }
+      {
+        \cs_undefine:N \njuemblem
+        \cs_undefine:N \njuname
+        \msg_warning:nn { njuthesis } { missing-image }
+        \RequirePackage { njuvisual }
+      }
+  }
+%    \end{macrocode}
 %
 % \begin{macro}{\maketitle}
 % \changes{v0.12}{2021/12/01}{仅会生成国家图书馆封面或者普通封面之一。}
@@ -4499,7 +4532,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
         \bool_if:NTF \g_@@_nlcover_bool
           { \@@_make_cover_nl: }
-          { \use:c { @@_make_cover_ \l_@@_info_diploma_tl : } }
+          { \@@_make_cover:    }
 %    \end{macrocode}
 % 如果在选择了 \opt{decl-page}，就生成本科生的诚信承诺书或研究生的原创性声明。
 %    \begin{macrocode}
@@ -4676,7 +4709,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
         \clist_map_inline:nn { major, author, supv_full }
           { \\
-            \@@_uline_entry:Nnnn \l_@@_tmp_dim { ##1 _en } { ##1 _en } { #2 }
+            \@@_uline_entry:Nnnn \l_@@_tmp_dim
+              { ##1 _en } { ##1 _en } { #2 }
           }
       }
   }
@@ -4925,10 +4959,9 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsection{配置常量}
-% \changes{v0.16}{2022/02/23}{将名称常量分离为单独的 \file{.def} 文件。}
+% \changes{v0.16}{2022/02/23}{将名称常量分离到 \file{.def} 文件。}
 %
-% 本节内容用于生成名称常量的默认定义文件，分为本科生和研究生模板两种。
-% 选定的配置文件会在 \cs{ProcessKeysOptions} 命令后载入。
+% 本节内容用于生成名称常量的默认定义，分为本科生和研究生模板两种。
 %
 % 由于同一名称在不同位置具有不同变体，本模板使用字母后缀名进行了区分，
 % 并在易混淆处添加了注释。
@@ -4976,15 +5009,16 @@ To produce the documentation run the original source files ending with
 \clist_map_inline:nn
   {
     % 用于摘要的作者名称字样
-    { author_a    } { 本科生姓名                      },
-    { grade       } { 年级                            },
-    { orig_decl   } { 本科毕业论文（设计）诚信承诺书  },
-    { orig_sign   } { 作者签名                        },
-    { sm_date     } { 提交日期                        },
-    { supv        } { 导师                            },
-    { title       } { 题目                            },
-    { type        } { 本科生毕业论文（设计、作品）    },
-    { ug          } { 本科生                          }
+    { author_a    } { 本科生姓名                         },
+    { grade       } { 年级                               },
+    { orig_decl   }
+      { \c_@@_name_nju_tl 本科毕业论文（设计）诚信承诺书 },
+    { orig_sign   } { 作者签名                           },
+    { sm_date     } { 提交日期                           },
+    { supv        } { 导师                               },
+    { title       } { 题目                               },
+    { type        } { 本科生毕业论文（设计、作品）       },
+    { ug          } { 本科生                             }
   }
   { \@@_define_name:nn #1 }
 \clist_map_inline:nn
@@ -5042,7 +5076,8 @@ To produce the documentation run the original source files ending with
     { major_a      } { 专业                            },
     % 用于国家图书馆封面的专业名称字样
     { major_b      } { 专业名称                        },
-    { orig_decl    } { 学位论文原创性声明              },
+    { orig_decl    }
+      { \c_@@_name_nju_tl 学位论文原创性声明           },
     { orig_sign    } { 研究生签名                      },
     { reviewer     } { 评阅人：                        },
     { seclv        } { 密级                            },
