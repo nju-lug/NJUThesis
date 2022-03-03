@@ -2360,7 +2360,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 %
-% \subsubsection{页面对象}
+% \subsection{页面对象}
 % \changes{v0.15}{2022/01/24}{使用 \pkg{xtemplate} 重构封面。}
 %
 % 本模板使用 \pkg{xtemplate} 提供的面向对象方法简化封面和摘要的绘制过程。
@@ -4436,7 +4436,7 @@ To produce the documentation run the original source files ending with
     \vfil
     \begin{flushright}
 %<definition-ug>      \clist_map_inline:nn { orig_sign, id, orig_date }
-%<definition-g>      \clist_map_inline:nn { orig_sign, orig_date }
+%<definition-g>      \clist_map_inline:nn { orig_sign,     orig_date }
         { \@@_vskip: \@@_name:n { ##1 } ： \@@_uline:n { 7 em } }
     \end{flushright}
     \vfil
@@ -4558,21 +4558,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{内部命令}
 %
-%    \begin{macrocode}
-\keys_define:nn { nju / style }
-  {
-%    \end{macrocode}
-% \begin{macro}{style/abstract-in-toc}
-% \changes{v0.15}{2022/02/04}{可选择摘要是否出现在目录中。}
-% 是否将摘要添加到目录。
-%    \begin{macrocode}
-    abstract-in-toc .bool_gset:N = \g_@@_abs_in_toc_bool,
-    abstract-in-toc   .initial:n = true
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_abs_bookmark:nn}
+% \begin{macro}{\@@_abs_bookmark:nn,\@@_abs_bookmark:Vn}
 % \changes{v0.14}{2021/12/21}{将摘要插入目录。}
 % 生成摘要的目录条目。
 %    \begin{macrocode}
@@ -4587,34 +4573,85 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_abs_title_uuline:n}
+% \begin{macro}{\@@_abs_title:n,\@@_abs_title:V}
 % 摘要标题双层下划线格式。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_title_uuline:n #1
-  { \bf \kaishu \zihao { -2 } \@@_uuline:n { #1 } }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_abs_info_style:n,\@@_abs_info_style_en:n}
-% 摘要信息栏通用格式，设置为无缩进、四号或者小四号、楷书。
-% \begin{arguments}
-%   \item 字号
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_info_style:n #1
-  { \noindent \zihao{ #1 } \kaishu }
-\cs_new_protected:Npn \@@_abs_info_style_en: #1
-  { \zihao{ #1 } }
+\cs_new_protected:Npn \@@_abs_title:n #1
+  {
+    \@@_get_text_width:Nn \l_@@_tmp_dim {#1}
+    \@@_uuline:n { \l_@@_tmp_dim } #1
+  }
+\cs_generate_variant:Nn \@@_abs_title:n { V }
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{绘制部件}
+% \changes{v0.16}{2022/03/02}{将摘要部件分离到 \file{.def} 文件。}
+% \changes{v0.16}{2022/03/02}{使用 \pkg{xtemplate} 重构摘要。}
+%
+% \begin{macro}{abstract/title}
+% 中文摘要标题实例。
+%    \begin{macrocode}
+%<*(definition-ug|definition-g)>
+\@@_declare_element:nn { abstract / title }
+  {
+    content     = \@@_abs_title:V \c_@@_name_abstract_title_tl,
+    format      = \bfseries \kaishu \zihao { -2 },
+    bottom-skip = 1.2 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{abstract/info}
+% 中文摘要信息栏实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { abstract / info }
+  {
+%<definition-ug>    content     = \@@_abs_info_ug:nn { } { ： },
+%<definition-g>    content     = \@@_abs_info_g:nn  { } { ： },
+%<definition-ug>    format      = \zihao { -4 } \kaishu,
+%<definition-g>    format      = \zihao {  4 } \kaishu,
+    align       = l,
+    bottom-skip = 1 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{abstract/en/title}
+% 英文摘要标题实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { abstract / en / title }
+  {
+    content     = \@@_abs_title:V \c_@@_name_abstract_title_en_tl,
+    format      = \bfseries \kaishu \zihao { -2 },
+    bottom-skip = 1 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{abstract/en/info}
+% 英文摘要信息栏实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { abstract / en / info }
+  {
+%<definition-ug>    content     = \@@_abs_info_ug:nn { _en } { :~ },
+%<definition-g>    content     = \@@_abs_info_g:nn  { _en } { :~ },
+%<definition-ug>    format      = \zihao { -4 },
+%<definition-g>    format      = \zihao {  4 },
+    align       = l,
+    bottom-skip = 1 cm
+  }
+%</(definition-ug|definition-g)>
+%    \end{macrocode}
+% \end{macro}
 %
 % \paragraph{本科生}
+% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构本科生摘要。}
 %
 % \begin{macro}{\@@_abs_info_ug:nn}
 % 绘制本科生摘要信息栏。
@@ -4624,6 +4661,7 @@ To produce the documentation run the original source files ending with
 % \end{arguments}
 % 本科生摘要页面不含下划线，因而不用确定文本宽度，绘制命令较为简单。
 %    \begin{macrocode}
+%<*definition-ug>
 \cs_new_protected:Npn \@@_abs_info_ug:nn #1#2
   {
 %    \end{macrocode}
@@ -4644,10 +4682,12 @@ To produce the documentation run the original source files ending with
       { \@@_name:n { ##1 #1 } #2 \@@_info:n { ##1 #1 } \\ }
     \@@_name:n { abstract #1 } #2
   }
+%</definition-ug>
 %    \end{macrocode}
 % \end{macro}
 %
 % \paragraph{研究生}
+% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构研究生摘要。}
 %
 % \begin{macro}{\@@_abs_info_g:nn}
 % 绘制研究生摘要信息栏。
@@ -4657,6 +4697,7 @@ To produce the documentation run the original source files ending with
 % 研究生摘要页包括下划线以及若干特殊的对齐方式，实现方式较为繁琐。
 % \end{arguments}
 %    \begin{macrocode}
+%<*definition-g>
 \cs_new_protected:Npn \@@_abs_info_g:nn #1#2
   {
     \tl_if_blank:eTF { #1 }
@@ -4714,6 +4755,7 @@ To produce the documentation run the original source files ending with
           }
       }
   }
+%</definition-g>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4727,11 +4769,11 @@ To produce the documentation run the original source files ending with
 %   \item 关键词分隔符
 % \end{arguments}
 %    \begin{macrocode}
+%<*class>
 \cs_new_protected:Npn \@@_print_keywords:nn #1#2
   {
-    \exp_args:NNc
-      \tl_set_eq:NN \l_@@_tmp_tl { c_@@_name_keywords #1 _tl }
-    \@@_get_text_width:Nn \l_@@_tmp_dim { \l_@@_tmp_tl }
+    \tl_set:Nv \l_@@_tmp_tl { c_@@_name_keywords #1 _tl }
+    \@@_get_text_width:NV \l_@@_tmp_dim \l_@@_tmp_tl
 %    \end{macrocode}
 % 关键词列表的悬挂缩进样式由 \tn{list} 环境产生。
 %    \begin{macrocode}
@@ -4751,58 +4793,48 @@ To produce the documentation run the original source files ending with
       \clist_use:cn { l_@@_info_keywords #1 _clist } { #2 }
     \endlist
   }
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{绘制摘要}
 %
-% \begin{macro}{\@@_make_abs_ug:nn}
-% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构本科生摘要。}
-% \begin{arguments}
-%   \item 语言，空置为中文，|_en| 为英文
-%   \item 关键词分隔符
-% \end{arguments}
-% 生成本科生摘要。
+% \begin{macro}{\@@_make_abstract:,\@@_make_abstract_en:}
+% 绘制摘要页面。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_abs_ug:nn #1#2
+%<*(definition-ug|definition-g)>
+\cs_new_protected:Npn \@@_make_abstract:
   {
-    \begin{center}
-      \@@_abs_title_uuline:n { 22 em }
-      \@@_name:n { abstract_title #1 }
-    \end{center}
-    \group_begin:
-      \@@_abs_info_style:n { -4 }
-      \@@_abs_info_ug:nn { #1 } { #2 }
-    \group_end: \@@_vskip:
+    \UseInstance { nju } { abstract / title }
+    \UseInstance { nju } { abstract / info  }
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_make_abs_g:nn}
-% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构研究生摘要。}
-% \begin{arguments}
-%   \item 语言，空置为中文，|_en| 为英文
-%   \item 关键词分隔符
-% \end{arguments}
-% 生成研究生摘要。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_abs_g:nn #1#2
+\cs_new_protected:Npn \@@_make_abstract_en:
   {
-    \begin{center}
-      \@@_abs_title_uuline:n { 19 em }
-      \@@_name:n { abstract_title #1 }
-    \end{center}
-    \group_begin:
-      \@@_abs_info_style:n { 4 }
-      \@@_abs_info_g:nn { #1 } { #2 }
-    \group_end: \@@_vskip:
+    \UseInstance { nju } { abstract / en / title }
+    \UseInstance { nju } { abstract / en / info  }
   }
+%</(definition-ug|definition-g)>
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{用户接口}
+%
+%    \begin{macrocode}
+%<*class>
+\keys_define:nn { nju / style }
+  {
+%    \end{macrocode}
+% \begin{macro}{style/abstract-in-toc}
+% \changes{v0.15}{2022/02/04}{可选择摘要是否出现在目录中。}
+% 是否将摘要添加到目录。
+%    \begin{macrocode}
+    abstract-in-toc .bool_gset:N = \g_@@_abs_in_toc_bool,
+    abstract-in-toc   .initial:n = true
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{environment}{abstract}
 % \changes{v0.13}{2021/12/12}{重新绘制摘要。}
@@ -4813,7 +4845,7 @@ To produce the documentation run the original source files ending with
     \cleardoublepage
     \thispagestyle { plain }
     \@@_abs_bookmark:Vn \c_@@_name_abstract_a_tl { abstract }
-    \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { } { ： }
+    \@@_make_abstract:
     \group_begin: \kaishu \zihao { -4 } #1
   }
   { \@@_print_keywords:nn { } { ； } \group_end: }
@@ -4828,7 +4860,7 @@ To produce the documentation run the original source files ending with
     \cleardoublepage
     \thispagestyle { plain }
     \@@_abs_bookmark:Vn \c_@@_name_abstract_a_en_tl { abstract-en }
-    \use:c { @@_make_abs_ \l_@@_info_diploma_tl :nn } { _en } { :~ }
+    \@@_make_abstract_en:
     \group_begin: \zihao { -4 } #1
   }
   { \@@_print_keywords:nn { _en } { ;~ } \group_end: }
