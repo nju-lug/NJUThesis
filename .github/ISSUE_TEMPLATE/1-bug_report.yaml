@@ -52,6 +52,29 @@ body:
     validations:
       required: true
   - type: dropdown
+    id: njuthesis_version
+    attributes:
+      label: njuthesis 模板版本
+      description: 模版版本可以在 `.log` 文件中搜索 `njuthesis` 得到。
+      options:
+        - 0.16.0
+        - 0.15.0
+        - 0.14.0
+        - 0.13.0
+        - 0.12.0
+        - 快更新吧
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: 模板获取途径
+      options:
+        - <https://tex.nju.edu.cn>
+        - 使用包管理器从 CTAN 安装
+        - 通过 GitHub Releases 或镜像站下载
+        - 从 Git 仓库下载
+  - type: dropdown
     id: operating_system
     attributes:
       label: 操作系统
@@ -73,27 +96,6 @@ body:
       options:
         - XeLaTeX
         - LuaLaTeX
-  - type: dropdown
-    id: njuthesis_version
-    attributes:
-      label: njuthesis 模板版本
-      description: 模版版本可以在 `.log` 文件中搜索 `njuthesis` 得到。
-      options:
-        - 0.14.0
-        - 0.13.0
-        - 0.12.0
-        - 快更新吧
-    validations:
-      required: true
-  - type: dropdown
-    id: source
-    attributes:
-      label: 模板获取途径
-      options:
-        - <https://tex.nju.edu.cn>
-        - 使用包管理器从 CTAN 安装
-        - 通过 GitHub Releases 或镜像站下载
-        - 从 Git 仓库下载
   - type: textarea
     id: more_info
     attributes:
