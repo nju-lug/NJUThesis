@@ -524,7 +524,7 @@ To produce the documentation run the original source files ending with
 %     \hologo{TeX}        & Windows   & macOS     & Linux     \\
 %     \midrule
 %     \hologo{TeX}\,Live  & $\bullet$ &           & $\bullet$ \\
-%     mac\hologo{TeX}     &           & $\bullet$ &           \\
+%     Mac\hologo{TeX}     &           & $\bullet$ &           \\
 %     \hologo{MiKTeX}     & $\bullet$ & $\bullet$ & $\bullet$ \\
 %     \bottomrule
 %   \end{tabular}
@@ -2093,10 +2093,9 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{内部函数}
 %
-% \begin{macro}{\file_input:V,\tl_map_inline:xn}
+% \begin{macro}{\file_input:V}
 %    \begin{macrocode}
 \cs_generate_variant:Nn \file_input:n     { V  }
-\cs_generate_variant:Nn \tl_map_inline:nn { xn }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2117,7 +2116,8 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_vskip:N}
-% 类似于 \hologo{LaTeX2e} 中的 \tn{vspace*}，从上一个页面元素底部开始生成 |skip|。
+% 类似于 \hologo{LaTeX2e} 中的 \tn{vspace*}，
+% 从上一个页面元素底部开始生成 |skip|。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_vskip:N #1
   {
@@ -2351,6 +2351,151 @@ To produce the documentation run the original source files ending with
   { \__zhnum_date_aux:nnn { #1 } { #2 } { #3 } }
 \cs_new:Npn \@@_date_en:www #1-#2-#3 \q_stop
   { \clist_item:Nn \c_@@_month_en_clist { #2 } ~#3 , ~#1  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{封面相关}
+% \changes{v0.16}{2022/03/10}{将封面和摘要内部函数定义移动到前部。}
+%
+% \begin{macro}{\@@_split_title:n,\@@_split_title:V}
+% 分割标题。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_split_title:n #1
+  {
+    \tl_if_in:nnTF { #1 } { \\ }
+      {
+%    \end{macrocode}
+% 从 |\\| 进行分割，存入 |clist|。
+%    \begin{macrocode}
+        \seq_set_split:Nnn \l_@@_tmp_seq { \\ } { #1 }
+        \clist_set_from_seq:NN \l_@@_tmp_clist \l_@@_tmp_seq
+      }
+      {
+%    \end{macrocode}
+% 如果没找到换行符，则手动从固定宽度的位置进行分割。
+%    \begin{macrocode}
+        \@@_put_inempty_seg:nnn { #1 } { 1  } { 15 }
+        \@@_put_inempty_seg:nnn { #1 } { 16 } { 15 }
+        \@@_put_inempty_seg:nnn { #1 } { 31 } { 15 }
+      }
+  }
+\cs_generate_variant:Nn \@@_split_title:n { V }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_multiline_title:nnn}
+% 生成多行标题。
+% \begin{arguments}
+%   \item 内容格式
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 内容盒子宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_multiline_title:nnn #1#2#3
+  {
+    \@@_split_title:V \l_@@_info_title_tl
+    \@@_spread_box:nnV { #2 } { \kaishu } \c_@@_name_title_tl
+    \@@_hskip:
+    \clist_map_inline:Nn \l_@@_tmp_clist
+      { \@@_ulined_center_box:nn { #3 } { #1 ##1 } \@@_vskip: }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_entry:nnn}
+% 生成单项信息条目。
+% \begin{arguments}
+%   \item 条目名称
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 内容盒子宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_entry:nnn #1#2#3
+  {
+    \@@_spread_box:nnx { #2 } { \kaishu } { \@@_name:n { #1 } }
+    \@@_hskip:
+    \@@_ulined_center_box:nn { #3 }       { \@@_info:n { #1 } }
+    \@@_vskip:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_bientry:nnnn}
+% 生成两项信息条目，仅用于本科生封面。
+% \begin{arguments}
+%   \item 左侧条目名称
+%   \item 右侧条目名称
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 内容盒子宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_bientry:nnnn #1#2#3#4
+  {
+    \@@_spread_box:nnx { #3 } { \kaishu } { \@@_name:n { #1 } }
+    \@@_hskip:
+    \@@_ulined_center_box:nn { #4 }       { \@@_info:n { #1 } }
+    \skip_horizontal:n { 0.5 em }
+    \@@_spread_box:nnx { #3 } { \kaishu } { \@@_name:n { #2 } }
+    \@@_hskip:
+    \@@_ulined_center_box:nn { #4 }       { \@@_info:n { #2 } }
+    \@@_vskip:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_supv_entry:nnn}
+% 生成两项导师信息条目，仅用于本科生封面。
+% \begin{arguments}
+%   \item 条目名称
+%   \item 长内容盒子宽度，|dim| 型变量
+%   \item 短内容盒子宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_supv_entry:nnn #1#2#3
+  {
+    \@@_spread_box:nnx { #2 } { \kaishu } { \@@_name:n { #1 } }
+    \@@_hskip:
+    \@@_ulined_center_box:nn { #3 }
+      { \clist_item:cn { l_@@_info_ #1 _clist } { 1 } }
+    \skip_horizontal:n { 0.5 em }
+    \@@_spread_box:nnV { #2 } { \kaishu } \c_@@_name_supv_ttl_tl
+    \@@_hskip:
+    \@@_ulined_center_box:nn { #3 }
+      { \clist_item:cn { l_@@_info_ #1 _clist } { 2 } }
+    \@@_vskip:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{摘要相关}
+%
+% \begin{macro}{\@@_abs_bookmark:nn,\@@_abs_bookmark:Vn}
+% \changes{v0.14}{2021/12/21}{将摘要插入目录。}
+% 生成摘要的目录条目。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_abs_bookmark:nn #1#2
+  {
+    \phantomsection
+    \bool_if:NTF \g_@@_abs_in_toc_bool
+      { \@@_add_tocline:n { #1 } }
+      { \pdfbookmark [0] { #1 } { #2 } }
+  }
+\cs_generate_variant:Nn \@@_abs_bookmark:nn { Vn }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_abs_title:n,\@@_abs_title:V}
+% 摘要标题双层下划线格式。
+% \begin{arguments}
+%   \item 宽度，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_abs_title:n #1
+  {
+    \@@_get_text_width:Nn \l_@@_tmp_dim {#1}
+    \@@_uuline:n { \l_@@_tmp_dim } #1
+  }
+\cs_generate_variant:Nn \@@_abs_title:n { V }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3815,123 +3960,11 @@ To produce the documentation run the original source files ending with
   \clist_remove_all:Nn \g_@@_theorem_type_clist { proof }
   \@@_new_theorem:N \g_@@_theorem_type_clist
 \group_end:
+%</class>
 %    \end{macrocode}
 %
 %
 % \subsection{封面}
-%
-% \subsubsection{内部命令}
-%
-% \begin{macro}{\@@_split_title:n,\@@_split_title:V}
-% 分割标题。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_split_title:n #1
-  {
-    \tl_if_in:nnTF { #1 } { \\ }
-      {
-%    \end{macrocode}
-% 从 |\\| 进行分割，存入 |clist|。
-%    \begin{macrocode}
-        \seq_set_split:Nnn \l_@@_tmp_seq { \\ } { #1 }
-        \clist_set_from_seq:NN \l_@@_tmp_clist \l_@@_tmp_seq
-      }
-      {
-%    \end{macrocode}
-% 如果没找到换行符，则手动从固定宽度的位置进行分割。
-%    \begin{macrocode}
-        \@@_put_inempty_seg:nnn { #1 } { 1  } { 15 }
-        \@@_put_inempty_seg:nnn { #1 } { 16 } { 15 }
-        \@@_put_inempty_seg:nnn { #1 } { 31 } { 15 }
-      }
-  }
-\cs_generate_variant:Nn \@@_split_title:n { V }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_multiline_title:nnn}
-% 生成多行标题。
-% \begin{arguments}
-%   \item 内容格式
-%   \item 名称盒子宽度，|dim| 型变量
-%   \item 内容盒子宽度，|dim| 型变量
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_multiline_title:nnn #1#2#3
-  {
-    \@@_split_title:V \l_@@_info_title_tl
-    \@@_spread_box:nnV { #2 } { \kaishu } \c_@@_name_title_tl
-    \@@_hskip:
-    \clist_map_inline:Nn \l_@@_tmp_clist
-      { \@@_ulined_center_box:nn { #3 } { #1 ##1 } \@@_vskip: }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_cover_entry:nnn}
-% 生成单项信息条目。
-% \begin{arguments}
-%   \item 条目名称
-%   \item 名称盒子宽度，|dim| 型变量
-%   \item 内容盒子宽度，|dim| 型变量
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry:nnn #1#2#3
-  {
-    \@@_spread_box:nnx { #2 } { \kaishu } { \@@_name:n { #1 } }
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #3 }       { \@@_info:n { #1 } }
-    \@@_vskip:
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_cover_bientry:nnnn}
-% 生成两项信息条目，仅用于本科生封面。
-% \begin{arguments}
-%   \item 左侧条目名称
-%   \item 右侧条目名称
-%   \item 名称盒子宽度，|dim| 型变量
-%   \item 内容盒子宽度，|dim| 型变量
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_bientry:nnnn #1#2#3#4
-  {
-    \@@_spread_box:nnx { #3 } { \kaishu } { \@@_name:n { #1 } }
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #4 }       { \@@_info:n { #1 } }
-    \skip_horizontal:n { 0.5 em }
-    \@@_spread_box:nnx { #3 } { \kaishu } { \@@_name:n { #2 } }
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #4 }       { \@@_info:n { #2 } }
-    \@@_vskip:
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_cover_supv_entry:nnn}
-% 生成两项导师信息条目，仅用于本科生封面。
-% \begin{arguments}
-%   \item 条目名称
-%   \item 长内容盒子宽度，|dim| 型变量
-%   \item 短内容盒子宽度，|dim| 型变量
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_supv_entry:nnn #1#2#3
-  {
-    \@@_spread_box:nnx { #2 } { \kaishu } { \@@_name:n { #1 } }
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #3 }
-      { \clist_item:cn { l_@@_info_ #1 _clist } { 1 } }
-    \skip_horizontal:n { 0.5 em }
-    \@@_spread_box:nnV { #2 } { \kaishu } \c_@@_name_supv_ttl_tl
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #3 }
-      { \clist_item:cn { l_@@_info_ #1 _clist } { 2 } }
-    \@@_vskip:
-  }
-%</class>
-%    \end{macrocode}
-% \end{macro}
 %
 %
 % \subsubsection{绘制部件}
@@ -4573,45 +4606,12 @@ To produce the documentation run the original source files ending with
     \pagenumbering { Roman }
     \normalfont \normalsize
   }
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsection{摘要页}
-%
-% \subsubsection{内部命令}
-%
-% \begin{macro}{\@@_abs_bookmark:nn,\@@_abs_bookmark:Vn}
-% \changes{v0.14}{2021/12/21}{将摘要插入目录。}
-% 生成摘要的目录条目。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_bookmark:nn #1#2
-  {
-    \phantomsection
-    \bool_if:NTF \g_@@_abs_in_toc_bool
-      { \@@_add_tocline:n { #1 } }
-      { \pdfbookmark [0] { #1 } { #2 } }
-  }
-\cs_generate_variant:Nn \@@_abs_bookmark:nn { Vn }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_abs_title:n,\@@_abs_title:V}
-% 摘要标题双层下划线格式。
-% \begin{arguments}
-%   \item 宽度，|dim| 型变量
-% \end{arguments}
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_title:n #1
-  {
-    \@@_get_text_width:Nn \l_@@_tmp_dim {#1}
-    \@@_uuline:n { \l_@@_tmp_dim } #1
-  }
-\cs_generate_variant:Nn \@@_abs_title:n { V }
-%</class>
-%    \end{macrocode}
-% \end{macro}
-%
 %
 % \subsubsection{绘制部件}
 % \changes{v0.16}{2022/03/02}{将摘要部件分离到 \file{.def} 文件。}
@@ -4636,7 +4636,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { abstract / info }
   {
 %<definition-ug>    content     = \@@_abs_info_ug:nn { } { ： },
-%<definition-g>    content     = \@@_abs_info_g:nn  { } { ： },
+%<definition-g>    content     = \@@_abs_info_g:n       { ： },
 %<definition-ug>    format      = \zihao { -4 } \kaishu,
 %<definition-g>    format      = \zihao {  4 } \kaishu,
     align       = l,
@@ -4652,7 +4652,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \@@_abs_title:V \c_@@_name_abstract_title_en_tl,
     format      = \bfseries \kaishu \zihao { -2 },
-    bottom-skip = 1 cm
+    bottom-skip = 1.2 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4663,7 +4663,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { abstract / en / info }
   {
 %<definition-ug>    content     = \@@_abs_info_ug:nn { _en } { :~ },
-%<definition-g>    content     = \@@_abs_info_g:nn  { _en } { :~ },
+%<definition-g>    content     = \@@_abs_info_en_g:n        { :~ },
 %<definition-ug>    format      = \zihao { -4 },
 %<definition-g>    format      = \zihao {  4 },
     align       = l,
@@ -4712,70 +4712,71 @@ To produce the documentation run the original source files ending with
 % \paragraph{研究生}
 % \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构研究生摘要。}
 %
-% \begin{macro}{\@@_abs_info_g:nn}
-% 绘制研究生摘要信息栏。
+% \begin{macro}{\@@_abs_info_g:n}
+% 绘制研究生中文摘要信息栏。
 % \begin{arguments}
-%   \item 语言，空置为中文，|_en| 为英文
 %   \item 分隔符
-% 研究生摘要页包括下划线以及若干特殊的对齐方式，实现方式较为繁琐。
 % \end{arguments}
+% 研究生中文摘要页包括下划线以及若干特殊的对齐方式，实现方式较为繁琐。使用 \cs{@@_full_uline:NV} 确定内容宽度后，调用 \cs{@@_uline:n} 或 \cs{@@_ulined_center_box:nn} 命令以绘制横穿页面的下划线。前两行为标题。
 %    \begin{macrocode}
 %<*definition-g>
-\cs_new_protected:Npn \@@_abs_info_g:nn #1#2
+\cs_new_protected:Npn \@@_abs_info_g:n #1
   {
-    \tl_if_blank:eTF { #1 }
+    \@@_full_uline:NV \l_@@_tmp_dim
       {
-%    \end{macrocode}
-% 中文摘要环境，使用 \cs{@@_full_uline:NV} 确定内容宽度后，调用 \cs{@@_uline:n} 或 \cs{@@_ulined_center_box:nn} 命令以绘制横穿页面的下划线。前两行为标题。
-%    \begin{macrocode}
-        \@@_full_uline:NV \l_@@_tmp_dim
-          {
-            \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int }
-            \c_@@_name_title_a_tl #2
-          }
-        \@@_ulined_center_box:nn { \l_@@_tmp_dim }
-          { \tl_range:Nnn \l_@@_info_title_tl { 1 } { 20 } } \\
-        \@@_uline:n { \textwidth } \@@_qquad:
-        \tl_range:Nnn \l_@@_info_title_tl { 21 } { -1 } \\
+        \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int }
+        \c_@@_name_title_a_tl #1
+      }
+    \@@_ulined_center_box:nn { \l_@@_tmp_dim }
+      { \tl_range:Nnn \l_@@_info_title_tl { 1 } { 20 } } \\
+    \@@_uline:n { \textwidth } \@@_qquad:
+    \tl_range:Nnn \l_@@_info_title_tl { 21 } { -1 } \\
 %    \end{macrocode}
 % 专业、年级、姓名。
 %    \begin{macrocode}
-        \@@_full_uline:NV \l_@@_tmp_dim
-          {
-            \@@_ulined_center_box:nn { 11 em } { \l_@@_info_major_tl }
-            \c_@@_name_major_a_tl
-            \@@_ulined_center_box:nn { 4 em } { \l_@@_info_grade_tl }
-            \c_@@_name_grade_tl \c_@@_name_author_a_tl #2
-          }
-        \@@_ulined_center_box:nn { \l_@@_tmp_dim }
-          { \l_@@_info_author_tl } \\
+    \@@_full_uline:NV \l_@@_tmp_dim
+      {
+        \@@_ulined_center_box:nn { 11 em } { \l_@@_info_major_tl }
+        \c_@@_name_major_a_tl
+        \@@_ulined_center_box:nn { 4  em } { \l_@@_info_grade_tl }
+        \c_@@_name_grade_tl \c_@@_name_author_a_tl #1
+      }
+    \@@_ulined_center_box:nn { \l_@@_tmp_dim }
+      { \l_@@_info_author_tl } \\
 %    \end{macrocode}
 % 导师姓名、职称。
 %    \begin{macrocode}
-        \@@_full_uline:NV \l_@@_tmp_dim
-          { \c_@@_name_supv_a_tl #2 }
-        \@@_ulined_center_box:nn { \l_@@_tmp_dim }
-          { \l_@@_info_supv_full_tl }
-      }
+    \@@_full_uline:NV \l_@@_tmp_dim
+      { \c_@@_name_supv_a_tl #1 }
+    \@@_ulined_center_box:nn { \l_@@_tmp_dim }
+      { \l_@@_info_supv_full_tl }
+  }
 %    \end{macrocode}
-% 英文摘要环境。前两行为标题。
+% \end{macro}
+%
+% \begin{macro}{\@@_abs_info_en_g:n}
+% 绘制研究生英文摘要信息栏。
+% \begin{arguments}
+%   \item 分隔符
+% \end{arguments}
+% 前两行为标题。
 %    \begin{macrocode}
-      {
-        \@@_full_uline:NV \l_@@_tmp_dim
-          { \clist_item:cn { c_@@_name_type #1 _clist }
-              { \g_@@_info_type_int } # 2 }
-        \@@_ulined_center_box:nn { \l_@@_tmp_dim }
-          { \tl_range:Nnn \l_@@_info_title_en_tl { 1 } { 40 } } \\
-        \@@_uline:n { \textwidth } \@@_qquad:
-        \tl_range:Nnn \l_@@_info_title_en_tl { 41 } { -1 }
+\cs_new_protected:Npn \@@_abs_info_en_g:n #1
+  {
+    \@@_full_uline:NV \l_@@_tmp_dim
+      { \clist_item:Nn \c_@@_name_type_en_clist
+          { \g_@@_info_type_int } #1 }
+    \@@_ulined_center_box:nn { \l_@@_tmp_dim }
+      { \tl_range:Nnn \l_@@_info_title_en_tl { 1 } { 40 } } \\
+    \@@_uline:n { \textwidth } \@@_qquad:
+    \tl_range:Nnn \l_@@_info_title_en_tl { 41 } { -1 }
 %    \end{macrocode}
 % 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，以避免末尾生成多余的换行符产生 |Underfull \vbox| 信息。
 %    \begin{macrocode}
-        \clist_map_inline:nn { major, author, supv_full }
-          { \\
-            \@@_uline_entry:Nnnn \l_@@_tmp_dim
-              { ##1 _en } { ##1 _en } { #2 }
-          }
+    \clist_map_inline:nn { major, author, supv_full }
+      { \\
+        \@@_uline_entry:Nnnn \l_@@_tmp_dim
+          { ##1 _en } { ##1 _en } { #1 }
       }
   }
 %</definition-g>
@@ -5116,37 +5117,37 @@ To produce the documentation run the original source files ending with
   {
     % 用于摘要的作者名称字样
     { author_a     }
-      { \tl_item:Nn \l_@@_info_degree_tl { 2 } 生姓名  },
-    { chairman     } { 答辩委员会主席：                },
-    { clc          } { 分类号                          },
-    { confer       } { 学位授予单位和日期              },
-    { df_date      } { 论文答辩日期                    },
-    { degree       } { 申请学位级别                    },
+      { \tl_item:Nn \l_@@_info_degree_tl { 1 } 士生姓名 },
+    { chairman     } { 答辩委员会主席：                 },
+    { clc          } { 分类号                           },
+    { confer       } { 学位授予单位和日期               },
+    { df_date      } { 论文答辩日期                     },
+    { degree       } { 申请学位级别                     },
     { apply        }
-      { （申请 \l_@@_info_degree_tl 学位）             },
-    { field        } { 研究方向                        },
-    { g            } { 研究生                          },
-    { grade        } { 级                              },
+      { （申请 \l_@@_info_degree_tl 学位）              },
+    { field        } { 研究方向                         },
+    { g            } { 研究生                           },
+    { grade        } { 级                               },
     % 用于摘要的专业名称字样
-    { major_a      } { 专业                            },
+    { major_a      } { 专业                             },
     % 用于国家图书馆封面的专业名称字样
-    { major_b      } { 专业名称                        },
+    { major_b      } { 专业名称                         },
     { orig_decl    }
-      { \c_@@_name_nju_tl 学位论文原创性声明           },
-    { orig_sign    } { 研究生签名                      },
-    { reviewer     } { 评阅人：                        },
-    { seclv        } { 密级                            },
-    { sign         } { （签字）                        },
-    { sm_date      } { 论文提交日期                    },
-    { supv         } { 导师                            },
+      { \c_@@_name_nju_tl 学位论文原创性声明            },
+    { orig_sign    } { 研究生签名                       },
+    { reviewer     } { 评阅人：                         },
+    { seclv        } { 密级                             },
+    { sign         } { （签字）                         },
+    { sm_date      } { 论文提交日期                     },
+    { supv         } { 导师                             },
     % 用于摘要的导师名称字样
-    { supv_a       } { 指导教师（姓名、职称）          },
+    { supv_a       } { 指导教师（姓名、职称）           },
     { supv_info    }
-      { 指导教师姓名、职务、职称、学位、单位名称及地址 },
+      { 指导教师姓名、职务、职称、学位、单位名称及地址  },
     % 用于普通封面的标题名称字样
-    { title        } { 论文题目                        },
+    { title        } { 论文题目                         },
     % 用于摘要的标题名称字样
-    { title_a      } { 题目                            },
+    { title_a      } { 题目                             },
     % 用于国家图书馆封面的标题名称字样
     { title_b      } { （题名和副题名）                },
     { udc          } { U D C                           }
