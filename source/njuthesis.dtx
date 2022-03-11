@@ -123,7 +123,7 @@ To produce the documentation run the original source files ending with
 %
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
-\documentclass{ctxdoc}
+\documentclass[fontset=fandol]{ctxdoc}
 \usepackage{listings,njuvisual,tabularray}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
@@ -342,7 +342,7 @@ To produce the documentation run the original source files ending with
 % \end{itemize}
 %
 %
-% \subsection{君 \hologo{LaTeX} 本当上手}
+% \subsection{快速上手}
 %
 % \hologo{LaTeX} 并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听
 % 到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须
@@ -1093,11 +1093,22 @@ To produce the documentation run the original source files ending with
 %     \tn{subsection}\oarg{短描述}\marg{完整的节标题}
 %     \tn{subsection}\oarg{短描述}\marg{完整的节标题}
 %   \end{syntax}
-% \pkg{ctex} 宏集提供了其中用于处理长标题的可选参数。对于过长的标题，目录中会使用其短描述。
+% 对于过长的标题，目录和页眉中会使用其短描述。
 % \end{function}
 %
 %
 % \subsubsection{文字}
+%
+% \begin{function}{\songti,\heiti,\kaishu,\fangsong,\zihao}
+%   \begin{syntax}
+%     \tn{zihao}\Arg{字号}
+%   \end{syntax}
+% 字形与字号设置。
+% \end{function}
+%
+% 本模板继承 \pkg{ctex} 宏集提供的字形字号设置，以备不时之需。换句话说，
+% 除非你有十足的把握，认为某处字体产生了偏差\footnote{在此情况下也应当直接到
+% GitHub 反馈}，否则无需动用这些命令处理样式问题。
 %
 % \begin{function}[added=2021-09-22]{\njuline}
 %   \begin{syntax}
@@ -3049,7 +3060,6 @@ To produce the documentation run the original source files ending with
   { \tl_set:Nn \l_@@_info_diploma_tl { ug } }
   { \tl_set:Nn \l_@@_info_diploma_tl { g  } }
 %    \end{macrocode}
-% \end{macro}
 %
 % 设置类型信息。
 %    \begin{macrocode}
@@ -3903,6 +3913,12 @@ To produce the documentation run the original source files ending with
 % 设置默认图片扩展名，允许在不键入扩展名时自动进行补全。
 %    \begin{macrocode}
 \DeclareGraphicsExtensions { .pdf, .eps, .jpg, .png }
+%    \end{macrocode}
+%
+% \changes{v0.16}{2022/03/11}{表格内字体设为五号。}
+% 表格默认居中，字号设置为五号。^^A  https://www.zhihu.com/question/366803177/answer/977853129
+%    \begin{macrocode}
+\BeforeBeginEnvironment { tabular } { \centering \zihao {5} }
 %    \end{macrocode}
 %
 % \changes{v0.12}{2021/12/06}{删除了可能导致冲突的 \pkg{floatrow}。}
