@@ -785,7 +785,7 @@ To produce the documentation run the original source files ending with
 % 配置文件路径。
 % \end{function}
 %
-% 本选项可用于载入额外的用户配置文件。该文件需使用 \hologo{LaTeX3} 语法编写。
+% 本选项可用于载入额外的用户配置文件。该文件支持 \hologo{LaTeX3} 语法。
 %
 %
 % \subsubsection{指定字体}
@@ -2104,12 +2104,6 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{内部函数}
 %
-% \begin{macro}{\file_input:V}
-%    \begin{macrocode}
-\cs_generate_variant:Nn \file_input:n     { V  }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_quad:,\@@_qquad:}
 % 等价于 \LaTeXe{} 中的 \tn{quad} 和 \tn{qquad}。
 %    \begin{macrocode}
@@ -2490,6 +2484,7 @@ To produce the documentation run the original source files ending with
     \bool_if:NTF \g_@@_abs_in_toc_bool
       { \@@_add_tocline:n { #1 } }
       { \pdfbookmark [0] { #1 } { #2 } }
+    \@@_chapter_header:n { #1 }
   }
 \cs_generate_variant:Nn \@@_abs_bookmark:nn { Vn }
 %    \end{macrocode}
@@ -2727,7 +2722,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.16}{2022/02/23}{新增 \opt{config} 选项。}
 % 配置文件路径。
 %    \begin{macrocode}
-    config             .tl_set:N  = \g_@@_config_tl
+    config             .tl_set:N  = \g_@@_config_clist
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2933,10 +2928,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { load-config }
   { I~ am~ loading~ config~ file~ "#1". }
-\tl_if_empty:NF \g_@@_config_tl
+\clist_if_empty:NF \g_@@_config_clist
   {
-    \file_input:V \g_@@_config_tl
     \msg_info:nnx { njuthesis } { load-config } { \g_@@_config_tl }
+    \clist_map_inline:Nn \g_@@_config_clist { \file_input:n { #1 } }
   }
 %    \end{macrocode}
 %
@@ -3447,7 +3442,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     \@@_load_math_font:
 %    \end{macrocode}
-% 自行定义 C\hologo{TeX} 中的四类字体命令。
+% 自行定义 \pkg{ctex} 中的四类字体命令。
 %    \begin{macrocode}
     \NewDocumentCommand \songti   { } { \CJKfamily { zhsong } }
     \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei  } }
@@ -3484,16 +3479,47 @@ To produce the documentation run the original source files ending with
 % 草稿模式下显示页面文字范围边界以及页眉、页脚线。
 %    \begin{macrocode}
 \bool_if:NT \g_@@_draft_bool { \geometry { showframe } }
+%</class>
 %    \end{macrocode}
 %
 %
 % \subsubsection{页眉页脚}
 %
-% \begin{macro}{\@@_fancy_head:nn}
-% 页眉样式，设置为小号字体、楷书。这里对 \pkg{fancyhdr} 的命令进行了包装。
+% \begin{variable}{\c_@@_pagestyle_tl}
+% 针对不同学位类型的默认页面样式设置。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_fancy_head:nn #1#2
-  { \fancyhead [#1] { \small \kaishu \nouppercase {#2} } }
+%<definition-ug>\tl_const:Nn \c_@@_pagestyle_tl { plain    }
+%<definition-g>\tl_const:Nn \c_@@_pagestyle_tl { headings }
+%    \end{macrocode}
+% \end{variable}
+%
+%    \begin{macrocode}
+%<*class>
+\keys_define:nn { nju / style }
+  {
+%    \end{macrocode}
+% \begin{macro}{style/header-format}
+% \changes{v0.16}{2022/03/18}{可手动指定页眉样式。}
+% 页眉格式。
+%    \begin{macrocode}
+    header-format .tl_gset:N = \g_@@_header_format_tl,
+    header-format .initial:n = \small \kaishu,
+%    \end{macrocode}
+% \begin{macro}{style/header,style/header*}
+% \changes{v0.16}{2022/03/18}{可手动指定页眉内容。}
+% 页眉内容，分别对应双面模式和单面模式。
+%    \begin{macrocode}
+    header     .clist_gset:N = \g_@@_header_twoside_clist,
+    header*    .clist_gset:N = \g_@@_header_oneside_clist,
+    header        .initial:n =
+      {
+        { EL } { \leftmark  }, { OR } { \rightmark }
+      },
+    header*       .initial:n =
+      {
+        {  L } { \leftmark  }, {  R } { \rightmark }
+      }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3510,39 +3536,47 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\@@_set_heading_g:}
-% \changes{v0.15}{2022/01/17}{修复单页模式的页眉问题。}
-% 以 \opt{plain} 样式为基础，单独设置研究生模板的页眉内容。在 \cs{fancyhead} 的
-% 可选参数中，\opt{E} 和 \opt{O} 分别表示在偶数页（even）和奇数页（odd）， 而
-% \opt{L}、\opt{R} 和 \opt{C} 则分别表示左（left）、右（right）和中间（center）
-% 。按照通常的排版规则，在双面模式下，偶数页的中间页眉文字在左，奇数页则在右。
-% 单面模式下，左右页眉都要显示。
+% \begin{macro}{\@@_fancy_head:nn}
+% 页眉样式，设置为小号字体、楷书。这里对 \pkg{fancyhdr} 的命令进行了包装。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_set_heading_g:
-  {
-    \bool_if:NTF \g_@@_twoside_bool
-      {
-        \@@_fancy_head:nn { EL } { \leftmark  }
-        \@@_fancy_head:nn { OR } { \rightmark }
-      }
-      {
-        \@@_fancy_head:nn { L  } { \leftmark  }
-        \@@_fancy_head:nn { R  } { \rightmark }
-      }
-    \tl_set:Nn \headrulewidth { 0.4 pt }
-    \dim_set:Nn \headheight { 20 pt }
-  }
+\cs_new_protected:Npn \@@_fancy_head:nn #1#2
+  { \fancyhead [#1] { \g_@@_header_format_tl #2 } }
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v0.15}{2022/01/17}{修复单页模式的页眉问题。}
+% 以 \opt{plain} 样式为基础的 \opt{headings}} 样式，用于研究生模板。在
+% \cs{fancyhead} 的可选参数中，\opt{E} 和 \opt{O} 分别表示在偶数页（even）
+% 和奇数页（odd）， 而\opt{L}、\opt{R} 和 \opt{C} 则分别表示左（left）、
+% 右（right）和中间（center）。按照通常的排版规则，在双面模式下，
+% 偶数页的中间页眉文字在左，奇数页则在右。单面模式下，左右页眉都要显示。
+%    \begin{macrocode}
+\fancypagestyle { headings }
+  {
+    \fancyhf { }
+    \fancyfoot [ C ] { \zihao { 5 } \rmfamily \thepage }
+    \bool_if:NTF \g_@@_twoside_bool
+      {
+        \clist_map_inline:Nn \g_@@_header_twoside_clist
+          { \@@_fancy_head:nn ##1 }
+      }
+      {
+        \clist_map_inline:Nn \g_@@_header_oneside_clist
+          { \@@_fancy_head:nn ##1 }
+      }
+    \tl_set:Nn \headrulewidth { 0.4 pt }
+    \tl_set:Nn \footrulewidth { \c_zero_dim }
+    \dim_set:Nn \headheight { 20 pt }
+  }
+%    \end{macrocode}
+%
 % \begin{macro}{\frontmatter}
-% 重定义 \cs{frontmatter}，清空页眉页脚以及页码设置。
-% 此命令仅为解决原 \cls{book} 类中默认使用小写罗马字母序号的冲突，并不建议使用。
+% 重定义 \cs{frontmatter}，设置前言区默认的页眉页脚以及页码样式。
 %    \begin{macrocode}
 \RenewDocumentCommand \frontmatter { }
   {
     \cleardoublepage
-    \pagestyle     { empty }
+    \exp_args:NV \pagestyle \c_@@_pagestyle_tl
     \pagenumbering { Roman }
   }
 %    \end{macrocode}
@@ -3551,20 +3585,27 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\mainmatter}
 % \changes{v0.12}{2021/12/03}{修复了摘要页字体格式泄漏到正文的问题。}
 % \changes{v0.12}{2021/12/03}{修复了页眉上长标题重叠的问题。}
-% 重定义 \cs{mainmatter}，在论文主体部分载入页眉页脚设置，使用阿拉伯数字重新进行
-% 页码编号。
+% 重定义 \cs{mainmatter}，在论文主体部分载入页面样式设置，
+% 使用阿拉伯数字重新进行页码编号。
 %    \begin{macrocode}
 \RenewDocumentCommand \mainmatter { }
   {
     \cleardoublepage
-    \pagestyle { plain }
-    \int_compare:nF { \g_@@_info_degree_int == 1 }
-      { \@@_set_heading_g: }
+    \exp_args:NV \pagestyle \c_@@_pagestyle_tl
     \pagenumbering { arabic }
     \normalfont \normalsize
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% 在文档起始位置设置默认页面样式。
+%    \begin{macrocode}
+\AtBeginEnvironment { document }
+  {
+    \exp_args:NV \pagestyle \c_@@_pagestyle_tl
+    \pagenumbering { Roman }
+  }
+%    \end{macrocode}
 %
 %
 % \subsection{章节标题格式}
@@ -4618,9 +4659,8 @@ To produce the documentation run the original source files ending with
 % 在标题页后使用大写罗马字母页码，恢复正常字体设置。
 %    \begin{macrocode}
     \cleardoublepage
-    \pagestyle     { plain }
+    \exp_args:NV \pagestyle \c_@@_pagestyle_tl
     \pagenumbering { Roman }
-    \normalfont \normalsize
   }
 %</class>
 %    \end{macrocode}
@@ -4787,7 +4827,8 @@ To produce the documentation run the original source files ending with
     \@@_uline:n { \textwidth } \@@_qquad:
     \tl_range:Nnn \l_@@_info_title_en_tl { 41 } { -1 }
 %    \end{macrocode}
-% 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，以避免末尾生成多余的换行符产生 |Underfull \vbox| 信息。
+% 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，
+% 以避免末尾生成多余的换行符产生 |Underfull \vbox| 信息。
 %    \begin{macrocode}
     \clist_map_inline:nn { major, author, supv_full }
       { \\
