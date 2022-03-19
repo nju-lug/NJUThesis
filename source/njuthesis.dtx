@@ -111,7 +111,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.16.0 2022-02-23 10:30:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.16.0 2022-03-19 12:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -197,7 +197,7 @@ To produce the documentation run the original source files ending with
 % 南京大学 Linux 用户组
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}{git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.16.0 \quad 2022-02-23}
+% \date{v0.16.0 \quad 2022-03-19}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -574,14 +574,15 @@ To produce the documentation run the original source files ending with
 % 下命令顺序进行编译，以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF
 % 文档位于同一目录下。该目录下同时会生成若干中间文件。
 %
-% 编译命令具体为引擎名称加主文件名，在编译 \file{.tex} 文件时，文件扩展名可以省略
-% 不写。现阶段 \cls{njuthesis} 仅支持 \hologo{XeLaTeX} 与 \hologo{LuaLaTeX}。请
-% 注意，几种命令的输出文件基本相同，可以任取一种；但如果您不清楚这两种编译引擎的
+% 编译命令具体为引擎名称加主文件名，在编译 \file{.tex} 文件时，
+% 文件扩展名可以省略不写。现阶段 \cls{njuthesis} 仅支持 \hologo{XeTeX}
+% 与 \hologo{LuaTeX} 引擎，以及 \hologo{biber} 文献工具。请注意，
+% 几种命令的输出文件基本相同，可以任取一种；但如果您不清楚这两种编译引擎的
 % 区别，或者对多步编译感到困惑，我们建议优先使用 |latexmk -xelatex|。
 %
 %
 % \subparagraph{使用 \hologo{XeLaTeX}}
-% 标准的 \hologo{XeLaTeX} 引擎四步编译方法。
+% 标准的 \hologo{XeTeX} 引擎四步编译方法。
 %
 % \begin{shellexample}[morekeywords={xelatex,biber}]
 %   xelatex njuthesis-sample
@@ -592,7 +593,7 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subparagraph{使用 \hologo{LuaLaTeX}}
-% 标准的 \hologo{LuaLaTeX} 引擎四步编译方法。
+% 标准的 \hologo{LuaTeX} 引擎四步编译方法。
 %
 % \begin{shellexample}[morekeywords={lualatex,biber}]
 %   lualatex njuthesis-sample
@@ -1280,11 +1281,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{数学}
 %
-% 符号表可以参考 \url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}。
-%
-% 单位请参考相关国家标准\footnote{GB 3100-1993, GB/T 3101-1993, GB/T 3102-1993}，使用 \pkg{siunitx} 宏包。\pkg{siunitx} 是一个更新频繁的包，可能会引发兼容性问题。
-%
-% 行内公式形如|$\mathrm{e}^{(a+2b)x}$|。
+% 行内公式形如 |$\mathrm{e}^{(a+2b)x}$|。
 %
 % 带有编号的行间公式 \env{equation}。
 % \begin{latexexample}[emph={[1]equation}]
@@ -1293,7 +1290,20 @@ To produce the documentation run the original source files ending with
 %   \end{equation}
 % \end{latexexample}
 %
-% 如不需要编号，可以用 \env{equation*} 或者 |\[|\meta{公式}|\]|，请不要使用可能引发问题的 |$$|\meta{公式}|$$|\footnote{\url{https://tex.stackexchange.com/questions/503/why-is-preferable-to}}。
+% 如不需要编号，可以用 \env{equation*} 或者 |\[|\meta{公式}|\]|，
+% 请不要使用可能引发问题的 |$$|\meta{公式}|$$|\footnote{\url{https://tex.stackexchange.com/questions/503/why-is-preferable-to}}。
+%
+%
+% \paragraph{符号和单位}
+%
+% 模板使用 \pkg{unicode-math} 配置数学字体，可以替代传统方案下的 \pkg{bm}、
+% \pkg{mathrsfs} 等宏包\footnote{\url{https://tex.stackexchange.com/questions/528831/why-doesnt-the-bm-package-work-with-the-unicode-math-package}}。
+% 相应地，也需要使用新方案提供的命令。例如，加粗数学符号的命令可以使用
+% \tn{symbf}。更多细节请查阅 \pkg{unicode-math} 手册。
+%
+% 符号表可以参考 \url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}。
+%
+% 单位请参考相关国家标准\footnote{GB 3100-1993, GB/T 3101-1993, GB/T 3102-1993}，使用 \pkg{siunitx} 宏包。\pkg{siunitx} 是一个更新频繁的包，可能会引发兼容性问题。
 %
 %
 % \paragraph{定理环境}
@@ -1318,13 +1328,11 @@ To produce the documentation run the original source files ending with
 % \end{table}
 %
 % 使用示例如下。
-% \begin{latexexample}
+% \begin{latexexample}[emph={[1]proof,definition}]
 %   \begin{proof}
 %       证明我是我
 %   \end{proof}
-% \end{latexexample}
-% 普通环境。
-% \begin{latexexample}
+%
 %   \begin{definition}[他人]
 %       定义他人即地狱
 %   \end{definition}
@@ -1748,6 +1756,54 @@ To produce the documentation run the original source files ending with
 % 本宏包的详细使用方法请参考其使用手册。
 %
 %
+% \section{宏包依赖}
+%
+% 在任何情况下，本模板都会\emph{显式}调用以下宏包（或文档类）：
+% \begin{itemize}
+%   \item \pkg{xtemplate} 和 \pkg{l3keys2e}，用于扩展 \hologo{LaTeX3} 编程环境。
+%         它们属于 \pkg{l3packages} 宏集。
+%   \item \cls{ctexbook}，提供中文排版的通用框架。属于 C\hologo{TeX}
+%         宏集 \cite{CTeX}。
+%   \item \pkg{mathtools}，增强数学功能。
+%   \item \pkg{unicode-math}，负责处理 Unicode 编码的 OpenType 数学字体。
+%   \item \pkg{geometry}，用于调整页面尺寸。
+%   \item \pkg{setspace}，调整行距。
+%   \item \pkg{fancyhdr}，处理页眉页脚。
+%   \item \pkg{footmisc}，处理脚注。
+%   \item \pkg{ntheorem}，提供增强版的定理类环境。
+%   \item \pkg{enumitem}，调整列表环境。
+%   \item \pkg{graphicx}，提供图形插入的接口。
+%   \item \pkg{booktabs}，绘制三线表。
+%   \item \pkg{caption}，用于设置题注。
+%   \item \pkg{hyperref}，提供交叉引用、超链接、电子书签等功能。
+%   \item \pkg{cleveref}，用于自动生成引用标签。
+%   \item \pkg{biblatex}，提供参考文献解决方案。
+% \end{itemize}
+%
+% 以下宏包可能被隐式载入：
+% \begin{itemize}
+%   \item \pkg{xcolor}，提供色彩支持。
+%   \item \pkg{amsmath}，对 \LaTeX{} 的数学排版功能进行了
+%         全面扩展。属于 \hologo{AmSLaTeX} 套件。
+%   \item \pkg{biblatex-gb7714-2015}，用于生成国标下的参考文献样式。
+%   \item \pkg{xits}，提供数学字体。
+% \end{itemize}
+%
+% 在开启某些选项时，本模板也会调用以下宏包：
+% \begin{itemize}
+%   \item \pkg{fandol}、\pkg{tex-gyre} 和 \pkg{tex-gyre-math}，提供自由字体。
+%   \item \pkg{emptypage}，在双面模式下清空空白页的页眉、页脚和页码。
+%   \item \pkg{njuvisual}，用于绘制封面的校名校徽。
+%   \item \pkg{xeCJKfntef} 或 \pkg{lua-ul}，用于在对应引擎下绘制下划线。
+% \end{itemize}
+%
+% 下列宏包会与本模板产生冲突，或者不能发挥预期作用：
+% \begin{itemize}
+%   \item \pkg{natbib} 和 \pkg{gbt7714} 等 \hologo{BibTeX} 相关的参考文献宏包。
+%   \item \pkg{bm} 等使用传统数学字体配置方案的宏包。
+% \end{itemize}
+%
+%
 % \begin{thebibliography}{99}
 %
 % \newcommand\urlprefix{\newline\hspace*{\fill}}
@@ -1830,6 +1886,14 @@ To produce the documentation run the original source files ending with
 % \newblock (2021-12-11)
 % \urlprefix\url{https://ctan.org/pkg/biblatex-gb7714-2015}
 % \urlprefix\CTANurl[文档：]{biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf}
+%
+% \bibitem{CTeX}
+% \textsc{CTEX.ORG}.
+% \newblock \textit{\CTeX{} 宏集手册} [EB/OL].
+% \newblock version 2.5.8,
+% \newblock (2021-12-12)
+% \urlprefix\url{https://ctan.org/pkg/ctex}
+% \urlprefix\CTANurl[文档及源代码：]{language/chinese/ctex/ctex.pdf}
 %
 % \bibitem{latexmk}
 % \textsc{Collins J}.
@@ -2867,12 +2931,12 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除
 %   \pkg{amsthm} 和 \pkg{thmtools}。}
+% \changes{v0.16}{2022/03/19}{不显式载入 \pkg{amsmath}。}
 % 数学相关的宏包。其中，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
 % \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的
 % 数学字体。用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math}
-% 发生冲突，此处手动消除其警告。
+% 发生冲突，需要手动消除其警告。
 %    \begin{macrocode}
-    amsmath,
     mathtools,
     unicode-math,
     ntheorem,
@@ -3691,6 +3755,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v0.16}{2022/03/18}{研究生模板的目录、摘要等页面也显示页眉。}
 % 在文档起始位置设置默认页面样式。
 %    \begin{macrocode}
 \AtBeginEnvironment { document }

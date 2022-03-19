@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [0.16.0] - 2022-03-19
+
 ### 新增
 
 - 将本科生和研究生模板定义分离为单独的 `.def` 文件 - [#46]
@@ -25,6 +27,9 @@
 
 - 说明手册中增加对 JabRef 软件的简介
   - 感谢 [@zhoujian9410]！
+- 说明手册中增加数学字体样式说明 - [#89], [#92]
+  - 感谢 [@zepinglee]！
+- 说明手册中增加宏包依赖信息
 
 ## [0.15.0] - 2022-02-20
 
@@ -251,7 +256,8 @@
 - 模板上传至 CTAN
 
 
-[unreleased]: https://github.com/nju-lug/NJUThesis/compare/v0.15.0...HEAD
+[unreleased]: https://github.com/nju-lug/NJUThesis/compare/v0.16.0...HEAD
+[0.16.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.16.0
 [0.15.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.15.0
 [0.14.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.14.0
 [0.13.1]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.13.1
@@ -274,6 +280,8 @@
 [#71]: https://github.com/nju-lug/NJUThesis/discussions/71
 [#79]: https://github.com/nju-lug/NJUThesis/issues/79
 [#85]: https://github.com/nju-lug/NJUThesis/discussions/85
+[#89]: https://github.com/nju-lug/NJUThesis/discussions/89
+[#92]: https://github.com/nju-lug/NJUThesis/issues/92
 [#99]: https://github.com/nju-lug/NJUThesis/discussions/99
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
