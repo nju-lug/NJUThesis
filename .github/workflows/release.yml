@@ -52,8 +52,8 @@ jobs:
           ${{ env.SET_PATH }}
           xetex njuvisual.dtx
           mv docs/* .
-          mv build/unpacked/njuthesis.cls .
-          zip -r njuthesis-user-$VERSION.zip njuthesis-* njuthesis.cls njuvisual.sty nju-*.pdf LICENSE CHANGELOG.md README.md
+          mv build/unpacked/* .
+          zip -r njuthesis-user-$VERSION.zip *.def njuthesis-sample* njuthesis.cls njuvisual.sty nju-*.pdf LICENSE CHANGELOG.md README.md
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
