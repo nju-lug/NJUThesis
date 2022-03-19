@@ -12,7 +12,7 @@
 % \documentclass[decl-page]{njuthesis}
 % \documentclass[draft]{njuthesis}
 % \documentclass[type=design]{njuthesis}
-% \documentclass[degree=mg]{njuthesis}
+\documentclass[degree=mg]{njuthesis}
 % \documentclass[degree=mf,oneside,decl-page]{njuthesis}
 % \documentclass[degree=phd,draft]{njuthesis}
 % \documentclass[degree=phd,nlcover]{njuthesis}
@@ -56,7 +56,13 @@
         emblem-img = {wug},
         name-img = {name},
         abstract-in-toc = false,
-        toc-in-toc = false
+        toc-in-toc = false,
+        header/format = \small\heiti,
+        header = {
+          {OR}{\thepage},{EL}{\thepage},
+          {ER}{\leftmark},{OL}{\rightmark}},
+        % header = {},
+        footer = {},
       }
   }
 

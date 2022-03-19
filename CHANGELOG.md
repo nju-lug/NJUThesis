@@ -9,6 +9,12 @@
 ### 新增
 
 - 将本科生和研究生模板定义分离为单独的 `.def` 文件 - [#46]
+- 可以手动指定页眉页脚 - [#85]
+  - 新增 `style/header` 等若干设置项
+
+### 修复
+
+- 研究生模板的目录、摘要等页面也显示页眉 - [#99]
 
 ### 变动
 
@@ -267,6 +273,8 @@
 [#66]: https://github.com/nju-lug/NJUThesis/issues/66
 [#71]: https://github.com/nju-lug/NJUThesis/discussions/71
 [#79]: https://github.com/nju-lug/NJUThesis/issues/79
+[#85]: https://github.com/nju-lug/NJUThesis/discussions/85
+[#99]: https://github.com/nju-lug/NJUThesis/discussions/99
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

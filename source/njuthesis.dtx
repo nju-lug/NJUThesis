@@ -1084,8 +1084,6 @@ To produce the documentation run the original source files ending with
 %   \cs{mainmatter} 标志着正文的开始，使用阿拉伯数字重新进行页码编号，并设置页眉格式。
 % \end{function}
 %
-% 在页面布局方面，页面编号居中位于页脚，本科生无页眉，研究生页眉包括章名（奇数页）和节名（偶数页）。
-%
 % \begin{function}{\chapter,\section,\subsection,\subsubsection}
 %   \begin{syntax}
 %     \tn{chapter}\oarg{短描述}\marg{完整的章标题}
@@ -1095,6 +1093,51 @@ To produce the documentation run the original source files ending with
 %   \end{syntax}
 % 对于过长的标题，目录和页眉中会使用其短描述。
 % \end{function}
+%
+%
+% \subsubsection{页面}
+%
+% 在本模板预定义的页面样式中：本科生使用 \opt{plain} 样式，无页眉，
+% 页面编号使用五号罗马体，居中位于页脚；研究生使用 \opt{headings} 样式，
+% 页眉使用五号楷体，包括章名（奇数页右侧）和节名（偶数页左侧），
+% 页面编号使用五号罗马体，居中位于页脚。在单面模式下，页眉会同时显示章节名。
+%
+% 考虑到各个院系对于页眉内容的规定并不一致，本模板提供了若干个自定义选项。
+%
+% \begin{function}{style/header/format,style/footer/format,
+%   style/header,style/header*,style/footer,style/footer*}
+%   \begin{syntax}
+%     header/format = \Arg{格式}
+%     footer/format = \Arg{格式}
+%     header  = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
+%     header* = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
+%     footer  = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
+%     footer* = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
+%   \end{syntax}
+% 页眉页脚的格式与内容设置。带有星号的设置项供单面模式下使用。
+% \end{function}
+%
+% 页眉页脚的内容设置是一个逗号分隔的列表，实际上是 \cs{fancyhead} 和
+% \cs{fancyfoot} 命令的选项。前一个花括号内为大写字母指定的位置选项，
+% 可使用左（\opt{L}）、中（\opt{C}）、右（\opt{R}）。
+% 双面模式下可额外指定出现在奇数页（\opt{O}）还是偶数页（\opt{E}）。
+% 详细说明请参考 \pkg{fancyhdr} 的手册。
+%
+% 接下来展示了一个手动设置页眉内容的例子。这里我们清空了页脚，
+% 并将页眉格式设置成五号黑体，奇数页左侧为节名，右侧为页码，
+% 偶数页左侧为页码，右侧为章名。
+% \begin{latexexample}[moretexcs={\njusetup,\sffamily},emph={[2]style}]
+%   \njusetup {
+%       style = {
+%           header/format = \small \sffamily,
+%           header = {
+%               { OR } { \thepage }, { OL } { \rightmark },
+%               { EL } { \thepage }, { ER } { \leftmark  }
+%             },
+%           footer = {},
+%         }
+%     }
+% \end{latexexample}
 %
 %
 % \subsubsection{文字}
@@ -3493,21 +3536,29 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
+% 提供设置页眉页脚的用户接口。在 \cs{fancyhead} 的可选参数中，
+% \opt{E} 和 \opt{O} 分别表示在偶数页（even）和奇数页（odd），
+% 而 \opt{L}、\opt{R} 和 \opt{C} 则分别表示左（left）、右
+% （right）和中间（center）。按照通常的排版规则，在双面模式下，
+% 偶数页的中间页眉文字在左，奇数页则在右。单面模式下，左右页眉都要显示。
 %    \begin{macrocode}
 %<*class>
 \keys_define:nn { nju / style }
   {
 %    \end{macrocode}
-% \begin{macro}{style/header-format}
+% \begin{macro}{style/header/format}
 % \changes{v0.16}{2022/03/18}{可手动指定页眉样式。}
 % 页眉格式。
 %    \begin{macrocode}
-    header-format .tl_gset:N = \g_@@_header_format_tl,
-    header-format .initial:n = \small \kaishu,
+    header/format .tl_gset:N = \g_@@_header_format_tl,
+    header/format .initial:n = \small \kaishu,
 %    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{style/header,style/header*}
 % \changes{v0.16}{2022/03/18}{可手动指定页眉内容。}
 % 页眉内容，分别对应双面模式和单面模式。
+% 为了便于指定复杂的页眉样式，这里用 |clist| 存储位置和内容信息。
 %    \begin{macrocode}
     header     .clist_gset:N = \g_@@_header_twoside_clist,
     header*    .clist_gset:N = \g_@@_header_oneside_clist,
@@ -3518,8 +3569,63 @@ To produce the documentation run the original source files ending with
     header*       .initial:n =
       {
         {  L } { \leftmark  }, {  R } { \rightmark }
+      },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{style/footer/format}
+% \changes{v0.16}{2022/03/19}{可手动指定页脚样式。}
+% 页脚格式。
+%    \begin{macrocode}
+    footer/format .tl_gset:N = \g_@@_header_format_tl,
+    footer/format .initial:n = \small \rmfamily,
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{style/footer,style/footer*}
+% \changes{v0.16}{2022/03/18}{可手动指定页脚内容。}
+% 页脚内容，同页眉。
+%    \begin{macrocode}
+    footer     .clist_gset:N = \g_@@_footer_twoside_clist,
+    footer*    .clist_gset:N = \g_@@_footer_oneside_clist,
+    footer        .initial:n = { { C } { \thepage } },
+    footer*       .initial:n = { { C } { \thepage } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\g_@@_header_clist,\g_@@_footer_clist}
+% 设置页眉页脚。
+%    \begin{macrocode}
+\clist_new:N \g_@@_header_clist
+\clist_new:N \g_@@_footer_clist
+%    \end{macrocode}
+% \end{macro}
+%
+% 在导言区末尾确定页眉页脚内容。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \bool_if:NTF \g_@@_twoside_bool
+      {
+        \clist_set_eq:NN \g_@@_header_clist \g_@@_header_twoside_clist
+        \clist_set_eq:NN \g_@@_footer_clist \g_@@_footer_twoside_clist
+      }
+      {
+        \clist_set_eq:NN \g_@@_header_clist \g_@@_header_oneside_clist
+        \clist_set_eq:NN \g_@@_footer_clist \g_@@_footer_oneside_clist
       }
   }
+%    \end{macrocode}
+%
+% \begin{macro}{\@@_header:nn,\@@_footer:nn}
+% 对 \pkg{fancyhdr} 的命令进行包装，便于设置页眉页脚。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_header:nn #1#2
+  { \fancyhead [#1] { \g_@@_header_format_tl #2 } }
+\cs_new_protected:Npn \@@_footer:nn #1#2
+  { \fancyfoot [#1] { \g_@@_footer_format_tl #2 } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3530,43 +3636,30 @@ To produce the documentation run the original source files ending with
 \fancypagestyle { plain }
   {
     \fancyhf { }
-    \fancyfoot [ C ] { \zihao { 5 } \rmfamily \thepage }
+    \clist_map_inline:Nn \g_@@_footer_clist { \@@_footer:nn ##1 }
     \tl_set:Nn \headrulewidth { \c_zero_dim }
     \tl_set:Nn \footrulewidth { \c_zero_dim }
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\@@_fancy_head:nn}
-% 页眉样式，设置为小号字体、楷书。这里对 \pkg{fancyhdr} 的命令进行了包装。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_fancy_head:nn #1#2
-  { \fancyhead [#1] { \g_@@_header_format_tl #2 } }
-%    \end{macrocode}
-% \end{macro}
-%
 % \changes{v0.15}{2022/01/17}{修复单页模式的页眉问题。}
-% 以 \opt{plain} 样式为基础的 \opt{headings}} 样式，用于研究生模板。在
-% \cs{fancyhead} 的可选参数中，\opt{E} 和 \opt{O} 分别表示在偶数页（even）
-% 和奇数页（odd）， 而\opt{L}、\opt{R} 和 \opt{C} 则分别表示左（left）、
-% 右（right）和中间（center）。按照通常的排版规则，在双面模式下，
-% 偶数页的中间页眉文字在左，奇数页则在右。单面模式下，左右页眉都要显示。
+% 以 \opt{plain} 样式为基础的 \opt{headings} 样式，用于研究生模板。
 %    \begin{macrocode}
 \fancypagestyle { headings }
   {
     \fancyhf { }
-    \fancyfoot [ C ] { \zihao { 5 } \rmfamily \thepage }
-    \bool_if:NTF \g_@@_twoside_bool
+    \clist_if_empty:NTF \g_@@_header_clist
       {
-        \clist_map_inline:Nn \g_@@_header_twoside_clist
-          { \@@_fancy_head:nn ##1 }
+        \tl_set:Nn \headrulewidth { \c_zero_dim }
       }
       {
-        \clist_map_inline:Nn \g_@@_header_oneside_clist
-          { \@@_fancy_head:nn ##1 }
+        \tl_set:Nn \headrulewidth { 0.4 pt }
+        \dim_set:Nn \headheight { 20 pt }
+        \clist_map_inline:Nn \g_@@_header_clist
+          { \@@_header:nn ##1 }
       }
-    \tl_set:Nn \headrulewidth { 0.4 pt }
+    \clist_map_inline:Nn \g_@@_footer_clist { \@@_footer:nn ##1 }
     \tl_set:Nn \footrulewidth { \c_zero_dim }
-    \dim_set:Nn \headheight { 20 pt }
   }
 %    \end{macrocode}
 %
