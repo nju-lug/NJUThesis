@@ -3,19 +3,21 @@
 % 其内容不具有任何参考意义
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% 自行编译前需反注释以下任意命令
-% \documentclass{njuthesis}
-% \documentclass[oneside]{njuthesis}
-% \documentclass[cjk-font=noto,latin-font=gyre]{njuthesis}
-% \documentclass[cjk-font=source,latin-font=gyre]{njuthesis}
-% \documentclass[cjk-font=founder,latin-font=gyre]{njuthesis}
-% \documentclass[decl-page]{njuthesis}
-% \documentclass[draft]{njuthesis}
-% \documentclass[type=design]{njuthesis}
-\documentclass[degree=mg]{njuthesis}
-% \documentclass[degree=mf,oneside,decl-page]{njuthesis}
-% \documentclass[degree=phd,draft]{njuthesis}
-% \documentclass[degree=phd,nlcover]{njuthesis}
+\ifdefined\TEST\else
+  % 自行编译前需反注释以下任意命令
+  % \documentclass{njuthesis}
+  % \documentclass[oneside]{njuthesis}
+  % \documentclass[cjk-font=noto,latin-font=gyre]{njuthesis}
+  % \documentclass[cjk-font=source,latin-font=gyre]{njuthesis}
+  % \documentclass[cjk-font=founder,latin-font=gyre]{njuthesis}
+  % \documentclass[decl-page]{njuthesis}
+  % \documentclass[draft]{njuthesis}
+  % \documentclass[type=design]{njuthesis}
+  \documentclass[degree=mg]{njuthesis}
+  % \documentclass[degree=mf,oneside,decl-page]{njuthesis}
+  % \documentclass[degree=phd,draft]{njuthesis}
+  % \documentclass[degree=phd,nlcover]{njuthesis}
+\fi
 
 \njusetup {
     info = {
