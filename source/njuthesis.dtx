@@ -142,6 +142,7 @@ To produce the documentation run the original source files ending with
 \UseTblrLibrary{booktabs,diagbox,siunitx}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
+\SetTblrInner{row{1}={font=\bfseries}}
 \DefTblrTemplate{caption-sep}{default}{\quad}
 \lstdefinestyle{style@base}
   {
@@ -191,11 +192,13 @@ To produce the documentation run the original source files ending with
 %</driver>
 % \fi
 %
-% \title{\color{njuviolet}{The \cls{njuthesis} class\\ \textbf{南京大学学位论文模板}}}
+% \title{\color{njuviolet}{The \cls{njuthesis} class\\
+%   \textbf{南京大学学位论文模板}}}
 %
 % \author{^^A
 % 南京大学 Linux 用户组
-% \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}{git+nju-lug-email-3104-issue-@yaoge123.cn}}}
+% \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
+%   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
 % \date{v0.16.0 \quad 2022-03-19}
 %
@@ -245,12 +248,13 @@ To produce the documentation run the original source files ending with
 % 在使用本模板时，我们默认您同意以下内容：
 % \begin{enumerate}
 %   \item 本模板通过 LPPL 1.3c 协议开放源代码，您可以随意使用编译出的 PDF 文件。
-%   \item 本模板与学校官方部门并不存在合作关系，作者不对使用本模板产生的格式审查问题负责。
+%   \item 本模板与学校官方部门并不存在合作关系，
+%         作者不对使用本模板产生的格式审查问题负责。
 %   \item 遇到本文档没有覆盖的问题属于正常情况，欢迎提交反馈意见。
 % \end{enumerate}
 %
-% 我们的 \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{Linux 用户组}始终欢迎
-% 您的加入！
+% 我们的 \href{https://git.nju.edu.cn/nju-lug/lug-introduction}
+%   {Linux 用户组}始终欢迎您的加入！
 % \end{abstract}
 %
 % \clearpage
@@ -266,9 +270,12 @@ To produce the documentation run the original source files ending with
 %
 % \section{模板介绍}
 %
-% \cls{njuthesis}，即南京大学学位论文模板，是一个由南京大学 Linux 用户组维护的，用于处理本校学生毕业论文排版需求的 \hologo{LaTeX} 模板。
+% \cls{njuthesis}，即南京大学学位论文模板，是一个由南京大学 Linux
+% 用户组维护的，用于处理本校学生毕业论文排版需求的 \hologo{LaTeX} 模板。
 %
-% 本模板使用的本科生毕业论文模板格式依据《关于启动南京大学2022届本科毕业论文（设计）工作的通知》\cite{nju2021}，研究生学位论文格式依据研究生院提供的材料包。
+% 本模板使用的本科生毕业论文模板格式依据
+% 《关于启动南京大学2022届本科毕业论文（设计）工作的通知》\cite{nju2021}，
+% 研究生学位论文格式依据研究生院提供的材料包。
 %
 %
 % \subsection{开始之前}
@@ -280,51 +287,68 @@ To produce the documentation run the original source files ending with
 % \fcolorbox{olgreen}{gray!5}{\parbox{\textwidth-5em}{%
 % \hspace{2em}\begin{minipage}[c]{10cm}
 % \begin{enumerate}
-%  \item 访问 \url{https://tex.nju.edu.cn}
-%  \item 点击右上角~\olbutton{注册}~按钮，用\href{https://itsc.nju.edu.cn/1b/ce/c21586a334798/page.htm}{南大邮箱}注册账号
-%  \item 登录您的账号
-%  \item 点击左上角~\olbutton{创建新项目}~按钮，选择~\olbutton{论文模板}
-%  \item 随意取名，点击~\olbutton{创建}~按钮
+%   \item 访问 \url{https://tex.nju.edu.cn}
+%   \item 点击右上角~\olbutton{注册}~按钮，
+%        用\href{https://itsc.nju.edu.cn/1b/ce/c21586a334798/page.htm}
+%        {南大邮箱}注册账号
+%   \item 登录您的账号
+%   \item 点击左上角~\olbutton{创建新项目}~按钮，选择~\olbutton{论文模板}
+%   \item 随意取名，点击~\olbutton{创建}~按钮
 % \end{enumerate}
 % \end{minipage}}}
 %
 % \bigskip
-% 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。如果它的效果令您满意，不妨以此为基础开始写作。
+% 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。
+% 如果它的效果令您满意，不妨以此为基础开始写作。
 %
 % \subparagraph{我一定要体验上述流程吗？}
-% 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一条路走到底}的教程，而不是
-% \emph{长篇累牍的精细介绍}，其核心论据在于：现代人类总体上需要快速取得成就感，而且大部分可能用
-% 到本模板的同学不会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，尤其是在您
-% 可能早已掌握基本用法的情况下。但，不论如何，这番操作总会使您预览到 \cls{njuthesis} 论文模板的
-% 实际样式。
+% 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一
+% 条路走到底}的教程，而不是\emph{长篇累牍的精细介绍}，其核心论据在于：
+% 现代人类总体上需要快速取得成就感，而且大部分可能用到本模板的同学不
+% 会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，
+% 尤其是在您可能早已掌握基本用法的情况下。但，不论如何，这番操作总会
+% 使您预览到 \cls{njuthesis} 论文模板的实际样式。
 %
 % \subparagraph{我并没有见到理想的结果。}
-% 具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果\emph{不能访问前文提到的在
-% 线编译网站}，请考虑检查网络连接，依次咨询本校
-% \href{https://itsc.nju.edu.cn}{信息化管理建设服务中心} 和该网站的维护者
-% \href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请点击左上角的菜单按钮，查看编译器是
-% 否显示为 |XeLaTeX|；再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个相当有益的
-% 结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉 \hologo{TeX} 排版软件使用方法所需的可
-% 观时间。
+% 具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果
+% \emph{不能访问前文提到的在线编译网站}，请考虑检查网络连接，依次咨询
+% 本校\href{https://itsc.nju.edu.cn}{信息化管理建设服务中心}和该网站
+% 的维护者\href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请
+% 点击左上角的菜单按钮，查看编译器是否显示为 |XeLaTeX|；
+% 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个相当
+% 有益的结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉
+% \hologo{TeX} 排版软件使用方法所需的可观时间。
 %
 % \subparagraph{但我依然对 \hologo{LaTeX} 一无所知！}
-% 这意味着您也许得花些时间在\emph{长篇累牍的精细介绍}上。请接着向后阅读，有需要时善用搜索。
+% 这意味着您也许得花些时间在\emph{长篇累牍的精细介绍}上。
+% 请接着向后阅读，有需要时善用搜索。
 %
 %
 % \subsection{历史沿革}
 %
 % 十几年来，多位热心校友发布过自己编写的模板，在 GitHub 网站上可考的包括：
 % \begin{enumerate}
-%  \item 杨文博（\href{http://yangwenbo.com/}{@solrex}）的 njuthesis（2010 - 2018） \cite{wenboyang2013}
-%  \item \href{https://github.com/fireblue}{@fireblue} 基于杨文博模板的 NJUThesis（2013）\cite{fireblue2013}
-%  \item \href{https://github.com/wenhai-zheng}{@wenhai-zheng} 的 NJUThesis（2013）\cite{wenhai-zheng2013}
-%  \item 曹增乐（\href{https://github.com/ZLCao}{@ZLCao}）的 NJUBachelor（2013 - 2016）\cite{zenglecao2013}
-%  \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的 NJU-Thesis（2013 - 2018）\cite{haixinghu2013}
-%  \item 张楚珩（\href{https://github.com/zhangchuheng123}{@zhangchuheng123}）基于胡海星模板的 NJUThesis（2016）\cite{chuhengzhang2016}
-%  \item 蒋炎岩（\href{http://ics.nju.edu.cn/~jyy/}{@jiangyy}）的 njuthesis（2017 - 2019）\cite{yanyanjiang2017}
-%  \item \href{https://github.com/njuHan}{@njuHan} 基于胡海星模板的 NJU-Thesis（2018 - 2021）
-%  \item 饶安逸（\href{https://anyirao.com/}{@AnyiRao}）基于张楚珩模板的 NJU Thesis 2018（2018）\cite{anyirao2018}
-%  \item 赵懿晨（\href{https://fengchendian.github.io/about.html}{@FengChendian}）基于饶安逸模板的 NJU Thesis 2021（2021）\cite{yichenzhao2021}
+%   \item 杨文博（\href{http://yangwenbo.com/}{@solrex}）的
+%        njuthesis（2010 - 2018） \cite{wenboyang2013}
+%   \item \href{https://github.com/fireblue}{@fireblue} 基于杨文博模板的
+%        NJUThesis（2013）\cite{fireblue2013}
+%   \item \href{https://github.com/wenhai-zheng}{@wenhai-zheng} 的
+%        NJUThesis（2013）\cite{wenhai-zheng2013}
+%   \item 曹增乐（\href{https://github.com/ZLCao}{@ZLCao}）的
+%        NJUBachelor（2013 - 2016）\cite{zenglecao2013}
+%   \item 胡海星（\href{http://haixing-hu.github.io/}{@Haixing-Hu}）的
+%        NJU-Thesis（2013 - 2018）\cite{haixinghu2013}
+%   \item 张楚珩（\href{https://github.com/zhangchuheng123}{@zhangchuheng123}）
+%        基于胡海星模板的 NJUThesis（2016）\cite{chuhengzhang2016}
+%   \item 蒋炎岩（\href{http://ics.nju.edu.cn/~jyy/}{@jiangyy}）的
+%        njuthesis（2017 - 2019）\cite{yanyanjiang2017}
+%   \item \href{https://github.com/njuHan}{@njuHan} 基于胡海星模板的
+%        NJU-Thesis（2018 - 2021）
+%   \item 饶安逸（\href{https://anyirao.com/}{@AnyiRao}）基于张楚珩模板的
+%        NJU Thesis 2018（2018）\cite{anyirao2018}
+%   \item 赵懿晨（\href{https://fengchendian.github.io/about.html}
+%        {@FengChendian}）基于饶安逸模板的
+%        NJU Thesis 2021（2021）\cite{yichenzhao2021}
 % \end{enumerate}
 % 至于不幸而未进行代码版本管理的，甚至于说以压缩包形式流传于各人硬盘中的，就更不可计数了。
 %
@@ -415,28 +439,37 @@ To produce the documentation run the original source files ending with
 % \href{https://github.com/nju-lug/NJUThesis}{Github仓库}。仓库内仅包含源代码、
 % 空白模板及测试文件，不可直接用于写作。这些文件对应的使用方法请参考
 % \ref{subsubsec:on-the-fly-installation}。如果由于网络原因不便访问主仓库，也可
-% 以从\href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}{NJU Git 同步镜像} 获取项目工程文件。
+% 以从 \href{https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis}
+% {NJU Git 同步镜像}获取项目工程文件。
 %
 % \subparagraph{GitHub Releases}
-% 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，赋以更改后的版本号，发布在 \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github Releases 页面}。如果由于网络原因不便访问主仓库，也可以从\href{https://mirror.nju.edu.cn/github-release/nju-lug/NJUThesis/LatestRelease/}{南京大学镜像站下载页面}获取。可供下载的文件包括下列三种：
+% 本模板不定期将已有的新功能和问题修复打包为新的正式发行版，赋以更改后的版本号，
+% 发布在 \href{https://github.com/nju-lug/NJUThesis/releases/latest}{Github
+% Releases 页面}。如果由于网络原因不便访问主仓库，也可以从\ignorespaces
+% \href{https://mirror.nju.edu.cn/github-release/nju-lug/NJUThesis/LatestRelease/}
+% {南京大学镜像站下载页面}获取。可供下载的文件包括下列三种：
 %   \begin{description}
 %     \item[\file{njuthesis-v*.pdf}] 模板说明文档（本文档）。
-%     \item[\file{njuthesis-user-v*.zip}] 交付给用户的完整模板包，包括格式文件和范本文档，可在解压后用于本地编译，也可直接上传至在线编译网站。
-%     \item[\file{njuthesis-ctan-v*.zip}] 交付给 CTAN 的源代码包，普通用户请忽略。
+%     \item[\file{njuthesis-user-v*.zip}] 交付给用户的完整模板包，
+%          包括格式文件和范本文档，可在解压后用于本地编译，
+%          也可直接上传至在线编译网站。
+%     \item[\file{njuthesis-ctan-v*.zip}] 交付给 CTAN 的源代码包，
+%          普通用户请忽略。
 %   \end{description}
 %
 %
 % \subsubsection{文件构成}
 %
-% 本模板由数量众多的文件组成，\emph{所有可能遇到的}文件如表 \ref{tab:njuthesis-files} 所示。
+% 本模板由数量众多的文件组成，\emph{所有可能遇到的}文件如表
+% \ref{tab:njuthesis-files} 所示。
 %
 % \begin{table}[ht]
 %   \centering
 %   \begin{talltblr}[
-%     caption = {\cls{njuthesis}文件构成},
-%     label = {tab:njuthesis-files},
-%     note{a} = {仅供开发使用，并不会在发布版本中出现。}
-%   ] {ll}
+%       caption = {\cls{njuthesis}文件构成},
+%       label = {tab:njuthesis-files},
+%       note{a} = {仅供开发使用，并不会在发布版本中出现。}
+%     ] { row{1} = {font=\bfseries}, colspec = {ll} }
 %     \toprule
 %     名称                               & 说明                             \\
 %     \midrule
@@ -513,8 +546,10 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{安装\hologo{TeX}发行版}
 %
-% 首先需要下载并安装 \hologo{TeX} 软件发行版，其中包括引擎、宏包、字体、文档等。各操作系统适用情况请参考表~\ref {tab:texdistribution}。第一次编译前请务必通过 MiKTeX Console、TeX Live
-% Manager 等图形化程序或 \pkg{tlmgr} \emph{手动更新全部宏包}以避免潜在的兼容性问题。
+% 首先需要下载并安装 \hologo{TeX} 软件发行版，其中包括引擎、宏包、字体、
+% 文档等。各操作系统适用情况请参考表~\ref {tab:texdistribution}。第一次
+% 编译前请务必通过 MiKTeX Console、TeX LiveManager 等图形化程序或
+% \pkg{tlmgr} \emph{手动更新全部宏包}以避免潜在的兼容性问题。
 % \begin{table}[ht]
 %   \centering
 %   \caption{\hologo{TeX} 软件发行版一览}
@@ -533,11 +568,16 @@ To produce the documentation run the original source files ending with
 % 以下是一些值得注意的要点：
 % \begin{itemize}
 %   \item 可以参照这份\emph{手把手的教程}\cite{install-latex-guide-zh-cn}。
-%   \item 校园网环境中访问\href{https://mirror.nju.edu.cn/download/TeX%20%E6%8E%92%E7%89%88%E7%B3%BB%E7%BB%9F}{南京大学开源软件镜像站}可以获得最佳的下载体验。
+%   \item 校园网环境中访问\ignorespaces
+%         \href{https://mirror.nju.edu.cn/download/TeX%20排版系统}
+%         {南京大学开源软件镜像站}可以获得最佳的下载体验。
 %   \item 使用最新的发行版，即版本号为2021或者21。
 %   \item 对于 Windows 和 macOS 用户，更推荐轻量化的 \hologo{MiKTeX} 套件。
-%   \item Linux 用户请尽可能下载 full 版本，如 |texlive-full|。换言之，下载最大的软件包。
-%   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis} 内置了版本检查\footnote{譬如遇到 l3 过时问题请运行 |tlmgr update l3packages|。}，请确认各宏包已升级至最新版。
+% ^^A   \item Linux 用户请尽可能下载 full 版本，如 |texlive-full|。
+% ^^A         换言之，下载最大的软件包。
+%   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis} 内置了版本检查
+%         \footnote{譬如遇到 l3 过时问题请运行 |tlmgr update l3packages|。}
+%         ，请确认各宏包已升级至最新版。
 % \end{itemize}
 %
 %
@@ -546,22 +586,30 @@ To produce the documentation run the original source files ending with
 %
 % 配置完编译器后，还需要一个\emph{文本编辑器}来完成 \file{.tex} 文件内容的写作。
 %
-% 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是最好的
-% 文本编辑器。但对于本项目而言，在此诚心诚意地推荐您使用\emph{更现代更美观更多功
-% 能}的编辑器，譬如\emph{安装了 LaTeX Workshop 插件的 \href{https://code.visualstudio.com/}{Visual Studio Code}}。您也可以根据个人的喜好随意使用 TeXworks、TeXstudio 等编辑器，顺手就行。
+% 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是
+% 最好的文本编辑器。但对于本项目而言，在此诚心诚意地推荐您使用\emph{更现代
+% 更美观更多功能}的编辑器，譬如\emph{安装了 \hologo{LaTeX} Workshop 插件的
+% \href{https://code.visualstudio.com/}{Visual Studio Code}}。您也可以根据
+% 个人的喜好随意使用 TeXworks、TeXstudio 等编辑器，顺手就行。
 %
 % \cls{njuthesis} 为一些常见编辑器提供了配置文件，如
 % \begin{description}
-%   \item[Visual Studio Code] 本模板在 \file{.vscode/} 中提供一份 \hologo{LaTeX} Workshop 插件的简易配置，在打开文件夹后将自动导入，可以省略初始配置步骤直接使用。
-%   \item[TeXstudio] 本模板提供 \file{conf.txsprofile}，可以使用快捷键 |alt+O+P| 导入配置文件。为了简化流程\footnote{当然，也可以设置为使用 \hologo{XeLaTeX} 编译，然后按照 \ref{subsubsec:compileseq} 内容使用快捷键 |F8| 手动编译参考文献。}，该配置文件使用 \pkg{latexmk}，第一次编译前请参考下一节内容安装 Perl。
+%   \item[Visual Studio Code] 本模板在 \file{.vscode/} 中提供一份
+%        \hologo{LaTeX} Workshop 插件的简易配置，在打开文件夹后将自动导入，
+%        可以省略初始配置步骤直接使用。
+%   \item[TeXstudio] 本模板提供 \file{conf.txsprofile}，可以使用快捷键
+%        |alt+O+P| 导入配置文件。为了简化流程\footnote{当然，也可以设置
+%        为使用 \hologo{XeLaTeX} 编译，然后按照 \ref{subsubsec:compileseq}
+%        内容使用快捷键 |F8| 手动编译参考文献。}，该配置文件使用
+%        \pkg{latexmk}，第一次编译前请参考下一节内容安装 Perl。
 % \end{description}
 %
 %
 % \subsubsection{编译顺序}
 % \label{subsubsec:compileseq}
-% \hologo{TeX} 本身是命令行程序，通过不同的命令调用所需的编译引擎，编辑器提供的
-% 快捷按钮实际只是做了包装。为了便于排查运行错误，以下通过具体终端命令简要描述编
-% 译过程。
+% \hologo{TeX} 本身是命令行程序，通过不同的命令调用所需的编译引擎，
+% 编辑器提供的快捷按钮实际只是做了包装。为了便于排查运行错误，
+% 以下通过具体终端命令简要描述编译过程。
 %
 % 编译本模板的过程可以概括为下述步骤：
 % \begin{enumerate}
@@ -570,8 +618,9 @@ To produce the documentation run the original source files ending with
 %   \item 生成页码、编号、目录
 %   \item 将参考文献列表页插入目录
 % \end{enumerate}
-% 总计需要编译四次。\emph{假设即将使用的主文件名为 \file{njuthesis-sample.tex}}，应采用以
-% 下命令顺序进行编译，以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF
+% 总计需要编译四次。\emph{假设即将使用的主文件名为
+% \file{njuthesis-sample.tex}}，应采用以下命令顺序进行编译，
+% 以生成内容正确的 \file{njuthesis-sample.pdf}。输出的 PDF
 % 文档位于同一目录下。该目录下同时会生成若干中间文件。
 %
 % 编译命令具体为引擎名称加主文件名，在编译 \file{.tex} 文件时，
@@ -604,10 +653,13 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subparagraph{使用 \pkg{latexmk}}
-% \pkg{latexmk}\cite{latexmk} 是一个基于 Perl 脚本的自动编译工具，宗旨是通过单一命令简化上述的多次编译流程。在使用该命令前，请确保安装了以下软件：
+% \pkg{latexmk}\cite{latexmk} 是一个基于 Perl 脚本的自动编译工具，
+% 宗旨是通过单一命令简化上述的多次编译流程。
+% 在使用该命令前，请确保安装了以下软件：
 % \begin{description}
-%   \item[Perl] 一般预装于 macOS 和 Linux，而 Windows 用户需要单独安装 \href{https://strawberryperl.com/}{Strawberry Perl}。
-%   \item[\pkg{latexmk}] \hologo{MiKTeX} 已预装；如果终端找不到 |latexmk| 命令，\hologo{TeX}\,Live 用户需使用 \pkg{tlmgr} 单独安装。
+%   \item[Perl] 一般预装于 macOS 和 Linux，而 Windows 用户需要单独安装
+%        \href{https://strawberryperl.com/}{Strawberry Perl}。
+%   \item[\pkg{latexmk}] 如果终端找不到 |latexmk| 命令，需使用包管理器单独安装。
 % \end{description}
 %
 % 该命令的使用方法为
@@ -817,23 +869,26 @@ To produce the documentation run the original source files ending with
 % \begin{table}[htbp]
 %   \centering
 %   \begin{talltblr}[
-%     caption = {中文字体配置列表},
-%     label = {tab:cjk-fontset},
-%     note{a} = {请下载简繁扩展（即 GBK 编码）版本},
-%     note{b} = {使用
-%       \href{http://www.foundertype.com/index.php/FontInfo/index/id/164}{方正小标宋}
-%       作为方正书宋的粗体},
-%     note{c} = {使用
-%       \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}{方正黑体}
-%       作为方正细黑一的粗体},
-%     note{d} = {在部分操作系统中可能已经预装 Google Noto 字体。考虑到获取字体的难易程度，单独安装时请采用
+%       caption = {中文字体配置列表},
+%       label = {tab:cjk-fontset},
+%       note{a} = {请下载简繁扩展（即 GBK 编码）版本},
+%       note{b} = {使用\ignorespaces
+%         \href{http://www.foundertype.com/index.php/FontInfo/index/id/164}
+%           {方正小标宋}作为方正书宋的粗体},
+%     note{c} = {使用\ignorespaces
+%       \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}
+%         {方正黑体}作为方正细黑一的粗体},
+%     note{d} = {在部分操作系统中可能已经预装 Google Noto 字体。
+%       考虑到获取字体的难易程度，单独安装时请采用
 %       \href{https://mirrors.nju.edu.cn/download/Adobe%20Source%20Han}{Adobe Source Han}
 %       字体表示思源字体，请下载 Simplified Chinese（即后缀名为 SC）的版本},
 %     note{e} = {思源字体并不包含楷书和仿宋，而 Adobe 楷体和仿宋难以直接下载，
-%       因此使用方正字体代替},
-%   ] { cell{2}{2,4} = {white!70!njuyellow}, cell{4}{4} = {white!70!njuyellow}, colspec = {ccccc} }
+%       因此使用方正字体代替} ]
+%     { cell{2}{2,4} = {white!70!njuyellow},
+%       cell{4}{4} = {white!70!njuyellow},
+%       row{1} = {font=\bfseries}, colspec = {ccccc} }
 %   \toprule
-%     \bf 配置名称 & \bf 宋体    & \bf 黑体    & \bf 楷书    & \bf 仿宋                 \\
+%     配置名称     & 宋体        & 黑体        & 楷书        & 仿宋                 \\
 %   \midrule
 %     Windows      & 中易宋体    & 中易黑体    & 中易楷体    & 中易仿宋                 \\
 %     macOS        & 华文宋体    & 华文黑体    & 华文楷体    & 华文仿宋                 \\
@@ -847,7 +902,7 @@ To produce the documentation run the original source files ending with
 %     \href{https://github.com/adobe-fonts}{思源}\TblrNote{d}
 %       & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/}{思源宋体}
 %       & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-sans/OTF/SimplifiedChinese/}{思源黑体}
-%                                              & 方正楷体\TblrNote{e}  & 方正仿宋       \\
+%                                              & 方正楷体\TblrNote{e}  & 方正仿宋      \\
 %   \bottomrule
 %   \end{talltblr}
 % \end{table}
@@ -1516,40 +1571,43 @@ To produce the documentation run the original source files ending with
 % 引用命令 \tn{cite} 含有多个变体，以便使用文献条目中不同的信息域。在两种参考文献样式下，这些命令的行为具体存在一些差异，详见表 \ref{tab:numeric-style} 和表 \ref{tab:author-year-style}。
 %
 % \begin{table}[ht]
-%   \caption{顺序编码制下的引用样式}
-%   \label{tab:numeric-style}
 %   \centering
-%   \begin{tblr}{cll}
+%   \begin{talltblr} [
+%       caption = {顺序编码制下的引用样式},
+%       label   = {tab:numeric-style} ]
+%     { row{1} = {font=\bfseries}, colspec = {cll} }
 %     \toprule
-%       \bf 引用方式      & \bf 命令           & \bf 排版效果                   \\
+%       引用方式 & 命令               &  排版效果                  \\
 %     \midrule
-%       单篇文献          & \tn{cite}          & 上标可设置页码             \\
-%       单篇文献          & \tn{parencite}     & 非上标可设置页码           \\
-%       多篇文献          & \tn{cite}          & 上标，逗号隔开或短横线连接 \\
-%       标注页码          & \tn{pagescite}     & 上标加自动页码             \\
-%       标注作者          & \tn{textcite}      & 作者为主语加非上标编号     \\
-%       标注作者          & \tn{authornumcite} & 作者为主语加上标编号       \\
-%       完整脚注          & \tn{footfullcite}  & 脚注方式                   \\
+%       单篇文献 & \tn{cite}          & 上标可设置页码             \\
+%       单篇文献 & \tn{parencite}     & 非上标可设置页码           \\
+%       多篇文献 & \tn{cite}          & 上标，逗号隔开或短横线连接 \\
+%       标注页码 & \tn{pagescite}     & 上标加自动页码             \\
+%       标注作者 & \tn{textcite}      & 作者为主语加非上标编号     \\
+%       标注作者 & \tn{authornumcite} & 作者为主语加上标编号       \\
+%       完整脚注 & \tn{footfullcite}  & 脚注方式                   \\
 %     \bottomrule
-%   \end{tblr}
+%   \end{talltblr}
 % \end{table}
 %
 % \begin{table}[ht]
 %   \centering
-%   \begin{talltblr}[
-%     caption = {著者-出版年制下的引用样式},
-%     label = {tab:author-year-style},
-%     note{a} = {在此样式下 \tn{parencite} 效果等同于 \tn{cite}} ] {cll}
+%   \begin{talltblr} [
+%       caption = {著者-出版年制下的引用样式},
+%       label   = {tab:author-year-style},
+%       note{a} = {在此样式下 \tn{parencite} 效果等同于 \tn{cite}。} ]
+%     { row{1} = {font=\bfseries}, colspec = {cll} }
 %     \toprule
-%       \bf 引用方式      & \bf 命令              & \bf 排版效果                   \\
+%       引用方式       & 命令                  & 排版效果                     \\
 %     \midrule
-%       单篇文献          & \tn{cite}\TblrNote{a} & 作者加年份用括号包围可设置页码 \\
-%       多篇文献          & \tn{cite}             & 分号隔开                       \\
-%       标注页码          & \tn{pagescite}        & 作者加年份用括号包围自动页码   \\
-%       标注年份          & \tn{yearcite}         & 用括号包围的年份               \\
-%       标注年份、页码    & \tn{yearpagescite}    & 提供年份用括号包围自动页码     \\
-%       标注作者          & \tn{textcite}         & 作者为主语加加括号包围年份     \\
-%       完整脚注          & \tn{footfullcite}     & 脚注方式                       \\
+%       单篇文献       & \tn{cite}\TblrNote{a} &
+%                                              作者加年份用括号包围可设置页码 \\
+%       多篇文献       & \tn{cite}             & 分号隔开                     \\
+%       标注页码       & \tn{pagescite}        & 作者加年份用括号包围自动页码 \\
+%       标注年份       & \tn{yearcite}         & 用括号包围的年份             \\
+%       标注年份、页码 & \tn{yearpagescite}    & 提供年份用括号包围自动页码   \\
+%       标注作者       & \tn{textcite}         & 作者为主语加加括号包围年份   \\
+%       完整脚注       & \tn{footfullcite}     & 脚注方式                     \\
 %     \bottomrule
 %   \end{talltblr}
 % \end{table}
