@@ -3093,10 +3093,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { load-config }
   { I~ am~ loading~ config~ file~ "#1". }
-\clist_if_empty:NF \g_@@_config_clist
+\clist_map_inline:Nn \g_@@_config_clist
   {
-    \msg_info:nnx { njuthesis } { load-config } { \g_@@_config_tl }
-    \clist_map_inline:Nn \g_@@_config_clist { \file_input:n { #1 } }
+    \msg_info:nnn { njuthesis } { load-config } { #1 }
+    \file_input:n { #1 }
   }
 %    \end{macrocode}
 %
