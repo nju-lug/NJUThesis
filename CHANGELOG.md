@@ -9,6 +9,7 @@
 ### 修复
 
 - 修复国家图书馆封面的“UDC”名称格式
+- 修复摘要标题的断行问题 - [#98], [#105], [#107]
 
 ## [0.16.0] - 2022-03-19
 
@@ -286,7 +287,10 @@
 [#85]: https://github.com/nju-lug/NJUThesis/discussions/85
 [#89]: https://github.com/nju-lug/NJUThesis/discussions/89
 [#92]: https://github.com/nju-lug/NJUThesis/issues/92
+[#98]: https://github.com/nju-lug/NJUThesis/issues/98
 [#99]: https://github.com/nju-lug/NJUThesis/discussions/99
+[#105]: https://github.com/nju-lug/NJUThesis/discussions/105
+[#107]: https://github.com/nju-lug/NJUThesis/issues/107
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

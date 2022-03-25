@@ -111,7 +111,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.16.1 2022-03-21 15:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.16.1 2022-03-25 15:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -958,8 +958,16 @@ To produce the documentation run the original source files ending with
 %     title  = \Arg{标题}
 %     title* = \Arg{英文标题}
 %   \end{syntax}
-% 题目。由于封面上提供给中文题目的横线长度有限\footnote{单行最长为15个汉字，建议总长度不超过45字}，本模板默认会自动对标题进行换行。如果需要手动制定换行位点，请使用换行控制符（ |\\| ），最多两处。
+% 题目。由于封面上提供给中文题目的横线长度有限\footnote{单行最长为15个汉字，建议总长度不超过45字}，本模板默认会自动对标题进行换行。如果需要手动指定换行位点，请使用换行控制符（ |\\| ），最多两处。
 % \end{function}
+%
+% 绘制封面及摘要中的标题涉及断行处理，无法对空字符串产生正确结果。
+% 因而在手动将标题设置为空时，本模板将抛出如下错误：
+% \begin{shellexample}[deletekeywords={in}]
+%   ! Package njuthesis Error: The title should not be left blank.
+%   (njuthesis)                Please check whether you have fill in both
+%   (njuthesis)                Chinese and English titles.
+% \end{shellexample}
 %
 % \begin{function}[updated=2021-10-01]{info/keywords,info/keywords*}
 %   \begin{syntax}
@@ -1489,7 +1497,8 @@ To produce the documentation run the original source files ending with
 %   \item[著者-出版年制] 正文引用的文献采用著者-出版年制时，各篇文献的标注内容由著者姓氏与出版年构成，并置于"()"内。参考文献表采用著者-出版年制组织时，各篇文献首先按文种集中，然后按著者字顺和出版年排列。
 % \end{description}
 %
-% 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号表示”\cite{nju2021}，符合顺序编码制的格式，保持默认设置即可。
+% 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号
+% 表示”\cite{nju2021}，符合顺序编码制的格式，保持默认设置即可。
 %
 % \begin{function}[added=2022-02-15]{bib/option}
 %   \begin{syntax}
@@ -1505,18 +1514,22 @@ To produce the documentation run the original source files ending with
 %   \begin{syntax}
 %     resource = \Arg{文件}
 %   \end{syntax}
-% 参考文献数据源。类似于 \tn{addbibresource} 命令，但可以使用逗号分隔的列表形式。必须使用带扩展名（\file{.bib}）的完整文件名。
+% 参考文献数据源。类似于 \tn{addbibresource} 命令，但可以使用逗号分隔的
+% 列表形式。必须使用带扩展名（\file{.bib}）的完整文件名。
 % \end{function}
 %
 % \begin{function}{\addbibresource}
 %   \begin{syntax}
 %     \tn{addbibresource}\Arg{文件}
 %   \end{syntax}
-% 添加参考文献源文件。为了与 \pkg{biblatex} 进行兼容，也可使用本命令添加数据源。本命令不支持逗号分隔多个文件的形式，如果希望额外添加参考文献列表，需要在导言区中多次调用。
+% 添加参考文献源文件。为了与 \pkg{biblatex} 进行兼容，也可使用本命令
+% 添加数据源。本命令不支持逗号分隔多个文件的形式，如果希望额外添加参
+% 考文献列表，需要在导言区中多次调用。
 % \end{function}
 %
 % 可以参考如下范例进行参考文献设置。
-% 其中 \opt{bib/option} 的内容旨在关闭部分不需显示的文献信息，可根据需要使用。
+% 其中 \opt{bib/option} 的内容旨在关闭部分不需显示的文献信息，
+% 并采取仅首字母大写的作者姓名格式，可根据需要使用。
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
 %   \njusetup {
 %       bib = {
@@ -1526,7 +1539,8 @@ To produce the documentation run the original source files ending with
 %               doi    = false,
 %               isbn   = false,
 %               url    = false,
-%               eprint = false
+%               eprint = false,
+%               gbnamefmt = lowercase
 %             }
 %         }
 %     }
@@ -1681,6 +1695,10 @@ To produce the documentation run the original source files ending with
 %       Abstract in English
 %   \end{abstract*}
 % \end{latexexample}
+%
+% 研究生摘要页面的标题会被填入两行下划线之中。
+% 过长的标题将自动延申至新的一行，但由于历来未见有三行的情况，
+% 本模板会对摘要页超长的标题产生警告。
 %
 % \begin{function}[added=2022-02-04]{style/abstract-in-toc}
 %   \begin{syntax}
@@ -1859,6 +1877,8 @@ To produce the documentation run the original source files ending with
 % \begin{itemize}
 %   \item \pkg{natbib} 和 \pkg{gbt7714} 等 \hologo{BibTeX} 相关的参考文献宏包。
 %   \item \pkg{bm} 等使用传统数学字体配置方案的宏包。
+%   \item \pkg{babel} 在直接使用时会覆盖默认的中文名称设置。
+%   \item \pkg{microtype} 在 \hologo{XeTeX} 和 \hologo{LuaTeX} 下支持有限。
 % \end{itemize}
 %
 %
@@ -2164,12 +2184,13 @@ To produce the documentation run the original source files ending with
 % \end{variable}
 %
 % \begin{variable}{\l_@@_info_degree_tl,\l_@@_info_diploma_tl,
-%   \l_@@_info_type_tl}
+%   \l_@@_info_type_tl,\l_@@_info_type_en_tl}
 % 用于存储学位名称的变量。
 %    \begin{macrocode}
 \tl_new:N  \l_@@_info_degree_tl
 \tl_new:N  \l_@@_info_diploma_tl
 \tl_new:N  \l_@@_info_type_tl
+\tl_new:N  \l_@@_info_type_en_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2341,7 +2362,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_ulined_center_box:nn #1#2
   {
     \mode_leave_vertical:
-    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
+    \rule [ -0.55 ex ] { #1 } { 0.4 pt }
     \skip_horizontal:n { -#1 }
     \hbox_to_wd:nn { #1 } { \hfil #2 \hfil }
   }
@@ -2416,7 +2437,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_uline:n #1
   {
     \mode_leave_vertical:
-    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
+    \rule [ -0.55 ex ] { #1 } { 0.4 pt }
     \skip_horizontal:n { -#1 }
   }
 %    \end{macrocode}
@@ -2508,6 +2529,74 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_uline_box:}
+% 用于摘要标题的下划线盒子。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_uline_box:
+  { \vtop{\box1\kern-\prevdepth\kern0.5ex\hrule} }
+%    \end{macrocode}
+% \end{macro}
+%
+% 定义关于标题的报错信息。
+%    \begin{macrocode}
+\msg_new:nnn { njuthesis } { missing-title }
+  {
+    The~ title~ should~ not~ be~ left~ blank.\\
+    Please~ check~ whether~ you~ have~ fill~ in~
+    both~ Chinese~ and~ English~ titles.
+  }
+\msg_new:nnn { njuthesis } { abs-title-too-long }
+  {
+    Your~ title~ is~ too~ long~ to~ fit~ in~ two~ lines.\\
+    I~ have~ drawn~ additional~ lines~ to~ contain~ it,~
+    which~ will~ probably~ make~ your~ abstract~ page~
+    look~ slightly~ different~ from~ the~ standard.
+  }
+%    \end{macrocode}
+%
+% \begin{macro}{\@@_uline_list:nn,\@@_uline_list:xn}
+% \changes{v0.16}{2022/03/25}{使用原生断行算法处理摘要页标题。}
+% 用于研究生摘要页面的多行标题。
+% \begin{arguments}
+%   \item 标签名
+%   \item 内容
+% \end{arguments}
+% 这里使用了 Primitive \TeX{} 语法以利用原生的断行算法\footnote{\url{https://tex.stackexchange.com/questions/637861/underline-list-item-to-page-width}}。
+% 对其语法的简要介绍可以参考 \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_uline_list:nn #1#2
+  {
+    \hbox_set:Nn \l_@@_tmp_box {#1}
+    \setbox0=\vbox{\hangindent=\wd\l_@@_tmp_box \hangafter=-1
+        \leftskip=1em \rightskip=\leftskip \parindent=\z@ #2\par
+        \global\setbox2=\hbox{}
+        \int_gzero:N \l_@@_tmp_int
+        \loop
+          \setbox1=\lastbox \unskip\unpenalty
+        \unless\ifvoid1
+          \global\setbox2=\hbox{\@@_uline_box:\penalty0\unhbox2}
+          \int_gincr:N \l_@@_tmp_int
+        \repeat
+      }
+      {
+        \noindent\copy\l_@@_tmp_box\unhbox2
+%    \end{macrocode}
+% 处理边界条件，包括标题未填写、标题只有一行，以及标题过长的情况。
+%    \begin{macrocode}
+        \int_case:nnF { \l_@@_tmp_int }
+          {
+            { 0 } { \msg_error:nn { njuthesis } { missing-title } }
+            { 1 } { \@@_uline:n { \textwidth } }
+            { 2 } { \prg_do_nothing: }
+          }
+          { \msg_warning:nn { njuthesis } { abs-title-too-long } }
+        \par
+      }
+  }
+\cs_generate_variant:Nn \@@_uline_list:nn { xn }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_date:www,\@@_date_en:www}
 % 将形如 |yyyy-mm-dd| 的 ISO 日期格式字符串转化为日期表示。该格式符合国际标准 ISO 8601 以及国内标准 GB/T 7408--2005《数据元和交换格式 信息交换 日期和时间表示法》。
 % \begin{arguments}
@@ -2563,6 +2652,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_multiline_title:nnn #1#2#3
   {
+    \tl_if_empty:NT \l_@@_info_title_tl
+      { \msg_error:nn { njuthesis } { missing-title } }
     \@@_split_title:V \l_@@_info_title_tl
     \@@_spread_box:nnV { #2 } { \kaishu } \c_@@_name_title_tl
     \@@_hskip:
@@ -3118,6 +3209,7 @@ To produce the documentation run the original source files ending with
     title               .tl_set:N = \l_@@_info_title_tl,
     title              .initial:n = { 空 },
     title*              .tl_set:N = \l_@@_info_title_en_tl,
+    title*             .initial:n = { Empty },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3224,7 +3316,9 @@ To produce the documentation run the original source files ending with
 % 设置类型信息。
 %    \begin{macrocode}
 \tl_set:Nx \l_@@_info_type_tl
-  { \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int } }
+  { \clist_item:Nn \c_@@_name_type_clist    { \g_@@_info_type_int } }
+\tl_set:Nx \l_@@_info_type_en_tl
+  { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
 \tl_put_left:Nx \l_@@_info_type_tl
   { \tl_use:c { c_@@_name_ \l_@@_info_diploma_tl _tl } }
 %    \end{macrocode}
@@ -4994,15 +5088,12 @@ To produce the documentation run the original source files ending with
 %<*definition-g>
 \cs_new_protected:Npn \@@_abs_info_g:n #1
   {
-    \@@_full_uline:NV \l_@@_tmp_dim
+    \@@_uline_list:xn
       {
         \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int }
         \c_@@_name_title_a_tl #1
       }
-    \@@_ulined_center_box:nn { \l_@@_tmp_dim }
-      { \tl_range:Nnn \l_@@_info_title_tl { 1 } { 20 } } \\
-    \@@_uline:n { \textwidth } \@@_qquad:
-    \tl_range:Nnn \l_@@_info_title_tl { 21 } { -1 } \\
+      { \l_@@_info_title_tl }
 %    \end{macrocode}
 % 专业、年级、姓名。
 %    \begin{macrocode}
@@ -5035,21 +5126,16 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_en_g:n #1
   {
-    \@@_full_uline:NV \l_@@_tmp_dim
-      { \clist_item:Nn \c_@@_name_type_en_clist
-          { \g_@@_info_type_int } #1 }
-    \@@_ulined_center_box:nn { \l_@@_tmp_dim }
-      { \tl_range:Nnn \l_@@_info_title_en_tl { 1 } { 40 } } \\
-    \@@_uline:n { \textwidth } \@@_qquad:
-    \tl_range:Nnn \l_@@_info_title_en_tl { 41 } { -1 }
+    \@@_uline_list:xn { \l_@@_info_type_en_tl #1 }
+        { \l_@@_info_title_en_tl }
 %    \end{macrocode}
 % 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，
 % 以避免末尾生成多余的换行符产生 |Underfull \vbox| 信息。
 %    \begin{macrocode}
     \clist_map_inline:nn { major, author, supv_full }
-      { \\
+      {
         \@@_uline_entry:Nnnn \l_@@_tmp_dim
-          { ##1 _en } { ##1 _en } { #1 }
+          { ##1 _en } { ##1 _en } { #1 } \par
       }
   }
 %</definition-g>
@@ -5074,7 +5160,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 关键词列表的悬挂缩进样式由 \tn{list} 环境产生。
 %    \begin{macrocode}
-    \list { }
+    \list { \l_@@_tmp_tl }
       {
         \labelwidth  \l_@@_tmp_dim
         \labelsep    \c_zero_dim
@@ -5086,8 +5172,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
         \cs_set_eq:NN \makelabel \textbf
       }
-    \item [ \l_@@_tmp_tl ]
-      \clist_use:cn { l_@@_info_keywords #1 _clist } { #2 }
+    \item \clist_use:cn { l_@@_info_keywords #1 _clist } { #2 }
     \endlist
   }
 %</class>
