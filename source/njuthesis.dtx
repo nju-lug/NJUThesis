@@ -1696,10 +1696,6 @@ To produce the documentation run the original source files ending with
 %   \end{abstract*}
 % \end{latexexample}
 %
-% 研究生摘要页面的标题会被填入两行下划线之中。
-% 过长的标题将自动延申至新的一行，但由于历来未见有三行的情况，
-% 本模板会对摘要页超长的标题产生警告。
-%
 % \begin{function}[added=2022-02-04]{style/abstract-in-toc}
 %   \begin{syntax}
 %     abstract-in-toc = <\TTF>
@@ -1708,6 +1704,24 @@ To produce the documentation run the original source files ending with
 % 关闭此选项后摘要页将不会出现在目录中，仅保留其 PDF 书签。
 % \end{function}
 %
+% \begin{function}[added=2022-03-26]{style/abstract-title}
+%   \begin{syntax}
+%     abstract-title = <(strict)|centered|natural>
+%   \end{syntax}
+% 选择研究生摘要标题样式。
+% 默认为严格模式（\opt{strict}），即完全模仿材料包要求。
+% \end{function}
+%
+% 材料包中的 Word 空白模板仅有两行空白下划线。
+% 根据填写习惯的不同，模板预置了三种样式：
+% \begin{itemize}
+%   \item \opt{strict}，在两行空白下划线上左对齐填写标题。
+%         如果该标题不足一行，则第二行下划线留空；
+%         如果长度超出两行，则向后延伸并抛出一个警告信息。
+%   \item \opt{centered}，将严格模式的左对齐改为居中。
+%   \item \opt{natural}，仅居中标题，不做行数检查。
+%         本模式更适合较短的题目。
+% \end{itemize}
 %
 % \subsubsection{前言页}
 %
@@ -2092,7 +2106,7 @@ To produce the documentation run the original source files ending with
 %
 %
 % \end{documentation}
-%
+% \clearpage
 %
 % \begin{implementation}
 %
@@ -2529,74 +2543,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_uline_box:}
-% 用于摘要标题的下划线盒子。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline_box:
-  { \vtop{\box1\kern-\prevdepth\kern0.5ex\hrule} }
-%    \end{macrocode}
-% \end{macro}
-%
-% 定义关于标题的报错信息。
-%    \begin{macrocode}
-\msg_new:nnn { njuthesis } { missing-title }
-  {
-    The~ title~ should~ not~ be~ left~ blank.\\
-    Please~ check~ whether~ you~ have~ fill~ in~
-    both~ Chinese~ and~ English~ titles.
-  }
-\msg_new:nnn { njuthesis } { abs-title-too-long }
-  {
-    Your~ title~ is~ too~ long~ to~ fit~ in~ two~ lines.\\
-    I~ have~ drawn~ additional~ lines~ to~ contain~ it,~
-    which~ will~ probably~ make~ your~ abstract~ page~
-    look~ slightly~ different~ from~ the~ standard.
-  }
-%    \end{macrocode}
-%
-% \begin{macro}{\@@_uline_list:nn,\@@_uline_list:xn}
-% \changes{v0.16}{2022/03/25}{使用原生断行算法处理摘要页标题。}
-% 用于研究生摘要页面的多行标题。
-% \begin{arguments}
-%   \item 标签名
-%   \item 内容
-% \end{arguments}
-% 这里使用了 Primitive \TeX{} 语法以利用原生的断行算法\footnote{\url{https://tex.stackexchange.com/questions/637861/underline-list-item-to-page-width}}。
-% 对其语法的简要介绍可以参考 \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline_list:nn #1#2
-  {
-    \hbox_set:Nn \l_@@_tmp_box {#1}
-    \setbox0=\vbox{\hangindent=\wd\l_@@_tmp_box \hangafter=-1
-        \leftskip=1em \rightskip=\leftskip \parindent=\z@ #2\par
-        \global\setbox2=\hbox{}
-        \int_gzero:N \l_@@_tmp_int
-        \loop
-          \setbox1=\lastbox \unskip\unpenalty
-        \unless\ifvoid1
-          \global\setbox2=\hbox{\@@_uline_box:\penalty0\unhbox2}
-          \int_gincr:N \l_@@_tmp_int
-        \repeat
-      }
-      {
-        \noindent\copy\l_@@_tmp_box\unhbox2
-%    \end{macrocode}
-% 处理边界条件，包括标题未填写、标题只有一行，以及标题过长的情况。
-%    \begin{macrocode}
-        \int_case:nnF { \l_@@_tmp_int }
-          {
-            { 0 } { \msg_error:nn { njuthesis } { missing-title } }
-            { 1 } { \@@_uline:n { \textwidth } }
-            { 2 } { \prg_do_nothing: }
-          }
-          { \msg_warning:nn { njuthesis } { abs-title-too-long } }
-        \par
-      }
-  }
-\cs_generate_variant:Nn \@@_uline_list:nn { xn }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_date:www,\@@_date_en:www}
 % 将形如 |yyyy-mm-dd| 的 ISO 日期格式字符串转化为日期表示。该格式符合国际标准 ISO 8601 以及国内标准 GB/T 7408--2005《数据元和交换格式 信息交换 日期和时间表示法》。
 % \begin{arguments}
@@ -2615,6 +2561,16 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{封面相关}
 % \changes{v0.16}{2022/03/10}{将封面和摘要内部函数定义移动到前部。}
+%
+% 定义关于标题的报错信息。
+%    \begin{macrocode}
+\msg_new:nnn { njuthesis } { missing-title }
+  {
+    The~ title~ should~ not~ be~ left~ blank.\\
+    Please~ check~ whether~ you~ have~ fill~ in~
+    both~ Chinese~ and~ English~ titles.
+  }
+%    \end{macrocode}
 %
 % \begin{macro}{\@@_split_title:n,\@@_split_title:V}
 % 分割标题。
@@ -2758,6 +2714,77 @@ To produce the documentation run the original source files ending with
     \@@_uuline:n { \l_@@_tmp_dim } #1
   }
 \cs_generate_variant:Nn \@@_abs_title:n { V }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_uline_box:}
+% 用于摘要标题的下划线盒子。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_uline_box:
+  { \vtop{\box1\kern-\prevdepth\kern0.5ex\hrule} }
+%    \end{macrocode}
+% \end{macro}
+%
+% 定义关于标题的报错信息。
+%    \begin{macrocode}
+\msg_new:nnn { njuthesis } { abs-title-too-long }
+  {
+    Your~ title~ is~ too~ long~ to~ fit~ in~ two~ lines.\\
+    I~ have~ drawn~ additional~ lines~ to~ contain~ it,~
+    which~ will~ probably~ make~ your~ abstract~ page~
+    look~ slightly~ different~ from~ the~ standard.\\
+    You~ can~ use~ the~ "style/abstract-title"~ key~
+    to~ disable~ this~ message.
+  }
+%    \end{macrocode}
+%
+% \begin{macro}{\@@_uline_list:nnn,\@@_uline_list:xnn}
+% \changes{v0.16}{2022/03/25}{使用原生断行算法处理摘要页标题。}
+% 用于研究生摘要页面的多行标题。
+% \begin{arguments}
+%   \item 标签名
+%   \item 内容
+%   \item 左边距
+% \end{arguments}
+% 这里使用了 Primitive \TeX{} 语法以利用原生的断行算法\footnote{\url{https://tex.stackexchange.com/questions/637861/underline-list-item-to-page-width}}。
+% 对其语法的简要介绍可以参考 \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_uline_list:nnn #1#2#3
+  {
+    \hbox_set:Nn \l_@@_tmp_box {#1}
+    \setbox0=\vbox{\hangindent=\wd\l_@@_tmp_box \hangafter=-1
+        \leftskip=#3 \rightskip=\leftskip \parindent=\z@ #2\par
+        \global\setbox2=\hbox{}
+        \int_gzero:N \l_@@_tmp_int
+        \loop
+          \setbox1=\lastbox \unskip\unpenalty
+        \unless\ifvoid1
+          \global\setbox2=\hbox{\@@_uline_box:\penalty0\unhbox2}
+          \int_gincr:N \l_@@_tmp_int
+        \repeat
+      }
+      {
+        \noindent\copy\l_@@_tmp_box\unhbox2
+%    \end{macrocode}
+% 在使用自然断行算法后，研究生的摘要标题可选择 \opt{strict}
+% 或者 \opt{natural} 模式。前者会为少于两行的标题补齐下划线，
+% 并对多于三行的标题生成警告信息。这里通过行数处理边界条件，
+% 包括标题未填写、标题只有一行，以及标题过长的情况。
+%    \begin{macrocode}
+        \bool_if:NT \g_@@_strict_abs_title_bool
+          {
+            \int_case:nnF { \l_@@_tmp_int }
+              {
+                { 0 } { \msg_error:nn { njuthesis } { missing-title } }
+                { 1 } { \@@_uline:n { \textwidth } }
+                { 2 } { \prg_do_nothing: }
+              }
+              { \msg_warning:nn { njuthesis } { abs-title-too-long } }
+            \par
+          }
+      }
+  }
+\cs_generate_variant:Nn \@@_uline_list:nnn { xnn }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5088,12 +5115,12 @@ To produce the documentation run the original source files ending with
 %<*definition-g>
 \cs_new_protected:Npn \@@_abs_info_g:n #1
   {
-    \@@_uline_list:xn
+    \@@_uline_list:xnn
       {
         \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int }
         \c_@@_name_title_a_tl #1
       }
-      { \l_@@_info_title_tl }
+      { \l_@@_info_title_tl } { \g_@@_abs_title_left_skip }
 %    \end{macrocode}
 % 专业、年级、姓名。
 %    \begin{macrocode}
@@ -5126,8 +5153,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_en_g:n #1
   {
-    \@@_uline_list:xn { \l_@@_info_type_en_tl #1 }
-        { \l_@@_info_title_en_tl }
+    \@@_uline_list:xnn { \l_@@_info_type_en_tl #1 }
+        { \l_@@_info_title_en_tl } { \g_@@_abs_title_left_skip }
 %    \end{macrocode}
 % 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，
 % 以避免末尾生成多余的换行符产生 |Underfull \vbox| 信息。
@@ -5203,8 +5230,15 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{用户接口}
 %
+% \begin{macro}{\g_@@_abs_title_left_skip}
+% 研究生摘要标题左边距。
 %    \begin{macrocode}
 %<*class>
+\skip_new:N \g_@@_abs_title_left_skip
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \keys_define:nn { nju / style }
   {
 %    \end{macrocode}
@@ -5212,8 +5246,32 @@ To produce the documentation run the original source files ending with
 % \changes{v0.15}{2022/02/04}{可选择摘要是否出现在目录中。}
 % 是否将摘要添加到目录。
 %    \begin{macrocode}
-    abstract-in-toc .bool_gset:N = \g_@@_abs_in_toc_bool,
-    abstract-in-toc   .initial:n = true
+    abstract-in-toc      .bool_gset:N = \g_@@_abs_in_toc_bool,
+    abstract-in-toc        .initial:n = true,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{style/abstract-title}
+% \changes{v0.16}{2022/03/26}{可选择研究生摘要标题样式。}
+% 选择摘要样式，默认为 \opt{strict}。
+%    \begin{macrocode}
+    abstract-title          .choice:,
+    abstract-title / strict   .code:n =
+      {
+        \bool_gset_true:N  \g_@@_strict_abs_title_bool
+        \skip_gset:Nn \g_@@_abs_title_left_skip { 1 em }
+      },
+    abstract-title / centered .code:n =
+      {
+        \bool_gset_true:N \g_@@_strict_abs_title_bool
+        \skip_gset:Nn \g_@@_abs_title_left_skip { 0 pt plus 1 fill }
+      },
+    abstract-title / natural  .code:n =
+      {
+        \bool_gset_false:N \g_@@_strict_abs_title_bool
+        \skip_gset:Nn \g_@@_abs_title_left_skip { 0 pt plus 1 fill }
+      },
+    abstract-title        .initial:n = strict
   }
 %    \end{macrocode}
 % \end{macro}
