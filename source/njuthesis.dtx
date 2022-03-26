@@ -5032,8 +5032,9 @@ To produce the documentation run the original source files ending with
 %<definition-g>    content     = \@@_abs_info_g:n       { ： },
 %<definition-ug>    format      = \zihao { -4 } \kaishu,
 %<definition-g>    format      = \zihao {  4 } \kaishu,
-    align       = l,
-    bottom-skip = 1 cm
+%<definition-ug>    bottom-skip = 1 cm,
+%<definition-g>    bottom-skip = 2 cm,
+    align       = l
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5059,8 +5060,9 @@ To produce the documentation run the original source files ending with
 %<definition-g>    content     = \@@_abs_info_en_g:n        { :~ },
 %<definition-ug>    format      = \zihao { -4 },
 %<definition-g>    format      = \zihao {  4 },
-    align       = l,
-    bottom-skip = 1 cm
+%<definition-ug>    bottom-skip = 1 cm,
+%<definition-g>    bottom-skip = 2 cm,
+    align       = l
   }
 %</(definition-ug|definition-g)>
 %    \end{macrocode}
@@ -5104,6 +5106,30 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{研究生}
 % \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构研究生摘要。}
+%
+% \begin{macro}{abstract/mark}
+% 英文摘要标题实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { abstract / mark }
+  {
+    content     = \c_@@_name_abstract_b_tl,
+    format      = \sffamily \zihao { -3 },
+    bottom-skip = 1 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{abstract/en/mark}
+% 英文摘要标题实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { abstract / en / mark }
+  {
+    content     = \c_@@_name_abstract_b_en_tl,
+    format      = \sffamily \zihao { -3 },
+    bottom-skip = 1 cm
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_abs_info_g:n}
 % 绘制研究生中文摘要信息栏。
@@ -5208,6 +5234,7 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsubsection{绘制摘要}
+% \changes{v0.16}{2022/03/26}{补上研究生摘要页面的小标题。}
 %
 % \begin{macro}{\@@_make_abstract:,\@@_make_abstract_en:}
 % 绘制摘要页面。
@@ -5217,11 +5244,13 @@ To produce the documentation run the original source files ending with
   {
     \UseInstance { nju } { abstract / title }
     \UseInstance { nju } { abstract / info  }
+%<definition-g>    \UseInstance { nju } { abstract / mark  }
   }
 \cs_new_protected:Npn \@@_make_abstract_en:
   {
     \UseInstance { nju } { abstract / en / title }
     \UseInstance { nju } { abstract / en / info  }
+%<definition-g>    \UseInstance { nju } { abstract / en / mark  }
   }
 %</(definition-ug|definition-g)>
 %    \end{macrocode}
@@ -5463,6 +5492,8 @@ To produce the documentation run the original source files ending with
     { abstract   } { 摘要       } { ABSTRACT            },
     % 用于书签的摘要名称字样
     { abstract_a } { 中文摘要   } { ABSTRACT            },
+    % 用于小标题的摘要名称字样
+    { abstract_b } { 摘\qquad{}要 } { ABSTRACT          },
     { appendix   } { 附录       } { appendix            },
     { dept       } { 院系       } { DEPARTMENT          },
     { figure     } { 图         } { figure              },
