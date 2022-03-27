@@ -7,7 +7,7 @@
 [![GitHub release](https://img.shields.io/github/release/nju-lug/NJUThesis/all.svg)](https://github.com/nju-lug/NJUThesis/releases/latest)
 
 > 此项目是基于 [NJU thesis 2021](https://github.com/FengChendian/NJUThesis2021) 的重构版本，目前本科生及研究生版本**已经重构完成**。
-> 然而，研究生院并未提供完善的规定，部分格式来自于本科生院。**如果院系另有要求，请提交 issue**。
+> 然而，研究生院并未提供完善的规定，部分格式来自于本科生院。**如果院系另有要求，请反馈**。
 
 本模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学排版要求和相应的国家规范、行业标准的学位论文，力求通过 LaTeX3 语法实现清晰的实现逻辑、较高的可定制性以及友好的用户接口。目前 [`njuthesis`](https://ctan.org/pkg/njuthesis) 文档类已发布在 CTAN。
 
@@ -47,15 +47,26 @@
 \end{document}
 ```
 
-## 常见问题
+## 反馈
 
-请参见[本项目 Wiki](https://github.com/nju-lug/NJUThesis/wiki)，或在[论坛](https://github.com/nju-lug/NJUThesis/discussions)中提问。
+在你遇到模板问题时，请遵守以下步骤：
+
+1. 在《[修订记录](https://github.com/nju-lug/NJUThesis/blob/master/CHANGELOG.md)》查看该问题是否已经修复但未发布；
+    - 若是，则可以使用仓库中的开发版本解决问题
+1. 在 [GitHub Issues](https://github.com/nju-lug/NJUThesis/issues) 和 [Discussions](https://github.com/nju-lug/NJUThesis/discussions) 中搜索该问题的关键词；
+1. 浏览[本项目 Wiki](https://github.com/nju-lug/NJUThesis/wiki) 和[用户手册](http://mirrors.ctan.org/macros/unicodetex/latex/njuthesis/njuthesis.pdf)；
+1. 在你确定这是一个新问题时
+    - 对于模板 bug、请求新功能、文档笔误等提出[新 issue](https://github.com/nju-lug/NJUThesis/issues/new/choose)
+    - 对于用法的疑惑、格式上的斟酌等提出[新 discussion](https://github.com/nju-lug/NJUThesis/discussions/new)
+    - 两个划分不绝对，区别在于 issue 是解决即关闭的
+    - 如果确实重复了，会打上 duplicate 标签并将你引导至本问题首条提问
+
+如果导师或院系有额外要求，请一同附上要求原文或格式截图。
 
 ## 贡献
 
-如果你发现了模板的问题，欢迎在 GitHub 中提交 [issue](https://github.com/nju-lug/NJUThesis/issues) 或者 [PR](https://github.com/nju-lug/NJUThesis/pulls)。
+欢迎提交 [PR](https://github.com/nju-lug/NJUThesis/pulls)。
 
 ## 许可
 
 本模板的发布遵守 [LaTeX Project Public License（版本 1.3c 或更高）](https://www.latex-project.org/lppl/lppl-1-3c/)。
-

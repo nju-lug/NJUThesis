@@ -6,12 +6,14 @@
 
 ## [未发布]
 
+## [0.16.1] - 2022-03-27
+
 ### 修复
 
 - 修复国家图书馆封面的“UDC”名称格式
 - 修复研究生摘要标题的断行问题 - [#98], [#105], [#107]
-  - 提供 `abstract-title` 设置项
-- 为研究生摘要补上“摘要”小标题字样
+  - 提供 `style/abstract-title` 设置项
+- 为研究生摘要补上“摘要”小标题字样 - [#99]
 
 ## [0.16.0] - 2022-03-19
 
@@ -263,7 +265,8 @@
 - 模板上传至 CTAN
 
 
-[unreleased]: https://github.com/nju-lug/NJUThesis/compare/v0.16.0...HEAD
+[unreleased]: https://github.com/nju-lug/NJUThesis/compare/v0.16.1...HEAD
+[0.16.1]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.16.1
 [0.16.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.16.0
 [0.15.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.15.0
 [0.14.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.14.0
