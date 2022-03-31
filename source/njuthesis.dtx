@@ -696,7 +696,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{enumerate}
 %   \item 访问\href{https://tex.nju.edu.cn}{南大 \hologo{TeX} 网站}，点击界面右上方“注册”按钮，使用\emph{南京大学邮箱}注册账号并登录
-%   \item 新建空白项目，或者上传 \ref{subsubsec:on-the-fly-installation} 得到的压缩文件。
+%   \item 新建空白项目，或者上传 \ref{subsubsec:on-the-fly-installation} 节得到的压缩文件。
 %   \item 在项目页面左上角的“菜单”中，确认编译器为 |XeLaTeX| 或者 |LuaLaTeX|
 %   \item 仿照 \file{njuthesis-sample.tex} 编写论文
 %   \item 点击“重新编译”按钮进行编译和预览
@@ -715,15 +715,23 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{版本升级}
 %
-% 考虑到本模板仍在开发中，将不断发布新版本，您可能需要不定期进行更新以得到对于已知问题的修复补丁。每个版本的更新内容记录于 Git 仓库中的 \file{CHANGELOG.md}。考虑到安装和编译方式的差异，不妨直接将论文内容迁移至新版的 \file{njuthesis-sample.tex}\footnote{请赞美 \hologo{TeX} 系统“样式与内容分离”的原则！}，然后按照当前工作文件夹内是否有 \file{.cls} 文件分别进行更新操作。
+% 本模板仍在开发中，将不断发布新版本，您可能需要不定期进行更新以得到
+% 对于已知问题的修复补丁。每个版本的更新内容记录于 Git 仓库中的
+% \file{CHANGELOG.md}。除非特别提到选项变化，升级时一般无需更改 \file{.tex}
+% 文件内容\footnote{在确实发生了接口变动，例如选项名称发生了更改，
+% 一种稳妥做法是将论文内容迁移至新版的 \file{njuthesis-sample.tex}}。
+% 基于安装和编译方式的差异，可以按照当前工作文件夹内是否有 \file{.cls}
+% 文件分别进行更新操作。
 %
 % \subparagraph{有}
-% 迁移至 \file{njuthesis-user-v*.zip} 提供的新内容。
+% 下载 \file{njuthesis-user-v*.zip}，使用其中新版的 \file{.cls}、\file{.def}
+% 文件覆盖旧版本。
 %
 % \subparagraph{没有}
-% 如果使用的是南大 \hologo{TeX}，更新内置模板时会进行公告，一般为上传 CTAN 后一周。如果是本地安装，请直接使用包管理器进行更新：
+% 如果使用的是南大 \hologo{TeX}，更新内置模板时会进行公告，一般为上传 CTAN
+% 后一周内。如果是本地安装，请直接使用包管理器进行更新：
 % \begin{shellexample}[morekeywords={tlmgr},emph={update}]
-%   tlmgr update all
+%   tlmgr update --all
 % \end{shellexample}
 %
 %
@@ -1806,8 +1814,17 @@ To produce the documentation run the original source files ending with
 %   \begin{syntax}
 %     \tn{njupaperlist}\oarg{标题}\marg{文献}
 %   \end{syntax}
-% 成果列表，默认标题为发表文章目录。\Arg{文献} 的填写方式同 \tn{cite}，多个文献需要使用英文半角逗号隔开。
+% 成果列表，生成一个列举文献条目的无编号节。可选参数为标题，
+% 默认为“发表文章目录”。\Arg{文献} 的填写方式同 \tn{cite}，
+% 多个文献需要使用英文半角逗号隔开。
 % \end{function}
+%
+% 一个简单的例子如下所示：
+% \begin{latexexample}[moretexcs={\njuchapter,\njupaperlist}]
+%   \njuchapter{攻读博士学位期间研究成果}
+%   \njupaperlist[攻读博士学位期间发表的学术论文]{
+%     Nemec1997-209-214,Chiani1998-2998-3008,Chiani1998a}
+% \end{latexexample}
 %
 % 为了便于识别，成果列表中默认对发表年份进行加粗处理。而对作者姓名的处理较为复杂。利用 \pkg{biblatex} 的数据注解机制可以实现对特定文献信息的样式修改\footnote{\url{https://blog.csdn.net/xenonhu/article/details/120853247}}，在此可以用来实现指定作者姓名的突出。经过注解后的一则参考文献条目如下所示：
 % \begin{latexexample}[emph={[1]@inproceedings},emph={[2]author}]
@@ -1826,7 +1843,7 @@ To produce the documentation run the original source files ending with
 %
 % 除手动进行标记以外，以下也提供一种自动化处理办法。下载 \href{https://github.com/hushidong/biblatex-map}{bibmap} 全部文件后，修改主目录下的 \file{bibmapaddauthoran.py} 中 |fieldsource| 为需要匹配的姓名，将需要进行标记的 \file{.bib} 文件拷贝至本目录（此处使用 \file{test.bib} 进行示范），运行以下命令生成的参考文献数据源即可被成果列表识别加粗。
 %
-% \begin{shellexample}[morekeywords={python}]
+% \begin{shellexample}[morekeywords={python},deletekeywords={test}]
 %   python bibmap.py test.bib -m bibmapaddauthoran.py
 % \end{shellexample}
 %
@@ -2794,7 +2811,13 @@ To produce the documentation run the original source files ending with
 %
 % 本模板使用 \pkg{xtemplate} 提供的面向对象方法简化封面和摘要的绘制过程。
 %
-% 以下分别从页面元素（element）和页面整体（page）的层次进行了抽象。当我们把页面部件考虑为一个对象时，它天然地只具备有限数量的属性：内容、格式、边距、对齐方式等。而具体的页面是这些对象的实例的集合，附加边距、行距等属性，创建页面只需传入一个列表调用各个 Instance 即可。通过 \pkg{xtemplate} 提供的功能，我们可以根据这些属性创建模板（template），进而能大量构建具有\emph{相似行为}的实例（instance）。这种做法能充分分离内容和样式，极大优化代码的可读性。
+% 以下分别从页面元素（element）和页面整体（page）的层次进行了抽象。
+% 当我们把页面部件考虑为一个对象时，它天然地只具备有限数量的属性：
+% 内容、格式、边距、对齐方式等。而具体的页面是这些对象的实例的集合，
+% 附加边距、行距等属性，创建页面只需传入一个列表调用各个 Instance
+% 即可。通过 \pkg{xtemplate} 提供的功能，我们可以根据这些属性创建模板
+% （template），进而能大量构建具有\emph{相似行为}的实例（instance）。
+% 这种做法能充分分离内容和样式，极大优化代码的可读性。
 %
 % 声明对象类型。此类对象不需要参数。
 %    \begin{macrocode}
@@ -2807,7 +2830,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % 声明页面元素模板接口。
-% 元素是一个页面的基本组成单位，包括文段、图片等等。一个抽象的元素应当具备以下属性：
+% 元素是一个页面的基本组成单位，包括文段、图片等等。
+% 一个抽象的元素应当具备以下属性：
 % \begin{description}
 %   \item[\opt{content}] 内容，即剥离样式的元素本身
 %   \item[\opt{format}] 格式，例如字号、字体
@@ -2962,7 +2986,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/15}{新增诚信承诺书选项。}
 % \changes{v0.14}{2022/01/06}{修改选项名称。}
 % 是否需要诚信承诺书或原创性声明（默认关闭）。
-% \footnote{原创性声明的英文翻译为 Declaration of Originality，为了使选项表义更清晰同时缩减名称长度，将其修改为“声明页”这一名称。}
+% \footnote{原创性声明的英文翻译为 Declaration of Originality，
+% 为了使选项表义更清晰同时缩减名称长度，将其修改为“声明页”这一名称。}
 %    \begin{macrocode}
     decl-page        .bool_set:N  = \g_@@_orig_decl_bool,
     decl-page         .initial:n  = false,
