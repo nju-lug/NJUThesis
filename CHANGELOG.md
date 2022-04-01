@@ -6,6 +6,14 @@
 
 ## [未发布]
 
+### 新增
+
+- 提供修改固定文本的接口 - [#111]
+
+### 杂项
+
+- 说明手册中增加“额外定制”一节
+
 ## [0.16.1] - 2022-03-27
 
 ### 修复
@@ -296,6 +304,7 @@
 [#99]: https://github.com/nju-lug/NJUThesis/discussions/99
 [#105]: https://github.com/nju-lug/NJUThesis/discussions/105
 [#107]: https://github.com/nju-lug/NJUThesis/issues/107
+[#107]: https://github.com/nju-lug/NJUThesis/issues/111
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
