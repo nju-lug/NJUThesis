@@ -9,6 +9,7 @@
 ### 新增
 
 - 提供修改固定文本的接口 - [#111]
+- 提供研究生的学位论文出版授权书 - [#116]
 
 ### 杂项
 
@@ -273,7 +274,7 @@
 - 模板上传至 CTAN
 
 
-[unreleased]: https://github.com/nju-lug/NJUThesis/compare/v0.16.1...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v0.16.1...HEAD
 [0.16.1]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.16.1
 [0.16.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.16.0
 [0.15.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.15.0
@@ -304,7 +305,8 @@
 [#99]: https://github.com/nju-lug/NJUThesis/discussions/99
 [#105]: https://github.com/nju-lug/NJUThesis/discussions/105
 [#107]: https://github.com/nju-lug/NJUThesis/issues/107
-[#107]: https://github.com/nju-lug/NJUThesis/issues/111
+[#111]: https://github.com/nju-lug/NJUThesis/issues/111
+[#116]: https://github.com/nju-lug/NJUThesis/issues/116
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
