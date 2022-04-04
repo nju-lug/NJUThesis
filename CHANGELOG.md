@@ -14,6 +14,7 @@
 ### 杂项
 
 - 说明手册中增加“额外定制”一节
+- 说明手册中补充页眉说明 - [#119]
 
 ## [0.16.1] - 2022-03-27
 
@@ -307,6 +308,7 @@
 [#107]: https://github.com/nju-lug/NJUThesis/issues/107
 [#111]: https://github.com/nju-lug/NJUThesis/issues/111
 [#116]: https://github.com/nju-lug/NJUThesis/issues/116
+[#119]: https://github.com/nju-lug/NJUThesis/issues/119
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
