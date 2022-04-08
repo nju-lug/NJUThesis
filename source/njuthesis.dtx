@@ -801,6 +801,13 @@ To produce the documentation run the original source files ending with
 % 通过此项，对于本科生模板可在封面后添加的诚信承诺书，
 % 对于研究生模板可在封面后添加原创性声明，并且在最后一页添加学位论文出版授权书。
 %
+% 对于需要手动插入承诺书扫描页的情况，可以在导言区载入 \pkg{pdfpages} 宏包，
+% 并在所需位置使用该红包提供的 \cs{includepdf} 命令。
+% 例如，可以用如下所示的命令插入扫描件的第一页，并插入紧随的一个空白页。
+% \begin{latexexample}[moretexcs={\includepdf},emph={[2]pages}]
+%   \includepdf[pages={1,{}}]{scanned.pdf}
+% \end{latexexample}
+%
 %
 % \subsubsection{单双面模式}
 %
@@ -1656,7 +1663,7 @@ To produce the documentation run the original source files ending with
 %
 % \subparagraph{使用 JabRef}
 %
-% \href{https://www.jabref.org/}{jabRef} 是一款开源、跨平台的文献管理软件。
+% \href{https://www.jabref.org/}{JabRef} 是一款开源、跨平台的文献管理软件。
 % JabRef 提供了对 \hologo{BibTeX} 和 \pkg{biblatex} 的原生支持，
 % 能够直接管理 \file{.bib} 文件， 还可以向 TeXstudio 等外部软件推送引用命令。
 %
@@ -1795,7 +1802,7 @@ To produce the documentation run the original source files ending with
 %     \quad\tn{item}\oarg{符号} \meta{说明}
 %     \tn{end}\{notation\}
 %   \end{syntax}
-% 符号表。带有星号的符号表环境不会插入目录。
+% 符号表，或者称为术语表、缩略词对照表。带有星号的符号表环境不会插入目录。
 % \end{function}
 %
 %
@@ -1879,7 +1886,7 @@ To produce the documentation run the original source files ending with
 %
 % 譬如，将英文摘要页的小标题修改为仅首字母大写的样式，示例如下：
 %
-% \begin{latexexample}[moretexcs={\njuemblem,\njuname,\njuname*}]
+% \begin{latexexample}[moretexcs={\njusetname*}]
 %   \njusetname*{abstract}[b]{Abstract}
 % \end{latexexample}
 %
@@ -3263,8 +3270,6 @@ To produce the documentation run the original source files ending with
     \RequirePackage{lua-ul}
     \NewDocumentCommand \njuline { m } { \underLine{#1} \null }
   }
-\bool_if:NT \g_@@_decl_bool
-  { \RequirePackage { tabularray } }
 %    \end{macrocode}
 % \end{macro}
 %

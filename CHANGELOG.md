@@ -13,6 +13,7 @@
 
 ### 杂项
 
+- 说明手册中补充扫描声明页的插入方法 - [#96]
 - 说明手册中增加“额外定制”一节
 - 说明手册中补充页眉说明 - [#119]
 
@@ -302,6 +303,7 @@
 [#85]: https://github.com/nju-lug/NJUThesis/discussions/85
 [#89]: https://github.com/nju-lug/NJUThesis/discussions/89
 [#92]: https://github.com/nju-lug/NJUThesis/issues/92
+[#96]: https://github.com/nju-lug/NJUThesis/issues/96
 [#98]: https://github.com/nju-lug/NJUThesis/issues/98
 [#99]: https://github.com/nju-lug/NJUThesis/discussions/99
 [#105]: https://github.com/nju-lug/NJUThesis/discussions/105
