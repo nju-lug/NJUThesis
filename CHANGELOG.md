@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [0.17.0] - 2022-04-09
+
 ### 新增
 
 - 提供修改固定文本的接口 - [#111]
@@ -23,6 +25,7 @@
 - 说明手册中补充扫描声明页的插入方法 - [#96]
 - 说明手册中增加“额外定制”一节
 - 说明手册中补充页眉说明 - [#119]
+- 说明手册跟进 TeX Live 2022
 
 ## [0.16.1] - 2022-03-27
 
@@ -283,7 +286,8 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v0.16.1...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v0.17.0...HEAD
+[0.17.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.17.0
 [0.16.1]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.16.1
 [0.16.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.16.0
 [0.15.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.15.0
