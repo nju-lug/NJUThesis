@@ -241,10 +241,13 @@
 
 % 在导言区随意定制所需命令
 % https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
-\DeclareMathOperator{\spn}{span}
-\renewcommand{\vec}[1]{\mathbf{#1}}
+% \DeclareMathOperator{\spn}{span}
+% \renewcommand{\vec}[1]{\mathbf{#1}}
 % \NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
 
+% 一些灵活调整
+% \njusetname{notation}{术语表} % 更改符号表名称
+% \njusetlength{coveruline}{330pt} % 加长封面页下划线
 
 % 开始编写论文
 \begin{document}
@@ -291,7 +294,7 @@
 % 带星号的符号表(notation*)不会插入目录
 \begin{notation}[10cm]
   \item[DFT] 密度泛函理论 (Density functional theory)
-  \item[DMRG] 密度矩阵重整化群 (Density-Matrix Reformation-Group)
+  \item[DMRG] 密度矩阵重正化群 (Density-Matrix Reformation-Group)
 \end{notation}
 
 % 建议将论文内容拆分为多个文件
@@ -305,7 +308,7 @@
 
 \section{tDMRG}
 
-矩阵乘积态也被用于含时薛定谔方程的求解，形成了含时密度矩阵重整化群方法\cite{schollwock2011}。
+矩阵乘积态也被用于含时薛定谔方程的求解，形成了含时密度矩阵重正化群方法\cite{schollwock2011}。
 
 %---------------------------------------------------------------------
 %	参考文献

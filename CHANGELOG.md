@@ -9,7 +9,12 @@
 ### 新增
 
 - 提供修改固定文本的接口 - [#111]
+- 提供修改长度值的接口 - [#121]
 - 提供研究生的学位论文出版授权书 - [#116]
+
+### 优化
+
+- 优化封面标题的断行方式 - [#121]
 
 ### 杂项
 
@@ -311,6 +316,7 @@
 [#111]: https://github.com/nju-lug/NJUThesis/issues/111
 [#116]: https://github.com/nju-lug/NJUThesis/issues/116
 [#119]: https://github.com/nju-lug/NJUThesis/issues/119
+[#121]: https://github.com/nju-lug/NJUThesis/issues/121
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
