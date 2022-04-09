@@ -71,11 +71,19 @@
 
 % \addbibresource{test.bib}
 
-\ctexset{
-  contentsname   = { 目\hspace{2em}次 },
+% \ctexset{
+%   contentsname   = { 目\qquad{}次 },
 %   listfigurename = { 插图清单 },
 %   listtablename  = { 表格清单 }
-}
+% }
+
+\njusetname{notation}{术语表}
+\njusetname{tableofcontents}{目\qquad{}次}
+\njusetname{listoffigures}{插图清单}
+\njusetname{listoftables}{表格清单}
+\njusetname*{abstract}[b]{Abstract}
+\njusetlength{coveruline}{330pt}
+\njusetformat{chapter}{\raggedleft\kaishu\zihao{-1}}
 
 % \usepackage{multirow,tabularray,wrapfig,subcaption}
 % \usepackage{listings,algorithm,algorithmic}
