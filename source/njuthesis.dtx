@@ -111,7 +111,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.17.0 2022-04-09 16:30:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.17.1 2022-04-10 00:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -200,7 +200,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.17.0 \quad 2022-04-09}
+% \date{v0.17.1 \quad 2022-04-10}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -3062,7 +3062,8 @@ To produce the documentation run the original source files ending with
   }
   {
     \AssignTemplateKeys
-    \newpage
+    \clearpage
+    \thispagestyle { empty }
     \__nju_vskip:N \l_@@_top_skip
     \group_begin:
       \l_@@_format_tl
@@ -4238,6 +4239,8 @@ To produce the documentation run the original source files ending with
     section        / format     = \g_@@_fmt_section_tl,
     subsection     / format     = \g_@@_fmt_subsection_tl,
     subsubsection  / format     = \g_@@_fmt_subsubsection_tl,
+    paragraph      / format     = \g_@@_fmt_paragraph_tl,
+    subparagraph   / format     = \g_@@_fmt_subparagraph_tl,
 %    \end{macrocode}
 %
 %
@@ -5286,12 +5289,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_authdecl:
   {
-%<definition-ug>      \prg_do_nothing:
-%<*definition-g>
-    \thispagestyle{empty}
-    \UseInstance { nju } { authdecl-g-default }
-    \cleardoublepage
-%</definition-g>
+%<definition-ug>    \prg_do_nothing:
+%<definition-g>    \UseInstance { nju } { authdecl-g-default }
   }
 %</(definition-ug|definition-g)>
 %    \end{macrocode}
@@ -5393,15 +5392,18 @@ To produce the documentation run the original source files ending with
 % 如果在选择了 \opt{decl-page}，就生成本科生的诚信承诺书，
 % 或研究生的原创性声明和出版授权书。
 %    \begin{macrocode}
-\bool_if:NF \g_@@_draft_bool
-  {
-    \bool_if:NT \g_@@_decl_bool
+    \bool_if:NF \g_@@_draft_bool
       {
-        \@@_make_origdecl:
-        \AtEndEnvironment { document }
-          { \@@_make_authdecl: }
+        \bool_if:NT \g_@@_decl_bool
+          {
+            \@@_make_origdecl:
+            \AtEndEnvironment { document }
+              {
+                \cleardoublepage
+                \@@_make_authdecl:
+              }
+          }
       }
-  }
 %    \end{macrocode}
 % 在标题页后使用大写罗马字母页码，恢复正常字体设置。
 %    \begin{macrocode}
@@ -6134,12 +6136,14 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { chapterintoc  } { \large \normalfont \sffamily            },
-    { chapter       } { \large \normalfont \sffamily \centering },
-    { section       } { \large \normalfont \sffamily            },
-    { subsection    } { \large \normalfont \sffamily            },
-    { subsubsection } { \large \normalfont \sffamily            },
-    { toctitle      } { \centering \zihao { 3 } \bfseries       }
+    { section       } { \large \normalfont \sffamily      },
+    { chapter       } { \g_@@_fmt_section_tl \centering   },
+    { chapterintoc  } { \g_@@_fmt_section_tl              },
+    { subsection    } { \g_@@_fmt_section_tl              },
+    { subsubsection } { \g_@@_fmt_section_tl              },
+    { paragraph     } { \g_@@_fmt_section_tl              },
+    { subparagraph  } { \g_@@_fmt_section_tl              },
+    { toctitle      } { \centering \zihao { 3 } \bfseries }
   }
   { \@@_define_fmt:nn #1 }
 %</(definition-ug|definition-g)>
