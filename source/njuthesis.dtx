@@ -2771,7 +2771,7 @@ To produce the documentation run the original source files ending with
       {
         \dim_set_eq:NN \baselineskip \g_@@_coverlineskip_dim
         #1 \@@_uline_title:
-        \dim_set_eq:NN \l_@@_tmpa_dim \prevdepth
+        \dim_gset_eq:NN \l_@@_tmpa_dim \prevdepth
       }
     \par \prevdepth \l_@@_tmpa_dim
   }
@@ -5401,6 +5401,7 @@ To produce the documentation run the original source files ending with
               {
                 \cleardoublepage
                 \@@_make_authdecl:
+                \cleardoublepage
               }
           }
       }

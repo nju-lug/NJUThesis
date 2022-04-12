@@ -23,7 +23,7 @@
 
 ### 本地编译
 
-请使用包管理器安装 `njuthesis` 和 `njuvisual` 的最新版。
+推荐使用包管理器安装 `njuthesis` 和 `njuvisual` 的最新版。
 
 新手同学不妨直接使用以下流程：
 
