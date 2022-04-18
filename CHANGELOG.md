@@ -8,7 +8,9 @@
 
 ## 修复
 
-- 正确生成出版授权书后的空白页
+- 正确生成出版授权书前后的空白页
+- 删除出版授权书页的页眉 - [#130]
+- 出版授权书内双导师姓名之间添加空格 - [#130]
 - 设置4、5级标题的样式
 
 ## [0.17.0] - 2022-04-09
@@ -328,6 +330,7 @@
 [#116]: https://github.com/nju-lug/NJUThesis/issues/116
 [#119]: https://github.com/nju-lug/NJUThesis/issues/119
 [#121]: https://github.com/nju-lug/NJUThesis/issues/121
+[#130]: https://github.com/nju-lug/NJUThesis/issues/130
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

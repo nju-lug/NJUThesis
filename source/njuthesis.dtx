@@ -4669,15 +4669,15 @@ To produce the documentation run the original source files ending with
     \begin{minipage} { #1 + #2 + \g_@@_smallhskip_dim }
       \dim_set_eq:NN \baselineskip \g_@@_coverlineskip_dim
       \dim_set:Nn \l_@@_tmpb_dim { .5 #2 - .5 #1 - \g_@@_smallhskip_dim }
-      \@@_cover_entry:nnn { dept     } { #1 } { #2 }
-      \@@_cover_entry:nnn { major    } { #1 } { #2 }
-      \@@_cover_entry_title:nnn  { \bf } { #1 } { #2 }
-      \@@_cover_bientry:nnnn { grade } { id } { #1 } { \l_@@_tmpb_dim }
-      \@@_cover_entry:nnn { author   } { #1 } { #2 }
+      \@@_cover_entry:nnn { dept      } { #1 } { #2 }
+      \@@_cover_entry:nnn { major     } { #1 } { #2 }
+      \@@_cover_entry_title:nnn { \bf } { #1 } { #2 }
+      \@@_cover_bientry:nnnn { grade  } { id } { #1 } { \l_@@_tmpb_dim }
+      \@@_cover_entry:nnn { author    } { #1 } { #2 }
       \@@_cover_entry_supv:nnn { supv } { #1 } { \l_@@_tmpb_dim }
       \bool_if:NT \l_@@_second_supv_bool
         { \@@_cover_entry_supv:nnn { supv_ii } { #1 } { \l_@@_tmpb_dim } }
-      \@@_cover_entry:nnn { submitdate  } { #1 } { #2 }
+      \@@_cover_entry:nnn { submitdate } { #1 } { #2 }
     \end{minipage}
   }
 %</definition-ug>
@@ -5123,8 +5123,12 @@ To produce the documentation run the original source files ending with
         } \\
       \g_@@_name_email_tl    & \g_@@_info_email_tl \\
       \g_@@_name_supv_b_tl   &
-        \clist_item:Nn \g_@@_info_supv_clist    {1}
-        \clist_item:Nn \g_@@_info_supv_ii_clist {1} \\
+        \clist_item:Nn \g_@@_info_supv_clist {1}
+        \bool_if:NT \l_@@_second_supv_bool
+          {
+            \@@_quad:
+            \clist_item:Nn \g_@@_info_supv_ii_clist {1}
+          } \\
     \end{tblr}
   }
 %    \end{macrocode}
