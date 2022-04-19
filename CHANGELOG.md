@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+## 新增
+
+- 新增盲审模式 - [#130]
+
 ## 修复
 
 - 正确生成出版授权书前后的空白页
@@ -331,6 +335,7 @@
 [#119]: https://github.com/nju-lug/NJUThesis/issues/119
 [#121]: https://github.com/nju-lug/NJUThesis/issues/121
 [#130]: https://github.com/nju-lug/NJUThesis/issues/130
+[#131]: https://github.com/nju-lug/NJUThesis/issues/131
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

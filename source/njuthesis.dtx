@@ -111,7 +111,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.17.1 2022-04-10 00:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.18.0 2022-04-19 15:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -200,7 +200,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.17.1 \quad 2022-04-10}
+% \date{v0.18.0 \quad 2022-04-19}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -811,7 +811,7 @@ To produce the documentation run the original source files ending with
 % \end{latexexample}
 %
 %
-% \subsubsection{单双面模式}
+% \subsubsection{页面模式}
 %
 % \begin{function}[added=2022-01-14]{oneside,twoside}
 %   \begin{syntax}
@@ -825,14 +825,11 @@ To produce the documentation run the original source files ending with
 % 在单面模式下，页面是连续的，不会产生空白页；在双面模式下，封面、摘要、
 % 参考文献表等特殊页面，以及新的章节都会从奇数页开始，更适合印刷输出。
 %
-%
-% \subsubsection{草稿模式}
-%
 % \begin{function}[added=2021-12-15]{draft}
 %   \begin{syntax}
 %     draft = <\TFF>
 %   \end{syntax}
-% 选择是否开启草稿模式，默认关闭。
+% 是否开启草稿模式，默认关闭。
 % \end{function}
 %
 % 本选项继承自 \hologo{LaTeX2e} \cls{book} 标准文档类。
@@ -849,6 +846,20 @@ To produce the documentation run the original source files ending with
 % 启用这一选项也会改变特定宏包的行为，譬如在草稿模式下 \pkg{listings}
 % 宏包的代码环境不会显示内容，具体效果需要参照各个宏包的说明文档。
 % 如需抵消草稿模式的影响，请使用 \opt{final} 选项载入相关宏包。
+%
+% \begin{function}[added=2022-04-19]{blind}
+%   \begin{syntax}
+%     <blind>
+%   \end{syntax}
+% 是否开启盲审模式。这个选项并不包含 |=| 号。
+% \end{function}
+%
+% 盲审模式会抹除论文中的学校和个人信息，效果包括：
+% \begin{itemize}
+%   \item 不显示校名校徽图片
+%   \item 不显示“南京大学”字样
+%   \item 不显示作者、导师等基本信息
+% \end{itemize}
 %
 %
 % \subsubsection{配置文件}
@@ -2424,6 +2435,22 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\c_@@_blind_info_clist,\c_@@_blind_info_en_clist,
+%   \c_@@_blind_infolist_clist}
+% 盲审模式下不显示的个人信息项。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_blind_info_clist
+  {
+    author, chairman, clc, dept, email, field, grade,
+    id, major, secretlv, supvcont, udc
+  }
+\clist_const:Nn \c_@@_blind_info_en_clist
+  { author, dept, field, major, supv, supv_ii }
+\clist_const:Nn \c_@@_blind_infolist_clist
+  { reviewer, supv, supv_ii }
+%    \end{macrocode}
+% \end{variable}
+%
 %
 % \subsection{内部函数}
 %
@@ -3156,6 +3183,15 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{blind}
+% \changes{v0.18}{2022/04/19}{新增盲审模式选项。}
+% 盲审模式。
+%    \begin{macrocode}
+    blind     .value_forbidden:n  = true,
+    blind            .bool_set:N  = \g_@@_blind_bool,
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{latin-font,cjk-font}
 % \changes{v0.14}{2021/12/12}{简化字体选项名称。}
 % 字体选项。
@@ -3553,7 +3589,7 @@ To produce the documentation run the original source files ending with
     clc                 .tl_set:N = \g_@@_info_clc_tl,
     secret-level        .tl_set:N = \g_@@_info_secretlv_tl,
     udc                 .tl_set:N = \g_@@_info_udc_tl,
-    supervisor-contact  .tl_set:N = \g_@@_info_supv_cont_tl,
+    supervisor-contact  .tl_set:N = \g_@@_info_supvcont_tl,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3588,6 +3624,24 @@ To produce the documentation run the original source files ending with
   { \clist_item:Nn \g_@@_name_type_en_clist { \g_@@_info_type_int } }
 \tl_put_left:Nx \g_@@_info_type_tl
   { \tl_use:c { g_@@_name_ \g_@@_info_diploma_tl _tl } }
+%    \end{macrocode}
+%
+% 盲审模式下抹去个人信息和学校名称。
+%    \begin{macrocode}
+\bool_if:NT \g_@@_blind_bool
+  {
+    \ctex_at_end_preamble:n
+      {
+        \clist_map_inline:Nn \c_@@_blind_info_clist
+          { \tl_gclear:c    { g_@@_info_ #1    _tl } }
+        \clist_map_inline:Nn \c_@@_blind_info_en_clist
+          { \tl_gclear:c    { g_@@_info_ #1 _en_tl } }
+        \clist_map_inline:Nn \c_@@_blind_infolist_clist
+          { \clist_gclear:c { g_@@_info_ #1 _clist } }
+        \tl_gclear:N \g_@@_name_nju_tl
+        \tl_gclear:N \g_@@_name_nju_en_tl
+      }
+  }
 %    \end{macrocode}
 %
 % \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
@@ -4991,8 +5045,8 @@ To produce the documentation run the original source files ending with
     \@@_uline_list:nnn { \g_@@_name_supvinfo_tl }
       {
         \clist_use:Nn \g_@@_info_supv_clist    { ~ }
-        \clist_use:Nn \g_@@_info_supv_ii_clist { ~ } ~
-        \g_@@_info_supv_cont_tl
+        \clist_use:Nn \g_@@_info_supv_ii_clist { ~ }
+        \@@_hskip: \g_@@_info_supvcont_tl
       }
       { 1 em plus 1 fill }
     \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { degree      } { degree     } { }
@@ -5364,6 +5418,11 @@ To produce the documentation run the original source files ending with
         \cs_undefine:N \njuname
         \msg_warning:nn { njuthesis } { missing-image }
         \RequirePackage { njuvisual }
+      }
+    \bool_if:NT \g_@@_blind_bool
+      {
+        \RenewDocumentCommand \njuemblem { o m m } { \prg_do_nothing: }
+        \RenewDocumentCommand \njuname   { o m m } { \prg_do_nothing: }
       }
   }
 %    \end{macrocode}
@@ -5998,7 +6057,8 @@ To produce the documentation run the original source files ending with
     { major_a      } { 专业                             },
     % 用于国家图书馆封面的专业名称字样
     { major_b      } { 专业名称                         },
-    { origdecl     } { 南京大学学位论文原创性声明       },
+    { origdecl     }
+      { \g_@@_name_nju_tl 学位论文原创性声明            },
     { origsign     } { 研究生签名                       },
     { reviewer     } { 评阅人：                         },
     { secretlv     } { 密级                             },
@@ -6031,11 +6091,11 @@ To produce the documentation run the original source files ending with
 \clist_map_inline:nn
   {
     { abstracttitle }
-      { 南京大学 \g_@@_info_type_tl 中文摘要首页用纸 }
-      { 南京大学 \g_@@_info_type_tl 英文摘要首页用纸 },
-    { author    } { 作者姓名 } { POSTGRADUATE        },
-    { major     } { 专业方向 } { SPECIALIZATION      },
-    { supvfull  } { 指导教师 } { MENTOR              }
+      { \g_@@_name_nju_tl \g_@@_info_type_tl 中文摘要首页用纸 }
+      { \g_@@_name_nju_tl \g_@@_info_type_tl 英文摘要首页用纸 },
+    { author    } { 作者姓名 } { POSTGRADUATE   },
+    { major     } { 专业方向 } { SPECIALIZATION },
+    { supvfull  } { 指导教师 } { MENTOR         }
   }
   { \@@_define_name:nnn #1 }
 %</definition-g>
@@ -6057,11 +6117,11 @@ To produce the documentation run the original source files ending with
     本人承诺不存在抄袭、伪造、篡改、代写、买卖毕业论文（设计）等违纪行为。
 %</definition-ug>
 %<*definition-g>
-    本人郑重声明，所提交的学位论文是本人在导师指导下独立进行科学研究工作
-    所取得的成果。除本论文中已经注明引用的内容外，本论文不包含其他个人或
-    集体已经发表或撰写过的研究成果，也不包含为获得南京大学或其他教育机构
-    的学位证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，均已
-    在论文的致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
+    本人郑重声明，所提交的学位论文是本人在导师指导下独立进行科学研究工作所
+    取得的成果。除本论文中已经注明引用的内容外，本论文不包含其他个人或集体
+    已经发表或撰写过的研究成果，也不包含为获得 \g_@@_name_nju_tl 或其他教
+    育机构的学位证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，
+    均已在论文的致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
 %</definition-g>
   }
 %    \end{macrocode}
@@ -6091,7 +6151,7 @@ To produce the documentation run the original source files ending with
 \tl_gset:Nn \g_@@_text_cover_en_tl
   {
     A~ dissertation~ submitted~ to \\
-    the~ graduate~ school~ of~ Nanjing~ University \\
+    the~ graduate~ school~ of~ \g_@@_name_nju_en_tl \\
     in~ partial~ fulfilment~ of~ the~ requirements~ for~ the~ degree~ of
   }
 %</definition-g>
