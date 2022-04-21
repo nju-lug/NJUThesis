@@ -1135,21 +1135,21 @@ To produce the documentation run the original source files ending with
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
 %   \njusetup {
 %       info = {
-%           title = {第一行标题\\第二行标题},
-%           title* = {My title in English},
-%           keywords = {我,就是,充数的,关键词},
-%           keywords* = {Dummy,Keywords,Here,{it is}},
-%           grade = {2018},
-%           student-id = {189114514},
-%           author = {周煜华},
-%           author* = {Zhou Yuhua},
-%           department = {化学化工学院},
-%           department* = {School of Chemistry and Chemical Engineering},
-%           major = {化学},
-%           major* = {Chemistry},
-%           supervisor = {李成殿,教授},
-%           supervisor*= {Professor Li Chengdian},
-%           submit-date = {2021-09-12}
+%           title        = {第一行标题\\第二行标题},
+%           title*       = {My title in English},
+%           keywords     = {我,就是,充数的,关键词},
+%           keywords*    = {Dummy, Keywords, Here, {it is}},
+%           grade        = {2018},
+%           student-id   = {189114514},
+%           author       = {周煜华},
+%           author*      = {Zhou Yuhua},
+%           department   = {化学化工学院},
+%           department*  = {School of Chemistry and Chemical Engineering},
+%           major        = {化学},
+%           major*       = {Chemistry},
+%           supervisor   = {李成殿,教授},
+%           supervisor*  = {Professor Li Chengdian},
+%           submit-date  = {2021-09-12}
 %         }
 %     }
 % \end{latexexample}
@@ -1159,30 +1159,30 @@ To produce the documentation run the original source files ending with
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
 %   \njusetup {
 %       info = {
-%           title = {第一行标题\\第二行标题\\第三行标题},
-%           title* = {My title in English},
-%           keywords = {我,就是,充数的,关键词},
-%           keywords* = {Dummy,Keywords,Here,{it is}},
-%           grade = {2018},
-%           student-id = {DZ18114514},
-%           author = {周煜华},
-%           author* = {Zhou Yuhua},
-%           department = {化学化工学院},
-%           department* = {School of Chemistry and Chemical Engineering},
-%           major = {化学},
-%           major* = {Chemistry},
-%           field = {物理化学},
-%           field* = {Physical Chemistry},
-%           supervisor = {李成殿,教授},
-%           supervisor*= {Professor Li Chengdian},
-%           submit-date = {2021-09-12},
-%           defend-date = {2022-01-15},
-%           email = {git+nju-lug-email-3104-issue-@yaoge123.cn},
-%           chairman = {张晓山~教授},
-%           reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
-%           clc = {0175.2},
+%           title        = {第一行标题\\第二行标题\\第三行标题},
+%           title*       = {My title in English},
+%           keywords     = {我,就是,充数的,关键词},
+%           keywords*    = {Dummy,Keywords,Here,{it is}},
+%           grade        = {2018},
+%           student-id   = {DZ18114514},
+%           author       = {周煜华},
+%           author*      = {Zhou Yuhua},
+%           department   = {化学化工学院},
+%           department*  = {School of Chemistry and Chemical Engineering},
+%           major        = {化学},
+%           major*       = {Chemistry},
+%           field        = {物理化学},
+%           field*       = {Physical Chemistry},
+%           supervisor   = {李成殿,教授},
+%           supervisor*  = {Professor Li Chengdian},
+%           submit-date  = {2021-09-12},
+%           defend-date  = {2022-01-15},
+%           email        = {git+nju-lug-email-3104-issue-@yaoge123.cn},
+%           chairman     = {张晓山~教授},
+%           reviewer     = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
+%           clc          = {0175.2},
 %           secret-level = {限制},
-%           udc = {004.72},
+%           udc          = {004.72},
 %           supervisor-contact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514}
 %         }
 %     }
@@ -1431,11 +1431,29 @@ To produce the documentation run the original source files ending with
 % \paragraph{定理环境}
 %
 % 本模板也提供了一系列的数学定理环境。
-% 全部预定义的数学定理环境如表~\ref{tab:mathenv} 所示。其中证明环境较为特殊，会在结尾添加证毕符号（\mdwhtsquare）。用户也可以选择使用 \tn{newtheorem} 定义新的定理环境。
+%
+% \begin{function}[added=2022-04-21]{theorem/predefine}
+%   \begin{syntax}
+%     predefine = <\TTF>
+%   \end{syntax}
+% 是否使用模板默认配置的定理环境。默认会载入 \pkg{ntheorem} 并进行相关设置。
+% \end{function}
+%
+% 全部预定义的数学定理环境如表~\ref{tab:mathenv} 所示。
+% 其中证明环境较为特殊，会在结尾添加证毕符号（\mdwhtsquare）。
+% 当然，你也可以创建属于自己的定理环境，其样式继承自前部的设定。
+%
+% \begin{function}{\newtheorem,\newtheorem*,\renewtheorem}
+%   \begin{syntax}
+%     \cs{newtheorem}\marg{环境名称}\marg{标题名称}\oarg{计数器范围}
+%   \end{syntax}
+% 定义新的定理环境或者修改已有的定理环境。带星号的命令不包含计数器。
+% 本模板中请在 |\begin{document}| 后进行定制。
+% \end{function}
 %
 % \begin{table}[htbp]
 %   \centering
-%   \caption{数学定理环境}
+%   \caption{预置的数学定理环境}
 %   \label{tab:mathenv}
 %   \begin{tabular}{cc|cc}
 %     \toprule
@@ -1458,6 +1476,53 @@ To produce the documentation run the original source files ending with
 %   \begin{definition}[他人]
 %       定义他人即地狱
 %   \end{definition}
+% \end{latexexample}
+%
+% 对于预置的定理环境样式，本模板也提供了一系列选项进行修改。
+% 这些选项目前只对模板预定义的若干种环境有效。
+%
+% \begin{function}[added=2022-04-21]{theorem/style}
+%   \begin{syntax}
+%     style = <(plain)|break|change|margin|empty|...>
+%   \end{syntax}
+% 定理基本样式。等效于 \cs{theoremstyle}\marg{样式名称}。
+% \end{function}
+%
+% \begin{function}[added=2022-04-21]{theorem/header-font}
+%   \begin{syntax}
+%     header-font = \meta{头部字体格式}
+%   \end{syntax}
+% 定理头部字体格式。等效于 \cs{theoremheaderfont}\marg{格式}。
+% \end{function}
+%
+% \begin{function}[added=2022-04-21]{theorem/body-font}
+%   \begin{syntax}
+%     body-font = \meta{内部字体格式}
+%   \end{syntax}
+% 定理内部字体格式。等效于 \cs{theorembodyfont}\marg{格式}。
+% \end{function}
+%
+% \begin{function}[added=2022-04-21]{theorem/counter}
+%   \begin{syntax}
+%     counter = <part|(chapter)|section|...>
+%   \end{syntax}
+% 定理计数器范围。
+% \end{function}
+%
+% 模板的默认设置等效于
+%
+% \begin{latexexample}[moretexcs={\njusetup,\bfseries,\itshape,\mdwhtsquare},
+%   emph={[2]theorem}]
+%   \njusetup {
+%       theorem = {
+%           predefine   = true,
+%           style       = plain,
+%           header=font = \normalfont \bfseries,
+%           body-font   = \itshape,
+%           qed-symbol  = \ensuremath { \mdwhtsquare },
+%           counter     = chapter
+%         }
+%     }
 % \end{latexexample}
 %
 %
@@ -3201,14 +3266,19 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{用户接口}
 %
-% \begin{macro}{bib,info,style}
-% 定义元（meta）键值对。
+% \begin{macro}{bib,info,style,theorem}
+% 定义元（meta）键值对。为 v1.0 升级预留了新的接口。
 %    \begin{macrocode}
 \keys_define:nn { nju }
   {
-    bib   .meta:nn = { nju / bib   } { #1 },
-    info  .meta:nn = { nju / info  } { #1 },
-    style .meta:nn = { nju / style } { #1 }
+    % abstract .meta:nn = { nju / abstract } { #1 },
+    bib      .meta:nn = { nju / bib      } { #1 },
+    % cover    .meta:nn = { nju / cover    } { #1 },
+    % footer   .meta:nn = { nju / footer   } { #1 },
+    % header   .meta:nn = { nju / header   } { #1 },
+    info     .meta:nn = { nju / info     } { #1 },
+    style    .meta:nn = { nju / style    } { #1 },
+    theorem  .meta:nn = { nju / theorem  } { #1 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3319,7 +3389,6 @@ To produce the documentation run the original source files ending with
   {
     { no-math           } { fontspec     },
     { perpage           } { footmisc     },
-    { amsmath, thmmarks } { ntheorem     },
     { hyphens           } { url          },
     { warnings-off={ mathtools-colon, mathtools-overbracket } }
                           { unicode-math },
@@ -3347,6 +3416,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除
 %   \pkg{amsthm} 和 \pkg{thmtools}。}
 % \changes{v0.16}{2022/03/19}{不显式载入 \pkg{amsmath}。}
+% \changes{v0.18}{2022/04/20}{不强制载入 \pkg{ntheorem}。}
 % 数学相关的宏包。其中，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
 % \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的
 % 数学字体。用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math}
@@ -3354,7 +3424,6 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     mathtools,
     unicode-math,
-    ntheorem,
 %    \end{macrocode}
 % \changes{v0.14}{2021/12/21}{移除内置的 \pkg{multirow}、\pkg{subcaption}
 %   和 \pkg{wrapfig}。}
@@ -4598,35 +4667,87 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{定理环境}
 %
-% \begin{macro}{\@@_new_theorem:N}
-% 用于定义普通定理环境的辅助函数。
-% \begin{arguments}
-%   \item 定理名称列表，|clist| 型变量
-% \end{arguments}
-% 除证明以外的环境都不需要证毕符号，在此清空其设置。
+% \changes{v0.18}{2022/04/21}{新增定理环境的若干定制项。}
+%
+% \begin{macro}{theorem/style,theorem/header-font,theorem/body-font,
+%   theorem/qed-symbol,theorem/counter}
+% 定义 |nju/theorem| 键值类。
+% 目前这套选项只适用于模板预定义的若干种定理环境。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_new_theorem:N #1
+\keys_define:nn { nju / theorem }
   {
-    \theoremsymbol { }
-    \clist_map_inline:Nn #1
-      { \newtheorem { ##1 } { \@@_name:n { ##1 } } }
+    predefine     .bool_set:N  = \g_@@_thm_predefine_bool,
+    style           .tl_set:N  = \l_@@_thm_style_tl,
+    header-font     .tl_set:N  = \l_@@_thm_header_font_tl,
+    body-font       .tl_set:N  = \l_@@_thm_body_font_tl,
+    qed-symbol      .tl_set:N  = \l_@@_thm_qed_symbol_tl,
+    counter         .tl_set:N  = \l_@@_thm_counter_tl,
+%    \end{macrocode}
+% 定理环境的缺省值。
+%    \begin{macrocode}
+    predefine      .initial:n  = true,
+    style          .initial:n  = plain,
+    header-font    .initial:n  = \normalfont \bfseries,
+    body-font      .initial:n  = \itshape,
+    qed-symbol     .initial:n  = \ensuremath { \mdwhtsquare },
+    counter        .initial:n  = chapter
   }
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_new_theorem:Nn,\@@_new_theorem:NV}
+% 用于定义普通定理环境的辅助函数。
+% \begin{arguments}
+%   \item 定理名称列表，|clist| 型变量
+%   \item 编号范围
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_new_theorem:Nn #1#2
+  {
+    \clist_map_inline:Nn #1
+      { \newtheorem { ##1 } { \@@_name:n { ##1 } } [#2] }
+  }
+\cs_generate_variant:Nn \@@_new_theorem:Nn { NV }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_ntheorem_post_setup:}
+% 载入 \pkg{ntheorem} 后的相应设置。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_ntheorem_post_setup:
+  {
+    \exp_args:NV \theoremstyle      \l_@@_thm_style_tl
+    \exp_args:NV \theoremheaderfont \l_@@_thm_header_font_tl
+    \exp_args:NV \theorembodyfont   \l_@@_thm_body_font_tl
+    \exp_args:NV \theoremsymbol     \l_@@_thm_qed_symbol_tl
+%    \end{macrocode}
 % 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare} 绘制，对应于 |U+25A1| 字符
 % \footnote{\url{https://tex.stackexchange.com/questions/567135/how-get-box-like-symbol-with-xelatex}}。
 %    \begin{macrocode}
-\theoremsymbol { \ensuremath { \mdwhtsquare } }
-\newtheorem* { proof } { \c_@@_name_proof_tl }
+    \newtheorem* { proof } { \c_@@_name_proof_tl }
 %    \end{macrocode}
-%
-% 定义普通定理环境，需要排除 \env{proof}。
+% 定义普通定理环境。清除预设的证毕符号，并排除 \env{proof}。
 %    \begin{macrocode}
-\group_begin:
-  \clist_remove_all:Nn \g_@@_theorem_type_clist { proof }
-  \@@_new_theorem:N \g_@@_theorem_type_clist
-\group_end:
+    \theoremsymbol { }
+    \group_begin:
+      \clist_remove_all:Nn \g_@@_theorem_type_clist { proof }
+      \@@_new_theorem:NV \g_@@_theorem_type_clist \l_@@_thm_counter_tl
+    \group_end:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 在导言区末尾，通过吸收的用户设置，选择是否载入并设置 \pkg{ntheorem}。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \bool_if:NT \g_@@_thm_predefine_bool
+      {
+        \PassOptionsToPackage { amsmath, thmmarks } { ntheorem }
+        \RequirePackage { ntheorem }
+        \@@_ntheorem_post_setup:
+      }
+  }
 %</class>
 %    \end{macrocode}
 %

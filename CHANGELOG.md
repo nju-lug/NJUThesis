@@ -9,6 +9,7 @@
 ## 新增
 
 - 新增盲审模式 - [#130]
+- 新增内置定理环境的若干设置项 - [#50]
 
 ## 修复
 
@@ -319,6 +320,7 @@
 [#14]: https://github.com/nju-lug/NJUThesis/issues/14
 [#44]: https://github.com/nju-lug/NJUThesis/issues/44
 [#46]: https://github.com/nju-lug/NJUThesis/issues/46
+[#50]: https://github.com/nju-lug/NJUThesis/issues/50
 [#52]: https://github.com/nju-lug/NJUThesis/issues/52
 [#60]: https://github.com/nju-lug/NJUThesis/issues/60
 [#61]: https://github.com/nju-lug/NJUThesis/issues/61
