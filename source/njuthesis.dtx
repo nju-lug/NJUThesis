@@ -124,7 +124,7 @@ To produce the documentation run the original source files ending with
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass[fontset=fandol]{ctxdoc}
-\usepackage{listings,njuvisual,tabularray}
+\usepackage{listings,njuvisual,tabularray,unicode-math}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
 \colorlet{at@guard}{njuviolet}
@@ -144,7 +144,10 @@ To produce the documentation run the original source files ending with
 \SetTblrStyle{caption-tag}{font=\bfseries}
 \SetTblrInner{row{1}={font=\bfseries}}
 \DefTblrTemplate{caption-sep}{default}{\quad}
-\lstdefinestyle{style@base}
+\setmathfont{XITSMath-Regular}[
+  BoldFont = XITSMath-Bold,
+  Extension = .otf]
+ \lstdefinestyle{style@base}
   {
     basewidth       = 0.5 em,
     gobble          = 3,
@@ -822,8 +825,9 @@ To produce the documentation run the original source files ending with
 %
 % 本选项继承自 \hologo{LaTeX2e} \cls{book} 标准文档类。
 % 单双面选项为全局选项，开启后会改变页码编号，以及部分宏包的行为。
-% 在单面模式下，页面是连续的，不会产生空白页；在双面模式下，封面、摘要、
-% 参考文献表等特殊页面，以及新的章节都会从奇数页开始，更适合印刷输出。
+% 在单面模式下，页面是连续的，不会产生空白页；在双面模式下，
+% 新的一章以及封面、摘要、参考文献表等特殊页面都会从奇数页开始，
+% 在奇数页结束的内容后会补上一页空页，更适合印刷输出。
 %
 % \begin{function}[added=2021-12-15]{draft}
 %   \begin{syntax}
@@ -1413,20 +1417,51 @@ To produce the documentation run the original source files ending with
 % \end{latexexample}
 %
 % 如不需要编号，可以用 \env{equation*} 或者 |\[|\meta{公式}|\]|，
-% 请不要使用可能引发问题的 |$$|\meta{公式}|$$|\footnote{\url{https://tex.stackexchange.com/questions/503/why-is-preferable-to}}。
+% 请不要使用可能引发问题的 |$$|\meta{公式}|$$|
+% \footnote{\url{https://tex.stackexchange.com/q/503/}}。
 %
 %
 % \paragraph{符号和单位}
 %
-% 模板使用 \pkg{unicode-math} 配置数学字体，可以替代传统方案下的 \pkg{bm}、
-% \pkg{mathrsfs} 等宏包\footnote{\url{https://tex.stackexchange.com/questions/528831/why-doesnt-the-bm-package-work-with-the-unicode-math-package}}。
-% 相应地，也需要使用新方案提供的命令。例如，加粗数学符号的命令可以使用
-% \tn{symbf}。更多细节请查阅 \pkg{unicode-math} 手册。
+% ^^A \url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}
+% 模板使用 \pkg{unicode-math} 宏包配置数学字体，完整符号表可以参考
+% \href{http://mirrors.ctan.org/macros/unicodetex/latex/unicode-math/unimath-symbols.pdf}{\file{unimath-symbols.pdf}}。
+% 该方案目前不兼容传统的 \pkg{amsfonts}、\pkg{amssymb}、\pkg{bm}
+% \footnote{\url{https://tex.stackexchange.com/q/528831/}}
+% 、\pkg{upgreek} 等宏包。需要使用新方案提供的相应命令。
+% 例如，加粗数学符号的命令为 \tn{symbf}。
+% 更多细节请查阅 \pkg{unicode-math} 手册。
 %
-% 符号表可以参考 \url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}。
+% ^^A 本段说明来自 THuThesis，待补充相应配置
+% 中文论文的数学符号默认遵循 GB/T 3102--93《物理科学和技术中
+% 使用的数学符号》\cite{gb-3102-93}，该标准参照采纳 ISO 31-11:1992，
+% 但是与 \TeX{} 默认的美国数学学会（AMS）的习惯有许多差异。
+% 本模板尚未完成自动样式适配，一些需要写作时手动处理的要点包括：
+% \begin{itemize}
+% ^^A   \item 小于等于号和大于等于号使用斜线（$\leqslant$、$\geqslant$）
+%   \item 数学常数和特殊函数名用正体，如
+%   \begin{itemize}
+%     \item $\uppi$ 使用 |$\uppi$|
+%     \item $\symup{i}$ 使用 |$\symup{e}$|
+%     \item $\symup{e}$ 使用 |$\symup{i}$|
+%   \end{itemize}
+%   \item 微分号使用正体，如
+%   \begin{itemize}
+%     \item $\mathrm{d} \varphi / \mathrm{d} t$
+%           使用 |$\mathrm{d} \varphi / \mathrm{d} t$|
+%   \end{itemize}
+% ^^A 可以提供一个设置项，|\renewcommand{\vec}[1]{\symbf{#1}}|
+%   \item 向量、矩阵和张量用粗斜体（\cs{symbf}），如
+%   \begin{itemize}
+%     \item $\symbf{\Sigma}$ 使用 |$\symbf{\Sigma}$|
+%     \item $\symbfsf{T}$ 使用 |$\symbfsf{T}$|
+%   \end{itemize}
+% \end{itemize}
 %
-% 单位请参考相关国家标准\footnote{GB 3100-1993, GB/T 3101-1993, GB/T 3102-1993}，使用 \pkg{siunitx} 宏包。\pkg{siunitx} 是一个更新频繁的包，可能会引发兼容性问题。
-%
+% 单位默认遵循 GB 3100--93《国际单位制及其应用》\cite{gb-3100-93}和
+% GB 3101--93《有关量、单位和符号的一般原则》\cite{gb-3101-93}，
+% SI 单位可通过载入 \pkg{siunitx} 宏包\cite{siunitx}进行输入。
+% ^^A \pkg{siunitx} 是一个更新频繁的包，可能会引发兼容性问题。
 %
 % \paragraph{定理环境}
 %
@@ -2135,6 +2170,21 @@ To produce the documentation run the original source files ending with
 %
 % \subsection*{标准、规范}
 %
+% \bibitem{gb-3100-93}
+% 全国信息与文献标准化技术委员会.
+% \newblock \textit{国际单位制及其应用: GB 3100--93} [S].
+% \newblock 北京: 中国标准出版社, 1993
+%
+% \bibitem{gb-3101-93}
+% 全国信息与文献标准化技术委员会.
+% \newblock \textit{有关量、单位和符号的一般原则: GB 3101--93} [S].
+% \newblock 北京: 中国标准出版社, 1993
+%
+% \bibitem{gb-3102-93}
+% 全国信息与文献标准化技术委员会.
+% \newblock \textit{物理科学和技术中使用的数学符号: GB/T 3102--93} [S].
+% \newblock 北京: 中国标准出版社, 1993
+%
 % \bibitem{gb-t-7408-2005}
 % 全国信息与文献标准化技术委员会.
 % \newblock \textit{数据元和交换格式\quad 信息交换~ 日期和时间表示法: GB/T 7408--2005} [S].
@@ -2206,6 +2256,14 @@ To produce the documentation run the original source files ending with
 % \newblock (2022-01-09)
 % \urlprefix\url{https://ctan.org/pkg/njuvisual}
 % \urlprefix\CTANurl[文档：]{macros/latex/contrib/njuvisual/njuvisual.pdf}
+%
+% \bibitem{siunitx}
+% \textsc{Wright J}.
+% \newblock \textit{A comprehensive (SI) units package} [EB/OL].
+% \newblock version 3.1.0,
+% \newblock (2022-04-25)
+% \urlprefix\url{https://www.ctan.org/pkg/siunitx}
+% \urlprefix\CTANurl[文档：]{macros/latex/contrib/siunitx/siunitx.pdf}
 %
 % \bibitem{tabularray}
 % \textsc{Jianrui Lyu}.
@@ -2825,7 +2883,7 @@ To produce the documentation run the original source files ending with
     \mode_leave_vertical: \@@_hskip:
 %    \end{macrocode}
 % 这里需要存储 \tn{baselineskip} 的值，以使 \tn{parbox} 后行距正确。
-% \footnote{\url{https://tex.stackexchange.com/questions/34971/how-to-keep-a-constant-baselineskip-when-using-minipages-or-parboxes}}
+% \footnote{\url{https://tex.stackexchange.com/q/34971/}}
 %    \begin{macrocode}
     \parbox [ t ] { #3 }
       {
@@ -2976,8 +3034,10 @@ To produce the documentation run the original source files ending with
 %   \item 内容
 %   \item 左边距
 % \end{arguments}
-% 这里使用了 Primitive \TeX{} 语法以利用原生的断行算法\footnote{\url{https://tex.stackexchange.com/questions/637861/underline-list-item-to-page-width}}。
-% 对其语法的简要介绍可以参考 \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。
+% 这里使用了 Primitive \TeX{} 语法以利用原生的断行算法
+% \footnote{\url{https://tex.stackexchange.com/q/637861/}}。
+% 对其语法的简要介绍可以参考
+% \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_uline_list:nnn #1#2#3
   {
@@ -3279,6 +3339,7 @@ To produce the documentation run the original source files ending with
     info     .meta:nn = { nju / info     } { #1 },
     style    .meta:nn = { nju / style    } { #1 },
     theorem  .meta:nn = { nju / theorem  } { #1 }
+    % toc      .meta:nn = { nju / toc      } { #1 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3417,7 +3478,7 @@ To produce the documentation run the original source files ending with
 %   \pkg{amsthm} 和 \pkg{thmtools}。}
 % \changes{v0.16}{2022/03/19}{不显式载入 \pkg{amsmath}。}
 % \changes{v0.18}{2022/04/20}{不强制载入 \pkg{ntheorem}。}
-% 数学相关的宏包。其中，\pkg{amsmath} 必须在 \pkg{unicode-math} 前加载。
+% 数学相关的宏包。其中，\pkg{amsmath} 会被 \pkg{unicode-math} 自动载入。
 % \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的
 % 数学字体。用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math}
 % 发生冲突，需要手动消除其警告。
@@ -4722,7 +4783,7 @@ To produce the documentation run the original source files ending with
     \exp_args:NV \theoremsymbol     \l_@@_thm_qed_symbol_tl
 %    \end{macrocode}
 % 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare} 绘制，对应于 |U+25A1| 字符
-% \footnote{\url{https://tex.stackexchange.com/questions/567135/how-get-box-like-symbol-with-xelatex}}。
+% \footnote{\url{https://tex.stackexchange.com/q/567135/}}。
 %    \begin{macrocode}
     \newtheorem* { proof } { \c_@@_name_proof_tl }
 %    \end{macrocode}
@@ -5920,9 +5981,11 @@ To produce the documentation run the original source files ending with
 % 单独制作的前言致谢页。
 %    \begin{macrocode}
 \NewDocumentEnvironment { preface         } { +b }
-  { \@@_chapter:V \c_@@_name_preface_tl         #1 } { }
+  { \@@_chapter:V \c_@@_name_preface_tl         #1 }
+  { \cleardoublepage }
 \NewDocumentEnvironment { acknowledgement } { +b }
-  { \@@_chapter:V \c_@@_name_acknowledgement_tl #1 } { }
+  { \@@_chapter:V \c_@@_name_acknowledgement_tl #1 }
+  { \cleardoublepage }
 %    \end{macrocode}
 % \end{environment}
 % \end{environment}
@@ -6017,7 +6080,7 @@ To produce the documentation run the original source files ending with
     \@@_chapter:V \c_@@_name_notation_tl
     \@@_make_notation:nn { #1 } { #2 }
   }
-  { \endlist }
+  { \endlist \cleardoublepage }
 %    \end{macrocode}
 % \end{environment}
 %

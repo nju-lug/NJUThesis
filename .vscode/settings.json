@@ -93,5 +93,6 @@
                 "lualatex"
             ]
         },
-    ]
+    ],
+    "editor.wordWrap": "bounded"
 }
