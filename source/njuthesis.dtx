@@ -1267,7 +1267,7 @@ To produce the documentation run the original source files ending with
 % \end{latexexample}
 %
 %
-% \subsubsection{文字}
+% \subsubsection{字形}
 %
 % \begin{function}{\songti,\heiti,\kaishu,\fangsong,\zihao}
 %   \begin{syntax}
@@ -1284,8 +1284,24 @@ To produce the documentation run the original source files ending with
 %   \begin{syntax}
 %     \tn{njuline}\Arg{文字}
 %   \end{syntax}
-% 为了避免原生\tn{uline}命令在中文环境下不能正常换行的问题，本模板使用\tn{njuline}作为替代方案，分别对 \hologo{XeLaTeX} 的 \pkg{xeCJKfntef} 包和 \hologo{LuaLaTeX} 的 \pkg{lua-ul} 包中的下划线命令进行了包装。
+% 为了避免原生 \tn{uline} 命令在中文环境下不能正常换行的问题，
+% 本模板使用 \tn{njuline} 作为替代方案，分别对 \hologo{XeLaTeX} 的
+% \pkg{xeCJKfntef} 包和 \hologo{LuaLaTeX} 的 \pkg{lua-ul}
+% 包中的下划线命令进行了包装。
 % \end{function}
+%
+% \subsubsection{列表}
+%
+% \begin{function}{itemize,enumerate,description}
+%   \begin{syntax}
+%     \tn{footnote}\Arg{脚注}
+%   \end{syntax}
+% 添加列表环境。
+% \end{function}
+%
+% 模板默认载入 \pkg{enumitem} 宏包，对三个常用列表环境内的条目间距进行压缩。
+%
+% \subsubsection{脚注}
 %
 % \begin{function}{\footnote}
 %   \begin{syntax}
@@ -1293,7 +1309,6 @@ To produce the documentation run the original source files ending with
 %   \end{syntax}
 % 添加脚注。
 % \end{function}
-%
 %
 % \subsubsection{图片}
 %
@@ -1308,8 +1323,7 @@ To produce the documentation run the original source files ending with
 %
 % 在使用特定类型的图片文件时，可以省略其扩展名，包括 \file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}。
 %
-%
-% \paragraph{图片}
+% \paragraph{单张图片}
 %
 % 下面这个例子展示了如何插入一张名称为 \file{myfig.jpg}，宽度占页面文字宽度一半的图片。注意标签命令 \tn{label} 必须放在图注命令 \tn{caption} 之后。
 % \begin{latexexample}[moretexcs={\includegraphics},emph={[1]figure}]
@@ -1323,7 +1337,6 @@ To produce the documentation run the original source files ending with
 %
 % \emph{以下图片相关功能的实现均需要手动载入相关宏包}。
 %
-%
 % \paragraph{文字环绕}
 %
 % 对于较为瘦长，或者仅起到辅助作用的图像，可以使用 \pkg{wrapfig} 宏包提供的 \env{wrapfigure} 实现文字环绕效果。注意这个环境后紧跟的一行不能为空。
@@ -1336,7 +1349,6 @@ To produce the documentation run the original source files ending with
 %   \end{wrapfigure}
 %   <text>
 % \end{latexexample}
-%
 %
 % \paragraph{多张嵌套}
 %
@@ -1364,7 +1376,6 @@ To produce the documentation run the original source files ending with
 %
 % 请尽量避免使用较为老旧的 \pkg{subfig} 宏包，完全不要使用过时的 \pkg{subfigure} 宏包。两者的 CTAN 页面上均建议转移至更新的 \pkg{subcaption} 宏包。
 %
-%
 % \subsubsection{表格}
 %
 % 下面这个例子展示了如何插入一张表格。通过 \pkg{booktabs} 宏包提供的 \tn{toprule}、\tn{midrule} 和 \tn{bottomrule} 命令，我们可以很轻松地绘制出一张漂亮规范的三线表。
@@ -1385,7 +1396,6 @@ To produce the documentation run the original source files ending with
 %
 % \emph{以下表格功能的实现均需要手动载入相关宏包。}
 %
-%
 % \paragraph{合并单元格}
 %
 % \begin{function}{\multirow,\multicolumn}
@@ -1398,7 +1408,6 @@ To produce the documentation run the original source files ending with
 %
 % TODO：\pkg{multirow} 宏包的使用方法，命令较为复杂。
 % \url{http://www.ctex.org/documents/packages/table/multirow.htm}
-%
 %
 % \paragraph{更多样式}
 %
@@ -3540,8 +3549,8 @@ To produce the documentation run the original source files ending with
   { \RequirePackage { tabularray } }
 %    \end{macrocode}
 %
-% \begin{macro}{\@@_check_package:nnn}
-% 检查过时宏包。
+% \begin{macro}{\@@_check_pkg_version:nnn}
+% 检查宏包版本是否过时。
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { package-too-old }
   {
@@ -3551,7 +3560,7 @@ To produce the documentation run the original source files ending with
     Please~ update~ an~ up-to-date~ version~ of~ it~
     using~ your TeX~ package~ manager~ or~ from~ CTAN.
   }
-\cs_new_protected:Npn \@@_check_package:nnn #1#2#3
+\cs_new_protected:Npn \@@_check_pkg_version:nnn #1#2#3
   {
     \@ifpackagelater {#1} {#2}
       { } { \msg_error:nnnn { njuthesis } { package-too-old } {#1} {#3} }
@@ -3563,9 +3572,48 @@ To produce the documentation run the original source files ending with
 % 解决了下划线中断问题，然而在 2021-10-24 的更新才提供了正确的内嵌日期。
 %    \begin{macrocode}
 \sys_if_engine_luatex:T
-  { \@@_check_package:nnn { luatexja } { 2021/10/24 } { 20211024.0 } }
+  { \@@_check_pkg_version:nnn { luatexja } { 2021/10/24 } { 20211024.0 } }
 %    \end{macrocode}
 %
+% \changes{v0.18}{2022/04/28}{增加宏包冲突检查。}
+%    \begin{macrocode}
+\RequirePackage { filehook }
+%    \end{macrocode}
+%
+% \begin{macro}{\@@_check_pkg_conflict:nn}
+% 检查用户载入的宏包是否会与预置宏包发生冲突。
+% \begin{arguments}
+%   \item 模板载入的宏包
+%   \item 产生冲突的宏包
+%   \item 替代的解决办法
+% \end{arguments}
+%    \begin{macrocode}
+\msg_new:nnn { njuthesis } { package-conflict }
+  {
+    The~ "#2"~ package~ is~ incompatible~ with~ "#1".\\
+    I~ have~ loaded~ "#1"~ by~ default.~ Maybe~ You~ should~
+    refer~ to~ section~ 4~ of~ the~ "njuthesis"~ manual.
+  }
+\cs_new_protected:Npn \@@_check_pkg_conflict:nn #1#2
+  {
+    \AtEndOfPackageFile * { #1 }
+      {
+        \AtBeginOfPackageFile * { #2 }
+          { \msg_error:nnnn { njuthesis } { package-conflict } {#1} {#2} }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 检查数学宏包冲突。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    amscd, amsfonts, amssymb, bbm, bm, eucal,
+    eufrak, mathrsfs, newtxmath, upgreek
+  }
+  { \@@_check_pkg_conflict:nn { unicode-math } { #1 } }
+%    \end{macrocode}
 %
 % \subsection{配置文件}
 %
