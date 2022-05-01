@@ -1294,7 +1294,11 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}{itemize,enumerate,description}
 %   \begin{syntax}
-%     \tn{footnote}\Arg{脚注}
+%     \tn{begin}\marg{列表环境}
+%       \tn{item}\oarg{标签1} \meta{条目1}
+%       \tn{item}\oarg{标签2} \meta{条目2}
+%       ...
+%     \tn{end}\marg{列表环境}
 %   \end{syntax}
 % 添加列表环境。
 % \end{function}
@@ -1308,6 +1312,14 @@ To produce the documentation run the original source files ending with
 %     \tn{footnote}\Arg{脚注}
 %   \end{syntax}
 % 添加脚注。
+% \end{function}
+%
+% \begin{function}[added=2022-05-01]{style/footnote-style}
+%   \begin{syntax}
+%     footnote-style = <(plain)|pifont>
+%   \end{syntax}
+% 设置脚注编号样式。默认为普通数字，使用 |pifont|
+% 选项可修改为带圈数字。单一页面内请尽量避免超过 10 条脚注。
 % \end{function}
 %
 % \subsubsection{图片}
@@ -3343,7 +3355,9 @@ To produce the documentation run the original source files ending with
     % abstract .meta:nn = { nju / abstract } { #1 },
     bib      .meta:nn = { nju / bib      } { #1 },
     % cover    .meta:nn = { nju / cover    } { #1 },
+    % font     .meta:nn = { nju / font     } { #1 },
     % footer   .meta:nn = { nju / footer   } { #1 },
+    % footnote .meta:nn = { nju / footnote } { #1 },
     % header   .meta:nn = { nju / header   } { #1 },
     info     .meta:nn = { nju / info     } { #1 },
     style    .meta:nn = { nju / style    } { #1 },
@@ -3481,6 +3495,7 @@ To produce the documentation run the original source files ending with
   {
     geometry,
     fancyhdr,
+    footmisc,
     setspace,
 %    \end{macrocode}
 % \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除
@@ -4735,6 +4750,90 @@ To produce the documentation run the original source files ending with
 \@@_cref_name:n { figure, table, appendix, proof }
 \@@_cref_name:V \g_@@_theorem_type_clist
 %    \end{macrocode}
+%
+%
+% \subsection{脚注}
+% \changes{v0.18}{2022/05/01}{提供脚注设置项。}
+% ^^A 来自 fduthesis
+%    \begin{macrocode}
+\tl_new:N \l_@@_fn_style_tl
+\keys_define:nn { nju / style }
+  {
+%    \end{macrocode}
+% \begin{macro}{style/footnote-style}
+%    \begin{macrocode}
+    footnote-style .choices:nn = { plain, pifont }
+%    \end{macrocode}
+% 若使用 \opt{pifont} 类型，则需引入 \pkg{pifont} 宏包。
+%    \begin{macrocode}
+      {
+        \tl_gset_eq:NN \l_@@_fn_style_tl \l_keys_choice_tl
+        \int_compare:nT { \l_keys_choice_int = 2 }
+          { \RequirePackage { pifont } }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_fn_symbol_pifont:n}
+% \opt{pifont} 普通版。以下四种都只包含 \numrange{1}{10}。
+%    \begin{macrocode}
+\cs_new:Npn \@@_fn_symbol_pifont:n #1
+  { \ding { \int_eval:n { 171 + #1 } } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_footnote_number:N}
+% 脚注编号样式。
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_fn_style_plain_tl  { plain  }
+\tl_const:Nn \c_@@_fn_style_pifont_tl { pifont }
+\cs_new:Npn \@@_footnote_number:N #1
+  {
+    \tl_case:NnF \l_@@_fn_style_tl
+      {
+%    \end{macrocode}
+% \opt{plain} 类型直接使用计数器 |footnote| 的值。
+%    \begin{macrocode}
+        \c_@@_fn_style_plain_tl
+          { \int_use:N #1 }
+%    \end{macrocode}
+% \opt{pifont} 类型无需进行额外的操作。
+%    \begin{macrocode}
+        \c_@@_fn_style_pifont_tl
+          { \@@_fn_symbol_pifont:n {#1} }
+      }
+%    \end{macrocode}
+% 变量 \cs{l_@@_fn_style_tl} 保存的类型未知时，默认使用 \opt{plain}
+% 类型。
+%    \begin{macrocode}
+      { \int_use:N #1 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\thefootnote}
+% 重定义脚注编号。
+%    \begin{macrocode}
+\cs_set:Npn \thefootnote { \@@_footnote_number:N \c@footnote }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{整体样式}
+%
+% \begin{macro}[int]{\@makefntext}
+% 重定义内部脚注文字命令，使脚注编号不使用上标，宽度为 \qty{1.5}{em}。
+% 见 \url{http://tex.stackexchange.com/q/19844} 和
+% \url{https://www.zhihu.com/question/53030087}。
+%    \begin{macrocode}
+\cs_set:Npn \@makefntext #1
+  {
+    \mode_leave_vertical:
+    \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
+    #1
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 %
 % \subsection{图片表格}
