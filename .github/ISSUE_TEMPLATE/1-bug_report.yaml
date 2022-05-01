@@ -56,7 +56,7 @@ body:
     attributes:
       label: njuthesis 模板版本
       placeholder: v0.17.0
-      description: 模版版本可以在 `.log` 文件中搜索 `njuthesis` 得到。
+      description: 模板版本可以在 `.log` 文件中搜索 `njuthesis` 得到。
     validations:
       required: true
   - type: dropdown

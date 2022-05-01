@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [0.18.0] - 2022-05-01
+
 ## 新增
 
 - 新增内置定理环境的若干设置项 - [#50]
@@ -308,38 +310,39 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v0.17.0...HEAD
-[0.17.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.17.0
-[0.16.1]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.16.1
-[0.16.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.16.0
-[0.15.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.15.0
-[0.14.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.14.0
-[0.13.1]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.13.1
-[0.13.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.13.0
-[0.12.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.12.0
-[0.11.3]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.11.3
-[0.11.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.11.0
-[0.10.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.10.0
-[0.9.0]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.9.0
-[0.8.4]: https://github.com/nju-lug/NJUThesis/releases/tag/v0.8.4
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v0.18.0...HEAD
+[0.18.0]: https://github.com/nju-lug/NJUThesis/compare/v0.17.0...v0.18.0
+[0.17.0]: https://github.com/nju-lug/NJUThesis/compare/v0.16.0...v0.17.0
+[0.16.1]: https://github.com/nju-lug/NJUThesis/compare/v0.16.0...v0.16.1
+[0.16.0]: https://github.com/nju-lug/NJUThesis/compare/v0.15.0...v0.16.0
+[0.15.0]: https://github.com/nju-lug/NJUThesis/compare/v0.14.0...v0.15.0
+[0.14.0]: https://github.com/nju-lug/NJUThesis/compare/v0.13.1...v0.14.0
+[0.13.1]: https://github.com/nju-lug/NJUThesis/compare/v0.13.0...v0.13.1
+[0.13.0]: https://github.com/nju-lug/NJUThesis/compare/v0.12.0...v0.13.0
+[0.12.0]: https://github.com/nju-lug/NJUThesis/compare/v0.11.3...v0.12.0
+[0.11.3]: https://github.com/nju-lug/NJUThesis/compare/v0.11.0...v0.11.3
+[0.11.0]: https://github.com/nju-lug/NJUThesis/compare/v0.10.0...v0.11.0
+[0.10.0]: https://github.com/nju-lug/NJUThesis/compare/v0.9.0...v0.10.0
+[0.9.0]:  https://github.com/nju-lug/NJUThesis/compare/v0.8.4...v0.9.0
+[0.8.4]:  https://github.com/nju-lug/NJUThesis/compare/v0.3.0...v0.8.4
 
-[#14]: https://github.com/nju-lug/NJUThesis/issues/14
-[#44]: https://github.com/nju-lug/NJUThesis/issues/44
-[#46]: https://github.com/nju-lug/NJUThesis/issues/46
-[#50]: https://github.com/nju-lug/NJUThesis/issues/50
-[#52]: https://github.com/nju-lug/NJUThesis/issues/52
-[#60]: https://github.com/nju-lug/NJUThesis/issues/60
-[#61]: https://github.com/nju-lug/NJUThesis/issues/61
-[#64]: https://github.com/nju-lug/NJUThesis/issues/64
-[#66]: https://github.com/nju-lug/NJUThesis/issues/66
-[#71]: https://github.com/nju-lug/NJUThesis/discussions/71
-[#79]: https://github.com/nju-lug/NJUThesis/issues/79
-[#85]: https://github.com/nju-lug/NJUThesis/discussions/85
-[#89]: https://github.com/nju-lug/NJUThesis/discussions/89
-[#92]: https://github.com/nju-lug/NJUThesis/issues/92
-[#96]: https://github.com/nju-lug/NJUThesis/issues/96
-[#98]: https://github.com/nju-lug/NJUThesis/issues/98
-[#99]: https://github.com/nju-lug/NJUThesis/discussions/99
+[#14]:  https://github.com/nju-lug/NJUThesis/issues/14
+[#44]:  https://github.com/nju-lug/NJUThesis/issues/44
+[#46]:  https://github.com/nju-lug/NJUThesis/issues/46
+[#50]:  https://github.com/nju-lug/NJUThesis/issues/50
+[#52]:  https://github.com/nju-lug/NJUThesis/issues/52
+[#60]:  https://github.com/nju-lug/NJUThesis/issues/60
+[#61]:  https://github.com/nju-lug/NJUThesis/issues/61
+[#64]:  https://github.com/nju-lug/NJUThesis/issues/64
+[#66]:  https://github.com/nju-lug/NJUThesis/issues/66
+[#71]:  https://github.com/nju-lug/NJUThesis/discussions/71
+[#79]:  https://github.com/nju-lug/NJUThesis/issues/79
+[#85]:  https://github.com/nju-lug/NJUThesis/discussions/85
+[#89]:  https://github.com/nju-lug/NJUThesis/discussions/89
+[#92]:  https://github.com/nju-lug/NJUThesis/issues/92
+[#96]:  https://github.com/nju-lug/NJUThesis/issues/96
+[#98]:  https://github.com/nju-lug/NJUThesis/issues/98
+[#99]:  https://github.com/nju-lug/NJUThesis/discussions/99
 [#105]: https://github.com/nju-lug/NJUThesis/discussions/105
 [#107]: https://github.com/nju-lug/NJUThesis/issues/107
 [#111]: https://github.com/nju-lug/NJUThesis/issues/111
