@@ -111,7 +111,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.18.0 2022-04-19 15:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.18.0 2022-05-01 12:40:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -203,7 +203,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.18.0 \quad 2022-04-19}
+% \date{v0.18.0 \quad 2022-05-01}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -1743,14 +1743,10 @@ To produce the documentation run the original source files ending with
 %     }
 % \end{latexexample}
 %
-% 如果开启了草稿模式，您可能会注意到部分条目存在超宽的问题，这时就要果断假装没有看到。
-% 该问题的产生是由于 \hologo{LaTeX} 中只有固定的字母组合中间可以断行。使条目右侧平齐的方法有如下两种
-% \footnote{详见 \url{https://github.com/nju-lug/NJUThesis/issues/57}。很不幸，\pkg{microtype} 与 \pkg{babel} 没能在我们的模板中解决问题。}：
-% \begin{itemize}
-%   \item 自行在 \file{.bib} 文件中设置断行点，例如可以将 graphene 一词修改为 graph|\-|ene。缺点是需要逐条手动排查，建议在定稿时进行修改。
-%   \item 在 |\printbibliography| 前添加 |\sloppy| 命令拉伸词间距，缺点是可能降低美观度。
-% \end{itemize}
-%
+% 如果开启了草稿模式，您可能会注意到部分条目存在超宽的问题。
+% 对此，需要将 \pkg{biblatex-gb7714-2015} 宏包手动更新至 2022-04-16 以后的版本。
+% 此外，由于 \TeX{} 预置的断词位置是有限的，不能覆盖学术上使用的复杂词汇，
+% 您也可以自行在 \file{.bib} 文件中设置断行点，例如可以将 graphene 一词修改为 graph|\-|ene。
 %
 % \subsubsection{正文引用}
 %
@@ -6503,7 +6499,7 @@ To produce the documentation run the original source files ending with
 %<definition-g>    { emblemwidthi  } { 46  pt },
 %<definition-g>    { emblemwidthii } { 61  pt },
 %<definition-ug>    { namewidth     } { 300 pt },
-%<definition-g>    { namewidth    } { 126  pt },
+%<definition-g>    { namewidth     } { 126 pt },
     { smallhskip    } { 5   pt },
     { smallvskip    } { 1   ex }
   }

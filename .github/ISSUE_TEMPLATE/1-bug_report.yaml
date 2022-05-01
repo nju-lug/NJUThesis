@@ -51,19 +51,12 @@ body:
       render: TeX
     validations:
       required: true
-  - type: dropdown
+  - type: input
     id: njuthesis_version
     attributes:
       label: njuthesis 模板版本
+      placeholder: v0.17.0
       description: 模版版本可以在 `.log` 文件中搜索 `njuthesis` 得到。
-      options:
-        - 0.16.1
-        - 0.16.0
-        - 0.15.0
-        - 0.14.0
-        - 0.13.0
-        - 0.12.0
-        - 快更新吧
     validations:
       required: true
   - type: dropdown
@@ -83,17 +76,15 @@ body:
         - Windows
         - macOS
         - Linux
-  - type: dropdown
+  - type: input
     id: tex_distribution
     attributes:
       label: TeX 发行版
-      options:
-        - TeX Live 2021
-        - MiKTeX 21
+      placeholder: TeX Live 2022 / MiKTeX 22.1
   - type: dropdown
     id: compiler
     attributes:
-      label: 编译引擎
+      label: 编译程序
       options:
         - XeLaTeX
         - LuaLaTeX
