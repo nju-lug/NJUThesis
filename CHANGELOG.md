@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+### 杂项
+- 修正文档笔误 - [#137]
+  - 感谢 [@note286]！
+
 ## [0.18.0] - 2022-05-01
 
 ## 新增
@@ -351,6 +355,7 @@
 [#121]: https://github.com/nju-lug/NJUThesis/issues/121
 [#130]: https://github.com/nju-lug/NJUThesis/issues/130
 [#131]: https://github.com/nju-lug/NJUThesis/issues/131
+[#137]: https://github.com/nju-lug/NJUThesis/issues/137
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
@@ -360,3 +365,4 @@
 [@zepinglee]: https://github.com/zepinglee
 [@hushidong]: https://github.com/hushidong
 [@zhoujian9410]: https://github.com/zhoujian9410
+[@note286]: https://github.com/note286
