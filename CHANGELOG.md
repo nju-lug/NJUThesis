@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+## 修复
+
+- 图表标题使用粗体 -[#139]
+
 ### 杂项
 - 修正文档笔误 - [#137]
   - 感谢 [@note286]！
@@ -356,6 +360,7 @@
 [#130]: https://github.com/nju-lug/NJUThesis/issues/130
 [#131]: https://github.com/nju-lug/NJUThesis/issues/131
 [#137]: https://github.com/nju-lug/NJUThesis/issues/137
+[#139]: https://github.com/nju-lug/NJUThesis/discussions/139
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

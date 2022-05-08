@@ -4846,12 +4846,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \changes{v0.12}{2021/12/06}{删除了可能导致冲突的 \pkg{floatrow}。}
+% \changes{v0.18}{2022/05/08}{图表标题使用粗体。}
 % 图表标题样式。文字设置为五号宋体，标签设置为粗体，间隔一个全角空格。
 %    \begin{macrocode}
 \DeclareCaptionStyle{njucap}
   {
     font          = small,
-    labelfont     = bf,
+    font         += bf,
     labelsep      = quad,
     justification = centering
   }
