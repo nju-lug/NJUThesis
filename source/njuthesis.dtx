@@ -111,7 +111,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.18.0 2022-05-01 12:40:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.19.0 2022-05-11 20:57:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -203,7 +203,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.18.0 \quad 2022-05-01}
+% \date{v0.19.0 \quad 2022-05-11}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -4227,27 +4227,17 @@ To produce the documentation run the original source files ending with
 % 草稿模式下显示页面文字范围边界以及页眉、页脚线。
 %    \begin{macrocode}
 \bool_if:NT \g_@@_draft_bool { \geometry { showframe } }
-%</class>
 %    \end{macrocode}
 %
 %
 % \subsubsection{页眉页脚}
-%
-% \begin{variable}{\c_@@_pagestyle_tl}
-% 针对不同学位类型的默认页面样式设置。
-%    \begin{macrocode}
-%<definition-ug>\tl_const:Nn \c_@@_pagestyle_tl { plain    }
-%<definition-g>\tl_const:Nn \c_@@_pagestyle_tl { headings }
-%    \end{macrocode}
-% \end{variable}
-%
+% ^^A TODO: 将页眉页脚样式改为使用 \njusetformat 修改
 % 提供设置页眉页脚的用户接口。在 \cs{fancyhead} 的可选参数中，
 % \opt{E} 和 \opt{O} 分别表示在偶数页（even）和奇数页（odd），
 % 而 \opt{L}、\opt{R} 和 \opt{C} 则分别表示左（left）、右
 % （right）和中间（center）。按照通常的排版规则，在双面模式下，
 % 偶数页的中间页眉文字在左，奇数页则在右。单面模式下，左右页眉都要显示。
 %    \begin{macrocode}
-%<*class>
 \keys_define:nn { nju / style }
   {
 %    \end{macrocode}
@@ -4374,7 +4364,7 @@ To produce the documentation run the original source files ending with
 \RenewDocumentCommand \frontmatter { }
   {
     \cleardoublepage
-    \exp_args:NV \pagestyle \c_@@_pagestyle_tl
+    \exp_args:NV \pagestyle \c_@@_fmt_pagestyle_tl
     \pagenumbering { Roman }
   }
 %    \end{macrocode}
@@ -4389,7 +4379,7 @@ To produce the documentation run the original source files ending with
 \RenewDocumentCommand \mainmatter { }
   {
     \cleardoublepage
-    \exp_args:NV \pagestyle \c_@@_pagestyle_tl
+    \exp_args:NV \pagestyle \c_@@_fmt_pagestyle_tl
     \pagenumbering { arabic }
     \normalfont \normalsize
   }
@@ -4401,7 +4391,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \AtBeginEnvironment { document }
   {
-    \exp_args:NV \pagestyle \c_@@_pagestyle_tl
+    \exp_args:NV \pagestyle \c_@@_fmt_pagestyle_tl
     \pagenumbering { Roman }
   }
 %    \end{macrocode}
@@ -5777,7 +5767,7 @@ To produce the documentation run the original source files ending with
 % 在标题页后使用大写罗马字母页码，恢复正常字体设置。
 %    \begin{macrocode}
     \cleardoublepage
-    \exp_args:NV \pagestyle \c_@@_pagestyle_tl
+    \exp_args:NV \pagestyle \c_@@_fmt_pagestyle_tl
     \pagenumbering { Roman }
   }
 %</class>
@@ -6511,10 +6501,13 @@ To produce the documentation run the original source files ending with
 % \label{subsubsec:constant-format}
 %
 % \changes{v0.17}{2022/04/09}{将样式定义分离到 \file{.def} 文件。}
+% \changes{v0.19}{2022/05/11}{简化默认页面样式的修改方式。}
 % 默认样式。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
+%<definition-ug>    { pagestyle     } { plain                             },
+%<definition-g>    { pagestyle     } { headings                          },
     { section       } { \large \normalfont \sffamily      },
     { chapter       } { \c_@@_fmt_section_tl \centering   },
     { chapterintoc  } { \c_@@_fmt_section_tl              },
