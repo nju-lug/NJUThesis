@@ -9,6 +9,8 @@
 ## 新增
 
 - 可使用 `\njusetformat` 修改默认页面样式
+- 对封面上的超宽文字进行压缩
+  - 支持专硕封面的特殊标签格式 - [#147]
 
 ## 修复
 
@@ -365,6 +367,7 @@
 [#131]: https://github.com/nju-lug/NJUThesis/issues/131
 [#137]: https://github.com/nju-lug/NJUThesis/issues/137
 [#139]: https://github.com/nju-lug/NJUThesis/discussions/139
+[#147]: https://github.com/nju-lug/NJUThesis/discussions/147
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

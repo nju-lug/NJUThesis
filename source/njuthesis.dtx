@@ -2692,7 +2692,10 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_spread_box:nnn,\@@_spread_box:nnV,\@@_spread_box:nnx}
-% 分散对齐的水平盒子。
+% \changes{v0.19}{2022/05/16}{对超出盒子宽度的文字进行水平压缩。}
+% 分散对齐的水平盒子，拉伸算法来自 \cls{fduthesis}。
+% 在文字宽度小于给定宽度时，在字符中间填补 \tn{hfil} 以增大字距。
+% 在文字宽度超出限制时，进行整体水平压缩。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 %   \item 格式
@@ -2702,8 +2705,22 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_spread_box:nnn #1#2#3
   {
     \mode_leave_vertical:
+    \@@_get_text_width:Nn \l_@@_tmpa_dim { #3 }
     \hbox_to_wd:nn { #1 }
-      { #2 \tl_map_inline:nn { #3 } { ##1 \hfil } \unskip }
+      {
+        \dim_compare:nTF { \l_@@_tmpa_dim > #1 }
+          {
+            \hfil
+            \scalebox
+              { \dim_to_decimal_in_unit:nn { #1 } { \l_@@_tmpa_dim } }
+              [ 1.0 ] { #2 #3 }
+            \hfil
+          }
+          {
+            \hbox_to_wd:nn { #1 }
+              { #2 \tl_map_inline:nn { #3 } { ##1 \hfil } \unskip }
+          }
+      }
   }
 \cs_generate_variant:Nn \@@_spread_box:nnn { nnV }
 \cs_generate_variant:Nn \@@_spread_box:nnn { nnx }
