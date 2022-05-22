@@ -102,12 +102,6 @@ To produce the documentation run the original source files ending with
 \Msg{*                                                           *}
 \Msg{*************************************************************}
 
-% ^^A 故意留白
-% ^^A 故意留白
-% ^^A 故意留白
-% ^^A 故意留白
-% ^^A 故意留白
-
 \endbatchfile
 %</install>
 %
@@ -115,8 +109,14 @@ To produce the documentation run the original source files ending with
 \fi
 %</internal>
 %
+% ^^A 故意留白
+% ^^A 故意留白
+% ^^A 故意留白
+% ^^A 故意留白
+%
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
+% ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
 %<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.19.0 2022-05-20 17:20:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
@@ -5917,6 +5917,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{abstract/mark}
 % 英文摘要标题实例。
 %    \begin{macrocode}
+%<*definition-g>
 \@@_declare_element:nn { abstract / mark }
   {
     content     = \c_@@_name_abstract_b_tl,
@@ -5945,7 +5946,6 @@ To produce the documentation run the original source files ending with
 % \end{arguments}
 % 研究生中文摘要页包括下划线以及若干特殊的对齐方式，实现方式较为繁琐。使用 \cs{@@_full_uline:NV} 确定内容宽度后，调用 \cs{@@_uline:n} 或 \cs{@@_ulined_center_box:nn} 命令以绘制横穿页面的下划线。前两行为标题。
 %    \begin{macrocode}
-%<*definition-g>
 \cs_new_protected:Npn \@@_abs_info_g:n #1
   {
     \@@_uline_list:xnn
