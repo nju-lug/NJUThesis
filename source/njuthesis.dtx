@@ -102,6 +102,12 @@ To produce the documentation run the original source files ending with
 \Msg{*                                                           *}
 \Msg{*************************************************************}
 
+% ^^A 故意留白
+% ^^A 故意留白
+% ^^A 故意留白
+% ^^A 故意留白
+% ^^A 故意留白
+
 \endbatchfile
 %</install>
 %
@@ -6343,6 +6349,7 @@ To produce the documentation run the original source files ending with
 %</definition-ug>
 %    \end{macrocode}
 %
+% \changes{v0.19}{2022/05/22}{更正研究生模板封面专业字样。}
 % 研究生模板默认名称。
 %    \begin{macrocode}
 %<*definition-g>
@@ -6412,10 +6419,16 @@ To produce the documentation run the original source files ending with
       { \c_@@_name_nju_tl \g_@@_info_type_tl 中文摘要首页用纸 }
       { \c_@@_name_nju_tl \g_@@_info_type_tl 英文摘要首页用纸 },
     { author    } { 作者姓名 } { POSTGRADUATE   },
-    { major     } { 专业方向 } { SPECIALIZATION },
+    { major     } { 专业名称 } { SPECIALIZATION },
     { supvfull  } { 指导教师 } { MENTOR         }
   }
   { \@@_define_name:nnn #1 }
+%    \end{macrocode}
+%
+% 对专业硕士的封面条目进行临时修改。
+%    \begin{macrocode}
+\int_compare:nT { \g_@@_info_degree_int == 3 }
+  { \njusetname{major}{专业学位类别(领域)} }
 %</definition-g>
 %    \end{macrocode}
 %
