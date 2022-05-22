@@ -5644,12 +5644,22 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_make_origdecl: }
 % \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
+% \changes{v0.19}{2022/05/22}{跟进新版本科生诚信承诺书样式。}
 % 生成本科生的诚信承诺书或研究生的学位论文原创性声明。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_origdecl:
   {
-    \chapter* { \c_@@_name_origdecl_tl }
+%<definition-ug>    \cleardoublepage
+%<definition-g>    \chapter* { \c_@@_name_origdecl_tl }
     \thispagestyle { empty }
+%<*definition-ug>
+    \begin{center}
+      \njuemblem{2cm}{!}\\
+      {\zihao{-1}\sffamily \c__nju_name_origdecl_tl }
+    \end{center}
+    \zihao{-3}
+    \hspace{2em}
+%</definition-ug>
     \c_@@_text_origdecl_tl
     \vfil
     \begin{flushright}
@@ -6318,16 +6328,16 @@ To produce the documentation run the original source files ending with
 \clist_map_inline:nn
   {
     % 用于摘要的作者名称字样
-    { author_a    } { 本科生姓名                         },
-    { grade       } { 年级                               },
-    { origdecl    }
-      { \c_@@_name_nju_tl 本科毕业论文（设计）诚信承诺书 },
-    { origsign    } { 作者签名                           },
-    { submitdate  } { 提交日期                           },
-    { supv        } { 导师                               },
-    { title       } { 题目                               },
-    { type        } { 本科生毕业论文（设计、作品）       },
-    { ug          } { 本科生                             }
+    { author_a    } { 本科生姓名                     },
+    { grade       } { 年级                           },
+    { origdecl    } { \c_@@_name_nju_tl
+                  本科毕业论文（设计） \\ 诚信承诺书 },
+    { origsign    } { 作者签名                       },
+    { submitdate  } { 提交日期                       },
+    { supv        } { 导师                           },
+    { title       } { 题目                           },
+    { type        } { 本科生毕业论文（设计、作品）   },
+    { ug          } { 本科生                         }
   }
   { \@@_define_name:nn #1 }
 \clist_map_inline:nn
