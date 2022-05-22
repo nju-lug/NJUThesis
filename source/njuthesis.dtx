@@ -6166,6 +6166,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\njupaperlist}
 % \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
 % \changes{v0.14}{2021/12/20}{成果列表中可突出指定作者姓名及年份。}
+% \changes{v0.19}{2022/05/22}{修复成果列表与章末参考文献表的冲突。}
 % 成果列表。
 %    \begin{macrocode}
 \NewDocumentCommand \njupaperlist
@@ -6186,10 +6187,21 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     \RenewDocumentCommand \mkbibdateshort { m m m }
       { \textbf { \thefield { ##1 } } }
-    \begin{refsection}
-      \nocite { #2 }
-      \printbibliography [ heading = subbibliography, title = #1 ]
-    \end{refsection}
+%    \end{macrocode}
+% 在使用章末参考文献表时，\env{refsection} 的单独一章范围内生效，
+% 无需额外添加环境。 ^^A TODO: 待修改为更简洁的形式
+%    \begin{macrocode}
+    \tl_if_eq:NnTF \blx@refsecreset@level { 2 }
+      {
+        \nocite { #2 }
+        \printbibliography [ heading = subbibliography, title = #1 ]
+      }
+      {
+        \begin{refsection}
+          \nocite { #2 }
+          \printbibliography [ heading = subbibliography, title = #1 ]
+        \end{refsection}
+      }
     \group_end:
   }
 %    \end{macrocode}

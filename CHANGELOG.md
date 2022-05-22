@@ -16,6 +16,7 @@
 ## 修复
 
 - 图表标题使用粗体 -[#139]
+- 修复成果列表与章末参考文献表的冲突 -[#148]
 
 ## 变动
 
@@ -375,6 +376,7 @@
 [#137]: https://github.com/nju-lug/NJUThesis/issues/137
 [#139]: https://github.com/nju-lug/NJUThesis/discussions/139
 [#147]: https://github.com/nju-lug/NJUThesis/discussions/147
+[#148]: https://github.com/nju-lug/NJUThesis/issues/148
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
