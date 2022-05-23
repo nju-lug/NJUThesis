@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.19.0 2022-05-20 17:20:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.19.0 2022-05-23 11:33:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -234,6 +234,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/15}{适配2022届本科生毕业毕业论文（设计）规范。}
 % \changes{v0.14}{2022/01/13}{将本模板内嵌入南大 \hologo{TeX} 网站。}
 % \changes{v0.16}{2022/03/01}{分离本科生和研究生模板配置。}
+% \changes{v0.19}{2022/05/23}{对研究生普通封面进行若干细节修改。}
+% \changes{v0.19}{2022/05/23}{对国家图书馆封面进行若干细节修改。}
 %
 %
 % \maketitle
@@ -1102,11 +1104,25 @@ To produce the documentation run the original source files ending with
 % 提交日期。中英文日期现在可以由 ISO 日期格式\cite{gb-t-7408-2005}的字符串统一生成。如果留空，则自动使用编译当天日期。
 % \end{function}
 %
-% \begin{function}[updated=2021-01-14]{info/defend-date}
+% \begin{function}[updated=2022-01-14]{info/defend-date}
 %   \begin{syntax}
 %     defend-date = \Arg{yyyy-mm-dd}
 %   \end{syntax}
 % 答辩日期，只对研究生有效，要求同提交日期。
+% \end{function}
+%
+% \begin{function}[updated=2022-05-23]{info/confer-date}
+%   \begin{syntax}
+%     confer-date = \Arg{yyyy-mm-dd}
+%   \end{syntax}
+% 学位授予日期，只用于国家图书馆封面，要求同提交日期。
+% \end{function}
+%
+% \begin{function}[updated=2021-05-23]{info/bottom-date}
+%   \begin{syntax}
+%     bottom-date = \Arg{yyyy-mm-dd}
+%   \end{syntax}
+% 底部日期，只用于国家图书馆封面，要求同提交日期。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/chairman,info/reviewer}
@@ -1188,7 +1204,18 @@ To produce the documentation run the original source files ending with
 %           supervisor*  = {Professor Li Chengdian},
 %           submit-date  = {2021-09-12},
 %           defend-date  = {2022-01-15},
-%           email        = {git+nju-lug-email-3104-issue-@yaoge123.cn},
+%           email        = {git+nju-lug-email-3104-issue-@yaoge123.cn}
+%         }
+%     }
+% \end{latexexample}
+%
+% 如果需要国家图书馆封面，还需要加入如下信息
+%
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
+%   \njusetup {
+%       info = {
+%           confer-date  = {2022-05-20},
+%           bottom-date  = {2022-05-21},
 %           chairman     = {张晓山~教授},
 %           reviewer     = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
 %           clc          = {0175.2},
@@ -2080,7 +2107,7 @@ To produce the documentation run the original source files ending with
 % 譬如，将章标题字号加大到小二号，示例如下：
 %
 % \begin{latexexample}[moretexcs={\njusetformat,\zihao}]
-%   \njusetformat{chapter}{\zihao{-2}\normalfont\sffamily\centering}
+%   \njusetformat{chapter}{\zihao{-2}\sffamily\centering}
 % \end{latexexample}
 %
 %
@@ -2534,16 +2561,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_info_submitdate_tl,\g_@@_info_submitdate_en_tl,
-% \g_@@_info_defenddate_tl}
-% 用于存储格式化后的论文提交日期和答辩日期的变量。
-%    \begin{macrocode}
-\tl_new:N \g_@@_info_submitdate_tl
-\tl_new:N \g_@@_info_submitdate_en_tl
-\tl_new:N \g_@@_info_defenddate_tl
-%    \end{macrocode}
-% \end{variable}
-%
 % \begin{variable}{\c_@@_today_tl}
 % 编译当天日期，格式为 |yyyy-mm-dd|。
 %    \begin{macrocode}
@@ -2870,6 +2887,30 @@ To produce the documentation run the original source files ending with
   { \__zhnum_date_aux:nnn { #1 } { #2 } { #3 } }
 \cs_new:Npn \@@_date_en:www #1-#2-#3 \q_stop
   { \clist_item:Nn \c_@@_month_en_clist { #2 } ~#3 , ~#1  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_date:n,\@@_date_en:n}
+% 封装 ISO 日期格式字符串的转化命令，该字符串需要进行展开。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_date:n #1
+  {
+    \tl_new:c  { g_@@_info_ #1 date_tl }
+    \tl_set:cn { g_@@_info_ #1 date_tl }
+      {
+        \exp_last_unbraced:Nv
+          \@@_date:www { g_@@_info_ #1 date_raw_tl } \q_stop
+      }
+  }
+\cs_new_protected:Npn \@@_date_en:n #1
+  {
+    \tl_new:c  { g_@@_info_ #1 date_en_tl }
+    \tl_set:cn { g_@@_info_ #1 date_en_tl }
+      {
+        \exp_last_unbraced:Nv
+          \@@_date:www { g_@@_info_ #1 date_raw_tl } \q_stop
+      }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3767,6 +3808,24 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{info/defend-date}
+% \changes{v0.19}{2022/05/23}{新增国家图书馆封面的学位授予日期设置项。}
+% 学位授予日期。
+%    \begin{macrocode}
+    confer-date         .tl_set:N = \g_@@_info_conferdate_raw_tl,
+    confer-date        .initial:V = \c_@@_today_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/bottom-date}
+% \changes{v0.19}{2022/05/23}{新增国家图书馆封面的底部日期设置项。}
+% 底部日期。
+%    \begin{macrocode}
+    bottom-date         .tl_set:N = \g_@@_info_bottomdate_raw_tl,
+    bottom-date        .initial:V = \c_@@_today_tl,
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{info/defend-date,info/chairman,info/reviewer}
 % 答辩委员会信息。
 %    \begin{macrocode}
@@ -3863,31 +3922,42 @@ To produce the documentation run the original source files ending with
           { \@@_quad: \g_@@_info_supv_ii_en_tl }
       }
 %    \end{macrocode}
-% 将 ISO 格式的原始日期字符串格式化为中文日期表示，该字符串需要进行展开。
+% \begin{variable}{\g_@@_info_submitdate_tl}
+% 将 ISO 格式的原始日期字符串格式化为中文日期表示。
 %    \begin{macrocode}
-    \tl_set:Nn \g_@@_info_submitdate_tl
-      {
-        \exp_last_unbraced:NV
-          \@@_date:www \g_@@_info_submitdate_raw_tl \q_stop
-      }
+    \@@_date:n { submit }
 %    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_info_submitdate_en_tl,\g_@@_info_defenddate_tl}
 % 英文提交日期以及答辩日期仅用于研究生封面。
 %    \begin{macrocode}
     \int_compare:nF { \g_@@_info_degree_int == 1 }
       {
-        \tl_set:Nn \g_@@_info_submitdate_en_tl
+        \@@_date_en:n { submit }
+        \@@_date:n    { defend }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_info_bottomdate_tl,
+%   \g_@@_info_conferdate_tl,\g_@@_info_confer_tl}
+% 底部日期以及学位授予日期仅用于国家图书馆封面。
+%    \begin{macrocode}
+        \bool_if:NT \g_@@_nlcover_bool
           {
-            \exp_last_unbraced:NV
-              \@@_date_en:www \g_@@_info_submitdate_raw_tl \q_stop
-          }
-        \tl_set:Nn \g_@@_info_defenddate_tl
-          {
-            \exp_last_unbraced:NV
-              \@@_date:www \g_@@_info_defenddate_raw_tl \q_stop
+            \@@_date:n { bottom }
+            \@@_date:n { confer }
+            \tl_new:N  \g_@@_info_confer_tl
+            \tl_set:Nn \g_@@_info_confer_tl
+              {
+                \textbf { \c_@@_name_nju_tl } \hfil
+                \g_@@_info_conferdate_tl
+              }
           }
       }
   }
 %    \end{macrocode}
+% \end{variable}
 %
 %
 % \subsection{字体设置}
@@ -5270,7 +5340,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / nl / name }
   {
     content     =
-      \@@_spread_box:nnV { 6 em } { } \c_@@_name_title_tl,
+      \@@_spread_box:nnV { 6 em } { } \c_@@_name_title_b_tl,
     format      = \zihao { -0 },
     bottom-skip = 0 pt plus 1 fil
   }
@@ -5314,12 +5384,11 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{cover/nl/date}
-  % \changes{v0.19}{2022/05/20}{将国家图书馆封面的底部日期修改为提交时间。}
 % 国家图书馆封面底部日期实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { cover / nl / date }
   {
-    content = \g_@@_info_submitdate_tl,
+    content = \g_@@_info_bottomdate_tl,
     format  = \kaishu \zihao { 3 }
   }
 %    \end{macrocode}
@@ -5347,7 +5416,7 @@ To produce the documentation run the original source files ending with
   {
     \parbox [ b ] { 15 em } { \@@_uline_title: } \par
     \skip_vertical:n { - 0.5 cm }
-    { \zihao { 4 } \c_@@_name_title_b_tl }
+    { \zihao { 4 } \c_@@_name_subtitle_tl }
     \skip_vertical:N \c_zero_skip
     \@@_ulined_center_box:nn { 4.5 em } { \g_@@_info_author_tl }
     \skip_vertical:n { - 0.5 cm }
@@ -5358,6 +5427,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_cover_info_nl:}
 % \changes{v0.17}{2022/04/09}{优化国家图书馆封面导师联系方式的输出格式。}
+% \changes{v0.19}{2022/05/23}{补充国家图书馆封面的学位授予单位和日期。}
 % 国家图书馆封面信息栏。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_info_nl:
@@ -5373,8 +5443,7 @@ To produce the documentation run the original source files ending with
     \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { major_b     } { major      } { } \\
     \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { submitdate  } { submitdate } { }
     \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { defenddate  } { defenddate } { } \\
-    \@@_full_uline:Nn      \l_@@_tmpa_dim { \c_@@_name_confer_tl }
-    \@@_uline:n          { \l_@@_tmpa_dim }
+    \@@_uline_entry:Nnnn   \l_@@_tmpa_dim { confer      } { confer     } { }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6371,7 +6440,8 @@ To produce the documentation run the original source files ending with
 %</definition-ug>
 %    \end{macrocode}
 %
-% \changes{v0.19}{2022/05/22}{更正研究生模板封面专业字样。}
+% \changes{v0.19}{2022/05/22}{更正研究生普通封面专业字样。}
+% \changes{v0.19}{2022/05/22}{更正国家图书馆封面学位论文字样。}
 % 研究生模板默认名称。
 %    \begin{macrocode}
 %<*definition-g>
@@ -6416,6 +6486,7 @@ To produce the documentation run the original source files ending with
                        \c_@@_name_blankdate_tl ）       },
     { sign         } { （签字）                         },
     { submitdate   } { 论文提交日期                     },
+    { subtitle     } { （题名和副题名）                 },
     { supv         } { 导师                             },
     % 用于摘要的导师名称字样
     { supv_a       } { 指导教师（姓名、职称）           },
@@ -6428,7 +6499,7 @@ To produce the documentation run the original source files ending with
     % 用于摘要的标题名称字样
     { title_a      } { 题目                             },
     % 用于国家图书馆封面的标题名称字样
-    { title_b      } { （题名和副题名）                 },
+    { title_b      } { 学位论文                         },
     % 用于出版授权书的标题名称字样
     { title_c      } { 论文题名                         },
     { udc          } { U D C                            },
@@ -6563,7 +6634,7 @@ To produce the documentation run the original source files ending with
   {
 %<definition-ug>    { pagestyle     } { plain                             },
 %<definition-g>    { pagestyle     } { headings                          },
-    { section       } { \large \normalfont \sffamily      },
+    { section       } { \large \sffamily                  },
     { chapter       } { \c_@@_fmt_section_tl \centering   },
     { chapterintoc  } { \c_@@_fmt_section_tl              },
     { subsection    } { \c_@@_fmt_section_tl              },

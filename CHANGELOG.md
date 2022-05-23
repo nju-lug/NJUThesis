@@ -12,6 +12,9 @@
 - 对封面上的超宽文字进行压缩
   - 支持专硕封面的特殊标签格式 - [#147]
 - 跟进新版本科生诚信承诺书样式
+- 国家图书馆样式更新
+  - 添加学位授予日期设置项 `info/confer-date` - [#150]
+  - 添加底部日期设置项 `info/bottom-date`
 
 ## 修复
 
@@ -20,9 +23,9 @@
 
 ## 变动
 
-- 将国家图书馆封面的底部日期修改为提交时间
+- 将国家图书馆封面的标题字样修改为“学位论文”
 - 将国家图书馆封面的评审委员会人数分离为单独参数
-- 更正研究生模板普通封面专业名称字样
+- 更正研究生模板普通封面上学硕和专硕不同的专业名称字样
 
 ### 杂项
 - 修正文档笔误 - [#137]
@@ -377,6 +380,7 @@
 [#139]: https://github.com/nju-lug/NJUThesis/discussions/139
 [#147]: https://github.com/nju-lug/NJUThesis/discussions/147
 [#148]: https://github.com/nju-lug/NJUThesis/issues/148
+[#150]: https://github.com/nju-lug/NJUThesis/discussions/150
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
