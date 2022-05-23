@@ -210,7 +210,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.19.0 \quad 2022-05-11}
+% \date{v0.19.0 \quad 2022-05-23}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -293,7 +293,8 @@ To produce the documentation run the original source files ending with
 % \subsection{开始之前}
 % \label{subsec:first-things-first}
 %
-% 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \hologo{TeX} 排版系统。话不多说，请先完整体验一遍下述的工作流程：
+% 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \hologo{TeX}
+% 排版系统。话不多说，请先按部就班体验一遍下述的工作流程：
 %
 % \bigskip
 % \fcolorbox{olgreen}{gray!5}{\parbox{\textwidth-5em}{%
@@ -311,7 +312,7 @@ To produce the documentation run the original source files ending with
 %
 % \bigskip
 % 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。
-% 如果它的效果令您满意，不妨以此为基础开始写作。
+% 如果它的效果令您满意，不妨以本模板为基础开始写作。
 %
 % \subparagraph{我一定要体验上述流程吗？}
 % 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一
@@ -327,13 +328,13 @@ To produce the documentation run the original source files ending with
 % 本校\href{https://itsc.nju.edu.cn}{信息化管理建设服务中心}和该网站
 % 的维护者\href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请
 % 点击左上角的菜单按钮，查看编译器是否显示为 |XeLaTeX|；
-% 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个相当
+% 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个极其
 % 有益的结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉
 % \hologo{TeX} 排版软件使用方法所需的可观时间。
 %
 % \subparagraph{但我依然对 \hologo{LaTeX} 一无所知！}
-% 这意味着您也许得花些时间在\emph{长篇累牍的精细介绍}上。
-% 请接着向后阅读，有需要时善用搜索。
+% 这意味着您真的得花些时间在\emph{长篇累牍的精细介绍}上。
+% 如果您已经下定决心，请接着向后阅读，有需要时善用搜索引擎。
 %
 %
 % \subsection{历史沿革}
@@ -414,7 +415,8 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{许可说明}
 %
-% \file{njuthesis.dtx} 文件以及由其直接产生的所有文件被称为 \cls{njuthesis} 文档类，或者在本文中简称为本模板。
+% \file{njuthesis.dtx} 文件以及由其直接产生的所有文件被称为
+% \cls{njuthesis} 文档类，或者在本文中简称为本模板。
 %
 % \subparagraph{版权信息}
 %   本模板之版权隶属于 © 2021 - 2022 南京大学 Linux 用户组。
@@ -693,13 +695,17 @@ To produce the documentation run the original source files ending with
 % \subsection{在线编译}
 % \label{subsec:onlinecompile}
 %
-% 相信您在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如 \hologo{TeX} 编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大\footnote{事实上，可以通过 |scheme-infraonly| 模式安装 \hologo{TeX}\,Live，随后利用 \pkg{tlmgr} 安装依赖宏包，这份宏包列表可以在 Git 仓库的 \file{.github/workflows/build.yml} 找到。}，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{出于文件 IO 速度的差异，同一个模板在 Linux 编译可以相对 Windows 节省约一半耗时。}。拒绝接受这些麻烦的同学不妨尝试本节介绍的在线编译方法。
+% 相信您在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如 \hologo{TeX} 编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大\footnote{事实上，可以通过 |scheme-infraonly| 模式安装 \hologo{TeX}\,Live，随后利用 \pkg{tlmgr} 安装依赖宏包，这份宏包列表可以在 Git 仓库的 \file{.github/workflows/build.yml} 找到。}，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{出于文件 IO 速度的差异，同一个模板在 Linux 编译可以相对 Windows 节省约一半耗时。}。拒绝接受这些麻烦的同学可以尝试本节介绍的在线编译方法。
+%
+% {\color{red}|[!]|} 请注意，在线编辑器不一定提供良好的文件恢复和版本管理机制。
+% 请谨慎备份您的心血结晶。
 %
 % \subsubsection{南大\hologo{TeX}平台简介}
 % \changes{v0.2}{2021/09/07}{添加对南大 \hologo{TeX} 的支持。}
 %
-% \href{https://tex.nju.edu.cn}{南大 \hologo{TeX}} 基于开源的 ShareLaTeX 平台构建\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的 \hologo{LaTeX} 在线编辑器，首次使用需凭学校邮箱自助注册账号。
+% \href{https://tex.nju.edu.cn}{南大 \hologo{TeX}} 基于开源的 Overleaf 社区版平台构建\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的 \hologo{LaTeX} 在线编辑器，首次使用需凭学校邮箱自助注册账号。
 %
+% {\color{red}|[!]|} 在 2022 年 5 月的运行中，该网站出现了多次崩溃事件，初步判断原因是由社区版并没有为高并发数做优化引发的。高峰时期，仍然建议在本地部署 \hologo{TeX} 发行版。
 %
 % \subsubsection{操作步骤}
 %
