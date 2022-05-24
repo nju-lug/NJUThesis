@@ -1107,7 +1107,9 @@ To produce the documentation run the original source files ending with
 %   \begin{syntax}
 %     submit-date = \Arg{yyyy-mm-dd}
 %   \end{syntax}
-% 提交日期。中英文日期现在可以由 ISO 日期格式\cite{gb-t-7408-2005}的字符串统一生成。如果留空，则自动使用编译当天日期。
+% 提交日期。中英文日期现在可以由 ISO 日期格式\cite{gb-t-7408-2005}
+% 的字符串统一生成。如果在等号后留空，则原本中文日期处使用空白的年月日字样；
+% 如果不添加此设置项，则自动使用编译当天日期。
 % \end{function}
 %
 % \begin{function}[updated=2022-01-14]{info/defend-date}
@@ -2887,7 +2889,9 @@ To produce the documentation run the original source files ending with
 %   \item 月份
 %   \item 日期
 % \end{arguments}
-% 中文日期表示通过封装 \pkg{zhnumber} 的内部函数实现；英文日期表示通过用于研究生英文封面。其中，变量类型 |w| 表明参数符合特定语法格式。
+% 中文日期字样通过封装 \pkg{zhnumber} 的内部函数实现；
+% 英文日期字样用于研究生英文封面。
+% 其中，变量类型 |w| 表明参数符合特定语法格式，其参数必须经过完全展开。
 %    \begin{macrocode}
 \cs_new:Npn \@@_date:www #1-#2-#3 \q_stop
   { \__zhnum_date_aux:nnn { #1 } { #2 } { #3 } }
@@ -2897,24 +2901,30 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_date:n,\@@_date_en:n}
-% 封装 ISO 日期格式字符串的转化命令，该字符串需要进行展开。
+% 从 ISO 格式的日期字符串生成中英文日期文本。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_date:n #1
+\cs_new_protected:Npn \@@_date:n    #1 { \@@_date:nn { #1 } {     } }
+\cs_new_protected:Npn \@@_date_en:n #1 { \@@_date:nn { #1 } { _en } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\exp_last_unbraced:cV,\@@_date:nn}
+% \changes{v0.19}{2022/05/24}{可在日期项留空以使用空白的年月日字样。}
+% 用于日期格式转化的辅助命令。在传入的字符串为空时生成空白字样。
+%    \begin{macrocode}
+\cs_generate_variant:Nn \exp_last_unbraced:NV { cV }
+\cs_new_protected:Npn \@@_date:nn #1#2
   {
-    \tl_new:c  { g_@@_info_ #1 date_tl }
-    \tl_set:cn { g_@@_info_ #1 date_tl }
+    \tl_set:Nv \l_@@_tmpa_tl { g_@@_info_ #1 date_raw_tl }
+    \tl_new:c  { g_@@_info_ #1 date #2 _tl }
+    \tl_set:cx { g_@@_info_ #1 date #2 _tl }
       {
-        \exp_last_unbraced:Nv
-          \@@_date:www { g_@@_info_ #1 date_raw_tl } \q_stop
-      }
-  }
-\cs_new_protected:Npn \@@_date_en:n #1
-  {
-    \tl_new:c  { g_@@_info_ #1 date_en_tl }
-    \tl_set:cn { g_@@_info_ #1 date_en_tl }
-      {
-        \exp_last_unbraced:Nv
-          \@@_date:www { g_@@_info_ #1 date_raw_tl } \q_stop
+        \tl_if_empty:NTF \l_@@_tmpa_tl
+          { \@@_name:n { blankdate #2 } }
+%    \end{macrocode}
+% |w| 后的参数需要使用非括号包裹的形式完全展开。
+%    \begin{macrocode}
+          { \exp_last_unbraced:cV { @@_date #2 :www } \l_@@_tmpa_tl \q_stop }
       }
   }
 %    \end{macrocode}
@@ -5590,7 +5600,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_authdecl_sign_g:
   {
     \c_@@_name_authsign_tl \par
-    \c_@@_name_blankdate_tl
+    \c_@@_name_blankdate_a_tl
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6364,6 +6374,8 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{名称}
 % \label{subsubsec:constant-name}
+% ^^A TODO: 将所有名称合并后使用 guard 进行本科生/研究生的区分
+% ^^A TODO: supv -> supvi, supv_ii -> supvii
 %
 % 由于同一名称在不同位置具有不同变体，本模板使用字母后缀名进行了区分，
 % 并在易混淆处添加了注释。
@@ -6399,6 +6411,9 @@ To produce the documentation run the original source files ending with
     % 用于小标题的摘要名称字样
     { abstract_b } { 摘\qquad{}要 } { ABSTRACT          },
     { appendix   } { 附录       } { appendix            },
+    { blankdate  } { \qquad{}年 \quad{}月 \quad{}日 } { },
+    { blankdate_a  } { \njuline{\qquad\qquad} 年
+            \njuline{\qquad} 月 \njuline{\qquad} 日 } { },
     { dept       } { 院系       } { DEPARTMENT          },
     { figure     } { 图         } { figure              },
     { keywords   } { 关键词：   } { Keywords:~          },
@@ -6458,8 +6473,6 @@ To produce the documentation run the original source files ending with
     { author_a     }
       { \tl_item:Nn \g_@@_info_degree_tl { 1 } 士生姓名 },
     { authsign     } { 作者签名：\njuline{\hspace{6em}} },
-    { blankdate    } { \njuline{\qquad\qquad} 年
-                \njuline{\qquad} 月 \njuline{\qquad} 日 },
     % 用于摘要的作者名称字样
     { chairman     } { 答辩委员会主席：                 },
     { clc          } { 分类号                           },
@@ -6488,8 +6501,8 @@ To produce the documentation run the original source files ending with
     { secretstatus } { 论文涉密情况：                   },
     { secretfree   } { 不保密                           },
     { secretdate   }
-      { 保密，保密期（ \c_@@_name_blankdate_tl 至
-                       \c_@@_name_blankdate_tl ）       },
+      { 保密，保密期（ \c_@@_name_blankdate_a_tl 至
+                       \c_@@_name_blankdate_a_tl ）     },
     { sign         } { （签字）                         },
     { submitdate   } { 论文提交日期                     },
     { subtitle     } { （题名和副题名）                 },
