@@ -6,15 +6,17 @@
 
 ## [未发布]
 
-## [0.19.0] - 2022-05-23
-
 ## 新增
 
 - 日期设置项可以通过留空生成空白的年月日字样 - [#150]
+- 可使用 `\njusetformat` 修改页眉页脚样式
+- 可使用 `\njusetformat` 修改内置校名校徽颜色
 
 ## 修复
 
 - 修复 0.19.0 版本中错误的研究生英文封面日期
+
+## [0.19.0] - 2022-05-23
 
 ## 新增
 
@@ -346,7 +348,7 @@
 
 
 [未发布]: https://github.com/nju-lug/NJUThesis/compare/v0.19.0...HEAD
-[0.18.0]: https://github.com/nju-lug/NJUThesis/compare/v0.18.0...v0.19.0
+[0.19.0]: https://github.com/nju-lug/NJUThesis/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/nju-lug/NJUThesis/compare/v0.17.0...v0.18.0
 [0.17.0]: https://github.com/nju-lug/NJUThesis/compare/v0.16.0...v0.17.0
 [0.16.1]: https://github.com/nju-lug/NJUThesis/compare/v0.16.0...v0.16.1

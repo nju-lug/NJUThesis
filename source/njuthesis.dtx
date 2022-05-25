@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.19.0 2022-05-23 11:33:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.20.0 2022-05-25 15:23:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -210,7 +210,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.19.0 \quad 2022-05-23}
+% \date{v0.20.0 \quad 2022-05-25}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -2909,7 +2909,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\exp_last_unbraced:cV,\@@_date:nn}
-% \changes{v0.19}{2022/05/24}{可在日期项留空以使用空白的年月日字样。}
+% \changes{v0.20}{2022/05/24}{可在日期项留空以使用空白的年月日字样。}
 % 用于日期格式转化的辅助命令。在传入的字符串为空时生成空白字样。
 %    \begin{macrocode}
 \cs_generate_variant:Nn \exp_last_unbraced:NV { cV }
@@ -3064,9 +3064,9 @@ To produce the documentation run the original source files ending with
 % 此时 \cs{njuemblem}、\cs{njuname} 和相关长度都是没有定义的。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_emblem:N #1
-  { \njuemblem [ black ] { #1 } { ! } }
+  { \njuemblem [ \c_@@_fmt_emblemcolor_tl ] { #1 } { ! } }
 \cs_new_protected:Npn \@@_name:N   #1
-  { \njuname   [ black ] { #1 } { ! } }
+  { \njuname   [ \c_@@_fmt_namecolor_tl   ] { #1 } { ! } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3454,7 +3454,10 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\njusetformat}
 % \changes{v0.17}{2022/04/09}{提供修改默认样式的接口。}
-% 定义修改固定文本的接口。
+% \changes{v0.19}{2022/05/11}{提供默认页面样式的修改方式。}
+% \changes{v0.20}{2022/05/25}{提供页眉页脚样式的修改方式。}
+% \changes{v0.20}{2022/05/25}{提供内置校名校徽颜色的修改方式。}
+% 定义修改默认样式的接口。
 %    \begin{macrocode}
 \NewDocumentCommand \njusetformat { m m }
   { \tl_gset:cn { c_@@_fmt_ #1 _tl } { #2 } }
@@ -3463,6 +3466,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\njusetlength,\njusetlength*}
 % \changes{v0.17}{2022/04/09}{提供修改长度值的接口。}
+% \changes{v0.18}{2022/04/20}{统一管理校名校徽尺寸。}
 % 定义修改长度值的接口。可选星号表示修改弹性长度。
 %    \begin{macrocode}
 \NewDocumentCommand \njusetlength { s m m }
@@ -4341,7 +4345,7 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsubsection{页眉页脚}
-% ^^A TODO: 将页眉页脚样式改为使用 \njusetformat 修改
+% ^^A TODO: 删除 header/format 和 footer/format
 % 提供设置页眉页脚的用户接口。在 \cs{fancyhead} 的可选参数中，
 % \opt{E} 和 \opt{O} 分别表示在偶数页（even）和奇数页（odd），
 % 而 \opt{L}、\opt{R} 和 \opt{C} 则分别表示左（left）、右
@@ -4355,8 +4359,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.16}{2022/03/18}{可手动指定页眉样式。}
 % 页眉格式。
 %    \begin{macrocode}
-    header/format .tl_gset:N = \g_@@_header_format_tl,
-    header/format .initial:n = \small \kaishu,
+    header/format .tl_gset:N = \c_@@_fmt_header_tl,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4382,8 +4385,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.16}{2022/03/19}{可手动指定页脚样式。}
 % 页脚格式。
 %    \begin{macrocode}
-    footer/format .tl_gset:N = \g_@@_footer_format_tl,
-    footer/format .initial:n = \small \rmfamily,
+    footer/format .tl_gset:N = \c_@@_fmt_footer_tl,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4428,9 +4430,9 @@ To produce the documentation run the original source files ending with
 % 对 \pkg{fancyhdr} 的命令进行包装，便于设置页眉页脚。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_header:nn #1#2
-  { \fancyhead [#1] { \g_@@_header_format_tl \nouppercase {#2} } }
+  { \fancyhead [#1] { \c_@@_fmt_header_tl \nouppercase {#2} } }
 \cs_new_protected:Npn \@@_footer:nn #1#2
-  { \fancyfoot [#1] { \g_@@_footer_format_tl \nouppercase {#2} } }
+  { \fancyfoot [#1] { \c_@@_fmt_footer_tl \nouppercase {#2} } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6622,7 +6624,6 @@ To produce the documentation run the original source files ending with
 % \label{subsubsec:constant-length}
 %
 % \changes{v0.17}{2022/04/09}{将长度值分离到 \file{.def} 文件。}
-% \changes{v0.18}{2022/04/20}{统一管理校名校徽尺寸。}
 % 默认长度值。
 %    \begin{macrocode}
 \clist_map_inline:nn
@@ -6646,13 +6647,14 @@ To produce the documentation run the original source files ending with
 % \label{subsubsec:constant-format}
 %
 % \changes{v0.17}{2022/04/09}{将样式定义分离到 \file{.def} 文件。}
-% \changes{v0.19}{2022/05/11}{简化默认页面样式的修改方式。}
 % 默认样式。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
 %<definition-ug>    { pagestyle     } { plain                             },
 %<definition-g>    { pagestyle     } { headings                          },
+    { emblemcolor   } { black                             },
+    { namecolor     } { black                             },
     { section       } { \large \sffamily                  },
     { chapter       } { \c_@@_fmt_section_tl \centering   },
     { chapterintoc  } { \c_@@_fmt_section_tl              },
@@ -6660,7 +6662,9 @@ To produce the documentation run the original source files ending with
     { subsubsection } { \c_@@_fmt_section_tl              },
     { paragraph     } { \c_@@_fmt_section_tl              },
     { subparagraph  } { \c_@@_fmt_section_tl              },
-    { toctitle      } { \centering \zihao { 3 } \bfseries }
+    { toctitle      } { \centering \zihao { 3 } \bfseries },
+    { header        } { \small \kaishu                    },
+    { footer        } { \small \rmfamily                  }
   }
   { \@@_define_fmt:nn #1 }
 %</(definition-ug|definition-g)>
