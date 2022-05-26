@@ -6093,6 +6093,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_print_keywords:nn}
 % \changes{v0.15}{2022/01/26}{为关键词列表添加悬挂缩进。}
+% \changes{v0.20}{2022/05/26}{修复英文关键词列表不整齐的缩进间距。}
 % 生成中英文关键词列表。
 % \begin{arguments}
 %   \item 语言，空置为中文，|_en| 为英文
@@ -6104,6 +6105,8 @@ To produce the documentation run the original source files ending with
   {
     \tl_set:Nv \l_@@_tmpa_tl { c_@@_name_keywords #1 _tl }
     \@@_get_text_width:NV \l_@@_tmpa_dim \l_@@_tmpa_tl
+    \dim_add:Nn \l_@@_tmpa_dim { 1 em }
+    \exp_args:NNv \tl_put_right:Nn \l_@@_tmpa_tl { c_@@_name_comma #1 _tl }
 %    \end{macrocode}
 % 关键词列表的悬挂缩进样式由 \tn{list} 环境产生。
 %    \begin{macrocode}
@@ -6275,7 +6278,7 @@ To produce the documentation run the original source files ending with
     \RenewDocumentCommand \mkbibdateshort { m m m }
       { \textbf { \thefield { ##1 } } }
 %    \end{macrocode}
-% 在使用章末参考文献表时，\env{refsection} 的单独一章范围内生效，
+% 在使用章末参考文献表时，\env{refsection} 在单独一章范围内生效，
 % 无需额外添加环境。 ^^A TODO: 待修改为更简洁的形式
 %    \begin{macrocode}
     \tl_if_eq:NnTF \blx@refsecreset@level { 2 }
@@ -6416,9 +6419,10 @@ To produce the documentation run the original source files ending with
     { blankdate  } { \qquad{}年 \quad{}月 \quad{}日 } { },
     { blankdate_a  } { \njuline{\qquad\qquad} 年
             \njuline{\qquad} 月 \njuline{\qquad} 日 } { },
+    { comma      } { ：         } { :~                  },
     { dept       } { 院系       } { DEPARTMENT          },
     { figure     } { 图         } { figure              },
-    { keywords   } { 关键词：   } { Keywords:~          },
+    { keywords   } { 关键词     } { Keywords            },
     { lang       } { 中文       } { 英文                },
     { nju        } { 南京大学   } { Nanjing~ University },
     { table      } { 表         } { table               }
