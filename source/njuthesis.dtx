@@ -1126,20 +1126,20 @@ To produce the documentation run the original source files ending with
 % 学位授予日期，只用于国家图书馆封面，要求同提交日期。
 % \end{function}
 %
-% \begin{function}[updated=2021-05-23]{info/bottom-date}
+% \begin{function}[updated=2022-05-23]{info/bottom-date}
 %   \begin{syntax}
 %     bottom-date = \Arg{yyyy-mm-dd}
 %   \end{syntax}
 % 底部日期，只用于国家图书馆封面，要求同提交日期。
 % \end{function}
 %
-% \begin{function}[updated=2021-10-01]{info/chairman,info/reviewer}
+% \begin{function}[updated=2022-05-27]{info/chairman,info/reviewer}
 %   \begin{syntax}
-%     chairman = \Arg{答辩主席}
-%     reviewer = \Arg{评委姓名职称}
+%     chairman = \Arg{答辩主席姓名职称}
+%     reviewer = \Arg{答辩评委姓名职称}
 %   \end{syntax}
-% 答辩委员会信息，分别为评审委员会主席及四位成员的姓名加职称，只对研究生有效。
-% 四位评审成员是以列表的形式存储的，填写方法同关键词。
+% 答辩委员会信息，分别为评审委员会主席及成员的姓名加职称，只对研究生有效。
+% 评审成员名单以逗号分隔的列表形式存储，填写方法同关键词。
 % 如果是盲审，填入“盲审”二字即可。
 % \end{function}
 %
@@ -2487,17 +2487,20 @@ To produce the documentation run the original source files ending with
 %
 % 在变量名称中，|l| 代表局部变量，|g| 代表全局变量，|c| 代表常量，最后一个下划线后的内容指示其类型。
 %
-% \begin{variable}{\l_@@_tmp_box,\l_@@_tmp_clist,
-%   \l_@@_tmpa_dim,\l_@@_tmpb_dim,\l_@@_tmp_int,
-%   \l_@@_tmp_seq,\l_@@_tmpa_tl,\l_@@_tmpb_tl}
+% \begin{variable}{
+%   \l_@@_tmp_box,
+%   \l_@@_tmp_clist,
+%   \l_@@_tmpa_dim,\l_@@_tmpb_dim,
+%   \l_@@_tmpa_int,\l_@@_tmpb_int,
+%   \l_@@_tmpa_tl,\l_@@_tmpb_tl}
 % 临时变量。
 %    \begin{macrocode}
 \box_new:N   \l_@@_tmp_box
 \clist_new:N \l_@@_tmp_clist
 \dim_new:N   \l_@@_tmpa_dim
 \dim_new:N   \l_@@_tmpb_dim
-\int_new:N   \l_@@_tmp_int
-\seq_new:N   \l_@@_tmp_seq
+\int_new:N   \l_@@_tmpa_int
+\int_new:N   \l_@@_tmpb_int
 \tl_new:N    \l_@@_tmpa_tl
 \tl_new:N    \l_@@_tmpb_tl
 %    \end{macrocode}
@@ -2742,16 +2745,11 @@ To produce the documentation run the original source files ending with
       {
         \dim_compare:nTF { \l_@@_tmpa_dim > #1 }
           {
-            \hfil
             \scalebox
               { \dim_to_decimal_in_unit:nn { #1 } { \l_@@_tmpa_dim } }
               [ 1.0 ] { #2 #3 }
-            \hfil
           }
-          {
-            \hbox_to_wd:nn { #1 }
-              { #2 \tl_map_inline:nn { #3 } { ##1 \hfil } \unskip }
-          }
+          { #2 \tl_map_inline:nn { #3 } { ##1 \hfil } \unskip }
       }
   }
 \cs_generate_variant:Nn \@@_spread_box:nnn { nnV }
@@ -2759,22 +2757,26 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_multiline_box:NNnn}
+% \begin{macro}{\@@_multiline_box:NNNn}
 % 多行固定长度的下划线内容，用于国家图书馆封面。
 % \begin{arguments}
 %   \item 用于循环的 |int| 型变量
+%   \item 用于存储条目数量的 |int| 型变量
 %   \item 内容，|clist| 型变量
-%   \item 行数
 %   \item 宽度，|dim| 型变量
 % \end{arguments}
+% 默认绘制 4 条下划线。在评阅者人数超过 4 人时添加额外的条目。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_multiline_box:NNnn #1#2#3#4
+\cs_new_protected:Npn \@@_multiline_box:NNNn #1#2#3#4
   {
     \int_set:Nn #1 { 1 }
-    \int_do_until:nn { #1 > #3 }
+    \int_set:Nn #2 { \clist_count:N #3 }
+    \int_compare:nF { #2 > 4 }
+      { \int_set:Nn #2 { 4 } }
+    \int_do_until:nn { #1 > #2 }
       {
         \@@_ulined_center_box:nn { #4 }
-          { \clist_item:Nn #2 { #1 } } \\
+          { \clist_item:Nn #3 { #1 } } \\
         \int_incr:N #1
       }
   }
@@ -3143,12 +3145,12 @@ To produce the documentation run the original source files ending with
     \setbox0 = \vbox{\hangindent=\wd\l_@@_tmp_box \hangafter=-1
         \leftskip=#3 \rightskip=\leftskip \parindent=\z@ #2\par
         \global\setbox2=\hbox{}
-        \int_gzero:N \l_@@_tmp_int
+        \int_gzero:N \l_@@_tmpa_int
         \loop
           \setbox1=\lastbox \unskip\unpenalty
         \unless\ifvoid1
           \global\setbox2=\hbox{\@@_uline_box:\penalty0\unhbox2}
-          \int_gincr:N \l_@@_tmp_int
+          \int_gincr:N \l_@@_tmpa_int
         \repeat
       }
       {
@@ -3161,7 +3163,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
         \bool_if:NT \g_@@_strict_abs_title_bool
           {
-            \int_case:nnF { \l_@@_tmp_int }
+            \int_case:nnF { \l_@@_tmpa_int }
               {
                 { 0 } { \msg_error:nn { njuthesis } { missing-title } }
                 { 1 } { \@@_uline:n { \textwidth } }
@@ -5394,7 +5396,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { cover / nl / bottom }
   {
-    content     = \@@_cover_bottom_nl:n { 4 },
+    content     = \@@_cover_bottom_nl:,
     bottom-skip = 1 cm,
     align       = r
   }
@@ -5466,17 +5468,18 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_bottom_nl:n}
+% \begin{macro}{\@@_cover_bottom_nl:}
 % \changes{v0.19}{2022/05/20}{将国家图书馆封面的评审委员会人数分离为单独参数。}
+% \changes{v0.20}{2022/05/27}{自动识别评审委员会人数。}
 % 国家图书馆封面底部信息。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_bottom_nl:n #1
+\cs_new_protected:Npn \@@_cover_bottom_nl:
   {
     \c_@@_name_chairman_tl \@@_hskip:
     \@@_ulined_center_box:nn { 9 em } { \g_@@_info_chairman_tl } \\
     \c_@@_name_reviewer_tl \@@_hskip:
-    \@@_multiline_box:NNnn \l_@@_tmp_int
-      \g_@@_info_reviewer_clist { #1 } { 9 em }
+    \@@_multiline_box:NNNn \l_@@_tmpa_int \l_@@_tmpb_int
+      \g_@@_info_reviewer_clist { 9 em }
   }
 %    \end{macrocode}
 % \end{macro}
