@@ -5735,6 +5735,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_make_origdecl: }
 % \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
 % \changes{v0.19}{2022/05/22}{跟进新版本科生诚信承诺书样式。}
+% ^^A TODO: 使用 xtemplate 重构
 % 生成本科生的诚信承诺书或研究生的学位论文原创性声明。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_origdecl:
@@ -5758,6 +5759,7 @@ To produce the documentation run the original source files ending with
         { \@@_vskip: \@@_name:n { ##1 } ： \@@_uline:n { 7 em } }
     \end{flushright}
     \vfil
+%<definition-ug>    \normalfont \normalsize
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6654,6 +6656,7 @@ To produce the documentation run the original source files ending with
 % \label{subsubsec:constant-format}
 %
 % \changes{v0.17}{2022/04/09}{将样式定义分离到 \file{.def} 文件。}
+% \changes{v0.20}{2022/05/28}{修复前一版本中错误的目录条目样式。}
 % 默认样式。
 %    \begin{macrocode}
 \clist_map_inline:nn
@@ -6662,7 +6665,7 @@ To produce the documentation run the original source files ending with
 %<definition-g>    { pagestyle     } { headings                          },
     { emblemcolor   } { black                             },
     { namecolor     } { black                             },
-    { section       } { \large \sffamily                  },
+    { section       } { \large \normalfont \sffamily      },
     { chapter       } { \c_@@_fmt_section_tl \centering   },
     { chapterintoc  } { \c_@@_fmt_section_tl              },
     { subsection    } { \c_@@_fmt_section_tl              },
