@@ -236,6 +236,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.16}{2022/03/01}{分离本科生和研究生模板配置。}
 % \changes{v0.19}{2022/05/23}{对研究生普通封面进行若干细节修改。}
 % \changes{v0.19}{2022/05/23}{对国家图书馆封面进行若干细节修改。}
+% \changes{v0.20}{2022/06/08}{更正本科生模板部分字样。}
 %
 %
 % \maketitle
@@ -2891,11 +2892,12 @@ To produce the documentation run the original source files ending with
 %   \item 月份
 %   \item 日期
 % \end{arguments}
-% 中文日期字样通过封装 \pkg{zhnumber} 的内部函数实现；
-% 英文日期字样用于研究生英文封面。
+% 中文日期字样通过封装 \pkg{zhnumber} 的内部函数实现，默认使用阿拉伯数字表示，
+% 可以通过该宏包提供的 |\zhnumsetup{time=Chinese}| 来使用中文数字；
+% 英文日期字样用于研究生英文封面，格式为 \meta{月份缩写}~\meta{日},~\meta{年}。
 % 其中，变量类型 |w| 表明参数符合特定语法格式，其参数必须经过完全展开。
 %    \begin{macrocode}
-\cs_new:Npn \@@_date:www #1-#2-#3 \q_stop
+\cs_new:Npn \@@_date:www    #1-#2-#3 \q_stop
   { \__zhnum_date_aux:nnn { #1 } { #2 } { #3 } }
 \cs_new:Npn \@@_date_en:www #1-#2-#3 \q_stop
   { \clist_item:Nn \c_@@_month_en_clist { #2 } ~#3 , ~#1  }
@@ -3889,40 +3891,21 @@ To produce the documentation run the original source files ending with
   { \tl_set:Nn \g_@@_info_diploma_tl { g  } }
 %    \end{macrocode}
 %
-% 设置类型信息。
-%    \begin{macrocode}
-\tl_set:Nx \g_@@_info_type_tl
-  { \clist_item:Nn \c_@@_name_type_clist    { \g_@@_info_type_int } }
-\tl_set:Nx \g_@@_info_type_en_tl
-  { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
-\tl_put_left:Nx \g_@@_info_type_tl
-  { \tl_use:c { c_@@_name_ \g_@@_info_diploma_tl _tl } }
-%    \end{macrocode}
-%
-% 盲审模式下抹去个人信息和学校名称。
-%    \begin{macrocode}
-\bool_if:NT \g_@@_blind_bool
-  {
-    \ctex_at_end_preamble:n
-      {
-        \clist_map_inline:Nn \c_@@_blind_info_clist
-          { \tl_gclear:c    { g_@@_info_ #1    _tl } }
-        \clist_map_inline:Nn \c_@@_blind_info_en_clist
-          { \tl_gclear:c    { g_@@_info_ #1 _en_tl } }
-        \clist_map_inline:Nn \c_@@_blind_infolist_clist
-          { \clist_gclear:c { g_@@_info_ #1 _clist } }
-        \tl_gclear:N \c_@@_name_nju_tl
-        \tl_gclear:N \c_@@_name_nju_en_tl
-      }
-  }
-%    \end{macrocode}
-%
 % \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
 % 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，
 % 应当位于载入文档类之后。
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
+%    \end{macrocode}
+% 设置类型信息。
+%    \begin{macrocode}
+    \tl_set:Nx \g_@@_info_type_tl
+      { \clist_item:Nn \c_@@_name_type_clist    { \g_@@_info_type_int } }
+    \tl_set:Nx \g_@@_info_type_en_tl
+      { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
+    \tl_put_left:Nx \g_@@_info_type_tl
+      { \tl_use:c { c_@@_name_ \g_@@_info_diploma_tl _tl } }
 %    \end{macrocode}
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
@@ -3980,6 +3963,24 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{variable}
+%
+% 盲审模式下抹去个人信息和学校名称。
+%    \begin{macrocode}
+\bool_if:NT \g_@@_blind_bool
+  {
+    \ctex_at_end_preamble:n
+      {
+        \clist_map_inline:Nn \c_@@_blind_info_clist
+          { \tl_gclear:c    { g_@@_info_ #1    _tl } }
+        \clist_map_inline:Nn \c_@@_blind_info_en_clist
+          { \tl_gclear:c    { g_@@_info_ #1 _en_tl } }
+        \clist_map_inline:Nn \c_@@_blind_infolist_clist
+          { \clist_gclear:c { g_@@_info_ #1 _clist } }
+        \tl_gclear:N \c_@@_name_nju_tl
+        \tl_gclear:N \c_@@_name_nju_en_tl
+      }
+  }
+%    \end{macrocode}
 %
 %
 % \subsection{字体设置}
@@ -6447,10 +6448,10 @@ To produce the documentation run the original source files ending with
                   本科毕业论文（设计） \\ 诚信承诺书 },
     { origsign    } { 作者签名                       },
     { submitdate  } { 提交日期                       },
-    { supv        } { 导师                           },
+    { supv        } { 指导教师                       },
     { title       } { 题目                           },
     { type        } { 本科生毕业论文（设计、作品）   },
-    { ug          } { 本科生                         }
+    { ug          } { 本科                           }
   }
   { \@@_define_name:nn #1 }
 \clist_map_inline:nn
