@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [0.20.0] - 2022-06-10
+
 ## 新增
 
 - 日期设置项可以通过留空生成空白的年月日字样 - [#150]
@@ -351,7 +353,8 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v0.19.0...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v0.20.0...HEAD
+[0.20.0]: https://github.com/nju-lug/NJUThesis/compare/v0.19.0...v0.20.0
 [0.19.0]: https://github.com/nju-lug/NJUThesis/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/nju-lug/NJUThesis/compare/v0.17.0...v0.18.0
 [0.17.0]: https://github.com/nju-lug/NJUThesis/compare/v0.16.0...v0.17.0

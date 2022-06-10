@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.20.0 2022-05-25 15:23:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.20.0 2022-06-10 14:42:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -210,7 +210,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.20.0 \quad 2022-05-25}
+% \date{v0.20.0 \quad 2022-06-10}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -822,8 +822,8 @@ To produce the documentation run the original source files ending with
 % 通过此项，对于本科生模板可在封面后添加的诚信承诺书，
 % 对于研究生模板可在封面后添加原创性声明，并且在最后一页添加学位论文出版授权书。
 %
-% 对于需要手动插入承诺书扫描页的情况，可以在导言区载入 \pkg{pdfpages} 宏包，
-% 并在所需位置使用该宏包提供的 \cs{includepdf} 命令。
+% 对于需要手动插入承诺书扫描页的情况，可以在导言区载入 \pkg{pdfpages} 宏包
+% \cite{pdfpages}，并在所需位置使用该宏包提供的 \cs{includepdf} 命令。
 % 例如，可以用如下所示的命令插入扫描件的第一页，并插入紧随的一个空白页。
 % \begin{latexexample}[moretexcs={\includepdf},emph={[2]pages}]
 %   \includepdf[pages={1,{}}]{scanned.pdf}
@@ -2310,12 +2310,20 @@ To produce the documentation run the original source files ending with
 % \urlprefix\CTANurl[文档：]{macros/latex/contrib/listings/listings.pdf}
 %
 % \bibitem{njuvisual}
-% \textsc{Yu Xiong}.
+% \textsc{Xiong Y}.
 % \newblock \textit{Display logos related to Nanjing University} [EB/OL].
 % \newblock version 0.2.1,
 % \newblock (2022-01-09)
 % \urlprefix\url{https://ctan.org/pkg/njuvisual}
 % \urlprefix\CTANurl[文档：]{macros/latex/contrib/njuvisual/njuvisual.pdf}
+%
+% \bibitem{pdfpages}
+% \textsc{Matthias A}.
+% \newblock \textit{Include PDF documents in \hologo{LaTeX}} [EB/OL].
+% \newblock version 0.5v,
+% \newblock (2022-05-22)
+% \urlprefix\url{https://www.ctan.org/pkg/pdfpages}
+% \urlprefix\CTANurl[文档：]{macros/latex/contrib/pdfpages/pdfpages.pdf}
 %
 % \bibitem{siunitx}
 % \textsc{Wright J}.
