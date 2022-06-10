@@ -45,7 +45,7 @@ jobs:
           latexmk -xelatex  -halt-on-error test-xetex-undergraduate
           xelatex           -halt-on-error test-xetex-graduate
           xelatex           -halt-on-error test-xetex-graduate-nlcover
-          latexmk -lualatex -halt-on-error test-luatex
+          # latexmk -lualatex -halt-on-error test-luatex
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
