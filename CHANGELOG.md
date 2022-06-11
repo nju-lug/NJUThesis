@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+# 新增
+
+- 可使用 `\njusetlength` 修改下划线的宽度和偏移 - [#155]
+
 ## [0.20.0] - 2022-06-10
 
 ## 新增
@@ -401,6 +405,7 @@
 [#147]: https://github.com/nju-lug/NJUThesis/discussions/147
 [#148]: https://github.com/nju-lug/NJUThesis/issues/148
 [#150]: https://github.com/nju-lug/NJUThesis/discussions/150
+[#155]: https://github.com/nju-lug/NJUThesis/discussions/155
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

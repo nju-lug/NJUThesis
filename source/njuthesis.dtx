@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.20.0 2022-06-10 14:42:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.21.0 2022-06-11 12:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -210,7 +210,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.20.0 \quad 2022-06-10}
+% \date{v0.21.0 \quad 2022-06-11}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -2801,7 +2801,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_uline:n #1
   {
     \mode_leave_vertical:
-    \rule [ -0.55 ex ] { #1 } { 0.4 pt }
+    \rule [ \c_@@_ulineshifti_dim ] { #1 } { \c_@@_ulinewidthi_dim }
     \skip_horizontal:n { -#1 }
   }
 %    \end{macrocode}
@@ -2816,9 +2816,9 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_uuline:n #1
   {
     \mode_leave_vertical:
-    \rule [ -0.5 ex ] { #1 } { 0.4 pt }
+    \rule [ \c_@@_ulineshiftii_dim  ] { #1 } { \c_@@_ulinewidthii_dim }
     \skip_horizontal:n { -#1 }
-    \rule [ -0.6 ex ] { #1 } { 0.4 pt }
+    \rule [ \c_@@_ulineshiftiii_dim ] { #1 } { \c_@@_ulinewidthii_dim }
     \skip_horizontal:n { -#1 }
   }
 %    \end{macrocode}
@@ -6642,21 +6642,27 @@ To produce the documentation run the original source files ending with
 % \label{subsubsec:constant-length}
 %
 % \changes{v0.17}{2022/04/09}{将长度值分离到 \file{.def} 文件。}
+% \changes{v0.21}{2022/06/11}{可以单独指定下划线的宽度和偏移。}
 % 默认长度值。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-%<definition-ug>    { coverlabel    } { 68  pt },
-%<definition-g>    { coverlabel    } { 100 pt },
-    { coverlineskip } { 40  pt },
-    { coveruline    } { 270 pt },
-%<definition-ug>    { emblemwidth   } { 68  pt },
-%<definition-g>    { emblemwidthi  } { 46  pt },
-%<definition-g>    { emblemwidthii } { 61  pt },
-%<definition-ug>    { namewidth     } { 300 pt },
-%<definition-g>    { namewidth     } { 126 pt },
-    { smallhskip    } { 5   pt },
-    { smallvskip    } { 1   ex }
+%<definition-ug>    { coverlabel    } { 68   pt },
+%<definition-g>    { coverlabel    } { 100  pt },
+    { coverlineskip } { 40   pt },
+    { coveruline    } { 270  pt },
+%<definition-ug>    { emblemwidth   } { 68   pt },
+%<definition-g>    { emblemwidthi  } { 46   pt },
+%<definition-g>    { emblemwidthii } { 61   pt },
+%<definition-ug>    { namewidth     } { 300  pt },
+%<definition-g>    { namewidth     } { 126  pt },
+    { ulinewidthi   } { .4   pt },
+    { ulinewidthii  } { .8   pt },
+    { ulineshifti   } { -.55 ex },
+    { ulineshiftii  } { -.7  ex },
+    { ulineshiftiii } { -1   ex },
+    { smallhskip    } { 5    pt },
+    { smallvskip    } { 1    ex }
   }
   { \@@_define_dim:nn #1 }
 %    \end{macrocode}
