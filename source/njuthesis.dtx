@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.21.0 2022-06-11 12:00:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.21.0 2022-06-16 15:50:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<definition-ug>  {Undergraduate definition file for njuthesis}
@@ -210,7 +210,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.21.0 \quad 2022-06-11}
+% \date{v0.21.0 \quad 2022-06-16}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -2710,11 +2710,20 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_name:n,\@@_info:n}
-% 根据变量名调用名称和内容信息。
+% \begin{macro}{\@@_name:n,\@@_info:n,\@@_fmt:n}
+% 根据变量名调用名称、内容或格式信息。
 %    \begin{macrocode}
 \cs_new:Npn \@@_name:n #1 { \tl_use:c { c_@@_name_ #1 _tl } }
 \cs_new:Npn \@@_info:n #1 { \tl_use:c { g_@@_info_ #1 _tl } }
+\cs_new:Npn \@@_fmt:n  #1 { \tl_use:c { c_@@_fmt_  #1 _tl } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_name:nn}
+% 根据变量名调用名称信息，可调整字符格式
+%    \begin{macrocode}
+\cs_new:Npn \@@_name:nn #1#2
+  { \group_begin: \@@_fmt:n {#1} \@@_name:n {#2} \group_end: }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5978,6 +5987,7 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{本科生}
 % \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构本科生摘要。}
+% \changes{v0.21}{2022/06/16}{统一本科生摘要页的标签格式。}
 %
 % \begin{macro}{\@@_abs_info_ug:nn}
 % 绘制本科生摘要信息栏。
@@ -5991,22 +6001,18 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_abs_info_ug:nn #1#2
   {
 %    \end{macrocode}
-% 确定标题类型。
-%    \begin{macrocode}
-    \tl_if_blank:eTF { #1 }
-      { \c_@@_name_title_tl }
-      { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
-    #2 \tl_use:c { g_@@_info_title #1 _tl } \\
-%    \end{macrocode}
 % 由于作者姓名使用的字样发生了变动，这里进行替换以便嵌入循环。
 %    \begin{macrocode}
     \tl_set_eq:NN \c_@@_name_author_tl \c_@@_name_author_a_tl
 %    \end{macrocode}
 % 使用循环输出院系、专业、作者、导师信息。
 %    \begin{macrocode}
-    \clist_map_inline:nn { dept, major, author, supvfull }
-      { \@@_name:n { ##1 #1 } #2 \@@_info:n { ##1 #1 } \\ }
-    \@@_name:n { abstract #1 } #2
+    \clist_map_inline:nn { title, dept, major, author, supvfull }
+      {
+        \@@_name:nn { abslabel #1 } { ##1 #1 } #2
+        \@@_info:n { ##1 #1 } \\
+      }
+    \@@_name:nn { abslabel #1 } { abstract #1 } #2
   }
 %</definition-ug>
 %    \end{macrocode}
@@ -6118,9 +6124,11 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_print_keywords:nn #1#2
   {
     \tl_set:Nv \l_@@_tmpa_tl { c_@@_name_keywords #1 _tl }
+    \exp_args:NNv \tl_put_left:Nn
+      \l_@@_tmpa_tl { c_@@_fmt_abslabel #1 _tl }
+    \exp_args:NNv \tl_put_right:Nn
+      \l_@@_tmpa_tl { c_@@_name_comma #1 _tl }
     \@@_get_text_width:NV \l_@@_tmpa_dim \l_@@_tmpa_tl
-    \dim_add:Nn \l_@@_tmpa_dim { 1 em }
-    \exp_args:NNv \tl_put_right:Nn \l_@@_tmpa_tl { c_@@_name_comma #1 _tl }
 %    \end{macrocode}
 % 关键词列表的悬挂缩进样式由 \tn{list} 环境产生。
 %    \begin{macrocode}
@@ -6134,7 +6142,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 使用粗体作为标签样式。
 %    \begin{macrocode}
-        \cs_set_eq:NN \makelabel \textbf
+        \cs_set_eq:NN \makelabel \prg_do_nothing:
       }
     \item \clist_use:cn { g_@@_info_keywords #1 _clist } { #2 }
     \endlist
@@ -6433,10 +6441,10 @@ To produce the documentation run the original source files ending with
     { blankdate  } { \qquad{}年 \quad{}月 \quad{}日 } { },
     { blankdate_a  } { \njuline{\qquad\qquad} 年
             \njuline{\qquad} 月 \njuline{\qquad} 日 } { },
-    { comma      } { ：         } { :~                  },
+    { comma      } { ：         } { : \c_space_tl       },
     { dept       } { 院系       } { DEPARTMENT          },
     { figure     } { 图         } { figure              },
-    { keywords   } { 关键词     } { Keywords            },
+    { keywords   } { 关键词     } { KEYWORDS            },
     { lang       } { 中文       } { 英文                },
     { nju        } { 南京大学   } { Nanjing~ University },
     { table      } { 表         } { table               }
@@ -6457,7 +6465,6 @@ To produce the documentation run the original source files ending with
     { origsign    } { 作者签名                       },
     { submitdate  } { 提交日期                       },
     { supv        } { 指导教师                       },
-    { title       } { 题目                           },
     { type        } { 本科生毕业论文（设计、作品）   },
     { ug          } { 本科                           }
   }
@@ -6475,7 +6482,9 @@ To produce the documentation run the original source files ending with
       },
     { author    } { 学生姓名               } { UNDERGRADUATE  },
     { major     } { 专业                   } { SPECIALIZATION },
-    { supvfull  } { 指导教师（姓名、职称） } { MENTOR         }
+    { supvfull  } { 指导教师（姓名、职称） } { MENTOR         },
+    { title     } { 题目                   } { \clist_item:Nn
+             \c_@@_name_type_en_clist { \g_@@_info_type_int } }
   }
   { \@@_define_name:nnn #1 }
 %</definition-ug>
@@ -6658,7 +6667,7 @@ To produce the documentation run the original source files ending with
 %<definition-g>    { namewidth     } { 126  pt },
     { ulinewidthi   } { .4   pt },
     { ulinewidthii  } { .8   pt },
-    { ulineshifti   } { -.55 ex },
+    { ulineshifti   } { -.5  ex },
     { ulineshiftii  } { -.7  ex },
     { ulineshiftiii } { -1   ex },
     { smallhskip    } { 5    pt },
@@ -6678,6 +6687,8 @@ To produce the documentation run the original source files ending with
   {
 %<definition-ug>    { pagestyle     } { plain                             },
 %<definition-g>    { pagestyle     } { headings                          },
+    { abslabel      } { \bfseries                         },
+    { abslabel_en   } {                                   },
     { emblemcolor   } { black                             },
     { namecolor     } { black                             },
     { section       } { \large \normalfont \sffamily      },
