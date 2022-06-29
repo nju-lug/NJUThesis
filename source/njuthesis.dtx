@@ -237,6 +237,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.19}{2022/05/23}{对研究生普通封面进行若干细节修改。}
 % \changes{v0.19}{2022/05/23}{对国家图书馆封面进行若干细节修改。}
 % \changes{v0.20}{2022/06/08}{更正本科生模板部分字样。}
+% \changes{v1.0}{2022/06/29}{移除毕业设计封面。}
 %
 %
 % \maketitle
@@ -555,8 +556,9 @@ To produce the documentation run the original source files ending with
 % \subsection{本地编译}
 % \label{subsec:localcompile}
 %
-% 本地编译的安装过程分为两个阶段：安装 \hologo{TeX} 发行版以及配置编辑器。前者提供了可以被命
-% 令行终端调用的编译程序，后者则提供了语法高亮、自动编译等人性化功能。
+% 本地编译的安装过程分为两个阶段：安装 \hologo{TeX} 发行版以及配置
+% 编辑器。前者提供了可以被命令行终端调用的编译程序，
+% 后者则提供了语法高亮、自动编译等人性化功能。
 %
 % \subsubsection{安装\hologo{TeX}发行版}
 %
@@ -2494,7 +2496,8 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{定义变量}
 %
-% 在变量名称中，|l| 代表局部变量，|g| 代表全局变量，|c| 代表常量，最后一个下划线后的内容指示其类型。
+% 在变量名称中，|l| 代表局部变量，|g| 代表全局变量，|c| 代表常量，
+% 最后一个下划线后的内容指示其类型。
 %
 % \begin{variable}{
 %   \l_@@_tmp_box,
@@ -2515,23 +2518,22 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_info_degree_int,
-%   \g_@@_info_diploma_int,\g_@@_info_type_int}
+% \begin{variable}{
+%   \g_@@_info_degree_int,
+%   \g_@@_info_type_int}
 % 用于存储学位类型的变量。
 %    \begin{macrocode}
 \int_new:N \g_@@_info_degree_int
-\int_new:N \g_@@_info_diploma_int
 \int_new:N \g_@@_info_type_int
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_info_degree_tl,\g_@@_info_diploma_tl,
-%   \g_@@_info_type_tl,\g_@@_info_type_en_tl}
+% \begin{variable}{
+%   \g_@@_info_degree_tl,
+%   \g_@@_info_type_en_tl}
 % 用于存储学位名称的变量。
 %    \begin{macrocode}
 \tl_new:N  \g_@@_info_degree_tl
-\tl_new:N  \g_@@_info_diploma_tl
-\tl_new:N  \g_@@_info_type_tl
 \tl_new:N  \g_@@_info_type_en_tl
 %    \end{macrocode}
 % \end{variable}
@@ -2593,18 +2595,18 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\c_@@_name_type_clist,\c_@@_name_type_en_clist,
-%   \c_@@_name_degree_clist,\c_@@_name_degree_en_clist}
+% \begin{variable}{
+%   \c_@@_name_type_clist,
+%   \c_@@_name_type_en_clist,
+%   \c_@@_name_degree_clist}
 % 论文类型与学位类型。
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_type_clist
-  { 毕业论文, 毕业设计 }
+  { 学士, 硕士, 博士 }
 \clist_const:Nn \c_@@_name_type_en_clist
-  { THESIS, DESIGN }
+  { Bachelor, Master, Doctor~of~Philosophy }
 \clist_const:Nn \c_@@_name_degree_clist
-  { 学士, 硕士, 硕士专业, 博士 }
-\clist_const:Nn \c_@@_name_degree_en_clist
-  { Bachelor, Master, Master, Doctor~of~Philosophy }
+  { \c_empty_tl, 专业 }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2619,7 +2621,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\c_@@_blind_info_clist,\c_@@_blind_info_en_clist,
+% \begin{variable}{
+%   \c_@@_blind_info_clist,
+%   \c_@@_blind_info_en_clist,
 %   \c_@@_blind_infolist_clist}
 % 盲审模式下不显示的个人信息项。
 %    \begin{macrocode}
@@ -3348,21 +3352,23 @@ To produce the documentation run the original source files ending with
   {
 %    \end{macrocode}
 %
-% \begin{macro}{degree}
-% 学位类型，默认为本科。
+% \begin{macro}{type}
+% \changes{v1.0}{2022/06/30}{修改类型选项。}
+% 学位，默认为学士。
 %    \begin{macrocode}
-    degree            .choices:nn = { ug, mg, mf, phd }
-      { \int_gset_eq:NN \g_@@_info_degree_int \l_keys_choice_int },
-    degree            .initial:n  = ug,
+    type              .choices:nn = { bachelor, master, doctor }
+      { \int_gset_eq:NN \g_@@_info_type_int   \l_keys_choice_int },
+    type              .initial:n  = bachelor,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{type}
-% 论文类型，默认为毕业论文。
+% \begin{macro}{degree}
+% \changes{v1.0}{2022/06/30}{修改学位选项。}
+% 研究生的学位类型，默认为学术学位。
 %    \begin{macrocode}
-    type              .choices:nn = { thesis, design }
-      { \int_gset_eq:NN \g_@@_info_type_int   \l_keys_choice_int },
-    type              .initial:n    = thesis,
+    degree            .choices:nn = { academic, professional }
+      { \int_gset_eq:NN \g_@@_info_degree_int \l_keys_choice_int },
+    degree            .initial:n  = academic,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3744,7 +3750,7 @@ To produce the documentation run the original source files ending with
 % \file{njuthesis-undergraduate.def}；研究生模板配置对应
 % \agrd{def-g}，用于生成 \file{njuthesis-graduate.def}。
 %    \begin{macrocode}
-\int_compare:nTF { \g_@@_info_degree_int == 1 }
+\int_compare:nTF { \g_@@_info_type_int == 1 }
   { \file_input:n { njuthesis-undergraduate.def } }
   { \file_input:n { njuthesis-     graduate.def } }
 %    \end{macrocode}
@@ -3898,14 +3904,17 @@ To produce the documentation run the original source files ending with
 % 设置学位信息。该设置需要放在 \cs{ProcessKeysOptions}
 % 命令以及载入配置文件中的常量信息后进行。
 %    \begin{macrocode}
+\tl_set:Nx \g_@@_info_type_tl
+  {
+    \clist_item:Nn \c_@@_name_type_clist
+      { \g_@@_info_type_int }
+  }
 \tl_set:Nx \g_@@_info_degree_tl
   {
+    \g_@@_info_type_tl
     \clist_item:Nn \c_@@_name_degree_clist
       { \g_@@_info_degree_int }
   }
-\int_compare:nTF { \g_@@_info_degree_int == 1 }
-  { \tl_set:Nn \g_@@_info_diploma_tl { ug } }
-  { \tl_set:Nn \g_@@_info_diploma_tl { g  } }
 %    \end{macrocode}
 %
 % \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
@@ -3917,12 +3926,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 设置类型信息。
 %    \begin{macrocode}
-    \tl_set:Nx \g_@@_info_type_tl
-      { \clist_item:Nn \c_@@_name_type_clist    { \g_@@_info_type_int } }
     \tl_set:Nx \g_@@_info_type_en_tl
       { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
-    \tl_put_left:Nx \g_@@_info_type_tl
-      { \tl_use:c { c_@@_name_ \g_@@_info_diploma_tl _tl } }
 %    \end{macrocode}
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
@@ -3943,6 +3948,14 @@ To produce the documentation run the original source files ending with
         \bool_if:NT \l_@@_second_supv_bool
           { \@@_quad: \g_@@_info_supvii_en_tl }
       }
+  }
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*(def-u|def-g)>
+\ctex_at_end_preamble:n
+  {
 %    \end{macrocode}
 % \begin{variable}{\g_@@_info_submitdate_tl}
 % 将 ISO 格式的原始日期字符串格式化为中文日期表示。
@@ -3951,38 +3964,43 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_info_submitdate_en_tl,\g_@@_info_defenddate_tl}
+% \begin{variable}{
+%   \g_@@_info_submitdate_en_tl,
+%   \g_@@_info_defenddate_tl}
 % 英文提交日期以及答辩日期仅用于研究生封面。
 %    \begin{macrocode}
-    \int_compare:nF { \g_@@_info_degree_int == 1 }
-      {
-        \@@_date_en:n { submit }
-        \@@_date:n    { defend }
+%<*def-g>
+    \@@_date_en:n { submit }
+    \@@_date:n    { defend }
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_info_bottomdate_tl,
-%   \g_@@_info_conferdate_tl,\g_@@_info_confer_tl}
+% \begin{variable}{
+%   \g_@@_info_bottomdate_tl,
+%   \g_@@_info_conferdate_tl,
+%   \g_@@_info_confer_tl}
 % 底部日期以及学位授予日期仅用于国家图书馆封面。
 %    \begin{macrocode}
-        \bool_if:NT \g_@@_nlcover_bool
+    \bool_if:NT \g_@@_nlcover_bool
+      {
+        \@@_date:n { bottom }
+        \@@_date:n { confer }
+        \tl_new:N  \g_@@_info_confer_tl
+        \tl_set:Nn \g_@@_info_confer_tl
           {
-            \@@_date:n { bottom }
-            \@@_date:n { confer }
-            \tl_new:N  \g_@@_info_confer_tl
-            \tl_set:Nn \g_@@_info_confer_tl
-              {
-                \textbf { \c_@@_name_nju_tl } \hfil
-                \g_@@_info_conferdate_tl
-              }
+            \textbf { \c_@@_name_nju_tl } \hfil
+            \g_@@_info_conferdate_tl
           }
       }
+%</def-g>
   }
+%</(def-u|def-g)>
 %    \end{macrocode}
 % \end{variable}
 %
 % 盲审模式下抹去个人信息和学校名称。
 %    \begin{macrocode}
+%<*class>
 \bool_if:NT \g_@@_blind_bool
   {
     \ctex_at_end_preamble:n
@@ -5088,11 +5106,11 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{本科生}
 %
-% \begin{macro}{cover/ug/emblem-img}
+% \begin{macro}{cover/u/emblem-img}
 % 本科生封面校徽图片实例。
 %    \begin{macrocode}
 %<*def-u>
-\@@_declare_element:nn { cover / ug / emblem-img }
+\@@_declare_element:nn { cover / u / emblem-img }
   {
     content     = \@@_emblem:N \c_@@_emblemwidth_dim,
     bottom-skip = 1 cm,
@@ -5101,10 +5119,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/ug/name-img}
+% \begin{macro}{cover/u/name-img}
 % 本科生封面校名图片实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / ug / name-img }
+\@@_declare_element:nn { cover / u / name-img }
   {
     content     = \@@_name:N \c_@@_namewidth_dim,
     bottom-skip = 1 cm
@@ -5112,32 +5130,32 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/ug/title}
+% \begin{macro}{cover/u/title}
 % 本科生封面标题实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / ug / title }
+\@@_declare_element:nn { cover / u / title }
   {
     content  =
-      \@@_spread_box:nnV { 9 em } { \bf } \g_@@_info_type_tl,
+      \@@_spread_box:nnV { 9 em } { \bf } \c_@@_name_type_tl,
     format   = \zihao { -1 },
     bottom-skip = 0 pt plus 1.5 fill
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/ug/info}
+% \begin{macro}{cover/u/info}
 % 本科生封面信息栏实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / ug / info }
+\@@_declare_element:nn { cover / u / info }
   {
     content  =
-      \@@_cover_info_ug:NN \c_@@_coverlabel_dim \c_@@_coveruline_dim,
+      \@@_cover_info_u:NN \c_@@_coverlabel_dim \c_@@_coveruline_dim,
     format   = \zihao { 3 }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_info_ug:NN}
+% \begin{macro}{\@@_cover_info_u:NN}
 % 本科生封面信息栏。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
@@ -5145,7 +5163,7 @@ To produce the documentation run the original source files ending with
 % \end{arguments}
 % 短内容盒子的长度值是通过计算得到的。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_info_ug:NN #1#2
+\cs_new_protected:Npn \@@_cover_info_u:NN #1#2
   {
     \begin{minipage} { #1 + #2 + \c_@@_smallhskip_dim }
       \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
@@ -5198,7 +5216,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / g / type }
   {
     content     =
-      \@@_spread_box:nnV { 9 em } { } \g_@@_info_type_tl,
+      \@@_spread_box:nnV { 9 em } { } \c_@@_name_type_tl,
     format      = \zihao { -1 } \bfseries,
     bottom-skip = 1 cm
   }
@@ -5326,7 +5344,7 @@ To produce the documentation run the original source files ending with
   {
     content     =
       \c_@@_text_cover_en_tl \@@_vskip:
-      \textsc { \clist_item:Nn \c_@@_name_degree_en_clist
+      \textsc { \clist_item:Nn \c_@@_name_type_en_clist
                   { \g_@@_info_degree_int } }
       \@@_vskip: { in } \@@_vskip:
       \g_@@_info_major_en_tl,
@@ -5650,14 +5668,14 @@ To produce the documentation run the original source files ending with
 %
 % 定义封面页面的具体配置参数。
 %
-% \begin{macro}{cover-ug-default}
+% \begin{macro}{cover-u-default}
 % 默认本科生封面实例。
 %    \begin{macrocode}
 %<*def-u>
-\@@_declare_page:nn { cover-ug-default }
+\@@_declare_page:nn { cover-u-default }
   {
     element     = { emblem-img, name-img, title, info },
-    prefix      = cover / ug /,
+    prefix      = cover / u /,
     bottom-skip = 0.5 cm plus 1.5 fill
   }
 %</def-u>
@@ -5735,7 +5753,7 @@ To produce the documentation run the original source files ending with
 %<*(def-u|def-g)>
 \cs_new_protected:Npn \@@_make_cover:
   {
-%<def-u>    \UseInstance { nju } { cover-ug-default }
+%<def-u>    \UseInstance { nju } { cover-u-default }
 %<def-g>    \clist_map_inline:nn { front, back, en }
 %<def-g>      { \UseInstance { nju } { cover-g- ##1 -default } }
   }
@@ -5945,7 +5963,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { abstract / info }
   {
-%<def-u>    content     = \@@_abs_info_ug:nn { } { ： },
+%<def-u>    content     = \@@_abs_info_u:nn { } { ： },
 %<def-g>    content     = \@@_abs_info_g:n       { ： },
 %<def-u>    format      = \zihao { -4 } \kaishu,
 %<def-g>    format      = \zihao {  4 } \kaishu,
@@ -5973,7 +5991,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { abstract / en / info }
   {
-%<def-u>    content     = \@@_abs_info_ug:nn { _en } { :~ },
+%<def-u>    content     = \@@_abs_info_u:nn { _en } { :~ },
 %<def-g>    content     = \@@_abs_info_en_g:n        { :~ },
 %<def-u>    format      = \zihao { -4 },
 %<def-g>    format      = \zihao {  4 },
@@ -5989,7 +6007,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构本科生摘要。}
 % \changes{v0.21}{2022/06/16}{统一本科生摘要页的标签格式。}
 %
-% \begin{macro}{\@@_abs_info_ug:nn}
+% \begin{macro}{\@@_abs_info_u:nn}
 % 绘制本科生摘要信息栏。
 % \begin{arguments}
 %   \item 语言，空置为中文，|_en| 为英文
@@ -5998,7 +6016,7 @@ To produce the documentation run the original source files ending with
 % 本科生摘要页面不含下划线，因而不用确定文本宽度，绘制命令较为简单。
 %    \begin{macrocode}
 %<*def-u>
-\cs_new_protected:Npn \@@_abs_info_ug:nn #1#2
+\cs_new_protected:Npn \@@_abs_info_u:nn #1#2
   {
 %    \end{macrocode}
 % 由于作者姓名使用的字样发生了变动，这里进行替换以便嵌入循环。
@@ -6058,7 +6076,7 @@ To produce the documentation run the original source files ending with
     \@@_uline_list:xnn
       {
         \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int }
-        \c_@@_name_title_a_tl #1
+        \c_@@_name_title_tl #1
       }
       { \g_@@_info_title_tl } { \g_@@_abs_title_left_skip }
 %    \end{macrocode}
@@ -6093,7 +6111,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_en_g:n #1
   {
-    \@@_uline_list:xnn { \g_@@_info_type_en_tl #1 }
+    \@@_uline_list:xnn { \c_@@_name_title_en_tl #1 }
         { \g_@@_info_title_en_tl } { \g_@@_abs_title_left_skip }
 %    \end{macrocode}
 % 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，
@@ -6421,8 +6439,7 @@ To produce the documentation run the original source files ending with
 % 用于摘要的作者名称字样
 %    \begin{macrocode}
 %<def-u>    { author_a        } { 本科生姓名                         },
-%<def-g>    { author_a        }
-%<def-g>      { \tl_item:Nn \g_@@_info_degree_tl { 1 } 士生姓名    },
+%<def-g>    { author_a        } { \g_@@_info_type_tl 生姓名        },
 %<def-g>    { authsign        } { 作者签名：\njuline{\hspace{6em}}   },
 %<def-g>    { chairman        } { 答辩委员会主席：                   },
 %<def-g>    { clc             } { 分类号                             },
@@ -6439,7 +6456,6 @@ To produce the documentation run the original source files ending with
 %<def-g>    { dept_a          } { 所在院系                           },
 %<def-g>    { email           } { 作者 Email                         },
 %<def-g>    { field           } { 研究方向                           },
-%<def-g>    { g               } { 研究生                             },
 %<def-u>    { grade           } { 年级                               },
 %<def-g>    { grade           } { 级                                 },
     { id              } { 学号                               },
@@ -6490,29 +6506,23 @@ To produce the documentation run the original source files ending with
 %<def-g>    { supv_b          } { 导师姓名                           },
 %<def-g>    { supvinfo        }
 %<def-g>      { 指导教师姓名、职务、职称、学位、单位名称及地址       },
-    { supvii         } { 第二导师                           },
-    { supvtitle      } { 职称                               },
+    { supvii          } { 第二导师                           },
+    { supvtitle       } { 职称                               },
     { tableofcontents } { 目 \qquad{} 录                     },
 %    \end{macrocode}
 % 用于普通封面的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title        } { 论文题目                              },
-%    \end{macrocode}
-% 用于摘要的标题名称字样
-%    \begin{macrocode}
-%<def-g>    { title_a      } { 题目                                  },
+%<def-g>    { title_a         } { 论文题目                           },
 %    \end{macrocode}
 % 用于国家图书馆封面的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title_b      } { 学位论文                              },
+%<def-g>    { title_b         } { 学位论文                           },
 %    \end{macrocode}
 % 用于出版授权书的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title_c      } { 论文题名                              },
-%<def-u>    { type         } { 本科生毕业论文（设计、作品）          },
-%<def-g>    { udc          } { U D C                                 },
-%<def-u>    { ug           } { 本科                                  }
-%<def-g>    { year         } { 学位年度                              }
+%<def-g>    { title_c         } { 论文题名                           },
+%<def-g>    { udc             } { U D C                              },
+%<def-g>    { year            } { 学位年度                           }
   }
   { \@@_define_name:nn #1 }
 %    \end{macrocode}
@@ -6521,45 +6531,40 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { abstract      } { 摘要          } { ABSTRACT                },
+    { abstract      } { 摘要            } { ABSTRACT              },
 %    \end{macrocode}
 % 用于书签的摘要名称字样
 %    \begin{macrocode}
-    { abstract_a    } { 中文摘要      } { ABSTRACT                },
+    { abstract_a    } { 中文摘要        } { ABSTRACT              },
 %    \end{macrocode}
 % 用于小标题的摘要名称字样
 %    \begin{macrocode}
-    { abstract_b    } { 摘\qquad{}要  } { ABSTRACT                },
+    { abstract_b    } { 摘\qquad{}要    } { ABSTRACT              },
     { abstracttitle }
-%<def-u>      {
-%<def-u>        \c_@@_name_nju_tl  \c_@@_name_type_tl
-%<def-u>        \c_@@_name_lang_tl \c_@@_name_abstract_tl
-%<def-u>      }
-%<def-u>      {
-%<def-u>        \c_@@_name_nju_tl     \c_@@_name_type_tl
-%<def-u>        \c_@@_name_lang_en_tl \c_@@_name_abstract_tl
-%<def-u>      },
-%<def-g>      { \c_@@_name_nju_tl \g_@@_info_type_tl 中文摘要首页用纸 }
-%<def-g>      { \c_@@_name_nju_tl \g_@@_info_type_tl 英文摘要首页用纸 },
-    { appendix      } { 附录          } { appendix                },
-%<def-u>    { author        } { 学生姓名      } { UNDERGRADUATE           },
-%<def-g>    { author        } { 作者姓名      } { POSTGRADUATE            },
-    { blankdate     } { \qquad{}年 \quad{}月 \quad{}日 } {        },
+%<def-u>      { 南京大学本科生毕业论文（设计、作品）中文摘要              }
+%<def-u>      { 南京大学本科生毕业论文（设计、作品）英文摘要              },
+%<def-g>      { 南京大学研究生毕业论文中文摘要首页用纸                    }
+%<def-g>      { 南京大学研究生毕业论文英文摘要首页用纸                    },
+    { appendix      } { 附录            } { appendix              },
+%<def-u>    { author        } { 学生姓名        } { UNDERGRADUATE         },
+%<def-g>    { author        } { 作者姓名        } { POSTGRADUATE          },
+    { blankdate     } { \qquad{}年 \quad{}月 \quad{}日   } {      },
     { blankdate_a   } { \njuline{\qquad\qquad} 年
-            \njuline{\qquad} 月 \njuline{\qquad} 日 } {           },
-    { comma         } { ：            } { : \c_space_tl           },
-    { dept          } { 院系          } { DEPARTMENT              },
-    { figure        } { 图            } { figure                  },
-    { keywords      } { 关键词        } { KEYWORDS                },
-    { lang          } { 中文          } { 英文                    },
-%<def-u>    { major         } { 专业          } { SPECIALIZATION          },
-%<def-g>    { major         } { 专业名称      } { SPECIALIZATION          },
-    { nju           } { 南京大学      } { Nanjing~ University     },
-%<def-u>    { supvfull      } { 指导教师（姓名、职称） } { MENTOR         },
-%<def-g>    { supvfull      } { 指导教师      } { MENTOR                  },
-    { table         } { 表            } { table                   },
-%<def-u>    { title         } { 题目          } { \clist_item:Nn
-%<def-u>             \c_@@_name_type_en_clist { \g_@@_info_type_int } }
+            \njuline{\qquad} 月 \njuline{\qquad} 日      } {      },
+    { comma         } { ：              } { : \c_space_tl         },
+    { dept          } { 院系            } { DEPARTMENT            },
+    { figure        } { 图              } { figure                },
+    { keywords      } { 关键词          } { KEYWORDS              },
+    { lang          } { 中文            } { 英文                  },
+%<def-u>    { major         } { 专业            } { SPECIALIZATION        },
+%<def-g>    { major         } { 专业名称        } { SPECIALIZATION        },
+    { nju           } { 南京大学        } { Nanjing~ University   },
+%<def-u>    { supvfull      } { 指导教师（姓名、职称）   } { MENTOR       },
+%<def-g>    { supvfull      } { 指导教师        } { MENTOR                },
+    { table         } { 表              } { table                 },
+    { title         } { 题目            } { THESIS                },
+%<def-u>    { type          } { 本科毕业论文    } { u                     }
+%<def-g>    { type          } { 研究生毕业论文  } { g                     }
   }
   { \@@_define_name:nnn #1 }
 %    \end{macrocode}
