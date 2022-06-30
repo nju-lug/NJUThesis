@@ -238,6 +238,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.19}{2022/05/23}{对国家图书馆封面进行若干细节修改。}
 % \changes{v0.20}{2022/06/08}{更正本科生模板部分字样。}
 % \changes{v1.0}{2022/06/29}{移除毕业设计封面。}
+% \changes{v1.0}{2022/06/30}{调整研究生封面布局。}
 %
 %
 % \maketitle
@@ -2993,7 +2994,6 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_cover_entry_title:nnn}
 % 生成普通封面页的标题条目，包括标签和标题本身。
 % \begin{arguments}
-%   \item 内容格式
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
 % \end{arguments}
@@ -3002,16 +3002,16 @@ To produce the documentation run the original source files ending with
   {
     \tl_if_empty:NT \g_@@_info_title_tl
       { \msg_error:nn { njuthesis } { missing-title } }
-    \@@_spread_box:nnV { #2 } { \kaishu } \c_@@_name_title_tl
+    \@@_spread_box:nnV { #1 } { #3 } \c_@@_name_title_tl
     \mode_leave_vertical: \@@_hskip:
 %    \end{macrocode}
 % 这里需要存储 \tn{baselineskip} 的值，以使 \tn{parbox} 后行距正确。
 % \footnote{\url{https://tex.stackexchange.com/q/34971/}}
 %    \begin{macrocode}
-    \parbox [ t ] { #3 }
+    \parbox [ t ] { #2 }
       {
         \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
-        #1 \@@_uline_title:
+        \c_@@_fmt_covertitle_tl \@@_uline_title:
         \dim_gset_eq:NN \l_@@_tmpa_dim \prevdepth
       }
     \par \prevdepth \l_@@_tmpa_dim
@@ -3019,7 +3019,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry:nnn}
+% \begin{macro}{\@@_cover_entry:nnnn}
 % 生成单项信息条目。
 % \begin{arguments}
 %   \item 条目名称
@@ -3027,9 +3027,9 @@ To produce the documentation run the original source files ending with
 %   \item 内容盒子宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry:nnn #1#2#3
+\cs_new_protected:Npn \@@_cover_entry:nnnn #1#2#3#4
   {
-    \@@_spread_box:nnx { #2 } { \kaishu } { \@@_name:n { #1 } }
+    \@@_spread_box:nnx { #2 } { #4 } { \@@_name:n { #1 } }
     \@@_hskip:
     \@@_ulined_center_box:nn { #3 }       { \@@_info:n { #1 } }
     \par
@@ -3037,7 +3037,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_bientry:nnnn}
+% \begin{macro}{\@@_cover_bientry:nnnnn}
 % 生成两项信息条目，仅用于本科生封面。
 % \begin{arguments}
 %   \item 左侧条目名称
@@ -3046,21 +3046,17 @@ To produce the documentation run the original source files ending with
 %   \item 内容盒子宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_bientry:nnnn #1#2#3#4
+\cs_new_protected:Npn \@@_cover_bientry:nnnnn #1#2#3#4#5
   {
-    \@@_spread_box:nnx { #3 } { \kaishu } { \@@_name:n { #1 } }
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #4 }       { \@@_info:n { #1 } }
-    \@@_hskip:
-    \@@_spread_box:nnx { #3 } { \kaishu } { \@@_name:n { #2 } }
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #4 }       { \@@_info:n { #2 } }
-    \par
+    \@@_spread_box:nnx { #3 } { #5 } { \@@_name:n { #1 } } \@@_hskip:
+    \@@_ulined_center_box:nn  { #4 } { \@@_info:n { #1 } } \@@_hskip:
+    \@@_spread_box:nnx { #3 } { #5 } { \@@_name:n { #2 } } \@@_hskip:
+    \@@_ulined_center_box:nn  { #4 } { \@@_info:n { #2 } } \par
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry_supv:nnn}
+% \begin{macro}{\@@_cover_entry_supv:nnnn}
 % 生成两项导师信息条目，仅用于本科生封面。
 % \begin{arguments}
 %   \item 条目名称
@@ -3068,14 +3064,14 @@ To produce the documentation run the original source files ending with
 %   \item 短内容盒子宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry_supv:nnn #1#2#3
+\cs_new_protected:Npn \@@_cover_entry_supv:nnnn #1#2#3#4
   {
-    \@@_spread_box:nnx { #2 } { \kaishu } { \@@_name:n { #1 } }
+    \@@_spread_box:nnx { #2 } { #4 } { \@@_name:n { #1 } }
     \@@_hskip:
     \@@_ulined_center_box:nn { #3 }
       { \clist_item:cn { g_@@_info_ #1 _clist } { 1 } }
     \@@_hskip:
-    \@@_spread_box:nnV { #2 } { \kaishu } \c_@@_name_supvtitle_tl
+    \@@_spread_box:nnV { #2 } { #4 } \c_@@_name_supvtitle_tl
     \@@_hskip:
     \@@_ulined_center_box:nn { #3 }
       { \clist_item:cn { g_@@_info_ #1 _clist } { 2 } }
@@ -5148,13 +5144,14 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / u / info }
   {
     content  =
-      \@@_cover_info_u:NN \c_@@_coverlabel_dim \c_@@_coveruline_dim,
+      \@@_cover_info_u:NNN \c_@@_coverlabel_dim \c_@@_coveruline_dim
+        \c_@@_fmt_coverlabel_tl,
     format   = \zihao { 3 }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_info_u:NN}
+% \begin{macro}{\@@_cover_info_u:NNN}
 % 本科生封面信息栏。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
@@ -5162,20 +5159,20 @@ To produce the documentation run the original source files ending with
 % \end{arguments}
 % 短内容盒子的长度值是通过计算得到的。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_info_u:NN #1#2
+\cs_new_protected:Npn \@@_cover_info_u:NNN #1#2#3
   {
     \begin{minipage} { #1 + #2 + \c_@@_smallhskip_dim }
       \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
       \dim_set:Nn \l_@@_tmpb_dim { .5 #2 - .5 #1 - \c_@@_smallhskip_dim }
-      \@@_cover_entry:nnn { dept      } { #1 } { #2 }
-      \@@_cover_entry:nnn { major     } { #1 } { #2 }
-      \@@_cover_entry_title:nnn { \bf } { #1 } { #2 }
-      \@@_cover_bientry:nnnn { grade  } { id } { #1 } { \l_@@_tmpb_dim }
-      \@@_cover_entry:nnn { author    } { #1 } { #2 }
-      \@@_cover_entry_supv:nnn { supv } { #1 } { \l_@@_tmpb_dim }
+      \@@_cover_entry:nnnn { dept      } { #1 } { #2 } { #3 }
+      \@@_cover_entry:nnnn { major     } { #1 } { #2 } { #3 }
+      \@@_cover_entry_title:nnn  { #1 } { #2 } { #3 }
+      \@@_cover_bientry:nnnnn { grade  } { id } { #1 } { \l_@@_tmpb_dim } { #3 }
+      \@@_cover_entry:nnnn { author    } { #1 } { #2 } { #3 }
+      \@@_cover_entry_supv:nnnn { supv } { #1 } { \l_@@_tmpb_dim } { #3 }
       \bool_if:NT \l_@@_second_supv_bool
-        { \@@_cover_entry_supv:nnn { supvii } { #1 } { \l_@@_tmpb_dim } }
-      \@@_cover_entry:nnn { submitdate } { #1 } { #2 }
+        { \@@_cover_entry_supv:nnnn { supvii } { #1 } { \l_@@_tmpb_dim } { #3 } }
+      \@@_cover_entry:nnnn { submitdate } { #1 } { #2 } { #3 }
     \end{minipage}
   }
 %</def-u>
@@ -5204,7 +5201,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / g / name-img }
   {
     content     = \@@_name:N \c_@@_namewidth_dim,
-    bottom-skip = 2 cm
+    bottom-skip = 100 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5215,9 +5212,9 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / g / type }
   {
     content     =
-      \@@_spread_box:nnV { 9 em } { } \c_@@_name_type_tl,
-    format      = \zihao { -1 } \bfseries,
-    bottom-skip = 1 cm
+      \@@_spread_box:nnV { 11 em } { } \c_@@_name_type_tl,
+    format      = \zihao { 1 } \bfseries,
+    bottom-skip = 40 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5228,7 +5225,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / g / degree }
   {
     content     = \c_@@_name_apply_tl,
-    format      = \zihao { -1 } \bfseries,
+    format      = \zihao { 1 } \bfseries,
     bottom-skip = 1 cm plus 1.5 fil
   }
 %    \end{macrocode}
@@ -5240,7 +5237,8 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / g / info }
   {
     content     =
-      \@@_cover_info_g:NN \c_@@_coverlabel_dim \c_@@_coveruline_dim,
+      \@@_cover_info_g:NNN \c_@@_coverlabel_dim \c_@@_coveruline_dim
+        \c_@@_fmt_coverlabel_tl,
     bottom-skip = 0 pt plus 1.5 fil
   }
 %    \end{macrocode}
@@ -5254,20 +5252,20 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_info_g:NN}
+% \begin{macro}{\@@_cover_info_g:NNN}
 % 研究生封面信息栏。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_info_g:NN #1#2
+\cs_new_protected:Npn \@@_cover_info_g:NNN #1#2#3
   {
     \begin{minipage} { #1 + #2 + \c_@@_smallhskip_dim }
       \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
-      \@@_cover_entry_title:nnn { } { #1 } { #2 }
+      \@@_cover_entry_title:nnn { #1 } { #2 } { #3 }
       \clist_map_inline:nn { author, major, field, supvfull }
-        { \@@_cover_entry:nnn { ##1 } { #1 } { #2 } }
+        { \@@_cover_entry:nnnn { ##1 } { #1 } { #2 } { #3 } }
     \end{minipage}
   }
 %    \end{macrocode}
@@ -5280,7 +5278,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { cover / g / back }
   {
-    content = \@@_cover_back_g:,
+    content = \@@_cover_back_g:N \c_@@_fmt_coverlabel_tl,
     align   = l
   }
 %    \end{macrocode}
@@ -5289,16 +5287,16 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_cover_back_g:}
 % 研究生封面背面信息。格式存在变化，没有使用循环来简化。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_back_g:
+\cs_new_protected:Npn \@@_cover_back_g:N #1
   {
-    \@@_spread_box:nnV { 6.2 em } { \kaishu } \c_@@_name_id_tl
+    \@@_spread_box:nnV { 6.2 em } { #1 } \c_@@_name_id_tl
     { : \@@_quad: } \g_@@_info_id_tl
     \@@_vskip:
-    \@@_spread_box:nnV { 6.2 em } { \kaishu } \c_@@_name_defenddate_tl
+    \@@_spread_box:nnV { 6.2 em } { #1 } \c_@@_name_defenddate_tl
     { : \@@_quad: } \g_@@_info_defenddate_tl
     \@@_vskip:
-    \@@_spread_box:nnV { 6.2 em } { \kaishu } \c_@@_name_supvfull_tl
-    { : \@@_quad: } \skip_horizontal:n { 8 em } \c_@@_name_sign_tl
+    \@@_spread_box:nnV { 6.2 em } { #1 } \c_@@_name_supvfull_tl
+    { : \@@_quad: } \skip_horizontal:n { 8 em } { #1 \c_@@_name_sign_tl }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5691,7 +5689,7 @@ To produce the documentation run the original source files ending with
     element  = { emblem-img, name-img, type, degree, info, date },
     prefix   = cover / g /,
     format   = \zihao { 3 } \kaishu,
-    top-skip = 1.5 cm
+    top-skip = 30 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6662,9 +6660,11 @@ To produce the documentation run the original source files ending with
 \clist_map_inline:nn
   {
 %<def-u>    { coverlabel    } { 68   pt },
-%<def-g>    { coverlabel    } { 100  pt },
-    { coverlineskip } { 40   pt },
-    { coveruline    } { 270  pt },
+%<def-g>    { coverlabel    } { 80   pt },
+%<def-u>    { coverlineskip } { 40   pt },
+%<def-g>    { coverlineskip } { 32   pt },
+%<def-u>    { coveruline    } { 270  pt },
+%<def-g>    { coveruline    } { 240  pt },
 %<def-u>    { emblemwidth   } { 68   pt },
 %<def-g>    { emblemwidthi  } { 46   pt },
 %<def-g>    { emblemwidthii } { 61   pt },
@@ -6694,6 +6694,10 @@ To produce the documentation run the original source files ending with
 %<def-g>    { pagestyle     } { headings                          },
     { abslabel      } { \bfseries                         },
     { abslabel_en   } {                                   },
+%<def-u>    { covertitle    } { \bfseries                         },
+%<def-g>    { covertitle    } {                                   },
+%<def-u>    { coverlabel    } { \kaishu                           },
+%<def-g>    { coverlabel    } { \bfseries                         },
     { emblemcolor   } { black                             },
     { namecolor     } { black                             },
     { section       } { \large \normalfont \sffamily      },
