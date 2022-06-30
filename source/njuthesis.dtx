@@ -3666,10 +3666,9 @@ To produce the documentation run the original source files ending with
 %
 % 使用 \pkg{tabularray} 绘制研究生的出版授权书。
 %    \begin{macrocode}
-\bool_lazy_and:nnT
-  { \g_@@_decl_bool }
-  { !\int_compare_p:n { \g_@@_info_degree_int == 1 } }
-  { \RequirePackage { tabularray } }
+%</class>
+%<def-g>\bool_if:NT \g_@@_decl_bool { \RequirePackage { tabularray } }
+%<*class>
 %    \end{macrocode}
 %
 % \begin{macro}{\@@_check_pkg_version:nnn}
@@ -5588,7 +5587,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_degree_checkbox:n #1
   {
-    \int_compare:nNnTF { #1 } { = } { \g_@@_info_degree_int }
+    \int_compare:nNnTF { #1 } { = }
+      { \g_@@_info_degree_int * \g_@@_info_type_int }
       {
         \makebox [ 0   pt ] [l] { \ensuremath { \mdwhtsquare } }
         \hspace  { 0.1 em }       \ensuremath { \checkmark   }
@@ -5618,9 +5618,9 @@ To produce the documentation run the original source files ending with
       \c_@@_name_degree_a_tl &
         {
           \@@_degree_checkbox:n { 2 } 学术学位硕士 \qquad{}
-          \@@_degree_checkbox:n { 3 } 专业学位硕士 \\
-          \@@_degree_checkbox:n { 4 } 学术学位博士 \qquad{}
-          \@@_degree_checkbox:n { 5 } 专业学位博士
+          \@@_degree_checkbox:n { 4 } 专业学位硕士 \\
+          \@@_degree_checkbox:n { 3 } 学术学位博士 \qquad{}
+          \@@_degree_checkbox:n { 6 } 专业学位博士
         } \\
       \c_@@_name_email_tl    & \g_@@_info_email_tl \\
       \c_@@_name_supv_b_tl   &
@@ -6435,6 +6435,7 @@ To produce the documentation run the original source files ending with
   {
     { acknowledgement } { 致 \qquad{} 谢                     },
 %<def-g>    { apply           } {（申请 \g_@@_info_degree_tl 学位）},
+%<def-g>    { authdecl        } { 学位论文出版授权书                 },
 %    \end{macrocode}
 % 用于摘要的作者名称字样
 %    \begin{macrocode}
@@ -6462,7 +6463,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 用于出版授权书的学号名称字样
 %    \begin{macrocode}
-%<def-g>    { id_a            } { \c_@@_name_g_tl 学号             },
+%<def-g>    { id_a            } { 研究生学号                         },
     { listoffigures   } { 插图目录                           },
     { listoftables    } { 表格目录                           },
 %    \end{macrocode}
@@ -6572,8 +6573,8 @@ To produce the documentation run the original source files ending with
 % 对专业硕士的封面条目进行临时修改。
 %    \begin{macrocode}
 %<*def-g>
-\int_compare:nT { \g_@@_info_degree_int == 3 }
-  { \njusetname{major}{专业学位类别(领域)} }
+\int_compare:nT { \g_@@_info_degree_int == 2 }
+  { \tl_set:Nn \c_@@_name_major_tl { 专业学位类别(领域) } }
 %</def-g>
 %    \end{macrocode}
 %
@@ -6595,9 +6596,9 @@ To produce the documentation run the original source files ending with
 %<*def-g>
     本人郑重声明，所提交的学位论文是本人在导师指导下独立进行科学研究工作所
     取得的成果。除本论文中已经注明引用的内容外，本论文不包含其他个人或集体
-    已经发表或撰写过的研究成果，也不包含为获得 \c_@@_name_nju_tl 或其他教
-    育机构的学位证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，
-    均已在论文的致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
+    已经发表或撰写过的研究成果，也不包含为获得南京大学或其他教育机构的学位
+    证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，均已在论文的
+    致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
 %</def-g>
   }
 %    \end{macrocode}
