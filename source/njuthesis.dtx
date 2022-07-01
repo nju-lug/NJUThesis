@@ -3444,6 +3444,13 @@ To produce the documentation run the original source files ending with
 \ProcessKeysOptions { nju }
 %    \end{macrocode}
 %
+% 处理单双面模式选项。
+%    \begin{macrocode}
+\bool_if:NTF \g_@@_twoside_bool
+  { \tl_const:Nn \c_@@_name_pagemode_tl { twoside } }
+  { \tl_const:Nn \c_@@_name_pagemode_tl { oneside } }
+%    \end{macrocode}
+%
 %
 % \subsection{用户接口}
 %
@@ -3456,9 +3463,9 @@ To produce the documentation run the original source files ending with
     bib      .meta:nn = { nju / bib      } { #1 },
     % cover    .meta:nn = { nju / cover    } { #1 },
     % font     .meta:nn = { nju / font     } { #1 },
-    % footer   .meta:nn = { nju / footer   } { #1 },
+    footer   .meta:nn = { nju / footer   } { #1 },
     % footnote .meta:nn = { nju / footnote } { #1 },
-    % header   .meta:nn = { nju / header   } { #1 },
+    header   .meta:nn = { nju / header   } { #1 },
     info     .meta:nn = { nju / info     } { #1 },
     style    .meta:nn = { nju / style    } { #1 },
     theorem  .meta:nn = { nju / theorem  } { #1 }
@@ -3549,7 +3556,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 传入单双面模式选项。
 %    \begin{macrocode}
-    \bool_if:NTF \g_@@_twoside_bool { twoside, } { oneside, }
+    \c_@@_name_pagemode_tl,
 %    \end{macrocode}
 % 开启草稿模式后传入 |draft| 选项。
 %    \begin{macrocode}
@@ -4378,7 +4385,7 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsubsection{页眉页脚}
-% ^^A TODO: 删除 header/format 和 footer/format
+% \changes{v1.0}{2022/07/01}{删除 |header/format| 和 |footer/format|。}
 % 提供设置页眉页脚的用户接口。在 \cs{fancyhead} 的可选参数中，
 % \opt{E} 和 \opt{O} 分别表示在偶数页（even）和奇数页（odd），
 % 而 \opt{L}、\opt{R} 和 \opt{C} 则分别表示左（left）、右
@@ -4388,13 +4395,6 @@ To produce the documentation run the original source files ending with
 \keys_define:nn { nju / style }
   {
 %    \end{macrocode}
-% \begin{macro}{style/header/format}
-% \changes{v0.16}{2022/03/18}{可手动指定页眉样式。}
-% 页眉格式。
-%    \begin{macrocode}
-    header/format .tl_gset:N = \c_@@_fmt_header_tl,
-%    \end{macrocode}
-% \end{macro}
 %
 % \begin{macro}{style/header,style/header*}
 % \changes{v0.16}{2022/03/18}{可手动指定页眉内容。}
@@ -4413,15 +4413,6 @@ To produce the documentation run the original source files ending with
       },
 %    \end{macrocode}
 % \end{macro}
-%
-% \begin{macro}{style/footer/format}
-% \changes{v0.16}{2022/03/19}{可手动指定页脚样式。}
-% 页脚格式。
-%    \begin{macrocode}
-    footer/format .tl_gset:N = \c_@@_fmt_footer_tl,
-%    \end{macrocode}
-% \end{macro}
-%
 %
 % \begin{macro}{style/footer,style/footer*}
 % \changes{v0.16}{2022/03/18}{可手动指定页脚内容。}
@@ -4447,15 +4438,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
-    \bool_if:NTF \g_@@_twoside_bool
-      {
-        \clist_set_eq:NN \g_@@_header_clist \g_@@_header_twoside_clist
-        \clist_set_eq:NN \g_@@_footer_clist \g_@@_footer_twoside_clist
-      }
-      {
-        \clist_set_eq:NN \g_@@_header_clist \g_@@_header_oneside_clist
-        \clist_set_eq:NN \g_@@_footer_clist \g_@@_footer_oneside_clist
-      }
+    \clist_set_eq:Nc \g_@@_header_clist
+      { g_@@_header_ \c_@@_name_pagemode_tl _clist }
+    \clist_set_eq:Nc \g_@@_footer_clist
+      { g_@@_footer_ \c_@@_name_pagemode_tl _clist }
   }
 %    \end{macrocode}
 %
@@ -4469,9 +4455,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 重定义 \pkg{fancyhdr} 的 \opt{plain} 样式，即本科生正文和部分特殊页面使用的的
-% 页眉页脚样式。页眉无内容；页脚为居中的页码，使用五号新罗马体数字。注意标记页眉
-% 页脚横线宽度的变量并不是 |dim| 类型的，但是采取了该类型的格式。
+% 重定义 \pkg{fancyhdr} 的 \opt{plain} 样式，即本科生正文和部分特殊页面使用的
+% 页眉页脚样式。页眉无内容；页脚为居中的页码，使用五号新罗马体数字。
+% 标记页眉页脚横线宽度的变量并不属于 |dim| 类型，但是采取了该类型的格式。
 %    \begin{macrocode}
 \fancypagestyle { plain }
   {
