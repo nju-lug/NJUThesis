@@ -5961,8 +5961,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { abstract / info }
   {
-%<def-u>    content     = \@@_abs_info_u:nn { } { ： },
-%<def-g>    content     = \@@_abs_info_g:n       { ： },
+%<def-u>    content     = \@@_abs_info_u:,
+%<def-g>    content     = \@@_abs_info_g:,
 %<def-u>    format      = \zihao { -4 } \kaishu,
 %<def-g>    format      = \zihao {  4 } \kaishu,
 %<def-u>    bottom-skip = 1 cm,
@@ -5989,8 +5989,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { abstract / en / info }
   {
-%<def-u>    content     = \@@_abs_info_u:nn { _en } { :~ },
-%<def-g>    content     = \@@_abs_info_en_g:n        { :~ },
+%<def-u>    content     = \@@_abs_info_en_u:,
+%<def-g>    content     = \@@_abs_info_en_g:,
 %<def-u>    format      = \zihao { -4 },
 %<def-g>    format      = \zihao {  4 },
 %<def-u>    bottom-skip = 1 cm,
@@ -6005,6 +6005,17 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构本科生摘要。}
 % \changes{v0.21}{2022/06/16}{统一本科生摘要页的标签格式。}
 %
+% \begin{macro}{\@@_abs_info_u:,\@@_abs_info_en_u:}
+% 封装好的本科生摘要信息栏。
+%    \begin{macrocode}
+%<*def-u>
+\cs_new_protected:Npn \@@_abs_info_u:
+  { \@@_abs_info_u:nn {     } { \c_@@_name_comma_tl    } }
+\cs_new_protected:Npn \@@_abs_info_en_u:
+  { \@@_abs_info_u:nn { _en } { \c_@@_name_comma_en_tl } }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_abs_info_u:nn}
 % 绘制本科生摘要信息栏。
 % \begin{arguments}
@@ -6013,7 +6024,6 @@ To produce the documentation run the original source files ending with
 % \end{arguments}
 % 本科生摘要页面不含下划线，因而不用确定文本宽度，绘制命令较为简单。
 %    \begin{macrocode}
-%<*def-u>
 \cs_new_protected:Npn \@@_abs_info_u:nn #1#2
   {
 %    \end{macrocode}
@@ -6062,6 +6072,17 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_abs_info_g:,\@@_abs_info_en_g:}
+% 封装好的研究生摘要信息栏。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_abs_info_g:
+  { \@@_abs_info_g:n    { \c_@@_name_comma_tl    } }
+\cs_new_protected:Npn \@@_abs_info_en_g:
+  { \@@_abs_info_en_g:n { \c_@@_name_comma_en_tl } }
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \begin{macro}{\@@_abs_info_g:n}
 % 绘制研究生中文摘要信息栏。
 % \begin{arguments}
@@ -6071,11 +6092,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_g:n #1
   {
-    \@@_uline_list:xnn
-      {
-        \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int }
-        \c_@@_name_title_tl #1
-      }
+    \@@_uline_list:xnn { \c_@@_name_title_a_tl #1 }
       { \g_@@_info_title_tl } { \g_@@_abs_title_left_skip }
 %    \end{macrocode}
 % 专业、年级、姓名。
@@ -6101,25 +6118,16 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_abs_info_en_g:n}
+% \changes{v2.0}{2022/07/01}{移除研究生英文摘要的下划线。}
 % 绘制研究生英文摘要信息栏。
 % \begin{arguments}
 %   \item 分隔符
 % \end{arguments}
-% 前两行为标题。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_en_g:n #1
   {
-    \@@_uline_list:xnn { \c_@@_name_title_en_tl #1 }
-        { \g_@@_info_title_en_tl } { \g_@@_abs_title_left_skip }
-%    \end{macrocode}
-% 使用循环输出专业、姓名、导师。注意这里将 |\\| 放置在前部，
-% 以避免末尾生成多余的换行符产生 |Underfull \vbox| 信息。
-%    \begin{macrocode}
-    \clist_map_inline:nn { major, author, supvfull }
-      {
-        \@@_uline_entry:Nnnn \l_@@_tmpa_dim
-          { ##1 _en } { ##1 _en } { #1 } \par
-      }
+    \clist_map_inline:nn { title, major, author, supvfull }
+      { \@@_name:n { ##1 _en } #1 \@@_info:n { ##1 _en } \\ }
   }
 %</def-g>
 %    \end{macrocode}
@@ -6474,9 +6482,9 @@ To produce the documentation run the original source files ending with
 %<def-g>    { major_b         } { 专业名称                           },
     { notation        } { 符号表                             },
     { origdate        } { 日期                               },
-    { origdecl        } { \c_@@_name_nju_tl
-%<def-u>                    本科毕业论文（设计） \\ 诚信承诺书       },
-%<def-g>                          学位论文原创性声明                 },
+%<def-u>    { origdecl        }
+%<def-u>      { 南京大学本科毕业论文（设计） \\ 诚信承诺书           },
+%<def-g>    { origdecl        } { 南京大学学位论文原创性声明         },
 %<def-u>    { origsign        } { 作者签名                           },
 %<def-g>    { origsign        } { 研究生签名                         },
     { paperlist       } { 发表文章目录                       },
@@ -6509,9 +6517,9 @@ To produce the documentation run the original source files ending with
     { supvtitle       } { 职称                               },
     { tableofcontents } { 目 \qquad{} 录                     },
 %    \end{macrocode}
-% 用于普通封面的标题名称字样
+% 用于摘要的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title_a         } { 论文题目                           },
+%<def-g>    { title_a         } { 毕业论文题目                       },
 %    \end{macrocode}
 % 用于国家图书馆封面的标题名称字样
 %    \begin{macrocode}
@@ -6561,7 +6569,8 @@ To produce the documentation run the original source files ending with
 %<def-u>    { supvfull      } { 指导教师（姓名、职称）   } { MENTOR       },
 %<def-g>    { supvfull      } { 指导教师        } { MENTOR                },
     { table         } { 表              } { table                 },
-    { title         } { 题目            } { THESIS                },
+%<def-u>    { title         } { 题目            } { THESIS                },
+%<def-g>    { title         } { 论文题目        } { THESIS                },
 %<def-u>    { type          } { 本科毕业论文    } { u                     }
 %<def-g>    { type          } { 研究生毕业论文  } { g                     }
   }
