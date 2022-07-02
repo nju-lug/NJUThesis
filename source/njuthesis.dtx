@@ -787,19 +787,19 @@ To produce the documentation run the original source files ending with
 % 下文中尖括号内列出了若干个允许的选项，其中加粗的为默认选项（缺省值）。
 %
 % \subsubsection{学位信息}
-% \begin{function}[added=2021-09-07]{degree}
+% \begin{function}[added=2021-09-07,updated=2022-07-01]{type}
 %   \begin{syntax}
-%     degree = <(ug)|mg|mf|phd>
+%     type = <(bachelor)|master|doctor>
 %   \end{syntax}
-% 选择学位，分别为学士、学术型硕士、专业硕士、博士，默认为学士（即本科生）。
+% 选择毕业论文模板类型，这将决定模板整体的外观。
+% 可选值分别为学士（本科生）、硕士研究生和博士研究生，默认为学士。
 % \end{function}
 %
-% \begin{function}[added=2021-09-07]{type}
+% \begin{function}[added=2021-09-07,updated=2022-07-01]{degree}
 %   \begin{syntax}
-%     type = <(thesis)|design>
+%     degree = <(academic)|professional>
 %   \end{syntax}
-% 用于选择文档类型并将相关字段输出在封面和摘要页，
-% 可选值分别为毕业论文和毕业设计，默认为毕业论文。
+% 选择研究生的学位类型。可选值分别学术型和专业型，默认为学术型。
 % \end{function}
 %
 %
@@ -1156,14 +1156,6 @@ To produce the documentation run the original source files ending with
 %     supervisor-contact = \Arg{导师联系方式}
 %   \end{syntax}
 % 国家图书馆封面相关，包括中图分类号、密级、UDC 分类号和导师联系方式。
-% \end{function}
-%
-% \begin{function}{info/titlea,info/titleb,info/titlec,info/supervisora,info/supervisora*,info/supervisora-title,info/supervisora-title*,info/supervisorb,info/supervisorb*,info/supervisorb-title,info/supervisorb-title*}
-% 这些选项已在 v0.13 弃置，请不要使用。
-% \end{function}
-%
-% \begin{function}{info/supervisor-title,info/supervisor-title*,info/supervisor-ii-title,info/supervisor-ii-title*,info/submit-date*}
-% 这些选项已在 v0.14 弃置，请不要使用。
 % \end{function}
 %
 %
@@ -2554,7 +2546,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_info_supvfull_tl,\g_@@_info_supvfull_en_tl}
+% \begin{variable}{
+%   \g_@@_info_supvfull_tl,
+%   \g_@@_info_supvfull_en_tl}
 % 用于存储导师姓名加职称的变量。
 %    \begin{macrocode}
 \tl_new:N \g_@@_info_supvfull_tl
@@ -2562,11 +2556,30 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_latin_font_tl,\g_@@_cjk_font_tl}
-% 用于存储所使用字体名称的全局变量。
+% \begin{variable}{
+%   \g_@@_latin_font_tl,
+%   \g_@@_cjk_font_tl,
+%   \g_@@_math_font_tl}
+% 存储所使用字体名称的全局变量。
 %    \begin{macrocode}
 \tl_new:N \g_@@_latin_font_tl
 \tl_new:N \g_@@_cjk_font_tl
+\tl_new:N \g_@@_math_font_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_font_path_tl}
+% 存储字体路径的全局变量。
+%    \begin{macrocode}
+\tl_new:N \g_@@_font_path_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_font_path_bool}
+% 是否使用独立的字体文件。
+%    \begin{macrocode}
+\bool_new:N \g_@@_font_path_bool
+\bool_gset_false:N \g_@@_font_path_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -3417,8 +3430,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{latin-font,cjk-font}
+% \begin{macro}{latin-font,cjk-font,math-font}
 % \changes{v0.14}{2021/12/12}{简化字体选项名称。}
+% \changes{v1.0}{2022/07/02}{增加数学字库选择功能。}
 % 字体选项。
 %    \begin{macrocode}
     latin-font        .choices:nn =
@@ -3427,6 +3441,23 @@ To produce the documentation run the original source files ending with
     cjk-font          .choices:nn =
       { fandol, founder, mac, noto, source, win, none }
       { \tl_set_eq:NN \g_@@_cjk_font_tl   \l_keys_choice_tl },
+    math-font         .choices:nn =
+      {
+        asana, cambria, cm, fira, garamond, lm, libertinus, stix,
+        bonum, dejavu, pagella, schola, termes, xits, none
+      }
+      { \tl_set_eq:NN \g_@@_math_font_tl  \l_keys_choice_tl },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{font-path}
+% 独立字体文件的路径。
+%    \begin{macrocode}
+    font-path            .code:n  =
+      {
+        \bool_set_true:N \g_@@_font_path_bool
+        \tl_set_eq:NN \g_@@_font_path_tl  \l_keys_choice_tl
+      },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4315,34 +4346,107 @@ To produce the documentation run the original source files ending with
 % \subsubsection{定义数学字库}
 %
 % \begin{macro}{\@@_load_math_font:}
-% 设置数学字体 (XITS, 或者 \href{https://www.stixfonts.org}{STIX}, 与 Times New Roman 最为相近)
-% 通用数学字体。
+% 批量定义数学字体配置。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_load_math_font:
+\cs_new:Npn \@@_define_math_font:nn #1#2
   {
-    % \setmathfont{STIXTwoMath-Regular}[Extension = .otf]
-    \setmathfont{XITSMath-Regular}[
-      BoldFont = XITSMath-Bold,
-      Extension = .otf]
-    \setmathfont{NewCMMath-Regular.otf}[range={cal,bb,frak}]
-    \setmathfont{NewCMMath-Regular.otf}[version=bold,range={bfcal}]
+    \cs_new:cpn { @@_load_math_font_ #1 : }
+      { \setmathfont { #2 } }
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{
+%   \@@_load_math_font_asana:,
+%   \@@_load_math_font_fira:,
+%   \@@_load_math_font_garamond:,
+%   \@@_load_math_font_lm:,
+%   \@@_load_math_font_libertinus:,
+%   \@@_load_math_font_stix:,
+%   \@@_load_math_font_bonum:,
+%   \@@_load_math_font_dejavu:,
+%   \@@_load_math_font_pagella:,
+%   \@@_load_math_font_schola:,
+%   \@@_load_math_font_termes:}
+% 批量定义若干数学字体的载入命令。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { asana      } { Asana-Math.otf             },
+    { fira       } { FiraMath-Regular.otf       },
+    { garamond   } { Garamond-Math.otf          },
+    { lm         } { latinmodern-math.otf       },
+    { libertinus } { LibertinusMath-Regular.otf },
+    { stix       } { STIXMath-Regular.otf       },
+    { bonum      } { texgyrebonum-math.otf      },
+    { dejavu     } { texgyredejavu-math.otf     },
+    { pagella    } { texgyrepagella-math.otf    },
+    { schola     } { texgyreschola-math.otf     },
+    { termes     } { texgyretermes-math.otf     }
+  }
+  { \@@_define_math_font:nn #1 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_load_math_font_cambria:}
+% Cambria Math 字体配置。
+%    \begin{macrocode}
+\cs_new:Npn \@@_load_math_font_cambria:
+  {
+    \bool_if:NTF \g_@@_font_path_bool
+      {
+        \setmathfont { cambria.ttc }
+          [ Path = \g_@@_font_path_tl/, FontIndex = 1 ]
+      }
+      { \setmathfont { Cambria~Math } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_load_math_font_xits:}
+% XITS Math 字体配置。
+%    \begin{macrocode}
+\cs_new:Npn \@@_load_math_font_xits:
+  {
+    \ctex_if_platform_macos:TF
+      {
+        \setmathfont { XITSMath-Regular.otf }
+        \setmathfont { XITSMath-Bold.otf    }
+          [ range= { bfup -> up, bfit -> it } ]
+      }
+      { \setmathfont { XITS~Math } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_load_math_font_none:}
+% 不进行数学字体配置。
+%    \begin{macrocode}
+\cs_new:Npn \@@_load_math_font_none: { }
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\@@_load_math_font_cm:}
+% \pkg{unicode-math} 默认采用 Computer Modern Math 字体，
+% 因此无需额外定义。
+%    \begin{macrocode}
+\cs_new_eq:NN \@@_load_math_font_cm: \@@_load_math_font_none:
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{载入指定字库}
+% \changes{v0.10}{2021/09/28}{修正了数学字体。}
 %
+% \begin{macro}{\@@_load_font:}
 % 载入字体命令。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_font:
   {
     \use:c { @@_load_latin_font_ \g_@@_latin_font_tl : }
     \use:c { @@_load_cjk_font_   \g_@@_cjk_font_tl   : }
-%    \end{macrocode}
-% \changes{v0.10}{2021/09/28}{修正了数学字体。}
-%    \begin{macrocode}
-    \@@_load_math_font:
+    \use:c { @@_load_math_font_  \g_@@_math_font_tl  : }
 %    \end{macrocode}
 % 自行定义 \pkg{ctex} 中的四类字体命令。
 %    \begin{macrocode}
@@ -4356,6 +4460,7 @@ To produce the documentation run the original source files ending with
     \RenewDocumentCommand \large  { } { \zihao     { 4      } }
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % 载入设置的字体。此处设置与文档类一同载入，否则在导言区后载入字体可能导致一部分覆盖字体的命令失效。
 %    \begin{macrocode}
@@ -6104,7 +6209,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_abs_info_en_g:n}
-% \changes{v2.0}{2022/07/01}{移除研究生英文摘要的下划线。}
+% \changes{v1.0}{2022/07/01}{移除研究生英文摘要的下划线。}
 % 绘制研究生英文摘要信息栏。
 % \begin{arguments}
 %   \item 分隔符
