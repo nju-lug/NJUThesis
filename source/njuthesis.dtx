@@ -3472,13 +3472,14 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_define_pkg_keys:nn}
+% \begin{macro}{\prg_new_conditional:cpnn,\@@_define_pkg_keys:nn}
 % \begin{arguments}
 %   \item 宏包名
 %   \item 用于函数的简写名称
 % \end{arguments}
 % 定义是否载入宏包的的文档类选项，以及相应的载入命令。
 %    \begin{macrocode}
+\cs_generate_variant:Nn \prg_new_conditional:Npnn { cpnn }
 \cs_new_protected:Npn \@@_define_pkg_keys:nn #1#2
   {
     \keys_define:nn { nju }
@@ -3491,20 +3492,36 @@ To produce the documentation run the original source files ending with
         \bool_if:cT { g_@@_use_ #2 _bool }
           { \RequirePackage { #1 } }
       }
+    \prg_new_conditional:cpnn { @@_if_ #2 _loaded: } { T }
+      {
+        \@ifpackageloaded { #1 }
+          { \prg_return_true:  }
+          { \prg_return_false: }
+      }
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{
+%   biblatex,
+%   cleveref,
 %   create-theorem,
 %   unicode-math,
+%   \@@_use_blx:,
+%   \@@_use_cref:,
 %   \@@_use_crthm:,
-%   \@@_use_unimath:}
+%   \@@_use_um:,
+%   \@@_if_blx_loaded:T,
+%   \@@_if_cref_loaded:T,
+%   \@@_if_crthm_loaded:T,
+%   \@@_if_um_loaded:T}
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { create-theorem } { crthm   },
-    { unicode-math   } { unimath }
+    { biblatex       } { blx   },
+    { cleveref       } { cref  },
+    { create-theorem } { crthm },
+    { unicode-math   } { um    }
   }
   { \@@_define_pkg_keys:nn #1 }
 %    \end{macrocode}
@@ -3669,6 +3686,18 @@ To produce the documentation run the original source files ending with
 %
 % \changes{v0.14}{2021/12/21}{移除内置的 \pkg{hologo}。}
 % \changes{v0.15}{2022/01/17}{移除内置的 \pkg{url}。}
+% \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除
+%   \pkg{amsthm} 和 \pkg{thmtools}。}
+% \changes{v0.16}{2022/03/19}{不显式载入 \pkg{amsmath}。}
+% \changes{v0.18}{2022/04/20}{不强制载入 \pkg{ntheorem}。}
+% \changes{v1.0}{2022/07/03}{不强制载入 \pkg{mathtools}。}
+%
+% \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下使用的
+% 数学字体。
+%    \begin{macrocode}
+\@@_use_um:
+%    \end{macrocode}
+%
 % 载入各种宏包。
 %    \begin{macrocode}
 \RequirePackage
@@ -3678,16 +3707,10 @@ To produce the documentation run the original source files ending with
     footmisc,
     setspace,
 %    \end{macrocode}
-% \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除
-%   \pkg{amsthm} 和 \pkg{thmtools}。}
-% \changes{v0.16}{2022/03/19}{不显式载入 \pkg{amsmath}。}
-% \changes{v0.18}{2022/04/20}{不强制载入 \pkg{ntheorem}。}
-% \changes{v1.0}{2022/07/03}{不强制载入 \pkg{mathtools}。}
-% 数学相关的宏包。其中，\pkg{amsmath} 会被 \pkg{unicode-math} 自动载入。
-% \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的
-% 数学字体。
+% 为保证 \pkg{cleveref} 在 \pkg{unicode-math}
+% 缺失的情况下也能正常工作，这里重复载入了 \pkg{amsmath}。
 %    \begin{macrocode}
-    unicode-math,
+    amsmath,
 %    \end{macrocode}
 % \changes{v0.14}{2021/12/21}{移除内置的 \pkg{multirow}、\pkg{subcaption}
 %   和 \pkg{wrapfig}。}
@@ -3705,9 +3728,9 @@ To produce the documentation run the original source files ending with
 % \pkg{hyperref} 覆写了大量命令，因此需要在其他包最后载入。
 % 仅有 \pkg{cleveref} 需要在 \pkg{hyperref} 后载入，否则会报错。
 %    \begin{macrocode}
-    hyperref,
-    cleveref
+    hyperref
   }
+\@@_use_cref:
 %    \end{macrocode}
 %
 % 在双面模式下，使用 \pkg{emptypage} 清除空白页的页眉、页脚和页码。
@@ -4483,8 +4506,8 @@ To produce the documentation run the original source files ending with
   {
     \use:c { @@_load_latin_font_ \g_@@_latin_font_tl : }
     \use:c { @@_load_cjk_font_   \g_@@_cjk_font_tl   : }
-    \@ifpackageloaded { unicode-math }
-      { \use:c { @@_load_math_font_ \g_@@_math_font_tl : } } { }
+    \@@_if_um_loaded:T
+      { \use:c { @@_load_math_font_ \g_@@_math_font_tl : } }
 %    \end{macrocode}
 % 自行定义 \pkg{ctex} 中的四类字体命令。
 %    \begin{macrocode}
@@ -4798,17 +4821,17 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{参考文献}
 %
-% \begin{variable}{\g_@@_biblatex_option_clist}
+% \begin{variable}{\g_@@_blx_option_clist}
 % 存储传入 \pkg{biblatex} 的选项列表。
 %    \begin{macrocode}
-\clist_new:N \g_@@_biblatex_option_clist
+\clist_new:N \g_@@_blx_option_clist
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_bib_resource_clist}
+% \begin{variable}{\g_@@_blx_resource_clist}
 % 存储参考文献数据源列表。
 %    \begin{macrocode}
-\clist_new:N \g_@@_bib_resource_clist
+\clist_new:N \g_@@_blx_resource_clist
 %    \end{macrocode}
 % \end{variable}
 %
@@ -4836,17 +4859,17 @@ To produce the documentation run the original source files ending with
     style             .choice:,
     style / numeric     .code:n =
       {
-        \clist_gput_right:Nn \g_@@_biblatex_option_clist
+        \clist_gput_right:Nn \g_@@_blx_option_clist
           { style = gb7714-2015      }
       },
     style / author-year .code:n =
       {
-        \clist_gput_right:Nn \g_@@_biblatex_option_clist
+        \clist_gput_right:Nn \g_@@_blx_option_clist
           { style = gb7714-2015ay    }
       },
     style / unknown     .code:n =
       {
-        \clist_gput_right:Nx \g_@@_biblatex_option_clist
+        \clist_gput_right:Nx \g_@@_blx_option_clist
           { style = \l_keys_value_tl }
       },
     style            .initial:n = numeric,
@@ -4865,7 +4888,7 @@ To produce the documentation run the original source files ending with
         \tl_if_in:VnTF \l_keys_value_tl { style = }
           { \msg_error:nn { njuthesis } { extra-bib-style } }
           {
-            \clist_gput_right:NV \g_@@_biblatex_option_clist
+            \clist_gput_right:NV \g_@@_blx_option_clist
               \l_keys_value_tl
           }
       },
@@ -4878,7 +4901,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     resource            .code:n =
       {
-        \clist_gput_right:NV \g_@@_bib_resource_clist
+        \clist_gput_right:NV \g_@@_blx_resource_clist
           \l_keys_value_tl
       },
   }
@@ -4890,29 +4913,32 @@ To produce the documentation run the original source files ending with
 % 入。此处单独定义了可以在导言区使用的 \cs{addbibresource} 命令，用于兼容传统的
 % 添加参考文献数据源的方法。
 %    \begin{macrocode}
-\NewDocumentCommand \addbibresource { m }
-  { \clist_gput_right:Nn \g_@@_bib_resource_clist { #1 } }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_biblatex_pre_setup:}
-% 载入 \pkg{biblatex} 宏包前，必须禁用自行定义的 \cs{addbibresource}
-% 命令，并传入用户设置的选项。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_biblatex_pre_setup:
+\bool_if:NT \g_@@_use_blx_bool
   {
-    \cs_undefine:N \addbibresource
-    \clist_gput_right:Nn \g_@@_biblatex_option_clist { backend = biber }
-    \exp_args:NV \PassOptionsToPackage
-      \g_@@_biblatex_option_clist { biblatex }
+    \NewDocumentCommand \addbibresource { m }
+      { \clist_gput_right:Nn \g_@@_blx_resource_clist { #1 } }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_biblatex_post_setup:}
+% \begin{macro}{\@@_blx_pre_setup:}
+% 载入 \pkg{biblatex} 宏包前，必须禁用自行定义的 \cs{addbibresource}
+% 命令，并传入用户设置的选项。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_blx_pre_setup:
+  {
+    \cs_undefine:N \addbibresource
+    \clist_gput_right:Nn \g_@@_blx_option_clist { backend = biber }
+    \exp_args:NV \PassOptionsToPackage
+      \g_@@_blx_option_clist { biblatex }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_blx_post_setup:}
 % \pkg{biblatex} 宏包载入后的设置。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_biblatex_post_setup:
+\cs_new_protected:Npn \@@_blx_post_setup:
   {
 %    \end{macrocode}
 % \changes{v0.12}{2021/12/06}{设置输出参考文献的默认选项。}
@@ -4928,7 +4954,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 传入参考文献源文件，此时可正常使用 \cs{addbibresource} 命令。
 %    \begin{macrocode}
-    \clist_map_inline:Nn \g_@@_bib_resource_clist
+    \clist_map_inline:Nn \g_@@_blx_resource_clist
       { \addbibresource { ##1 } }
   }
 %    \end{macrocode}
@@ -4939,9 +4965,12 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \BeforeBeginEnvironment { document }
   {
-    \@@_biblatex_pre_setup:
-    \RequirePackage { biblatex }
-    \@@_biblatex_post_setup:
+    \bool_if:NT \g_@@_use_blx_bool
+      {
+        \@@_blx_pre_setup:
+        \RequirePackage { biblatex }
+        \@@_blx_post_setup:
+      }
   }
 %    \end{macrocode}
 %
@@ -4997,18 +5026,20 @@ To produce the documentation run the original source files ending with
 %
 % 修改 \pkg{cleverref} 的标签格式。默认在名称后面添加空格，删除公式编号的括号。
 %    \begin{macrocode}
-\crefdefaultlabelformat { #2#1#3\, }
-\crefformat { equation      } { 公式~#2#1#3~   }
-\crefformat { chapter       } { 第#2#1#3章     }
-\crefformat { section       } { 第~#2#1#3~节   }
-\crefformat { subsection    } { 第~#2#1#3~小节 }
-\crefformat { subsubsection } { 第~#2#1#3~小节 }
+\@@_if_cref_loaded:T
+  {
+    \crefdefaultlabelformat { #2#1#3\, }
+    \crefformat { equation      } { 公式~#2#1#3~   }
+    \crefformat { chapter       } { 第#2#1#3章     }
+    \crefformat { section       } { 第~#2#1#3~节   }
+    \crefformat { subsection    } { 第~#2#1#3~小节 }
+    \crefformat { subsubsection } { 第~#2#1#3~小节 }
 %    \end{macrocode}
-%
 % 修改 \pkg{cleverref} 的标签名称。
 %    \begin{macrocode}
-\@@_cref_name:n { figure, table, appendix, proof }
-\@@_cref_name:V \g_@@_theorem_type_clist
+    \@@_cref_name:n { figure, table, appendix, proof }
+    \@@_cref_name:V \g_@@_theorem_type_clist
+  }
 %    \end{macrocode}
 %
 %
@@ -6022,8 +6053,8 @@ To produce the documentation run the original source files ending with
       }
     \bool_if:NT \g_@@_blind_bool
       {
-        \RenewDocumentCommand \njuemblem { o m m } { \prg_do_nothing: }
-        \RenewDocumentCommand \njuname   { o m m } { \prg_do_nothing: }
+        \RenewDocumentCommand \njuemblem { o m m } { }
+        \RenewDocumentCommand \njuname   { o m m } { }
       }
   }
 %    \end{macrocode}
