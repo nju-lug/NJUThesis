@@ -2624,10 +2624,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\c_@@_month_en_clist}
+% \begin{variable}{\c_@@_name_month_en_clist}
 % 英文月份名称。
 %    \begin{macrocode}
-\clist_const:Nn \c_@@_month_en_clist
+\clist_const:Nn \c_@@_name_month_en_clist
   {
     January, February, March, April, May, June,
     July, August, September, October, November, December
@@ -2935,7 +2935,7 @@ To produce the documentation run the original source files ending with
 \cs_new:Npn \@@_date:www    #1-#2-#3 \q_stop
   { \__zhnum_date_aux:nnn { #1 } { #2 } { #3 } }
 \cs_new:Npn \@@_date_en:www #1-#2-#3 \q_stop
-  { \clist_item:Nn \c_@@_month_en_clist { #2 } ~#3 , ~#1  }
+  { \clist_item:Nn \c_@@_name_month_en_clist { #2 } ~#3 , ~#1  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3004,14 +3004,15 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry_title:nnn}
+% \begin{macro}{\@@_cover_entry_title:NNN}
 % 生成普通封面页的标题条目，包括标签和标题本身。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
+%   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry_title:nnn #1#2#3
+\cs_new_protected:Npn \@@_cover_entry_title:NNN #1#2#3
   {
     \tl_if_empty:NT \g_@@_info_title_tl
       { \msg_error:nn { njuthesis } { missing-title } }
@@ -3032,34 +3033,34 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry:nnnn}
+% \begin{macro}{\@@_cover_entry:nNNN}
 % 生成单项信息条目。
 % \begin{arguments}
 %   \item 条目名称
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
+%   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry:nnnn #1#2#3#4
+\cs_new_protected:Npn \@@_cover_entry:nNNN #1#2#3#4
   {
-    \@@_spread_box:nnx { #2 } { #4 } { \@@_name:n { #1 } }
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #3 }       { \@@_info:n { #1 } }
-    \par
+    \@@_spread_box:nnx { #2 } { #4 } { \@@_name:n { #1 } } \@@_hskip:
+    \@@_ulined_center_box:nn { #3 }  { \@@_info:n { #1 } } \par
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_bientry:nnnnn}
+% \begin{macro}{\@@_cover_entry:nnNNN}
 % 生成两项信息条目，仅用于本科生封面。
 % \begin{arguments}
 %   \item 左侧条目名称
 %   \item 右侧条目名称
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
+%   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_bientry:nnnnn #1#2#3#4#5
+\cs_new_protected:Npn \@@_cover_entry:nnNNN #1#2#3#4#5
   {
     \@@_spread_box:nnx { #3 } { #5 } { \@@_name:n { #1 } } \@@_hskip:
     \@@_ulined_center_box:nn  { #4 } { \@@_info:n { #1 } } \@@_hskip:
@@ -3069,15 +3070,16 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry_supv:nnnn}
+% \begin{macro}{\@@_cover_entry_supv:nNNN}
 % 生成两项导师信息条目，仅用于本科生封面。
 % \begin{arguments}
 %   \item 条目名称
 %   \item 长内容盒子宽度，|dim| 型变量
 %   \item 短内容盒子宽度，|dim| 型变量
+%   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry_supv:nnnn #1#2#3#4
+\cs_new_protected:Npn \@@_cover_entry_supv:nNNN #1#2#3#4
   {
     \@@_spread_box:nnx { #2 } { #4 } { \@@_name:n { #1 } }
     \@@_hskip:
@@ -3470,6 +3472,44 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_define_pkg_keys:nn}
+% \begin{arguments}
+%   \item 宏包名
+%   \item 用于函数的简写名称
+% \end{arguments}
+% 定义是否载入宏包的的文档类选项，以及相应的载入命令。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_define_pkg_keys:nn #1#2
+  {
+    \keys_define:nn { nju }
+      {
+        #1 .bool_gset:c = { g_@@_use_ #2 _bool },
+        #1   .initial:n = true
+      }
+    \cs_new_protected:cpn { @@_use_ #2 : }
+      {
+        \bool_if:cT { g_@@_use_ #2 _bool }
+          { \RequirePackage { #1 } }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{
+%   create-theorem,
+%   unicode-math,
+%   \@@_use_crthm:,
+%   \@@_use_unimath:}
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { create-theorem } { crthm   },
+    { unicode-math   } { unimath }
+  }
+  { \@@_define_pkg_keys:nn #1 }
+%    \end{macrocode}
+% \end{macro}
+%
 % 在定义完全部设置以后从导言区输入参数。
 %    \begin{macrocode}
 \ProcessKeysOptions { nju }
@@ -3616,8 +3656,6 @@ To produce the documentation run the original source files ending with
     { no-math           } { fontspec     },
     { perpage           } { footmisc     },
     { hyphens           } { url          },
-    { warnings-off={ mathtools-colon, mathtools-overbracket } }
-                          { unicode-math },
     { capitalise, nameinlink, noabbrev }
                           { cleveref     }
   }
@@ -3644,12 +3682,11 @@ To produce the documentation run the original source files ending with
 %   \pkg{amsthm} 和 \pkg{thmtools}。}
 % \changes{v0.16}{2022/03/19}{不显式载入 \pkg{amsmath}。}
 % \changes{v0.18}{2022/04/20}{不强制载入 \pkg{ntheorem}。}
+% \changes{v1.0}{2022/07/03}{不强制载入 \pkg{mathtools}。}
 % 数学相关的宏包。其中，\pkg{amsmath} 会被 \pkg{unicode-math} 自动载入。
 % \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下所使用的
-% 数学字体。用于配置数学环境的 \pkg{mathtools} 会与 \pkg{unicode-math}
-% 发生冲突，需要手动消除其警告。
+% 数学字体。
 %    \begin{macrocode}
-    mathtools,
     unicode-math,
 %    \end{macrocode}
 % \changes{v0.14}{2021/12/21}{移除内置的 \pkg{multirow}、\pkg{subcaption}
@@ -4446,7 +4483,8 @@ To produce the documentation run the original source files ending with
   {
     \use:c { @@_load_latin_font_ \g_@@_latin_font_tl : }
     \use:c { @@_load_cjk_font_   \g_@@_cjk_font_tl   : }
-    \use:c { @@_load_math_font_  \g_@@_math_font_tl  : }
+    \@ifpackageloaded { unicode-math }
+      { \use:c { @@_load_math_font_ \g_@@_math_font_tl : } } { }
 %    \end{macrocode}
 % 自行定义 \pkg{ctex} 中的四类字体命令。
 %    \begin{macrocode}
@@ -5235,35 +5273,44 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / u / info }
   {
     content  =
-      \@@_cover_info_u:NNN \c_@@_coverlabel_dim \c_@@_coveruline_dim
+      \@@_cover_info_u:NNNN
+        \c_@@_coverlabel_dim
+        \c_@@_coveruline_dim
+        \c_@@_smallhskip_dim
         \c_@@_fmt_coverlabel_tl,
     format   = \zihao { 3 }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_info_u:NNN}
+% \begin{macro}{\@@_cover_info_u:NNNN}
 % 本科生封面信息栏。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 长内容盒子宽度，|dim| 型变量
+%   \item 间隔宽度，|dim| 型变量
+%   \item 标签格式
 % \end{arguments}
-% 短内容盒子的长度值是通过计算得到的。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_info_u:NNN #1#2#3
+\cs_new_protected:Npn \@@_cover_info_u:NNNN #1#2#3#4
   {
-    \begin{minipage} { #1 + #2 + \c_@@_smallhskip_dim }
+    \dim_set:Nn \l__nju_tmpa_dim { #1 + #2 + #3 }
+    \begin{minipage} { \l__nju_tmpa_dim }
       \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
-      \dim_set:Nn \l_@@_tmpb_dim { .5 #2 - .5 #1 - \c_@@_smallhskip_dim }
-      \@@_cover_entry:nnnn { dept      } { #1 } { #2 } { #3 }
-      \@@_cover_entry:nnnn { major     } { #1 } { #2 } { #3 }
-      \@@_cover_entry_title:nnn  { #1 } { #2 } { #3 }
-      \@@_cover_bientry:nnnnn { grade  } { id } { #1 } { \l_@@_tmpb_dim } { #3 }
-      \@@_cover_entry:nnnn { author    } { #1 } { #2 } { #3 }
-      \@@_cover_entry_supv:nnnn { supv } { #1 } { \l_@@_tmpb_dim } { #3 }
+%    \end{macrocode}
+% 短内容盒子的长度值是通过计算得到的。|dim| 型变量的乘除需要采取
+% \cs{dim_ratio:nn} 提供的形式。
+%    \begin{macrocode}
+      \dim_set:Nn \l_@@_tmpb_dim { #2 * 1/2 - #1 * 1/2 - #3 }
+      \@@_cover_entry:nNNN { dept  } #1 #2 #4
+      \@@_cover_entry:nNNN { major } #1 #2 #4
+      \@@_cover_entry_title:NNN #1 #2 #4
+      \@@_cover_entry:nnNNN { grade } { id } #1 \l_@@_tmpb_dim #4
+      \@@_cover_entry:nNNN { author } #1 #2 #4
+      \@@_cover_entry_supv:nNNN { supv } #1 \l_@@_tmpb_dim #4
       \bool_if:NT \l_@@_second_supv_bool
-        { \@@_cover_entry_supv:nnnn { supvii } { #1 } { \l_@@_tmpb_dim } { #3 } }
-      \@@_cover_entry:nnnn { submitdate } { #1 } { #2 } { #3 }
+        { \@@_cover_entry_supv:nNNN { supvii } #1 \l_@@_tmpb_dim #4 }
+      \@@_cover_entry:nNNN { submitdate } #1 #2 #4
     \end{minipage}
   }
 %</def-u>
@@ -5328,7 +5375,10 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / g / info }
   {
     content     =
-      \@@_cover_info_g:NNN \c_@@_coverlabel_dim \c_@@_coveruline_dim
+      \@@_cover_info_g:NNNN
+        \c_@@_coverlabel_dim
+        \c_@@_coveruline_dim
+        \c_@@_smallhskip_dim
         \c_@@_fmt_coverlabel_tl,
     bottom-skip = 0 pt plus 1.5 fil
   }
@@ -5343,20 +5393,23 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_info_g:NNN}
+% \begin{macro}{\@@_cover_info_g:NNNN}
 % 研究生封面信息栏。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
+%   \item 间隔宽度，|dim| 型变量
+%   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_info_g:NNN #1#2#3
+\cs_new_protected:Npn \@@_cover_info_g:NNNN #1#2#3#4
   {
-    \begin{minipage} { #1 + #2 + \c_@@_smallhskip_dim }
+    \dim_set:Nn \l__nju_tmpa_dim { #1 + #2 + #3 }
+    \begin{minipage} { \l__nju_tmpa_dim }
       \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
-      \@@_cover_entry_title:nnn { #1 } { #2 } { #3 }
+      \@@_cover_entry_title:NNN  #1 #2 #4
       \clist_map_inline:nn { author, major, field, supvfull }
-        { \@@_cover_entry:nnnn { ##1 } { #1 } { #2 } { #3 } }
+        { \@@_cover_entry:nNNN { ##1 } #1 #2 #4 }
     \end{minipage}
   }
 %    \end{macrocode}

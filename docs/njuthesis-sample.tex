@@ -1,60 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% njuthesis - 南京大学学位论文模板
-% Version 0.20.0  2022-06-10
-%
-% 关注项目地址以获取最新变化
-% https://github.com/nju-lug/NJUThesis
-% https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis
-% https://ctan.org/pkg/njuthesis
-%
-% 贡献者
-% Yu XIONG @atxy-blip   Yichen ZHAO @FengChendian
-% Song GAO @myandeg     Chang MA @glatavento
-% Yilun SUN @HermitSun  Yinfeng LIN @linyinfeng
-%
-% 许可证
-% LaTeX Project Public License（版本 1.3c 或更高）
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%---------------------------------------------------------------------
-% 一些提升使用体验的小技巧：
-%   1. 请务必使用 UTF-8 编码编写和保存本文档
-%   2. 请务必使用 XeLaTeX 或 LuaLaTeX 引擎进行编译
-%   3. 不保证接口稳定，写作前一定要留意版本号
-%   4. 以百分号(%)开头的内容为注释，可以随意删除
-%---------------------------------------------------------------------
-
-%---------------------------------------------------------------------
-% 请先阅读使用手册：
-% http://mirrors.ctan.org/macros/unicodetex/latex/njuthesis/njuthesis.pdf
-%---------------------------------------------------------------------
-
-\documentclass[
-    % 模板选项：
-    %
-    %   学位信息
-    % type = bachelor|master|doctor,  % 模板类型，默认为本科毕业论文
-    % degree = academic|professional, % 研究生学位类型，默认为学术学位
-    %
-    %   特殊页面
-    % nlcover = true|false,   % 是否需要国家图书馆封面，默认关闭
-    % decl-page = true|false, % 是否需要诚信承诺书或原创性声明，默认关闭
-    %
-    %   单双面模式，默认为适合印刷的双面模式
-    % oneside,                % 单面模式，无空白页
-    % twoside,                % 双面模式，每一章从奇数页开始
-    %
-    %   建议定稿前一直开启草稿模式以提升编译速度
-    % draft,                  % 开启草稿模式
-    %
-    %   盲审模式会抹除学校和个人信息
-    % blind,                  % 开启盲审模式
-    %
-    %   以下两项为字体设置，不改动则自动调用系统预装字体
-    % latin-font = win|mac|gyre|none,
-    % cjk-font = win|mac|fandol|founder|noto|source|none,
-    ]{njuthesis}
+\documentclass[]{njuthesis}
 
 \njusetup{
     % 设置参数
@@ -277,69 +221,69 @@
 %     前言
 % \end{preface}
 
-\begin{abstract}
-    中文摘要
-\end{abstract}
+% \begin{abstract}
+%     中文摘要
+% \end{abstract}
 
-\begin{abstract*}
-    English abstract
-\end{abstract*}
+% \begin{abstract*}
+%     English abstract
+% \end{abstract*}
 
-% 生成目录
-\tableofcontents
-% 生成图片清单
-\listoffigures
-% 生成表格清单
-\listoftables
+% % 生成目录
+% \tableofcontents
+% % 生成图片清单
+% \listoffigures
+% % 生成表格清单
+% \listoftables
 
-%---------------------------------------------------------------------
-%	正文部分
-%---------------------------------------------------------------------
-\mainmatter
+% %---------------------------------------------------------------------
+% %	正文部分
+% %---------------------------------------------------------------------
+% \mainmatter
 
-% 符号表
-% 语法与 description 环境一致
-% 两个可选参数依次为说明区域宽度、符号区域宽度
-% 带星号的符号表(notation*)不会插入目录
-\begin{notation}[10cm]
-  \item[DFT] 密度泛函理论 (Density functional theory)
-  \item[DMRG] 密度矩阵重正化群 (Density-Matrix Reformation-Group)
-\end{notation}
+% % 符号表
+% % 语法与 description 环境一致
+% % 两个可选参数依次为说明区域宽度、符号区域宽度
+% % 带星号的符号表(notation*)不会插入目录
+% \begin{notation}[10cm]
+%   \item[DFT] 密度泛函理论 (Density functional theory)
+%   \item[DMRG] 密度矩阵重正化群 (Density-Matrix Reformation-Group)
+% \end{notation}
 
-% 建议将论文内容拆分为多个文件
-% 即新建一个 chapters 文件夹
-% 把每一章的内容单独放入一个 tex 文件
-% 然后在这里用 \input{} 导入，例如
-%   \input{chapters/introduction}
-%   \input{chapters/environments}
+% % 建议将论文内容拆分为多个文件
+% % 即新建一个 chapters 文件夹
+% % 把每一章的内容单独放入一个 tex 文件
+% % 然后在这里用 \input{} 导入，例如
+% %   \input{chapters/introduction}
+% %   \input{chapters/environments}
 
-\chapter{引言}
+% \chapter{引言}
 
-\section{tDMRG}
+% \section{tDMRG}
 
-矩阵乘积态也被用于含时薛定谔方程的求解，形成了含时密度矩阵重正化群方法\cite{schollwock2011}。
+% 矩阵乘积态也被用于含时薛定谔方程的求解，形成了含时密度矩阵重正化群方法\cite{schollwock2011}。
 
-%---------------------------------------------------------------------
-%	参考文献
-%---------------------------------------------------------------------
+% %---------------------------------------------------------------------
+% %	参考文献
+% %---------------------------------------------------------------------
 
-% 生成参考文献页
-\printbibliography
+% % 生成参考文献页
+% \printbibliography
 
-%---------------------------------------------------------------------
-%	致谢
-%---------------------------------------------------------------------
+% %---------------------------------------------------------------------
+% %	致谢
+% %---------------------------------------------------------------------
 
-\begin{acknowledgement}
-    感谢 \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{LUG@NJU}。
-\end{acknowledgement}
+% \begin{acknowledgement}
+%     感谢 \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{LUG@NJU}。
+% \end{acknowledgement}
 
-%---------------------------------------------------------------------
-%	附录部分
-%---------------------------------------------------------------------
+% %---------------------------------------------------------------------
+% %	附录部分
+% %---------------------------------------------------------------------
 
-% 附录部分使用单独的字母序号
-\appendix
+% % 附录部分使用单独的字母序号
+% \appendix
 
 % 可以在这里插入补充材料
 
