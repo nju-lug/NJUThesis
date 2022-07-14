@@ -150,6 +150,7 @@ To produce the documentation run the original source files ending with
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
 \SetTblrInner{row{1}={font=\bfseries}}
+\SetTblrInner[talltblr]{row{1}={font=\bfseries}}
 \DefTblrTemplate{caption-sep}{default}{\quad}
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
@@ -886,6 +887,34 @@ To produce the documentation run the original source files ending with
 % \end{itemize}
 %
 %
+% \subsubsection{可选宏包}
+%
+% \begin{function}[added=2022-07-03]{
+%   biblatex,
+%   cleveref,
+%   create-theorem,
+%   unicode-math}
+%   \begin{syntax}
+%     biblatex       = <\TTF>
+%     cleveref       = <\TTF>
+%     create-theorem = <\TTF>
+%     unicode-math   = <\TTF>
+%   \end{syntax}
+% 是否默认载入某些宏包，默认均是。这里宏包名和选项名是一致的。
+% \end{function}
+%
+% 为了跟进现代 \LaTeX{} 技术的发展趋势，本模板采用一系列新开发的宏包
+% 作为相关功能的解决方案。这些宏包为：
+% \begin{description}
+%   \item[\pkg{biblatex}] 复杂参考文献数据的处理。
+%   \item[\pkg{cleveref}] 按来源类型自动处理引用标签。
+%   \item[\pkg{create-theorem}] 使用 \hologo{LaTeX3} 编写的定理类环境定制界面。
+%   \item[\pkg{unicode-math}] 支持 Unicode 数学字体。
+% \end{description}
+%
+% 在某些情况下，这些宏包会与旧有的经验方法冲突，可以使用上述选项在模板
+% 中禁用这些宏包，从而手动配置相关功能。
+%
 % \subsubsection{配置文件}
 %
 % \begin{function}[added=2022-02-23]{config}
@@ -921,6 +950,20 @@ To produce the documentation run the original source files ending with
 % 在不同的操作系统上使用同一套配置会导致缺字、编译出错等后果。
 % 因此，本模板对于中文字体和西文字体都提供了多种字体配置。
 %
+% 若要手动选择字体，则需将字体设置为 \opt{none}，再通过 \pkg{fontspec}
+% 宏包或 \pkg{ctex} 宏包中给出的命令来实现。
+%
+% ^^A \begin{function}[added=2022-07-02]{font-path}
+% ^^A   \begin{syntax}
+% ^^A     font-path = \Arg{文件夹}
+% ^^A   \end{syntax}
+% ^^A 字体文件目录。
+% ^^A \end{function}
+%
+% ^^A 本模板默认使用操作系统安装的字体。可以使用本选项从任意目录载入字体。
+%
+% \paragraph{中文}
+%
 % 本模板提供的中文字体配置如表 \ref{tab:cjk-fontset} 所示。
 % 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置
 % （见表中前三行，Windows 和 macOS 以外的系统采用 Fandol 配置）。
@@ -929,7 +972,7 @@ To produce the documentation run the original source files ending with
 % \begin{table}[htbp]
 %   \centering
 %   \begin{talltblr}[
-%       caption = {中文字体配置列表},
+%       caption = {中文字体配置},
 %       label = {tab:cjk-fontset},
 %       note{a} = {请下载简繁扩展（即 GBK 编码）版本},
 %       note{b} = {使用\ignorespaces
@@ -946,7 +989,7 @@ To produce the documentation run the original source files ending with
 %       因此使用方正字体代替} ]
 %     { cell{2}{2,4} = {white!70!njuyellow},
 %       cell{4}{4} = {white!70!njuyellow},
-%       row{1} = {font=\bfseries}, colspec = {ccccc} }
+%       colspec = {ccccc} }
 %   \toprule
 %     配置名称     & 宋体        & 黑体        & 楷书        & 仿宋                 \\
 %   \midrule
@@ -973,29 +1016,72 @@ To produce the documentation run the original source files ending with
 % 若想要获得与 Word 版本模板最为贴近的体验，
 % 可以通过手动安装 Windows 自带的中易宋体、中易黑体、中易楷体和中易仿宋，并设置使用 Windows 字体来实现。
 %
-% 本模板提供的西文字体配置如表 \ref{tab:latinfontset} 所示。
-% 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置
-% （见表中前三行，Windows 和 macOS 以外的系统采用 \opt{gyre} 配置）。
+% \paragraph{西文}
+%
+% 本模板提供的西文字体配置如表 \ref{tab:latin-fontset} 所示。
+% 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的
+% 字体配置。Windows 和 macOS 以外的系统采用 \opt{gyre} 配置。
 %
 % \begin{table}[htbp]
 %   \centering
-%   \caption{西文字体清单}
-%   \label{tab:latinfontset}
-%   \begin{tabular}{cccc}
+%   \begin{talltblr} [
+%       caption = {西文字体配置},
+%       label = {tab:latin-fontset},
+%       note{a} = {TG 表示 \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{\Hologo{TeX}~Gyre}。} ]
+%     { colspec = {cccc} }
 %     \toprule
-%       \bf 配置名称 & \bf 衬线体                & \bf 无衬线体            & \bf 等宽字体             \\
+%       配置名称   & 衬线体          & 无衬线体 & 等宽字体    \\
 %     \midrule
-%       Windows      & Times~New~Roman           & Arial                   & Courier~New              \\
-%       macOS        & Times~New~Roman           & Arial                   & Menlo                    \\
-%       \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{gyre}
-%                    & \Hologo{TeX}~Gyre~Termes  & \Hologo{TeX}~Gyre~Heros & \Hologo{TeX}~Gyre~Cursor \\
+%       \opt{win}  & Times~New~Roman & Arial    & Courier~New \\
+%       \opt{mac}  & Times~New~Roman & Arial    & Menlo       \\
+%       \opt{gyre} & TG Termes       & TG Heros & TG Cursor   \\
 %     \bottomrule
-%   \end{tabular}
+%   \end{talltblr}
 % \end{table}
 %
-% 若要手动选择字体，则需将字体设置为 \opt{none}，再通过 \pkg{fontspec} 宏包或 \pkg{ctex} 宏包中给出的命令来实现。
 %
-% 最后，出于统一格式的需要，本模板还选取了与正文字体相似度最高的数学字体（\href{https://github.com/aliftype/xits}{XITS 字体}）用于公式排版。
+% \paragraph{数学}
+%
+% \begin{function}[added=2022-07-02]{math-font}
+%   \begin{syntax}
+%     math-font=<asana|cambria|fira|garamond|lm|...|termes|xits|none>
+%   \end{syntax}
+% 设置数学字体。
+% \end{function}
+%
+% 本模板采用 \pkg{unicode-math} 宏包配置数学公式环境中使用的字体。
+% 与原生 \LaTeX{} 最接近的字体对应 \opt{lm}，
+% 与 MS Word 最接近的字体对应 \opt{cambria}。
+%
+% \begin{table}[htbp]
+%   \centering
+%   \begin{talltblr} [
+%       caption = {数学字体配置},
+%       label = {tab:math-fontset},
+%       note{a} = {TG 表示 \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{\Hologo{TeX}~Gyre}。},
+%       note{b} = {粗体使用 XITS Math Bold。} ]
+%     { colspec = {ccl} }
+%   \toprule
+%     配置名称          & 字体名称           & 描述                            \\
+%   \midrule
+%     \opt{asana}       & Asana Math         &                                 \\
+%     \opt{cambria}     & Cambria Math       & 微软 Office 预装的数学字体      \\
+%     \opt{fira}        & Fira Math          & 无衬线数学字体，Fira 风格       \\
+%     \opt{garamond}    & Garamond Math      & Garamond 风格                   \\
+%     \opt{lm}          & Latin Modern Math  & Computer Modern 风格            \\
+%     \opt{libertinus}  & Libertinus Math    &                                 \\
+%     \opt{stix}        & STIX Math          & Times 风格                      \\
+%     \opt{bonum}       & TG Bonum Math   \TblrNote{a} &                       \\
+%     \opt{dejavu}      & TG DejaVu Math  \TblrNote{a} & DejaVu 风格           \\
+%     \opt{pagella}     & TG Pagella Math \TblrNote{a} & Palatino 风格         \\
+%     \opt{schola}      & TG Schola Math  \TblrNote{a} &                       \\
+%     \opt{termes}      & TG Termes Math  \TblrNote{a} & Times 风格            \\
+%     \opt{xits}        & XITS Math       \TblrNote{b} & 基于 STIX，Times 风格 \\
+%   \bottomrule
+%   \end{talltblr}
+% \end{table}
+%
+% \paragraph{授权}
 %
 % 本节提及的字库中，中文字库只有方正书宋、方正黑体、方正楷体、方正仿宋、两种思源字体和四种Fandol字体能够\emph{免费商用}；
 % 英文字库中只有 Times New Roman、XITS 和三种 \Hologo{TeX} Gyre字体能够\emph{免费商用}。
@@ -1804,7 +1890,7 @@ To produce the documentation run the original source files ending with
 %   \begin{talltblr} [
 %       caption = {顺序编码制下的引用样式},
 %       label   = {tab:numeric-style} ]
-%     { row{1} = {font=\bfseries}, colspec = {cll} }
+%     { colspec = {cll} }
 %     \toprule
 %       引用方式 & 命令               &  排版效果                  \\
 %     \midrule
@@ -1825,7 +1911,7 @@ To produce the documentation run the original source files ending with
 %       caption = {著者-出版年制下的引用样式},
 %       label   = {tab:author-year-style},
 %       note{a} = {在此样式下 \tn{parencite} 效果等同于 \tn{cite}。} ]
-%     { row{1} = {font=\bfseries}, colspec = {cll} }
+%     { colspec = {cll} }
 %     \toprule
 %       引用方式       & 命令                  & 排版效果                     \\
 %     \midrule
@@ -2922,7 +3008,9 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_date:www,\@@_date_en:www}
-% 将形如 |yyyy-mm-dd| 的 ISO 日期格式字符串转化为日期表示。该格式符合国际标准 ISO 8601 以及国内标准 GB/T 7408--2005《数据元和交换格式 信息交换 日期和时间表示法》。
+% 将形如 |yyyy-mm-dd| 的 ISO 日期格式字符串转化为日期表示。
+% 该格式符合国际标准 ISO 8601 以及国内标准 GB/T 7408--2005
+% 《数据元和交换格式 信息交换 日期和时间表示法》。
 % \begin{arguments}
 %   \item 年份
 %   \item 月份
@@ -3266,26 +3354,26 @@ To produce the documentation run the original source files ending with
     align =
       {
         l =
-          { \tl_set_eq:NN \l_@@_begin_align_tl \flushleft
-            \tl_set_eq:NN \l_@@_end_align_tl   \endflushleft  },
+          { \tl_set_eq:NN \l_@@_align_begin_tl \flushleft
+            \tl_set_eq:NN \l_@@_align_end_tl   \endflushleft  },
         r =
-          { \tl_set_eq:NN \l_@@_begin_align_tl \flushright
-            \tl_set_eq:NN \l_@@_end_align_tl   \endflushright },
+          { \tl_set_eq:NN \l_@@_align_begin_tl \flushright
+            \tl_set_eq:NN \l_@@_align_end_tl   \endflushright },
         c =
-          { \tl_set_eq:NN \l_@@_begin_align_tl \center
-            \tl_set_eq:NN \l_@@_end_align_tl   \endcenter     },
+          { \tl_set_eq:NN \l_@@_align_begin_tl \center
+            \tl_set_eq:NN \l_@@_align_end_tl   \endcenter     },
         n =
-          { \tl_clear:N   \l_@@_begin_align_tl
-            \tl_clear:N   \l_@@_end_align_tl                  }
+          { \tl_clear:N   \l_@@_align_begin_tl
+            \tl_clear:N   \l_@@_align_end_tl                  }
       }
   }
   {
     \AssignTemplateKeys
     \group_begin:
-      \l_@@_begin_align_tl
+      \l_@@_align_begin_tl
       \l_@@_format_tl
       \l_@@_content_tl \par
-      \l_@@_end_align_tl
+      \l_@@_align_end_tl
     \group_end:
     \__nju_vskip:N \l_@@_bottom_skip
   }
@@ -3450,7 +3538,7 @@ To produce the documentation run the original source files ending with
       { \tl_set_eq:NN \g_@@_font_cjk_tl   \l_keys_choice_tl },
     math-font         .choices:nn =
       {
-        asana, cambria, cm, fira, garamond, lm, libertinus, stix,
+        asana, cambria, fira, garamond, lm, libertinus, stix,
         bonum, dejavu, pagella, schola, termes, xits, none
       }
       { \tl_set_eq:NN \g_@@_font_math_tl  \l_keys_choice_tl },
