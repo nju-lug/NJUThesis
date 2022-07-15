@@ -152,6 +152,15 @@ To produce the documentation run the original source files ending with
 \SetTblrInner{row{1}={font=\bfseries}}
 \SetTblrInner[talltblr]{row{1}={font=\bfseries}}
 \DefTblrTemplate{caption-sep}{default}{\quad}
+\def\TA{\TblrNote{a}}
+\def\TB{\TblrNote{b}}
+\def\TC{\TblrNote{c}}
+\def\TD{\TblrNote{d}}
+\def\TE{\TblrNote{e}}
+\def\TL{\TeX~Live}
+\def\MacTeX{Mac\TeX}
+\def\biber{\hologo{biber}}
+\def\LaTeXe{\hologo{LaTeX2e}}
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
   Extension = .otf]
@@ -224,7 +233,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.7}{2021/09/12}{将 \cls{njuthesis} 发布在 CTAN。}
 % \changes{v0.8}{2021/09/12}{修复已知问题，进行公开宣传。}
 % \changes{v0.9}{2021/09/15}{使用 DocStrip 合并模板文件。}
-% \changes{v0.9}{2021/09/15}{大幅度修改宏名称以符合 \hologo{LaTeX3} 规范。}
+% \changes{v0.9}{2021/09/15}{大幅度修改宏名称以符合 \LaTeX3 规范。}
 % \changes{v0.9}{2021/09/15}{进一步完善文档。}
 % \changes{v0.10}{2021/09/24}{删除了生成自述文件的代码。}
 % \changes{v0.12}{2021/11/28}{删除内置的 \pkg{njuvisual} 代码。}
@@ -233,7 +242,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.12}{2021/12/06}{修改了说明文档的代码呈现样式。}
 % \changes{v0.13}{2021/12/12}{优化了编译速度。}
 % \changes{v0.13}{2021/12/15}{适配2022届本科生毕业毕业论文（设计）规范。}
-% \changes{v0.14}{2022/01/13}{将本模板内嵌入南大 \hologo{TeX} 网站。}
+% \changes{v0.14}{2022/01/13}{将本模板内嵌入南大 \TeX{} 网站。}
 % \changes{v0.16}{2022/03/01}{分离本科生和研究生模板配置。}
 % \changes{v0.19}{2022/05/23}{对研究生普通封面进行若干细节修改。}
 % \changes{v0.19}{2022/05/23}{对国家图书馆封面进行若干细节修改。}
@@ -246,7 +255,7 @@ To produce the documentation run the original source files ending with
 % \maketitle
 %
 % \begin{abstract}
-% 南京大学学位论文 \hologo{LaTeX} 模板 \cls{njuthesis} 基于本科生院的论文撰写
+% 南京大学学位论文 \LaTeX 模板 \cls{njuthesis} 基于本科生院的论文撰写
 % 规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学学
 % 位论文排版要求和相应的国家规范、行业标准的学位论文，旨在为同学提供毕业论文书
 % 写的方便。
@@ -255,7 +264,7 @@ To produce the documentation run the original source files ending with
 % \def\abstractname{Abstract}
 % \begin{abstract}
 % The \cls{njuthesis} class is intended for typesetting Nanjing University
-% dissertations with \hologo{LaTeX}, providing support for bachelor, master,
+% dissertations with \LaTeX, providing support for bachelor, master,
 % and doctoral thesis.
 % \end{abstract}
 %
@@ -288,7 +297,7 @@ To produce the documentation run the original source files ending with
 % \section{模板介绍}
 %
 % \cls{njuthesis}，即南京大学学位论文模板，是一个由南京大学 Linux
-% 用户组维护的，用于处理本校学生毕业论文排版需求的 \hologo{LaTeX} 模板。
+% 用户组维护的，用于处理本校学生毕业论文排版需求的 \LaTeX 模板。
 %
 % 本模板使用的本科生毕业论文模板格式依据
 % 《关于启动南京大学2022届本科毕业论文（设计）工作的通知》\cite{nju2021}，
@@ -298,7 +307,7 @@ To produce the documentation run the original source files ending with
 % \subsection{开始之前}
 % \label{subsec:first-things-first}
 %
-% 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \hologo{TeX}
+% 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \TeX{}
 % 排版系统。话不多说，请先按部就班体验一遍下述的工作流程：
 %
 % \bigskip
@@ -335,9 +344,9 @@ To produce the documentation run the original source files ending with
 % 点击左上角的菜单按钮，查看编译器是否显示为 |XeLaTeX|；
 % 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个极其
 % 有益的结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉
-% \hologo{TeX} 排版软件使用方法所需的可观时间。
+% \TeX{} 排版软件使用方法所需的可观时间。
 %
-% \subparagraph{但我依然对 \hologo{LaTeX} 一无所知！}
+% \subparagraph{但我依然对 \LaTeX 一无所知！}
 % 这意味着您真的得花些时间在\emph{长篇累牍的精细介绍}上。
 % 如果您已经下定决心，请接着向后阅读，有需要时善用搜索引擎。
 %
@@ -373,7 +382,7 @@ To produce the documentation run the original source files ending with
 % 与其让一千个学生做一千种不同的模板，不如有人牵起头来，集中力量办大事。因此，南
 % 京大学 Linux User Group 的有志之士在2021年暑期联合起来，参考以上的现成模板，兼
 % 顾友校 \cls{fduthesis}\cite{fduthesis}、\textsc{THuThesis}\cite{thuthesis} 等
-% 优秀项目，构建了这一全新模板，力求通过 \hologo{LaTeX3} 语法和清晰的接口实现良
+% 优秀项目，构建了这一全新模板，力求通过 \LaTeX3 语法和清晰的接口实现良
 % 好的易用性和可维护性。
 %
 % 目前，本模板的主要维护者包括：
@@ -386,10 +395,10 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{快速上手}
 %
-% \hologo{LaTeX} 并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听
+% \LaTeX 并不是一种零门槛的语言，亦不是南京大学学生的必备技能。有同学听
 % 到“\emph{给毕业论文交差也得写代码}”这种事情就头疼，实在是我们不愿意见到而必须
-% 要面对的情况。目前，中文互联网上的 \hologo{LaTeX} 写作教程可谓汗牛充栋，然而
-% 如何快速准确找到所需要的用法，尤其是 \hologo{LaTeX3} 的新接口，需要一定的时间
+% 要面对的情况。目前，中文互联网上的 \LaTeX 写作教程可谓汗牛充栋，然而
+% 如何快速准确找到所需要的用法，尤其是 \LaTeX3 的新接口，需要一定的时间
 % 或者良好的英文阅读能力。在本文档的写作中，我们无力从盘古开天辟地开始从头构建您
 % 的相关知识体系，只能\emph{尽力做到有求必应}，在需要的地方顺带提一嘴，以期使您
 % 少走点弯路。
@@ -398,7 +407,7 @@ To produce the documentation run the original source files ending with
 % 所帮助的资料：
 % \begin{description}
 %   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，可以参考英文版\cite{lshort}及其中文翻译版\cite{lshort-zh-cn}。
-%   \item[《\hologo{LaTeX} 入门》] 刘海洋著\cite{刘海洋2013latex入门}。
+%   \item[《\LaTeX 入门》] 刘海洋著\cite{刘海洋2013latex入门}。
 % \end{description}
 %
 %
@@ -407,7 +416,7 @@ To produce the documentation run the original source files ending with
 % 本模板通过 \textsc{DocStrip} 进行维护，实际上是一种\emph{文学编程}。文学编程的
 % 本体是那些用来说明的文字，按写书写文章的方式组织。\file{njuthesis.dtx} 包含
 % \cls{njuthesis} 文档类的所有信息。前半部分为模板说明，即各种常用命令与必要的使
-% 用方法；后半部分为代码实现，为带有详细注释的 \hologo{TeX} 源代码。后者配合附
+% 用方法；后半部分为代码实现，为带有详细注释的 \TeX{} 源代码。后者配合附
 % 录，为有意了解本模板实现细节的同学提供必要指引。
 %
 % 下文中将出现若干特殊格式，用来指示代码组件。譬如，无衬线字体的
@@ -415,7 +424,7 @@ To produce the documentation run the original source files ending with
 % 字体的 \opt{opt-example} 为选项名，等宽字体的 \env{env-example} 为需要
 %  |\begin{}|和|\end{}|的环境名，等。本手册提供的代码示例中，左侧边线呈现南大标
 % 准洋红色 {\color{njumagenta}$\blacksquare$} 的属于终端命令，呈南大标准蓝色
-% {\color{njublue}$\blacksquare$} 的属于 \hologo{LaTeX} 源代码。
+% {\color{njublue}$\blacksquare$} 的属于 \LaTeX 源代码。
 %
 %
 % \subsection{许可说明}
@@ -427,7 +436,7 @@ To produce the documentation run the original source files ending with
 %   本模板之版权隶属于 © 2021 - 2022 南京大学 Linux 用户组。
 %
 % \subparagraph{发布和修改}
-%   本模板的发布和（或）修改遵守 LaTeX Project Public License（版本 1.3c 或更高）的条款。该许可证的最新版本位于 \url{http://www.latex-project.org/lppl.txt}，1.3c 及更新的版本随附于 2003/12/01 版本以后的所有 \hologo{LaTeX} 发行版。
+%   本模板的发布和（或）修改遵守 LaTeX Project Public License（版本 1.3c 或更高）的条款。该许可证的最新版本位于 \url{http://www.latex-project.org/lppl.txt}，1.3c 及更新的版本随附于 2003/12/01 版本以后的所有 \LaTeX 发行版。
 %
 % \subparagraph{联系作者}
 %   如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过 \href{https://github.com/nju-lug/NJUThesis/issues}{GitHub Issue} 或者 QQ 群聊\footnote{群号是 991559926。}联系 NJU LUG。
@@ -442,13 +451,13 @@ To produce the documentation run the original source files ending with
 % \cls{njuthesis} 目前处于积极的维护中，主要可通过以下三种途径获取模板文件：
 %
 % \subparagraph{CTAN}
-% \href{https://ctan.org/}{CTAN}\footnote{The Comprehensive \hologo{TeX}
-% Archive Network} 是所有 \hologo{TeX} 相关材料的中枢。
+% \href{https://ctan.org/}{CTAN}\footnote{The Comprehensive \TeX{}
+% Archive Network} 是所有 \TeX{} 相关材料的中枢。
 % 本模板的 CTAN 页面
 % \footnote{\href{https://ctan.org/pkg/njuthesis}{\cls{njuthesis}} 已经于2021年9
 % 月12日发布在 CTAN，用于绘制南大图标的
 % \href{https://ctan.org/pkg/njuvisual}{\pkg{njuvisual}} 也已于同年11月28日发
-% 布，两者已被 \hologo{TeX} Live 和 \hologo{MiKTeX} 收录。}上提供基本的介绍信息，可以下载说明文档（本文档）和宏包源代
+% 布，两者已被 \TeX{} Live 和 \MiKTeX 收录。}上提供基本的介绍信息，可以下载说明文档（本文档）和宏包源代
 % 码。当然，使用这一来源时并不需要接触后者，请参考
 % \ref{subsubsec:standard-installation} 的标准安装方法。
 %
@@ -514,10 +523,10 @@ To produce the documentation run the original source files ending with
 % \subsubsection{标准安装}
 % \label{subsubsec:standard-installation}
 %
-% 我们\emph{始终建议}使用宏包管理器将 \cls{njuthesis} 安装到您的 \hologo{TeX} 系
-% 统。您可以通过 \hologo{TeX}\,Live Manager 或者 \hologo{MiKTeX} Console 等图形
-% 化包管理器直接搜索并安装 \cls{njuthesis} （及其依赖的 \pkg{njuvisual}）最新的
-% 稳定版。同时，您也可以使用终端命令。例如，假设您使用的是 \hologo{TeX}\,Live，
+% 我们\emph{始终建议}使用宏包管理器将 \cls{njuthesis} 安装到您的 \TeX 系
+% 统。您可以通过 \TL~Manager 或者 \MiKTeX~Console 等图形化包管理器直接搜
+% 索并安装 \cls{njuthesis} （及其依赖的 \pkg{njuvisual}）最新的
+% 稳定版。同时，您也可以使用终端命令。例如，假设您使用的是 \TL，
 % 键入下述 \pkg{tlmgr} 的命令（很可能需要管理员权限）：
 % \begin{shellexample}[morekeywords={tlmgr},emph={install}]
 %   tlmgr install njuthesis njuvisual
@@ -527,7 +536,7 @@ To produce the documentation run the original source files ending with
 % 另一方面，CTAN 依赖开发者手动上传更新，版本更新具有滞后性。如果使用时遇到了问
 % 题，不妨使用下一小节的\emph{即时安装方法}优先载入较新的格式文件。
 %
-% {\color{red}|[!]|} 如果您具备相关经验\footnote{譬如熟悉命令行操作、使用的是 \hologo{TeX}\,Live 发行版等}，可以在下载仓库内全部文件后，于该目录下运行
+% {\color{red}|[!]|} 如果您具备相关经验\footnote{譬如熟悉命令行操作、使用的是 \TL 发行版等}，可以在下载仓库内全部文件后，于该目录下运行
 % \begin{shellexample}[morekeywords={l3build},emph={install}]
 %   l3build install
 % \end{shellexample}
@@ -559,27 +568,27 @@ To produce the documentation run the original source files ending with
 % \subsection{本地编译}
 % \label{subsec:localcompile}
 %
-% 本地编译的安装过程分为两个阶段：安装 \hologo{TeX} 发行版以及配置
+% 本地编译的安装过程分为两个阶段：安装 \TeX 发行版以及配置
 % 编辑器。前者提供了可以被命令行终端调用的编译程序，
 % 后者则提供了语法高亮、自动编译等人性化功能。
 %
-% \subsubsection{安装\hologo{TeX}发行版}
+% \subsubsection{安装 \TeX{} 发行版}
 %
-% 首先需要下载并安装 \hologo{TeX} 软件发行版，其中包括引擎、宏包、字体、
-% 文档等。各操作系统适用情况请参考表~\ref {tab:texdistribution}。第一次
-% 编译前请务必通过 MiKTeX Console、TeX LiveManager 等图形化程序或
+% 首先需要下载并安装 \TeX{} 软件发行版，其中包括引擎、宏包、字体、文档等。
+% 各操作系统适用情况请参考表~\ref {tab:texdistribution}。第一次
+% 编译前请务必通过 \MiKTeX~Console、\TL~Manager 等图形化程序或
 % \pkg{tlmgr} \emph{手动更新全部宏包}以避免潜在的兼容性问题。
 % \begin{table}[ht]
 %   \centering
-%   \caption{\hologo{TeX} 软件发行版一览}
+%   \caption{\TeX 软件发行版一览}
 %   \label{tab:texdistribution}
 %   \begin{tabular}{cccc}
 %     \toprule
-%     \hologo{TeX}        & Windows   & macOS     & Linux     \\
+%     \TeX        & Windows   & macOS     & Linux     \\
 %     \midrule
-%     \hologo{TeX}\,Live  & $\bullet$ &           & $\bullet$ \\
-%     Mac\hologo{TeX}     &           & $\bullet$ &           \\
-%     \hologo{MiKTeX}     & $\bullet$ & $\bullet$ & $\bullet$ \\
+%     \TL      & $\bullet$ &           & $\bullet$ \\
+%     \MacTeX     &           & $\bullet$ &           \\
+%     \MiKTeX     & $\bullet$ & $\bullet$ & $\bullet$ \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -591,7 +600,7 @@ To produce the documentation run the original source files ending with
 %         \href{https://mirror.nju.edu.cn/download/TeX%20排版系统}
 %         {南京大学开源软件镜像站}可以获得最佳的下载体验。
 %   \item 使用最新的发行版，即版本号为2022或者22。
-%   \item 对于 Windows 和 macOS 用户，更推荐轻量化的 \hologo{MiKTeX} 套件。
+%   \item 对于 Windows 和 macOS 用户，更推荐轻量化的 \MiKTeX 套件。
 % ^^A   \item Linux 用户请尽可能下载 full 版本，如 |texlive-full|。
 % ^^A         换言之，下载最大的软件包。
 %   \item 对于一部分用到新版本特性的宏包，\cls{njuthesis} 内置了版本检查
@@ -607,18 +616,18 @@ To produce the documentation run the original source files ending with
 %
 % 关于具体使用哪一种，至今仍有相当一部分人认为Windows自带的\emph{记事本}是
 % 最好的文本编辑器。但对于本项目而言，在此诚心诚意地推荐您使用\emph{更现代
-% 更美观更多功能}的编辑器，譬如\emph{安装了 \hologo{LaTeX} Workshop 插件的
+% 更美观更多功能}的编辑器，譬如\emph{安装了 \LaTeX Workshop 插件的
 % \href{https://code.visualstudio.com/}{Visual Studio Code}}。您也可以根据
 % 个人的喜好随意使用 TeXworks、TeXstudio 等编辑器，顺手就行。
 %
 % \cls{njuthesis} 为一些常见编辑器提供了配置文件，如
 % \begin{description}
 %   \item[Visual Studio Code] 本模板在 \file{.vscode/} 中提供一份
-%        \hologo{LaTeX} Workshop 插件的简易配置，在打开文件夹后将自动导入，
+%        \LaTeX Workshop 插件的简易配置，在打开文件夹后将自动导入，
 %        可以省略初始配置步骤直接使用。
 %   \item[TeXstudio] 本模板提供 \file{conf.txsprofile}，可以使用快捷键
 %        |alt+O+P| 导入配置文件。为了简化流程\footnote{当然，也可以设置
-%        为使用 \hologo{XeLaTeX} 编译，然后按照 \ref{subsubsec:compileseq}
+%        为使用 \XeLaTeX 编译，然后按照 \ref{subsubsec:compileseq}
 %        内容使用快捷键 |F8| 手动编译参考文献。}，该配置文件使用
 %        \pkg{latexmk}，第一次编译前请参考下一节内容安装 Perl。
 % \end{description}
@@ -626,7 +635,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{编译顺序}
 % \label{subsubsec:compileseq}
-% \hologo{TeX} 本身是命令行程序，通过不同的命令调用所需的编译引擎，
+% \TeX 本身是命令行程序，通过不同的命令调用所需的编译引擎，
 % 编辑器提供的快捷按钮实际只是做了包装。为了便于排查运行错误，
 % 以下通过具体终端命令简要描述编译过程。
 %
@@ -643,14 +652,14 @@ To produce the documentation run the original source files ending with
 % 文档位于同一目录下。该目录下同时会生成若干中间文件。
 %
 % 编译命令具体为引擎名称加主文件名，在编译 \file{.tex} 文件时，
-% 文件扩展名可以省略不写。现阶段 \cls{njuthesis} 仅支持 \hologo{XeTeX}
-% 与 \hologo{LuaTeX} 引擎，以及 \hologo{biber} 文献工具。请注意，
-% 几种命令的输出文件基本相同，可以任取一种；但如果您不清楚这两种编译引擎的
-% 区别，或者对多步编译感到困惑，我们建议优先使用 |latexmk -xelatex|。
+% 文件扩展名可以省略不写。现阶段 \cls{njuthesis} 仅支持 \XeTeX
+% 与 \LuaTeX 引擎，以及 \biber 文献工具。请注意，几种命令的输出文件
+% 基本相同，可以任取一种；但如果您不清楚这两种编译引擎的区别，
+% 或者对多步编译感到困惑，我们建议优先使用 |latexmk -xelatex|。
 %
 %
-% \subparagraph{使用 \hologo{XeLaTeX}}
-% 标准的 \hologo{XeTeX} 引擎四步编译方法。
+% \subparagraph{使用 \XeLaTeX}
+% 标准的 \XeTeX 引擎四步编译方法。
 %
 % \begin{shellexample}[morekeywords={xelatex,biber}]
 %   xelatex njuthesis-sample
@@ -660,8 +669,8 @@ To produce the documentation run the original source files ending with
 % \end{shellexample}
 %
 %
-% \subparagraph{使用 \hologo{LuaLaTeX}}
-% 标准的 \hologo{LuaTeX} 引擎四步编译方法。
+% \subparagraph{使用 \LuaLaTeX}
+% 标准的 \LuaTeX 引擎四步编译方法。
 %
 % \begin{shellexample}[morekeywords={lualatex,biber}]
 %   lualatex njuthesis-sample
@@ -685,9 +694,9 @@ To produce the documentation run the original source files ending with
 % \begin{shellexample}[morekeywords={latexmk}]
 %   latexmk njuthesis-sample
 % \end{shellexample}
-% 直接运行会调用 \hologo{pdfLaTeX} 引擎导致报错。
+% 直接运行会调用 \pdfLaTeX 引擎导致报错。
 % 如需指定编译引擎，可以加入 |-xelatex| 或 |-lualatex| 参数。
-% 例如，指定 \hologo{XeLaTeX} 的命令为
+% 例如，指定 \XeLaTeX 的命令为
 % \begin{shellexample}[morekeywords={latexmk},emph={-xelatex}]
 %   latexmk -xelatex njuthesis-sample
 % \end{shellexample}
@@ -701,24 +710,24 @@ To produce the documentation run the original source files ending with
 % \subsection{在线编译}
 % \label{subsec:onlinecompile}
 %
-% 相信您在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如 \hologo{TeX} 编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \hologo{MiKTeX}。}，占用空间过大\footnote{事实上，可以通过 |scheme-infraonly| 模式安装 \hologo{TeX}\,Live，随后利用 \pkg{tlmgr} 安装依赖宏包，这份宏包列表可以在 Git 仓库的 \file{.github/workflows/build.yml} 找到。}，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{出于文件 IO 速度的差异，同一个模板在 Linux 编译可以相对 Windows 节省约一半耗时。}。拒绝接受这些麻烦的同学可以尝试本节介绍的在线编译方法。
+% 相信您在接触了本地编译以后，很快就会意识到一些十分显然的事实，譬如 \TeX 编译器安装过程较为漫长\footnote{因此对于 Windows 推荐 \MiKTeX。}，占用空间过大\footnote{事实上，可以通过 |scheme-infraonly| 模式安装 \TL，随后利用 \pkg{tlmgr} 安装依赖宏包，这份宏包列表可以在 Git 仓库的 \file{.github/workflows/build.yml} 找到。}，而且在一部分处理器性能不佳的电脑上需要较长编译时间\footnote{出于文件 IO 速度的差异，同一个模板在 Linux 编译可以相对 Windows 节省约一半耗时。}。拒绝接受这些麻烦的同学可以尝试本节介绍的在线编译方法。
 %
 % {\color{red}|[!]|} 请注意，在线编辑器不一定提供良好的文件恢复和版本管理机制。
 % 请谨慎备份您的心血结晶。
 %
-% \subsubsection{南大\hologo{TeX}平台简介}
-% \changes{v0.2}{2021/09/07}{添加对南大 \hologo{TeX} 的支持。}
+% \subsubsection{南大 \TeX 平台简介}
+% \changes{v0.2}{2021/09/07}{添加对南大 \TeX 的支持。}
 %
-% \href{https://tex.nju.edu.cn}{南大 \hologo{TeX}} 基于开源的 Overleaf 社区版平台构建\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的 \hologo{LaTeX} 在线编辑器，首次使用需凭学校邮箱自助注册账号。
+% \href{https://tex.nju.edu.cn}{南大 \TeX} 基于开源的 Overleaf 社区版平台构建\footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的 \LaTeX 在线编辑器，首次使用需凭学校邮箱自助注册账号。
 %
-% {\color{red}|[!]|} 在 2022 年 5 月的运行中，该网站出现了多次崩溃事件，初步判断原因是由社区版并没有为高并发数做优化引发的。高峰时期，仍然建议在本地部署 \hologo{TeX} 发行版。
+% {\color{red}|[!]|} 在 2022 年 5 月的运行中，该网站出现了多次崩溃事件，初步判断原因是由社区版并没有为高并发数做优化引发的。高峰时期，仍然建议在本地部署 \TeX 发行版。
 %
 % \subsubsection{操作步骤}
 %
-% 本说明手册开头的 \ref{subsec:first-things-first} 即呈现了网站内嵌的 \cls{njuthesis} 模板的使用方法。由于南大 \hologo{TeX} 网站已预装 \cls{njuthesis}，可以直接编写正文，无需 \file{.cls} 等格式文件。如果有其他要求，也可以按如下步骤手动上传包含模板的压缩包。
+% 本说明手册开头的 \ref{subsec:first-things-first} 即呈现了网站内嵌的 \cls{njuthesis} 模板的使用方法。由于南大 \TeX 网站已预装 \cls{njuthesis}，可以直接编写正文，无需 \file{.cls} 等格式文件。如果有其他要求，也可以按如下步骤手动上传包含模板的压缩包。
 %
 % \begin{enumerate}
-%   \item 访问\href{https://tex.nju.edu.cn}{南大 \hologo{TeX} 网站}，点击界面右上方“注册”按钮，使用\emph{南京大学邮箱}注册账号并登录
+%   \item 访问\href{https://tex.nju.edu.cn}{南大 \TeX 网站}，点击界面右上方“注册”按钮，使用\emph{南京大学邮箱}注册账号并登录
 %   \item 新建空白项目，或者上传 \ref{subsubsec:on-the-fly-installation} 节得到的压缩文件。
 %   \item 在项目页面左上角的“菜单”中，确认编译器为 |XeLaTeX| 或者 |LuaLaTeX|
 %   \item 仿照 \file{njuthesis-sample.tex} 编写论文
@@ -733,7 +742,9 @@ To produce the documentation run the original source files ending with
 % \pkg{njuthesis} 现已支持 \href{https://www.overleaf.com/}{Overleaf} 平台。
 %
 % \subparagraph{TeXPage}
-% \href{https://www.texpage.com/}{TeXPage} 是国人研发的 \hologo{LaTeX} 在线编辑器，当前版本已具备较为完善的编辑编译功能，而且免费版相对 Overleaf 增加了公式识别、编辑历史等实用工具，也可以作为一个备选项。
+% \href{https://www.texpage.com/}{TeXPage} 是国人研发的 \LaTeX 在线编辑器，
+% 当前版本已具备较为完善的编辑编译功能，而且免费版相对 Overleaf 增加了公式识别、
+% 编辑历史等实用工具，也可以作为一个备选项。
 %
 %
 % \subsection{版本升级}
@@ -751,7 +762,7 @@ To produce the documentation run the original source files ending with
 % 文件覆盖旧版本。
 %
 % \subparagraph{没有}
-% 如果使用的是南大 \hologo{TeX}，更新内置模板时会进行公告，一般为上传 CTAN
+% 如果使用的是南大 \TeX，更新内置模板时会进行公告，一般为上传 CTAN
 % 后一周内。如果是本地安装，请直接使用包管理器进行更新：
 % \begin{shellexample}[morekeywords={tlmgr},emph={update}]
 %   tlmgr update --all
@@ -844,7 +855,7 @@ To produce the documentation run the original source files ending with
 % 开启单面或双面模式，默认为双面模式。
 % \end{function}
 %
-% 本选项继承自 \hologo{LaTeX2e} \cls{book} 标准文档类。
+% 本选项继承自 \LaTeXe \cls{book} 标准文档类。
 % 单双面选项为全局选项，开启后会改变页码编号，以及部分宏包的行为。
 % 在单面模式下，页面是连续的，不会产生空白页；在双面模式下，
 % 新的一章以及封面、摘要、参考文献表等特殊页面都会从奇数页开始，
@@ -857,7 +868,7 @@ To produce the documentation run the original source files ending with
 % 是否开启草稿模式，默认关闭。
 % \end{function}
 %
-% 本选项继承自 \hologo{LaTeX2e} \cls{book} 标准文档类。
+% 本选项继承自 \LaTeXe \cls{book} 标准文档类。
 % 草稿模式为全局选项，启用这一选项将产生以下整体影响：
 % \begin{itemize}
 %   \item 禁用封面的绘制（包括承诺和声明）
@@ -908,7 +919,7 @@ To produce the documentation run the original source files ending with
 % \begin{description}
 %   \item[\pkg{biblatex}] 复杂参考文献数据的处理。
 %   \item[\pkg{cleveref}] 按来源类型自动处理引用标签。
-%   \item[\pkg{create-theorem}] 使用 \hologo{LaTeX3} 编写的定理类环境定制界面。
+%   \item[\pkg{create-theorem}] 使用 \LaTeX3 编写的定理类环境定制界面。
 %   \item[\pkg{unicode-math}] 支持 Unicode 数学字体。
 % \end{description}
 %
@@ -924,7 +935,7 @@ To produce the documentation run the original source files ending with
 % 配置文件路径。
 % \end{function}
 %
-% 本选项可用于载入额外的用户配置文件。该文件支持 \hologo{LaTeX3} 语法。
+% 本选项可用于载入额外的用户配置文件。该文件支持 \LaTeX3 语法。
 %
 %
 % \subsubsection{指定字体}
@@ -966,55 +977,51 @@ To produce the documentation run the original source files ending with
 %
 % 本模板提供的中文字体配置如表 \ref{tab:cjk-fontset} 所示。
 % 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置
-% （见表中前三行，Windows 和 macOS 以外的系统采用 Fandol 配置）。
-% 此外，我们也单独提供了方正和思源两套中文字体配置。
+% （见表中前三行，Windows 和 macOS 以外的系统采用
+% \href{https://www.ctan.org/pkg/fandol}{Fandol} 配置）。
+% 此外，我们也单独提供了\href{https://www.foundertype.com}
+% {方正}和\href{https://github.com/adobe-fonts}{思源}两套中文字体配置。
 %
-% \begin{table}[htbp]
+% \begin{table}[!htbp]
+%   \def\FD{http://www.foundertype.com/index.php/FontInfo/index/id/1}
+%   \def\MN{https://mirrors.nju.edu.cn/adobe-fonts/source-han-}
+%   \def\OT{/OTF/SimplifiedChinese/}
+%   \def\FZ#1#2{\href{\FD #1}{方正 #2}}
+%   \def\SC#1#2{\href{\MN #1\OT}{思源 #2 体}}
 %   \centering
 %   \begin{talltblr}[
-%       caption = {中文字体配置},
-%       label = {tab:cjk-fontset},
-%       note{a} = {请下载简繁扩展（即 GBK 编码）版本},
-%       note{b} = {使用\ignorespaces
-%         \href{http://www.foundertype.com/index.php/FontInfo/index/id/164}
-%           {方正小标宋}作为方正书宋的粗体},
-%     note{c} = {使用\ignorespaces
-%       \href{http://www.foundertype.com/index.php/FontInfo/index/id/131}
-%         {方正黑体}作为方正细黑一的粗体},
+%     caption = {中文字体配置},
+%     label = {tab:cjk-fontset},
+%     note{a} = {请下载简繁扩展（即 GBK 编码）版本},
+%     note{b} = {使用\href{\FD164}{方正小标宋}作为方正书宋的粗体},
+%     note{c} = {使用\href{\FD131}{方正黑体}作为方正细黑一的粗体},
 %     note{d} = {在部分操作系统中可能已经预装 Google Noto 字体。
-%       考虑到获取字体的难易程度，单独安装时请采用
-%       \href{https://mirrors.nju.edu.cn/download/Adobe%20Source%20Han}{Adobe Source Han}
-%       字体表示思源字体，请下载 Simplified Chinese（即后缀名为 SC）的版本},
-%     note{e} = {思源字体并不包含楷书和仿宋，而 Adobe 楷体和仿宋难以直接下载，
-%       因此使用方正字体代替} ]
+%       考虑到获取字体的难易程度，单独安装时建议采用 Adobe Source Han 字体
+%       表示思源字体，请下载 Simplified Chinese（即后缀名为 SC）的版本},
+%     note{e} = {思源字体并不包含楷书和仿宋，而 Adobe
+%       楷体和仿宋难以直接下载，因此使用方正字体代替} ]
 %     { cell{2}{2,4} = {white!70!njuyellow},
-%       cell{4}{4} = {white!70!njuyellow},
+%       cell{4}{4}   = {white!70!njuyellow},
 %       colspec = {ccccc} }
 %   \toprule
-%     配置名称     & 宋体        & 黑体        & 楷书        & 仿宋                 \\
+%     配置名称         & 宋体             & 黑体               & 楷书          & 仿宋          \\
 %   \midrule
-%     Windows      & 中易宋体    & 中易黑体    & 中易楷体    & 中易仿宋                 \\
-%     macOS        & 华文宋体    & 华文黑体    & 华文楷体    & 华文仿宋                 \\
-%     \href{https://www.ctan.org/pkg/fandol} {Fandol}
-%                  & Fandol宋体  & Fandol黑体  & Fandol楷体  & Fandol仿宋               \\
-%     \href{https://www.foundertype.com}{方正}\TblrNote{a}
-%       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/151}{方正书宋}\TblrNote{b}
-%       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/161}{方正细黑一}\TblrNote{c}
-%       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/137}{方正楷体}
-%       & \href{http://www.foundertype.com/index.php/FontInfo/index/id/128}{方正仿宋}   \\
-%     \href{https://github.com/adobe-fonts}{思源}\TblrNote{d}
-%       & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/}{思源宋体}
-%       & \href{https://mirrors.nju.edu.cn/adobe-fonts/source-han-sans/OTF/SimplifiedChinese/}{思源黑体}
-%                                              & 方正楷体\TblrNote{e}  & 方正仿宋      \\
+%     \opt{win}        & 中易宋体         & 中易黑体           & 中易楷体      & 中易仿宋      \\
+%     \opt{mac}        & 华文宋体         & 华文黑体           & 华文楷体      & 华文仿宋      \\
+%     \opt{fandol}     & Fandol 宋体      & Fandol 黑体        & Fandol 楷体   & Fandol 仿宋   \\
+%     \opt{founder}\TA & \FZ{51}{书宋}\TB & \FZ{61}{细黑一}\TC & \FZ{37}{楷体} & \FZ{28}{仿宋} \\
+%     \opt{noto}   \TD & 思源宋体         & 思源黑体           & 方正楷体\TE   & 方正仿宋\TE   \\
+%     \opt{source} \TD & \SC{serif}{宋}   & \SC{sans}{黑}      & 方正楷体\TE   & 方正仿宋\TE   \\
 %   \bottomrule
 %   \end{talltblr}
 % \end{table}
 %
-% 由于各操作系统对自带字体的支持程度不同，本模板对不同字体加粗的方式有所差别，
-% 表 \ref{tab:cjk-fontset} 中，黄色底色的字体采用算法加粗。
-% 除此以外，各种字体在设计上也存在差异，因此本模板在不同操作系统下编译的结果可能存在细微不同，使用时请注意。
-% 若想要获得与 Word 版本模板最为贴近的体验，
-% 可以通过手动安装 Windows 自带的中易宋体、中易黑体、中易楷体和中易仿宋，并设置使用 Windows 字体来实现。
+% 由于各操作系统对自带字体的支持程度不同，本模板对不同字体加粗的方式
+% 有所差别，表 \ref{tab:cjk-fontset} 中，黄色底色的字体采用算法加粗。
+% 除此以外，各种字体在设计上也存在差异，因此本模板在不同操作系统下编
+% 译的结果可能存在细微不同，使用时请注意。若想要获得与 Word 版本模板
+% 最为贴近的体验，可以通过手动安装 Windows 自带的中易宋体、中易黑体、
+% 中易楷体和中易仿宋，并设置使用 Windows 字体来实现。
 %
 % \paragraph{西文}
 %
@@ -1022,12 +1029,12 @@ To produce the documentation run the original source files ending with
 % 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的
 % 字体配置。Windows 和 macOS 以外的系统采用 \opt{gyre} 配置。
 %
-% \begin{table}[htbp]
+% \begin{table}[!htbp]
 %   \centering
 %   \begin{talltblr} [
 %       caption = {西文字体配置},
 %       label = {tab:latin-fontset},
-%       note{a} = {TG 表示 \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{\Hologo{TeX}~Gyre}。} ]
+%       note{a} = {TG 表示 \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{\TeX~Gyre}。} ]
 %     { colspec = {cccc} }
 %     \toprule
 %       配置名称   & 衬线体          & 无衬线体 & 等宽字体    \\
@@ -1053,12 +1060,12 @@ To produce the documentation run the original source files ending with
 % 与原生 \LaTeX{} 最接近的字体对应 \opt{lm}，
 % 与 MS Word 最接近的字体对应 \opt{cambria}。
 %
-% \begin{table}[htbp]
+% \begin{table}[!htbp]
 %   \centering
 %   \begin{talltblr} [
 %       caption = {数学字体配置},
 %       label = {tab:math-fontset},
-%       note{a} = {TG 表示 \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{\Hologo{TeX}~Gyre}。},
+%       note{a} = {TG 表示 \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{\TeX~Gyre}。},
 %       note{b} = {粗体使用 XITS Math Bold。} ]
 %     { colspec = {ccl} }
 %   \toprule
@@ -1084,7 +1091,7 @@ To produce the documentation run the original source files ending with
 % \paragraph{授权}
 %
 % 本节提及的字库中，中文字库只有方正书宋、方正黑体、方正楷体、方正仿宋、两种思源字体和四种Fandol字体能够\emph{免费商用}；
-% 英文字库中只有 Times New Roman、XITS 和三种 \Hologo{TeX} Gyre字体能够\emph{免费商用}。
+% 英文字库中只有 Times New Roman、XITS 和三种 \TeX Gyre字体能够\emph{免费商用}。
 % 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。
 %
 %
@@ -1410,8 +1417,8 @@ To produce the documentation run the original source files ending with
 %     \tn{njuline}\Arg{文字}
 %   \end{syntax}
 % 为了避免原生 \tn{uline} 命令在中文环境下不能正常换行的问题，
-% 本模板使用 \tn{njuline} 作为替代方案，分别对 \hologo{XeLaTeX} 的
-% \pkg{xeCJKfntef} 包和 \hologo{LuaLaTeX} 的 \pkg{lua-ul}
+% 本模板使用 \tn{njuline} 作为替代方案，分别对 \XeLaTeX 的
+% \pkg{xeCJKfntef} 包和 \LuaLaTeX 的 \pkg{lua-ul}
 % 包中的下划线命令进行了包装。
 % \end{function}
 %
@@ -1548,7 +1555,7 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{更多样式}
 %
-% \pkg{tabularray} 宏包\cite{tabularray}运用 \hologo{LaTeX3} 语法重新实现了表格的绘制，提供了简明的用户接口与丰富的单元格样式，详见其使用手册。
+% \pkg{tabularray} 宏包\cite{tabularray}运用 \LaTeX3 语法重新实现了表格的绘制，提供了简明的用户接口与丰富的单元格样式，详见其使用手册。
 %
 %
 % \subsubsection{数学}
@@ -2222,9 +2229,9 @@ To produce the documentation run the original source files ending with
 %
 % 在任何情况下，本模板都会\emph{显式}调用以下宏包（或文档类）：
 % \begin{itemize}
-%   \item \pkg{xtemplate} 和 \pkg{l3keys2e}，用于扩展 \hologo{LaTeX3} 编程环境。
+%   \item \pkg{xtemplate} 和 \pkg{l3keys2e}，用于扩展 \LaTeX3 编程环境。
 %         它们属于 \pkg{l3packages} 宏集。
-%   \item \cls{ctexbook}，提供中文排版的通用框架。属于 C\hologo{TeX}
+%   \item \cls{ctexbook}，提供中文排版的通用框架。属于 C\TeX
 %         宏集 \cite{CTeX}。
 %   \item \pkg{mathtools}，增强数学功能。
 %   \item \pkg{unicode-math}，负责处理 Unicode 编码的 OpenType 数学字体。
@@ -2265,7 +2272,7 @@ To produce the documentation run the original source files ending with
 %   \item \pkg{natbib} 和 \pkg{gbt7714} 等 \hologo{BibTeX} 相关的参考文献宏包。
 %   \item \pkg{bm} 等使用传统数学字体配置方案的宏包。
 %   \item \pkg{babel} 在直接使用时会覆盖默认的中文名称设置。
-%   \item \pkg{microtype} 在 \hologo{XeTeX} 和 \hologo{LuaTeX} 下支持有限。
+%   \item \pkg{microtype} 在 \XeTeX 和 \LuaTeX 下支持有限。
 % \end{itemize}
 %
 %
@@ -2298,7 +2305,7 @@ To produce the documentation run the original source files ending with
 %
 % \bibitem{install-latex-guide-zh-cn}
 % 王然.
-% \newblock \textit{一份简短的关于 \hologo{LaTeX} 安装的介绍} [EB/OL].
+% \newblock \textit{一份简短的关于 \LaTeX 安装的介绍} [EB/OL].
 % \newblock version 2021.12.1,
 % \newblock (2021-12-01)
 % \urlprefix\url{https://ctan.org/pkg/install-latex-guide-zh-cn}
@@ -2306,7 +2313,7 @@ To produce the documentation run the original source files ending with
 %
 % \bibitem{刘海洋2013latex入门}
 % 刘海洋.
-% \newblock \textit{\hologo{LaTeX} 入门} [M].
+% \newblock \textit{\LaTeX 入门} [M].
 % \newblock 北京: 电子工业出版社, 2013
 %
 %
@@ -2353,7 +2360,7 @@ To produce the documentation run the original source files ending with
 %
 % \bibitem{biblatex}
 % \textsc{Lehman P}, \textsc{Wright J}, \textsc{Boruvka A}, \textsc{Kime P}.
-% \newblock \textit{Sophisticated Bibliographies in \hologo{LaTeX}} [EB/OL].
+% \newblock \textit{Sophisticated Bibliographies in \LaTeX} [EB/OL].
 % \newblock version 3.17,
 % \newblock (2022-02-02)
 % \urlprefix\url{https://ctan.org/pkg/biblatex}
@@ -2377,7 +2384,7 @@ To produce the documentation run the original source files ending with
 %
 % \bibitem{latexmk}
 % \textsc{Collins J}.
-% \newblock \textit{Fully automated \hologo{LaTeX} document generation} [EB/OL].
+% \newblock \textit{Fully automated \LaTeX document generation} [EB/OL].
 % \newblock version 4.76,
 % \newblock (2021-11-20)
 % \urlprefix\url{https://www.ctan.org/pkg/latexmk}
@@ -2385,7 +2392,7 @@ To produce the documentation run the original source files ending with
 %
 % \bibitem{listings}
 % \textsc{Heinz C}, \textsc{Moses B}, \textsc{Hoffmann J}.
-% \newblock \textit{Typeset source code listings using \hologo{LaTeX}} [EB/OL].
+% \newblock \textit{Typeset source code listings using \LaTeX} [EB/OL].
 % \newblock version 1.8d,
 % \newblock (2020-03-24)
 % \urlprefix\url{https://www.ctan.org/pkg/listings}
@@ -2401,7 +2408,7 @@ To produce the documentation run the original source files ending with
 %
 % \bibitem{pdfpages}
 % \textsc{Matthias A}.
-% \newblock \textit{Include PDF documents in \hologo{LaTeX}} [EB/OL].
+% \newblock \textit{Include PDF documents in \LaTeX} [EB/OL].
 % \newblock version 0.5v,
 % \newblock (2022-05-22)
 % \urlprefix\url{https://www.ctan.org/pkg/pdfpages}
@@ -2417,7 +2424,7 @@ To produce the documentation run the original source files ending with
 %
 % \bibitem{tabularray}
 % \textsc{Jianrui Lyu}.
-% \newblock \textit{Typeset tabulars and arrays with \hologo{LaTeX3}} [EB/OL].
+% \newblock \textit{Typeset tabulars and arrays with \LaTeX3} [EB/OL].
 % \newblock version 2021Q,
 % \newblock (2021-12-01)
 % \urlprefix\url{https://ctan.org/pkg/tabularray}
@@ -2447,37 +2454,37 @@ To produce the documentation run the original source files ending with
 %
 % \bibitem{wenboyang2013}
 % 杨文博.
-% \newblock \textit{南京大学学位论文 \hologo{LaTeX} 模板} [EB/OL].
+% \newblock \textit{南京大学学位论文 \LaTeX 模板} [EB/OL].
 % \newblock (2018-06-23)
 % \urlprefix\url{https://github.com/solrex/njuthesis}
 %
 % \bibitem{fireblue2013}
 % \textsc{fireblue}.
-% \newblock \textit{南京大学学位论文 \hologo{LaTeX} 模板} [EB/OL].
+% \newblock \textit{南京大学学位论文 \LaTeX 模板} [EB/OL].
 % \newblock (2013-04-13)
 % \urlprefix\url{https://github.com/fireblue/NJUThesis}
 %
 % \bibitem{wenhai-zheng2013}
 % \textsc{wenhai-zheng}.
-% \newblock \textit{南京大学本科毕业论文 \hologo{LaTeX} 模板} [EB/OL].
+% \newblock \textit{南京大学本科毕业论文 \LaTeX 模板} [EB/OL].
 % \newblock (2013-08-12)
 % \urlprefix\url{https://github.com/wenhai-zheng/NJUThesis}
 %
 % \bibitem{zenglecao2013}
 % 曹增乐.
-% \newblock \textit{南京大学本科毕业论文（设计） \hologo{LaTeX} 模板} [EB/OL].
+% \newblock \textit{南京大学本科毕业论文（设计） \LaTeX 模板} [EB/OL].
 % \newblock (2019-06-26)
 % \urlprefix\url{https://github.com/ZLCao/NJUBachelor}
 %
 % \bibitem{haixinghu2013}
 % 胡海星.
-% \newblock \textit{南京大学学位论文 \hologo{XeLaTeX} 模板} [EB/OL].
+% \newblock \textit{南京大学学位论文 \XeLaTeX 模板} [EB/OL].
 % \newblock (2018-08-08)
 % \urlprefix\url{https://github.com/Haixing-Hu/nju-thesis}
 %
 % \bibitem{chuhengzhang2016}
 % 张楚珩.
-% \newblock \textit{南京大学本科生毕业论文 \hologo{LaTeX} 模板} [EB/OL].
+% \newblock \textit{南京大学本科生毕业论文 \LaTeX 模板} [EB/OL].
 % \newblock (2016-06-01)
 % \urlprefix\url{https://github.com/zhangchuheng123/NJUThesis}
 %
@@ -2489,19 +2496,19 @@ To produce the documentation run the original source files ending with
 %
 % \bibitem{njuHan2018}
 % \textsc{njuHan}.
-% \newblock \textit{南京大学学位论文(本科/硕士/博士)，毕业论文 \hologo{LaTeX} 模板} [EB/OL].
+% \newblock \textit{南京大学学位论文(本科/硕士/博士)，毕业论文 \LaTeX 模板} [EB/OL].
 % \newblock (2021-06-15)
 % \urlprefix\url{https://github.com/njuHan/njuthesis-nju-thesis-template}
 %
 % \bibitem{anyirao2018}
 % 饶安逸.
-% \newblock \textit{南京大学本科生毕业论文 \hologo{LaTeX} 模板 2018 新版} [EB/OL].
+% \newblock \textit{南京大学本科生毕业论文 \LaTeX 模板 2018 新版} [EB/OL].
 % \newblock (2018-06-24)
 % \urlprefix\url{https://github.com/AnyiRao/NJUThesis2018}
 %
 % \bibitem{yichenzhao2021}
 % 赵懿晨.
-% \newblock \textit{南京大学本科生毕业论文 \hologo{LaTeX} 模板（2021版）} [EB/OL].
+% \newblock \textit{南京大学本科生毕业论文 \LaTeX 模板（2021版）} [EB/OL].
 % \newblock (2021-09-23)
 % \urlprefix\url{https://github.com/FengChendian/NJUThesis2021}
 %
@@ -2517,7 +2524,7 @@ To produce the documentation run the original source files ending with
 % \section{代码实现}
 % \changes{v0.10}{2021/09/26}{对代码实现部分进行了整理。}
 %
-% 本模板使用 \hologo{LaTeX3} 语法编写，依赖 \pkg{expl3} 环境，
+% 本模板使用 \LaTeX3 语法编写，依赖 \pkg{expl3} 环境，
 % 并需调用 \pkg{l3packages} 中的相关宏包。
 %
 % 以下代码中有一些形如 \agrd{*class} 的标记，
@@ -2540,7 +2547,7 @@ To produce the documentation run the original source files ending with
 %
 % \changes{v0.11}{2021/10/23}{添加了若干环境检查与警告信息。}
 % \changes{v0.12}{2021/12/03}{放宽对于 \pkg{l3packages} 的版本要求。}
-% 检查 \hologo{LaTeX3} 编程环境。
+% 检查 \LaTeX3 编程环境。
 %    \begin{macrocode}
 \RequirePackage { xtemplate, l3keys2e }
 \msg_new:nnn { njuthesis } { l3-too-old }
@@ -2557,7 +2564,7 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% 目前 \cls{njuthesis} 仅支持 \hologo{XeTeX} 和 \hologo{LuaTeX}。
+% 目前 \cls{njuthesis} 仅支持 \XeTeX 和 \LuaTeX。
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { unsupported-engine }
   {
@@ -2760,7 +2767,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_vskip:N}
-% 类似于 \hologo{LaTeX2e} 中的 \tn{vspace*}，
+% 类似于 \LaTeXe 中的 \tn{vspace*}，
 % 从上一个页面元素底部开始生成 |skip|。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_vskip:N #1
@@ -3073,7 +3080,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_uline_title:}
 % \changes{v0.17}{2022/04/09}{优化封面标题的断行方式。}
-% 多行带下划线标题。使用 \hologo{TeX} 原生断行算法实现。
+% 多行带下划线标题。使用 \TeX 原生断行算法实现。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_uline_title:
   {
@@ -3571,7 +3578,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{linespread}
 % \changes{v1.0}{2022/07/04}{新增行距选项。}
 % \begin{macro}{\g_@@_opt_linespread_tl}
-% 行距。\hologo{LaTeX} 默认1.2行距，MS Word 默认行距是1.3，要求1.5倍
+% 行距。\LaTeX 默认1.2行距，MS Word 默认行距是1.3，要求1.5倍
 % Word 行距，故默认值为 $1.5\times\frac{1.3}{1.2} = 1.625$。
 % 更详细的说明请参考 \pkg{zhlinespread} 宏包文档。
 %    \begin{macrocode}
@@ -3813,7 +3820,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.18}{2022/04/20}{不强制载入 \pkg{ntheorem}。}
 % \changes{v1.0}{2022/07/03}{不强制载入 \pkg{mathtools}。}
 %
-% \pkg{unicode-math} 指定了 \hologo{XeTeX} 和 \hologo{LuaTeX} 下使用的
+% \pkg{unicode-math} 指定了 \XeTeX 和 \LuaTeX 下使用的
 % 数学字体。
 %    \begin{macrocode}
 \@@_loadpkg_um:
@@ -4437,7 +4444,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_cjk_founder:
   {
 %    \end{macrocode}
-% 调整方正字体括号位置。\footnote{\hologo{XeTeX} 的调整方法来自 \url{https://www.zhihu.com/question/46241367/answer/101660183}。}
+% 调整方正字体括号位置。\footnote{\XeTeX 的调整方法来自 \url{https://www.zhihu.com/question/46241367/answer/101660183}。}
 %    \begin{macrocode}
     \sys_if_engine_xetex:T
       { \xeCJKEditPunctStyle {quanjiao} { optimize-kerning = true } }
@@ -5958,9 +5965,9 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsubsection{绘制封面}
-% \changes{v0.13}{2021/12/10}{使用 \hologo{LaTeX3} 语法重构本科生封面。}
-% \changes{v0.13}{2021/12/11}{使用 \hologo{LaTeX3} 语法重构研究生封面。}
-% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构国家图书馆封面。}
+% \changes{v0.13}{2021/12/10}{使用 \LaTeX3 语法重构本科生封面。}
+% \changes{v0.13}{2021/12/11}{使用 \LaTeX3 语法重构研究生封面。}
+% \changes{v0.13}{2021/12/12}{使用 \LaTeX3 语法重构国家图书馆封面。}
 % \changes{v0.15}{2022/01/25}{将封面页面封装为对象。}
 %
 % 定义封面页面的具体配置参数。
@@ -6301,7 +6308,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \paragraph{本科生}
-% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构本科生摘要。}
+% \changes{v0.13}{2021/12/12}{使用 \LaTeX3 语法重构本科生摘要。}
 % \changes{v0.21}{2022/06/16}{统一本科生摘要页的标签格式。}
 %
 % \begin{macro}{\@@_abs_info_u:,\@@_abs_info_en_u:}
@@ -6344,7 +6351,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \paragraph{研究生}
-% \changes{v0.13}{2021/12/12}{使用 \hologo{LaTeX3} 语法重构研究生摘要。}
+% \changes{v0.13}{2021/12/12}{使用 \LaTeX3 语法重构研究生摘要。}
 %
 % \begin{macro}{abstract/mark}
 % 英文摘要标题实例。
@@ -6655,7 +6662,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_make_notation:nn}
 % 生成符号表。由于符号表只有符号和说明两列，相比于 \env{longtable} 环境，
 % \env{description} 环境的语法更为简洁直观，且说明文字可以换行，因而此处使用
-% \hologo{LaTeX2e} 的列表环境进行封装，定义和语法参见 \file{source2e.pdf} 中的
+% \LaTeXe 的列表环境进行封装，定义和语法参见 \file{source2e.pdf} 中的
 % File I \quad ltlists.dtx 一章。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_notation:nn #1#2

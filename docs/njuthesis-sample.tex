@@ -36,11 +36,11 @@
     % type = bachelor|master|doctor,  % 文档类型，默认为本科毕业论文
     % degree = academic|professional, % 学位类型，默认为学术型
     %
-    % nl-cover = true|false,   % 是否需要国家图书馆封面，默认关闭
+    % nl-cover = true|false,  % 是否需要国家图书馆封面，默认关闭
     % decl-page = true|false, % 是否需要诚信承诺书或原创性声明，默认关闭
     %
     % draft,                  % 开启草稿模式
-    % blind,                  % 开启盲审模式
+    % anonymous,              % 开启盲审模式
     %
     %   单双面模式，默认为适合印刷的双面模式
     % oneside,                % 单面模式，无空白页
@@ -49,7 +49,7 @@
     %  字体设置，不填写则自动调用系统预装字体
     % latin-font = win|mac|gyre|none,
     % cjk-font   = win|mac|fandol|founder|noto|source|none,
-    math-font  = cambria,
+    % math-font  = cambria|lm|termes|xits,
     %
     %   关闭内置宏包
     % biblatex       = false,
@@ -273,10 +273,6 @@
 % 效果更好，但可能出现 underfull \vbox 信息
 % 如需抑制这些信息，可以反注释以下命令
 % \raggedbottom
-
-% \begin{preface}
-%     前言
-% \end{preface}
 
 \begin{abstract}
     中文摘要
