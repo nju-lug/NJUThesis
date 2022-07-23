@@ -6,17 +6,15 @@
 \ifdefined\TEST\else
   % 自行编译前需反注释以下任意命令
   % \documentclass{njuthesis}
+  % \documentclass[type=master]{njuthesis}
+  % \documentclass[type=doctor]{njuthesis}
+  \documentclass[type=postdoc]{njuthesis}
   % \documentclass[oneside]{njuthesis}
   % \documentclass[cjk-font=noto,latin-font=gyre]{njuthesis}
   % \documentclass[cjk-font=source,latin-font=gyre]{njuthesis}
   % \documentclass[cjk-font=founder,latin-font=gyre]{njuthesis}
   % \documentclass[decl-page]{njuthesis}
   % \documentclass[draft]{njuthesis}
-  % \documentclass[type=design]{njuthesis}
-  \documentclass[degree=mg]{njuthesis}
-  % \documentclass[degree=mf,oneside,decl-page]{njuthesis}
-  % \documentclass[degree=phd,draft]{njuthesis}
-  % \documentclass[degree=phd,nlcover]{njuthesis}
 \fi
 
 \njusetup {
@@ -60,7 +58,6 @@
         name-img = {name},
         abstract-in-toc = false,
         toc-in-toc = false,
-        header/format = \small\heiti,
         header = {
           {OR}{\thepage},{EL}{\thepage},
           {ER}{\leftmark},{OL}{\rightmark}},
@@ -83,14 +80,14 @@
 \njusetname{listoffigures}{插图清单}
 \njusetname{listoftables}{表格清单}
 \njusetname*{abstract}[b]{Abstract}
-\njusetlength{coveruline}{330pt}
+% \njusetlength{coveruline}{330pt}
 \njusetformat{chapter}{\raggedleft\kaishu\zihao{-1}}
 
 % \usepackage{multirow,tabularray,wrapfig,subcaption}
 % \usepackage{listings,algorithm,algorithmic}
 % \usepackage{siunitx,physics,chemfig}
 % \usepackage[version=4]{mhchem}
-\usepackage{hologo,blindtext,zhlipsum}
+\usepackage{hologo,blindtext,zhlipsum,mathtools}
 
 % \setmonofont{cmun}[
 %   Extension      = .otf,

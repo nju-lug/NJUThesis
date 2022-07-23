@@ -76,6 +76,7 @@ To produce the documentation run the original source files ending with
     \file{\jobname.cls}               {\from{\jobname.dtx}{class}}
     \file{\jobname-undergraduate.def} {\from{\jobname.dtx}{def-u}}
     \file{\jobname-graduate.def}      {\from{\jobname.dtx}{def-g}}
+    \file{\jobname-postdoctoral.def}  {\from{\jobname.dtx}{def-p}}
 %<*internal>
   \usedir{source/latex/njuthesis}
     \file{\jobname.ins}               {\from{\jobname.dtx}{install}}
@@ -118,13 +119,16 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 0.21.0 2022-06-16 15:50:00 +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-07-16 00:20:00
+%<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<def-u>  {Undergraduate definition file for njuthesis}
 %<def-u>\ProvidesExplFile{njuthesis-undergraduate.def}
 %<def-g>  {Graduate definition file for njuthesis}
 %<def-g>\ProvidesExplFile{njuthesis-graduate.def}
+%<def-p>  {Postdoctoral definition file for njuthesis}
+%<def-p>\ProvidesExplFile{njuthesis-postdoctoral.def}
 %<!driver>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %</!(driver|install)>
 %
@@ -142,7 +146,9 @@ To produce the documentation run the original source files ending with
 \newcommand\bgrd[1]{\textcolor{at@guard}{\sffamily #1}}
 \newcommand\tikzlogo{Ti\emph{k}Z}
 \hypersetup{%
-  pdftitle  = {The njuthesis class - LaTeX thesis template for Nanjing University},
+  pdftitle  = {
+    The njuthesis class -
+    LaTeX thesis template for Nanjing University},
   citecolor = njublue,
   linkcolor = njuviolet,
   urlcolor  = njumagenta}
@@ -250,6 +256,7 @@ To produce the documentation run the original source files ending with
 % \changes{v1.0}{2022/06/29}{移除毕业设计封面。}
 % \changes{v1.0}{2022/06/30}{调整研究生封面布局。}
 % \changes{v1.0}{2022/07/05}{按类型重命名变量。}
+% \changes{v1.0}{2022/07/23}{新增博士后出站报告模板。}
 %
 %
 % \maketitle
@@ -802,7 +809,7 @@ To produce the documentation run the original source files ending with
 % \subsubsection{学位信息}
 % \begin{function}[added=2021-09-07,updated=2022-07-01]{type}
 %   \begin{syntax}
-%     type = <(bachelor)|master|doctor>
+%     type = <(bachelor)|master|doctor|postdoc>
 %   \end{syntax}
 % 选择毕业论文模板类型，这将决定模板整体的外观。
 % 可选值分别为学士（本科生）、硕士研究生和博士研究生，默认为学士。
@@ -3463,7 +3470,7 @@ To produce the documentation run the original source files ending with
 % \changes{v1.0}{2022/06/30}{修改类型选项。}
 % 学位，默认为学士。
 %    \begin{macrocode}
-    type              .choices:nn = { bachelor, master, doctor }
+    type              .choices:nn = { bachelor, master, doctor, postdoc }
       { \int_gset_eq:NN \g_@@_info_type_int   \l_keys_choice_int },
     type              .initial:n  = bachelor,
 %    \end{macrocode}
@@ -3974,9 +3981,18 @@ To produce the documentation run the original source files ending with
 % \file{njuthesis-undergraduate.def}；研究生模板配置对应
 % \agrd{def-g}，用于生成 \file{njuthesis-graduate.def}。
 %    \begin{macrocode}
-\int_compare:nTF { \g_@@_info_type_int == 1 }
-  { \file_input:n { njuthesis-undergraduate.def } }
-  { \file_input:n { njuthesis-     graduate.def } }
+\exp_args:Nx \file_input:n
+  {
+    njuthesis-
+    \int_case:nn { \g_@@_info_type_int }
+      {
+        { 1 } { undergraduate }
+        { 2 } { graduate      }
+        { 3 } { graduate      }
+        { 4 } { postdoctoral  }
+      }
+    .def
+  }
 %    \end{macrocode}
 %
 % 载入用户设置，可用于对模板做额外修改。
@@ -4177,7 +4193,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*(def-u|def-g)>
+%<*(def-u|def-g|def-p)>
 \ctex_at_end_preamble:n
   {
 %    \end{macrocode}
@@ -4218,7 +4234,7 @@ To produce the documentation run the original source files ending with
       }
 %</def-g>
   }
-%</(def-u|def-g)>
+%</(def-u|def-g|def-p)>
 %    \end{macrocode}
 % \end{variable}
 %
@@ -5963,6 +5979,51 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \paragraph{博士后}
+%
+% \begin{macro}{cover/p/name-img}
+% 博士后封面校名图片实例。
+%    \begin{macrocode}
+%<*def-p>
+\@@_declare_element:nn { cover / p / name-img }
+  {
+    content     = \@@_name:N \c_@@_namewidth_dim,
+    bottom-skip = 100 pt
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{cover/p/report}
+% 博士后封面报告字样实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { cover / p / report }
+  {
+    content     = \c_@@_name_report_tl,
+    format      = \zihao { 1 } \sffamily,
+    bottom-skip = 40 pt
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{cover/p/title}
+% 博士后封面报告标题实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { cover / p / title }
+  {
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{cover/p/info}
+% 博士后封面信息栏实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { cover / p / info }
+  {
+  }
+%</def-p>
+%    \end{macrocode}
+% \end{macro}
+%
 %
 % \subsubsection{绘制封面}
 % \changes{v0.13}{2021/12/10}{使用 \LaTeX3 语法重构本科生封面。}
@@ -5972,11 +6033,11 @@ To produce the documentation run the original source files ending with
 %
 % 定义封面页面的具体配置参数。
 %
-% \begin{macro}{cover-u-default}
+% \begin{macro}{cover-u}
 % 默认本科生封面实例。
 %    \begin{macrocode}
 %<*def-u>
-\@@_declare_page:nn { cover-u-default }
+\@@_declare_page:nn { cover-u }
   {
     element     = { emblem-img, name-img, title, info },
     prefix      = cover / u /,
@@ -5986,11 +6047,11 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover-g-front-default}
+% \begin{macro}{cover-g-front}
 % 默认研究生普通封面正面实例。
 %    \begin{macrocode}
 %<*def-g>
-\@@_declare_page:nn { cover-g-front-default }
+\@@_declare_page:nn { cover-g-front }
   {
     element  = { emblem-img, name-img, type, degree, info, date },
     prefix   = cover / g /,
@@ -6000,10 +6061,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover-g-back-default}
+% \begin{macro}{cover-g-back}
 % 默认研究生普通封面背面实例。
 %    \begin{macrocode}
-\@@_declare_page:nn { cover-g-back-default }
+\@@_declare_page:nn { cover-g-back }
   {
     element  = { back },
     prefix   = cover / g /,
@@ -6013,10 +6074,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover-g-en-default}
+% \begin{macro}{cover-g-en}
 % 默认研究生英文封面实例。
 %    \begin{macrocode}
-\@@_declare_page:nn { cover-g-en-default }
+\@@_declare_page:nn { cover-g-en }
   {
     element  = { title, top, middle, emblem-img, bottom },
     prefix   = cover / g / en /,
@@ -6025,10 +6086,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover-nl-default}
+% \begin{macro}{cover-nl}
 % 默认国家图书馆封面实例。
 %    \begin{macrocode}
-\@@_declare_page:nn { cover-nl-default }
+\@@_declare_page:nn { cover-nl }
   {
     element = { top, name, title, middle, bottom, date },
     prefix  = cover / nl /,
@@ -6037,10 +6098,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{authdecl-g-default}
+% \begin{macro}{authdecl-g}
 % 默认出版授权书实例。
 %    \begin{macrocode}
-\@@_declare_page:nn { authdecl-g-default }
+\@@_declare_page:nn { authdecl-g }
   {
     element     = { title, text, sign, info, date },
     prefix      = authdecl / g /,
@@ -6051,15 +6112,30 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{cover-p}
+% 默认本科生封面实例。
+%    \begin{macrocode}
+%<*def-p>
+\@@_declare_page:nn { cover-p }
+  {
+    element     = { name-img, report, title, info },
+    prefix      = cover / p /,
+    bottom-skip = 0.5 cm plus 1.5 fill
+  }
+%</def-p>
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_make_cover:}
 % 生成本科生或研究生的普通封面。
 %    \begin{macrocode}
-%<*(def-u|def-g)>
+%<*(def-u|def-g|def-p)>
 \cs_new_protected:Npn \@@_make_cover:
   {
-%<def-u>    \UseInstance { nju } { cover-u-default }
+%<def-u>    \UseInstance { nju } { cover-u }
 %<def-g>    \clist_map_inline:nn { front, back, en }
-%<def-g>      { \UseInstance { nju } { cover-g- ##1 -default } }
+%<def-g>      { \UseInstance { nju } { cover-g- ##1  } }
+%<def-p>    \UseInstance { nju } { cover-p }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6068,7 +6144,7 @@ To produce the documentation run the original source files ending with
 % 生成研究生的国家图书馆封面。
 %    \begin{macrocode}
 %<def-g>\cs_new_protected:Npn \@@_make_cover_nl:
-%<def-g>  { \UseInstance { nju } { cover-nl-default } }
+%<def-g>  { \UseInstance { nju } { cover-nl } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6080,6 +6156,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_origdecl:
   {
+%<*(def-u|def-g)>
 %<def-u>    \cleardoublepage
 %<def-g>    \chapter* { \c_@@_name_origdecl_tl }
     \thispagestyle { empty }
@@ -6100,6 +6177,7 @@ To produce the documentation run the original source files ending with
     \end{flushright}
     \vfil
 %<def-u>    \normalfont \normalsize
+%</(def-u|def-g)>
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6110,10 +6188,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_authdecl:
   {
-%<def-u>    \prg_do_nothing:
-%<def-g>    \UseInstance { nju } { authdecl-g-default }
+%<def-g>    \UseInstance { nju } { authdecl-g }
   }
-%</(def-u|def-g)>
+%</(def-u|def-g|def-p)>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6252,28 +6329,13 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{abstract/title}
 % 中文摘要标题实例。
 %    \begin{macrocode}
-%<*(def-u|def-g)>
+%<*(def-u|def-g|def-p)>
 \@@_declare_element:nn { abstract / title }
   {
-    content     = \@@_abs_title:V \c_@@_name_abstracttitle_tl,
-    format      = \bfseries \kaishu \zihao { -2 },
+%<def-u|def-g>    content     = \@@_abs_title:V \c_@@_name_abstracttitle_tl,
+%<def-p>    content     = \g_@@_info_title_tl,
+%<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
     bottom-skip = 1.2 cm
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{abstract/info}
-% 中文摘要信息栏实例。
-%    \begin{macrocode}
-\@@_declare_element:nn { abstract / info }
-  {
-%<def-u>    content     = \@@_abs_info_u:,
-%<def-g>    content     = \@@_abs_info_g:,
-%<def-u>    format      = \zihao { -4 } \kaishu,
-%<def-g>    format      = \zihao {  4 } \kaishu,
-%<def-u>    bottom-skip = 1 cm,
-%<def-g>    bottom-skip = 2 cm,
-    align       = l
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6283,9 +6345,28 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { abstract / en / title }
   {
-    content     = \@@_abs_title:V \c_@@_name_abstracttitle_en_tl,
-    format      = \bfseries \kaishu \zihao { -2 },
+%<def-u|def-g>    content     = \@@_abs_title:V \c_@@_name_abstracttitle_en_tl,
+%<def-p>    content     = \g_@@_info_title_en_tl,
+%<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
     bottom-skip = 1.2 cm
+  }
+%</(def-u|def-g|def-p)>
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{abstract/info}
+% 中文摘要信息栏实例。
+%    \begin{macrocode}
+%<*(def-u|def-g)>
+\@@_declare_element:nn { abstract / info }
+  {
+%<def-u>    content     = \@@_abs_info_u:,
+%<def-g>    content     = \@@_abs_info_g:,
+%<def-u>    format      = \zihao { -4 } \kaishu,
+%<def-g>    format      = \zihao {  4 } \kaishu,
+%<def-u>    bottom-skip = 1 cm,
+%<def-g>    bottom-skip = 2 cm,
+    align       = l
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6304,6 +6385,32 @@ To produce the documentation run the original source files ending with
     align       = l
   }
 %</(def-u|def-g)>
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{abstract/mark}
+% 英文摘要标题实例。
+%<*(def-g|def-p)>
+%    \begin{macrocode}
+\@@_declare_element:nn { abstract / mark }
+  {
+    content     = \c_@@_name_abstract_b_tl,
+    format      = \sffamily \zihao { -3 },
+    bottom-skip = 1 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{abstract/en/mark}
+% 英文摘要标题实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { abstract / en / mark }
+  {
+    content     = \c_@@_name_abstract_b_en_tl,
+    format      = \sffamily \zihao { -3 },
+    bottom-skip = 1 cm
+  }
+%</(def-g|def-p)>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6353,34 +6460,10 @@ To produce the documentation run the original source files ending with
 % \paragraph{研究生}
 % \changes{v0.13}{2021/12/12}{使用 \LaTeX3 语法重构研究生摘要。}
 %
-% \begin{macro}{abstract/mark}
-% 英文摘要标题实例。
-%    \begin{macrocode}
-%<*def-g>
-\@@_declare_element:nn { abstract / mark }
-  {
-    content     = \c_@@_name_abstract_b_tl,
-    format      = \sffamily \zihao { -3 },
-    bottom-skip = 1 cm
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{abstract/en/mark}
-% 英文摘要标题实例。
-%    \begin{macrocode}
-\@@_declare_element:nn { abstract / en / mark }
-  {
-    content     = \c_@@_name_abstract_b_en_tl,
-    format      = \sffamily \zihao { -3 },
-    bottom-skip = 1 cm
-  }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_abs_info_g:,\@@_abs_info_en_g:}
 % 封装好的研究生摘要信息栏。
 %    \begin{macrocode}
+%<*def-g>
 \cs_new_protected:Npn \@@_abs_info_g:
   { \@@_abs_info_g:n    { \c_@@_name_comma_tl    } }
 \cs_new_protected:Npn \@@_abs_info_en_g:
@@ -6488,20 +6571,20 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_make_abstract:,\@@_make_abstract_en:}
 % 绘制摘要页面。
 %    \begin{macrocode}
-%<*(def-u|def-g)>
+%<*(def-u|def-g|def-p)>
 \cs_new_protected:Npn \@@_make_abstract:
   {
     \UseInstance { nju } { abstract / title }
-    \UseInstance { nju } { abstract / info  }
-%<def-g>    \UseInstance { nju } { abstract / mark  }
+%<def-u|def-g>    \UseInstance { nju } { abstract / info  }
+%<def-g|def-p>    \UseInstance { nju } { abstract / mark  }
   }
 \cs_new_protected:Npn \@@_make_abstract_en:
   {
     \UseInstance { nju } { abstract / en / title }
-    \UseInstance { nju } { abstract / en / info  }
-%<def-g>    \UseInstance { nju } { abstract / en / mark  }
+%<def-u|def-g>    \UseInstance { nju } { abstract / en / info  }
+%<def-g|def-p>    \UseInstance { nju } { abstract / en / mark  }
   }
-%</(def-u|def-g)>
+%</(def-u|def-g|def-p)>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6742,12 +6825,13 @@ To produce the documentation run the original source files ending with
 %
 % 通用默认名称。注意空格是忽略掉的。
 %    \begin{macrocode}
-%<*(def-u|def-g)>
+%<*(def-u|def-g|def-p)>
 \clist_map_inline:nn
   {
     { acknowledgement } { 致 \qquad{} 谢                     },
 %<def-g>    { apply           } {（申请 \g_@@_info_degree_tl 学位）},
 %<def-g>    { authdecl        } { 学位论文出版授权书                 },
+%<def-p>    { author          } { 作者                               },
 %    \end{macrocode}
 % 用于摘要的作者名称字样
 %    \begin{macrocode}
@@ -6763,6 +6847,7 @@ To produce the documentation run the original source files ending with
 % 用于出版授权书的学位名称字样
 %    \begin{macrocode}
 %<def-g>    { degree_a        } { 论文级别                           },
+%<def-p>    { dept            } { 系别                               },
 %    \end{macrocode}
 % 用于出版授权书的院系名称字样
 %    \begin{macrocode}
@@ -6771,13 +6856,15 @@ To produce the documentation run the original source files ending with
 %<def-g>    { field           } { 研究方向                           },
 %<def-u>    { grade           } { 年级                               },
 %<def-g>    { grade           } { 级                                 },
-    { id              } { 学号                               },
+%<def-u|def-g>    { id              } { 学号                               },
+%<def-p>    { id              } { 工号                               },
 %    \end{macrocode}
 % 用于出版授权书的学号名称字样
 %    \begin{macrocode}
 %<def-g>    { id_a            } { 研究生学号                         },
     { listoffigures   } { 插图目录                           },
     { listoftables    } { 表格目录                           },
+%<def-p>    { major           } { 学科专业                           },
 %    \end{macrocode}
 % 用于摘要的专业名称字样
 %    \begin{macrocode}
@@ -6796,6 +6883,7 @@ To produce the documentation run the original source files ending with
     { paperlist       } { 发表文章目录                       },
     { pdfcreator      } { LaTeX~ with~ njuthesis~ class      },
     { preface         } { 前 \qquad{} 言                     },
+%<def-p>    { report          } { 博士后研究工作报告                 },
 %<def-g>    { reviewer        } { 评阅人：                           },
 %<def-g>    { secretlv        } { 密级                               },
 %<def-g>    { secretstatus    } { 论文涉密情况：                     },
@@ -6809,6 +6897,7 @@ To produce the documentation run the original source files ending with
 %<def-g>    { subtitle        } { （题名和副题名）                   },
 %<def-u>    { supv            } { 指导教师                           },
 %<def-g>    { supv            } { 导师                               },
+%<def-p>    { supv            } { 合作导师                           },
 %    \end{macrocode}
 % 用于摘要的导师名称字样
 %    \begin{macrocode}
@@ -6822,6 +6911,7 @@ To produce the documentation run the original source files ending with
     { supvii          } { 第二导师                           },
     { supvtitle       } { 职称                               },
     { tableofcontents } { 目 \qquad{} 录                     },
+%<def-p>    { title           } { 报告题目                           },
 %    \end{macrocode}
 % 用于摘要的标题名称字样
 %    \begin{macrocode}
@@ -6853,7 +6943,7 @@ To produce the documentation run the original source files ending with
 % 用于小标题的摘要名称字样
 %    \begin{macrocode}
     { abstract_b    } { 摘\qquad{}要    } { ABSTRACT              },
-    { abstracttitle }
+%<def-u|def-g>    { abstracttitle }
 %<def-u>      { 南京大学本科生毕业论文（设计、作品）中文摘要              }
 %<def-u>      { 南京大学本科生毕业论文（设计、作品）英文摘要              },
 %<def-g>      { 南京大学研究生毕业论文中文摘要首页用纸                    }
@@ -6865,7 +6955,7 @@ To produce the documentation run the original source files ending with
     { blankdate_a   } { \njuline{\qquad\qquad} 年
             \njuline{\qquad} 月 \njuline{\qquad} 日      } {      },
     { comma         } { ：              } { : \c_space_tl         },
-    { dept          } { 院系            } { DEPARTMENT            },
+%<def-u|def-g>    { dept          } { 院系            } { DEPARTMENT            },
     { figure        } { 图              } { figure                },
     { keywords      } { 关键词          } { KEYWORDS              },
     { lang          } { 中文            } { 英文                  },
@@ -6913,6 +7003,12 @@ To produce the documentation run the original source files ending with
     证书而使用过的材料。对本文的研究做出重要贡献的个人和集体，均已在论文的
     致谢部分明确标明。本人郑重申明愿承担本声明的法律责任。
 %</def-g>
+%<*def-p>
+    本人郑重声明：所呈交的研究报告，是本人独立进行研究工作所取得的成果。除
+    文中已经注明引用的内容外，本报告不含任何其他个人或集体已经发表或撰写过
+    的作品成果。对本报告的研究做出重要贡献的个人和集体，均已在报告中以明确
+    方式标明。本人完全意识到本声明的法律结果由本人承担。
+%</def-p>
   }
 %    \end{macrocode}
 % \end{variable}
@@ -6920,24 +7016,34 @@ To produce the documentation run the original source files ending with
 % \begin{variable}{\c_@@_text_authdecl_tl}
 % 研究生的学位论文出版授权书。
 %    \begin{macrocode}
-%<*def-g>
+%<*(def-g|def-p)>
 \tl_const:Nn \c_@@_text_authdecl_tl
   {
-    本人完全同意《中国优秀博硕士学位论文全文数据库出版章程》
-    （以下简称“章程”），愿意将本人的学位论文提交“中国学术期刊
-    （光盘版）电子杂志社”在《中国博士学位论文全文数据库》、
-    《中国优秀硕士学位论文全文数据库》中全文发表。《中国博士
-    学位论文全文数据库》、《中国优秀硕士学位论文全文数据库》
-    可以以电子、网络及其他数字媒体形式公开出版，并同意编入
-    《中国知识资源总库》，在《中国博硕士学位论文评价数据库》
-    中使用和在互联网上传播，同意按“章程”规定享受相关权益。
+%<*def-g>
+    本人完全同意《中国优秀博硕士学位论文全文数据库出版章程》（以下简称“章
+    程”），愿意将本人的学位论文提交“中国学术期刊（光盘版）电子杂志社”在《
+    中国博士学位论文全文数据库》、《中国优秀硕士学位论文全文数据库》中全文
+    发表。《中国博士学位论文全文数据库》、《中国优秀硕士学位论文全文数据库
+    》可以以电子、网络及其他数字媒体形式公开出版，并同意编入《中国知识资源
+    总库》，在《中国博硕士学位论文评价数据库》中使用和在互联网上传播，同意
+    按“章程”规定享受相关权益。
+%</def-g>
+%<*def-p>
+    本研究报告作者完全了解南京大学有关保留和使用该报告的规定，即：博士后在
+    职期间的知识产权单位属南京大学。学校有权保留并向国家有关部门或机构送交
+    研究报告的复印件和电子版，允许研究报告被查阅和借阅；学校可以公布研究报
+    告的全部或部分内容，可以允许采用影印、缩印或其它复制手段保存、汇编研究
+    报告。保密的研究报告在解密后适用于本授权书。
+%</def-p>
   }
+%</(def-g|def-p)>
 %    \end{macrocode}
 % \end{variable}
 %
 % \begin{variable}{\c_@@_text_cover_en_tl}
 % 研究生的英文封面字样。
 %    \begin{macrocode}
+%<*def-g>
 \tl_const:Nn \c_@@_text_cover_en_tl
   {
     A~ dissertation~ submitted~ to \\
@@ -6985,11 +7091,18 @@ To produce the documentation run the original source files ending with
 %<def-g>    { emblemwidthii } { 61   pt },
 %<def-u>    { namewidth     } { 300  pt },
 %<def-g>    { namewidth     } { 126  pt },
+%<def-p>    { namewidth     } { 300  pt },
+%    \end{macrocode}
+% 下划线宽度。下划线绘制命令是通用的，因此没有作文件区分。
+%    \begin{macrocode}
     { ulinewidthi   } { .4   pt },
     { ulinewidthii  } { .8   pt },
     { ulineshifti   } { -.5  ex },
     { ulineshiftii  } { -.7  ex },
     { ulineshiftiii } { -1   ex },
+%    \end{macrocode}
+% 小幅空格。
+%    \begin{macrocode}
     { smallhskip    } { 5    pt },
     { smallvskip    } { 1    ex }
   }
@@ -7006,7 +7119,7 @@ To produce the documentation run the original source files ending with
 \clist_map_inline:nn
   {
 %<def-u>    { pagestyle     } { plain                             },
-%<def-g>    { pagestyle     } { headings                          },
+%<def-g|def-p>    { pagestyle     } { headings                          },
     { abslabel      } { \bfseries                         },
     { abslabel_en   } {                                   },
 %<def-u>    { covertitle    } { \bfseries                         },
@@ -7027,7 +7140,7 @@ To produce the documentation run the original source files ending with
     { footer        } { \small \rmfamily                  }
   }
   { \@@_define_fmt:nn #1 }
-%</(def-u|def-g)>
+%</(def-u|def-g|def-p)>
 %    \end{macrocode}
 %
 % \end{implementation}
