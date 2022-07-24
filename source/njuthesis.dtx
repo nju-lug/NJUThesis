@@ -93,6 +93,7 @@ To produce the documentation run the original source files ending with
 \Msg{*                                                           *}
 \Msg{*     njuthesis.cls                                         *}
 \Msg{*     njuthesis-graduate.def                                *}
+\Msg{*     njuthesis-postdoctoral.def                            *}
 \Msg{*     njuthesis-undergraduate.def                           *}
 \Msg{*     njuthesis.ins                                         *}
 \Msg{*                                                           *}
@@ -110,8 +111,6 @@ To produce the documentation run the original source files ending with
 \fi
 %</internal>
 %
-% ^^A 故意留白
-% ^^A 故意留白
 % ^^A 故意留白
 % ^^A 故意留白
 %
@@ -2894,6 +2893,18 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_center_box:nn,\@@_center_box:Vn}
+% 居中对齐的水平盒子。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_center_box:nn #1#2
+  {
+    \mode_leave_vertical:
+    \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
+  }
+\cs_generate_variant:Nn \@@_center_box:nn  { Vn }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_multiline_box:NNNn}
 % 多行固定长度的下划线内容，用于国家图书馆封面。
 % \begin{arguments}
@@ -2952,7 +2963,11 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_get_text_width:Nn,\@@_get_text_width:NV}
+% \begin{macro}{
+%   \@@_get_text_width:Nn,
+%   \@@_get_text_width:NV,
+%   \@@_get_text_width:Nx}
+% ^^A 来自 fduthesis
 % 获取文本宽度。
 % \begin{arguments}
 %   \item 存储宽度的 |dim| 型变量
@@ -2966,6 +2981,32 @@ To produce the documentation run the original source files ending with
     \dim_set:Nn #1 { \box_wd:N \l_@@_tmp_box }
   }
 \cs_generate_variant:Nn \@@_get_text_width:Nn { NV }
+\cs_generate_variant:Nn \@@_get_text_width:Nn { Nx }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_get_max_text_width:NN}
+% ^^A 来自 fduthesis，调整了实现方法
+% 获取多个文本中的最大宽度，并存入 |dim| 型变量。
+% 本模板中此函数仅用于处理 |info| 类型文本变量，
+% 出现在博士后模板封面信息表。
+% \begin{arguments}
+%   \item |dim| 型变量
+%   \item 文本 |clist|
+% \end{arguments}
+% 当 \cs{l_@@_tmpa_clist} 非空时，弹出最后一个元素
+% 赋给 \cs{l_@@_tmpa_tl}，获取其长度后与 |#1| 进行比较，
+% 二者中较大的那一个将成为 |#1| 的新值。
+% 不断循环，直至 \cs{l_@@_tmpa_clist} 为空。
+%    \begin{macrocode}
+\cs_new:Npn \@@_get_max_text_width:NN #1#2
+  {
+    \clist_map_inline:Nn #2
+      {
+        \@@_get_text_width:Nx \l_@@_tmpa_dim { \@@_info:n {##1} }
+        \dim_gset:Nn #1 { \dim_max:nn {#1} { \l_@@_tmpa_dim } }
+      }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5451,7 +5492,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / u / info }
   {
     content  =
-      \@@_cover_info_u:NNNN
+      \@@_u_cover_info:NNNN
         \c_@@_coverlabel_dim
         \c_@@_coveruline_dim
         \c_@@_smallhskip_dim
@@ -5461,7 +5502,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_info_u:NNNN}
+% \begin{macro}{\@@_u_cover_info:NNNN}
 % 本科生封面信息栏。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
@@ -5470,26 +5511,23 @@ To produce the documentation run the original source files ending with
 %   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_info_u:NNNN #1#2#3#4
+\cs_new_protected:Npn \@@_u_cover_info:NNNN #1#2#3#4
   {
-    \dim_set:Nn \l__nju_tmpa_dim { #1 + #2 + #3 }
-    \begin{minipage} { \l__nju_tmpa_dim }
-      \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
+    \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
 %    \end{macrocode}
 % 短内容盒子的长度值是通过计算得到的。|dim| 型变量的乘除需要采取
 % \cs{dim_ratio:nn} 提供的形式。
 %    \begin{macrocode}
-      \dim_set:Nn \l_@@_tmpb_dim { #2 * 1/2 - #1 * 1/2 - #3 }
-      \@@_cover_entry:nNNN { dept  } #1 #2 #4
-      \@@_cover_entry:nNNN { major } #1 #2 #4
-      \@@_cover_entry_title:NNN #1 #2 #4
-      \@@_cover_entry:nnNNN { grade } { id } #1 \l_@@_tmpb_dim #4
-      \@@_cover_entry:nNNN { author } #1 #2 #4
-      \@@_cover_entry_supv:nNNN { supv } #1 \l_@@_tmpb_dim #4
-      \bool_if:NT \l_@@_second_supv_bool
-        { \@@_cover_entry_supv:nNNN { supvii } #1 \l_@@_tmpb_dim #4 }
-      \@@_cover_entry:nNNN { submitdate } #1 #2 #4
-    \end{minipage}
+    \dim_set:Nn \l_@@_tmpb_dim { #2 * 1/2 - #1 * 1/2 - #3 }
+    \@@_cover_entry:nNNN { dept  } #1 #2 #4
+    \@@_cover_entry:nNNN { major } #1 #2 #4
+    \@@_cover_entry_title:NNN #1 #2 #4
+    \@@_cover_entry:nnNNN { grade } { id } #1 \l_@@_tmpb_dim #4
+    \@@_cover_entry:nNNN { author } #1 #2 #4
+    \@@_cover_entry_supv:nNNN { supv } #1 \l_@@_tmpb_dim #4
+    \bool_if:NT \l_@@_second_supv_bool
+      { \@@_cover_entry_supv:nNNN { supvii } #1 \l_@@_tmpb_dim #4 }
+    \@@_cover_entry:nNNN { submitdate } #1 #2 #4
   }
 %</def-u>
 %    \end{macrocode}
@@ -5553,7 +5591,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover / g / info }
   {
     content     =
-      \@@_cover_info_g:NNNN
+      \@@_g_cover_info:NNNN
         \c_@@_coverlabel_dim
         \c_@@_coveruline_dim
         \c_@@_smallhskip_dim
@@ -5571,7 +5609,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_info_g:NNNN}
+% \begin{macro}{\@@_g_cover_info:NNNN}
 % 研究生封面信息栏。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
@@ -5580,15 +5618,12 @@ To produce the documentation run the original source files ending with
 %   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_info_g:NNNN #1#2#3#4
+\cs_new_protected:Npn \@@_g_cover_info:NNNN #1#2#3#4
   {
-    \dim_set:Nn \l__nju_tmpa_dim { #1 + #2 + #3 }
-    \begin{minipage} { \l__nju_tmpa_dim }
-      \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
-      \@@_cover_entry_title:NNN  #1 #2 #4
-      \clist_map_inline:nn { author, major, field, supvfull }
-        { \@@_cover_entry:nNNN { ##1 } #1 #2 #4 }
-    \end{minipage}
+    \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
+    \@@_cover_entry_title:NNN  #1 #2 #4
+    \clist_map_inline:nn { author, major, field, supvfull }
+      { \@@_cover_entry:nNNN { ##1 } #1 #2 #4 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5981,11 +6016,11 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{博士后}
 %
-% \begin{macro}{cover/p/name-img}
+% \begin{macro}{p/cover/name-img}
 % 博士后封面校名图片实例。
 %    \begin{macrocode}
 %<*def-p>
-\@@_declare_element:nn { cover / p / name-img }
+\@@_declare_element:nn { p / cover / name-img }
   {
     content     = \@@_name:N \c_@@_namewidth_dim,
     bottom-skip = 100 pt
@@ -5993,10 +6028,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/p/report}
+% \begin{macro}{p/cover/report}
 % 博士后封面报告字样实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / p / report }
+\@@_declare_element:nn { p / cover / report }
   {
     content     = \c_@@_name_report_tl,
     format      = \zihao { 1 } \sffamily,
@@ -6005,20 +6040,61 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/p/title}
+% \begin{macro}{p/cover/title}
 % 博士后封面报告标题实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / p / title }
+\@@_declare_element:nn { p / cover / title }
   {
+    content     =
+      \c_@@_name_title_tl
+      \c_@@_name_colon_tl
+      \g_@@_info_title_tl,
+    bottom-skip = 100 pt
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/p/info}
+% \begin{macro}{p/cover/info}
 % 博士后封面信息栏实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / p / info }
+\@@_declare_element:nn { p / cover / info }
   {
+    content     =
+      \@@_p_cover_info:NN
+        \c_@@_coverlabel_dim
+        \c_@@_fmt_coverlabel_tl,
+    bottom-skip = 0 pt plus 1.5 fil
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_p_cover_info:NN}
+% 博士后封面信息栏。
+% \begin{arguments}
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 标签格式
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_p_cover_info:NN #1#2
+  {
+    \clist_set:Nn \l_@@_tmp_clist
+      { author, supvfull, dept, id, major, submitdate }
+%    \end{macrocode}
+% 设置信息栏右侧宽度。读取各字段，并将最宽者的宽度赋给
+% \cs{l_@@_tmpb_dim}。
+%    \begin{macrocode}
+    \@@_get_max_text_width:NN \l_@@_tmpb_dim \l_@@_tmp_clist
+%    \end{macrocode}
+% 用循环输出各字段。
+%    \begin{macrocode}
+    \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
+    \clist_map_inline:Nn \l_@@_tmp_clist
+      {
+        \@@_spread_box:nnx { #1 } { #2 } { \@@_name:n { ##1 } }
+        \c_@@_name_colon_tl
+        \@@_center_box:Vn \l_@@_tmpb_dim { \@@_info:n { ##1 } }
+        \par
+      }
   }
 %</def-p>
 %    \end{macrocode}
@@ -6119,7 +6195,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_page:nn { cover-p }
   {
     element     = { name-img, report, title, info },
-    prefix      = cover / p /,
+    prefix      = p / cover /,
     bottom-skip = 0.5 cm plus 1.5 fill
   }
 %</def-p>
@@ -6390,8 +6466,8 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{abstract/mark}
 % 英文摘要标题实例。
-%<*(def-g|def-p)>
 %    \begin{macrocode}
+%<*(def-g|def-p)>
 \@@_declare_element:nn { abstract / mark }
   {
     content     = \c_@@_name_abstract_b_tl,
@@ -6423,9 +6499,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 %<*def-u>
 \cs_new_protected:Npn \@@_abs_info_u:
-  { \@@_abs_info_u:nn {     } { \c_@@_name_comma_tl    } }
+  { \@@_abs_info_u:nn {     } { \c_@@_name_colon_tl    } }
 \cs_new_protected:Npn \@@_abs_info_en_u:
-  { \@@_abs_info_u:nn { _en } { \c_@@_name_comma_en_tl } }
+  { \@@_abs_info_u:nn { _en } { \c_@@_name_colon_en_tl } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6465,9 +6541,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 %<*def-g>
 \cs_new_protected:Npn \@@_abs_info_g:
-  { \@@_abs_info_g:n    { \c_@@_name_comma_tl    } }
+  { \@@_abs_info_g:n    { \c_@@_name_colon_tl    } }
 \cs_new_protected:Npn \@@_abs_info_en_g:
-  { \@@_abs_info_en_g:n { \c_@@_name_comma_en_tl } }
+  { \@@_abs_info_en_g:n { \c_@@_name_colon_en_tl } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6540,7 +6616,7 @@ To produce the documentation run the original source files ending with
     \exp_args:NNv \tl_put_left:Nn
       \l_@@_tmpa_tl { c_@@_fmt_abslabel #1 _tl }
     \exp_args:NNv \tl_put_right:Nn
-      \l_@@_tmpa_tl { c_@@_name_comma #1 _tl }
+      \l_@@_tmpa_tl { c_@@_name_colon #1 _tl }
     \@@_get_text_width:NV \l_@@_tmpa_dim \l_@@_tmpa_tl
 %    \end{macrocode}
 % 关键词列表的悬挂缩进样式由 \tn{list} 环境产生。
@@ -6894,10 +6970,11 @@ To produce the documentation run the original source files ending with
 %<def-g>    { sign            } { （签字）                           },
 %<def-u>    { submitdate      } { 提交日期                           },
 %<def-g>    { submitdate      } { 论文提交日期                       },
+%<def-p>    { submitdate      } { 完成日期                           },
 %<def-g>    { subtitle        } { （题名和副题名）                   },
 %<def-u>    { supv            } { 指导教师                           },
 %<def-g>    { supv            } { 导师                               },
-%<def-p>    { supv            } { 合作导师                           },
+%<def-p>    { supvfull        } { 合作导师                           },
 %    \end{macrocode}
 % 用于摘要的导师名称字样
 %    \begin{macrocode}
@@ -6954,7 +7031,7 @@ To produce the documentation run the original source files ending with
     { blankdate     } { \qquad{}年 \quad{}月 \quad{}日   } {      },
     { blankdate_a   } { \njuline{\qquad\qquad} 年
             \njuline{\qquad} 月 \njuline{\qquad} 日      } {      },
-    { comma         } { ：              } { : \c_space_tl         },
+    { colon         } { ：              } { : \c_space_tl         },
 %<def-u|def-g>    { dept          } { 院系            } { DEPARTMENT            },
     { figure        } { 图              } { figure                },
     { keywords      } { 关键词          } { KEYWORDS              },
@@ -7080,10 +7157,11 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-%<def-u>    { coverlabel    } { 68   pt },
+%<def-u|def-p>    { coverlabel    } { 68   pt },
 %<def-g>    { coverlabel    } { 80   pt },
 %<def-u>    { coverlineskip } { 40   pt },
 %<def-g>    { coverlineskip } { 32   pt },
+%<def-p>    { coverlineskip } { 32   pt },
 %<def-u>    { coveruline    } { 270  pt },
 %<def-g>    { coveruline    } { 240  pt },
 %<def-u>    { emblemwidth   } { 68   pt },
@@ -7126,6 +7204,7 @@ To produce the documentation run the original source files ending with
 %<def-g>    { covertitle    } {                                   },
 %<def-u>    { coverlabel    } { \kaishu                           },
 %<def-g>    { coverlabel    } { \bfseries                         },
+%<def-p>    { coverlabel    } {                                   },
     { emblemcolor   } { black                             },
     { namecolor     } { black                             },
     { section       } { \large \normalfont \sffamily      },
