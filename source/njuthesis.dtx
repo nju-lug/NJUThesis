@@ -2881,9 +2881,9 @@ To produce the documentation run the original source files ending with
       {
         \dim_compare:nTF { \l_@@_tmpa_dim > #1 }
           {
-            \scalebox
+            \hfil \scalebox
               { \dim_to_decimal_in_unit:nn { #1 } { \l_@@_tmpa_dim } }
-              [ 1.0 ] { #2 #3 }
+              [ 1.0 ] { #2 #3 } \hfil
           }
           { #2 \tl_map_inline:nn { #3 } { ##1 \hfil } \unskip }
       }
@@ -3618,7 +3618,7 @@ To produce the documentation run the original source files ending with
 % 字号。默认为小四号。
 %    \begin{macrocode}
     zihao              .tl_set:N  = \g_@@_opt_zihao_tl,
-    zihao             .initial:n  = false,
+    zihao             .initial:n  = -4,
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -3728,9 +3728,9 @@ To produce the documentation run the original source files ending with
     bib      .meta:nn = { nju / bib      } { #1 },
     % cover    .meta:nn = { nju / cover    } { #1 },
     % font     .meta:nn = { nju / font     } { #1 },
-    footer   .meta:nn = { nju / footer   } { #1 },
+    % footer   .meta:nn = { nju / footer   } { #1 },
     % footnote .meta:nn = { nju / footnote } { #1 },
-    header   .meta:nn = { nju / header   } { #1 },
+    % header   .meta:nn = { nju / header   } { #1 },
     info     .meta:nn = { nju / info     } { #1 },
     style    .meta:nn = { nju / style    } { #1 },
     theorem  .meta:nn = { nju / theorem  } { #1 }
@@ -3813,7 +3813,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.12}{2021/12/07}{重新组织宏包载入顺序。}
 % 将选项传入 \cls{ctexbook} 文档类。
 %    \begin{macrocode}
-\PassOptionsToClass
+\exp_args:Nx \PassOptionsToClass
   {
     a4paper,
     UTF8,
@@ -5449,11 +5449,11 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{本科生}
 %
-% \begin{macro}{cover/u/emblem-img}
+% \begin{macro}{u/cover/emblem-img}
 % 本科生封面校徽图片实例。
 %    \begin{macrocode}
 %<*def-u>
-\@@_declare_element:nn { cover / u / emblem-img }
+\@@_declare_element:nn { u / cover / emblem-img }
   {
     content     = \@@_emblem:N \c_@@_emblemwidth_dim,
     bottom-skip = 1 cm,
@@ -5462,10 +5462,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/u/name-img}
+% \begin{macro}{u/cover/name-img}
 % 本科生封面校名图片实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / u / name-img }
+\@@_declare_element:nn { u / cover / name-img }
   {
     content     = \@@_name:N \c_@@_namewidth_dim,
     bottom-skip = 1 cm
@@ -5473,10 +5473,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/u/title}
+% \begin{macro}{u/cover/title}
 % 本科生封面标题实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / u / title }
+\@@_declare_element:nn { u / cover / title }
   {
     content  =
       \@@_spread_box:nnV { 9 em } { \bf } \c_@@_name_type_tl,
@@ -5486,10 +5486,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/u/info}
+% \begin{macro}{u/cover/info}
 % 本科生封面信息栏实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / u / info }
+\@@_declare_element:nn { u / cover / info }
   {
     content  =
       \@@_u_cover_info:NNNN
@@ -5537,11 +5537,11 @@ To produce the documentation run the original source files ending with
 %
 % \subparagraph{正面} 包括校名、校徽、标题、信息栏。
 %
-% \begin{macro}{cover/g/emblem-img}
+% \begin{macro}{g/cover-front/emblem-img}
 % 研究生封面校徽图片实例。
 %    \begin{macrocode}
 %<*def-g>
-\@@_declare_element:nn { cover / g / emblem-img }
+\@@_declare_element:nn { g / cover-front / emblem-img }
   {
     content     = \@@_emblem:N \c_@@_emblemwidthi_dim,
     bottom-skip = 1.5 cm
@@ -5549,10 +5549,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/g/name-img}
+% \begin{macro}{g/cover-front/name-img}
 % 研究生封面校名图片实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / name-img }
+\@@_declare_element:nn { g / cover-front / name-img }
   {
     content     = \@@_name:N \c_@@_namewidth_dim,
     bottom-skip = 100 pt
@@ -5560,10 +5560,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/g/type}
+% \begin{macro}{g/cover-front/type}
 % 研究生封面标题实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / type }
+\@@_declare_element:nn { g / cover-front / type }
   {
     content     =
       \@@_spread_box:nnV { 11 em } { } \c_@@_name_type_tl,
@@ -5573,10 +5573,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/g/degree}
+% \begin{macro}{g/cover-front/degree}
 % 研究生封面标题实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / degree }
+\@@_declare_element:nn { g / cover-front / degree }
   {
     content     = \c_@@_name_apply_tl,
     format      = \zihao { 1 } \bfseries,
@@ -5585,10 +5585,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/g/info}
+% \begin{macro}{g/cover-front/info}
 % 研究封面信息栏实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / info }
+\@@_declare_element:nn { g / cover-front / info }
   {
     content     =
       \@@_g_cover_info:NNNN
@@ -5601,10 +5601,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/g/date}
+% \begin{macro}{g/cover-front/date}
 % 研究封面日期实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / date }
+\@@_declare_element:nn { g / cover-front / date }
   { content = \g_@@_info_submitdate_tl }
 %    \end{macrocode}
 % \end{macro}
@@ -5630,40 +5630,47 @@ To produce the documentation run the original source files ending with
 %
 % \subparagraph{背面}
 %
-% \begin{macro}{cover/g/back}
+% \begin{macro}{g/cover-back/info}
 % 研究生封面背面信息实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / back }
+\@@_declare_element:nn { g / cover-back / info }
   {
-    content = \@@_cover_back_g:N \c_@@_fmt_coverlabel_tl,
+    content =
+      \@@_g_cover_back:NN
+        \c_@@_coverlabel_dim
+        \c_@@_fmt_coverlabel_tl,
     align   = l
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_back_g:}
+% \begin{macro}{\@@_cover_back_g:NN}
 % 研究生封面背面信息。格式存在变化，没有使用循环来简化。
+% \begin{arguments}
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 标签格式
+% \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_back_g:N #1
+\cs_new_protected:Npn \@@_g_cover_back:NN #1#2
   {
-    \@@_spread_box:nnV { 6.2 em } { #1 } \c_@@_name_id_tl
-    { : \@@_quad: } \g_@@_info_id_tl
-    \@@_vskip:
-    \@@_spread_box:nnV { 6.2 em } { #1 } \c_@@_name_defenddate_tl
-    { : \@@_quad: } \g_@@_info_defenddate_tl
-    \@@_vskip:
-    \@@_spread_box:nnV { 6.2 em } { #1 } \c_@@_name_supvfull_tl
-    { : \@@_quad: } \skip_horizontal:n { 8 em } { #1 \c_@@_name_sign_tl }
+    \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
+    \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_id_tl
+      \c_@@_name_colon_tl \g_@@_info_id_tl \par
+    \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_defenddate_tl
+      \c_@@_name_colon_tl \g_@@_info_defenddate_tl \par
+    \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_supvfull_tl
+      \c_@@_name_colon_tl \skip_horizontal:n { 8 em }
+      { #2 \c_@@_name_sign_tl }
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \subparagraph{英文封面} 包括标题、顶部、中部、校徽、底部。
 %
-% \begin{macro}{cover/g/en/title}
+% \begin{macro}{g/cover-en/title}
 % 研究生英文封面标题实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / en / title }
+\@@_declare_element:nn { g / cover-en / title }
   {
     content     = \g_@@_info_title_en_tl,
     format      = \bf \sffamily \zihao { 2 },
@@ -5672,10 +5679,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/g/en/top}
+% \begin{macro}{g/cover-en/top}
 % 研究生英文封面顶部信息实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / en / top }
+\@@_declare_element:nn { g / cover-en / top }
   {
     content      =
       { by }
@@ -5691,10 +5698,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/g/en/middle}
+% \begin{macro}{g/cover-en/middle}
 % 研究生英文封面中部信息实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / en / middle }
+\@@_declare_element:nn { g / cover-en / middle }
   {
     content     =
       \c_@@_text_cover_en_tl \@@_vskip:
@@ -5707,10 +5714,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/g/en/emblem-img}
+% \begin{macro}{g/cover-en/emblem-img}
 % 研究生英文封面校徽图片实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / en / emblem-img }
+\@@_declare_element:nn { g / cover-en / emblem-img }
   {
     content     = \@@_emblem:N \c_@@_emblemwidthii_dim,
     bottom-skip = 1.5 cm
@@ -5718,10 +5725,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/g/en/bottom}
+% \begin{macro}{g/cover-en/bottom}
 % 研究生英文封面底部信息实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / g / en / bottom }
+\@@_declare_element:nn { g / cover-en / bottom }
   {
     content =
       \g_@@_info_dept_en_tl \skip_vertical:N \c_zero_skip
@@ -5733,10 +5740,10 @@ To produce the documentation run the original source files ending with
 %
 % \subparagraph{国家图书馆封面} 包括顶部、题名、标题、中部、底部、日期。
 %
-% \begin{macro}{cover/nl/top}
+% \begin{macro}{cover-nl/top}
 % 国家图书馆封面顶部信息实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / nl / top }
+\@@_declare_element:nn { cover-nl / top }
   {
     content     = \@@_cover_top_nl:,
     bottom-skip = 2 cm
@@ -5744,10 +5751,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/nl/name}
+% \begin{macro}{cover-nl/name}
 % 国家图书馆封面标题名称实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / nl / name }
+\@@_declare_element:nn { cover-nl / name }
   {
     content     =
       \@@_spread_box:nnV { 6 em } { } \c_@@_name_title_b_tl,
@@ -5757,10 +5764,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/nl/title}
+% \begin{macro}{cover-nl/title}
 % 国家图书馆封面标题实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / nl / title }
+\@@_declare_element:nn { cover-nl / title }
   {
     content     = \@@_cover_title_nl:,
     format      = \zihao { 1 },
@@ -5769,10 +5776,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/nl/middle}
+% \begin{macro}{cover-nl/middle}
 % 国家图书馆封面中部信息实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / nl / middle }
+\@@_declare_element:nn { cover-nl / middle }
   {
     content     = \@@_cover_info_nl:,
     format      = \zihao { 4 },
@@ -5781,10 +5788,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/nl/bottom}
+% \begin{macro}{cover-nl/bottom}
 % 国家图书馆封面底部信息实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / nl / bottom }
+\@@_declare_element:nn { cover-nl / bottom }
   {
     content     = \@@_cover_bottom_nl:,
     bottom-skip = 1 cm,
@@ -5793,10 +5800,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{cover/nl/date}
+% \begin{macro}{cover-nl/date}
 % 国家图书馆封面底部日期实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { cover / nl / date }
+\@@_declare_element:nn { cover-nl / date }
   {
     content = \g_@@_info_bottomdate_tl,
     format  = \kaishu \zihao { 3 }
@@ -5876,10 +5883,10 @@ To produce the documentation run the original source files ending with
 %
 % \subparagraph{出版授权书}
 %
-% \begin{macro}{authdecl/g/title}
+% \begin{macro}{g/authdecl/title}
 % 出版授权书标题实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { authdecl / g / title }
+\@@_declare_element:nn { g / authdecl / title }
   {
     content     = \c_@@_name_authdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
@@ -5888,10 +5895,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{authdecl/g/text}
+% \begin{macro}{g/authdecl/text}
 % 出版授权书文本实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { authdecl / g / text }
+\@@_declare_element:nn { g / authdecl / text }
   {
     content     = \c_@@_text_authdecl_tl,
     align       = n,
@@ -5900,24 +5907,24 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{authdecl/g/sign}
+% \begin{macro}{g/authdecl/sign}
 % 出版授权书签名区实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { authdecl / g / sign }
+\@@_declare_element:nn { g / authdecl / sign }
   {
-    content     = \@@_authdecl_sign_g:,
+    content     = \@@_g_decl_auth_sign:,
     align       = r,
     bottom-skip = 0pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{authdecl/g/info}
+% \begin{macro}{g/authdecl/info}
 % 出版授权书信息表格实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { authdecl / g / info }
+\@@_declare_element:nn { g / authdecl / info }
   {
-    content     = \@@_authdecl_info_g:,
+    content     = \@@_g_decl_auth_info:,
     format      = \zihao { 5 } ,
     align       = l,
     bottom-skip = 2 cm
@@ -5925,10 +5932,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{authdecl/g/date}
+% \begin{macro}{g/authdecl/date}
 % 出版授权书保密信息实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { authdecl / g / date }
+\@@_declare_element:nn { g / authdecl / date }
   {
     content     = \@@_authdecl_secretlv_g:,
     format      = \zihao { 5 } ,
@@ -5953,10 +5960,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_authdecl_info_g:}
+% \begin{macro}{\@@_g_decl_auth_info:}
 % 信息栏内容。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_authdecl_info_g:
+\cs_new_protected:Npn \@@_g_decl_auth_info:
   {
     \begin{tblr}
       {
@@ -5990,10 +5997,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_authdecl_sign_g:}
+% \begin{macro}{\@@_g_decl_auth_sign:}
 % 签名区内容。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_authdecl_sign_g:
+\cs_new_protected:Npn \@@_g_decl_auth_sign:
   {
     \c_@@_name_authsign_tl \par
     \c_@@_name_blankdate_a_tl
@@ -6023,7 +6030,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { p / cover / name-img }
   {
     content     = \@@_name:N \c_@@_namewidth_dim,
-    bottom-skip = 100 pt
+    bottom-skip = 40 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6034,8 +6041,8 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { p / cover / report }
   {
     content     = \c_@@_name_report_tl,
-    format      = \zihao { 1 } \sffamily,
-    bottom-skip = 40 pt
+    format      = \zihao { 0 } \sffamily,
+    bottom-skip = 40 pt plus 1.5 fil
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6049,7 +6056,8 @@ To produce the documentation run the original source files ending with
       \c_@@_name_title_tl
       \c_@@_name_colon_tl
       \g_@@_info_title_tl,
-    bottom-skip = 100 pt
+    format      = \zihao { 4 },
+    bottom-skip = 80 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6063,7 +6071,8 @@ To produce the documentation run the original source files ending with
       \@@_p_cover_info:NN
         \c_@@_coverlabel_dim
         \c_@@_fmt_coverlabel_tl,
-    bottom-skip = 0 pt plus 1.5 fil
+    format      = \zihao { -4 },
+    bottom-skip = 0 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6096,6 +6105,92 @@ To produce the documentation run the original source files ending with
         \par
       }
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subparagraph{原创性声明和出版授权书}
+%
+% \begin{macro}{p/decl/orig/title}
+% 原创性声明标题实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { p / decl / orig / title }
+  {
+    content     = \c_@@_name_origdecl_tl,
+    format      = \c_@@_fmt_chapter_tl,
+    bottom-skip = 3 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{p/decl/orig/text}
+% 原创性声明文本实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { p / decl / orig / text }
+  {
+    content     = \c_@@_text_origdecl_tl,
+    align       = n,
+    bottom-skip = 2 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{p/decl/orig/sign}
+% 原创性声明签名区实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { p / decl / orig / sign }
+  {
+    content     = \@@_p_decl_sign:nn { origsign } { date },
+    bottom-skip = 0 pt plus 1 fill
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{p/decl/auth/title}
+% 出版授权书标题实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { p / decl / auth / title }
+  {
+    content     = \c_@@_name_authdecl_tl,
+    format      = \c_@@_fmt_chapter_tl,
+    bottom-skip = 3 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{p/decl/auth/text}
+% 出版授权书文本实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { p / decl / auth / text }
+  {
+    content     = \c_@@_text_authdecl_tl,
+    align       = n,
+    bottom-skip = 2 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{p/decl/auth/sign}
+% 出版授权书签名区实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { p / decl / auth / sign }
+  {
+    content     =
+      \@@_p_decl_sign:nn { authsign   } { date }
+      \@@_p_decl_sign:nn { authsign_a } { date },
+    bottom-skip = 0 pt plus 1 fill
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_p_decl_sign:nn}
+% 原创性声明签名区内容。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_p_decl_sign:nn #1#2
+  {
+    \@@_name:n {#1} \c_@@_name_colon_tl \hfill
+    \@@_name:n {#2} \c_@@_name_colon_tl
+    \skip_horizontal:n { 160 pt } \null \@@_vskip:
+  }
 %</def-p>
 %    \end{macrocode}
 % \end{macro}
@@ -6116,7 +6211,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_page:nn { cover-u }
   {
     element     = { emblem-img, name-img, title, info },
-    prefix      = cover / u /,
+    prefix      = u / cover /,
     bottom-skip = 0.5 cm plus 1.5 fill
   }
 %</def-u>
@@ -6130,7 +6225,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_page:nn { cover-g-front }
   {
     element  = { emblem-img, name-img, type, degree, info, date },
-    prefix   = cover / g /,
+    prefix   = g / cover-front /,
     format   = \zihao { 3 } \kaishu,
     top-skip = 30 pt
   }
@@ -6142,8 +6237,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_page:nn { cover-g-back }
   {
-    element  = { back },
-    prefix   = cover / g /,
+    element  = { info },
+    prefix   = g / cover-back /,
     format   = \zihao { 3 } \kaishu,
     top-skip = 20 cm
   }
@@ -6156,7 +6251,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_page:nn { cover-g-en }
   {
     element  = { title, top, middle, emblem-img, bottom },
-    prefix   = cover / g / en /,
+    prefix   = g / cover-en /,
     top-skip = 0 pt plus 1.2 fil
   }
 %    \end{macrocode}
@@ -6168,7 +6263,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_page:nn { cover-nl }
   {
     element = { top, name, title, middle, bottom, date },
-    prefix  = cover / nl /,
+    prefix  = cover-nl /,
     format  = \kaishu
   }
 %    \end{macrocode}
@@ -6180,7 +6275,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_page:nn { authdecl-g }
   {
     element     = { title, text, sign, info, date },
-    prefix      = authdecl / g /,
+    prefix      = g / authdecl /,
     top-skip    = 1 cm,
     bottom-skip = 0.5 cm plus 1.5 fill
   }
@@ -6189,14 +6284,32 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{cover-p}
-% 默认本科生封面实例。
+% 默认博士后封面实例。
 %    \begin{macrocode}
 %<*def-p>
 \@@_declare_page:nn { cover-p }
   {
     element     = { name-img, report, title, info },
     prefix      = p / cover /,
-    bottom-skip = 0.5 cm plus 1.5 fill
+    format      = \bfseries,
+    top-skip    = 100 pt
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{authdecl-p}
+% 默认出版授权书实例。
+%    \begin{macrocode}
+\@@_declare_page:nn { authdecl-p }
+  {
+    element     =
+      {
+        orig/title, orig/text, orig/sign,
+        auth/title, auth/text, auth/sign
+      },
+    prefix      = p / decl /,
+    top-skip    = 40 pt,
+    bottom-skip = 0 pt
   }
 %</def-p>
 %    \end{macrocode}
@@ -6224,14 +6337,16 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_make_origdecl: }
+% \begin{macro}{\@@_make_decl_orig: }
 % \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
 % \changes{v0.19}{2022/05/22}{跟进新版本科生诚信承诺书样式。}
 % ^^A TODO: 使用 xtemplate 重构
 % 生成本科生的诚信承诺书或研究生的学位论文原创性声明。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_origdecl:
+\cs_new_protected:Npn \@@_make_decl_orig:
   {
+%<def-p>    \cleardoublepage
+%<def-p>    \UseInstance { nju } { authdecl-p }
 %<*(def-u|def-g)>
 %<def-u>    \cleardoublepage
 %<def-g>    \chapter* { \c_@@_name_origdecl_tl }
@@ -6247,8 +6362,8 @@ To produce the documentation run the original source files ending with
     \c_@@_text_origdecl_tl
     \vfil
     \begin{flushright}
-%<def-u>      \clist_map_inline:nn { origsign, id, origdate }
-%<def-g>      \clist_map_inline:nn { origsign,     origdate }
+%<def-u>      \clist_map_inline:nn { origsign, id, date }
+%<def-g>      \clist_map_inline:nn { origsign,     date }
         { \@@_vskip: \@@_name:n { ##1 } ： \@@_uline:n { 7 em } }
     \end{flushright}
     \vfil
@@ -6258,11 +6373,11 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_make_authdecl: }
+% \begin{macro}{\@@_make_decl_auth: }
 % \changes{v0.17}{2022/04/04}{加入研究生的学位论文出版授权书。}
 % 生成研究生的学位论文出版授权书。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_authdecl:
+\cs_new_protected:Npn \@@_make_decl_auth:
   {
 %<def-g>    \UseInstance { nju } { authdecl-g }
   }
@@ -6375,11 +6490,11 @@ To produce the documentation run the original source files ending with
       {
         \bool_if:NT \g_@@_opt_decl_bool
           {
-            \@@_make_origdecl:
+            \@@_make_decl_orig:
             \AtEndEnvironment { document }
               {
                 \cleardoublepage
-                \@@_make_authdecl:
+                \@@_make_decl_auth:
                 \cleardoublepage
               }
           }
@@ -6411,6 +6526,7 @@ To produce the documentation run the original source files ending with
 %<def-u|def-g>    content     = \@@_abs_title:V \c_@@_name_abstracttitle_tl,
 %<def-p>    content     = \g_@@_info_title_tl,
 %<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
+%<def-p>    format      = \bfseries,
     bottom-skip = 1.2 cm
   }
 %    \end{macrocode}
@@ -6424,6 +6540,7 @@ To produce the documentation run the original source files ending with
 %<def-u|def-g>    content     = \@@_abs_title:V \c_@@_name_abstracttitle_en_tl,
 %<def-p>    content     = \g_@@_info_title_en_tl,
 %<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
+%<def-p>    format      = \bfseries,
     bottom-skip = 1.2 cm
   }
 %</(def-u|def-g|def-p)>
@@ -6907,6 +7024,7 @@ To produce the documentation run the original source files ending with
     { acknowledgement } { 致 \qquad{} 谢                     },
 %<def-g>    { apply           } {（申请 \g_@@_info_degree_tl 学位）},
 %<def-g>    { authdecl        } { 学位论文出版授权书                 },
+%<def-p>    { authdecl        } { 研究报告使用授权书                 },
 %<def-p>    { author          } { 作者                               },
 %    \end{macrocode}
 % 用于摘要的作者名称字样
@@ -6914,9 +7032,12 @@ To produce the documentation run the original source files ending with
 %<def-u>    { author_a        } { 本科生姓名                         },
 %<def-g>    { author_a        } { \g_@@_info_type_tl 生姓名        },
 %<def-g>    { authsign        } { 作者签名：\njuline{\hspace{6em}}   },
+%<def-p>    { authsign        } { 本人签名                           },
+%<def-p>    { authsign_a      } { 导师签名                           },
 %<def-g>    { chairman        } { 答辩委员会主席：                   },
 %<def-g>    { clc             } { 分类号                             },
 %<def-g>    { confer          } { 学位授予单位和日期                 },
+    { date            } { 日期                               },
 %<def-g>    { defenddate      } { 论文答辩日期                       },
 %<def-g>    { degree          } { 申请学位级别                       },
 %    \end{macrocode}
@@ -6950,12 +7071,13 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 %<def-g>    { major_b         } { 专业名称                           },
     { notation        } { 符号表                             },
-    { origdate        } { 日期                               },
 %<def-u>    { origdecl        }
 %<def-u>      { 南京大学本科毕业论文（设计） \\ 诚信承诺书           },
 %<def-g>    { origdecl        } { 南京大学学位论文原创性声明         },
+%<def-p>    { origdecl        } { 研究报告原创性声明                 },
 %<def-u>    { origsign        } { 作者签名                           },
 %<def-g>    { origsign        } { 研究生签名                         },
+%<def-p>    { origsign        } { 研究报告作者签名                   },
     { paperlist       } { 发表文章目录                       },
     { pdfcreator      } { LaTeX~ with~ njuthesis~ class      },
     { preface         } { 前 \qquad{} 言                     },
@@ -7157,11 +7279,12 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-%<def-u|def-p>    { coverlabel    } { 68   pt },
+%<def-u>    { coverlabel    } { 68   pt },
 %<def-g>    { coverlabel    } { 80   pt },
+%<def-p>    { coverlabel    } { 50   pt },
 %<def-u>    { coverlineskip } { 40   pt },
 %<def-g>    { coverlineskip } { 32   pt },
-%<def-p>    { coverlineskip } { 32   pt },
+%<def-p>    { coverlineskip } { 28   pt },
 %<def-u>    { coveruline    } { 270  pt },
 %<def-g>    { coveruline    } { 240  pt },
 %<def-u>    { emblemwidth   } { 68   pt },
@@ -7169,7 +7292,7 @@ To produce the documentation run the original source files ending with
 %<def-g>    { emblemwidthii } { 61   pt },
 %<def-u>    { namewidth     } { 300  pt },
 %<def-g>    { namewidth     } { 126  pt },
-%<def-p>    { namewidth     } { 300  pt },
+%<def-p>    { namewidth     } { 220  pt },
 %    \end{macrocode}
 % 下划线宽度。下划线绘制命令是通用的，因此没有作文件区分。
 %    \begin{macrocode}
