@@ -306,8 +306,10 @@ To produce the documentation run the original source files ending with
 % 用户组维护的，用于处理本校学生毕业论文排版需求的 \LaTeX 模板。
 %
 % 本模板使用的本科生毕业论文模板格式依据
-% 《关于启动南京大学2022届本科毕业论文（设计）工作的通知》\cite{nju2021}，
-% 研究生学位论文格式依据研究生院提供的材料包。
+% 《关于启动南京大学2022届本科毕业论文（设计）工作的通知》\cite{nju-bachelor-2022}，
+% 研究生学位论文格式依据研究生院提供的材料包\cite{nju-master-2022,nju-doctor-2022}。
+% 博士后出站报告格式要求与博士学位论文一致\cite{nju-postdoc-2022}，
+% 封面、摘要的设计参考了部分既有报告。
 %
 %
 % \subsection{开始之前}
@@ -412,7 +414,8 @@ To produce the documentation run the original source files ending with
 % 如果您希望在使用本模板前了解一些关于这个排版软件的基础知识，在此尝试列举一些有
 % 所帮助的资料：
 % \begin{description}
-%   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，可以参考英文版\cite{lshort}及其中文翻译版\cite{lshort-zh-cn}。
+%   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，可以参考英文版
+%                          \cite{lshort}及其中文翻译版\cite{lshort-zh-cn}。
 %   \item[《\LaTeX 入门》] 刘海洋著\cite{刘海洋2013latex入门}。
 % \end{description}
 %
@@ -463,8 +466,8 @@ To produce the documentation run the original source files ending with
 % \footnote{\href{https://ctan.org/pkg/njuthesis}{\cls{njuthesis}} 已经于2021年9
 % 月12日发布在 CTAN，用于绘制南大图标的
 % \href{https://ctan.org/pkg/njuvisual}{\pkg{njuvisual}} 也已于同年11月28日发
-% 布，两者已被 \TeX{} Live 和 \MiKTeX 收录。}上提供基本的介绍信息，可以下载说明文档（本文档）和宏包源代
-% 码。当然，使用这一来源时并不需要接触后者，请参考
+% 布，两者已被 \TeX{} Live 和 \MiKTeX 收录。}上提供基本的介绍信息，可以下载
+% 说明文档（本文档）和宏包源代码。当然，使用这一来源时并不需要接触后者，请参考
 % \ref{subsubsec:standard-installation} 的标准安装方法。
 %
 % \subparagraph{GitHub 仓库}
@@ -542,7 +545,8 @@ To produce the documentation run the original source files ending with
 % 另一方面，CTAN 依赖开发者手动上传更新，版本更新具有滞后性。如果使用时遇到了问
 % 题，不妨使用下一小节的\emph{即时安装方法}优先载入较新的格式文件。
 %
-% {\color{red}|[!]|} 如果您具备相关经验\footnote{譬如熟悉命令行操作、使用的是 \TL 发行版等}，可以在下载仓库内全部文件后，于该目录下运行
+% {\color{red}|[!]|} 如果您具备相关经验\footnote{譬如熟悉命令行操作、使用的是 \TL
+% 发行版等}，可以在下载仓库内全部文件后，于该目录下运行
 % \begin{shellexample}[morekeywords={l3build},emph={install}]
 %   l3build install
 % \end{shellexample}
@@ -806,7 +810,7 @@ To produce the documentation run the original source files ending with
 % 下文中尖括号内列出了若干个允许的选项，其中加粗的为默认选项（缺省值）。
 %
 % \subsubsection{学位信息}
-% \begin{function}[added=2021-09-07,updated=2022-07-01]{type}
+% \begin{function}[added=2021-09-07,updated=2022-07-23]{type}
 %   \begin{syntax}
 %     type = <(bachelor)|master|doctor|postdoc>
 %   \end{syntax}
@@ -1816,7 +1820,7 @@ To produce the documentation run the original source files ending with
 % \end{description}
 %
 % 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号
-% 表示”\cite{nju2021}，符合顺序编码制的格式，保持默认设置即可。
+% 表示”\cite{nju-bachelor-2022}，符合顺序编码制的格式，保持默认设置即可。
 %
 % \begin{function}[added=2022-02-15]{bib/option}
 %   \begin{syntax}
@@ -2355,11 +2359,29 @@ To produce the documentation run the original source files ending with
 % \newblock \textit{信息与文献\quad 参考文献著录规则: GB/T 7714--2015} [S].
 % \newblock 北京: 中国标准出版社, 2015
 %
-% \bibitem{nju2021}
+% \bibitem{nju-bachelor-2022}
 % 南京大学本科生院.
 % \newblock \textit{关于启动南京大学2022届本科毕业论文（设计）工作的通知} [EB/OL].
 % \newblock (2021-12-14)
 % \urlprefix\url{https://jw.nju.edu.cn/7c/86/c26263a556166/page.htm}
+%
+% \bibitem{nju-master-2022}
+% 南京大学研究生院.
+% \newblock \textit{硕士研究生申请学位材料下载} [EB/OL].
+% \newblock (2022-04-26)
+% \urlprefix\url{https://grawww.nju.edu.cn/1077/list.htm}
+%
+% \bibitem{nju-doctor-2022}
+% 南京大学研究生院.
+% \newblock \textit{博士研究生申请学位材料下载} [EB/OL].
+% \newblock (2022-04-26)
+% \urlprefix\url{https://grawww.nju.edu.cn/1076/list.htm}
+%
+% \bibitem{nju-postdoc-2022}
+% 南京大学人力资源处.
+% \newblock \textit{博士后出站申请} [EB/OL].
+% \newblock (2022-07-27)
+% \urlprefix\url{https://hr.nju.edu.cn/6334/list.htm}
 %
 %
 % \subsection*{宏包}
@@ -3259,9 +3281,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_abs_bookmark:nn #1#2
   {
     \phantomsection
-    \bool_if:NTF \g_@@_abs_in_toc_bool
-      { \@@_add_tocline:n { #1 } }
-      { \pdfbookmark [0] { #1 } { #2 } }
+    \@@_bookmark:Nnn \g_@@_abs_in_toc_bool {#1} {#2}
     \@@_chapter_header:n { #1 }
   }
 \cs_generate_variant:Nn \@@_abs_bookmark:nn { Vn }
@@ -3434,10 +3454,18 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
+% \changes{v1.0}{2022/07/27}{为页面模板添加书签选项。}
+%
 % 定义页面模板。
 %    \begin{macrocode}
 %<@@=njupage>
 %    \end{macrocode}
+%
+% \begin{macro}{\exp_args:NVV}
+%    \begin{macrocode}
+\exp_args_generate:n { NVV }
+%    \end{macrocode}
+% \end{macro}
 %
 % 声明页面模板接口。
 % 页面是元素的集合。一个抽象的页面应当具备以下属性：
@@ -3447,6 +3475,9 @@ To produce the documentation run the original source files ending with
 %   \item[\opt{format}] 格式，例如行距
 %   \item[\opt{top-skip}] 上间距，即与页面顶部的距离
 %   \item[\opt{bottom-skip}] 下间距，即与页面底部的距离
+%   \item[\opt{bm-text}] PDF 书签名称
+%   \item[\opt{bm-name}] PDF 书签锚点名
+%   \item[\opt{bookmark}] 添加书签的类型，分别为目录条目、仅 PDF 书签、不显示。
 % \end{description}
 %    \begin{macrocode}
 \DeclareTemplateInterface { nju } { page } { \c_zero_int }
@@ -3455,7 +3486,10 @@ To produce the documentation run the original source files ending with
     prefix      : tokenlist = \c_empty_tl,
     format      : tokenlist = \c_empty_tl,
     top-skip    : skip      = \c_zero_skip,
-    bottom-skip : skip      = \c_zero_skip
+    bottom-skip : skip      = \c_zero_skip,
+    bm-text     : tokenlist = \c_empty_tl,
+    bm-name     : tokenlist = \c_empty_tl,
+    bookmark    : choice { toc, pdf, none } = none
   }
 %    \end{macrocode}
 %
@@ -3467,13 +3501,22 @@ To produce the documentation run the original source files ending with
     prefix      = \l_@@_prefix_tl,
     format      = \l_@@_format_tl,
     top-skip    = \l_@@_top_skip,
-    bottom-skip = \l_@@_bottom_skip
+    bottom-skip = \l_@@_bottom_skip,
+    bm-text     = \l_@@_bm_text_tl,
+    bm-name     = \l_@@_bm_name_tl,
+    bookmark    =
+      {
+        toc  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_toc:nn  },
+        pdf  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_pdf:nn  },
+        none = { \cs_set_eq:NN \@@_bookmark:nn \@@_do_nothing:nn       }
+      }
   }
   {
     \AssignTemplateKeys
     \clearpage
     \thispagestyle { empty }
     \__nju_vskip:N \l_@@_top_skip
+    \exp_args:NVV \@@_bookmark:nn \l_@@_bm_text_tl \l_@@_bm_name_tl
     \group_begin:
       \l_@@_format_tl
       \clist_map_inline:Nn \l_@@_element_clist
@@ -3481,8 +3524,15 @@ To produce the documentation run the original source files ending with
     \group_end:
     \__nju_vskip:N \l_@@_bottom_skip
   }
+%    \end{macrocode}
+%
+% \begin{macro}{\@@_bookmark:NN}
+% 吸收两个参数的摸鱼函数。
+%    \begin{macrocode}
+\cs_new:Npn \@@_do_nothing:nn #1#2 { }
 %<@@=nju>
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_declare_element:nn,\@@_declare_page:nn}
 % 封装 \pkg{xtemplate} 提供的函数，简化创建实例的过程。
@@ -3491,9 +3541,9 @@ To produce the documentation run the original source files ending with
 %   \item 参数列表
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_declare_element:nn #1#2
+\cs_new:Npn \@@_declare_element:nn #1#2
   { \DeclareInstance { nju } {#1} { element } {#2} }
-\cs_new_protected:Npn \@@_declare_page:nn    #1#2
+\cs_new:Npn \@@_declare_page:nn    #1#2
   { \DeclareInstance { nju } {#1} { page    } {#2} }
 %    \end{macrocode}
 % \end{macro}
@@ -4884,24 +4934,56 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{章节标题格式}
 %
-% \begin{macro}{\@@_add_tocline:n,\@@_add_tocline:V}
+% \begin{macro}{\@@_bookmark_toc:n,\@@_bookmark_toc:V}
 % 为无编号章添加目录条目，需手动指定格式为四号、不加粗、黑体。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_add_tocline:n #1
+\cs_new:Npn \@@_bookmark_toc:n #1
   { \addcontentsline { toc } { chapter } { \c_@@_fmt_chapterintoc_tl #1 } }
-\cs_generate_variant:Nn \@@_add_tocline:n { V }
+\cs_generate_variant:Nn \@@_bookmark_toc:n { V }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_chapter:n,\@@_chapter:V}
+% \begin{macro}{\@@_bookmark_toc:nn}
+% 为了保持形式一致，进行封装。
+%    \begin{macrocode}
+\cs_new:Npn \@@_bookmark_toc:nn #1#2
+  { \phantomsection \_@@_bookmark_toc:n {#1} }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_bookmark_pdf_nosec:nn,\@@_bookmark_pdf:nn}
+% 封装 \pkg{hyperref} 的 PDF 书签命令。
+%    \begin{macrocode}
+\cs_new:Npn \@@_bookmark_pdf_nosec:nn #1#2
+  { \pdfbookmark [0] { #1 } { #2 } }
+\cs_new:Npn \@@_bookmark_pdf:nn #1#2
+  { \phantomsection \@@_bookmark_pdf_nosec:nn {#1} {#2} }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_bookmark:Nnn}
+% 书签。
+%    \begin{macrocode}
+\cs_new:Npn \@@_bookmark:Nnn #1#2#3
+  {
+    \bool_if:NTF #1
+      { \_@@_bookmark_toc:n        { #2 }        }
+      { \_@@_bookmark_pdf_nosec:nn { #2 } { #3 } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_chapter:Nnn,\@@_chapter:n,\@@_chapter:V}
 % 含有目录和 PDF 标签的无编号章。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_chapter:n #1
+\cs_new:Npn \@@_chapter:Nnn #1#2#3
   {
-    \chapter *           { #1 }
-    \@@_add_tocline:n    { #1 }
-    \@@_chapter_header:n { #1 }
+    \chapter *           { #2 }
+    \@@_bookmark:Nnn #1  { #2 } { #3 }
+    \@@_chapter_header:n { #2 }
   }
+\cs_new:Npn \@@_chapter:n #1
+  { \@@_chapter:Nnn \c_true_bool {#1} { } }
 \cs_generate_variant:Nn \@@_chapter:n { V }
 %    \end{macrocode}
 % \end{macro}
@@ -4930,8 +5012,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \keys_set:nn { ctex }
   {
-    chapter        / beforeskip = 10 pt,
-    chapter        / afterskip  = 60 pt,
+    chapter        / beforeskip = \c_@@_beforechapter_dim,
+    chapter        / afterskip  = \c_@@_afterchapter_dim,
     chapter        / format     = \c_@@_fmt_chapter_tl,
     section        / format     = \c_@@_fmt_section_tl,
     subsection     / format     = \c_@@_fmt_subsection_tl,
@@ -4980,13 +5062,7 @@ To produce the documentation run the original source files ending with
     \group_begin:
       \keys_set:nn { ctex }
         { chapter/format = \c_@@_fmt_toctitle_tl }
-      \bool_if:NTF \g_@@_toc_in_toc_bool
-        { \@@_chapter:n { #1 } }
-        {
-          \chapter * { #1 }
-          \pdfbookmark [0] { #1 } { #2 }
-          \@@_chapter_header:n { #1 }
-        }
+      \@@_chapter:Nnn \g_@@_toc_in_toc_bool { #1 } { #2 }
     \group_end:
     \@starttoc { #2 }
   }
@@ -6308,6 +6384,9 @@ To produce the documentation run the original source files ending with
         auth/title, auth/text, auth/sign
       },
     prefix      = p / decl /,
+    bookmark    = toc,
+    bm-text     = 声明页,
+    bm-name     = decl,
     top-skip    = 40 pt,
     bottom-skip = 0 pt
   }
@@ -6337,13 +6416,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_make_decl_orig: }
+% \begin{macro}{\@@_make_decl_i:}
 % \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
 % \changes{v0.19}{2022/05/22}{跟进新版本科生诚信承诺书样式。}
-% ^^A TODO: 使用 xtemplate 重构
+% 位于封面后的承诺书页面。
 % 生成本科生的诚信承诺书或研究生的学位论文原创性声明。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_decl_orig:
+\cs_new_protected:Npn \@@_make_decl_i:
   {
 %<def-p>    \cleardoublepage
 %<def-p>    \UseInstance { nju } { authdecl-p }
@@ -6373,13 +6452,20 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_make_decl_auth: }
+% \begin{macro}{\@@_make_decl_ii:}
 % \changes{v0.17}{2022/04/04}{加入研究生的学位论文出版授权书。}
-% 生成研究生的学位论文出版授权书。
+% 位于封底的承诺书页面。生成研究生的学位论文出版授权书。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_decl_auth:
+\cs_new_protected:Npn \@@_make_decl_ii:
   {
-%<def-g>    \UseInstance { nju } { authdecl-g }
+%<*def-g>
+    \AtEndEnvironment { document }
+      {
+        \cleardoublepage
+        \UseInstance { nju } { authdecl-g }
+        \cleardoublepage
+      }
+%</def-g>
   }
 %</(def-u|def-g|def-p)>
 %    \end{macrocode}
@@ -6490,13 +6576,8 @@ To produce the documentation run the original source files ending with
       {
         \bool_if:NT \g_@@_opt_decl_bool
           {
-            \@@_make_decl_orig:
-            \AtEndEnvironment { document }
-              {
-                \cleardoublepage
-                \@@_make_decl_auth:
-                \cleardoublepage
-              }
+            \@@_make_decl_i:
+            \@@_make_decl_ii:
           }
       }
 %    \end{macrocode}
@@ -7275,7 +7356,7 @@ To produce the documentation run the original source files ending with
 %
 % \changes{v0.17}{2022/04/09}{将长度值分离到 \file{.def} 文件。}
 % \changes{v0.21}{2022/06/11}{可以单独指定下划线的宽度和偏移。}
-% 默认长度值。
+% 默认固定长度值。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
@@ -7305,7 +7386,12 @@ To produce the documentation run the original source files ending with
 % 小幅空格。
 %    \begin{macrocode}
     { smallhskip    } { 5    pt },
-    { smallvskip    } { 1    ex }
+    { smallvskip    } { 1    ex },
+%    \end{macrocode}
+% 章节标题前后间距。
+%    \begin{macrocode}
+    { beforechapter } { 10   pt },
+    { afterchapter  } { 60   pt }
   }
   { \@@_define_dim:nn #1 }
 %    \end{macrocode}
