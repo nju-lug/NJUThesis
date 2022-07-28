@@ -141,7 +141,7 @@ To produce the documentation run the original source files ending with
 \definecolor{olgreen}{HTML}{138a07}
 \definecolor{agrd}{HTML}{2E3191}
 \newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
-\newcommand\agrd[1]{\textcolor{agrd}{\sffamily 〈#1〉}}
+\newcommand\agrd[1]{\textcolor{agrd}{\sffamily\textlangle #1\textrangle}}
 \newcommand\bgrd[1]{\textcolor{at@guard}{\sffamily #1}}
 \newcommand\tikzlogo{Ti\emph{k}Z}
 \hypersetup{%
@@ -169,7 +169,7 @@ To produce the documentation run the original source files ending with
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
   Extension = .otf]
- \lstdefinestyle{style@base}
+\lstdefinestyle{style@base}
   {
     basewidth       = 0.5 em,
     gobble          = 3,
@@ -209,6 +209,103 @@ To produce the documentation run the original source files ending with
   \lstset{style=style@shell, #1}}{}
 \lstnewenvironment{latexexample}[1][]{%
   \lstset{style=style@latex, #1}}{}
+\makeatletter
+\ExplSyntaxOn
+\definecolor { angle@guard } { gray } { 0.8 }
+\definecolor { star@guard  } { rgb  } { 0.8 , 0 , 0 }
+\definecolor { u@guard } { HTML } { 5463FF }
+\definecolor { g@guard } { HTML } { FFC300 }
+\definecolor { p@guard } { HTML } { FF1818 }
+\definecolor { c@guard } { HTML } { 2B7A0B }
+\clist_const:Nn \c__njudoc_module_color_clist
+  {
+    { def-u } { u@guard },
+    { def-g } { g@guard },
+    { def-p } { p@guard },
+    { class } { c@guard }
+  }
+\cs_new_protected:Npn \__njudoc_compare_module:nnn #1#2#3
+  { \str_if_eq:nnT {#1} {#2} { \color {#3} #1 } }
+\cs_new_protected:Npn \__njudoc_set_module_color:n #1
+  {
+    \clist_map_inline:Nn \c__njudoc_module_color_clist
+      { \__njudoc_compare_module:nnn {#1} ##1 }
+  }
+\cs_new_protected:Npn \__njudoc_colored_module_angle:NN #1#2
+  {
+    \seq_clear:N #2
+    \seq_map_inline:Nn #1
+      {
+        \seq_gput_right:Nn #2
+          { \__njudoc_set_module_color:n {##1} }
+      }
+  }
+\cs_new_protected:Npn \__njudoc_print_module:n #1
+  {
+    \__njudoc_colored_module_angle:NN \l_tmpa_seq \l_tmpb_seq
+    \bool_lazy_or:nnTF
+      { \str_if_empty_p:n { #1 } }
+      { \int_compare_p:n { \seq_count:N \l_tmpb_seq = 1 } }
+      {
+        \str_clear:N \l_tmpa_str
+        \str_clear:N \l_tmpb_str
+      }
+      {
+        \str_set:Nn  \l_tmpa_str { ( }
+        \str_set:Nn  \l_tmpb_str { ) }
+      }
+    \color { angle@guard } \textlangle
+    \color { star@guard  } #1
+    \color { angle@guard } \l_tmpa_str
+    \seq_use:Nn \l_tmpb_seq
+      { \color { angle@guard } \orbar }
+    \color { angle@guard } \l_tmpb_str \textrangle
+  }
+\cs_new_protected_nopar:Npn \__njudoc_split_pm:n #1
+  { \seq_set_split:Nnn \l_tmpa_seq { | } {#1} }
+\cs_new_protected_nopar:Npn \__njudoc_split_m:n #1
+  {
+    \tl_set:Nn \l_tmpa_str {#1}
+    \clist_map_inline:nn { *, /, (, ) }
+      { \str_remove_all:Nn \l_tmpa_str {##1} }
+    \seq_set_split:NnV \l_tmpa_seq { | } \l_tmpa_str
+  }
+\group_begin:
+  \char_set_catcode_active:N \>
+  \cs_gset_protected:Npn \__ctxdoc_module_star:w #1 > #2 \q_stop
+    {
+      \__ctxdoc_output_module:nn
+        { \__njudoc_split_m:n {#1} }
+        { \__ctxdoc_module_push:n { \__njudoc_print_module:n { * } } }
+      \__ctxdoc_output_line:n {#2}
+      \__ctxdoc_star_format:
+    }
+  \cs_gset_protected:Npn \__ctxdoc_module_slash:w #1 > #2 \q_stop
+    {
+      \__ctxdoc_output_module:nn
+        { \__njudoc_split_m:n {#1} }
+        { \__ctxdoc_module_pop:n { \__njudoc_print_module:n { / } } }
+      \__ctxdoc_output_line:n {#2}
+      \__ctxdoc_slash_format:
+    }
+  \cs_gset_protected:Npn \__ctxdoc_module_pm:w #1 > #2 \q_stop
+    {
+      \tex_noindent:D
+      \hbox_overlap_left:n
+        {
+          \__ctxdoc_output_module:nn
+            { \__njudoc_split_pm:n {#1} }
+            { \__njudoc_print_module:n { } }
+          \skip_horizontal:n { \leftskip + \smallskipamount }
+        }
+      \group_begin:
+        \__ctxdoc_pm_format:
+        \__ctxdoc_output_line:n {#2}
+      \group_end:
+    }
+\group_end:
+\ExplSyntaxOff
+\makeatother
 \begin{document}
   \DocInput{njuthesis.dtx}
   \PrintChanges
@@ -256,6 +353,7 @@ To produce the documentation run the original source files ending with
 % \changes{v1.0}{2022/06/30}{调整研究生封面布局。}
 % \changes{v1.0}{2022/07/05}{按类型重命名变量。}
 % \changes{v1.0}{2022/07/23}{新增博士后出站报告模板。}
+% \changes{v1.0}{2022/07/28}{在手册中以不同颜色指示不同模块。}
 %
 %
 % \maketitle
@@ -3401,7 +3499,7 @@ To produce the documentation run the original source files ending with
 %<@@=njuelem>
 %    \end{macrocode}
 %
-%\begin{macro}{\l_@@_align_begin_tl,\l_@@_align_end_tl}
+% \begin{macro}{\l_@@_align_begin_tl,\l_@@_align_end_tl}
 % 声明元素模板接口。
 % 元素是一个页面的基本组成单位，包括文段、图片等等。
 % 一个抽象的元素应当具备以下属性：
@@ -7161,7 +7259,7 @@ To produce the documentation run the original source files ending with
 % 右侧说明文字区域的宽度无法直接指定，而是靠计算左右边距 \tn{leftmargin} 和
 % \tn{rightmargin} 得到的。
 %    \begin{macrocode}
-        \leftmargin  .5\l_@@_tmpa_dim
+        \leftmargin .5\l_@@_tmpa_dim
         \rightmargin \leftmargin
         \advance \leftmargin #2
         \cs_set_eq:NN \makelabel \@@_notation_label:n
