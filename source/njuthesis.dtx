@@ -1560,7 +1560,7 @@ To produce the documentation run the original source files ending with
 % 合并单元格。
 % \end{function}
 %
-% TODO：\pkg{multirow} 宏包的使用方法，命令较为复杂。
+% \pkg{multirow} 宏包的使用方法，命令较为复杂。^^A TODO：待修改
 % \url{http://www.ctex.org/documents/packages/table/multirow.htm}
 %
 % \paragraph{更多样式}
@@ -3395,12 +3395,14 @@ To produce the documentation run the original source files ending with
 \DeclareObjectType { nju } { \c_zero_int }
 %    \end{macrocode}
 %
-% 定义元素模板。
+% \subsubsection{元素模板}
+%
 %    \begin{macrocode}
 %<@@=njuelem>
 %    \end{macrocode}
 %
-% 声明页面元素模板接口。
+%\begin{macro}{\l_@@_align_begin_tl,\l_@@_align_end_tl}
+% 声明元素模板接口。
 % 元素是一个页面的基本组成单位，包括文段、图片等等。
 % 一个抽象的元素应当具备以下属性：
 % \begin{description}
@@ -3419,7 +3421,7 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% 声明页面元素模板代码。涉及的变量将被自动创建。
+% 声明元素模板代码。涉及的变量将被自动创建。
 %    \begin{macrocode}
 \DeclareTemplateCode { nju } { element } { \c_zero_int }
   {
@@ -3453,10 +3455,11 @@ To produce the documentation run the original source files ending with
     \__nju_vskip:N \l_@@_bottom_skip
   }
 %    \end{macrocode}
+% \end{macro}
 %
+% \subsubsection{页面模板}
 % \changes{v1.0}{2022/07/27}{为页面模板添加书签选项。}
 %
-% 定义页面模板。
 %    \begin{macrocode}
 %<@@=njupage>
 %    \end{macrocode}
@@ -3467,6 +3470,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_bookmark:nn}
 % 声明页面模板接口。
 % 页面是元素的集合。一个抽象的页面应当具备以下属性：
 % \begin{description}
@@ -3506,9 +3510,9 @@ To produce the documentation run the original source files ending with
     bm-name     = \l_@@_bm_name_tl,
     bookmark    =
       {
-        toc  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_toc:nn  },
-        pdf  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_pdf:nn  },
-        none = { \cs_set_eq:NN \@@_bookmark:nn \@@_do_nothing:nn       }
+        toc  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_toc:nn   },
+        pdf  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_pdf:nn   },
+        none = { \cs_set_eq:NN \@@_bookmark:nn \_@@_do_nothing:nn }
       }
   }
   {
@@ -3516,7 +3520,8 @@ To produce the documentation run the original source files ending with
     \clearpage
     \thispagestyle { empty }
     \__nju_vskip:N \l_@@_top_skip
-    \exp_args:NVV \@@_bookmark:nn \l_@@_bm_text_tl \l_@@_bm_name_tl
+    \exp_args:NVV \@@_bookmark:nn
+      \l_@@_bm_text_tl \l_@@_bm_name_tl
     \group_begin:
       \l_@@_format_tl
       \clist_map_inline:Nn \l_@@_element_clist
@@ -3525,14 +3530,16 @@ To produce the documentation run the original source files ending with
     \__nju_vskip:N \l_@@_bottom_skip
   }
 %    \end{macrocode}
+% \end{macro}
 %
-% \begin{macro}{\@@_bookmark:NN}
+% \begin{macro}{\@@_do_nothing:nn}
 % 吸收两个参数的摸鱼函数。
 %    \begin{macrocode}
 \cs_new:Npn \@@_do_nothing:nn #1#2 { }
-%<@@=nju>
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsubsection{外部接口}
 %
 % \begin{macro}{\@@_declare_element:nn,\@@_declare_page:nn}
 % 封装 \pkg{xtemplate} 提供的函数，简化创建实例的过程。
@@ -3541,6 +3548,7 @@ To produce the documentation run the original source files ending with
 %   \item 参数列表
 % \end{arguments}
 %    \begin{macrocode}
+%<@@=nju>
 \cs_new:Npn \@@_declare_element:nn #1#2
   { \DeclareInstance { nju } {#1} { element } {#2} }
 \cs_new:Npn \@@_declare_page:nn    #1#2
@@ -4484,7 +4492,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_loadfont_cjk_mac:}
 % macOS 字体。
-% TODO: 修复 macOS 字体支持，实现开箱即用。
+% ^^A TODO: 修复 macOS 字体支持，实现开箱即用。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_cjk_mac:
   {
@@ -5525,6 +5533,8 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{本科生}
 %
+% \subparagraph{封面}
+%
 % \begin{macro}{u/cover/emblem-img}
 % 本科生封面校徽图片实例。
 %    \begin{macrocode}
@@ -5605,7 +5615,71 @@ To produce the documentation run the original source files ending with
       { \@@_cover_entry_supv:nNNN { supvii } #1 \l_@@_tmpb_dim #4 }
     \@@_cover_entry:nNNN { submitdate } #1 #2 #4
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subparagraph{诚信承诺书}
+%
+% \begin{macro}{u/decl/orig/emblem}
+% 本科生诚信承诺书校徽实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { u / decl / orig / emblem }
+  {
+    content     = \@@_emblem:N \c_@@_emblemwidthi_dim,
+    bottom-skip = 30 pt
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{u/decl/orig/title}
+% 本科生诚信承诺书标题实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { u / decl / orig / title }
+  {
+    content     = \c_@@_name_origdecl_tl,
+    format      = \zihao { -1 } \sffamily,
+    bottom-skip = 50 pt
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{u/decl/orig/text}
+% 本科生诚信承诺书文本实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { u / decl / orig / text }
+  {
+    content     = \c_@@_text_origdecl_tl,
+    format      = \zihao { -3 },
+    align       = n,
+    bottom-skip = 0 pt plus 1 fil
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{u/decl/orig/sign}
+% 本科生诚信承诺书签名区实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { u / decl / orig / sign }
+  {
+    content  = \@@_decl_sign:,
+    format   = \zihao { -3 },
+    align    = r
+  }
 %</def-u>
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_decl_sign:}
+% 通用的承诺书签名区
+%    \begin{macrocode}
+%<*(def-u|def-g)>
+\cs_new_protected:Npn \@@_decl_sign:
+  {
+%<def-u>    \clist_map_inline:nn { origsign, id, date }
+%<def-g>    \clist_map_inline:nn { origsign,     date }
+      { \@@_vskip: \@@_name:n { ##1 } ： \@@_uline:n { 7 em } }
+  }
+%</(def-u|def-g)>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5957,12 +6031,49 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \subparagraph{原创性声明}
+%
+% \begin{macro}{g/decl/orig/title}
+% 研究生原创性声明标题实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { g / decl / orig / title }
+  {
+    content     = \c_@@_name_origdecl_tl,
+    format      = \c_@@_fmt_chapter_tl,
+    bottom-skip = 60 pt
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{g/decl/orig/text}
+% 研究生原创性声明文本实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { g / decl / orig / text }
+  {
+    content     = \c_@@_text_origdecl_tl,
+    align       = n,
+    bottom-skip = 0 pt plus 1 fil
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{g/decl/orig/sign}
+% 研究生原创性声明签名区实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { g / decl / orig / sign }
+  {
+    content  = \@@_decl_sign:,
+    align    = r
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subparagraph{出版授权书}
 %
-% \begin{macro}{g/authdecl/title}
-% 出版授权书标题实例。
+% \begin{macro}{g/decl/auth/title}
+% 研究生出版授权书标题实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { g / authdecl / title }
+\@@_declare_element:nn { g / decl / auth / title }
   {
     content     = \c_@@_name_authdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
@@ -5971,10 +6082,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{g/authdecl/text}
-% 出版授权书文本实例。
+% \begin{macro}{g/decl/auth/text}
+% 研究生出版授权书文本实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { g / authdecl / text }
+\@@_declare_element:nn { g / decl / auth / text }
   {
     content     = \c_@@_text_authdecl_tl,
     align       = n,
@@ -5983,22 +6094,22 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{g/authdecl/sign}
-% 出版授权书签名区实例。
+% \begin{macro}{g/decl/auth/sign}
+% 研究生出版授权书签名区实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { g / authdecl / sign }
+\@@_declare_element:nn { g / decl / auth / sign }
   {
     content     = \@@_g_decl_auth_sign:,
     align       = r,
-    bottom-skip = 0pt plus 1 fill
+    bottom-skip = 0 pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{g/authdecl/info}
-% 出版授权书信息表格实例。
+% \begin{macro}{g/decl/auth/info}
+% 研究生出版授权书信息表格实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { g / authdecl / info }
+\@@_declare_element:nn { g / decl / auth / info }
   {
     content     = \@@_g_decl_auth_info:,
     format      = \zihao { 5 } ,
@@ -6008,10 +6119,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{g/authdecl/date}
-% 出版授权书保密信息实例。
+% \begin{macro}{g/decl/auth/date}
+% 研究生出版授权书保密信息实例。
 %    \begin{macrocode}
-\@@_declare_element:nn { g / authdecl / date }
+\@@_declare_element:nn { g / decl / auth / date }
   {
     content     = \@@_authdecl_secretlv_g:,
     format      = \zihao { 5 } ,
@@ -6290,6 +6401,19 @@ To produce the documentation run the original source files ending with
     prefix      = u / cover /,
     bottom-skip = 0.5 cm plus 1.5 fill
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{origdecl-u}
+% 默认诚信承诺书实例。
+%    \begin{macrocode}
+\@@_declare_page:nn { origdecl-u }
+  {
+    element     = { emblem, title, text, sign },
+    prefix      = u / decl / orig /,
+    top-skip    = 0 pt,
+    bottom-skip = 0 pt plus 1 fil
+  }
 %</def-u>
 %    \end{macrocode}
 % \end{macro}
@@ -6345,15 +6469,33 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{origdecl-g}
+% 默认原创性声明实例。
+%    \begin{macrocode}
+\@@_declare_page:nn { origdecl-g }
+  {
+    element     = { title, text, sign },
+    prefix      = g / decl / orig /,
+    top-skip    = 60 pt,
+    bottom-skip = 0 pt plus 1 fil,
+    bm-text     = \c_@@_name_origdecl_tl,
+    bm-name     = origdecl
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{authdecl-g}
 % 默认出版授权书实例。
 %    \begin{macrocode}
 \@@_declare_page:nn { authdecl-g }
   {
     element     = { title, text, sign, info, date },
-    prefix      = g / authdecl /,
-    top-skip    = 1 cm,
-    bottom-skip = 0.5 cm plus 1.5 fill
+    prefix      = g / decl / auth /,
+    top-skip    = 40 pt,
+    bottom-skip = 0.5 cm plus 1.5 fill,
+    bm-text     = \c_@@_name_authdecl_tl,
+    bm-name     = authdecl,
+    bookmark    = toc
   }
 %</def-g>
 %    \end{macrocode}
@@ -6384,7 +6526,6 @@ To produce the documentation run the original source files ending with
         auth/title, auth/text, auth/sign
       },
     prefix      = p / decl /,
-    bookmark    = toc,
     bm-text     = 声明页,
     bm-name     = decl,
     top-skip    = 40 pt,
@@ -6424,30 +6565,11 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_make_decl_i:
   {
-%<def-p>    \cleardoublepage
+    \cleardoublepage
+%<def-u>    \UseInstance { nju } { origdecl-u }
+%<def-g>    \UseInstance { nju } { origdecl-g }
 %<def-p>    \UseInstance { nju } { authdecl-p }
-%<*(def-u|def-g)>
-%<def-u>    \cleardoublepage
-%<def-g>    \chapter* { \c_@@_name_origdecl_tl }
-    \thispagestyle { empty }
-%<*def-u>
-    \begin{center}
-      \njuemblem{2cm}{!}\\
-      {\zihao{-1}\sffamily \c__nju_name_origdecl_tl }
-    \end{center}
-    \zihao{-3}
-    \hspace{2em}
-%</def-u>
-    \c_@@_text_origdecl_tl
-    \vfil
-    \begin{flushright}
-%<def-u>      \clist_map_inline:nn { origsign, id, date }
-%<def-g>      \clist_map_inline:nn { origsign,     date }
-        { \@@_vskip: \@@_name:n { ##1 } ： \@@_uline:n { 7 em } }
-    \end{flushright}
-    \vfil
-%<def-u>    \normalfont \normalsize
-%</(def-u|def-g)>
+    \cleardoublepage
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7369,6 +7491,7 @@ To produce the documentation run the original source files ending with
 %<def-u>    { coveruline    } { 270  pt },
 %<def-g>    { coveruline    } { 240  pt },
 %<def-u>    { emblemwidth   } { 68   pt },
+%<def-u>    { emblemwidthi  } { 68   pt },
 %<def-g>    { emblemwidthi  } { 46   pt },
 %<def-g>    { emblemwidthii } { 61   pt },
 %<def-u>    { namewidth     } { 300  pt },
