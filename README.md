@@ -6,10 +6,7 @@
 [![CTAN](https://img.shields.io/ctan/v/njuthesis.svg)](https://www.ctan.org/pkg/njuthesis)
 [![GitHub release](https://img.shields.io/github/release/nju-lug/NJUThesis/all.svg)](https://github.com/nju-lug/NJUThesis/releases/latest)
 
-> 此项目是基于 [NJU thesis 2021](https://github.com/FengChendian/NJUThesis2021) 的重构版本，目前本科生及研究生版本**已经重构完成**。
-> 然而，研究生院并未提供完善的规定，部分格式来自于本科生院。**如果院系另有要求，请反馈**。
-
-本模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学排版要求和相应的国家规范、行业标准的学位论文，力求通过 LaTeX3 语法实现清晰的实现逻辑、较高的可定制性以及友好的用户接口。目前 [`njuthesis`](https://ctan.org/pkg/njuthesis) 文档类已发布在 CTAN。
+`njuthesis` 是制作南京大学本科生毕业论文、研究生学位论文、博士后出站报告的 LaTeX 文档类。本模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学排版要求和相应的国家规范、行业标准的学位论文，力求通过 LaTeX3 语法实现清晰的实现逻辑、较高的可定制性以及友好的用户接口。
 
 ## 快速开始
 

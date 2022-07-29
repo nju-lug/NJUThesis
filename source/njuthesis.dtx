@@ -136,14 +136,25 @@ To produce the documentation run the original source files ending with
 \documentclass[fontset=fandol]{ctxdoc}
 \usepackage{listings,njuvisual,tabularray,unicode-math}
 \usepackage[firstpage=true]{background}
-\backgroundsetup{contents={\njuemblem[white!85!gray]{22cm}{!}},scale=1,angle=0,hshift=-4cm}
-\colorlet{at@guard}{njuviolet}
+\backgroundsetup{
+  contents={\njuemblem[white!85!gray]{22cm}{!}},
+  scale=1, angle=0, hshift=-4cm
+}
 \definecolor{olgreen}{HTML}{138a07}
-\definecolor{agrd}{HTML}{2E3191}
 \newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
-\newcommand\agrd[1]{\textcolor{agrd}{\sffamily\textlangle #1\textrangle}}
-\newcommand\bgrd[1]{\textcolor{at@guard}{\sffamily #1}}
 \newcommand\tikzlogo{Ti\emph{k}Z}
+\makeatletter
+\newcommand\grd[1]{\textcolor{at@guard}{\sffamily\textlangle#1\textrangle}}
+\newcommand\sgrd[1]{
+  \begingroup\sffamily
+  \color{angle@guard}\textlangle\color{star@guard}*\ignorespaces
+  \color{c@guard}#1\color{angle@guard}\textrangle\endgroup
+}
+\newcommand\pgrd[1]{
+  \begingroup\sffamily\color{angle@guard}\textlangle\ignorespaces
+  \color{#1@guard}def-#1\color{angle@guard}\textrangle\endgroup
+}
+\makeatother
 \hypersetup{%
   pdftitle  = {
     The njuthesis class -
@@ -211,12 +222,13 @@ To produce the documentation run the original source files ending with
   \lstset{style=style@latex, #1}}{}
 \makeatletter
 \ExplSyntaxOn
+\colorlet    {    at@guard } { njuviolet }
 \definecolor { angle@guard } { gray } { 0.8 }
-\definecolor { star@guard  } { rgb  } { 0.8 , 0 , 0 }
+\definecolor {  star@guard } { rgb  } { 0.8 , 0 , 0 }
 \definecolor { u@guard } { HTML } { 5463FF }
-\definecolor { g@guard } { HTML } { FFC300 }
+\definecolor { g@guard } { HTML } { 2B7A0B }
 \definecolor { p@guard } { HTML } { FF1818 }
-\definecolor { c@guard } { HTML } { 2B7A0B }
+\definecolor { c@guard } { HTML } { FFC300 }
 \clist_const:Nn \c__njudoc_module_color_clist
   {
     { def-u } { u@guard },
@@ -2653,16 +2665,19 @@ To produce the documentation run the original source files ending with
 % 本模板使用 \LaTeX3 语法编写，依赖 \pkg{expl3} 环境，
 % 并需调用 \pkg{l3packages} 中的相关宏包。
 %
-% 以下代码中有一些形如 \agrd{*class} 的标记，
-% 这是 \pkg{DocStrip} 中的“guard”，用来选择性地提取文件。
-% “|*|”和“|/|”分别表示该部分的开始和结束。不含
-% “|*|”和“|/|”的 guard 出现在行号右侧，它们用来确定
-% 单独一行代码的归属。这些 guard 的颜色深浅不一，用以明确嵌套关系。
+% 以下代码中有一些形如\sgrd{class}的标记， 这是 \pkg{DocStrip} 中的
+% “guard”，用来选择性地提取文件。“|*|”和“|/|”分别表示该部分的开始和结
+% 束。不含“|*|”和“|/|”的 guard 出现在行号左侧，它们用来确定单独一行代
+% 码的归属。这些 guard 的颜色不一，用以明确分类关系。
 %
-% 另有若干包含 \bgrd{@@} 的 guard，用以表示名空间（模块）。
+% 下文中，本科生模板配置对应\pgrd{u}，用于生成
+% \file{njuthesis-undergraduate.def}；研究生模板配置对应\pgrd{g}，
+% 用于生成 \file{njuthesis-graduate.def}；博士后模板配置对应\pgrd{p}，
+% 用于生成 \file{njuthesis-postdoctoral.def}。
+%
+% 另有若干包含 |@@| 的 guard，用以表示名空间（模块）。
 % 在删除注释生成格式文件时，源代码变量名称中的 |@@| 会被等号后的字段替换，
-% 譬如在本模板主体部分中 \bgrd{〈@@=nju〉}。
-%
+% 譬如在本模板主体部分中\grd{@@=nju}。
 %
 % \subsection{准备}
 %
@@ -2709,8 +2724,10 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{定义变量}
 %
-% 在变量名称中，|l| 代表局部变量，|g| 代表全局变量，|c| 代表常量，
-% 最后一个下划线后的内容指示其类型。
+% 本模板的变量名称通式为 |\|\meta{作用域}|_@@_|\meta{族}|_|\meta{描述}|_|\meta{类型}
+% （出现在源代码中）或 |\|\meta{作用域}|__nju_|\meta{族}|_|\meta{描述}|_|\meta{类型}
+% （出现在文档中）。作用域为单个字母，|l| 代表局部变量，|g| 代表全局变量，|c| 代表常
+% 量。最后一个下划线后的内容指示其类型，但引擎不会根据名称检查变量类型。
 %
 % \begin{variable}{
 %   \l_@@_tmp_box,
@@ -4168,15 +4185,11 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{配置文件}
 %
-% \cls{njuthesis} 包含\emph{本科生}和\emph{研究生}两套区别较大的模板配置。
-% 出于定义的简洁起见，本模板将其拆分为两个单独的参数配置文件，
-% 编译过程中将会根据设置的学位信息，载入相应默认配置。
-% 注意，尽管在手册的实现细节部分封面、摘要、常量等位于靠后部分，
-% 拆分后实际上是在此处载入运行的，务必要注意逻辑顺序。
-%
-% 下文中，本科生模板配置对应 \agrd{def-u}，用于生成
-% \file{njuthesis-undergraduate.def}；研究生模板配置对应
-% \agrd{def-g}，用于生成 \file{njuthesis-graduate.def}。
+% \cls{njuthesis} 包含三套区别较大的模板配置，分别适用于\emph{本科生}、
+% \emph{研究生}和\emph{博士后}。出于定义的简洁起见，本模板将其不同之处
+% 拆分为单独的参数配置文件，编译过程中将会根据导言区设置的类型选项，载
+% 入对应默认配置。注意，尽管在手册中封面、摘要、常量等的代码实现位于靠
+% 后部分，拆分后实际上是在此处载入运行的，务必要注意处理的逻辑顺序。
 %    \begin{macrocode}
 \exp_args:Nx \file_input:n
   {
