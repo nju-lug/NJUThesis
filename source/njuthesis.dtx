@@ -1693,8 +1693,7 @@ To produce the documentation run the original source files ending with
 % 请不要使用可能引发问题的 |$$|\meta{公式}|$$|
 % \footnote{\url{https://tex.stackexchange.com/q/503/}}。
 %
-%
-% \paragraph{符号和单位}
+% \paragraph{符号}
 %
 % ^^A \url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}
 % 模板使用 \pkg{unicode-math} 宏包配置数学字体，完整符号表可以参考
@@ -1705,13 +1704,101 @@ To produce the documentation run the original source files ending with
 % 例如，加粗数学符号的命令为 \tn{symbf}。
 % 更多细节请查阅 \pkg{unicode-math} 手册。
 %
-% ^^A 本段说明来自 THuThesis，待补充相应配置
 % 中文论文的数学符号默认遵循 GB/T 3102--93《物理科学和技术中
 % 使用的数学符号》\cite{gb-3102-93}，该标准参照采纳 ISO 31-11:1992，
+% \footnote{目前已更新为 ISO 80000-2:2019。}，
 % 但是与 \TeX{} 默认的美国数学学会（AMS）的习惯有许多差异。
-% 本模板尚未完成自动样式适配，一些需要写作时手动处理的要点包括：
+%
+% \begin{function}[added=2022-07-31]{math/style}
+%   \begin{syntax}
+%     style = <TeX|ISO|(GB)>
+%   \end{syntax}
+% 数学符号风格。
+% \end{function}
+%
+% 默认的国标风格 \opt{GB} 相当于在导言区设置了
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]math}]
+%   \njusetup{
+%     math = {
+%       uppercase-greek    = italic,
+%       less-than-or-equal = slanted,
+%       integral           = upright,
+%       integral-limits    = false,
+%       partial            = upright,
+%       math-ellipsis      = centered,
+%       vector             = boldfont,
+%       real-part          = roman
+%     }
+%   }
+% \end{latexexample}
+%
+% 用户也可以逐项修改数学样式。
+%
+% \begin{function}[added=2022-07-31]{math/integral}
+%   \begin{syntax}
+%     integral = <upright|slanted>
+%   \end{syntax}
+% 积分号的正/斜体。
+% 该选项需要字体的支持，目前仅限 \opt{xits}、\opt{newcm}。
+% \end{function}
+%
+% \begin{function}[added=2022-07-31]{math/integral-limits}
+%   \begin{syntax}
+%     integral-limits = <\TF>
+%   \end{syntax}
+% 积分号上下限的位置，可选：\opt{true}（在上下）、\opt{false}（在右侧）。
+% 这个设置只影响行间公式，行内公式统一居右侧，不受影响。
+% \end{function}
+%
+% \begin{function}[added=2022-07-31]{math/less-than-or-equal}
+%   \begin{syntax}
+%     less-than-or-equal = <slanted|horizontal>
+%   \end{syntax}
+% 小于等于号和大于等于号的字形。
+% 这将控制 \cs{le}、\cs{ge}、\cs{leq} 和 \cs{geq} 的符号是
+% “$\leqslant$、$\geqslant$”还是“$\leq$、$\geq$”。
+% \end{function}
+%
+% \begin{function}[added=2022-07-31]{math/math-ellipsis}
+%   \begin{syntax}
+%     math-ellipsis = <centered|lower>
+%   \end{syntax}
+% 省略号 \cs{dots} 的样式，可选：\opt{centered}（按照中文的习惯固定居中）、
+% \opt{lower}（取决于前后符号的位置）。
+% 其他的省略号命令如 \cs{lots}、\cs{cdots} 则不受影响。
+% \end{function}
+%
+% \begin{function}[added=2022-07-31]{math/partial}
+%   \begin{syntax}
+%     partial = <TeX|ISO|(GB)>
+%   \end{syntax}
+% 偏微分符号的正/斜体。
+% \end{function}
+%
+% \begin{function}[added=2022-07-31]{math/real-part}
+%   \begin{syntax}
+%     real-part = <roman|fraktur>
+%   \end{syntax}
+% 实部 \cs{Re} 和虚部 \cs{Im} 的字体。
+% \end{function}
+%
+% \begin{function}[added=2022-07-31]{math/vector}
+%   \begin{syntax}
+%     vector = <boldfont|arrow>
+%   \end{syntax}
+% 向量的表示方法，可选粗斜体或箭头。
+% \end{function}
+%
+% \begin{function}[added=2022-07-31]{math/uppercase-greek}
+%   \begin{syntax}
+%     uppercase-greek = <upright|italic>
+%   \end{syntax}
+% 大写希腊字母的正/斜体。
+% 有限增量符号 $\increment x$ 固定使用正体，推荐使用 \cs{increment} 表示。
+% \end{function}
+%
+% 本模板的设置并不能覆盖所有符号，一些需要写作时手动处理的要点包括：
 % \begin{itemize}
-% ^^A   \item 小于等于号和大于等于号使用斜线（$\leqslant$、$\geqslant$）
 %   \item 数学常数和特殊函数名用正体，如
 %   \begin{itemize}
 %     \item $\uppi$ 使用 |$\uppi$|
@@ -1723,13 +1810,9 @@ To produce the documentation run the original source files ending with
 %     \item $\mathrm{d} \varphi / \mathrm{d} t$
 %           使用 |$\mathrm{d} \varphi / \mathrm{d} t$|
 %   \end{itemize}
-% ^^A 可以提供一个设置项，|\renewcommand{\vec}[1]{\symbf{#1}}|
-%   \item 向量、矩阵和张量用粗斜体（\cs{symbf}），如
-%   \begin{itemize}
-%     \item $\symbf{\Sigma}$ 使用 |$\symbf{\Sigma}$|
-%     \item $\symbfsf{T}$ 使用 |$\symbfsf{T}$|
-%   \end{itemize}
 % \end{itemize}
+%
+% \paragraph{单位}
 %
 % 单位默认遵循 GB 3100--93《国际单位制及其应用》\cite{gb-3100-93}和
 % GB 3101--93《有关量、单位和符号的一般原则》\cite{gb-3101-93}，
@@ -3785,7 +3868,6 @@ To produce the documentation run the original source files ending with
       { \tl_set_eq:NN \g_@@_font_math_tl  \l_keys_choice_tl },
 %    \end{macrocode}
 % \end{macro}
-% \end{macro}
 %
 % \begin{macro}{font-path}
 % 独立字体文件的路径。
@@ -4534,10 +4616,11 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_latin_win:
   {
-    \setmainfont { Times~New~Roman }
-    \setsansfont { Arial           }
-    \setmonofont { Courier~New     }
-      [ Scale = MatchLowercase ]
+    \__fontspec_main_setmainfont:nn { } { Times~New~Roman }
+    \__fontspec_main_setsansfont:nn { } { Arial           }
+    \__fontspec_main_setmonofont:nn
+      { Scale = MatchLowercase }
+      { Courier~New }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4547,10 +4630,11 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_latin_mac:
   {
-    \setmainfont { Times~New~Roman }
-    \setsansfont { Arial           }
-    \setmonofont { Menlo           }
-      [ Scale = MatchLowercase ]
+    \__fontspec_main_setmainfont:nn { } { Times~New~Roman }
+    \__fontspec_main_setsansfont:nn { } { Arial           }
+    \__fontspec_main_setmonofont:nn
+      { Scale = MatchLowercase }
+      { Menlo }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4560,24 +4644,26 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_latin_gyre:
   {
-    \setmainfont { texgyretermes }
-      [
+    \__fontspec_main_setmainfont:nn
+      {
         Extension      = .otf,
         UprightFont    = *-regular,
         BoldFont       = *-bold,
         ItalicFont     = *-italic,
         BoldItalicFont = *-bolditalic
-      ]
-    \setsansfont { texgyreheros  }
-      [
+      }
+      { texgyretermes }
+    \__fontspec_main_setsansfont:nn
+      {
         Extension      = .otf,
         UprightFont    = *-regular,
         BoldFont       = *-bold,
         ItalicFont     = *-italic,
         BoldItalicFont = *-bolditalic
-      ]
-    \setmonofont { texgyrecursor }
-      [
+      }
+      { texgyreheros  }
+    \__fontspec_main_setmonofont:nn
+      {
         Extension      = .otf,
         UprightFont    = *-regular,
         BoldFont       = *-bold,
@@ -4585,7 +4671,8 @@ To produce the documentation run the original source files ending with
         BoldItalicFont = *-bolditalic,
         Scale          = MatchLowercase,
         Ligatures      = CommonOff
-      ]
+      }
+      { texgyrecursor }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4786,7 +4873,7 @@ To produce the documentation run the original source files ending with
 \cs_new:Npn \@@_define_math_font:nn #1#2
   {
     \cs_new:cpn { @@_loadfont_math_ #1 : }
-      { \setmathfont { #2 } }
+      { \__um_setmathfont:nn { } { #2 } }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4830,10 +4917,11 @@ To produce the documentation run the original source files ending with
   {
     \bool_if:NTF \g_@@_font_path_bool
       {
-        \setmathfont { cambria.ttc }
-          [ Path = \g_@@_font_path_tl/, FontIndex = 1 ]
+        \__um_setmathfont:nn
+          { Path = \g_@@_font_path_tl/, FontIndex = 1 }
+          { cambria.ttc }
       }
-      { \setmathfont { Cambria~Math } }
+      { \__um_setmathfont:nn { } { Cambria~Math } }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5705,31 +5793,24 @@ To produce the documentation run the original source files ending with
 % \subsection{公式样式}
 % \changes{v1.0}{2022/07/31}{新增若干公式样式设置。}
 %
-% \begin{variable}{\g_@@_opt_math_int_bool}
-% 是否使用直立积分号。
-%    \begin{macrocode}
-\bool_new:N \g_@@_opt_math_int_bool
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\g_@@_opt_math_re_bool}
-% 是否使用罗马体实部虚部符号。
+% \begin{variable}{
+%   \g_@@_opt_math_re_bool,
+%   \g_@@_opt_math_int_bool,
+%   \g_@@_opt_math_leq_bool,
+%   \g_@@_opt_math_vec_bool}
+% 用于以下若干选项的 |bool| 变量。
 %    \begin{macrocode}
 \bool_new:N \g_@@_opt_math_re_bool
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\g_@@_opt_math_leq_bool}
-% 是否使用倾斜的小于等于号。
-%    \begin{macrocode}
+\bool_new:N \g_@@_opt_math_int_bool
 \bool_new:N \g_@@_opt_math_leq_bool
+\bool_new:N \g_@@_opt_math_vec_bool
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_name_integral_tl}
+% \begin{variable}{\c_@@_name_integral_tl}
 % 保存 \pkg{unicode-math} 内置的所有积分号命令。
 %    \begin{macrocode}
-\tl_const:Nx \c_@@_name_integral_tl { \l__um_nolimits_tl }
+\exp_args:NNV \tl_const:Nn \c_@@_name_integral_tl \l__um_nolimits_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -5754,27 +5835,8 @@ To produce the documentation run the original source files ending with
 \keys_define:nn { nju / math }
   {
 %    \end{macrocode}
-% \begin{macro}{math/uppercase-greek}
-%    \begin{macrocode}
-    uppercase-greek               .choice:,
-    uppercase-greek / italic        .code:n =
-      { \@@_um_setup:n { math-style = TeX } },
-    uppercase-greek / upright       .code:n =
-      { \@@_um_setup:n { math-style = ISO } },
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{math/less-than-or-equal}
-%    \begin{macrocode}
-    less-than-or-equal            .choice:,
-    less-than-or-equal / slanted    .code:n =
-      { \bool_set_true:N  \g_@@_opt_math_leq_bool },
-    less-than-or-equal / horizontal .code:n =
-      { \bool_set_false:N \g_@@_opt_math_leq_bool },
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{math/integral}
+% 积分号样式，直立或倾斜。
 %    \begin{macrocode}
     integral                      .choice:,
     integral / upright              .code:n =
@@ -5785,27 +5847,30 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{math/integral-limits}
+% 积分号上下限的位置，在上下或在右侧。
 % 两个选项分别相当于 \tn{removenolimits} 和 \tn{addnolimits}。
 %    \begin{macrocode}
     integral-limits               .choice:,
     integral-limits / true          .code:n =
-      { \tl_set_eq:NN \l__um_nolimits_tl \c_@@_name_integral_tl },
-    integral-limits / false         .code:n =
       { \tl_clear:N   \l__um_nolimits_tl },
+    integral-limits / false         .code:n =
+      { \tl_set_eq:NN \l__um_nolimits_tl \c_@@_name_integral_tl },
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{math/partial}
+% \begin{macro}{math/less-than-or-equal}
+% 小于等于号和大于等于号的横线样式，倾斜或水平。
 %    \begin{macrocode}
-    partial                       .choice:,
-    partial / upright               .code:n =
-      { \@@_um_setup:n { partial = upright } },
-    partial / italic                .code:n =
-      { \@@_um_setup:n { partial = italic  } },
+    less-than-or-equal            .choice:,
+    less-than-or-equal / slanted    .code:n =
+      { \bool_set_true:N  \g_@@_opt_math_leq_bool },
+    less-than-or-equal / horizontal .code:n =
+      { \bool_set_false:N \g_@@_opt_math_leq_bool },
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{math/math-ellipsis}
+% 省略号的样式，居中或底部。
 %    \begin{macrocode}
     math-ellipsis                 .choice:,
     math-ellipsis / centered        .code:n =
@@ -5821,7 +5886,19 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{math/partial}
+% 偏微分号样式，正体或斜体。
+%    \begin{macrocode}
+    partial                       .choice:,
+    partial / upright               .code:n =
+      { \@@_um_setup:n { partial = upright } },
+    partial / italic                .code:n =
+      { \@@_um_setup:n { partial = italic  } },
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{math/real-part}
+% 实部和虚部符号的样式，罗马体或花体。
 %    \begin{macrocode}
     real-part                     .choice:,
     real-part / roman               .code:n =
@@ -5831,7 +5908,29 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{math/style}
+% \begin{macro}{math/vector}
+% 向量符号样式，粗斜体或箭头。
+%    \begin{macrocode}
+    vector                        .choice:,
+    vector / boldfont               .code:n =
+      { \bool_set_true:N  \g_@@_opt_math_vec_bool },
+    vector / arrow             .code:n =
+      { \bool_set_false:N \g_@@_opt_math_vec_bool },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math/uppercase-greek}
+  % 大写希腊字母的样式，正体或斜体。
+  %    \begin{macrocode}
+      uppercase-greek               .choice:,
+      uppercase-greek / upright       .code:n =
+        { \@@_um_setup:n { math-style = ISO } },
+      uppercase-greek / italic        .code:n =
+        { \@@_um_setup:n { math-style = TeX } },
+  %    \end{macrocode}
+  % \end{macro}
+  %
+  % \begin{macro}{math/style}
 % 整体样式。
 %    \begin{macrocode}
     style                      .choice:,
@@ -5845,6 +5944,7 @@ To produce the documentation run the original source files ending with
             math-ellipsis      = centered,
             partial            = italic,
             real-part          = fraktur,
+            vector             = arrow,
             uppercase-greek    = upright
           }
         \@@_um_setup:n { bold-style = TeX }
@@ -5860,6 +5960,7 @@ To produce the documentation run the original source files ending with
             math-ellipsis      = lower,
             partial            = upright,
             real-part          = roman,
+            vector             = arrow,
             uppercase-greek    = italic
           }
         \@@_um_setup:n { bold-style = ISO }
@@ -5875,6 +5976,7 @@ To produce the documentation run the original source files ending with
             math-ellipsis      = centered,
             partial            = upright,
             real-part          = roman,
+            vector             = boldfont,
             uppercase-greek    = italic
           }
         \@@_um_setup:n { bold-style = ISO }
@@ -5885,6 +5987,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% 在 |\begin{document}| 处设置小于等于号和实部符号等的样式。
 %    \begin{macrocode}
 \@@_at_begin_document:n
   {
@@ -5900,6 +6003,8 @@ To produce the documentation run the original source files ending with
         \cs_set:Npn \Re { \operatorname { Re } }
         \cs_set:Npn \Im { \operatorname { Im } }
       }
+    \bool_if:NT \g_@@_opt_math_vec_bool
+      { \cs_set_eq:NN \vec \symbf }
   }
 %</class>
 %    \end{macrocode}
@@ -6406,7 +6511,7 @@ To produce the documentation run the original source files ending with
     \c_@@_name_chairman_tl \@@_hskip:
     \@@_ulined_center_box:nn { 9 em } { \g_@@_info_chairman_tl } \\
     \c_@@_name_reviewer_tl \@@_hskip:
-    \@@_multiline_box:NNNn \l_@@_tmpa_int, \l_@@_tmpb_int
+    \@@_multiline_box:NNNn \l_@@_tmpa_int \l_@@_tmpb_int
       \g_@@_info_reviewer_clist { 9 em }
   }
 %    \end{macrocode}
