@@ -3250,6 +3250,14 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_at_begin_document:n}
+% 封装 \LaTeX{} 的钩子管理机制，等效于 \tn{AtBeginDocument}。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_at_begin_document:n #1
+  { \hook_gput_next_code:nn { begindocument } { #1 } }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{封面相关}
 % \changes{v0.16}{2022/03/10}{将封面和摘要内部函数定义移动到前部。}
 %
@@ -3754,9 +3762,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{latin-font,cjk-font}
 % \changes{v0.14}{2021/12/12}{简化字体选项名称。}
-% \begin{macro}{math-font}
-% \changes{v1.0}{2022/07/02}{增加数学字库选择功能。}
-% 字体选项。
+% 中英文字体选项。
 %    \begin{macrocode}
     latin-font        .choices:nn =
       { gyre, mac, win, none }
@@ -3764,10 +3770,17 @@ To produce the documentation run the original source files ending with
     cjk-font          .choices:nn =
       { fandol, founder, mac, noto, source, win, none }
       { \tl_set_eq:NN \g_@@_font_cjk_tl   \l_keys_choice_tl },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math-font}
+% \changes{v1.0}{2022/07/02}{增加数学字库选择功能。}
+% 数学字体选项。
+%    \begin{macrocode}
     math-font         .choices:nn =
       {
-        asana, cambria, fira, garamond, lm, libertinus, stix,
-        bonum, dejavu, pagella, schola, termes, xits, none
+        asana, cambria, fira, garamond, lm, libertinus, newcm,
+        stix, bonum, dejavu, pagella, schola, termes, xits, none
       }
       { \tl_set_eq:NN \g_@@_font_math_tl  \l_keys_choice_tl },
 %    \end{macrocode}
@@ -3905,6 +3918,7 @@ To produce the documentation run the original source files ending with
     % footnote .meta:nn = { nju / footnote } { #1 },
     % header   .meta:nn = { nju / header   } { #1 },
     info     .meta:nn = { nju / info     } { #1 },
+    math     .meta:nn = { nju / math     } { #1 },
     style    .meta:nn = { nju / style    } { #1 },
     theorem  .meta:nn = { nju / theorem  } { #1 }
     % toc      .meta:nn = { nju / toc      } { #1 }
@@ -3919,6 +3933,10 @@ To produce the documentation run the original source files ending with
 \NewDocumentCommand \njusetup { m } { \keys_set:nn { nju } { #1 } }
 %    \end{macrocode}
 % \end{macro}
+% \tn{njusetup} 仅能在导言区使用。
+%    \begin{macrocode}
+\@onlypreamble \njusetup
+%    \end{macrocode}
 %
 % \begin{macro}{\njusetformat}
 % \changes{v0.17}{2022/04/09}{提供修改默认样式的接口。}
@@ -4821,17 +4839,79 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_loadfont_math_xits:}
-% XITS Math 字体配置。
+% XITS Math 字体。
 %    \begin{macrocode}
 \cs_new:Npn \@@_loadfont_math_xits:
   {
-    \ctex_if_platform_macos:TF
+    \bool_if:NTF \g_@@_opt_math_int_bool
+      { \tl_set:Nn  \l_@@_tmpa_tl { 8 } }
+      { \tl_clear:N \l_@@_tmpa_tl       }
+    \__um_setmathfont:nn
       {
-        \setmathfont { XITSMath-Regular.otf }
-        \setmathfont { XITSMath-Bold.otf    }
-          [ range= { bfup -> up, bfit -> it } ]
+        Extension    = .otf,
+        StylisticSet = \l_@@_tmpa_tl,
+        BoldFont     = XITSMath-Bold
       }
-      { \setmathfont { XITS~Math } }
+      { XITSMath-Regular }
+    \__um_setmathfont:nn
+      {
+        Extension    = .otf,
+        StylisticSet = 1,
+        range        = {cal,bfcal}
+      }
+      { XITSMath-Regular }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_loadfont_math_newcm:}
+% New Computer Modern Math 字体。
+%    \begin{macrocode}
+\cs_new:Npn \@@_loadfont_math_newcm:
+  {
+    \bool_if:NTF \g_@@_opt_math_int_bool
+      { \tl_set:Nn  \l_@@_tmpa_tl { 2 } }
+      { \tl_clear:N \l_@@_tmpa_tl       }
+    \__um_setmathfont:nn
+      {
+        Extension      = .otf,
+        StylisticSet   = \l_@@_tmpa_tl
+      }
+      { NewCMMath-Book }
+    \__um_setmathfont:nn
+      {
+        Extension      = .otf,
+        StylisticSet   = 1,
+        range          = {scr,bfscr}
+      }
+      { NewCMMath-Book }
+    \__fontspec_main_setmathrm:nn
+      {
+        Extension      = .otf,
+        UprightFont    = *-Book,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-BookItalic,
+        BoldItalicFont = *-BoldItalic
+      }
+      { NewCM10 }
+    \__fontspec_main_setmathsf:nn
+      {
+        Extension      = .otf,
+        UprightFont    = *-Book,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-BookOblique,
+        BoldItalicFont = *-BoldOblique
+      }
+      { NewCMSans10 }
+    \__fontspec_main_setmathtt:nn
+      {
+        Extension      = .otf,
+        UprightFont    = *-Book,
+        ItalicFont     = *-BookItalic,
+        BoldFont       = *-Bold,
+        BoldItalicFont = *-BoldOblique
+      }
+      { NewCMMono10 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4840,15 +4920,6 @@ To produce the documentation run the original source files ending with
 % 不进行数学字体配置。
 %    \begin{macrocode}
 \cs_new:Npn \@@_loadfont_math_none: { }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{\@@_loadfont_math_cm:}
-% \pkg{unicode-math} 默认采用 Computer Modern Math 字体，
-% 因此无需额外定义。
-%    \begin{macrocode}
-\cs_new_eq:NN \@@_loadfont_math_cm: \@@_loadfont_math_none:
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4863,8 +4934,6 @@ To produce the documentation run the original source files ending with
   {
     \use:c { @@_loadfont_latin_ \g_@@_font_latin_tl : }
     \use:c { @@_loadfont_cjk_   \g_@@_font_cjk_tl   : }
-    \@@_if_um_loaded:T
-      { \use:c { @@_loadfont_math_ \g_@@_font_math_tl : } }
 %    \end{macrocode}
 % 自行定义 \pkg{ctex} 中的四类字体命令。
 %    \begin{macrocode}
@@ -4880,7 +4949,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 载入设置的字体。此处设置与文档类一同载入，否则在导言区后载入字体可能导致一部分覆盖字体的命令失效。
+% 载入设置的字体。为了吸收导言区的设置，放在其后载入。
 %    \begin{macrocode}
 % \BeforeBeginEnvironment { document } { \@@_loadfont: }
 \@@_loadfont:
@@ -5549,7 +5618,6 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsection{定理环境}
-%
 % \changes{v0.18}{2022/04/21}{新增定理环境的若干定制项。}
 %
 % \begin{macro}{theorem/style,theorem/header-font,theorem/body-font,
@@ -5629,6 +5697,208 @@ To produce the documentation run the original source files ending with
         \PassOptionsToPackage { amsmath, thmmarks } { ntheorem }
         \RequirePackage { ntheorem }
         \@@_ntheorem_post_setup:
+      }
+  }
+%    \end{macrocode}
+%
+%
+% \subsection{公式样式}
+% \changes{v1.0}{2022/07/31}{新增若干公式样式设置。}
+%
+% \begin{variable}{\g_@@_opt_math_int_bool}
+% 是否使用直立积分号。
+%    \begin{macrocode}
+\bool_new:N \g_@@_opt_math_int_bool
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_opt_math_re_bool}
+% 是否使用罗马体实部虚部符号。
+%    \begin{macrocode}
+\bool_new:N \g_@@_opt_math_re_bool
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_opt_math_leq_bool}
+% 是否使用倾斜的小于等于号。
+%    \begin{macrocode}
+\bool_new:N \g_@@_opt_math_leq_bool
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_name_integral_tl}
+% 保存 \pkg{unicode-math} 内置的所有积分号命令。
+%    \begin{macrocode}
+\tl_const:Nx \c_@@_name_integral_tl { \l__um_nolimits_tl }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}{\@@_um_setup:n}
+% 封装 \cs{unimathsetup}。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_um_setup:n #1
+  { \keys_set:nn { unicode-math } { #1 } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_loadfont_math:}
+% 加载选定数学字体。
+%    \begin{macrocode}
+\cs_new_eq:Nc \@@_loadfont_math:
+  { @@_loadfont_math_ \g_@@_font_math_tl : }
+%    \end{macrocode}
+% \end{macro}
+%
+% ^^A 选项名称来自 thuthesis
+%    \begin{macrocode}
+\keys_define:nn { nju / math }
+  {
+%    \end{macrocode}
+% \begin{macro}{math/uppercase-greek}
+%    \begin{macrocode}
+    uppercase-greek               .choice:,
+    uppercase-greek / italic        .code:n =
+      { \@@_um_setup:n { math-style = TeX } },
+    uppercase-greek / upright       .code:n =
+      { \@@_um_setup:n { math-style = ISO } },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math/less-than-or-equal}
+%    \begin{macrocode}
+    less-than-or-equal            .choice:,
+    less-than-or-equal / slanted    .code:n =
+      { \bool_set_true:N  \g_@@_opt_math_leq_bool },
+    less-than-or-equal / horizontal .code:n =
+      { \bool_set_false:N \g_@@_opt_math_leq_bool },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math/integral}
+%    \begin{macrocode}
+    integral                      .choice:,
+    integral / upright              .code:n =
+      { \bool_set_true:N  \g_@@_opt_math_int_bool },
+    integral / slanted              .code:n =
+      { \bool_set_false:N \g_@@_opt_math_int_bool },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math/integral-limits}
+% 两个选项分别相当于 \tn{removenolimits} 和 \tn{addnolimits}。
+%    \begin{macrocode}
+    integral-limits               .choice:,
+    integral-limits / true          .code:n =
+      { \tl_set_eq:NN \l__um_nolimits_tl \c_@@_name_integral_tl },
+    integral-limits / false         .code:n =
+      { \tl_clear:N   \l__um_nolimits_tl },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math/partial}
+%    \begin{macrocode}
+    partial                       .choice:,
+    partial / upright               .code:n =
+      { \@@_um_setup:n { partial = upright } },
+    partial / italic                .code:n =
+      { \@@_um_setup:n { partial = italic  } },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math/math-ellipsis}
+%    \begin{macrocode}
+    math-ellipsis                 .choice:,
+    math-ellipsis / centered        .code:n =
+      {
+        \DeclareRobustCommand \mathellipsis
+          { \mathinner { \unicodecdots    } }
+      },
+    math-ellipsis / lower           .code:n =
+      {
+        \DeclareRobustCommand \mathellipsis
+          { \mathinner { \unicodeellipsis } }
+      },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math/real-part}
+%    \begin{macrocode}
+    real-part                     .choice:,
+    real-part / roman               .code:n =
+      { \bool_set_true:N  \g_@@_opt_math_re_bool },
+    real-part / fraktur             .code:n =
+      { \bool_set_false:N \g_@@_opt_math_re_bool },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math/style}
+% 整体样式。
+%    \begin{macrocode}
+    style                      .choice:,
+    style / TeX                  .code:n =
+      {
+        \keys_set:nn { nju / math }
+          {
+            integral           = slanted,
+            integral-limits    = false,
+            less-than-or-equal = horizontal,
+            math-ellipsis      = centered,
+            partial            = italic,
+            real-part          = fraktur,
+            uppercase-greek    = upright
+          }
+        \@@_um_setup:n { bold-style = TeX }
+        \@@_loadfont_math:
+      },
+    style / ISO                  .code:n =
+      {
+        \keys_set:nn { nju / math }
+          {
+            integral           = upright,
+            integral-limits    = true,
+            less-than-or-equal = horizontal,
+            math-ellipsis      = lower,
+            partial            = upright,
+            real-part          = roman,
+            uppercase-greek    = italic
+          }
+        \@@_um_setup:n { bold-style = ISO }
+        \@@_loadfont_math:
+      },
+    style / GB                   .code:n =
+      {
+        \keys_set:nn { nju / math }
+          {
+            integral           = upright,
+            integral-limits    = false,
+            less-than-or-equal = slanted,
+            math-ellipsis      = centered,
+            partial            = upright,
+            real-part          = roman,
+            uppercase-greek    = italic
+          }
+        \@@_um_setup:n { bold-style = ISO }
+        \@@_loadfont_math:
+      },
+    style                     .initial:n = GB
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\@@_at_begin_document:n
+  {
+    \bool_if:NT \g_@@_opt_math_leq_bool
+      {
+        \cs_set_eq:NN \le  \leslant
+        \cs_set_eq:NN \ge  \geslant
+        \cs_set_eq:NN \leq \leqslant
+        \cs_set_eq:NN \geq \geqslant
+      }
+    \bool_if:NT \g_@@_opt_math_re_bool
+      {
+        \cs_set:Npn \Re { \operatorname { Re } }
+        \cs_set:Npn \Im { \operatorname { Im } }
       }
   }
 %</class>
@@ -6136,7 +6406,7 @@ To produce the documentation run the original source files ending with
     \c_@@_name_chairman_tl \@@_hskip:
     \@@_ulined_center_box:nn { 9 em } { \g_@@_info_chairman_tl } \\
     \c_@@_name_reviewer_tl \@@_hskip:
-    \@@_multiline_box:NNNn \l_@@_tmpa_int \l_@@_tmpb_int
+    \@@_multiline_box:NNNn \l_@@_tmpa_int, \l_@@_tmpb_int
       \g_@@_info_reviewer_clist { 9 em }
   }
 %    \end{macrocode}
