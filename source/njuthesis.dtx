@@ -2216,17 +2216,17 @@ To produce the documentation run the original source files ending with
 %   \end{abstract*}
 % \end{latexexample}
 %
-% \begin{function}[added=2022-02-04]{style/abstract-in-toc}
+% \begin{function}[added=2022-02-04,updated=2022-07-31]{abstract/toc-entry}
 %   \begin{syntax}
-%     abstract-in-toc = <\TTF>
+%     toc-entry = <\TTF>
 %   \end{syntax}
 % 是否将摘要条目插入目录，默认开启。
 % 关闭此选项后摘要页将不会出现在目录中，仅保留其 PDF 书签。
 % \end{function}
 %
-% \begin{function}[added=2022-03-26]{style/abstract-title}
+% \begin{function}[added=2022-03-26,updated=2022-07-31]{abstract/title-style}
 %   \begin{syntax}
-%     abstract-title = <(strict)|centered|natural>
+%     title-style = <(strict)|centered|natural>
 %   \end{syntax}
 % 选择研究生摘要标题样式。
 % 默认为严格模式（\opt{strict}），即完全模仿材料包要求。
@@ -2279,14 +2279,26 @@ To produce the documentation run the original source files ending with
 % 尽管“目录”这一说法已流传甚广，但学位论文中理应使用“目次”这一名称
 % 来指代篇目的列表。
 %
-% \begin{function}[added=2022-02-04]{style/toc-in-toc}
+% \begin{function}[added=2022-02-04,updated=2022-07-31]{
+%   tableofcontents/toc-entry,listoffigures/toc-entry,
+%   listoftables/toc-entry}
 %   \begin{syntax}
-%     toc-in-toc = <\TTF>
+%     toc-entry = <\TTF>
 %   \end{syntax}
-% 是否在目录中显示目录自身的条目，默认开启。关闭此选项后目录、
+% 是否在目录中显示目录自身的条目，默认开启。关闭后目录、
 % 插图目录和表格目录将不会出现在目录中，仅保留其 PDF 书签。
+% 注意，虽然名称一样，但这其实是对应三种目录的三个选项。
 % \end{function}
 %
+% 如果仅需要禁用插图目录和表格目录的条目，可以这样设置
+% \begin{latexexample}[moretexcs={\njusetup},
+%   emph={[2]tableofcontents,listoffigures,listoftables}]
+%   \njusetup{
+%     tableofcontents/toc-entry = true, % 仅作展示，无需手动启用
+%     listoffigures/toc-entry   = false,
+%     listoftables/toc-entry    = false
+%   }
+% \end{latexexample}
 %
 % \subsubsection{符号表}
 %
@@ -3446,7 +3458,7 @@ To produce the documentation run the original source files ending with
     \@@_spread_box:nnx { #3 } { #5 } { \@@_name:n { #1 } } \@@_hskip:
     \@@_ulined_center_box:nn  { #4 } { \@@_info:n { #1 } } \@@_hskip:
     \@@_spread_box:nnx { #3 } { #5 } { \@@_name:n { #2 } } \@@_hskip:
-    \@@_ulined_center_box:nn  { #4 } { \@@_info:n { #2 } } \par
+    \@@_ulined_center_box:nn  { #4 } { \@@_info:n { #2 } } \tex_par:D
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3496,7 +3508,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_abs_bookmark:nn #1#2
   {
     \phantomsection
-    \@@_bookmark:Nnn \g_@@_abs_in_toc_bool {#1} {#2}
+    \@@_bookmark:Nnn \g_@@_abs_showentry_bool {#1} {#2}
     \@@_chapter_header:n { #1 }
   }
 \cs_generate_variant:Nn \@@_abs_bookmark:nn { Vn }
@@ -3534,7 +3546,7 @@ To produce the documentation run the original source files ending with
     I~ have~ drawn~ additional~ lines~ to~ contain~ it,~
     which~ will~ probably~ make~ your~ abstract~ page~
     look~ slightly~ different~ from~ the~ standard.\\
-    You~ can~ use~ the~ "style/abstract-title"~ key~
+    You~ can~ use~ the~ "abstract/title-style"~ key~
     to~ disable~ this~ message.
   }
 %    \end{macrocode}
@@ -3574,7 +3586,7 @@ To produce the documentation run the original source files ending with
 % 并对多于三行的标题生成警告信息。这里通过行数处理边界条件，
 % 包括标题未填写、标题只有一行，以及标题过长的情况。
 %    \begin{macrocode}
-        \bool_if:NT \g_@@_strict_abs_title_bool
+        \bool_if:NT \g_@@_abs_title_strict_bool
           {
             \int_case:nnF { \l_@@_tmpa_int }
               {
@@ -3664,7 +3676,7 @@ To produce the documentation run the original source files ending with
     \group_begin:
       \l_@@_align_begin_tl
       \l_@@_format_tl
-      \l_@@_content_tl \par
+      \l_@@_content_tl \tex_par:D
       \l_@@_align_end_tl
     \group_end:
     \__nju_vskip:N \l_@@_bottom_skip
@@ -3996,14 +4008,14 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{用户接口}
 %
-% \begin{macro}{bib,info,style,theorem}
+% \begin{macro}{bib,info,label-sep,style,theorem,
+%   tableofcontents}
 % 定义元（meta）键值对。为 v1.0 升级预留了新的接口。
 %    \begin{macrocode}
 \keys_define:nn { nju }
   {
-    % abstract .meta:nn = { nju / abstract } { #1 },
+    abstract  .meta:nn = { nju / abstract  } { #1 },
     bib       .meta:nn = { nju / bib       } { #1 },
-    % cover    .meta:nn = { nju / cover    } { #1 },
     % font     .meta:nn = { nju / font     } { #1 },
     % footer   .meta:nn = { nju / footer   } { #1 },
     % footnote .meta:nn = { nju / footnote } { #1 },
@@ -4012,8 +4024,10 @@ To produce the documentation run the original source files ending with
     label-sep .meta:nn = { nju / label-sep } { #1 },
     math      .meta:nn = { nju / math      } { #1 },
     style     .meta:nn = { nju / style     } { #1 },
-    theorem   .meta:nn = { nju / theorem   } { #1 }
-    % toc      .meta:nn = { nju / toc      } { #1 }
+    theorem   .meta:nn = { nju / theorem   } { #1 },
+    tableofcontents .meta:nn = { nju / tableofcontents } { #1 },
+    listoffigures   .meta:nn = { nju / listoffigures   } { #1 },
+    listoftables    .meta:nn = { nju / listoftables    } { #1 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5259,7 +5273,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_chapter:Nnn,\@@_chapter:n,\@@_chapter:V}
+% \begin{macro}{\@@_chapter:Nnn,\@@_chapter:cnn,\@@_chapter:n,\@@_chapter:V}
 % 含有目录和 PDF 标签的无编号章。
 %    \begin{macrocode}
 \cs_new:Npn \@@_chapter:Nnn #1#2#3
@@ -5270,7 +5284,8 @@ To produce the documentation run the original source files ending with
   }
 \cs_new:Npn \@@_chapter:n #1
   { \@@_chapter:Nnn \c_true_bool {#1} { } }
-\cs_generate_variant:Nn \@@_chapter:n { V }
+\cs_generate_variant:Nn \@@_chapter:Nnn { cnn }
+\cs_generate_variant:Nn \@@_chapter:n   { V   }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5324,20 +5339,7 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-%    \begin{macrocode}
-\keys_define:nn { nju / style }
-  {
-%    \end{macrocode}
-% \begin{macro}{style/toc-in-toc}
-% \changes{v0.15}{2022/02/04}{可选择目录自身是否出现在目录中。}
-% 是否在目录中显示目录自身。
-%    \begin{macrocode}
-    toc-in-toc .bool_gset:N = \g_@@_toc_in_toc_bool,
-    toc-in-toc   .initial:n = true
-  }
-%    \end{macrocode}
-% \end{macro}
-%
+% \changes{v1.0}{2022/08/01}{整合目录设置项。}
 % \begin{macro}{\@@_make_toc:nn,\@@_make_toc:Vn}
 % 通过 group 内修改标题设置，将目录页标题格式单独设置为三号粗宋体。
 % 目录自身不出现在目录中时需特别处理。参考
@@ -5348,25 +5350,61 @@ To produce the documentation run the original source files ending with
     \group_begin:
       \keys_set:nn { ctex }
         { chapter/format = \c_@@_fmt_toctitle_tl }
-      \@@_chapter:Nnn \g_@@_toc_in_toc_bool { #1 } { #2 }
+      \@@_chapter:cnn { g_@@_ #2 _showentry_bool } {#1} {#2}
     \group_end:
     \@starttoc { #2 }
   }
-\cs_generate_variant:Nn \@@_make_toc:nn { Vn }
+\cs_generate_variant:Nn \@@_make_toc:nn { vn }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\tableofcontents,\listoffigures,\listoftables}
+% \changes{v0.15}{2022/02/04}{可选择目录自身是否出现在目录中。}
+% \begin{macro}{\@@_define_toc_cmd:nnn}
 % 重定义目录命令，修改标题格式并插入书签。
 %    \begin{macrocode}
-\RenewDocumentCommand \tableofcontents { }
-  { \@@_make_toc:Vn \contentsname   { toc } }
-\RenewDocumentCommand \listoffigures   { }
-  { \@@_make_toc:Vn \listfigurename { lof } }
-\RenewDocumentCommand \listoftables    { }
-  { \@@_make_toc:Vn \listtablename  { lot } }
+\cs_new_protected:Npn \@@_define_toc_cmd:nnn #1#2#3
+  {
+    \keys_define:nn { nju / #1 }
+      {
+        toc-entry  .bool_set:c = { g_@@_ #3 _showentry_bool },
+        toc-entry   .initial:n = true
+      }
+    \exp_args:Nc \RenewDocumentCommand { #1 } { }
+      { \@@_make_toc:vn { #2 name } { #3 } }
+  }
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{macro}{
+%   \tableofcontents,\listoffigures,\listoftables,
+%   tableofcontents/toc-entry,
+%   listoffigures/toc-entry,
+%   listoftables/toc-entry,
+%   \g_@@_toc_showentry_bool,
+%   \g_@@_lof_showentry_bool,
+%   \g_@@_lot_showentry_bool}
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { tableofcontents } { contents   } { toc },
+    { listoffigures   } { listfigure } { lof },
+    { listoftables    } { listtable  } { lot }
+  }
+  { \@@_define_toc_cmd:nnn #1 }
+%    \end{macrocode}
+% \end{macro}
+%
+% 如果不显示主目录的条目，则插图目录和表格目录一并不显示。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \bool_if:NF \g_@@_toc_showentry_bool
+      {
+        \bool_set_false:N \g_@@_lof_showentry_bool
+        \bool_set_false:N \g_@@_lot_showentry_bool
+      }
+  }
+%    \end{macrocode}
 %
 %
 % \subsection{参考文献}
@@ -7518,40 +7556,41 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v1.0}{2022/08/01}{整合摘要设置项。}
 %    \begin{macrocode}
-\keys_define:nn { nju / style }
+\keys_define:nn { nju / abstract }
   {
 %    \end{macrocode}
-% \begin{macro}{style/abstract-in-toc}
+% \begin{macro}{abstract/toc-entry}
 % \changes{v0.15}{2022/02/04}{可选择摘要是否出现在目录中。}
 % 是否将摘要添加到目录。
 %    \begin{macrocode}
-    abstract-in-toc      .bool_gset:N = \g_@@_abs_in_toc_bool,
-    abstract-in-toc        .initial:n = true,
+    toc-entry          .bool_set:N = \g_@@_abs_showentry_bool,
+    toc-entry           .initial:n = true,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{style/abstract-title}
+% \begin{macro}{style/title-style}
 % \changes{v0.16}{2022/03/26}{可选择研究生摘要标题样式。}
 % 选择摘要样式，默认为 \opt{strict}。
 %    \begin{macrocode}
-    abstract-title          .choice:,
-    abstract-title / strict   .code:n =
+    title-style          .choice:,
+    title-style / strict   .code:n =
       {
-        \bool_gset_true:N  \g_@@_strict_abs_title_bool
-        \skip_gset:Nn \g_@@_abs_title_left_skip { 1 em }
+        \bool_set_true:N  \g_@@_abs_title_strict_bool
+        \skip_set:Nn \g_@@_abs_title_left_skip { .5 em }
       },
-    abstract-title / centered .code:n =
+    title-style / centered .code:n =
       {
-        \bool_gset_true:N \g_@@_strict_abs_title_bool
-        \skip_gset:Nn \g_@@_abs_title_left_skip { 0 pt plus 1 fill }
+        \bool_set_true:N \g_@@_abs_title_strict_bool
+        \skip_set:Nn \g_@@_abs_title_left_skip { .5 em plus 1 fill }
       },
-    abstract-title / natural  .code:n =
+    title-style / natural  .code:n =
       {
-        \bool_gset_false:N \g_@@_strict_abs_title_bool
-        \skip_gset:Nn \g_@@_abs_title_left_skip { 0 pt plus 1 fill }
+        \bool_set_false:N \g_@@_abs_title_strict_bool
+        \skip_set:Nn \g_@@_abs_title_left_skip { .5 em plus 1 fill }
       },
-    abstract-title        .initial:n = strict
+    title-style         .initial:n = strict
   }
 %    \end{macrocode}
 % \end{macro}
