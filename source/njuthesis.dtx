@@ -2834,14 +2834,16 @@ To produce the documentation run the original source files ending with
 % 量。最后一个下划线后的内容指示其类型，但引擎不会根据名称检查变量类型。
 %
 % \begin{variable}{
-%   \l_@@_tmp_box,
+%   \l_@@_tmpa_box,\l_@@_tmpb_box,\l_@@_tmpc_box,
 %   \l_@@_tmp_clist,
 %   \l_@@_tmpa_dim,\l_@@_tmpb_dim,
 %   \l_@@_tmpa_int,\l_@@_tmpb_int,
 %   \l_@@_tmpa_tl,\l_@@_tmpb_tl}
 % 临时变量。
 %    \begin{macrocode}
-\box_new:N   \l_@@_tmp_box
+\box_new:N   \l_@@_tmpa_box
+\box_new:N   \l_@@_tmpb_box
+\box_new:N   \l_@@_tmpc_box
 \clist_new:N \l_@@_tmp_clist
 \dim_new:N   \l_@@_tmpa_dim
 \dim_new:N   \l_@@_tmpb_dim
@@ -3218,8 +3220,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new:Npn \@@_get_text_width:Nn #1#2
   {
-    \hbox_set:Nn \l_@@_tmp_box {#2}
-    \dim_set:Nn #1 { \box_wd:N \l_@@_tmp_box }
+    \hbox_set:Nn \l_@@_tmpa_box {#2}
+    \dim_set:Nn #1 { \box_wd:N \l_@@_tmpa_box }
   }
 \cs_generate_variant:Nn \@@_get_text_width:Nn { NV }
 \cs_generate_variant:Nn \@@_get_text_width:Nn { Nx }
@@ -3348,7 +3350,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % |w| 后的参数需要使用非括号包裹的形式完全展开。
 %    \begin{macrocode}
-          { \exp_last_unbraced:cV { @@_date #2 :www } \l_@@_tmpa_tl \q_stop }
+          {
+            \exp_last_unbraced:cV { @@_date #2 :www }
+              \l_@@_tmpa_tl \q_stop
+          }
       }
   }
 %    \end{macrocode}
@@ -3375,24 +3380,90 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
+% \begin{macro}{\@@_loop_until:nnn}
+% 等效于 plain \TeX 的 \cs{loop} 循环，原始结构为
+% \cs{loop}\meta{循环体1}\meta{终止条件}\meta{循环体2}\cs{repeat}。
+% \begin{arguments}
+%   \item |bool| 表达式
+%   \item 循环体1
+%   \item 循环体2
+% \end{arguments}
+% 两个代码块交替执行，如果在\meta{循环体1}结束后满足条件，则退出循环。
+%    \begin{macrocode}
+\cs_new:Npn \@@_loop_until:nnn #1#2#3
+  { #2 \bool_if:nF {#1} { #3 \@@_loop_until:nnn {#1} {#2} {#3} } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_breakpar_loop:n}
+% \changes{v1.0}{2022/08/01}{使用 \LaTeX3 语法重构下划线断行算法。}
+% 带下划线的自然断行算法。
+% \begin{arguments}
+%   \item 循环体2的额外语句
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new:Npn \@@_breakpar_loop:n #1
+  {
+    \@@_loop_until:nnn { \box_if_empty_p:N \l_@@_tmpb_box }
+      {
+        \box_gset_to_last:N \l_@@_tmpb_box
+        \tex_unskip:D \tex_unpenalty:D
+      }
+      {
+        \hbox_gset:Nn \l_@@_tmpc_box
+          {
+            \vbox_top:n
+              {
+                \box_use_drop:N \l_@@_tmpb_box
+                \__kernel_kern:n { -\tex_prevdepth:D        }
+                \__kernel_kern:n { -\c_@@_ulineshifti_dim }
+                \tex_hrule:D
+              }
+            \tex_penalty:D
+            \l_@@_tmpa_box
+            \hbox_unpack_drop:N \l_@@_tmpc_box
+          }
+        #1
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_breakpar_print:nn}
+% 打印带下划线的自然断行算法结果。
+%    \begin{macrocode}
+\cs_new:Npn \@@_breakpar_print:nn #1#2
+  {
+    \group_begin:
+      \tex_noindent:D #1
+      \hbox_unpack_drop:N \l_@@_tmpc_box #2
+      \tex_par:D
+    \group_end:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_uline_title:}
 % \changes{v0.17}{2022/04/09}{优化封面标题的断行方式。}
 % 多行带下划线标题。使用 \TeX 原生断行算法实现。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_uline_title:
   {
-    \setbox0 = \vbox{
-        \leftskip=0.5em plus 1 fill
-        \rightskip=\leftskip \parskip=1cm
-        \parindent=\z@ \g_@@_info_title_tl \par
-        \global\setbox2=\hbox{}
-        \loop
-          \setbox1=\lastbox \unskip\unpenalty
-        \unless\ifvoid1
-          \global\setbox2=\hbox{\@@_uline_box:\penalty0\unhbox2}
-        \repeat
+    \vbox_set:Nn \l_@@_tmpa_box
+      {
+        \skip_set:Nn \tex_leftskip:D { .5 em plus 1 fill }
+        \skip_set_eq:NN \tex_rightskip:D \tex_leftskip:D
+        \g_@@_info_title_tl \tex_par:D
+        \hbox_gset:Nn \l_@@_tmpc_box { }
+%    \end{macrocode}
+% 使用循环寻找断行点，存入已被清空的 3 号盒子。
+%    \begin{macrocode}
+        \@@_breakpar_loop:n { }
       }
-      { \noindent \unhbox2 \par }
+%    \end{macrocode}
+% 输出绘制好的标题。
+%    \begin{macrocode}
+    \@@_breakpar_print:nn { } { }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3419,9 +3490,10 @@ To produce the documentation run the original source files ending with
       {
         \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
         \c_@@_fmt_covertitle_tl \@@_uline_title:
-        \dim_gset_eq:NN \l_@@_tmpa_dim \prevdepth
+        \dim_gset_eq:NN \l_@@_tmpa_dim \tex_prevdepth:D
       }
-    \par \prevdepth \l_@@_tmpa_dim
+    \tex_par:D
+    \dim_set_eq:NN \tex_prevdepth:D \l_@@_tmpa_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3438,7 +3510,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_cover_entry:nNNN #1#2#3#4
   {
     \@@_spread_box:nnx { #2 } { #4 } { \@@_name:n { #1 } } \@@_hskip:
-    \@@_ulined_center_box:nn { #3 }  { \@@_info:n { #1 } } \par
+    \@@_ulined_center_box:nn { #3 }  { \@@_info:n { #1 } } \tex_par:D
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3483,7 +3555,7 @@ To produce the documentation run the original source files ending with
     \@@_hskip:
     \@@_ulined_center_box:nn { #3 }
       { \clist_item:cn { g_@@_info_ #1 _clist } { 2 } }
-    \par
+    \tex_par:D
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3530,14 +3602,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_uline_box:}
-% 用于摘要标题的下划线盒子。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline_box:
-  { \vtop{\box1\kern-\prevdepth\kern0.5ex\hrule} }
-%    \end{macrocode}
-% \end{macro}
-%
 % 定义关于标题的报错信息。
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { abs-title-too-long }
@@ -3559,27 +3623,29 @@ To produce the documentation run the original source files ending with
 %   \item 内容
 %   \item 左边距
 % \end{arguments}
-% 这里使用了 Primitive \TeX{} 语法以利用原生的断行算法
+% 这里使用了 plain \TeX{} 语法以利用原生的断行算法
 % \footnote{\url{https://tex.stackexchange.com/q/637861/}}。
 % 对其语法的简要介绍可以参考
 % \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_uline_list:nnn #1#2#3
   {
-    \hbox_set:Nn \l_@@_tmp_box {#1}
-    \setbox0 = \vbox{\hangindent=\wd\l_@@_tmp_box \hangafter=-1
-        \leftskip=#3 \rightskip=\leftskip \parindent=\z@ #2\par
-        \global\setbox2=\hbox{}
-        \int_gzero:N \l_@@_tmpa_int
-        \loop
-          \setbox1=\lastbox \unskip\unpenalty
-        \unless\ifvoid1
-          \global\setbox2=\hbox{\@@_uline_box:\penalty0\unhbox2}
-          \int_gincr:N \l_@@_tmpa_int
-        \repeat
-      }
+    \vbox_set:Nn \l_@@_tmpa_box
       {
-        \noindent\copy\l_@@_tmp_box\unhbox2
+        \@@_get_text_width:Nn \tex_hangindent:D { #1 }
+        \int_set:Nn \tex_hangafter:D { -1 }
+        \skip_set:Nn \tex_leftskip:D { #3 }
+        \skip_set_eq:NN \tex_rightskip:D \tex_leftskip:D
+        \tex_noindent:D #2 \tex_par:D
+%    \end{macrocode}
+% 使用循环寻找断行点，存入已被清空的 3 号盒子，同时统计行数。
+%    \begin{macrocode}
+        \hbox_gset:Nn \l_@@_tmpc_box { }
+        \int_gzero:N \l_@@_tmpa_int
+        \@@_breakpar_loop:n { \int_gincr:N \l_@@_tmpa_int }
+      }
+      \@@_breakpar_print:nn { #1 }
+        {
 %    \end{macrocode}
 % 在使用自然断行算法后，研究生的摘要标题可选择 \opt{strict}
 % 或者 \opt{natural} 模式。前者会为少于两行的标题补齐下划线，
@@ -3595,7 +3661,7 @@ To produce the documentation run the original source files ending with
                 { 2 } { \prg_do_nothing: }
               }
               { \msg_warning:nn { njuthesis } { abs-title-too-long } }
-            \par
+            \tex_par:D
           }
       }
   }
@@ -6366,9 +6432,9 @@ To produce the documentation run the original source files ending with
   {
     \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
     \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_id_tl
-      \c_@@_name_colon_tl \g_@@_info_id_tl \par
+      \c_@@_name_colon_tl \g_@@_info_id_tl \tex_par:D
     \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_defenddate_tl
-      \c_@@_name_colon_tl \g_@@_info_defenddate_tl \par
+      \c_@@_name_colon_tl \g_@@_info_defenddate_tl \tex_par:D
     \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_supvfull_tl
       \c_@@_name_colon_tl \skip_horizontal:n { 8 em }
       { #2 \c_@@_name_sign_tl }
@@ -6542,7 +6608,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_title_nl:
   {
-    \parbox [ b ] { 15 em } { \@@_uline_title: } \par
+    \parbox [ b ] { 15 em } { \@@_uline_title: } \tex_par:D
     \skip_vertical:n { - 0.5 cm }
     { \zihao { 4 } \c_@@_name_subtitle_tl }
     \skip_vertical:N \c_zero_skip
@@ -6750,7 +6816,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_g_decl_auth_sign:
   {
-    \c_@@_name_authsign_tl \par
+    \c_@@_name_authsign_tl \tex_par:D
     \c_@@_name_blankdate_a_tl
   }
 %    \end{macrocode}
@@ -6761,8 +6827,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_authdecl_secretlv_g:
   {
-    \c_@@_name_secretstatus_tl \par
-    \ensuremath { \mdwhtsquare } \c_@@_name_secretfree_tl \par
+    \c_@@_name_secretstatus_tl \tex_par:D
+    \ensuremath { \mdwhtsquare } \c_@@_name_secretfree_tl \tex_par:D
     \ensuremath { \mdwhtsquare } \c_@@_name_secretdate_tl
   }
 %</def-g>
@@ -6850,7 +6916,7 @@ To produce the documentation run the original source files ending with
         \@@_spread_box:nnx { #1 } { #2 } { \@@_name:n { ##1 } }
         \c_@@_name_colon_tl
         \@@_center_box:Vn \l_@@_tmpb_dim { \@@_info:n { ##1 } }
-        \par
+        \tex_par:D
       }
   }
 %    \end{macrocode}
