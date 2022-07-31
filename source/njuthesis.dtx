@@ -1973,6 +1973,15 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{引用}
 %
+% \begin{function}[added=2022-07-31]{label-sep/figure,label-sep/table,label-sep/equation}
+%   \begin{syntax}
+%     figure   = \meta{符号}
+%     table    = \meta{符号}
+%     equation = \meta{符号}
+%   \end{syntax}
+% 图片、表格、公式编号中的连接符样式，默认为短横线（en dash）。
+% \end{function}
+%
 % \begin{function}{\cref}
 %   \begin{syntax}
 %     \tn{cref}\Arg{标签}
@@ -3993,16 +4002,17 @@ To produce the documentation run the original source files ending with
 \keys_define:nn { nju }
   {
     % abstract .meta:nn = { nju / abstract } { #1 },
-    bib      .meta:nn = { nju / bib      } { #1 },
+    bib       .meta:nn = { nju / bib       } { #1 },
     % cover    .meta:nn = { nju / cover    } { #1 },
     % font     .meta:nn = { nju / font     } { #1 },
     % footer   .meta:nn = { nju / footer   } { #1 },
     % footnote .meta:nn = { nju / footnote } { #1 },
     % header   .meta:nn = { nju / header   } { #1 },
-    info     .meta:nn = { nju / info     } { #1 },
-    math     .meta:nn = { nju / math     } { #1 },
-    style    .meta:nn = { nju / style    } { #1 },
-    theorem  .meta:nn = { nju / theorem  } { #1 }
+    info      .meta:nn = { nju / info      } { #1 },
+    label-sep .meta:nn = { nju / label-sep } { #1 },
+    math      .meta:nn = { nju / math      } { #1 },
+    style     .meta:nn = { nju / style     } { #1 },
+    theorem   .meta:nn = { nju / theorem   } { #1 }
     % toc      .meta:nn = { nju / toc      } { #1 }
   }
 %    \end{macrocode}
@@ -5694,6 +5704,33 @@ To produce the documentation run the original source files ending with
 \captionsetup [ figure ] { style = njucap }
 \captionsetup [ table  ] { style = njucap }
 %    \end{macrocode}
+%
+% \begin{macro}{\ctex_patch_cmd:Nnn}
+%    \begin{macrocode}
+\cs_generate_variant:Nn \ctex_patch_cmd:Nnn { cnv }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{label-sep/figure,label-sep/table,label-sep/equation}
+% \changes{v0.18}{2022/07/31}{添加编号连接符设置项。}
+% 修改图片、表格、公式编号中的连接符。
+% \footnote{\url{https://tex.stackexchange.com/q/61756/}}
+%    \begin{macrocode}
+\clist_map_inline:nn { figure, table, equation }
+  {
+    \keys_define:nn { nju / label-sep }
+      {
+        #1  .tl_set:c = { g_@@_sep_ #1 _tl },
+%    \end{macrocode}
+% 根据本科生撰写规范的建议，默认连接符为短横线（en dash）。
+%    \begin{macrocode}
+        #1 .initial:n = { - }
+      }
+    \@@_at_begin_document:n
+      { \ctex_patch_cmd:cnv { the #1 } {.} { g_@@_sep_ #1 _tl } }
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 %
 % \subsection{列表环境}
