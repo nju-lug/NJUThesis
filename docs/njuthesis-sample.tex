@@ -1,11 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% njuthesis - 南京大学论文模板
-% 本示例文件版本 v1.0.0  2022-07-03
-%
-% 关注项目地址以获取最新变化
+% njuthesis 示例模板 v1.0.0 2022-08-01
 % https://github.com/nju-lug/NJUThesis
-% https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis
-% https://ctan.org/pkg/njuthesis
 %
 % 贡献者
 % Yu XIONG @atxy-blip   Yichen ZHAO @FengChendian
@@ -14,7 +9,6 @@
 %
 % 许可证
 % LaTeX Project Public License（版本 1.3c 或更高）
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %---------------------------------------------------------------------
@@ -58,185 +52,9 @@
     % unicode-math   = false
   ]{njuthesis}
 
-\njusetup{
-    % 设置参数
-    %
-    % 一些提醒：
-    %   1. 千万不要有空行
-    %   2. 使用英文半角逗号(,)分隔选项
-    %   3. 等于号(=)两侧的空格会被忽略
-    %       3.1. 为避免歧义，请用花括号({})包裹内容
-    %   4. 本科生无需填写的项目已被特别标注
-    %
-    % info 类用于录入个人信息
-    %   带*号的为对应英文字段
-    info = {
-        title = {第一行标题\\第二行标题\\第三行标题},
-        % 中文题目
-        % 直接填写标题就是自动换行
-        % 可以使用换行控制符(\\)手动指定换行位置
-        %
-        title* = {My Title in English},
-        % 英文题目
-        %
-        author = {姓名},
-        % 作者姓名
-        %
-        author* = {Ming Xing},
-        % 作者英文姓名
-        % 一般使用拼音
-        %
-        keywords = {我,就是,充数的,关键词},
-        % 中文关键词列表
-        % 使用英文半角逗号(,)分隔
-        %
-        keywords* = {Dummy,Keywords,Here,{It Is}},
-        % 英文关键词
-        % 使用英文半角逗号(,)分隔
-        %
-        grade = {2018},
-        % 年级
-        %
-        student-id = {189114514},
-        % 学号
-        % 研究生请斟酌大小写字母格式
-        % 本模板并不会自动更正大小写
-        %
-        department = {化学化工学院},
-        department* = {School of Chemistry and Chemical Engineering},
-        % 院系
-        %
-        major = {化学},
-        major* = {Chemistry},
-        % 专业
-        %
-        supervisor = {导师姓名,教授},
-        supervisor*= {Professor My Supervisor},
-        % 导师全称
-        % 新版对选项进行了改动
-        % 使用英文半角逗号(,)分隔中文姓名和职称
-        %
-        % supervisor-ii = {第二导师姓名,副教授},
-        % supervisor-ii* = {Associate professor My Second Supervisor},
-        % 第二导师全称
-        % 如果确实没有第二导师，不填写即可
-        %
-        submit-date = {2021-08-10},
-        % 提交日期
-        % 格式为 yyyy-mm-dd
-        % 不填就是编译当天日期
-        %
-        %
-        % 以下均为研究生项
-        field = {物理化学},
-        field* = {Physical Chemistry},
-        % 研究领域
-        %
-        defend-date = {2021-09-19},
-        % 答辩日期
-        % 格式为 yyyy-mm-dd
-        % 不填就是编译当天日期
-        %
-        email = {xyz@smail.nju.edu.cn},
-        % 电子邮箱地址
-        % 只用于出版授权书
-        %
-        %
-        % 以下用于国家图书馆封面
-        confer-date = {2022-05-20},
-        % 学位授予日期
-        %
-        bottom-date = {2022-05-21},
-        % 封面底部日期
-        %
-        chairman = {某某某~教授},
-        % 答辩委员会主席
-        % 推荐使用波浪号(~)分隔姓名和职称
-        %
-        reviewer = {
-            某某某~教授,
-            某某某~教授
-        },
-        % 答辩委员会成员
-        % 一般为四名，使用英文半角逗号(,)分隔
-        %
-        clc = {0175.2},
-        % 中图分类号
-        %
-        secret-level = {限制},
-        % 密级
-        %
-        udc = {004.72},
-        % UDC分类号
-        %
-        supervisor-contact = {
-            南京大学~
-            江苏省南京市栖霞区仙林大道163号
-        }
-        % 导师联系方式
-    },
-    %
-    %
-    % bib 类用于参考文献设置
-    bib = {
-        % style = numeric|author-year,
-        % 参考文献样式
-        % 默认为顺序编码制（numeric）
-        % 可选著者-出版年制（author-year）
-        %
-        resource = {njuthesis-sample.bib},
-        % 参考文献数据源
-        % 需要带扩展名的完整文件名
-        % 可使用逗号分隔多个文件
-        % 此条等效于 \addbibresource 命令
-        %
-        % option = {
-            % doi    = false,
-            % isbn   = false,
-            % url    = false,
-            % eprint = false,
-            % 关闭部分无用文献信息
-            %
-            % refsection = chapter,
-            % 将参考文献表置于每章后
-            %
-            % gbnamefmt = lowercase
-            % 使用仅首字母大写的姓名
-        %   }
-        % 额外的 biblatex 宏包选项
-    },
-    %
-    %
-    % style 类用于外观样式设置
-    style = {
-        emblem-img = {nju-emblem},
-        % 外置校徽图片路径
-        % 建议使用矢量图
-        % 使用外置图片有助于减少编译时间
-        % 空置时会自动使用 njuisual 宏包绘制
-        %
-        name-img = {nju-name},
-        % 外置校名图片路径
-        % 说明同上
-        %
-        % abstract-title = strict|centered|natural,
-        % 摘要标题绘制方式，详见手册
-        % 默认为 strict
-        %
-        % abstract-in-toc = false,
-        % 是否在目录中显示摘要，默认显示
-        %
-        % toc-in-toc = false,
-        % 是否在目录中显示目录，默认显示
-        %
-        % header = {
-        %     {OR}{\thepage},{OL}{\rightmark},
-        %     {EL}{\thepage},{ER}{\leftmark}
-        %   },
-        % footer = {},
-        % 自定义页眉页脚设置
-    }
-}
+% 模板选项设置，包括个人信息、外观样式等
+% 较为冗长且一般不需要修改，放在单独的文件里
+\input{njuthesis-setup.def}
 
 % 自行载入所需宏包
 % \usepackage{subcaption} % 用于嵌套小幅图像，比 subfig 和 subfigure 好用
@@ -251,13 +69,12 @@
 
 % 在导言区随意定制所需命令
 % \DeclareMathOperator{\spn}{span}
-% \renewcommand{\vec}[1]{\symbf{#1}}
 % \NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
 
 % 一些灵活调整
 % \njusetname{notation}{术语表} % 更改符号表名称
 % \njusetname{tableofcontents}{目\qquad{}次} % 更改目录名称
-% \njusetlength{coveruline}{330pt} % 加长封面页下划线
+% \njusetlength{crulewd}{330pt} % 加长封面页下划线
 
 % 开始编写论文
 \begin{document}

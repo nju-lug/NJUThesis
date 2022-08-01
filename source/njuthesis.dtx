@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-07-16 00:20:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-01 16:20:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -211,7 +211,7 @@ To produce the documentation run the original source files ending with
     style      = style@base,
     rulecolor  = \color{njublue},
     language   = [LaTeX]TeX,
-    alsoletter = {*, -},
+    alsoletter = {*, -, .},
     texcsstyle = *\color{njuviolet},
     emphstyle  = [1]\color{nju-ai-orange},
     emphstyle  = [2]\color{nju-cs-green}
@@ -334,7 +334,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v0.21.0 \quad 2022-06-16}
+% \date{v1.0.0 \quad 2022-08-01}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -1217,18 +1217,63 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{个人信息}
 %
-% \begin{function}[added=2021-09-10]{\njusetup}
+% \begin{function}[added=2021-09-10,updated=2022-08-01]{\njusetup}
 %   \begin{syntax}
-%     \tn{njusetup} \Arg{键值列表}
+%     \tn{njusetup}\oarg{键路径}\marg{设置项}
 %   \end{syntax}
-% 是 \cls{njuthesis} 文档类的通用设置命令，用来设置各项功能。
-% \tn{njusetup} 的参数是一个使用英文半角逗号分隔的键值列表，
-% 通常形如 \meta{key}|=|\meta{value}。
+% \cls{njuthesis} 文档类的通用设置命令，提供自定义接口。
 % \end{function}
 %
-% 目前，\tn{njusetup} 仅包含用于设置个人信息的 |info| 类。
+% 根据可选参数填写方式不同，\cs{njusetup} 共有四种等效的使用方式，
+% 可以根据实际情况进行灵活选择。
+%
+% 在键路径留空时，为最基础的用法。此时设置项的参数是一个使用英文
+% 半角逗号分隔的键值列表，通常形如 \meta{key}|=|\meta{value}。
+%
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib}]
+%   \njusetup{
+%       info/title   = {奇文},
+%       info/author  = {佚名},
+%       bib/resource = {ref1.bib, ref1.bib}
+%     }
+% \end{latexexample}
+%
+% 以上为最基础的填写方法，可以分组为：
+%
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib}]
+%   \njusetup{
+%       info = {
+%           title    = {奇文},
+%           author   = {佚名}
+%         },
+%       bib = {
+%           resource = {ref1.bib, ref1.bib},
+%         }
+%     }
+% \end{latexexample}
+%
+% 在键路径填入模块（类）时，只能设定当前模块下的选项。此时参数是键值列表。
+%
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib}]
+%   \njusetup[info]{
+%       title    = {奇文},
+%       author   = {佚名}
+%     }
+%   \njusetup[bib]{
+%       resource = {ref1.bib, ref1.bib}
+%     }
+% \end{latexexample}
+%
+% 在键路径填入具体选项名称时，只能设定该选项的值。
+%
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib}]
+%   \njusetup[info/title]{奇文}
+%   \njusetup[info/author]{佚名}
+%   \njusetup[bib/resource]{ref1.bib, ref1.bib}
+% \end{latexexample}
+%
+% |info| 类用于设置个人信息。
 % 以下为全部的个人信息参数，其中带有星号的为对应的英文字段。
-% 请注意，部分参数已被弃置，列于后方。
 %
 % \begin{function}[updated=2022-01-14]{info/title,info/title*}
 %   \begin{syntax}
@@ -1267,10 +1312,10 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[updated=2021-10-01]{info/student-id}
 %   \begin{syntax}
-%     student-id = \Arg{学号}
+%     student-id = \Arg{学号或工号}
 %   \end{syntax}
-% 学号。南京大学本科生为9位数字学号，
-% 研究生为两位大写字母标识加上数字组成的学号。
+% 学号或工号。南京大学本科生为9位数字学号，
+% 研究生为两位大写字母标识加上数字组成的学号（2022级改为纯数字）。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/author,info/author*}
@@ -1378,69 +1423,80 @@ To produce the documentation run the original source files ending with
 % 本科生可以参考如下范例输入个人信息。注意不能有空行。
 %
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
-%   \njusetup {
-%       info = {
-%           title        = {第一行标题\\第二行标题},
-%           title*       = {My title in English},
-%           keywords     = {我,就是,充数的,关键词},
-%           keywords*    = {Dummy, Keywords, Here, {it is}},
-%           grade        = {2018},
-%           student-id   = {189114514},
-%           author       = {周煜华},
-%           author*      = {Zhou Yuhua},
-%           department   = {化学化工学院},
-%           department*  = {School of Chemistry and Chemical Engineering},
-%           major        = {化学},
-%           major*       = {Chemistry},
-%           supervisor   = {李成殿,教授},
-%           supervisor*  = {Professor Li Chengdian},
-%           submit-date  = {2021-09-12}
-%         }
-%     }
+%   \njusetup[info]{
+%       title        = {第一行标题\\第二行标题},
+%       title*       = {My title in English},
+%       keywords     = {我,就是,充数的,关键词},
+%       keywords*    = {Dummy, Keywords, Here, {it is}},
+%       grade        = {2018},
+%       student-id   = {189114514},
+%       author       = {周煜华},
+%       author*      = {Zhou Yuhua},
+%       department   = {化学化工学院},
+%       department*  = {School of Chemistry and Chemical Engineering},
+%       major        = {化学},
+%       major*       = {Chemistry},
+%       supervisor   = {李成殿,教授},
+%       supervisor*  = {Professor Li Chengdian},
+%       submit-date  = {2021-09-12}
+%   }
 % \end{latexexample}
 %
 % 研究生可以参考如下列表输入个人信息
 %
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
-%   \njusetup {
-%       info = {
-%           title        = {第一行标题\\第二行标题\\第三行标题},
-%           title*       = {My title in English},
-%           keywords     = {我,就是,充数的,关键词},
-%           keywords*    = {Dummy,Keywords,Here,{it is}},
-%           grade        = {2018},
-%           student-id   = {DZ18114514},
-%           author       = {周煜华},
-%           author*      = {Zhou Yuhua},
-%           department   = {化学化工学院},
-%           department*  = {School of Chemistry and Chemical Engineering},
-%           major        = {化学},
-%           major*       = {Chemistry},
-%           field        = {物理化学},
-%           field*       = {Physical Chemistry},
-%           supervisor   = {李成殿,教授},
-%           supervisor*  = {Professor Li Chengdian},
-%           submit-date  = {2021-09-12},
-%           defend-date  = {2022-01-15},
-%           email        = {git+nju-lug-email-3104-issue-@yaoge123.cn}
-%         }
-%     }
+%   \njusetup[info]{
+%       title        = {第一行标题\\第二行标题\\第三行标题},
+%       title*       = {My title in English},
+%       keywords     = {我,就是,充数的,关键词},
+%       keywords*    = {Dummy,Keywords,Here,{it is}},
+%       grade        = {2018},
+%       student-id   = {DZ18114514},
+%       author       = {周煜华},
+%       author*      = {Zhou Yuhua},
+%       department   = {化学化工学院},
+%       department*  = {School of Chemistry and Chemical Engineering},
+%       major        = {化学},
+%       major*       = {Chemistry},
+%       field        = {物理化学},
+%       field*       = {Physical Chemistry},
+%       supervisor   = {李成殿,教授},
+%       supervisor*  = {Professor Li Chengdian},
+%       submit-date  = {2021-09-12},
+%       defend-date  = {2022-01-15},
+%       email        = {git+nju-lug-email-3104-issue-@yaoge123.cn}
+%   }
 % \end{latexexample}
 %
 % 如果需要国家图书馆封面，还需要加入如下信息
 %
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
-%   \njusetup {
-%       info = {
-%           confer-date  = {2022-05-20},
-%           bottom-date  = {2022-05-21},
-%           chairman     = {张晓山~教授},
-%           reviewer     = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
-%           clc          = {0175.2},
-%           secret-level = {限制},
-%           udc          = {004.72},
-%           supervisor-contact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514}
-%         }
+%   \njusetup[info]{
+%       confer-date  = {2022-05-20},
+%       bottom-date  = {2022-05-21},
+%       chairman     = {张晓山~教授},
+%       reviewer     = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
+%       clc          = {0175.2},
+%       secret-level = {限制},
+%       udc          = {004.72},
+%       supervisor-contact = {拉太赫科学与技术学院 枝江市结丘路 19 号 114514}
+%   }
+% \end{latexexample}
+%
+% 博士后可以参考如下范例输入个人信息。
+%
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
+%   \njusetup[info]{
+%       title        = {第一行标题\\第二行标题},
+%       title*       = {My title in English},
+%       keywords     = {我,就是,充数的,关键词},
+%       keywords*    = {Dummy, Keywords, Here, {it is}},
+%       student-id   = {189114514},
+%       author       = {周煜华},
+%       department   = {化学化工学院},
+%       major        = {化学},
+%       supervisor   = {李成殿,教授},
+%       submit-date  = {2021-09-12}
 %     }
 % \end{latexexample}
 %
@@ -1483,15 +1539,10 @@ To produce the documentation run the original source files ending with
 %
 % 考虑到各个院系对于页眉内容的规定并不一致，本模板提供了若干个自定义选项。
 %
-% \begin{function}{style/header/format,style/footer/format,
-%   style/header,style/header*,style/footer,style/footer*}
+% \begin{function}{header/content,header/content*,footer/content,footer/content*}
 %   \begin{syntax}
-%     header/format = \Arg{格式}
-%     footer/format = \Arg{格式}
-%     header  = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
-%     header* = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
-%     footer  = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
-%     footer* = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
+%     content  = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
+%     content* = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
 %   \end{syntax}
 % 页眉页脚的格式与内容设置。带有星号的设置项供单面模式下使用。
 % \end{function}
@@ -1505,17 +1556,14 @@ To produce the documentation run the original source files ending with
 % 接下来展示了一个手动设置页眉内容的例子。这里我们清空了页脚，
 % 并将页眉格式设置成五号黑体，奇数页左侧为节名，右侧为页码，
 % 偶数页左侧为页码，右侧为章名。
-% \begin{latexexample}[moretexcs={\njusetup,\sffamily},emph={[2]style}]
-%   \njusetup {
-%       style = {
-%           header/format = \small \sffamily,
-%           header = {
-%               { OR } { \thepage }, { OL } { \rightmark },
-%               { EL } { \thepage }, { ER } { \leftmark  }
-%             },
-%           footer = {},
-%         }
-%     }
+% \begin{latexexample}[moretexcs={\njusetup,\sffamily,\njusetformat},
+%   emph={[2]header,footer}]
+%   \njusetup[header/content]{
+%       { OR } { \thepage }, { OL } { \rightmark },
+%       { EL } { \thepage }, { ER } { \leftmark  }
+%   },
+%   \njusetup[footer/content]{}
+%   \njusetformat{header}{\small\sffamily}
 % \end{latexexample}
 %
 %
@@ -1718,17 +1766,15 @@ To produce the documentation run the original source files ending with
 %
 % 默认的国标风格 \opt{GB} 相当于在导言区设置了
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]math}]
-%   \njusetup{
-%     math = {
-%       uppercase-greek    = italic,
-%       less-than-or-equal = slanted,
+%   \njusetup[math]{
 %       integral           = upright,
 %       integral-limits    = false,
-%       partial            = upright,
+%       less-than-or-equal = slanted,
 %       math-ellipsis      = centered,
+%       partial            = upright,
+%       real-part          = roman,
 %       vector             = boldfont,
-%       real-part          = roman
-%     }
+%       uppercase-greek    = italic
 %   }
 % \end{latexexample}
 %
@@ -1770,7 +1816,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-31]{math/partial}
 %   \begin{syntax}
-%     partial = <TeX|ISO|(GB)>
+%     partial = <upright|italic>
 %   \end{syntax}
 % 偏微分符号的正/斜体。
 % \end{function}
@@ -1904,16 +1950,14 @@ To produce the documentation run the original source files ending with
 %
 % \begin{latexexample}[moretexcs={\njusetup,\bfseries,\itshape,\mdwhtsquare},
 %   emph={[2]theorem}]
-%   \njusetup {
-%       theorem = {
-%           predefine   = true,
-%           style       = plain,
-%           header=font = \normalfont \bfseries,
-%           body-font   = \itshape,
-%           qed-symbol  = \ensuremath { \mdwhtsquare },
-%           counter     = chapter
-%         }
-%     }
+%   \njusetup[theorem]{
+%       predefine   = true,
+%       style       = plain,
+%       header=font = \normalfont \bfseries,
+%       body-font   = \itshape,
+%       qed-symbol  = \ensuremath { \mdwhtsquare },
+%       counter     = chapter
+%   }
 % \end{latexexample}
 %
 %
@@ -2055,19 +2099,17 @@ To produce the documentation run the original source files ending with
 % 其中 \opt{bib/option} 的内容旨在关闭部分不需显示的文献信息，
 % 并采取仅首字母大写的作者姓名格式，可根据需要使用。
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
-%   \njusetup {
-%       bib = {
-%           style    = author-year,
-%           resource = {njuthesis-sample.bib}，
-%           option   = {
-%               doi    = false,
-%               isbn   = false,
-%               url    = false,
-%               eprint = false,
-%               gbnamefmt = lowercase
-%             }
-%         }
-%     }
+%   \njusetup[bib]{
+%       style    = author-year,
+%       resource = {njuthesis-sample.bib}，
+%       option   = {
+%           doi       = false,
+%           isbn      = false,
+%           url       = false,
+%           eprint    = false,
+%           gbnamefmt = lowercase
+%       }
+%   }
 % \end{latexexample}
 %
 %
@@ -2082,9 +2124,7 @@ To produce the documentation run the original source files ending with
 % 假如需要在每章末尾附上单独的参考文献表，导言区添加以下设置，
 % 并在每章后使用 \cs{printbibliography} 即可。
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
-%   \njusetup {
-%       bib = { option = { refsection = chapter } }
-%     }
+%   \njusetup[bib/option]{refsection = chapter}
 % \end{latexexample}
 %
 % 如果开启了草稿模式，您可能会注意到部分条目存在超宽的问题。
@@ -2294,9 +2334,9 @@ To produce the documentation run the original source files ending with
 % \begin{latexexample}[moretexcs={\njusetup},
 %   emph={[2]tableofcontents,listoffigures,listoftables}]
 %   \njusetup{
-%     tableofcontents/toc-entry = true, % 仅作展示，无需手动启用
-%     listoffigures/toc-entry   = false,
-%     listoftables/toc-entry    = false
+%       tableofcontents/toc-entry = true, % 仅作展示，无需手动启用
+%       listoffigures/toc-entry   = false,
+%       listoftables/toc-entry    = false
 %   }
 % \end{latexexample}
 %
@@ -2413,7 +2453,7 @@ To produce the documentation run the original source files ending with
 % 譬如，将封面页填写个人信息的横线加长，示例如下：
 %
 % \begin{latexexample}[moretexcs={\njusetlength}]
-%   \njusetlength{coveruline}{330pt}
+%   \njusetlength{crulewd}{330pt}
 % \end{latexexample}
 %
 % \subsubsection{样式}
@@ -2882,10 +2922,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\l_@@_second_supv_bool}
+% \begin{variable}{\l_@@_second_supvbool}
 % 定义用于判断是否有第二导师的变量。
 %    \begin{macrocode}
-\bool_new:N \l_@@_second_supv_bool
+\bool_new:N \l_@@_second_supvbool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -3010,8 +3050,8 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_vskip:,\@@_hskip:}
 % 生成一个较小的 skip。
 %    \begin{macrocode}
-\cs_new:Nn \@@_vskip: { \skip_vertical:N   \c_@@_smallvskip_dim }
-\cs_new:Nn \@@_hskip: { \skip_horizontal:N \c_@@_smallhskip_dim }
+\cs_new:Nn \@@_vskip: { \skip_vertical:N   \c_@@_vsep_dim }
+\cs_new:Nn \@@_hskip: { \skip_horizontal:N \c_@@_hsep_dim }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3098,9 +3138,9 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_ulined_center_box:nn #1#2
   {
     \mode_leave_vertical:
-    \rule [ -0.55 ex ] { #1 } { 0.4 pt }
+    \rule [ \c_@@_ruledpi_dim ] { #1 } { \c_@@_rulehti_dim }
     \skip_horizontal:n { -#1 }
-    \hbox_to_wd:nn { #1 } { \hfil #2 \hfil }
+    \hbox_to_wd:nn { #1 } { \tex_hfil:D #2 \tex_hfil:D }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3124,11 +3164,11 @@ To produce the documentation run the original source files ending with
       {
         \dim_compare:nTF { \l_@@_tmpa_dim > #1 }
           {
-            \hfil \scalebox
+            \tex_hfil:D \scalebox
               { \dim_to_decimal_in_unit:nn { #1 } { \l_@@_tmpa_dim } }
-              [ 1.0 ] { #2 #3 } \hfil
+              [ 1.0 ] { #2 #3 } \tex_hfil:D
           }
-          { #2 \tl_map_inline:nn { #3 } { ##1 \hfil } \unskip }
+          { #2 \tl_map_inline:nn { #3 } { ##1 \tex_hfil:D } \unskip }
       }
   }
 \cs_generate_variant:Nn \@@_spread_box:nnn { nnV }
@@ -3142,7 +3182,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_center_box:nn #1#2
   {
     \mode_leave_vertical:
-    \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
+    \hbox_to_wd:nn {#1} { \tex_hfil:D #2 \tex_hfil:D }
   }
 \cs_generate_variant:Nn \@@_center_box:nn  { Vn }
 %    \end{macrocode}
@@ -3183,7 +3223,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_uline:n #1
   {
     \mode_leave_vertical:
-    \rule [ \c_@@_ulineshifti_dim ] { #1 } { \c_@@_ulinewidthi_dim }
+    \rule [ \c_@@_ruledpi_dim ] { #1 } { \c_@@_rulehti_dim }
     \skip_horizontal:n { -#1 }
   }
 %    \end{macrocode}
@@ -3198,9 +3238,9 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_uuline:n #1
   {
     \mode_leave_vertical:
-    \rule [ \c_@@_ulineshiftii_dim  ] { #1 } { \c_@@_ulinewidthii_dim }
+    \rule [ \c_@@_ruledpii_dim  ] { #1 } { \c_@@_rulehtii_dim }
     \skip_horizontal:n { -#1 }
-    \rule [ \c_@@_ulineshiftiii_dim ] { #1 } { \c_@@_ulinewidthii_dim }
+    \rule [ \c_@@_ruledpiii_dim ] { #1 } { \c_@@_rulehtii_dim }
     \skip_horizontal:n { -#1 }
   }
 %    \end{macrocode}
@@ -3404,6 +3444,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new:Npn \@@_breakpar_loop:n #1
   {
+    \dim_set:Nn \l_@@_tmpa_dim
+      { - \tex_prevdepth:D - \c_@@_ruledpi_dim - \c_@@_rulehti_dim }
+    \hbox_gset:Nn \l_@@_tmpc_box { }
     \@@_loop_until:nnn { \box_if_empty_p:N \l_@@_tmpb_box }
       {
         \box_gset_to_last:N \l_@@_tmpb_box
@@ -3415,8 +3458,7 @@ To produce the documentation run the original source files ending with
             \vbox_top:n
               {
                 \box_use_drop:N \l_@@_tmpb_box
-                \__kernel_kern:n { -\tex_prevdepth:D        }
-                \__kernel_kern:n { -\c_@@_ulineshifti_dim }
+                \__kernel_kern:n { \l_@@_tmpa_dim }
                 \tex_hrule:D
               }
             \tex_penalty:D
@@ -3454,7 +3496,6 @@ To produce the documentation run the original source files ending with
         \skip_set:Nn \tex_leftskip:D { .5 em plus 1 fill }
         \skip_set_eq:NN \tex_rightskip:D \tex_leftskip:D
         \g_@@_info_title_tl \tex_par:D
-        \hbox_gset:Nn \l_@@_tmpc_box { }
 %    \end{macrocode}
 % 使用循环寻找断行点，存入已被清空的 3 号盒子。
 %    \begin{macrocode}
@@ -3483,12 +3524,12 @@ To produce the documentation run the original source files ending with
     \@@_spread_box:nnV { #1 } { #3 } \c_@@_name_title_tl
     \mode_leave_vertical: \@@_hskip:
 %    \end{macrocode}
-% 这里需要存储 \tn{baselineskip} 的值，以使 \tn{parbox} 后行距正确。
+% 这里需要存储 \tn{prevdepth} 的值，以使 \tn{parbox} 后行距正确。
 % \footnote{\url{https://tex.stackexchange.com/q/34971/}}
 %    \begin{macrocode}
     \parbox [ t ] { #2 }
       {
-        \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
+        \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
         \c_@@_fmt_covertitle_tl \@@_uline_title:
         \dim_gset_eq:NN \l_@@_tmpa_dim \tex_prevdepth:D
       }
@@ -3640,7 +3681,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 使用循环寻找断行点，存入已被清空的 3 号盒子，同时统计行数。
 %    \begin{macrocode}
-        \hbox_gset:Nn \l_@@_tmpc_box { }
         \int_gzero:N \l_@@_tmpa_int
         \@@_breakpar_loop:n { \int_gincr:N \l_@@_tmpa_int }
       }
@@ -3953,6 +3993,7 @@ To produce the documentation run the original source files ending with
         stix, bonum, dejavu, pagella, schola, termes, xits, none
       }
       { \tl_set_eq:NN \g_@@_font_math_tl  \l_keys_choice_tl },
+    math-font         .initial:n  = xits,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4074,35 +4115,45 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{用户接口}
 %
-% \begin{macro}{bib,info,label-sep,style,theorem,
-%   tableofcontents}
-% 定义元（meta）键值对。为 v1.0 升级预留了新的接口。
+% \begin{macro}{abstract, bib, ext-image, footer, header,
+%   info, label-sep, listoffigures, listoftables,
+%   math, style, theorem, tableofcontents}
+% 定义模块名的元（meta）键值对。
 %    \begin{macrocode}
-\keys_define:nn { nju }
+\clist_map_inline:nn
   {
-    abstract  .meta:nn = { nju / abstract  } { #1 },
-    bib       .meta:nn = { nju / bib       } { #1 },
-    % font     .meta:nn = { nju / font     } { #1 },
-    % footer   .meta:nn = { nju / footer   } { #1 },
-    % footnote .meta:nn = { nju / footnote } { #1 },
-    % header   .meta:nn = { nju / header   } { #1 },
-    info      .meta:nn = { nju / info      } { #1 },
-    label-sep .meta:nn = { nju / label-sep } { #1 },
-    math      .meta:nn = { nju / math      } { #1 },
-    style     .meta:nn = { nju / style     } { #1 },
-    theorem   .meta:nn = { nju / theorem   } { #1 },
-    tableofcontents .meta:nn = { nju / tableofcontents } { #1 },
-    listoffigures   .meta:nn = { nju / listoffigures   } { #1 },
-    listoftables    .meta:nn = { nju / listoftables    } { #1 }
+    abstract, bib, ext-image, footer, header,
+    info, label-sep, listoffigures, listoftables,
+    math, style, theorem, tableofcontents
   }
+  { \keys_define:nn { nju } { #1 .meta:nn = { nju / #1 } {##1} } }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\njusetup}
 % \changes{v0.6}{2021/09/10}{改用键值对输入信息。}
-% 定义用于设置信息的命令。
+% \changes{v1.0}{2022/08/01}{增加输入键路径的可选参数。}
+% 定义设置接口。
+% \begin{arguments}
+%   \item 可选的键路径
+%   \item 设置项
+% \end{arguments}
+% \cls{njuthesis} 的键值对设置一共三层：最外层为指示名空间的
+% \opt{nju}，第二层为上方设定的模块名称，最内层为具体设置项。
+% 在路径留空时，本接口仅使用最外层名空间，向下兼容旧版设置；
+% 在路径填入模块名时，第二个参数为键值对类型，可以减少一层缩进；
+% 在路径填入完整设置项时，第二个参数为具体的值。
 %    \begin{macrocode}
-\NewDocumentCommand \njusetup { m } { \keys_set:nn { nju } { #1 } }
+\NewDocumentCommand \njusetup { o m }
+  {
+    \tl_if_novalue:nTF { #1 }
+      { \keys_set:nn { nju } { #2 } }
+      {
+        \tl_if_in:nnTF { #1 } { / }
+          { \keys_set:nn { nju } { #1 = {#2} } }
+          { \keys_set:nn { nju / #1 }   {#2}   }
+      }
+  }
 %    \end{macrocode}
 % \end{macro}
 % \tn{njusetup} 仅能在导言区使用。
@@ -4159,13 +4210,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_set_tokenlist:nnnnn #1#2#3#4#5
   {
-    \tl_if_novalue:nTF { #3 }
-      { \tl_clear:N \l_@@_tmpa_tl          }
-      { \tl_set:Nn  \l_@@_tmpa_tl { _ #3 } }
-    \bool_if:nTF       { #1 }
-      { \tl_set:Nn  \l_@@_tmpb_tl { _en  } }
-      { \tl_clear:N \l_@@_tmpb_tl          }
-    \tl_gset:cn { c_@@_ #5 _ #2 \l_@@_tmpa_tl \l_@@_tmpb_tl _tl } {#4}
+    \bool_if:nTF { #1 }
+      { \tl_set_eq:NN \l_@@_tmpb_tl \c_@@_name_suffix_en_tl }
+      { \tl_clear:N   \l_@@_tmpb_tl }
+    \tl_gset:cn { c_@@_ #5 _ #2 #3 \l_@@_tmpb_tl _tl } {#4}
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4571,12 +4619,12 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
-    \bool_set:Nn \l_@@_second_supv_bool
+    \bool_set:Nn \l_@@_second_supvbool
       { ! \clist_if_empty_p:N \g_@@_info_supvii_clist }
     \tl_set:Nx \g_@@_info_supvfull_tl
       {
         \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: }
-        \bool_if:NT \l_@@_second_supv_bool
+        \bool_if:NT \l_@@_second_supvbool
           {
             \@@_quad:
             \clist_use:Nn \g_@@_info_supvii_clist { \@@_hskip: }
@@ -4585,7 +4633,7 @@ To produce the documentation run the original source files ending with
     \tl_set:Nx \g_@@_info_supvfull_en_tl
       {
         \g_@@_info_supv_en_tl
-        \bool_if:NT \l_@@_second_supv_bool
+        \bool_if:NT \l_@@_second_supvbool
           { \@@_quad: \g_@@_info_supvii_en_tl }
       }
   }
@@ -5120,11 +5168,13 @@ To produce the documentation run the original source files ending with
     \NewDocumentCommand \fangsong { } { \CJKfamily { zhfs   } }
     \NewDocumentCommand \kaishu   { } { \CJKfamily { zhkai  } }
 %    \end{macrocode}
+% \begin{macro}{\bigger}
 % 重定义字号命令。
 %    \begin{macrocode}
-    \RenewDocumentCommand \large  { } { \zihao     { 4      } }
+    \NewDocumentCommand \bigger   { } { \ctex_zihao:n { 4   } }
   }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % 载入设置的字体。为了吸收导言区的设置，放在其后载入。
@@ -5156,48 +5206,52 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{页眉页脚}
 % \changes{v1.0}{2022/07/01}{删除 |header/format| 和 |footer/format|。}
+% \changes{v1.0}{2022/08/01}{页眉接口更名为 \opt{header} 类。}
+% \changes{v1.0}{2022/08/01}{页脚接口更名为 \opt{footer} 类。}
+%
 % 提供设置页眉页脚的用户接口。在 \cs{fancyhead} 的可选参数中，
 % \opt{E} 和 \opt{O} 分别表示在偶数页（even）和奇数页（odd），
 % 而 \opt{L}、\opt{R} 和 \opt{C} 则分别表示左（left）、右
 % （right）和中间（center）。按照通常的排版规则，在双面模式下，
 % 偶数页的中间页眉文字在左，奇数页则在右。单面模式下，左右页眉都要显示。
 %    \begin{macrocode}
-\keys_define:nn { nju / style }
+\keys_define:nn { nju / header }
   {
 %    \end{macrocode}
 %
-% \begin{macro}{style/header,style/header*}
+% \begin{macro}{header/content,header/content*}
 % \changes{v0.16}{2022/03/18}{可手动指定页眉内容。}
 % 页眉内容，分别对应双面模式和单面模式。
 % 为了便于指定复杂的页眉样式，这里用 |clist| 存储位置和内容信息。
 %    \begin{macrocode}
-    header     .clist_gset:N = \g_@@_header_twoside_clist,
-    header*    .clist_gset:N = \g_@@_header_oneside_clist,
-    header        .initial:n =
-      {
-        { EL } { \leftmark  }, { OR } { \rightmark }
-      },
-    header*       .initial:n =
-      {
-        {  L } { \leftmark  }, {  R } { \rightmark }
-      },
+    content  .clist_gset:N = \g_@@_header_twoside_clist,
+    content* .clist_gset:N = \g_@@_header_oneside_clist,
+    content     .initial:n =
+      { { EL } { \leftmark  }, { OR } { \rightmark } },
+    content*    .initial:n =
+      { {  L } { \leftmark  }, {  R } { \rightmark } }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{style/footer,style/footer*}
+%    \begin{macrocode}
+  }
+\keys_define:nn { nju / footer }
+  {
+%    \end{macrocode}
+% \begin{macro}{footer/content,footer/content*}
 % \changes{v0.16}{2022/03/18}{可手动指定页脚内容。}
 % 页脚内容，同页眉。
 %    \begin{macrocode}
-    footer     .clist_gset:N = \g_@@_footer_twoside_clist,
-    footer*    .clist_gset:N = \g_@@_footer_oneside_clist,
-    footer        .initial:n = { { C } { \thepage } },
-    footer*       .initial:n = { { C } { \thepage } }
+    content  .clist_gset:N = \g_@@_footer_twoside_clist,
+    content* .clist_gset:N = \g_@@_footer_oneside_clist,
+    content     .initial:n = { { C } { \thepage } },
+    content*    .initial:n = { { C } { \thepage } }
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\g_@@_header_clist,\g_@@_footer_clist}
-% 设置页眉页脚。
+% 存储页眉页脚内容。
 %    \begin{macrocode}
 \clist_new:N \g_@@_header_clist
 \clist_new:N \g_@@_footer_clist
@@ -5642,9 +5696,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     \pdfstringdefDisableCommands
       {
-        \cs_set_eq:NN \\     \prg_do_nothing:
-        \cs_set_eq:NN \quad  \prg_do_nothing:
-        \cs_set_eq:NN \qquad \prg_do_nothing:
+        \cs_set_eq:NN \\      \prg_do_nothing:
+        \cs_set_eq:NN \quad   \prg_do_nothing:
+        \cs_set_eq:NN \qquad  \prg_do_nothing:
+        \cs_set_eq:NN \bigger \prg_do_nothing:
       }
     \hypersetup
       {
@@ -5774,7 +5829,7 @@ To produce the documentation run the original source files ending with
 \cs_set:Npn \@makefntext #1
   {
     \mode_leave_vertical:
-    \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
+    \hbox_to_wd:nn { 1.5 em } { \@thefnmark \tex_hfil:D }
     #1
   }
 %    \end{macrocode}
@@ -5980,9 +6035,9 @@ To produce the documentation run the original source files ending with
 % 积分号样式，直立或倾斜。
 %    \begin{macrocode}
     integral                      .choice:,
-    integral / upright              .code:n =
+    integral / upright              .code:n  =
       { \bool_set_true:N  \g_@@_opt_math_int_bool },
-    integral / slanted              .code:n =
+    integral / slanted              .code:n  =
       { \bool_set_false:N \g_@@_opt_math_int_bool },
 %    \end{macrocode}
 % \end{macro}
@@ -5992,9 +6047,9 @@ To produce the documentation run the original source files ending with
 % 两个选项分别相当于 \tn{removenolimits} 和 \tn{addnolimits}。
 %    \begin{macrocode}
     integral-limits               .choice:,
-    integral-limits / true          .code:n =
+    integral-limits / true          .code:n  =
       { \tl_clear:N   \l__um_nolimits_tl },
-    integral-limits / false         .code:n =
+    integral-limits / false         .code:n  =
       { \tl_set_eq:NN \l__um_nolimits_tl \c_@@_name_integral_tl },
 %    \end{macrocode}
 % \end{macro}
@@ -6003,9 +6058,9 @@ To produce the documentation run the original source files ending with
 % 小于等于号和大于等于号的横线样式，倾斜或水平。
 %    \begin{macrocode}
     less-than-or-equal            .choice:,
-    less-than-or-equal / slanted    .code:n =
+    less-than-or-equal / slanted    .code:n  =
       { \bool_set_true:N  \g_@@_opt_math_leq_bool },
-    less-than-or-equal / horizontal .code:n =
+    less-than-or-equal / horizontal .code:n  =
       { \bool_set_false:N \g_@@_opt_math_leq_bool },
 %    \end{macrocode}
 % \end{macro}
@@ -6014,12 +6069,12 @@ To produce the documentation run the original source files ending with
 % 省略号的样式，居中或底部。
 %    \begin{macrocode}
     math-ellipsis                 .choice:,
-    math-ellipsis / centered        .code:n =
+    math-ellipsis / centered        .code:n  =
       {
         \DeclareRobustCommand \mathellipsis
           { \mathinner { \unicodecdots    } }
       },
-    math-ellipsis / lower           .code:n =
+    math-ellipsis / lower           .code:n  =
       {
         \DeclareRobustCommand \mathellipsis
           { \mathinner { \unicodeellipsis } }
@@ -6030,11 +6085,8 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math/partial}
 % 偏微分号样式，正体或斜体。
 %    \begin{macrocode}
-    partial                       .choice:,
-    partial / upright               .code:n =
-      { \@@_um_setup:n { partial = upright } },
-    partial / italic                .code:n =
-      { \@@_um_setup:n { partial = italic  } },
+    partial                      .choices:nn =
+      { upright, italic } { \@@_um_setup:n { partial = #1 } },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6042,9 +6094,9 @@ To produce the documentation run the original source files ending with
 % 实部和虚部符号的样式，罗马体或花体。
 %    \begin{macrocode}
     real-part                     .choice:,
-    real-part / roman               .code:n =
+    real-part / roman               .code:n  =
       { \bool_set_true:N  \g_@@_opt_math_re_bool },
-    real-part / fraktur             .code:n =
+    real-part / fraktur             .code:n  =
       { \bool_set_false:N \g_@@_opt_math_re_bool },
 %    \end{macrocode}
 % \end{macro}
@@ -6053,9 +6105,9 @@ To produce the documentation run the original source files ending with
 % 向量符号样式，粗斜体或箭头。
 %    \begin{macrocode}
     vector                        .choice:,
-    vector / boldfont               .code:n =
+    vector / boldfont               .code:n  =
       { \bool_set_true:N  \g_@@_opt_math_vec_bool },
-    vector / arrow             .code:n =
+    vector / arrow                  .code:n  =
       { \bool_set_false:N \g_@@_opt_math_vec_bool },
 %    \end{macrocode}
 % \end{macro}
@@ -6064,9 +6116,9 @@ To produce the documentation run the original source files ending with
   % 大写希腊字母的样式，正体或斜体。
   %    \begin{macrocode}
       uppercase-greek               .choice:,
-      uppercase-greek / upright       .code:n =
+      uppercase-greek / upright       .code:n  =
         { \@@_um_setup:n { math-style = ISO } },
-      uppercase-greek / italic        .code:n =
+      uppercase-greek / italic        .code:n  =
         { \@@_um_setup:n { math-style = TeX } },
   %    \end{macrocode}
   % \end{macro}
@@ -6075,7 +6127,7 @@ To produce the documentation run the original source files ending with
 % 整体样式。
 %    \begin{macrocode}
     style                      .choice:,
-    style / TeX                  .code:n =
+    style / TeX                  .code:n  =
       {
         \keys_set:nn { nju / math }
           {
@@ -6091,7 +6143,7 @@ To produce the documentation run the original source files ending with
         \@@_um_setup:n { bold-style = TeX }
         \@@_loadfont_math:
       },
-    style / ISO                  .code:n =
+    style / ISO                  .code:n  =
       {
         \keys_set:nn { nju / math }
           {
@@ -6107,7 +6159,7 @@ To produce the documentation run the original source files ending with
         \@@_um_setup:n { bold-style = ISO }
         \@@_loadfont_math:
       },
-    style / GB                   .code:n =
+    style / GB                   .code:n  =
       {
         \keys_set:nn { nju / math }
           {
@@ -6168,7 +6220,7 @@ To produce the documentation run the original source files ending with
 %<*def-u>
 \@@_declare_element:nn { u / cover / emblem-img }
   {
-    content     = \@@_emblem:N \c_@@_emblemwidth_dim,
+    content     = \@@_emblem:N \c_@@_emblemwd_dim,
     bottom-skip = 1 cm,
     align       = l
   }
@@ -6180,7 +6232,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / name-img }
   {
-    content     = \@@_name:N \c_@@_namewidth_dim,
+    content     = \@@_name:N \c_@@_namewd_dim,
     bottom-skip = 1 cm
   }
 %    \end{macrocode}
@@ -6206,9 +6258,9 @@ To produce the documentation run the original source files ending with
   {
     content  =
       \@@_u_cover_info:NNNN
-        \c_@@_coverlabel_dim
-        \c_@@_coveruline_dim
-        \c_@@_smallhskip_dim
+        \c_@@_clabelwd_dim
+        \c_@@_crulewd_dim
+        \c_@@_hsep_dim
         \c_@@_fmt_coverlabel_tl,
     format   = \zihao { 3 }
   }
@@ -6226,7 +6278,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_u_cover_info:NNNN #1#2#3#4
   {
-    \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
+    \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
 %    \end{macrocode}
 % 短内容盒子的长度值是通过计算得到的。|dim| 型变量的乘除需要采取
 % \cs{dim_ratio:nn} 提供的形式。
@@ -6238,7 +6290,7 @@ To produce the documentation run the original source files ending with
     \@@_cover_entry:nnNNN { grade } { id } #1 \l_@@_tmpb_dim #4
     \@@_cover_entry:nNNN { author } #1 #2 #4
     \@@_cover_entry_supv:nNNN { supv } #1 \l_@@_tmpb_dim #4
-    \bool_if:NT \l_@@_second_supv_bool
+    \bool_if:NT \l_@@_second_supvbool
       { \@@_cover_entry_supv:nNNN { supvii } #1 \l_@@_tmpb_dim #4 }
     \@@_cover_entry:nNNN { submitdate } #1 #2 #4
   }
@@ -6252,7 +6304,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { u / decl / orig / emblem }
   {
-    content     = \@@_emblem:N \c_@@_emblemwidthi_dim,
+    content     = \@@_emblem:N \c_@@_emblemwdi_dim,
     bottom-skip = 30 pt
   }
 %    \end{macrocode}
@@ -6320,7 +6372,7 @@ To produce the documentation run the original source files ending with
 %<*def-g>
 \@@_declare_element:nn { g / cover-front / emblem-img }
   {
-    content     = \@@_emblem:N \c_@@_emblemwidthi_dim,
+    content     = \@@_emblem:N \c_@@_emblemwdi_dim,
     bottom-skip = 1.5 cm
   }
 %    \end{macrocode}
@@ -6331,7 +6383,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-front / name-img }
   {
-    content     = \@@_name:N \c_@@_namewidth_dim,
+    content     = \@@_name:N \c_@@_namewd_dim,
     bottom-skip = 100 pt
   }
 %    \end{macrocode}
@@ -6369,9 +6421,9 @@ To produce the documentation run the original source files ending with
   {
     content     =
       \@@_g_cover_info:NNNN
-        \c_@@_coverlabel_dim
-        \c_@@_coveruline_dim
-        \c_@@_smallhskip_dim
+        \c_@@_clabelwd_dim
+        \c_@@_crulewd_dim
+        \c_@@_hsep_dim
         \c_@@_fmt_coverlabel_tl,
     bottom-skip = 0 pt plus 1.5 fil
   }
@@ -6397,7 +6449,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_g_cover_info:NNNN #1#2#3#4
   {
-    \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
+    \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
     \@@_cover_entry_title:NNN  #1 #2 #4
     \clist_map_inline:nn { author, major, field, supvfull }
       { \@@_cover_entry:nNNN { ##1 } #1 #2 #4 }
@@ -6414,7 +6466,7 @@ To produce the documentation run the original source files ending with
   {
     content =
       \@@_g_cover_back:NN
-        \c_@@_coverlabel_dim
+        \c_@@_clabelwd_dim
         \c_@@_fmt_coverlabel_tl,
     align   = l
   }
@@ -6430,7 +6482,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_g_cover_back:NN #1#2
   {
-    \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
+    \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
     \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_id_tl
       \c_@@_name_colon_tl \g_@@_info_id_tl \tex_par:D
     \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_defenddate_tl
@@ -6496,7 +6548,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-en / emblem-img }
   {
-    content     = \@@_emblem:N \c_@@_emblemwidthii_dim,
+    content     = \@@_emblem:N \c_@@_emblemwdii_dim,
     bottom-skip = 1.5 cm
   }
 %    \end{macrocode}
@@ -6534,7 +6586,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover-nl / name }
   {
     content     =
-      \@@_spread_box:nnV { 6 em } { } \c_@@_name_title_b_tl,
+      \@@_spread_box:nnV { 6 em } { } \c_@@_name_titleb_tl,
     format      = \zihao { -0 },
     bottom-skip = 0 pt plus 1 fil
   }
@@ -6634,7 +6686,7 @@ To produce the documentation run the original source files ending with
       }
       { 1 em plus 1 fill }
     \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { degree      } { degree     } { }
-    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { major_b     } { major      } { } \\
+    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { majorb     } { major      } { } \\
     \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { submitdate  } { submitdate } { }
     \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { defenddate  } { defenddate } { } \\
     \@@_uline_entry:Nnnn   \l_@@_tmpa_dim { confer      } { confer     } { }
@@ -6786,12 +6838,12 @@ To produce the documentation run the original source files ending with
         cell{1}{2} = {c=5}{m}, cell{3}{2} = {c=5}{m},
         cell{4}{2} = {c=5}{m}, cell{5}{2} = {c=5}{m}
       }
-      \c_@@_name_title_c_tl  & \g_@@_info_title_tl \\
-      \c_@@_name_id_a_tl     & \g_@@_info_id_tl    &
-      \c_@@_name_dept_a_tl   & \g_@@_info_dept_tl  &
+      \c_@@_name_titlec_tl  & \g_@@_info_title_tl \\
+      \c_@@_name_ida_tl     & \g_@@_info_id_tl    &
+      \c_@@_name_depta_tl   & \g_@@_info_dept_tl  &
       \c_@@_name_year_tl     &
         \tl_range:Nnn \g_@@_info_submitdate_raw_tl {1} {4} \\
-      \c_@@_name_degree_a_tl &
+      \c_@@_name_degreea_tl &
         {
           \@@_degree_checkbox:n { 2 } 学术学位硕士 \qquad{}
           \@@_degree_checkbox:n { 4 } 专业学位硕士 \\
@@ -6799,9 +6851,9 @@ To produce the documentation run the original source files ending with
           \@@_degree_checkbox:n { 6 } 专业学位博士
         } \\
       \c_@@_name_email_tl    & \g_@@_info_email_tl \\
-      \c_@@_name_supv_b_tl   &
+      \c_@@_name_supvb_tl   &
         \clist_item:Nn \g_@@_info_supv_clist {1}
-        \bool_if:NT \l_@@_second_supv_bool
+        \bool_if:NT \l_@@_second_supvbool
           {
             \@@_quad:
             \clist_item:Nn \g_@@_info_supvii_clist {1}
@@ -6817,7 +6869,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_g_decl_auth_sign:
   {
     \c_@@_name_authsign_tl \tex_par:D
-    \c_@@_name_blankdate_a_tl
+    \c_@@_name_blankdatea_tl
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6843,7 +6895,7 @@ To produce the documentation run the original source files ending with
 %<*def-p>
 \@@_declare_element:nn { p / cover / name-img }
   {
-    content     = \@@_name:N \c_@@_namewidth_dim,
+    content     = \@@_name:N \c_@@_namewd_dim,
     bottom-skip = 40 pt
   }
 %    \end{macrocode}
@@ -6883,7 +6935,7 @@ To produce the documentation run the original source files ending with
   {
     content     =
       \@@_p_cover_info:NN
-        \c_@@_coverlabel_dim
+        \c_@@_clabelwd_dim
         \c_@@_fmt_coverlabel_tl,
     format      = \zihao { -4 },
     bottom-skip = 0 pt
@@ -6910,7 +6962,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 用循环输出各字段。
 %    \begin{macrocode}
-    \dim_set_eq:NN \baselineskip \c_@@_coverlineskip_dim
+    \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
     \clist_map_inline:Nn \l_@@_tmp_clist
       {
         \@@_spread_box:nnx { #1 } { #2 } { \@@_name:n { ##1 } }
@@ -6990,7 +7042,7 @@ To produce the documentation run the original source files ending with
   {
     content     =
       \@@_p_decl_sign:nn { authsign   } { date }
-      \@@_p_decl_sign:nn { authsign_a } { date },
+      \@@_p_decl_sign:nn { authsigna } { date },
     bottom-skip = 0 pt plus 1 fill
   }
 %    \end{macrocode}
@@ -7223,38 +7275,36 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{用户接口}
 %
-% \begin{macro}{\@@_new_img_cmd:nn,\@@_new_img_cmd:nV}
+% \begin{macro}{\@@_new_img_cmd:nn}
 % 用于定义插入图片命令的辅助函数。
 %    \begin{macrocode}
 %<*class>
 \cs_new_protected:Npn \@@_new_img_cmd:nn #1#2
   {
-    \exp_args:Nc \NewDocumentCommand { #1 } { o m m }
+    \exp_args:Nc \NewDocumentCommand { nju #1 } { o m m }
       { \includegraphics [ width = ##2, height = ##3 ] { #2 } }
   }
-\cs_generate_variant:Nn \@@_new_img_cmd:nn { nV }
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v1.0}{2022/08/01}{外置图片接口更名为 \opt{ext-image} 类。}
 %    \begin{macrocode}
-\keys_define:nn { nju / style }
+\keys_define:nn { nju / ext-image }
   {
 %    \end{macrocode}
-% \begin{macro}{style/emblem-img,\njuemblem}
+% \begin{macro}{ext-image/emblem,\njuemblem}
 % \changes{v0.14}{2021/12/23}{提供选择外置校徽图片的接口。}
 % 校徽图片路径。
 %    \begin{macrocode}
-    emblem-img .code:n =
-      { \@@_new_img_cmd:nV { njuemblem } \l_keys_value_tl },
+    emblem .code:n = { \@@_new_img_cmd:nn { emblem } {#1} },
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{style/name-img,\njuname}
+% \begin{macro}{ext-image/name,\njuname}
 % \changes{v0.14}{2021/12/23}{提供选择外置校名图片的接口。}
 % 校名图片路径。
 %    \begin{macrocode}
-    name-img   .code:n =
-      { \@@_new_img_cmd:nV { njuname   } \l_keys_value_tl }
+    name   .code:n = { \@@_new_img_cmd:nn { name   } {#1} }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7417,7 +7467,7 @@ To produce the documentation run the original source files ending with
 %<*(def-g|def-p)>
 \@@_declare_element:nn { abstract / mark }
   {
-    content     = \c_@@_name_abstract_b_tl,
+    content     = \c_@@_name_abstractb_tl,
     format      = \sffamily \zihao { -3 },
     bottom-skip = 1 cm
   }
@@ -7429,7 +7479,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { abstract / en / mark }
   {
-    content     = \c_@@_name_abstract_b_en_tl,
+    content     = \c_@@_name_abstractb_en_tl,
     format      = \sffamily \zihao { -3 },
     bottom-skip = 1 cm
   }
@@ -7465,7 +7515,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 由于作者姓名使用的字样发生了变动，这里进行替换以便嵌入循环。
 %    \begin{macrocode}
-    \tl_set_eq:NN \c_@@_name_author_tl \c_@@_name_author_a_tl
+    \tl_set_eq:NN \c_@@_name_author_tl \c_@@_name_authora_tl
 %    \end{macrocode}
 % 使用循环输出院系、专业、作者、导师信息。
 %    \begin{macrocode}
@@ -7488,23 +7538,23 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 %<*def-g>
 \cs_new_protected:Npn \@@_abs_info_g:
-  { \@@_abs_info_g:n    { \c_@@_name_colon_tl    } }
+  { \@@_abs_info_g:N    \c_@@_name_colon_tl    }
 \cs_new_protected:Npn \@@_abs_info_en_g:
-  { \@@_abs_info_en_g:n { \c_@@_name_colon_en_tl } }
+  { \@@_abs_info_en_g:N \c_@@_name_colon_en_tl }
 %    \end{macrocode}
 % \end{macro}
 %
 %
-% \begin{macro}{\@@_abs_info_g:n}
+% \begin{macro}{\@@_abs_info_g:N}
 % 绘制研究生中文摘要信息栏。
 % \begin{arguments}
 %   \item 分隔符
 % \end{arguments}
 % 研究生中文摘要页包括下划线以及若干特殊的对齐方式，实现方式较为繁琐。使用 \cs{@@_full_uline:NV} 确定内容宽度后，调用 \cs{@@_uline:n} 或 \cs{@@_ulined_center_box:nn} 命令以绘制横穿页面的下划线。前两行为标题。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_info_g:n #1
+\cs_new_protected:Npn \@@_abs_info_g:N #1
   {
-    \@@_uline_list:xnn { \c_@@_name_title_a_tl #1 }
+    \@@_uline_list:xnn { \c_@@_name_titlea_tl #1 }
       { \g_@@_info_title_tl } { \g_@@_abs_title_left_skip }
 %    \end{macrocode}
 % 专业、年级、姓名。
@@ -7512,9 +7562,9 @@ To produce the documentation run the original source files ending with
     \@@_full_uline:NV \l_@@_tmpa_dim
       {
         \@@_ulined_center_box:nn { 11 em } { \g_@@_info_major_tl }
-        \c_@@_name_major_a_tl
+        \c_@@_name_majora_tl
         \@@_ulined_center_box:nn { 4  em } { \g_@@_info_grade_tl }
-        \c_@@_name_grade_tl \c_@@_name_author_a_tl #1
+        \c_@@_name_grade_tl \c_@@_name_authora_tl #1
       }
     \@@_ulined_center_box:nn { \l_@@_tmpa_dim }
       { \g_@@_info_author_tl } \\
@@ -7522,21 +7572,21 @@ To produce the documentation run the original source files ending with
 % 导师姓名、职称。
 %    \begin{macrocode}
     \@@_full_uline:NV \l_@@_tmpa_dim
-      { \c_@@_name_supv_a_tl #1 }
+      { \c_@@_name_supva_tl #1 }
     \@@_ulined_center_box:nn { \l_@@_tmpa_dim }
       { \g_@@_info_supvfull_tl }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_abs_info_en_g:n}
+% \begin{macro}{\@@_abs_info_en_g:N}
 % \changes{v1.0}{2022/07/01}{移除研究生英文摘要的下划线。}
 % 绘制研究生英文摘要信息栏。
 % \begin{arguments}
 %   \item 分隔符
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_info_en_g:n #1
+\cs_new_protected:Npn \@@_abs_info_en_g:N #1
   {
     \clist_map_inline:nn { title, major, author, supvfull }
       { \@@_name:n { ##1 _en } #1 \@@_info:n { ##1 _en } \\ }
@@ -7669,7 +7719,7 @@ To produce the documentation run the original source files ending with
   {
     \cleardoublepage
     \thispagestyle { plain }
-    \@@_abs_bookmark:Vn \c_@@_name_abstract_a_tl { abstract }
+    \@@_abs_bookmark:Vn \c_@@_name_abstracta_tl { abstract }
     \@@_make_abstract:
     \group_begin: \kaishu \zihao { -4 } #1
   }
@@ -7684,7 +7734,7 @@ To produce the documentation run the original source files ending with
   {
     \cleardoublepage
     \thispagestyle { plain }
-    \@@_abs_bookmark:Vn \c_@@_name_abstract_a_en_tl { abstract-en }
+    \@@_abs_bookmark:Vn \c_@@_name_abstracta_en_tl { abstract-en }
     \@@_make_abstract_en:
     \group_begin: \zihao { -4 } #1
   }
@@ -7762,7 +7812,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_notation_label:n}
 % 左对齐的标签格式，用于符号表。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_notation_label:n #1 { #1 \hfil }
+\cs_new_protected:Npn \@@_notation_label:n #1 { #1 \tex_hfil:D }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -7854,32 +7904,32 @@ To produce the documentation run the original source files ending with
   {
     { acknowledgement } { 致 \qquad{} 谢                     },
 %<def-g>    { apply           } {（申请 \g_@@_info_degree_tl 学位）},
-%<def-g>    { authdecl        } { 学位论文出版授权书                 },
-%<def-p>    { authdecl        } { 研究报告使用授权书                 },
+%<def-g>    { auth decl       } { 学位论文出版授权书                 },
+%<def-p>    { auth decl       } { 研究报告使用授权书                 },
 %<def-p>    { author          } { 作者                               },
 %    \end{macrocode}
 % 用于摘要的作者名称字样
 %    \begin{macrocode}
-%<def-u>    { author_a        } { 本科生姓名                         },
-%<def-g>    { author_a        } { \g_@@_info_type_tl 生姓名        },
-%<def-g>    { authsign        } { 作者签名：\njuline{\hspace{6em}}   },
-%<def-p>    { authsign        } { 本人签名                           },
-%<def-p>    { authsign_a      } { 导师签名                           },
+%<def-u>    { author        a } { 本科生姓名                         },
+%<def-g>    { author        a } { \g_@@_info_type_tl 生姓名        },
+%<def-g>    { auth sign       } { 作者签名：\njuline{\hspace{6em}}   },
+%<def-p>    { auth sign       } { 本人签名                           },
+%<def-p>    { auth sign     a } { 导师签名                           },
 %<def-g>    { chairman        } { 答辩委员会主席：                   },
 %<def-g>    { clc             } { 分类号                             },
 %<def-g>    { confer          } { 学位授予单位和日期                 },
     { date            } { 日期                               },
-%<def-g>    { defenddate      } { 论文答辩日期                       },
+%<def-g>    { defend date     } { 论文答辩日期                       },
 %<def-g>    { degree          } { 申请学位级别                       },
 %    \end{macrocode}
 % 用于出版授权书的学位名称字样
 %    \begin{macrocode}
-%<def-g>    { degree_a        } { 论文级别                           },
+%<def-g>    { degree        a } { 论文级别                           },
 %<def-p>    { dept            } { 系别                               },
 %    \end{macrocode}
 % 用于出版授权书的院系名称字样
 %    \begin{macrocode}
-%<def-g>    { dept_a          } { 所在院系                           },
+%<def-g>    { dept          a } { 所在院系                           },
 %<def-g>    { email           } { 作者 Email                         },
 %<def-g>    { field           } { 研究方向                           },
 %<def-u>    { grade           } { 年级                               },
@@ -7889,71 +7939,71 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 用于出版授权书的学号名称字样
 %    \begin{macrocode}
-%<def-g>    { id_a            } { 研究生学号                         },
+%<def-g>    { id            a } { 研究生学号                         },
     { listoffigures   } { 插图目录                           },
     { listoftables    } { 表格目录                           },
 %<def-p>    { major           } { 学科专业                           },
 %    \end{macrocode}
 % 用于摘要的专业名称字样
 %    \begin{macrocode}
-%<def-g>    { major_a         } { 专业                               },
+%<def-g>    { major         a } { 专业                               },
 %    \end{macrocode}
 % 用于国家图书馆封面的专业名称字样
 %    \begin{macrocode}
-%<def-g>    { major_b         } { 专业名称                           },
+%<def-g>    { major         b } { 专业名称                           },
     { notation        } { 符号表                             },
-%<def-u>    { origdecl        }
+%<def-u>    { orig decl       }
 %<def-u>      { 南京大学本科毕业论文（设计） \\ 诚信承诺书           },
-%<def-g>    { origdecl        } { 南京大学学位论文原创性声明         },
-%<def-p>    { origdecl        } { 研究报告原创性声明                 },
-%<def-u>    { origsign        } { 作者签名                           },
-%<def-g>    { origsign        } { 研究生签名                         },
-%<def-p>    { origsign        } { 研究报告作者签名                   },
-    { paperlist       } { 发表文章目录                       },
-    { pdfcreator      } { LaTeX~ with~ njuthesis~ class      },
+%<def-g>    { orig decl       } { 南京大学学位论文原创性声明         },
+%<def-p>    { orig decl       } { 研究报告原创性声明                 },
+%<def-u>    { orig sign       } { 作者签名                           },
+%<def-g>    { orig sign       } { 研究生签名                         },
+%<def-p>    { orig sign       } { 研究报告作者签名                   },
+    { paper list      } { 发表文章目录                       },
+    { pdf creator     } { LaTeX~ with~ njuthesis~ class      },
     { preface         } { 前 \qquad{} 言                     },
 %<def-p>    { report          } { 博士后研究工作报告                 },
 %<def-g>    { reviewer        } { 评阅人：                           },
-%<def-g>    { secretlv        } { 密级                               },
-%<def-g>    { secretstatus    } { 论文涉密情况：                     },
-%<def-g>    { secretfree      } { 不保密                             },
-%<def-g>    { secretdate      }
-%<def-g>      { 保密，保密期（ \c_@@_name_blankdate_a_tl 至
-%<def-g>                       \c_@@_name_blankdate_a_tl ）        },
+%<def-g>    { secret lv       } { 密级                               },
+%<def-g>    { secret status   } { 论文涉密情况：                     },
+%<def-g>    { secret free     } { 不保密                             },
+%<def-g>    { secret date     }
+%<def-g>      { 保密，保密期（ \c_@@_name_blankdatea_tl 至
+%<def-g>                       \c_@@_name_blankdatea_tl ）        },
 %<def-g>    { sign            } { （签字）                           },
-%<def-u>    { submitdate      } { 提交日期                           },
-%<def-g>    { submitdate      } { 论文提交日期                       },
-%<def-p>    { submitdate      } { 完成日期                           },
+%<def-u>    { submit date     } { 提交日期                           },
+%<def-g>    { submit date     } { 论文提交日期                       },
+%<def-p>    { submit date     } { 完成日期                           },
 %<def-g>    { subtitle        } { （题名和副题名）                   },
 %<def-u>    { supv            } { 指导教师                           },
 %<def-g>    { supv            } { 导师                               },
-%<def-p>    { supvfull        } { 合作导师                           },
+%<def-p>    { supv full       } { 合作导师                           },
 %    \end{macrocode}
 % 用于摘要的导师名称字样
 %    \begin{macrocode}
-%<def-g>    { supv_a          } { 指导教师（姓名、职称）             },
+%<def-g>    { supv          a } { 指导教师（姓名、职称）             },
 %    \end{macrocode}
 % 用于出版授权书的导师名称字样
 %    \begin{macrocode}
-%<def-g>    { supv_b          } { 导师姓名                           },
-%<def-g>    { supvinfo        }
+%<def-g>    { supv          b } { 导师姓名                           },
+%<def-g>    { supv info       }
 %<def-g>      { 指导教师姓名、职务、职称、学位、单位名称及地址       },
-    { supvii          } { 第二导师                           },
-    { supvtitle       } { 职称                               },
+    { supv ii         } { 第二导师                           },
+    { supv title      } { 职称                               },
     { tableofcontents } { 目 \qquad{} 录                     },
 %<def-p>    { title           } { 报告题目                           },
 %    \end{macrocode}
 % 用于摘要的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title_a         } { 毕业论文题目                       },
+%<def-g>    { title         a } { 毕业论文题目                       },
 %    \end{macrocode}
 % 用于国家图书馆封面的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title_b         } { 学位论文                           },
+%<def-g>    { title         b } { 学位论文                           },
 %    \end{macrocode}
 % 用于出版授权书的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title_c         } { 论文题名                           },
+%<def-g>    { title         c } { 论文题名                           },
 %<def-g>    { udc             } { U D C                              },
 %<def-g>    { year            } { 学位年度                           }
   }
@@ -7968,11 +8018,11 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 用于书签的摘要名称字样
 %    \begin{macrocode}
-    { abstract_a    } { 中文摘要        } { ABSTRACT              },
+    { abstract    a } { 中文摘要        } { ABSTRACT              },
 %    \end{macrocode}
 % 用于小标题的摘要名称字样
 %    \begin{macrocode}
-    { abstract_b    } { 摘\qquad{}要    } { ABSTRACT              },
+    { abstract    b } { 摘\qquad{}要    } { ABSTRACT              },
 %<def-u|def-g>    { abstracttitle }
 %<def-u>      { 南京大学本科生毕业论文（设计、作品）中文摘要              }
 %<def-u>      { 南京大学本科生毕业论文（设计、作品）英文摘要              },
@@ -7982,7 +8032,7 @@ To produce the documentation run the original source files ending with
 %<def-u>    { author        } { 学生姓名        } { UNDERGRADUATE         },
 %<def-g>    { author        } { 作者姓名        } { POSTGRADUATE          },
     { blankdate     } { \qquad{}年 \quad{}月 \quad{}日   } {      },
-    { blankdate_a   } { \njuline{\qquad\qquad} 年
+    { blankdate   a } { \njuline{\qquad\qquad} 年
             \njuline{\qquad} 月 \njuline{\qquad} 日      } {      },
     { colon         } { ：              } { : \c_space_tl         },
 %<def-u|def-g>    { dept          } { 院系            } { DEPARTMENT            },
@@ -7992,8 +8042,9 @@ To produce the documentation run the original source files ending with
 %<def-u>    { major         } { 专业            } { SPECIALIZATION        },
 %<def-g>    { major         } { 专业名称        } { SPECIALIZATION        },
     { nju           } { 南京大学        } { Nanjing~ University   },
-%<def-u>    { supvfull      } { 指导教师（姓名、职称）   } { MENTOR       },
-%<def-g>    { supvfull      } { 指导教师        } { MENTOR                },
+    { suffix        } {                 } { _en                   },
+%<def-u>    { supv full     } { 指导教师（姓名、职称）   } { MENTOR       },
+%<def-g>    { supv full     } { 指导教师        } { MENTOR                },
     { table         } { 表              } { table                 },
 %<def-u>    { title         } { 题目            } { THESIS                },
 %<def-g>    { title         } { 论文题目        } { THESIS                },
@@ -8110,39 +8161,57 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-%<def-u>    { coverlabel    } { 68   pt },
-%<def-g>    { coverlabel    } { 80   pt },
-%<def-p>    { coverlabel    } { 50   pt },
-%<def-u>    { coverlineskip } { 40   pt },
-%<def-g>    { coverlineskip } { 32   pt },
-%<def-p>    { coverlineskip } { 28   pt },
-%<def-u>    { coveruline    } { 270  pt },
-%<def-g>    { coveruline    } { 240  pt },
-%<def-u>    { emblemwidth   } { 68   pt },
-%<def-u>    { emblemwidthi  } { 68   pt },
-%<def-g>    { emblemwidthi  } { 46   pt },
-%<def-g>    { emblemwidthii } { 61   pt },
-%<def-u>    { namewidth     } { 300  pt },
-%<def-g>    { namewidth     } { 126  pt },
-%<def-p>    { namewidth     } { 220  pt },
 %    \end{macrocode}
-% 下划线宽度。下划线绘制命令是通用的，因此没有作文件区分。
+% 封面信息栏的行距。此处的空格仅用来提升可读性，在生成变量名时会被删去。
 %    \begin{macrocode}
-    { ulinewidthi   } { .4   pt },
-    { ulinewidthii  } { .8   pt },
-    { ulineshifti   } { -.5  ex },
-    { ulineshiftii  } { -.7  ex },
-    { ulineshiftiii } { -1   ex },
+%<def-u>    { c lineskip     } { 40   pt },
+%<def-g>    { c lineskip     } { 32   pt },
+%<def-p>    { c lineskip     } { 28   pt },
+%    \end{macrocode}
+% 封面信息栏标签的宽度。
+%    \begin{macrocode}
+%<def-u>    { c label wd     } { 68   pt },
+%<def-g>    { c label wd     } { 80   pt },
+%<def-p>    { c label wd     } { 50   pt },
+%    \end{macrocode}
+% 封面信息栏横线的宽度。
+%    \begin{macrocode}
+%<def-u>    { c rule  wd     } { 270  pt },
+%<def-g>    { c rule  wd     } { 240  pt },
+%    \end{macrocode}
+% 校徽图片的宽度。
+%    \begin{macrocode}
+%<def-u>    { emblem  wd     } { 68   pt },
+%<def-u>    { emblem  wd i   } { 68   pt },
+%<def-g>    { emblem  wd i   } { 46   pt },
+%<def-g>    { emblem  wd ii  } { 61   pt },
+%    \end{macrocode}
+% 校名图片的宽度。
+%    \begin{macrocode}
+%<def-u>    { name    wd     } { 300  pt },
+%<def-g>    { name    wd     } { 126  pt },
+%<def-p>    { name    wd     } { 220  pt },
+%    \end{macrocode}
+% 下划线高度（厚度）。下划线绘制命令是通用的，因此没有作文件区分。
+%    \begin{macrocode}
+    { rule    ht i   } { .4   pt },
+    { rule    ht ii  } { .8   pt },
+%    \end{macrocode}
+% 下划线深度（偏移量）。
+%    \begin{macrocode}
+    { rule    dp i   } { -.5  ex },
+    { rule    dp ii  } { -.7  ex },
+    { rule    dp iii } { - 1  ex },
 %    \end{macrocode}
 % 小幅空格。
 %    \begin{macrocode}
-    { smallhskip    } { 5    pt },
-    { smallvskip    } { 1    ex },
+    { h sep         } { 5    pt },
+    { v sep         } { 1    ex },
 %    \end{macrocode}
 % 章节标题前后间距。
 %    \begin{macrocode}
     { beforechapter } { 10   pt },
-    { afterchapter  } { 60   pt }
+    { after chapter } { 60   pt }
   }
   { \@@_define_dim:nn #1 }
 %    \end{macrocode}
@@ -8160,21 +8229,21 @@ To produce the documentation run the original source files ending with
 %<def-g|def-p>    { pagestyle     } { headings                          },
     { abslabel      } { \bfseries                         },
     { abslabel_en   } {                                   },
-%<def-u>    { covertitle    } { \bfseries                         },
-%<def-g>    { covertitle    } {                                   },
-%<def-u>    { coverlabel    } { \kaishu                           },
-%<def-g>    { coverlabel    } { \bfseries                         },
-%<def-p>    { coverlabel    } {                                   },
-    { emblemcolor   } { black                             },
-    { namecolor     } { black                             },
-    { section       } { \large \normalfont \sffamily      },
+%<def-u>    { cover title   } { \bfseries                         },
+%<def-g>    { cover title   } {                                   },
+%<def-u>    { cover label   } { \kaishu                           },
+%<def-g>    { cover label   } { \bfseries                         },
+%<def-p>    { cover label   } {                                   },
+    { emblem color  } { black                             },
+    { name   color  } { black                             },
+    { section       } { \bigger \normalfont \sffamily     },
     { chapter       } { \c_@@_fmt_section_tl \centering },
     { chapterintoc  } { \c_@@_fmt_section_tl            },
     { subsection    } { \c_@@_fmt_section_tl            },
     { subsubsection } { \c_@@_fmt_section_tl            },
     { paragraph     } { \c_@@_fmt_section_tl            },
     { subparagraph  } { \c_@@_fmt_section_tl            },
-    { toctitle      } { \centering \zihao { 3 } \bfseries },
+    { toc title     } { \centering \zihao { 3 } \bfseries },
     { header        } { \small \kaishu                    },
     { footer        } { \small \rmfamily                  }
   }
