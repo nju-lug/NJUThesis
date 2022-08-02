@@ -3056,15 +3056,16 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_vskip:N}
-% 类似于 \LaTeXe 中的 \tn{vspace*}，
+% 类似于 \LaTeXe 中的 \tn{vspace*}
+% \url{https://tex.stackexchange.com/a/30065/251992}，
 % 从上一个页面元素底部开始生成 |skip|。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_vskip:N #1
+\cs_set_protected:Npn \@@_vskip:N #1
   {
-    \hrule height \c_zero_dim
-    \nobreak
-    \skip_vertical:n { - \baselineskip - \lineskip }
+    \tex_hrule:D \@height \c_zero_dim \scan_stop:
+    \tex_penalty:D \@M
     \skip_vertical:N #1
+    \skip_vertical:N \c_zero_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3729,12 +3730,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \subsubsection{元素模板}
+% \changes{v1.0}{2022/08/02}{修正元素对象的底部间距设置。}
 %
 %    \begin{macrocode}
 %<@@=njuelem>
 %    \end{macrocode}
 %
-% \begin{macro}{\l_@@_align_begin_tl,\l_@@_align_end_tl}
+% \begin{macro}{\@@_align:}
 % 声明元素模板接口。
 % 元素是一个页面的基本组成单位，包括文段、图片等等。
 % 一个抽象的元素应当具备以下属性：
@@ -3763,27 +3765,17 @@ To produce the documentation run the original source files ending with
     bottom-skip = \l_@@_bottom_skip,
     align =
       {
-        l =
-          { \tl_set_eq:NN \l_@@_align_begin_tl \flushleft
-            \tl_set_eq:NN \l_@@_align_end_tl   \endflushleft  },
-        r =
-          { \tl_set_eq:NN \l_@@_align_begin_tl \flushright
-            \tl_set_eq:NN \l_@@_align_end_tl   \endflushright },
-        c =
-          { \tl_set_eq:NN \l_@@_align_begin_tl \center
-            \tl_set_eq:NN \l_@@_align_end_tl   \endcenter     },
-        n =
-          { \tl_clear:N   \l_@@_align_begin_tl
-            \tl_clear:N   \l_@@_align_end_tl                  }
+        l = { \cs_set_eq:NN \@@_align: \raggedright },
+        r = { \cs_set_eq:NN \@@_align: \raggedleft  },
+        c = { \cs_set_eq:NN \@@_align: \centering   },
+        n = { \cs_clear:N   \@@_align:              }
       }
   }
   {
     \AssignTemplateKeys
     \group_begin:
-      \l_@@_align_begin_tl
-      \l_@@_format_tl
-      \l_@@_content_tl \tex_par:D
-      \l_@@_align_end_tl
+      \@@_align:
+      \l_@@_format_tl \l_@@_content_tl \tex_par:D
     \group_end:
     \__nju_vskip:N \l_@@_bottom_skip
   }
@@ -3852,6 +3844,9 @@ To produce the documentation run the original source files ending with
     \AssignTemplateKeys
     \clearpage
     \thispagestyle { empty }
+%    \end{macrocode}
+% 由于起始位置没有内容，\cs{vspace*} 会使第一个元素的位置与上边距有一定距离。
+%    \begin{macrocode}
     \__nju_vskip:N \l_@@_top_skip
     \exp_args:NVV \@@_bookmark:nn
       \l_@@_bm_text_tl \l_@@_bm_name_tl
@@ -6221,7 +6216,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { u / cover / emblem-img }
   {
     content     = \@@_emblem:N \c_@@_emblemwd_dim,
-    bottom-skip = 1 cm,
+    bottom-skip = 10 pt,
     align       = l
   }
 %    \end{macrocode}
@@ -6233,7 +6228,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { u / cover / name-img }
   {
     content     = \@@_name:N \c_@@_namewd_dim,
-    bottom-skip = 1 cm
+    bottom-skip = 10 pt,
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6243,10 +6238,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / title }
   {
-    content  =
+    content     =
       \@@_spread_box:nnV { 9 em } { \bf } \c_@@_name_type_tl,
-    format   = \zihao { -1 },
-    bottom-skip = 0 pt plus 1.5 fill
+    format      = \zihao { -1 },
+    bottom-skip = 10 pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6256,13 +6251,13 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / info }
   {
-    content  =
+    content =
       \@@_u_cover_info:NNNN
         \c_@@_clabelwd_dim
         \c_@@_crulewd_dim
         \c_@@_hsep_dim
         \c_@@_fmt_coverlabel_tl,
-    format   = \zihao { 3 }
+    format  = \zihao { 3 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6373,7 +6368,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { g / cover-front / emblem-img }
   {
     content     = \@@_emblem:N \c_@@_emblemwdi_dim,
-    bottom-skip = 1.5 cm
+    bottom-skip = 20 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6384,7 +6379,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { g / cover-front / name-img }
   {
     content     = \@@_name:N \c_@@_namewd_dim,
-    bottom-skip = 100 pt
+    bottom-skip = 70 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6397,7 +6392,7 @@ To produce the documentation run the original source files ending with
     content     =
       \@@_spread_box:nnV { 11 em } { } \c_@@_name_type_tl,
     format      = \zihao { 1 } \bfseries,
-    bottom-skip = 40 pt
+    bottom-skip = 20 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6409,7 +6404,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \c_@@_name_apply_tl,
     format      = \zihao { 1 } \bfseries,
-    bottom-skip = 1 cm plus 1.5 fil
+    bottom-skip = 20 pt plus 1 fil
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6425,7 +6420,7 @@ To produce the documentation run the original source files ending with
         \c_@@_crulewd_dim
         \c_@@_hsep_dim
         \c_@@_fmt_coverlabel_tl,
-    bottom-skip = 0 pt plus 1.5 fil
+    bottom-skip = 20 pt plus 1 fil
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7078,7 +7073,7 @@ To produce the documentation run the original source files ending with
   {
     element     = { emblem-img, name-img, title, info },
     prefix      = u / cover /,
-    bottom-skip = 0.5 cm plus 1.5 fill
+    bottom-skip = 0 pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7106,7 +7101,7 @@ To produce the documentation run the original source files ending with
     element  = { emblem-img, name-img, type, degree, info, date },
     prefix   = g / cover-front /,
     format   = \zihao { 3 } \kaishu,
-    top-skip = 30 pt
+    top-skip = 0 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7119,7 +7114,7 @@ To produce the documentation run the original source files ending with
     element  = { info },
     prefix   = g / cover-back /,
     format   = \zihao { 3 } \kaishu,
-    top-skip = 20 cm
+    top-skip = 500 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7407,7 +7402,7 @@ To produce the documentation run the original source files ending with
 %<def-p>    content     = \g_@@_info_title_tl,
 %<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
 %<def-p>    format      = \bfseries,
-    bottom-skip = 1.2 cm
+    bottom-skip = 20 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7421,7 +7416,7 @@ To produce the documentation run the original source files ending with
 %<def-p>    content     = \g_@@_info_title_en_tl,
 %<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
 %<def-p>    format      = \bfseries,
-    bottom-skip = 1.2 cm
+    bottom-skip = 20 pt
   }
 %</(def-u|def-g|def-p)>
 %    \end{macrocode}
@@ -7437,8 +7432,8 @@ To produce the documentation run the original source files ending with
 %<def-g>    content     = \@@_abs_info_g:,
 %<def-u>    format      = \zihao { -4 } \kaishu,
 %<def-g>    format      = \zihao {  4 } \kaishu,
-%<def-u>    bottom-skip = 1 cm,
-%<def-g>    bottom-skip = 2 cm,
+%<def-u>    bottom-skip = 15 pt,
+%<def-g>    bottom-skip = 30 pt,
     align       = l
   }
 %    \end{macrocode}
@@ -7453,8 +7448,8 @@ To produce the documentation run the original source files ending with
 %<def-g>    content     = \@@_abs_info_en_g:,
 %<def-u>    format      = \zihao { -4 },
 %<def-g>    format      = \zihao {  4 },
-%<def-u>    bottom-skip = 1 cm,
-%<def-g>    bottom-skip = 2 cm,
+%<def-u>    bottom-skip = 15 pt,
+%<def-g>    bottom-skip = 30 pt,
     align       = l
   }
 %</(def-u|def-g)>
@@ -7462,26 +7457,26 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{abstract/mark}
-% 英文摘要标题实例。
+% 英文摘要标签实例。
 %    \begin{macrocode}
 %<*(def-g|def-p)>
 \@@_declare_element:nn { abstract / mark }
   {
     content     = \c_@@_name_abstractb_tl,
     format      = \sffamily \zihao { -3 },
-    bottom-skip = 1 cm
+    bottom-skip = 15 pt
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{abstract/en/mark}
-% 英文摘要标题实例。
+% 英文摘要标签实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { abstract / en / mark }
   {
     content     = \c_@@_name_abstractb_en_tl,
     format      = \sffamily \zihao { -3 },
-    bottom-skip = 1 cm
+    bottom-skip = 15 pt
   }
 %</(def-g|def-p)>
 %    \end{macrocode}
@@ -8164,7 +8159,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 封面信息栏的行距。此处的空格仅用来提升可读性，在生成变量名时会被删去。
 %    \begin{macrocode}
-%<def-u>    { c lineskip     } { 40   pt },
+%<def-u>    { c lineskip     } { 36   pt },
 %<def-g>    { c lineskip     } { 32   pt },
 %<def-p>    { c lineskip     } { 28   pt },
 %    \end{macrocode}
