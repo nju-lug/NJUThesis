@@ -356,16 +356,17 @@ To produce the documentation run the original source files ending with
 % \changes{v0.12}{2021/12/06}{修改了说明文档的代码呈现样式。}
 % \changes{v0.13}{2021/12/12}{优化了编译速度。}
 % \changes{v0.13}{2021/12/15}{适配2022届本科生毕业毕业论文（设计）规范。}
+% \changes{v0.13}{2021/12/16}{默认不加载 \pkg{listings} 宏包。}
 % \changes{v0.14}{2022/01/13}{将本模板内嵌入南大 \TeX{} 网站。}
 % \changes{v0.16}{2022/03/01}{分离本科生和研究生模板配置。}
 % \changes{v0.19}{2022/05/23}{对研究生普通封面进行若干细节修改。}
 % \changes{v0.19}{2022/05/23}{对国家图书馆封面进行若干细节修改。}
 % \changes{v0.20}{2022/06/08}{更正本科生模板部分字样。}
 % \changes{v1.0}{2022/06/29}{移除毕业设计封面。}
-% \changes{v1.0}{2022/06/30}{调整研究生封面布局。}
 % \changes{v1.0}{2022/07/05}{按类型重命名变量。}
 % \changes{v1.0}{2022/07/23}{新增博士后出站报告模板。}
 % \changes{v1.0}{2022/07/28}{在手册中以不同颜色指示不同模块。}
+% \changes{v1.0}{2022/08/02}{删除 \LaTeX 基础用法的说明。}
 %
 %
 % \maketitle
@@ -1215,7 +1216,7 @@ To produce the documentation run the original source files ending with
 % 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。
 %
 %
-% \subsection{个人信息}
+% \subsection{设置接口}
 %
 % \begin{function}[added=2021-09-10,updated=2022-08-01]{\njusetup}
 %   \begin{syntax}
@@ -1271,6 +1272,9 @@ To produce the documentation run the original source files ending with
 %   \njusetup[info/author]{佚名}
 %   \njusetup[bib/resource]{ref1.bib, ref1.bib}
 % \end{latexexample}
+%
+%
+% \subsection{个人信息}
 %
 % |info| 类用于设置个人信息。
 % 以下为全部的个人信息参数，其中带有星号的为对应的英文字段。
@@ -1497,7 +1501,7 @@ To produce the documentation run the original source files ending with
 %       major        = {化学},
 %       supervisor   = {李成殿,教授},
 %       submit-date  = {2021-09-12}
-%     }
+%   }
 % \end{latexexample}
 %
 %
@@ -1506,17 +1510,8 @@ To produce the documentation run the original source files ending with
 % 与导言区相对的是正文，位于 \env{document} 环境内。
 %
 % \begin{function}{\mainmatter}
-%   \cs{mainmatter} 标志着正文的开始，使用阿拉伯数字重新进行页码编号，并设置页眉格式。
-% \end{function}
-%
-% \begin{function}{\chapter,\section,\subsection,\subsubsection}
-%   \begin{syntax}
-%     \tn{chapter}\oarg{短描述}\marg{完整的章标题}
-%     \tn{section}\oarg{短描述}\marg{完整的节标题}
-%     \tn{subsection}\oarg{短描述}\marg{完整的节标题}
-%     \tn{subsection}\oarg{短描述}\marg{完整的节标题}
-%   \end{syntax}
-% 对于过长的标题，目录和页眉中会使用其短描述。
+%   \cs{mainmatter} 标志着正文的开始，使用阿拉伯数字重新进行页码编号，
+%   并设置页眉页脚格式。
 % \end{function}
 %
 % \begin{function}{\chaptermark,\sectionmark}
@@ -1569,16 +1564,9 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{字形}
 %
-% \begin{function}{\songti,\heiti,\kaishu,\fangsong,\zihao}
-%   \begin{syntax}
-%     \tn{zihao}\Arg{字号}
-%   \end{syntax}
-% 字形与字号设置。
-% \end{function}
-%
 % 本模板继承 \pkg{ctex} 宏集提供的字形字号设置，以备不时之需。换句话说，
-% 除非你有十足的把握，认为某处字体产生了偏差\footnote{在此情况下也应当直接到
-% GitHub 反馈}，否则无需动用这些命令处理样式问题。
+% 除非你有十足的把握，认为某处字体产生了偏差\footnote{在此情况下也应当
+% 直接到 GitHub 仓库反馈}，否则无需动用这些命令处理样式问题。
 %
 % \begin{function}[added=2021-09-22]{\njuline}
 %   \begin{syntax}
@@ -1592,161 +1580,24 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{列表}
 %
-% \begin{function}{itemize,enumerate,description}
-%   \begin{syntax}
-%     \tn{begin}\marg{列表环境}
-%       \tn{item}\oarg{标签1} \meta{条目1}
-%       \tn{item}\oarg{标签2} \meta{条目2}
-%       ...
-%     \tn{end}\marg{列表环境}
-%   \end{syntax}
-% 添加列表环境。
-% \end{function}
-%
 % 模板默认载入 \pkg{enumitem} 宏包，对三个常用列表环境内的条目间距进行压缩。
 %
 % \subsubsection{脚注}
 %
-% \begin{function}{\footnote}
+% \begin{function}[added=2022-05-01,updated=added=2022-08-02]{footnote/style}
 %   \begin{syntax}
-%     \tn{footnote}\Arg{脚注}
-%   \end{syntax}
-% 添加脚注。
-% \end{function}
-%
-% \begin{function}[added=2022-05-01]{style/footnote-style}
-%   \begin{syntax}
-%     footnote-style = <(plain)|pifont>
+%     style = <(plain)|pifont>
 %   \end{syntax}
 % 设置脚注编号样式。默认为普通数字，使用 |pifont|
 % 选项可修改为带圈数字。单一页面内请尽量避免超过 10 条脚注。
 % \end{function}
 %
-% \subsubsection{图片}
-%
-% \begin{function}{\graphicspath}
-%   \begin{syntax}
-%     \tn{graphicspath}\{\marg{路径1}\marg{路径2}\}
-%   \end{syntax}
-% 添加图像路径。
-% \end{function}
-%
-% \pkg{graphicx} 宏包会对一些常见路径进行搜索。使用自己的图片时，如果提示不能找到文件，需要在导言区通过本命令添加图片存放路径。
-%
-% 在使用特定类型的图片文件时，可以省略其扩展名，包括 \file{*.jpg}, \file{*.png}, \file{*.pdf}, \file{*.eps}。
-%
-% \paragraph{单张图片}
-%
-% 下面这个例子展示了如何插入一张名称为 \file{myfig.jpg}，宽度占页面文字宽度一半的图片。注意标签命令 \tn{label} 必须放在图注命令 \tn{caption} 之后。
-% \begin{latexexample}[moretexcs={\includegraphics},emph={[1]figure}]
-%   \begin{figure}[h]
-%       \centering
-%       \includegraphics[width=0.5\textwidth]{myfig}
-%       \caption{我的图}
-%       \label{fig:myfig}
-%   \end{figure}
-% \end{latexexample}
-%
-% \emph{以下图片相关功能的实现均需要手动载入相关宏包}。
-%
-% \paragraph{文字环绕}
-%
-% 对于较为瘦长，或者仅起到辅助作用的图像，可以使用 \pkg{wrapfig} 宏包提供的 \env{wrapfigure} 实现文字环绕效果。注意这个环境后紧跟的一行不能为空。
-% \begin{latexexample}[moretexcs={\includegraphics},emph={[1]wrapfigure}]
-%   \begin{wrapfigure}{r}{0cm}
-%       \centering
-%       \includegraphics[width=0.15\textwidth]{myfig}
-%       \caption{我的图}
-%       \label{fig:myfig}
-%   \end{wrapfigure}
-%   <text>
-% \end{latexexample}
-%
-% \paragraph{多张嵌套}
-%
-% 使用 \pkg{subcaption} 宏包提供的 \env{subfigure} 环境可以实现多张图片嵌套的效果。
-% \begin{latexexample}[moretexcs={\includegraphics},emph={[1]figure,subfigure}]
-%   \begin{figure}
-%       \begin{subfigure}{.32\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{fig1}
-%          \caption{fig1}
-%       \end{subfigure}
-%       \begin{subfigure}{.32\textwidth}
-%          \centering
-%           \includegraphics[width=\textwidth]{fig2}
-%           \caption{fig2}
-%       \end{subfigure}
-%       \begin{subfigure}{.32\textwidth}
-%           \centering
-%           \includegraphics[width=\textwidth]{fig3}
-%           \caption{fig3}
-%       \end{subfigure}
-%       \caption{subfigures}
-%   \end{figure}
-% \end{latexexample}
-%
-% 请尽量避免使用较为老旧的 \pkg{subfig} 宏包，完全不要使用过时的 \pkg{subfigure} 宏包。两者的 CTAN 页面上均建议转移至更新的 \pkg{subcaption} 宏包。
-%
-% \subsubsection{表格}
-%
-% 下面这个例子展示了如何插入一张表格。通过 \pkg{booktabs} 宏包提供的 \tn{toprule}、\tn{midrule} 和 \tn{bottomrule} 命令，我们可以很轻松地绘制出一张漂亮规范的三线表。
-% \begin{latexexample}[moretexcs={\toprule,\midrule,\bottomrule},emph={[1]table,tabular}]
-%   \begin{table}[htbp]
-%       \centering
-%       \caption{我的表}
-%       \label{tab:testtab}
-%       \begin{tabular}{ccc}
-%           \toprule
-%           OS & TeX & 测试情况 \\
-%           \midrule
-%           南大TeX & Overleaf & √ \\
-%           \bottomrule
-%       \end{tabular}
-%   \end{table}
-% \end{latexexample}
-%
-% \emph{以下表格功能的实现均需要手动载入相关宏包。}
-%
-% \paragraph{合并单元格}
-%
-% \begin{function}{\multirow,\multicolumn}
-%   \begin{syntax}
-%     \tn{multirow}\Arg{nrows}\oarg{bigstructs}\Arg{width}\oarg{fixup}\Arg{text}
-%     \tn{multicolumn}\Arg{nrows}\Arg{width}\Arg{text}
-%   \end{syntax}
-% 合并单元格。
-% \end{function}
-%
-% \pkg{multirow} 宏包的使用方法，命令较为复杂。^^A TODO：待修改
-% \url{http://www.ctex.org/documents/packages/table/multirow.htm}
-%
-% \paragraph{更多样式}
-%
-% \pkg{tabularray} 宏包\cite{tabularray}运用 \LaTeX3 语法重新实现了表格的绘制，提供了简明的用户接口与丰富的单元格样式，详见其使用手册。
-%
-%
-% \subsubsection{数学}
-%
-% 行内公式形如 |$\mathrm{e}^{(a+2b)x}$|。
-%
-% 带有编号的行间公式 \env{equation}。
-% \begin{latexexample}[emph={[1]equation}]
-%   \begin{equation}\label{eq:myeqlabel}
-%       \pi
-%   \end{equation}
-% \end{latexexample}
-%
-% 如不需要编号，可以用 \env{equation*} 或者 |\[|\meta{公式}|\]|，
-% 请不要使用可能引发问题的 |$$|\meta{公式}|$$|
-% \footnote{\url{https://tex.stackexchange.com/q/503/}}。
-%
-% \paragraph{符号}
+% \subsubsection{数学符号}
 %
 % ^^A \url{https://www.caam.rice.edu/~heinken/latex/symbols.pdf}
-% 模板使用 \pkg{unicode-math} 宏包配置数学字体，完整符号表可以参考
-% \href{http://mirrors.ctan.org/macros/unicodetex/latex/unicode-math/unimath-symbols.pdf}{\file{unimath-symbols.pdf}}。
-% 该方案目前不兼容传统的 \pkg{amsfonts}、\pkg{amssymb}、\pkg{bm}
+% ^^A http://mirrors.ctan.org/macros/unicodetex/latex/unicode-math/unimath-symbols.pdf
+% 模板使用 \pkg{unicode-math} 宏包配置数学字体，该方案目前不兼容
+% 传统的 \pkg{amsfonts}、\pkg{amssymb}、\pkg{bm}
 % \footnote{\url{https://tex.stackexchange.com/q/528831/}}
 % 、\pkg{upgreek} 等宏包。需要使用新方案提供的相应命令。
 % 例如，加粗数学符号的命令为 \tn{symbf}。
@@ -1858,14 +1709,7 @@ To produce the documentation run the original source files ending with
 %   \end{itemize}
 % \end{itemize}
 %
-% \paragraph{单位}
-%
-% 单位默认遵循 GB 3100--93《国际单位制及其应用》\cite{gb-3100-93}和
-% GB 3101--93《有关量、单位和符号的一般原则》\cite{gb-3101-93}，
-% SI 单位可通过载入 \pkg{siunitx} 宏包\cite{siunitx}进行输入。
-% ^^A \pkg{siunitx} 是一个更新频繁的包，可能会引发兼容性问题。
-%
-% \paragraph{定理环境}
+% \subsubsection{定理环境}
 %
 % 本模板也提供了一系列的数学定理环境。
 %
@@ -1961,61 +1805,7 @@ To produce the documentation run the original source files ending with
 % \end{latexexample}
 %
 %
-% \subsubsection{代码}
-% \changes{v0.13}{2021/12/13}{提供简化的行内代码环境。}
-% \changes{v0.13}{2021/12/16}{默认不加载 \pkg{listings} 宏包。}
-%
-% 如需展示代码，可以使用抄录环境 \tn{verb}，格式如 |\verb!<code>!|。其中包裹代码的两个感叹号并不是绝对的，可以替换成任何两个相同的、没有在这段代码中出现过的符号。
-%
-% 抄录环境仅会用等宽字体如实呈现代码本身，并无任何附加功能。若需格式更为多样的代码环境，可以使用 \pkg{listings} 宏包。v0.14.0 版以后，本模板默认不会调用该宏包，使用代码环境前请在导言区自行导入。
-% \begin{latexexample}
-%   \usepackage{listings}
-% \end{latexexample}
-%
-% \pkg{listings} 宏包\cite{listings}提供了 \env{lstlisting} 环境，可以生成代码块，提供语法高亮功能，会如实输出缩进空格。且值得注意的是这个环境中的代码不会在草稿模式下显示。
-% 如需指定语言，可以使用 |language| 选项。如需自定义关键字，可以使用 |morekeywords| 选项。这一宏包也提供了为某种样式单独一种环境的方法，详见其手册，此处仅展示一个最简化的例子：
-% \begin{latexexample}[emph={[1]lstlisting},emph={[2]language},morekeywords={print}]
-%   \begin{lstlisting}[language=python]
-%   print("Hello World")
-%   \end{lstlisting}
-% \end{latexexample}
-%
-% 当然，默认提供的代码样式在本模板中并不和谐。可以参照以下代码在导言区设置代码环境通用样式。
-% \begin{latexexample}[moretexcs={\lstdefinestyle,\lstset},emph={[2]basewidth,lineskip,basicstyle,keywordstyle,commentstyle,numbers,captionpos,breaklines,xleftmargin,xrightmargin,style,flexiblecolumns}]
-%   \lstdefinestyle { njulisting }
-%     {
-%       basewidth    = 0.5 em,               % 单个字体宽度
-%       lineskip     = 3 pt,                 % 在代码行间添加额外行距
-%       basicstyle   = \tiny\ttfamily,       % 基本字体样式，小号等宽
-%       keywordstyle = \bfseries,            % 关键词样式，粗体
-%       commentstyle = \itshape\color{gray}, % 注释样式，灰色斜体
-%       numbers      = left,                 % 行号位置，左侧
-%       captionpos   = t,                    % 题注位置，顶部
-%       breaklines   = true,                 % 是否允许自动折行
-%       xleftmargin  = 2 em,                 % 左侧边距
-%       xrightmargin = 2 em                  % 右侧边距
-%     }
-%   \lstset{
-%       style        = njulisting,           % 调用上述样式
-%       flexiblecolumns                      % 允许调整字符宽度
-%     }
-% \end{latexexample}
-%
-% \pkg{listings} 同时提供了用于展示行内代码的 \tn{lstinline} 命令，用法同 \tn{verb}。但这一命令会被全局的代码字号设置污染。请参考如下使用方法：
-% \begin{latexexample}[moretexcs={\lstinline,\tt},deletetexcs={\usepackage},emph={[2]language,basicstyle}]
-%   \lstinline[language=[LaTeX]TeX, basicstyle=\tt]!\usepackage{njuvisual}!
-% \end{latexexample}
-%
-% 简便起见，不妨单独创建使用简写的行内代码环境，指定某个符号后用其包裹代码即可。这个符号不可以出现在正文及其他命令中，请谨慎设置。
-% \begin{latexexample}[moretexcs={\lstMakeShortInline},emph={[2]style,basicstyle,columns}]
-%   \lstMakeShortInline[
-%     style = njulisting,
-%     basicstyle = \normalsize\tt,
-%     columns = fixed]|
-% \end{latexexample}
-%
-%
-% \subsubsection{引用}
+% \subsubsection{编号}
 %
 % \begin{function}[added=2022-07-31]{label-sep/figure,label-sep/table,label-sep/equation}
 %   \begin{syntax}
@@ -2024,21 +1814,6 @@ To produce the documentation run the original source files ending with
 %     equation = \meta{符号}
 %   \end{syntax}
 % 图片、表格、公式编号中的连接符样式，默认为短横线（en dash）。
-% \end{function}
-%
-% \begin{function}{\cref}
-%   \begin{syntax}
-%     \tn{cref}\Arg{标签}
-%   \end{syntax}
-% 使用 \pkg{cleveref} 宏包实现了带图、表等项目名称的智能引用。
-% \end{function}
-%
-% \begin{function}{\href,\url}
-%   \begin{syntax}
-%     \tn{href}\Arg{链接}\Arg{名称}
-%     \tn{url}\Arg{链接}
-%   \end{syntax}
-% 超链接。\tn{href} 会将特定字符显示为可点击的超链接，\tn{url} 会输出可点击的链接原文。
 % \end{function}
 %
 %
@@ -3408,6 +3183,14 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_cs_clear:N}
+% 两个代码块交替执行，如果在\meta{循环体1}结束后满足条件，则退出循环。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cs_clear:N #1
+  { \cs_set_eq:NN #1 \prg_do_nothing: }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{封面相关}
 % \changes{v0.16}{2022/03/10}{将封面和摘要内部函数定义移动到前部。}
 %
@@ -3765,10 +3548,10 @@ To produce the documentation run the original source files ending with
     bottom-skip = \l_@@_bottom_skip,
     align =
       {
-        l = { \cs_set_eq:NN \@@_align: \raggedright },
-        r = { \cs_set_eq:NN \@@_align: \raggedleft  },
-        c = { \cs_set_eq:NN \@@_align: \centering   },
-        n = { \cs_clear:N   \@@_align:              }
+        l = { \cs_set_eq:NN     \@@_align: \raggedright },
+        r = { \cs_set_eq:NN     \@@_align: \raggedleft  },
+        c = { \cs_set_eq:NN     \@@_align: \centering   },
+        n = { \__nju_cs_clear:N \@@_align:              }
       }
   }
   {
@@ -4036,31 +3819,25 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\prg_new_conditional:cpnn,\@@_define_pkg_keys:nn}
+% \begin{macro}{\@@_define_pkg_keys:nnn}
 % \begin{arguments}
 %   \item 宏包名
-%   \item 用于函数的简写名称
+%   \item 简写名称，一般为宏包使用的名空间
+%   \item 是否默认载入
 % \end{arguments}
 % 定义是否载入宏包的的文档类选项，以及相应的载入命令。
 %    \begin{macrocode}
-\cs_generate_variant:Nn \prg_new_conditional:Npnn { cpnn }
-\cs_new_protected:Npn \@@_define_pkg_keys:nn #1#2
+\cs_new_protected:Npn \@@_define_pkg_keys:nnn #1#2#3
   {
     \keys_define:nn { nju }
       {
         #1 .bool_gset:c = { g_@@_opt_load_ #2 _bool },
-        #1   .initial:n = true
+        #1   .initial:n = #3
       }
     \cs_new_protected:cpn { @@_loadpkg_ #2 : }
       {
         \bool_if:cT { g_@@_opt_load_ #2 _bool }
           { \RequirePackage { #1 } }
-      }
-    \prg_new_conditional:cpnn { @@_if_ #2 _loaded: } { T }
-      {
-        \@ifpackageloaded { #1 }
-          { \prg_return_true:  }
-          { \prg_return_false: }
       }
   }
 %    \end{macrocode}
@@ -4070,32 +3847,36 @@ To produce the documentation run the original source files ending with
 %   biblatex,
 %   cleveref,
 %   create-theorem,
+%   enumitem,
+%   footmisc,
 %   unicode-math,
 %   \g_@@_opt_load_blx_bool,
 %   \g_@@_opt_load_cref_bool,
 %   \g_@@_opt_load_crthm_bool,
+%   \g_@@_opt_load_enit_bool,
+%   \g_@@_opt_load_fm_bool,
 %   \g_@@_opt_load_um_bool,
 %   \@@_loadpkg_blx:,
 %   \@@_loadpkg_cref:,
 %   \@@_loadpkg_crthm:,
-%   \@@_loadpkg_um:,
-%   \@@_if_blx_loaded:T,
-%   \@@_if_cref_loaded:T,
-%   \@@_if_crthm_loaded:T,
-%   \@@_if_um_loaded:T}
+%   \@@_loadpkg_enit:,
+%   \@@_loadpkg_fm:,
+%   \@@_loadpkg_um:}
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { biblatex       } { blx   },
-    { cleveref       } { cref  },
-    { create-theorem } { crthm },
-    { unicode-math   } { um    }
+    { biblatex       } { blx   } { true  },
+    { cleveref       } { cref  } { true  },
+    { create-theorem } { crthm } { false },
+    { enumitem       } { enit  } { true  },
+    { footmisc       } { fm    } { true  },
+    { unicode-math   } { um    } { true  }
   }
-  { \@@_define_pkg_keys:nn #1 }
+  { \@@_define_pkg_keys:nnn #1 }
 %    \end{macrocode}
 % \end{macro}
 %
-% 在定义完全部设置以后从导言区输入参数。
+% 获取输入的文档类选项。
 %    \begin{macrocode}
 \ProcessKeysOptions { nju }
 %    \end{macrocode}
@@ -4110,14 +3891,14 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{用户接口}
 %
-% \begin{macro}{abstract, bib, ext-image, footer, header,
+% \begin{macro}{abstract, bib, ext-image, footer, footnote, header,
 %   info, label-sep, listoffigures, listoftables,
 %   math, style, theorem, tableofcontents}
 % 定义模块名的元（meta）键值对。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    abstract, bib, ext-image, footer, header,
+    abstract, bib, ext-image, footer, footnote, header,
     info, label-sep, listoffigures, listoftables,
     math, style, theorem, tableofcontents
   }
@@ -4214,7 +3995,9 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 %
-% \subsection{载入宏包}
+% \subsection{外部宏包}
+%
+% \subsubsection{默认选项}
 %
 % \changes{v0.12}{2021/12/07}{重新组织宏包载入顺序。}
 % 将选项传入 \cls{ctexbook} 文档类。
@@ -4254,30 +4037,35 @@ To produce the documentation run the original source files ending with
   {
     { no-math           } { fontspec     },
     { perpage           } { footmisc     },
-    { hyphens           } { url          },
     { capitalise, nameinlink, noabbrev }
                           { cleveref     }
   }
   { \PassOptionsToPackage #1 }
 %    \end{macrocode}
 %
+% \subsubsection{载入文档类}
+%
 % 使用\pkg{ctexbook}作为基础文档类。
 %    \begin{macrocode}
 \LoadClass { ctexbook } [ 2018/04/01 ]
 %    \end{macrocode}
 %
+% \subsubsection{载入宏包}
+%
 % \changes{v0.14}{2021/12/21}{移除内置的 \pkg{hologo}。}
 % \changes{v0.15}{2022/01/17}{移除内置的 \pkg{url}。}
-% \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，删除
-%   \pkg{amsthm} 和 \pkg{thmtools}。}
+% \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，
+%   删除 \pkg{amsthm} 和 \pkg{thmtools}。}
 % \changes{v0.16}{2022/03/19}{不显式载入 \pkg{amsmath}。}
 % \changes{v0.18}{2022/04/20}{不强制载入 \pkg{ntheorem}。}
 % \changes{v1.0}{2022/07/03}{不强制载入 \pkg{mathtools}。}
 %
-% \pkg{unicode-math} 指定了 \XeTeX 和 \LuaTeX 下使用的
-% 数学字体。
+% \pkg{unicode-math} 指定了 \XeTeX 和 \LuaTeX 下使用的数学字体。
 %    \begin{macrocode}
+\@@_loadpkg_enit:
+\@@_loadpkg_fm:
 \@@_loadpkg_um:
+\@@_loadpkg_crthm:
 %    \end{macrocode}
 %
 % 载入各种宏包。
@@ -4286,7 +4074,6 @@ To produce the documentation run the original source files ending with
   {
     geometry,
     fancyhdr,
-    footmisc,
     setspace,
 %    \end{macrocode}
 % 为保证 \pkg{cleveref} 在 \pkg{unicode-math}
@@ -4301,10 +4088,6 @@ To produce the documentation run the original source files ending with
     booktabs,
     caption,
     graphicx,
-%    \end{macrocode}
-% 列表环境。
-%    \begin{macrocode}
-    enumitem,
 %    \end{macrocode}
 % 按以下顺序加载两个关于引用的包。
 % \pkg{hyperref} 覆写了大量命令，因此需要在其他包最后载入。
@@ -4347,6 +4130,16 @@ To produce the documentation run the original source files ending with
 %<*class>
 %    \end{macrocode}
 %
+% \subsubsection{检查宏包}
+%
+% \begin{macro}{\@@_if_pkg_loaded:nTF}
+% 等效于 \cs{IfPackageLoadedTF}。
+%    \begin{macrocode}
+\prg_new_conditional:Npnn \@@_if_pkg_loaded:n #1 { T, TF }
+  { \@ifpackageloaded {#1} { \prg_return_true: } { \prg_return_false: } }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_check_pkg_version:nnn}
 % 检查宏包版本是否过时。
 %    \begin{macrocode}
@@ -4383,7 +4176,6 @@ To produce the documentation run the original source files ending with
 % \begin{arguments}
 %   \item 模板载入的宏包
 %   \item 产生冲突的宏包
-%   \item 替代的解决办法
 % \end{arguments}
 %    \begin{macrocode}
 \msg_new:nnn { njuthesis } { package-conflict }
@@ -4394,9 +4186,9 @@ To produce the documentation run the original source files ending with
   }
 \cs_new_protected:Npn \@@_check_pkg_conflict:nn #1#2
   {
-    \AtEndOfPackageFile * { #1 }
+    \ctex_at_end_package:nn { #1 }
       {
-        \AtBeginOfPackageFile * { #2 }
+        \ctex_at_begin_package:nn { #2 }
           { \msg_error:nnnn { njuthesis } { package-conflict } {#1} {#2} }
       }
   }
@@ -4405,7 +4197,7 @@ To produce the documentation run the original source files ending with
 %
 % 检查数学宏包冲突。
 %    \begin{macrocode}
-\@@_if_um_loaded:T
+\@@_if_pkg_loaded:nT { unicode-math }
   {
     \clist_map_inline:nn
       {
@@ -5450,7 +5242,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 设置目录中章标题的样式。
 %    \begin{macrocode}
-    chapter / tocline = \c_@@_fmt_chapterintoc_tl \CTEXnumberline { #1 } #2
+    chapter / tocline = \c_@@_fmt_chapterintoc_tl \CTEXnumberline {#1} #2
   }
 %    \end{macrocode}
 %
@@ -5571,10 +5363,7 @@ To produce the documentation run the original source files ending with
           { style = gb7714-2015ay    }
       },
     style / unknown     .code:n =
-      {
-        \clist_gput_right:Nx \g_@@_blx_option_clist
-          { style = \l_keys_value_tl }
-      },
+      { \clist_gput_right:Nn \g_@@_blx_option_clist { style = #1 } },
     style            .initial:n = numeric,
 %    \end{macrocode}
 % \end{macro}
@@ -5687,14 +5476,13 @@ To produce the documentation run the original source files ending with
 \ctex_at_end_preamble:n
   {
 %    \end{macrocode}
-% 忽略 PDF 字符串中的换行符，从而抑制 \pkg{hyperref} 警告。
+% 忽略 PDF 字符串中的特定命令，从而抑制 \pkg{hyperref} 警告。
 %    \begin{macrocode}
     \pdfstringdefDisableCommands
       {
-        \cs_set_eq:NN \\      \prg_do_nothing:
-        \cs_set_eq:NN \quad   \prg_do_nothing:
-        \cs_set_eq:NN \qquad  \prg_do_nothing:
-        \cs_set_eq:NN \bigger \prg_do_nothing:
+        \clist_map_inline:nn
+          { \\, \quad, \qquad, \bigger }
+          { \@@_cs_clear:N #1 }
       }
     \hypersetup
       {
@@ -5714,23 +5502,20 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \begin{macro}{\@@_cref_name:n,\@@_cref_name:V}
-% 用于修改 \pkg{cleverref} 的标签名称的辅助函数。
+% 用于修改 \pkg{cleveref} 的标签名称的辅助函数。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cref_name:n #1
   {
     \clist_map_inline:nn { #1 }
-      {
-        \crefname { ##1 }
-          { \@@_name:n { ##1 } } { \@@_name:n { ##1 _en } }
-      }
+      { \crefname {##1} { \@@_name:n {##1} } { \@@_name:n { ##1 _en } } }
   }
 \cs_generate_variant:Nn \@@_cref_name:n { V }
 %    \end{macrocode}
 % \end{macro}
 %
-% 修改 \pkg{cleverref} 的标签格式。默认在名称后面添加空格，删除公式编号的括号。
+% 修改 \pkg{cleveref} 的标签格式。默认在名称后面添加空格，删除公式编号的括号。
 %    \begin{macrocode}
-\@@_if_cref_loaded:T
+\@@_if_pkg_loaded:nT { cleveref }
   {
     \crefdefaultlabelformat { #2#1#3\, }
     \crefformat { equation      } { 公式~#2#1#3~   }
@@ -5739,7 +5524,7 @@ To produce the documentation run the original source files ending with
     \crefformat { subsection    } { 第~#2#1#3~小节 }
     \crefformat { subsubsection } { 第~#2#1#3~小节 }
 %    \end{macrocode}
-% 修改 \pkg{cleverref} 的标签名称。
+% 修改 \pkg{cleveref} 的标签名称。
 %    \begin{macrocode}
     \@@_cref_name:n { figure, table, appendix, proof }
     \@@_cref_name:V \g_@@_theorem_type_clist
@@ -5752,12 +5537,12 @@ To produce the documentation run the original source files ending with
 % ^^A 来自 fduthesis
 %    \begin{macrocode}
 \tl_new:N \l_@@_fn_style_tl
-\keys_define:nn { nju / style }
+\keys_define:nn { nju / footnote }
   {
 %    \end{macrocode}
-% \begin{macro}{style/footnote-style}
+% \begin{macro}{footnote/style}
 %    \begin{macrocode}
-    footnote-style .choices:nn = { plain, pifont }
+    style .choices:nn = { plain, pifont }
 %    \end{macrocode}
 % 若使用 \opt{pifont} 类型，则需引入 \pkg{pifont} 宏包。
 %    \begin{macrocode}
@@ -5810,7 +5595,9 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\thefootnote}
 % 重定义脚注编号。
 %    \begin{macrocode}
-\cs_set:Npn \thefootnote { \@@_footnote_number:N \c@footnote }
+\@@_if_pkg_loaded:nT { footmisc }
+  {
+    \cs_set:Npn \thefootnote { \@@_footnote_number:N \c@footnote }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5821,11 +5608,12 @@ To produce the documentation run the original source files ending with
 % 见 \url{http://tex.stackexchange.com/q/19844} 和
 % \url{https://www.zhihu.com/question/53030087}。
 %    \begin{macrocode}
-\cs_set:Npn \@makefntext #1
-  {
-    \mode_leave_vertical:
-    \hbox_to_wd:nn { 1.5 em } { \@thefnmark \tex_hfil:D }
-    #1
+    \cs_set:Npn \@makefntext #1
+      {
+        \mode_leave_vertical:
+        \hbox_to_wd:nn { 1.5 em } { \@thefnmark \tex_hfil:D }
+        #1
+      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5892,7 +5680,7 @@ To produce the documentation run the original source files ending with
 %
 % 缩减列表环境的条目间距。
 %    \begin{macrocode}
-\setlist { noitemsep }
+\@@_if_pkg_loaded:nT { enumitem } { \setlist { noitemsep } }
 %    \end{macrocode}
 %
 %
@@ -6358,6 +6146,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \paragraph{研究生}
+% \changes{v1.0}{2022/06/30}{调整研究生封面布局。}
 %
 % \subparagraph{正面} 包括校名、校徽、标题、信息栏。
 %
@@ -6714,7 +6503,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \c_@@_name_origdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
-    bottom-skip = 60 pt
+    bottom-skip = \c_@@_afterchapter_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6751,7 +6540,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \c_@@_name_authdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
-    bottom-skip = 3 cm
+    bottom-skip = \c_@@_afterchapter_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6814,7 +6603,7 @@ To produce the documentation run the original source files ending with
       { \g_@@_info_degree_int * \g_@@_info_type_int }
       {
         \makebox [ 0   pt ] [l] { \ensuremath { \mdwhtsquare } }
-        \hspace  { 0.1 em }       \ensuremath { \checkmark   }
+        \hspace  { 0.1 em }       \ensuremath { ^^^^2713   }
       }
       { \ensuremath { \mdwhtsquare } }
   }
@@ -6972,13 +6761,13 @@ To produce the documentation run the original source files ending with
 % \subparagraph{原创性声明和出版授权书}
 %
 % \begin{macro}{p/decl/orig/title}
-% 原创性声明标题实例。
+% 原创性声明标题实例。^^A 这个实例与研究生的完全一样
 %    \begin{macrocode}
 \@@_declare_element:nn { p / decl / orig / title }
   {
     content     = \c_@@_name_origdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
-    bottom-skip = 3 cm
+    bottom-skip = \c_@@_afterchapter_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7007,13 +6796,13 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{p/decl/auth/title}
-% 出版授权书标题实例。
+% 出版授权书标题实例。^^A 这个实例与研究生的完全一样
 %    \begin{macrocode}
 \@@_declare_element:nn { p / decl / auth / title }
   {
     content     = \c_@@_name_authdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
-    bottom-skip = 3 cm
+    bottom-skip = \c_@@_afterchapter_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7150,7 +6939,7 @@ To produce the documentation run the original source files ending with
   {
     element     = { title, text, sign },
     prefix      = g / decl / orig /,
-    top-skip    = 60 pt,
+    top-skip    = \c_@@_beforechapter_dim,
     bottom-skip = 0 pt plus 1 fil,
     bm-text     = \c_@@_name_origdecl_tl,
     bm-name     = origdecl
@@ -7165,7 +6954,7 @@ To produce the documentation run the original source files ending with
   {
     element     = { title, text, sign, info, date },
     prefix      = g / decl / auth /,
-    top-skip    = 40 pt,
+    top-skip    = \c_@@_beforechapter_dim,
     bottom-skip = 0.5 cm plus 1.5 fill,
     bm-text     = \c_@@_name_authdecl_tl,
     bm-name     = authdecl,
@@ -7202,7 +6991,7 @@ To produce the documentation run the original source files ending with
     prefix      = p / decl /,
     bm-text     = 声明页,
     bm-name     = decl,
-    top-skip    = 40 pt,
+    top-skip    = \c_@@_beforechapter_dim,
     bottom-skip = 0 pt
   }
 %</def-p>
@@ -7623,7 +7412,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 使用粗体作为标签样式。
 %    \begin{macrocode}
-        \cs_set_eq:NN \makelabel \prg_do_nothing:
+        \__nju_cs_clear:N \makelabel
       }
     \item \clist_use:cn { g_@@_info_keywords #1 _clist } { #2 }
     \endlist
@@ -8200,13 +7989,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 小幅空格。
 %    \begin{macrocode}
-    { h sep         } { 5    pt },
-    { v sep         } { 1    ex },
+    { h sep          } { 5    pt },
+    { v sep          } { 1    ex },
 %    \end{macrocode}
 % 章节标题前后间距。
 %    \begin{macrocode}
-    { beforechapter } { 10   pt },
-    { after chapter } { 60   pt }
+    { before chapter } { 10   pt },
+    { after  chapter } { 60   pt }
   }
   { \@@_define_dim:nn #1 }
 %    \end{macrocode}
