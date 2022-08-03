@@ -30,26 +30,22 @@
     % type = bachelor|master|doctor|postdoc, % 文档类型，默认为本科生
     % degree = academic|professional,        % 学位类型，默认为学术型
     %
-    % nl-cover = true|false,  % 是否需要国家图书馆封面，默认关闭
+    % nl-cover  = true|false, % 是否需要国家图书馆封面，默认关闭
     % decl-page = true|false, % 是否需要诚信承诺书或原创性声明，默认关闭
     %
+    %   页面模式，详见手册说明
     % draft,                  % 开启草稿模式
     % anonymous,              % 开启盲审模式
+    % minimal,                % 开启最小化模式
     %
     %   单双面模式，默认为适合印刷的双面模式
     % oneside,                % 单面模式，无空白页
     % twoside,                % 双面模式，每一章从奇数页开始
     %
-    %  字体设置，不填写则自动调用系统预装字体
+    %   字体设置，不填写则自动调用系统预装字体
     % latin-font = win|mac|gyre|none,
     % cjk-font   = win|mac|fandol|founder|noto|source|none,
-    % math-font  = cambria|lm|termes|xits,   % 完整列表见手册
-    %
-    %   关闭内置宏包
-    % biblatex       = false,
-    % cleveref       = false,
-    % create-theorem = false,
-    % unicode-math   = false
+    % math-font  = cambria|newcm|xits,   % 完整列表见手册
   ]{njuthesis}
 
 % 模板选项设置，包括个人信息、外观样式等
@@ -57,12 +53,12 @@
 \input{njuthesis-setup.def}
 
 % 自行载入所需宏包
-% \usepackage{subcaption} % 用于嵌套小幅图像，比 subfig 和 subfigure 好用
-% \usepackage{wrapfig} % 用于生成文字环绕的图片
-% \usepackage{siunitx} % 用于书写单位符号
-% \usepackage[version=4]{mhchem} % 用于绘制分子式
-% \usepackage{listings} % 用于展示代码
-% \usepackage{algorithm,algorithmic} % 用于展示算法伪代码
+% \usepackage{subcaption} % 嵌套小幅图像，比 subfig 和 subfigure 更新更好
+% \usepackage{siunitx} % 标准单位符号
+% \usepackage[version=4]{mhchem} % 物理百宝箱
+% \usepackage[version=4]{mhchem} % 绘制分子式
+% \usepackage{listings} % 展示代码
+% \usepackage{algorithm,algorithmic} % 展示算法伪代码
 
 % 设置图片存储位置
 % \graphicspath{{figure/}}
@@ -122,10 +118,10 @@
 
 % 建议将论文内容拆分为多个文件
 % 即新建一个 chapters 文件夹
-% 把每一章的内容单独放入一个 tex 文件
-% 然后在这里用 \input{} 导入，例如
-%   \input{chapters/introduction}
-%   \input{chapters/environments}
+% 把每一章的内容单独放入一个 .tex 文件
+% 然后在这里用 \include 导入，例如
+%   \include{chapters/introduction}
+%   \include{chapters/environments}
 
 \chapter{引言}
 

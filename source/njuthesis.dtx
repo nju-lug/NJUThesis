@@ -556,10 +556,14 @@ To produce the documentation run the original source files ending with
 %   本模板之版权隶属于 © 2021 - 2022 南京大学 Linux 用户组。
 %
 % \subparagraph{发布和修改}
-%   本模板的发布和（或）修改遵守 LaTeX Project Public License（版本 1.3c 或更高）的条款。该许可证的最新版本位于 \url{http://www.latex-project.org/lppl.txt}，1.3c 及更新的版本随附于 2003/12/01 版本以后的所有 \LaTeX 发行版。
+%   本模板的发布和（或）修改遵守 LaTeX Project Public License（版本 1.3c 或更高）
+% 的条款。该许可证的最新版本位于 \url{http://www.latex-project.org/lppl.txt}，
+% 1.3c 及更新的版本随附于 2003/12/01 版本以后的所有 \LaTeX 发行版。
 %
 % \subparagraph{联系作者}
-%   如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，请通过 \href{https://github.com/nju-lug/NJUThesis/issues}{GitHub Issue} 或者 QQ 群聊\footnote{群号是 991559926。}联系 NJU LUG。
+%   如果您在使用最新版模板时发现了任何问题，抑或有意向参与本模板的维护，
+% 请通过 \href{https://github.com/nju-lug/NJUThesis/issues}{GitHub Issue}
+% 或者 QQ 群聊\footnote{群号是 991559926。}联系 NJU LUG。
 %
 %
 % \section{安装}
@@ -1020,27 +1024,41 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsubsection{可选宏包}
+% \label{subsubsec:optional-pkg}
 %
-% \begin{function}[added=2022-07-03]{
+% \begin{function}[added=2022-08-03]{
 %   biblatex,
 %   cleveref,
 %   create-theorem,
+%   enumitem,
+%   footmisc,
 %   unicode-math}
 %   \begin{syntax}
 %     biblatex       = <\TTF>
 %     cleveref       = <\TTF>
-%     create-theorem = <\TTF>
+%     create-theorem = <\TFF>
+%     enumitem       = <\TTF>
+%     footmisc       = <\TTF>
 %     unicode-math   = <\TTF>
 %   \end{syntax}
-% 是否默认载入某些宏包，默认均是。这里宏包名和选项名是一致的。
+% 是否默认载入某些宏包，除去 \pkg{create-theorem} 默认均是。
+% 这里宏包名和选项名是一致的。
 % \end{function}
 %
-% 为了跟进现代 \LaTeX{} 技术的发展趋势，本模板采用一系列新开发的宏包
-% 作为相关功能的解决方案。这些宏包为：
+% \begin{function}[added=2022-08-03]{minimal}
+%   \begin{syntax}
+%     <minimal>
+%   \end{syntax}
+% 不自动载入所有上述宏包的最小化模式。
+% \end{function}
+%
+% 本模板内置了一系列宏包以进行功能扩展。这些宏包为：
 % \begin{description}
 %   \item[\pkg{biblatex}] 复杂参考文献数据的处理。
 %   \item[\pkg{cleveref}] 按来源类型自动处理引用标签。
 %   \item[\pkg{create-theorem}] 使用 \LaTeX3 编写的定理类环境定制界面。
+%   \item[\pkg{enumitem}] 列表环境样式定制。
+%   \item[\pkg{footmisc}] 脚注样式定制。
 %   \item[\pkg{unicode-math}] 支持 Unicode 数学字体。
 % \end{description}
 %
@@ -1581,16 +1599,20 @@ To produce the documentation run the original source files ending with
 % \subsubsection{列表}
 %
 % 模板默认载入 \pkg{enumitem} 宏包，对三个常用列表环境内的条目间距进行压缩。
+% 可以通过第 \ref{subsubsec:optional-pkg} 节提供的选项禁用该宏包。
 %
 % \subsubsection{脚注}
 %
-% \begin{function}[added=2022-05-01,updated=added=2022-08-02]{footnote/style}
+% \begin{function}[added=2022-05-01,updated=2022-08-03]{footnote/style}
 %   \begin{syntax}
 %     style = <(plain)|pifont>
 %   \end{syntax}
 % 设置脚注编号样式。默认为普通数字，使用 |pifont|
 % 选项可修改为带圈数字。单一页面内请尽量避免超过 10 条脚注。
 % \end{function}
+%
+% 脚注样式的调整依赖 \pkg{footmisc}。如果希望使用 \LaTeX 的默认样式，
+% 可以通过第 \ref{subsubsec:optional-pkg} 节提供的选项禁用该宏包。
 %
 % \subsubsection{数学符号}
 %
@@ -1602,6 +1624,9 @@ To produce the documentation run the original source files ending with
 % 、\pkg{upgreek} 等宏包。需要使用新方案提供的相应命令。
 % 例如，加粗数学符号的命令为 \tn{symbf}。
 % 更多细节请查阅 \pkg{unicode-math} 手册。
+%
+% 如果您对此并不熟悉，也可以通过第 \ref{subsubsec:optional-pkg}
+% 节提供的选项禁用该宏包。\footnote{禁用后本节提供的设置均不会生效。}
 %
 % 中文论文的数学符号默认遵循 GB/T 3102--93《物理科学和技术中
 % 使用的数学符号》\cite{gb-3102-93}，该标准参照采纳 ISO 31-11:1992，
@@ -1711,26 +1736,13 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{定理环境}
 %
-% 本模板也提供了一系列的数学定理环境。
+% 在打开第 \ref{subsubsec:optional-pkg} 节介绍的的 \opt{create-theorem} 选项
+% 后，本模板会利用该宏包预定义若干定理类环境，如表~\ref{tab:mathenv} 所示。
+% 其中证明环境较为特殊，无编号且会在结尾添加证毕符号（$\mdwhtsquare$）。
 %
-% \begin{function}[added=2022-04-21]{theorem/predefine}
-%   \begin{syntax}
-%     predefine = <\TTF>
-%   \end{syntax}
-% 是否使用模板默认配置的定理环境。默认会载入 \pkg{ntheorem} 并进行相关设置。
-% \end{function}
-%
-% 全部预定义的数学定理环境如表~\ref{tab:mathenv} 所示。
-% 其中证明环境较为特殊，会在结尾添加证毕符号（\mdwhtsquare）。
-% 当然，你也可以创建属于自己的定理环境，其样式继承自前部的设定。
-%
-% \begin{function}{\newtheorem,\newtheorem*,\renewtheorem}
-%   \begin{syntax}
-%     \cs{newtheorem}\marg{环境名称}\marg{标题名称}\oarg{计数器范围}
-%   \end{syntax}
-% 定义新的定理环境或者修改已有的定理环境。带星号的命令不包含计数器。
-% 本模板中请在 |\begin{document}| 后进行定制。
-% \end{function}
+% \pkg{create-theorem} 包相提供了清晰的键值接口，支持在导言区
+% 对已经定义的环境进行修改。详细用法请参考其手册\cite{create-theorem}。
+% 由于这个宏包较新，模板并不会默认载入它。
 %
 % \begin{table}[htbp]
 %   \centering
@@ -1759,51 +1771,6 @@ To produce the documentation run the original source files ending with
 %   \end{definition}
 % \end{latexexample}
 %
-% 对于预置的定理环境样式，本模板也提供了一系列选项进行修改。
-% 这些选项目前只对模板预定义的若干种环境有效。
-%
-% \begin{function}[added=2022-04-21]{theorem/style}
-%   \begin{syntax}
-%     style = <(plain)|break|change|margin|empty|...>
-%   \end{syntax}
-% 定理基本样式。等效于 \cs{theoremstyle}\marg{样式名称}。
-% \end{function}
-%
-% \begin{function}[added=2022-04-21]{theorem/header-font}
-%   \begin{syntax}
-%     header-font = \meta{头部字体格式}
-%   \end{syntax}
-% 定理头部字体格式。等效于 \cs{theoremheaderfont}\marg{格式}。
-% \end{function}
-%
-% \begin{function}[added=2022-04-21]{theorem/body-font}
-%   \begin{syntax}
-%     body-font = \meta{内部字体格式}
-%   \end{syntax}
-% 定理内部字体格式。等效于 \cs{theorembodyfont}\marg{格式}。
-% \end{function}
-%
-% \begin{function}[added=2022-04-21]{theorem/counter}
-%   \begin{syntax}
-%     counter = <part|(chapter)|section|...>
-%   \end{syntax}
-% 定理计数器范围。
-% \end{function}
-%
-% 模板的默认设置等效于
-%
-% \begin{latexexample}[moretexcs={\njusetup,\bfseries,\itshape,\mdwhtsquare},
-%   emph={[2]theorem}]
-%   \njusetup[theorem]{
-%       predefine   = true,
-%       style       = plain,
-%       header=font = \normalfont \bfseries,
-%       body-font   = \itshape,
-%       qed-symbol  = \ensuremath { \mdwhtsquare },
-%       counter     = chapter
-%   }
-% \end{latexexample}
-%
 %
 % \subsubsection{编号}
 %
@@ -1819,10 +1786,15 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{参考文献}
 %
-% 本模板默认载入 \pkg{biblatex} 宏包，使用 \hologo{biber} 作为后端\footnote{出于简化命令的考虑，现阶段并不计划支持 \hologo{BibTeX}。}，通过 \pkg{biblatex-gb7714-2015}\cite{biblatex-gb7714-2015} 实现 GB/T 7714--2015\cite{gb-t-7714-2015} 规定的参考文献著录规则国家标准。
+% 本模板默认载入 \pkg{biblatex} 宏包，使用 \hologo{biber} 作为后端，
+% 通过 \pkg{biblatex-gb7714-2015}\cite{biblatex-gb7714-2015} 实现
+% GB/T 7714--2015 \cite{gb-t-7714-2015} 规定的参考文献著录规则国家标准。
+% 需要使用 |biber| 命令编译才会显示正确的条目序号，详情请参照第
+% \ref{subsubsec:compileseq} 节。本节提供的所有选项均基于此方案。
 %
-% 需要使用 |biber| 命令编译才会显示正确的条目序号，详情请参照 \ref{subsubsec:compileseq}。
-%
+% 出于简化命令的考虑，本模板并不计划支持 \hologo{BibTeX}，但您可以通过第
+% \ref{subsubsec:optional-pkg} 节提供的选项禁用默认的参考文献工具，
+% 自行利用 \pkg{gbt7714} 等宏包完成参考文献样式的配置。
 %
 % \subsubsection{选项}
 %
@@ -1834,10 +1806,17 @@ To produce the documentation run the original source files ending with
 % 或自行填入任意其他 \pkg{biblatex} 样式。默认为顺序编码制。
 % \end{function}
 %
-% 参考文献样式是一个整体的设置，会对正文中引用的文献的标注方法和参考文献表的输出格式产生影响。根据国家规定\cite{gb-t-7714-2015}，可以按照参考文献表的组织方式分为以下两种样式：
+% 参考文献样式是一个整体的设置，会对正文中引用的文献的标注方法和
+% 参考文献表的输出格式产生影响。根据国家规定\cite{gb-t-7714-2015}，
+% 可以按照参考文献表的组织方式分为以下两种样式：
 % \begin{description}
-%   \item[顺序编码制] 顺序编码制是按正文中引用的文献出现的先后顺序连续编码，将序号置于方括号中。参考文献表采用顺序编码制组织时，各篇文献应按正文部分标注的序号依次列出。
-%   \item[著者-出版年制] 正文引用的文献采用著者-出版年制时，各篇文献的标注内容由著者姓氏与出版年构成，并置于"()"内。参考文献表采用著者-出版年制组织时，各篇文献首先按文种集中，然后按著者字顺和出版年排列。
+%   \item[顺序编码制] 顺序编码制是按正文中引用的文献出现的先后顺序连续
+%                     编码，将序号置于方括号中。参考文献表采用顺序编码
+%                     制组织时，各篇文献应按正文部分标注的序号依次列出。
+%   \item[著者-出版年制] 正文引用的文献采用著者-出版年制时，各篇文献的
+%                        标注内容由著者姓氏与出版年构成，并置于"()"内。
+%                        参考文献表采用著者-出版年制组织时，各篇文献首
+%                        先按文种集中，然后按著者字顺和出版年排列。
 % \end{description}
 %
 % 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号
@@ -1902,10 +1881,11 @@ To produce the documentation run the original source files ending with
 %   \njusetup[bib/option]{refsection = chapter}
 % \end{latexexample}
 %
-% 如果开启了草稿模式，您可能会注意到部分条目存在超宽的问题。
-% 对此，需要将 \pkg{biblatex-gb7714-2015} 宏包手动更新至 2022-04-16 以后的版本。
+% 如果开启了草稿模式，您可能会注意到部分条目存在超宽的问题。对此，
+% 需要将 \pkg{biblatex-gb7714-2015} 宏包手动更新至 2022-04-16 以后的版本。
 % 此外，由于 \TeX{} 预置的断词位置是有限的，不能覆盖学术上使用的复杂词汇，
-% 您也可以自行在 \file{.bib} 文件中设置断行点，例如可以将 graphene 一词修改为 graph|\-|ene。
+% 您也可以自行在 \file{.bib} 文件中设置断行点，例如可以将 graphene
+% 一词修改为 graph|\-|ene。
 %
 % \subsubsection{正文引用}
 %
@@ -1917,7 +1897,9 @@ To produce the documentation run the original source files ending with
 % 在正文中引用参考文献。
 % \end{function}
 %
-% 引用命令 \tn{cite} 含有多个变体，以便使用文献条目中不同的信息域。在两种参考文献样式下，这些命令的行为具体存在一些差异，详见表 \ref{tab:numeric-style} 和表 \ref{tab:author-year-style}。
+% 引用命令 \tn{cite} 含有多个变体，以便使用文献条目中不同的信息域。
+% 在两种参考文献样式下，这些命令的行为具体存在一些差异，
+% 详见表 \ref{tab:numeric-style} 和表 \ref{tab:author-year-style}。
 %
 % \begin{table}[ht]
 %   \centering
@@ -1968,7 +1950,9 @@ To produce the documentation run the original source files ending with
 %
 % \subparagraph{使用 EndNote}
 %
-% 南京大学信息化建设管理服务中心已购买 \href{https://itsc.nju.edu.cn/EndNote/list.htm}{EndNote} 供全校师生免费使用，最新版为 EndNote 20。
+% 南京大学信息化建设管理服务中心已购买
+% \href{https://itsc.nju.edu.cn/EndNote/list.htm}{EndNote}
+% 供全校师生免费使用，最新版为 EndNote 20。
 %
 % \subparagraph{使用 JabRef}
 %
@@ -1979,7 +1963,10 @@ To produce the documentation run the original source files ending with
 % \subparagraph{使用 Zotero}
 %
 % \href{https://www.zotero.org/}{Zotero} 也是一款开源、跨平台的文献管理软件。
-% Zotero 更为通用，其功能可以通过 \href{https://github.com/l0o0/jasminum}{Jasminum}、\href{https://github.com/retorquere/zotero-better-bibtex}{Better BibTeX}、\href{https://github.com/bwiernik/zotero-shortdoi}{DOI Manager} 等第三方插件，以及 Zotero Connector 浏览器插件进行增强。
+% Zotero 更为通用，其功能可以通过 \href{https://github.com/l0o0/jasminum}{Jasminum}、
+% \href{https://github.com/retorquere/zotero-better-bibtex}{Better BibTeX}、
+% \href{https://github.com/bwiernik/zotero-shortdoi}{DOI Manager} 等第三方插件，
+% 以及 Zotero Connector 浏览器插件进行增强。
 %
 %
 % \subsection{特殊页面}
@@ -2082,8 +2069,10 @@ To produce the documentation run the original source files ending with
 % 分别生成目录、图片目录和表格目录。
 % \end{function}
 %
-% 目录页的标题名称一般无需修改。用户可以选择使用 \pkg{ctex} 宏集提供的 \tn{ctexset} 命令进行自定义。
-% \begin{latexexample}[moretexcs={\ctexset},emph={[1]contentsname,listfigurename,listtablename}]
+% 目录页的标题名称一般无需修改。用户可以选择使用 \pkg{ctex} 宏集提供的
+%  \tn{ctexset} 命令进行自定义。
+% \begin{latexexample}[moretexcs={\ctexset},
+%   emph={[1]contentsname,listfigurename,listtablename}]
 %   \ctexset{
 %     contentsname   = { 目\hspace{2em}次 },
 %     listfigurename = { 插图清单 },
@@ -2165,7 +2154,10 @@ To produce the documentation run the original source files ending with
 %     Nemec1997-209-214,Chiani1998-2998-3008,Chiani1998a}
 % \end{latexexample}
 %
-% 为了便于识别，成果列表中默认对发表年份进行加粗处理。而对作者姓名的处理较为复杂。利用 \pkg{biblatex} 的数据注解机制可以实现对特定文献信息的样式修改\footnote{\url{https://blog.csdn.net/xenonhu/article/details/120853247}}，在此可以用来实现指定作者姓名的突出。经过注解后的一则参考文献条目如下所示：
+% 为了便于识别，成果列表中默认对发表年份进行加粗处理。而对作者姓名的处理较为复杂。
+% 利用 \pkg{biblatex} 的数据注解机制可以实现对特定文献信息的样式修改
+% \footnote{\url{https://blog.csdn.net/xenonhu/article/details/120853247}}，
+% 在此可以用来实现指定作者姓名的突出。经过注解后的一则参考文献条目如下所示：
 % \begin{latexexample}[emph={[1]@inproceedings},emph={[2]author}]
 %   @inproceedings{Nemec1997-209-214,
 %     title = {Force control of redundant robots},
@@ -2178,9 +2170,16 @@ To produce the documentation run the original source files ending with
 %     year = {1997}
 %   }
 % \end{latexexample}
-% 其中 |author+an| 提供了注解的标记，格式为 \meta{序号}|=|\meta{标签}，以上条目中即是将第二名作者加入了指定论文作者的注解。\tn{njupaperlist} 会识别 |thesisauthor| 标签，为其指代的作者姓名进行加粗下划线处理。
+% 其中 |author+an| 提供了注解的标记，格式为 \meta{序号}|=|\meta{标签}，
+% 以上条目中即是将第二名作者加入了指定论文作者的注解。\tn{njupaperlist}
+% 会识别 |thesisauthor| 标签，为其指代的作者姓名进行加粗下划线处理。
 %
-% 除手动进行标记以外，以下也提供一种自动化处理办法。下载 \href{https://github.com/hushidong/biblatex-map}{bibmap} 全部文件后，修改主目录下的 \file{bibmapaddauthoran.py} 中 |fieldsource| 为需要匹配的姓名，将需要进行标记的 \file{.bib} 文件拷贝至本目录（此处使用 \file{test.bib} 进行示范），运行以下命令生成的参考文献数据源即可被成果列表识别加粗。
+% 除手动进行标记以外，以下也提供一种自动化处理办法。
+% 下载 \href{https://github.com/hushidong/biblatex-map}{bibmap}
+% 全部文件后，修改主目录下的 \file{bibmapaddauthoran.py} 中 |fieldsource|
+% 为需要匹配的姓名，将需要进行标记的 \file{.bib} 文件拷贝至本目录
+% （此处使用 \file{test.bib} 进行示范），运行以下命令生成的参考文献数据源
+% 即可被成果列表识别加粗。
 %
 % \begin{shellexample}[morekeywords={python},deletekeywords={test}]
 %   python bibmap.py test.bib -m bibmapaddauthoran.py
@@ -2272,41 +2271,38 @@ To produce the documentation run the original source files ending with
 %         它们属于 \pkg{l3packages} 宏集。
 %   \item \cls{ctexbook}，提供中文排版的通用框架。属于 C\TeX
 %         宏集 \cite{CTeX}。
-%   \item \pkg{mathtools}，增强数学功能。
-%   \item \pkg{unicode-math}，负责处理 Unicode 编码的 OpenType 数学字体。
+%   \item \pkg{amsmath}，对 \LaTeX{} 的数学排版功能进行了全面扩展。
+%         属于 \hologo{AmSLaTeX} 套件。
 %   \item \pkg{geometry}，用于调整页面尺寸。
 %   \item \pkg{setspace}，调整行距。
 %   \item \pkg{fancyhdr}，处理页眉页脚。
-%   \item \pkg{footmisc}，处理脚注。
-%   \item \pkg{ntheorem}，提供增强版的定理类环境。
-%   \item \pkg{enumitem}，调整列表环境。
 %   \item \pkg{graphicx}，提供图形插入的接口。
 %   \item \pkg{booktabs}，绘制三线表。
 %   \item \pkg{caption}，用于设置题注。
 %   \item \pkg{hyperref}，提供交叉引用、超链接、电子书签等功能。
-%   \item \pkg{cleveref}，用于自动生成引用标签。
-%   \item \pkg{biblatex}，提供参考文献解决方案。
 % \end{itemize}
 %
-% 以下宏包可能被隐式载入：
+% 以下宏包可以在文档类选项中禁用：
 % \begin{itemize}
-%   \item \pkg{xcolor}，提供色彩支持。
-%   \item \pkg{amsmath}，对 \LaTeX{} 的数学排版功能进行了
-%         全面扩展。属于 \hologo{AmSLaTeX} 套件。
-%   \item \pkg{biblatex-gb7714-2015}，用于生成国标下的参考文献样式。
-%   \item \pkg{xits}，提供数学字体。
+%   \item \pkg{amsthm} 和 \pkg{create-theorem}，提供定理类环境支持。
+%   \item \pkg{unicode-math}，负责处理 Unicode 编码的 OpenType 数学字体。
+%   \item \pkg{footmisc}，处理脚注。
+%   \item \pkg{enumitem}，调整列表环境。
+%   \item \pkg{cleveref}，用于自动生成引用标签。
+%   \item \pkg{biblatex} 和 \pkg{biblatex-gb7714-2015}，用于生成国标下的参考文献样式。
 % \end{itemize}
 %
 % 在开启某些选项时，本模板也会调用以下宏包：
 % \begin{itemize}
-%   \item \pkg{fandol}、\pkg{tex-gyre} 和 \pkg{tex-gyre-math}，提供自由字体。
+%   \item \pkg{fandol}、\pkg{tex-gyre}、\pkg{tex-gyre-math}、\pkg{xits} 等，
+%         提供自由字体。
 %   \item \pkg{emptypage}，在双面模式下清空空白页的页眉、页脚和页码。
-%   \item \pkg{njuvisual}，用于绘制封面的校名校徽。
+%   \item \pkg{tikz} 和 \pkg{njuvisual}，用于绘制封面的校名校徽。
 %   \item \pkg{tabularray}，用于绘制研究生的出版授权书信息表格。
 %   \item \pkg{xeCJKfntef} 或 \pkg{lua-ul}，用于在对应引擎下绘制下划线。
 % \end{itemize}
 %
-% 下列宏包会与本模板产生冲突，或者不能发挥预期作用：
+% 下列宏包会与本模板的默认配置产生冲突，或者不能发挥预期作用：
 % \begin{itemize}
 %   \item \pkg{natbib} 和 \pkg{gbt7714} 等 \hologo{BibTeX} 相关的参考文献宏包。
 %   \item \pkg{bm} 等使用传统数学字体配置方案的宏包。
@@ -2430,6 +2426,13 @@ To produce the documentation run the original source files ending with
 % \newblock (2021-12-11)
 % \urlprefix\url{https://ctan.org/pkg/biblatex-gb7714-2015}
 % \urlprefix\CTANurl[文档：]{biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf}
+%
+% \bibitem{create-theorem}
+% \textsc{Xu J}.
+% \newblock \textit{Initializing theorem-like environments with multilingual support} [EB/OL].
+% \newblock (2022-07-31)
+% \urlprefix\url{https://www.ctan.org/pkg/create-theorem}
+% \urlprefix\CTANurl[文档：]{macros/latex/contrib/create-theorem/create-theorem-doc.pdf}
 %
 % \bibitem{CTeX}
 % \textsc{CTEX.ORG}.
@@ -2873,17 +2876,6 @@ To produce the documentation run the original source files ending with
   { \dim_const:cn  { c_@@_ #1 _dim  } { #2 } }
 \cs_new_protected:Npn \@@_define_skip:nn #1#2
   { \skip_const:cn { c_@@_ #1 _skip } { #2 } }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_add_theorem_type:nnn}
-% 添加已知的定理环境类型。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_add_theorem_type:nnn #1#2#3
-  {
-    \clist_gput_right:Nn \g_@@_theorem_type_clist { #1 }
-    \@@_define_name:nnn { #1 } { #2 } { #3 }
-  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3618,9 +3610,9 @@ To produce the documentation run the original source files ending with
     bm-name     = \l_@@_bm_name_tl,
     bookmark    =
       {
-        toc  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_toc:nn   },
-        pdf  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_pdf:nn   },
-        none = { \cs_set_eq:NN \@@_bookmark:nn \_@@_do_nothing:nn }
+        toc  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_toc:nn },
+        pdf  = { \cs_set_eq:NN \@@_bookmark:nn \__nju_bookmark_pdf:nn },
+        none = { \cs_set:Nn    \@@_bookmark:nn { } }
       }
   }
   {
@@ -3640,13 +3632,6 @@ To produce the documentation run the original source files ending with
     \group_end:
     \__nju_vskip:N \l_@@_bottom_skip
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_do_nothing:nn}
-% 吸收两个参数的摸鱼函数。
-%    \begin{macrocode}
-\cs_new:Npn \@@_do_nothing:nn #1#2 { }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3764,6 +3749,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math-font}
 % \changes{v1.0}{2022/07/02}{增加数学字库选择功能。}
 % 数学字体选项。
+% 由 \pkg{unicode-math} 指定 \XeTeX 和 \LuaTeX 下使用的数学字体。
 %    \begin{macrocode}
     math-font         .choices:nn =
       {
@@ -3819,6 +3805,12 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\g_@@_name_optional_pkg_clist}
+%    \begin{macrocode}
+\clist_new:N \g_@@_name_optional_pkg_clist
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_define_pkg_keys:nnn}
 % \begin{arguments}
 %   \item 宏包名
@@ -3839,6 +3831,7 @@ To produce the documentation run the original source files ending with
         \bool_if:cT { g_@@_opt_load_ #2 _bool }
           { \RequirePackage { #1 } }
       }
+    \clist_put_right:Nn \g_@@_name_optional_pkg_clist {#1}
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3873,6 +3866,23 @@ To produce the documentation run the original source files ending with
     { unicode-math   } { um    } { true  }
   }
   { \@@_define_pkg_keys:nnn #1 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{minimal}
+% \changes{v1.0}{2022/08/03}{新增最小化载入宏包选项。}
+% 最小化模式，不载入进行功能拓展的额外宏包。
+%    \begin{macrocode}
+\keys_define:nn { nju }
+  {
+    minimal .value_forbidden:n = true,
+    minimal            .code:n =
+      {
+        \clist_map_inline:Nn \g_@@_name_optional_pkg_clist
+          { \keys_set:nn { nju } { ##1 = false } }
+        \keys_set:nn { nju } { math-font = none }
+      }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4052,20 +4062,19 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{载入宏包}
 %
-% \changes{v0.14}{2021/12/21}{移除内置的 \pkg{hologo}。}
-% \changes{v0.15}{2022/01/17}{移除内置的 \pkg{url}。}
+% \changes{v0.14}{2021/12/21}{移除 \pkg{hologo}。}
+% \changes{v0.15}{2022/01/17}{移除 \pkg{url}。}
 % \changes{v0.13}{2021/12/13}{使用 \pkg{ntheorem} 创建定理环境，
-%   删除 \pkg{amsthm} 和 \pkg{thmtools}。}
+%   移除 \pkg{amsthm} 和 \pkg{thmtools}。}
 % \changes{v0.16}{2022/03/19}{不显式载入 \pkg{amsmath}。}
 % \changes{v0.18}{2022/04/20}{不强制载入 \pkg{ntheorem}。}
-% \changes{v1.0}{2022/07/03}{不强制载入 \pkg{mathtools}。}
+% \changes{v1.0}{2022/07/03}{移除 \pkg{mathtools}。}
+% \changes{v1.0}{2022/08/03}{移除 \pkg{ntheorem}。}
 %
-% \pkg{unicode-math} 指定了 \XeTeX 和 \LuaTeX 下使用的数学字体。
 %    \begin{macrocode}
 \@@_loadpkg_enit:
 \@@_loadpkg_fm:
 \@@_loadpkg_um:
-\@@_loadpkg_crthm:
 %    \end{macrocode}
 %
 % 载入各种宏包。
@@ -4098,18 +4107,24 @@ To produce the documentation run the original source files ending with
 \@@_loadpkg_cref:
 %    \end{macrocode}
 %
-% 在双面模式下，使用 \pkg{emptypage} 清除空白页的页眉、页脚和页码。
+% \pkg{create-theorem} 依赖 \pkg{amsthm} 实现 QED 符号等功能。
 %    \begin{macrocode}
-\bool_if:NT \g_@@_opt_twoside_bool { \RequirePackage{ emptypage } }
+\bool_if:NT \g_@@_opt_load_crthm_bool
+  { \RequirePackage{ amsthm, create-theorem } }
 %    \end{macrocode}
 %
-% \changes{v0.13}{2021/12/13}{删除会与 \pkg{ntheorem} 冲突的 \pkg{microtype}。}
+% 在双面模式下，使用 \pkg{emptypage} 清除空白页的页眉、页脚和页码。
+%    \begin{macrocode}
+\bool_if:NT \g_@@_opt_twoside_bool { \RequirePackage { emptypage } }
+%    \end{macrocode}
+%
+% \changes{v0.13}{2021/12/13}{移除会与 \pkg{ntheorem} 冲突的 \pkg{microtype}。}
 % \begin{macro}{\njuline}
 % 针对编译引擎，使用不同的宏包构建可以对中文正常换行的下划线命令。
 %    \begin{macrocode}
 \sys_if_engine_xetex:T
   {
-    \RequirePackage{xeCJKfntef}
+    \RequirePackage { xeCJKfntef }
     \NewDocumentCommand \njuline { m } { \CJKunderline{#1} }
   }
 %    \end{macrocode}
@@ -4117,7 +4132,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \sys_if_engine_luatex:T
   {
-    \RequirePackage{lua-ul}
+    \RequirePackage { lua-ul }
     \NewDocumentCommand \njuline { m } { \underLine{#1} \null }
   }
 %    \end{macrocode}
@@ -4135,7 +4150,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_if_pkg_loaded:nTF}
 % 等效于 \cs{IfPackageLoadedTF}。
 %    \begin{macrocode}
-\prg_new_conditional:Npnn \@@_if_pkg_loaded:n #1 { T, TF }
+\prg_new_conditional:Npnn \@@_if_pkg_loaded:n #1 { T }
   { \@ifpackageloaded {#1} { \prg_return_true: } { \prg_return_false: } }
 %    \end{macrocode}
 % \end{macro}
@@ -4159,6 +4174,12 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \pkg{create-theorem} 包在 2022-05-31 的更新中提供了 QED 符号。
+%    \begin{macrocode}
+\bool_if:NT \g_@@_opt_load_crthm_bool
+  { \@@_check_pkg_version:nnn { create-theorem } { 2022/05/31 } { 2022-05-31 } }
+%    \end{macrocode}
+%
 % 检查绘制下划线所需的 \pkg{luatexja} 包版本。该宏包在 2021-09-18 的更新
 % 解决了下划线中断问题，然而在 2021-10-24 的更新才提供了正确的内嵌日期。
 %    \begin{macrocode}
@@ -4167,9 +4188,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \changes{v0.18}{2022/04/28}{增加宏包冲突检查。}
-%    \begin{macrocode}
-\RequirePackage { filehook }
-%    \end{macrocode}
+% \changes{v1.0}{2022/08/03}{移除 \pkg{filehook}，改用 \pkg{ctex} 内置的宏包钩子。}
 %
 % \begin{macro}{\@@_check_pkg_conflict:nn}
 % 检查用户载入的宏包是否会与预置宏包发生冲突。
@@ -4197,7 +4216,7 @@ To produce the documentation run the original source files ending with
 %
 % 检查数学宏包冲突。
 %    \begin{macrocode}
-\@@_if_pkg_loaded:nT { unicode-math }
+\bool_if:NTF \g_@@_opt_load_um_bool
   {
     \clist_map_inline:nn
       {
@@ -5503,11 +5522,16 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_cref_name:n,\@@_cref_name:V}
 % 用于修改 \pkg{cleveref} 的标签名称的辅助函数。
+% \begin{arguments}
+%   \item 类型，|clist| 型
+%   \item 标签名
+%   \item 标签名（复数）
+% \end{arguments}
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cref_name:n #1
   {
     \clist_map_inline:nn { #1 }
-      { \crefname {##1} { \@@_name:n {##1} } { \@@_name:n { ##1 _en } } }
+      { \crefname {##1} { \@@_name:n {##1} } { \@@_name:n {##1} } }
   }
 \cs_generate_variant:Nn \@@_cref_name:n { V }
 %    \end{macrocode}
@@ -5515,7 +5539,7 @@ To produce the documentation run the original source files ending with
 %
 % 修改 \pkg{cleveref} 的标签格式。默认在名称后面添加空格，删除公式编号的括号。
 %    \begin{macrocode}
-\@@_if_pkg_loaded:nT { cleveref }
+\bool_if:NT \g_@@_opt_load_cref_bool
   {
     \crefdefaultlabelformat { #2#1#3\, }
     \crefformat { equation      } { 公式~#2#1#3~   }
@@ -5527,7 +5551,6 @@ To produce the documentation run the original source files ending with
 % 修改 \pkg{cleveref} 的标签名称。
 %    \begin{macrocode}
     \@@_cref_name:n { figure, table, appendix, proof }
-    \@@_cref_name:V \g_@@_theorem_type_clist
   }
 %    \end{macrocode}
 %
@@ -5536,7 +5559,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.18}{2022/05/01}{提供脚注设置项。}
 % ^^A 来自 fduthesis
 %    \begin{macrocode}
-\tl_new:N \l_@@_fn_style_tl
+\tl_new:N \g_@@_fn_style_tl
 \keys_define:nn { nju / footnote }
   {
 %    \end{macrocode}
@@ -5547,7 +5570,7 @@ To produce the documentation run the original source files ending with
 % 若使用 \opt{pifont} 类型，则需引入 \pkg{pifont} 宏包。
 %    \begin{macrocode}
       {
-        \tl_gset_eq:NN \l_@@_fn_style_tl \l_keys_choice_tl
+        \tl_gset_eq:NN \g_@@_fn_style_tl \l_keys_choice_tl
         \int_compare:nT { \l_keys_choice_int = 2 }
           { \RequirePackage { pifont } }
       }
@@ -5570,7 +5593,7 @@ To produce the documentation run the original source files ending with
 \tl_const:Nn \c_@@_fn_style_pifont_tl { pifont }
 \cs_new:Npn \@@_footnote_number:N #1
   {
-    \tl_case:NnF \l_@@_fn_style_tl
+    \tl_case:NnF \g_@@_fn_style_tl
       {
 %    \end{macrocode}
 % \opt{plain} 类型直接使用计数器 |footnote| 的值。
@@ -5595,7 +5618,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\thefootnote}
 % 重定义脚注编号。
 %    \begin{macrocode}
-\@@_if_pkg_loaded:nT { footmisc }
+\bool_if:NT \g_@@_opt_load_fm_bool
   {
     \cs_set:Npn \thefootnote { \@@_footnote_number:N \c@footnote }
 %    \end{macrocode}
@@ -5680,91 +5703,38 @@ To produce the documentation run the original source files ending with
 %
 % 缩减列表环境的条目间距。
 %    \begin{macrocode}
-\@@_if_pkg_loaded:nT { enumitem } { \setlist { noitemsep } }
+\bool_if:NT \g_@@_opt_load_enit_bool { \setlist { noitemsep } }
 %    \end{macrocode}
 %
 %
 % \subsection{定理环境}
 % \changes{v0.18}{2022/04/21}{新增定理环境的若干定制项。}
+% \changes{v1.0}{2022/08/03}{删除 \opt{nju/theorem} 类。}
 %
-% \begin{macro}{theorem/style,theorem/header-font,theorem/body-font,
-%   theorem/qed-symbol,theorem/counter}
-% 定义 |nju/theorem| 键值类。
-% 目前这套选项只适用于模板预定义的若干种定理环境。
-%    \begin{macrocode}
-\keys_define:nn { nju / theorem }
-  {
-    predefine     .bool_set:N  = \g_@@_thm_predefine_bool,
-    style           .tl_set:N  = \l_@@_thm_style_tl,
-    header-font     .tl_set:N  = \l_@@_thm_header_font_tl,
-    body-font       .tl_set:N  = \l_@@_thm_body_font_tl,
-    qed-symbol      .tl_set:N  = \l_@@_thm_qed_symbol_tl,
-    counter         .tl_set:N  = \l_@@_thm_counter_tl,
-%    \end{macrocode}
-% 定理环境的缺省值。
-%    \begin{macrocode}
-    predefine      .initial:n  = true,
-    style          .initial:n  = plain,
-    header-font    .initial:n  = \normalfont \bfseries,
-    body-font      .initial:n  = \itshape,
-    qed-symbol     .initial:n  = \ensuremath { \mdwhtsquare },
-    counter        .initial:n  = chapter
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_new_theorem:Nn,\@@_new_theorem:NV}
-% 用于定义普通定理环境的辅助函数。
+% \begin{macro}{\@@_create_theorem:nnn}
 % \begin{arguments}
-%   \item 定理名称列表，|clist| 型变量
-%   \item 编号范围
+%   \item 类型
+%   \item 标签名
+%   \item 是否需要编号和证毕符号
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_new_theorem:Nn #1#2
+\cs_new_protected:Npn \@@_create_theorem:nnn #1#2#3
   {
-    \clist_map_inline:Nn #1
-      { \newtheorem { ##1 } { \@@_name:n { ##1 } } [#2] }
-  }
-\cs_generate_variant:Nn \@@_new_theorem:Nn { NV }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_ntheorem_post_setup:}
-% 载入 \pkg{ntheorem} 后的相应设置。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_ntheorem_post_setup:
-  {
-    \exp_args:NV \theoremstyle      \l_@@_thm_style_tl
-    \exp_args:NV \theoremheaderfont \l_@@_thm_header_font_tl
-    \exp_args:NV \theorembodyfont   \l_@@_thm_body_font_tl
-    \exp_args:NV \theoremsymbol     \l_@@_thm_qed_symbol_tl
-%    \end{macrocode}
-% 定义证明环境。证毕符号使用 \tn{mdlgwhtsquare} 绘制，对应于 |U+25A1| 字符
-% \footnote{\url{https://tex.stackexchange.com/q/567135/}}。
-%    \begin{macrocode}
-    \newtheorem* { proof } { \c_@@_name_proof_tl }
-%    \end{macrocode}
-% 定义普通定理环境。清除预设的证毕符号，并排除 \env{proof}。
-%    \begin{macrocode}
-    \theoremsymbol { }
-    \group_begin:
-      \clist_remove_all:Nn \g_@@_theorem_type_clist { proof }
-      \@@_new_theorem:NV \g_@@_theorem_type_clist \l_@@_thm_counter_tl
-    \group_end:
+    \crthm_name_theorem:nn { #1 }
+      { heading = #2, crefname = {#2} {#2}, Crefname = {#2} {#2}, }
+    \bool_if:cTF { c_ #3 _bool }
+      { \crthm_create_theorem:nn { #1 } { numberless, qed } }
+      { \crthm_create_theorem:nn { #1 } { } }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% 在导言区末尾，通过吸收的用户设置，选择是否载入并设置 \pkg{ntheorem}。
+% 通过 \pkg{create-theorem} 预定义若干种定理环境。
 %    \begin{macrocode}
-\ctex_at_end_preamble:n
+\bool_if:NT \g_@@_opt_load_crthm_bool
   {
-    \bool_if:NT \g_@@_thm_predefine_bool
-      {
-        \PassOptionsToPackage { amsmath, thmmarks } { ntheorem }
-        \RequirePackage { ntheorem }
-        \@@_ntheorem_post_setup:
-      }
+    \clist_map_inline:Nn \g_@@_theorem_type_clist
+      { \@@_create_theorem:nnn #1 }
   }
 %    \end{macrocode}
 %
@@ -5789,15 +5759,18 @@ To produce the documentation run the original source files ending with
 % \begin{variable}{\c_@@_name_integral_tl}
 % 保存 \pkg{unicode-math} 内置的所有积分号命令。
 %    \begin{macrocode}
-\exp_args:NNV \tl_const:Nn \c_@@_name_integral_tl \l__um_nolimits_tl
+\bool_if:NTF \g_@@_opt_load_um_bool
+  { \tl_set_eq:NN \c_@@_name_integral_tl \l__um_nolimits_tl }
+  { \tl_set_eq:NN \c_@@_name_integral_tl \c_empty_tl        }
 %    \end{macrocode}
 % \end{variable}
 %
 % \begin{macro}{\@@_um_setup:n}
 % 封装 \cs{unimathsetup}。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_um_setup:n #1
-  { \keys_set:nn { unicode-math } { #1 } }
+\bool_if:NTF \g_@@_opt_load_um_bool
+  { \cs_new:Npn \@@_um_setup:n #1 { \keys_set:nn { unicode-math } {#1} } }
+  { \cs_new:Npn \@@_um_setup:n #1 { } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5958,7 +5931,7 @@ To produce the documentation run the original source files ending with
         \@@_um_setup:n { bold-style = ISO }
         \@@_loadfont_math:
       },
-    style                     .initial:n = GB
+    style                     .initial:n  = GB
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7921,19 +7894,18 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{定理}
 %
-% 默认定理类型和头名称。
+% 默认定理类型、头名称，以及是否需要编号和证毕符号。
 %    \begin{macrocode}
-\clist_map_inline:nn
+\clist_gset:Nn \g_@@_theorem_type_clist
   {
-    { axiom      } { 公理 } { Axiom      },
-    { corollary  } { 推论 } { Corollary  },
-    { definition } { 定义 } { Definition },
-    { example    } { 例   } { Example    },
-    { lemma      } { 引理 } { Lemma      },
-    { proof      } { 证明 } { Proof      },
-    { theorem    } { 定理 } { Theorem    }
+    { axiom      } { 公理 } { false },
+    { corollary  } { 推论 } { false },
+    { definition } { 定义 } { false },
+    { example    } { 例   } { false },
+    { lemma      } { 引理 } { false },
+    { proof      } { 证明 } { true  },
+    { theorem    } { 定理 } { false }
   }
-  { \@@_add_theorem_type:nnn #1 }
 %    \end{macrocode}
 %
 % \subsubsection{长度}
