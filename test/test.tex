@@ -6,9 +6,10 @@
 \ifdefined\TEST\else
   % 自行编译前需反注释以下任意命令
   % \documentclass{njuthesis}
+  \documentclass[create-theorem=true]{njuthesis}
   % \documentclass[type=master]{njuthesis}
   % \documentclass[type=doctor]{njuthesis}
-  \documentclass[type=postdoc]{njuthesis}
+  % \documentclass[type=postdoc]{njuthesis}
   % \documentclass[oneside]{njuthesis}
   % \documentclass[cjk-font=noto,latin-font=gyre]{njuthesis}
   % \documentclass[cjk-font=source,latin-font=gyre]{njuthesis}
@@ -17,55 +18,51 @@
   % \documentclass[draft]{njuthesis}
 \fi
 
-\njusetup {
-    info = {
-        title = {一种使用南京大学 \hologo{LaTeX} 模板\\编写毕业论文的经验性方法},
-        title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template},
-        keywords = {我,就是,充数的,关键词},
-        keywords* = {Dummy,Keywords,Here,{it is}},
-        grade = {2018},
-        % student-id = {DZ18114514},
-        student-id = {189114514},
-        author = {周煜华},
-        author* = {Zhou~Yuhua},
-        department = {拉太赫科学与技术学院},
-        department* = {School~of~\hologo{LaTeX}},
-        major = {拉太赫语言学},
-        major* = {\hologo{LaTeX}~Linguistics},
-        field = {拉太赫语言在现当代的使用},
-        field* = {Contemporary~Usage~of~the~\hologo{LaTeX}~Language},
-        supervisor = {李成殿,教授},
-        supervisor* = {Professor Li Chengdian},
-        % supervisor-ii = {孙赫弥,副教授},
-        % supervisor-ii* = {Associate~professor~Sun~Hemi},
-        % submit-date = {2021-08-10},
-        % defend-date = {2021-09-19},
-        chairman = {张晓山~教授},
-        reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
-        clc = {0175.2},
-        secret-level = {限制},
-        udc = {004.72},
-        supervisor-contact = {拉太赫科学与技术学院~枝江市结丘路~19~号~114514},
-        email={git+nju-lug-email-3104-issue-@yaoge123.cn}
-      },
-    bib = {
-        % style = author-year,
-        resource = {test.bib},
-        option = {doi=false, isbn=false, url=false, eprint=false}
-      },
-    style = {
-        emblem-img = {wug},
-        name-img = {name},
-        abstract-in-toc = false,
-        toc-in-toc = false,
-        header = {
-          {OR}{\thepage},{EL}{\thepage},
-          {ER}{\leftmark},{OL}{\rightmark}},
-        % header = {},
-        footer = {},
-        footnote-style=pifont
-      }
-  }
+\njusetup[info]{
+    title = {一种使用南京大学 \hologo{LaTeX} 模板\\编写毕业论文的经验性方法},
+    title* = {An Empirical Way of Composing Thesis with NJU \hologo{LaTeX} Template},
+    keywords = {我,就是,充数的,关键词},
+    keywords* = {Dummy,Keywords,Here,{it is}},
+    grade = {2018},
+    % student-id = {DZ18114514},
+    student-id = {189114514},
+    author = {周煜华},
+    author* = {Zhou~Yuhua},
+    department = {拉太赫科学与技术学院},
+    department* = {School~of~\hologo{LaTeX}},
+    major = {拉太赫语言学},
+    major* = {\hologo{LaTeX}~Linguistics},
+    field = {拉太赫语言在现当代的使用},
+    field* = {Contemporary~Usage~of~the~\hologo{LaTeX}~Language},
+    supervisor = {李成殿,教授},
+    supervisor* = {Professor Li Chengdian},
+    % supervisor-ii = {孙赫弥,副教授},
+    % supervisor-ii* = {Associate~professor~Sun~Hemi},
+    % submit-date = {2021-08-10},
+    % defend-date = {2021-09-19},
+    chairman = {张晓山~教授},
+    reviewer = {王瑞希~教授,郭德纲~副教授,华芈库~教授,戴菲菲~教授},
+    clc = {0175.2},
+    secret-level = {限制},
+    udc = {004.72},
+    supervisor-contact = {拉太赫科学与技术学院~枝江市结丘路~19~号~114514},
+    email={git+nju-lug-email-3104-issue-@yaoge123.cn}
+}
+\njusetup[bib]{
+    % style = author-year,
+    resource = {test.bib},
+    option = {doi=false, isbn=false, url=false, eprint=false}
+}
+\njusetup[ext-image]{
+    emblem = {wug},
+    name   = {name}
+}
+\njusetup[abstract/title-style]{natural}
+\njusetup{
+    abstract/toc-entry = false,
+    tableofcontents/toc-entry = false,
+    math/style = ISO
+}
 
 % \addbibresource{test.bib}
 
@@ -79,6 +76,7 @@
 \njusetname{tableofcontents}{目\qquad{}次}
 \njusetname{listoffigures}{插图清单}
 \njusetname{listoftables}{表格清单}
+\njusetname{abstract}[b]{我是摘要}
 \njusetname*{abstract}[b]{Abstract}
 % \njusetlength{coveruline}{330pt}
 \njusetformat{chapter}{\raggedleft\kaishu\zihao{-1}}
@@ -131,11 +129,7 @@
 
 % https://tex.stackexchange.com/questions/33264/span-as-a-math-operator
 \DeclareMathOperator{\spn}{span}
-\renewcommand{\vec}[1]{\mathbf{#1}}
-% \RenewDocumentCommand\vec{m}{\mathbf{#1}}
 \NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
-
-\njusetname{abstract}[b]{谁的姓名}
 
 \begin{document}
 
@@ -163,7 +157,6 @@
 \end{abstract*}
 
 \raggedbottom
-% \flushbottom
 
 \tableofcontents
 \listoffigures
@@ -254,10 +247,7 @@
 \input{chapters/Mathematics}
 \input{chapters/Bibliography}
 
-% \bgroup
-%   \sloppy
-  \printbibliography
-% \egroup
+\printbibliography
 
 \begin{acknowledgement}
   感谢\href{https://git.nju.edu.cn/nju-lug/lug-introduction}{NJU Linux User Group}。

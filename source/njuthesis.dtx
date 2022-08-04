@@ -4074,7 +4074,13 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_loadpkg_enit:
 \@@_loadpkg_fm:
-\@@_loadpkg_um:
+%    \end{macrocode}
+% 为保证 \pkg{cleveref} 在 \pkg{unicode-math}
+% 缺失的情况下也能正常工作，载入了 \pkg{amsmath}。
+%    \begin{macrocode}
+\bool_if:NTF \g_@@_opt_load_um_bool
+  { \RequirePackage { unicode-math } }
+  { \RequirePackage { amsmath      } }
 %    \end{macrocode}
 %
 % 载入各种宏包。
@@ -4084,11 +4090,6 @@ To produce the documentation run the original source files ending with
     geometry,
     fancyhdr,
     setspace,
-%    \end{macrocode}
-% 为保证 \pkg{cleveref} 在 \pkg{unicode-math}
-% 缺失的情况下也能正常工作，这里重复载入了 \pkg{amsmath}。
-%    \begin{macrocode}
-    amsmath,
 %    \end{macrocode}
 % \changes{v0.14}{2021/12/21}{移除内置的 \pkg{multirow}、\pkg{subcaption}
 %   和 \pkg{wrapfig}。}
@@ -5677,7 +5678,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{label-sep/figure,label-sep/table,label-sep/equation}
-% \changes{v0.18}{2022/07/31}{添加编号连接符设置项。}
+% \changes{1.0}{2022/07/31}{添加编号连接符设置项。}
 % 修改图片、表格、公式编号中的连接符。
 % \footnote{\url{https://tex.stackexchange.com/q/61756/}}
 %    \begin{macrocode}
@@ -5771,14 +5772,6 @@ To produce the documentation run the original source files ending with
 \bool_if:NTF \g_@@_opt_load_um_bool
   { \cs_new:Npn \@@_um_setup:n #1 { \keys_set:nn { unicode-math } {#1} } }
   { \cs_new:Npn \@@_um_setup:n #1 { } }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_loadfont_math:}
-% 加载选定数学字体。
-%    \begin{macrocode}
-\cs_new_eq:Nc \@@_loadfont_math:
-  { @@_loadfont_math_ \g_@@_font_math_tl : }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5897,7 +5890,6 @@ To produce the documentation run the original source files ending with
             uppercase-greek    = upright
           }
         \@@_um_setup:n { bold-style = TeX }
-        \@@_loadfont_math:
       },
     style / ISO                  .code:n  =
       {
@@ -5929,17 +5921,18 @@ To produce the documentation run the original source files ending with
             uppercase-greek    = italic
           }
         \@@_um_setup:n { bold-style = ISO }
-        \@@_loadfont_math:
       },
     style                     .initial:n  = GB
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% 在 |\begin{document}| 处设置小于等于号和实部符号等的样式。
+% 在 |\begin{document}| 处载入字体以兼容 \pkg{mathtools}，
+% 并设置小于等于号和实部符号等的样式。
 %    \begin{macrocode}
 \@@_at_begin_document:n
   {
+    \use:c { @@_loadfont_math_ \g_@@_font_math_tl : }
     \bool_if:NT \g_@@_opt_math_leq_bool
       {
         \cs_set_eq:NN \le  \leslant
@@ -7246,7 +7239,7 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{本科生}
 % \changes{v0.13}{2021/12/12}{使用 \LaTeX3 语法重构本科生摘要。}
-% \changes{v0.21}{2022/06/16}{统一本科生摘要页的标签格式。}
+% \changes{v1.0}{2022/06/16}{统一本科生摘要页的标签格式。}
 %
 % \begin{macro}{\@@_abs_info_u:,\@@_abs_info_en_u:}
 % 封装好的本科生摘要信息栏。
@@ -7912,7 +7905,7 @@ To produce the documentation run the original source files ending with
 % \label{subsubsec:constant-length}
 %
 % \changes{v0.17}{2022/04/09}{将长度值分离到 \file{.def} 文件。}
-% \changes{v0.21}{2022/06/11}{可以单独指定下划线的宽度和偏移。}
+% \changes{v1.0}{2022/06/11}{可以单独指定下划线的宽度和偏移。}
 % 默认固定长度值。
 %    \begin{macrocode}
 \clist_map_inline:nn
