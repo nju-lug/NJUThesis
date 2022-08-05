@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.0.0 2022-08-02
+% njuthesis 参数设置文件 v1.0.0 2022-08-06
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -206,6 +206,20 @@
     % real-part          = roman|fraktur,
     % vector             = boldfont|arrow,
     % uppercase-greek    = upright|italic
+}
+
+% theorem 类用于设置定理类环境样式，功能详见手册
+\njusetup[theorem]{
+    % define,
+    % 默认创建内置的七种定理环境
+    %
+    % style       = remark,
+    % header-font = \sffamily \bfseries ,
+    % body-font   = \ttfamily ,
+    % qed-symbol  = \ensuremath { \male },
+    % counter     = section,
+    % type        = {...}
+    % 以上设置项在调用 theorem/define 后生效
 }
 
 % footnote 类用于设置脚注样式，功能详见手册

@@ -5,8 +5,8 @@
 
 \ifdefined\TEST\else
   % 自行编译前需反注释以下任意命令
-  % \documentclass{njuthesis}
-  \documentclass[create-theorem=true]{njuthesis}
+  \documentclass{njuthesis}
+  % \documentclass[minimal]{njuthesis}
   % \documentclass[type=master]{njuthesis}
   % \documentclass[type=doctor]{njuthesis}
   % \documentclass[type=postdoc]{njuthesis}
@@ -62,6 +62,14 @@
     abstract/toc-entry = false,
     tableofcontents/toc-entry = false,
     math/style = ISO
+}
+\njusetup[theorem]{
+    style       = remark,
+    header-font = \sffamily\bfseries,
+    body-font   = \ttfamily,
+    qed-symbol  = \ensuremath { \male },
+    counter     = section,
+    define,
 }
 
 % \addbibresource{test.bib}

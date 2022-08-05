@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-01 16:20:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-06 00:40:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -334,7 +334,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.0.0 \quad 2022-08-01}
+% \date{v1.0.0 \quad 2022-08-06}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -1029,34 +1029,33 @@ To produce the documentation run the original source files ending with
 % \begin{function}[added=2022-08-03]{
 %   biblatex,
 %   cleveref,
-%   create-theorem,
+%   ntheorem,
 %   enumitem,
 %   footmisc,
 %   unicode-math}
 %   \begin{syntax}
 %     biblatex       = <\TTF>
 %     cleveref       = <\TTF>
-%     create-theorem = <\TFF>
+%     ntheorem       = <\TTF>
 %     enumitem       = <\TTF>
 %     footmisc       = <\TTF>
 %     unicode-math   = <\TTF>
 %   \end{syntax}
-% 是否默认载入某些宏包，除去 \pkg{create-theorem} 默认均是。
-% 这里宏包名和选项名是一致的。
+% 是否默认载入某些宏包，默认均是。选项名和宏包名是一致的。
 % \end{function}
 %
 % \begin{function}[added=2022-08-03]{minimal}
 %   \begin{syntax}
 %     <minimal>
 %   \end{syntax}
-% 不自动载入所有上述宏包的最小化模式。
+% 最小化模式，禁用所有上述宏包。
 % \end{function}
 %
 % 本模板内置了一系列宏包以进行功能扩展。这些宏包为：
 % \begin{description}
 %   \item[\pkg{biblatex}] 复杂参考文献数据的处理。
 %   \item[\pkg{cleveref}] 按来源类型自动处理引用标签。
-%   \item[\pkg{create-theorem}] 使用 \LaTeX3 编写的定理类环境定制界面。
+%   \item[\pkg{ntheorem}] 定理类环境定制。
 %   \item[\pkg{enumitem}] 列表环境样式定制。
 %   \item[\pkg{footmisc}] 脚注样式定制。
 %   \item[\pkg{unicode-math}] 支持 Unicode 数学字体。
@@ -1736,13 +1735,75 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{定理环境}
 %
-% 在打开第 \ref{subsubsec:optional-pkg} 节介绍的的 \opt{create-theorem} 选项
-% 后，本模板会利用该宏包预定义若干定理类环境，如表~\ref{tab:mathenv} 所示。
-% 其中证明环境较为特殊，无编号且会在结尾添加证毕符号（$\mdwhtsquare$）。
+% 模板使用 \pkg{ntheorem} 宏包配置定理类环境，提供了一系列选项。
+% 您也可以通过第 \ref{subsubsec:optional-pkg} 节提供的选项禁用该宏包。
+% \footnote{禁用后本节提供的设置均不会生效。}
 %
-% \pkg{create-theorem} 包相提供了清晰的键值接口，支持在导言区
-% 对已经定义的环境进行修改。详细用法请参考其手册\cite{create-theorem}。
-% 由于这个宏包较新，模板并不会默认载入它。
+% 以下选项用于定义定理类环境的样式。
+%
+% \begin{function}[added=2022-04-21]{theorem/style}
+%   \begin{syntax}
+%     style = <(plain)|break|change|margin|empty|...>
+%   \end{syntax}
+% 定理基本样式。等效于 \cs{theoremstyle}\marg{样式名称}。
+% \end{function}
+%
+% \begin{function}[added=2022-04-21]{theorem/header-font}
+%   \begin{syntax}
+%     header-font = \meta{头部字体格式}
+%   \end{syntax}
+% 定理头部字体格式。等效于 \cs{theoremheaderfont}\marg{格式}。
+% \end{function}
+%
+% \begin{function}[added=2022-04-21]{theorem/body-font}
+%   \begin{syntax}
+%     body-font = \meta{内部字体格式}
+%   \end{syntax}
+% 定理内部字体格式。等效于 \cs{theorembodyfont}\marg{格式}。
+% \end{function}
+%
+% \begin{function}[added=2022-04-21]{theorem/qed-symbol}
+%   \begin{syntax}
+%     qed-symbol = \meta{证毕符号}
+%   \end{syntax}
+% 证毕符号。等效于 \cs{theoremsymbol}\marg{符号}。默认为空心方块（\mdwhtsquare）。
+% 禁用 \pkg{unicode-math} 时为实心黑色方块（\rule{1ex}{1ex}）。
+% \end{function}
+%
+% \begin{function}[added=2022-04-21]{theorem/counter}
+%   \begin{syntax}
+%     counter = <part|(chapter)|section|...>
+%   \end{syntax}
+% 定理计数器范围。
+% \end{function}
+%
+% 模板的默认设置等效于
+%
+% \begin{latexexample}[moretexcs={\njusetup,\bfseries,\itshape,\mdwhtsquare},
+%   emph={[2]theorem}]
+%   \njusetup[theorem]{
+%       style       = plain,
+%       header-font = \normalfont \bfseries ,
+%       body-font   = \itshape ,
+%       qed-symbol  = \ensuremath { \mdwhtsquare },
+%       counter     = chapter
+%   }
+% \end{latexexample}
+%
+% 以下选项用于创建定理类环境。
+%
+% \begin{function}[added=2022-08-05]{theorem/type}
+%   \begin{syntax}
+%     type = \{\marg{环境名,类型标识} \marg{头名称},...\}
+%   \end{syntax}
+% 需要定义的定理类型列表。在可选的 \meta{类型标识} 中，含有\emph{星号}表示
+% 需要编号，含有\emph{加号}需要证毕符号。该选项存储的是用来定义环境的参数，
+% 而\emph{不会直接创建环境}，且每次调用都会覆盖前面定义的环境列表。
+% \end{function}
+%
+% \opt{theorem/type} 初始定义的环境列表如表~\ref{tab:mathenv} 所示。
+% 其中证明环境较为特殊，不编号且会在结尾添加证毕符号。
+% 这些环境并没有预先创建，使用方法见下面的例子。
 %
 % \begin{table}[htbp]
 %   \centering
@@ -1760,15 +1821,31 @@ To produce the documentation run the original source files ending with
 %   \end{tabular}
 % \end{table}
 %
-% 使用示例如下。
-% \begin{latexexample}[emph={[1]proof,definition}]
-%   \begin{proof}
-%       证明我是我
-%   \end{proof}
+% \begin{function}[added=2022-08-05]{theorem/define}
+%   \begin{syntax}
+%      <define>
+%   \end{syntax}
+% 创建定理环境。
+% \end{function}
 %
-%   \begin{definition}[他人]
-%       定义他人即地狱
-%   \end{definition}
+% \opt{theorem/define} 并没有参数。这个选项在调用后会读取
+% \opt{theorem/type} 保存的列表以及前方的样式设置并创建相应环境。
+% 这也就意味着该选项在 \opt{theorem/type} 为空时会报错。
+%
+% 在下面这个例子中，我们先创建了预置的七种环境，随后将定理内部文字字体改为
+% 宋体，定义了 \env{exercise} 和 \env{solution} 两种定理环境，后者没有编号。
+%
+% \begin{latexexample}[moretexcs={\njusetup,\normalfont},
+%   emph={[2]theorem}]
+%   \njusetup[theorem]{
+%       define,
+%       body-font   = \normalfont ,
+%       type        = {
+%           { {exercise} {习题} },
+%           { {solution,*} {解} }
+%       },
+%       define
+%   }
 % \end{latexexample}
 %
 %
@@ -2427,13 +2504,6 @@ To produce the documentation run the original source files ending with
 % \urlprefix\url{https://ctan.org/pkg/biblatex-gb7714-2015}
 % \urlprefix\CTANurl[文档：]{biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf}
 %
-% \bibitem{create-theorem}
-% \textsc{Xu J}.
-% \newblock \textit{Initializing theorem-like environments with multilingual support} [EB/OL].
-% \newblock (2022-07-31)
-% \urlprefix\url{https://www.ctan.org/pkg/create-theorem}
-% \urlprefix\CTANurl[文档：]{macros/latex/contrib/create-theorem/create-theorem-doc.pdf}
-%
 % \bibitem{CTeX}
 % \textsc{CTEX.ORG}.
 % \newblock \textit{\CTeX{} 宏集手册} [EB/OL].
@@ -2751,10 +2821,20 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_theorem_type_clist}
-% 定理类型。
+% \begin{variable}{\g_@@_thm_type_clist}
+% 默认定理类型、头名称，以及是否需要编号和证毕符号。
 %    \begin{macrocode}
-\clist_new:N \g_@@_theorem_type_clist
+\clist_new:N   \g_@@_thm_type_clist
+\clist_gset:Nn \g_@@_thm_type_clist
+  {
+    { axiom      } { 公理 },
+    { corollary  } { 推论 },
+    { definition } { 定义 },
+    { example    } { 例   },
+    { lemma      } { 引理 },
+    { proof, *+  } { 证明 },
+    { theorem    } { 定理 }
+  }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -3839,28 +3919,28 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{
 %   biblatex,
 %   cleveref,
-%   create-theorem,
 %   enumitem,
 %   footmisc,
+%   ntheorem,
 %   unicode-math,
 %   \g_@@_opt_load_blx_bool,
 %   \g_@@_opt_load_cref_bool,
-%   \g_@@_opt_load_crthm_bool,
+%   \g_@@_opt_load_nthm_bool,
 %   \g_@@_opt_load_enit_bool,
 %   \g_@@_opt_load_fm_bool,
 %   \g_@@_opt_load_um_bool,
 %   \@@_loadpkg_blx:,
 %   \@@_loadpkg_cref:,
-%   \@@_loadpkg_crthm:,
 %   \@@_loadpkg_enit:,
 %   \@@_loadpkg_fm:,
+%   \@@_loadpkg_nthm:,
 %   \@@_loadpkg_um:}
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
     { biblatex       } { blx   } { true  },
     { cleveref       } { cref  } { true  },
-    { create-theorem } { crthm } { false },
+    { ntheorem       } { nthm  } { true  },
     { enumitem       } { enit  } { true  },
     { footmisc       } { fm    } { true  },
     { unicode-math   } { um    } { true  }
@@ -4069,7 +4149,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.16}{2022/03/19}{不显式载入 \pkg{amsmath}。}
 % \changes{v0.18}{2022/04/20}{不强制载入 \pkg{ntheorem}。}
 % \changes{v1.0}{2022/07/03}{移除 \pkg{mathtools}。}
-% \changes{v1.0}{2022/08/03}{移除 \pkg{ntheorem}。}
+% \changes{v1.0}{2022/08/03}{选择性载入 \pkg{ntheorem}。}
 %
 %    \begin{macrocode}
 \@@_loadpkg_enit:
@@ -4108,10 +4188,13 @@ To produce the documentation run the original source files ending with
 \@@_loadpkg_cref:
 %    \end{macrocode}
 %
-% \pkg{create-theorem} 依赖 \pkg{amsthm} 实现 QED 符号等功能。
+% \pkg{ntheorem} 依赖 \pkg{amsthm} 和 \pkg{thmmarks} 实现 QED 符号等功能。
 %    \begin{macrocode}
-\bool_if:NT \g_@@_opt_load_crthm_bool
-  { \RequirePackage{ amsthm, create-theorem } }
+\bool_if:NT \g_@@_opt_load_nthm_bool
+  {
+    \PassOptionsToPackage { amsmath, thmmarks, noconfig } { ntheorem }
+    \RequirePackage{ ntheorem }
+  }
 %    \end{macrocode}
 %
 % 在双面模式下，使用 \pkg{emptypage} 清除空白页的页眉、页脚和页码。
@@ -4175,12 +4258,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \pkg{create-theorem} 包在 2022-05-31 的更新中提供了 QED 符号。
-%    \begin{macrocode}
-\bool_if:NT \g_@@_opt_load_crthm_bool
-  { \@@_check_pkg_version:nnn { create-theorem } { 2022/05/31 } { 2022-05-31 } }
-%    \end{macrocode}
-%
 % 检查绘制下划线所需的 \pkg{luatexja} 包版本。该宏包在 2021-09-18 的更新
 % 解决了下划线中断问题，然而在 2021-10-24 的更新才提供了正确的内嵌日期。
 %    \begin{macrocode}
@@ -4217,7 +4294,7 @@ To produce the documentation run the original source files ending with
 %
 % 检查数学宏包冲突。
 %    \begin{macrocode}
-\bool_if:NTF \g_@@_opt_load_um_bool
+\bool_if:NT \g_@@_opt_load_um_bool
   {
     \clist_map_inline:nn
       {
@@ -5521,20 +5598,14 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\@@_cref_name:n,\@@_cref_name:V}
+% \begin{macro}{\@@_cref_name:n}
 % 用于修改 \pkg{cleveref} 的标签名称的辅助函数。
 % \begin{arguments}
-%   \item 类型，|clist| 型
 %   \item 标签名
-%   \item 标签名（复数）
 % \end{arguments}
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cref_name:n #1
-  {
-    \clist_map_inline:nn { #1 }
-      { \crefname {##1} { \@@_name:n {##1} } { \@@_name:n {##1} } }
-  }
-\cs_generate_variant:Nn \@@_cref_name:n { V }
+  { \crefname {#1} { \@@_name:n {#1} } { \@@_name:n {#1} } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5551,7 +5622,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 修改 \pkg{cleveref} 的标签名称。
 %    \begin{macrocode}
-    \@@_cref_name:n { figure, table, appendix, proof }
+    \clist_map_inline:nn { figure, table, appendix, proof }
+      { \@@_cref_name:n { #1 } }
   }
 %    \end{macrocode}
 %
@@ -5710,34 +5782,136 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{定理环境}
 % \changes{v0.18}{2022/04/21}{新增定理环境的若干定制项。}
-% \changes{v1.0}{2022/08/03}{删除 \opt{nju/theorem} 类。}
 %
-% \begin{macro}{\@@_create_theorem:nnn}
-% \begin{arguments}
-%   \item 类型
-%   \item 标签名
-%   \item 是否需要编号和证毕符号
-% \end{arguments}
+% \begin{macro}{\c_@@_name_qed_tl}
+% 证毕符号使用 \tn{mdlgwhtsquare} 绘制，对应于 |U+25A1| 字符。
+% \footnote{\url{https://tex.stackexchange.com/q/567135/}}
+% 如果 \pkg{unicode-math} 未载入，则使用黑色方块代替。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_create_theorem:nnn #1#2#3
+\bool_if:NTF \g_@@_opt_load_um_bool
+  { \tl_const:Nn \c_@@_name_qed_tl { \ensuremath { \mdlgwhtsquare    } } }
+  { \tl_const:Nn \c_@@_name_qed_tl { \ensuremath { \rule {1ex} {1ex} } } }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\keys_define:nn { nju / theorem }
   {
-    \crthm_name_theorem:nn { #1 }
-      { heading = #2, crefname = {#2} {#2}, Crefname = {#2} {#2}, }
-    \bool_if:cTF { c_ #3 _bool }
-      { \crthm_create_theorem:nn { #1 } { numberless, qed } }
-      { \crthm_create_theorem:nn { #1 } { } }
+%    \end{macrocode}
+% \begin{macro}{theorem/style,theorem/header-font,theorem/body-font,
+%   theorem/qed-symbol,theorem/counter}
+% 定义 |nju/theorem| 键值类。^^A 这是否也可以抽象到 xtemplate？
+% 目前这套选项只适用于模板预定义的若干种定理环境。
+%    \begin{macrocode}
+    style           .tl_set:N = \l_@@_thm_style_tl,
+    header-font     .tl_set:N = \l_@@_thm_header_font_tl,
+    body-font       .tl_set:N = \l_@@_thm_body_font_tl,
+    qed-symbol      .tl_set:N = \l_@@_thm_qed_symbol_tl,
+    counter         .tl_set:N = \l_@@_thm_counter_tl,
+%    \end{macrocode}
+% 定理环境的缺省值。
+%    \begin{macrocode}
+    style          .initial:n = plain,
+    header-font    .initial:n = \normalfont \bfseries,
+    body-font      .initial:n = \itshape,
+    qed-symbol     .initial:V = \c_@@_name_qed_tl,
+    counter        .initial:n = chapter,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{theorem/type,theorem/define}
+% 使用模板提供的接口定义定理类环境。
+%    \begin{macrocode}
+    type         .clist_set:N = \g_@@_thm_type_clist,
+    define .value_forbidden:n = true,
+    define            .code:n =
+      {
+        \clist_if_empty:NT \g_@@_thm_type_clist
+          { \msg_error:nn { njuthesis } { empty-theorem-type } }
+        \clist_map_inline:Nn \g_@@_thm_type_clist
+          { \@@_thm_define:nn ##1 }
+      }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% 通过 \pkg{create-theorem} 预定义若干种定理环境。
 %    \begin{macrocode}
-\bool_if:NT \g_@@_opt_load_crthm_bool
+\msg_new:nnn { njuthesis } { empty-theorem-type }
   {
-    \clist_map_inline:Nn \g_@@_theorem_type_clist
-      { \@@_create_theorem:nnn #1 }
+    Empty~ theorem~ list~ to~ define.\\
+    The~ key~ "theorem/type"~ should~ not~ be~ set~ empty.
+  }
+\msg_new:nnn { njuthesis } { missing-ntheorem }
+  {
+    "ntheorem"~ package~ not~ detected.\\
+    The~ functionality~ of~ built-in~ theorem~ settings~ require~
+    loading~ the~ class~ with~ "ntheorem"~ option~ set~ to~ "true".
   }
 %    \end{macrocode}
+%
+% \begin{macro}{\@@_thm_define:nn}
+% 配置定理环境。
+% \begin{arguments}
+%   \item 环境名与类型标识，|clist| 型变量
+%   \item 定理头名称
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_thm_define:nn #1#2
+  {
+    \bool_if:NF \g_@@_opt_load_nthm_bool
+      { \msg_error:nn { njuthesis } { missing-ntheorem } }
+    \exp_args:NV \theoremstyle      \l_@@_thm_style_tl
+    \exp_args:NV \theoremheaderfont \l_@@_thm_header_font_tl
+    \exp_args:NV \theorembodyfont   \l_@@_thm_body_font_tl
+%    \end{macrocode}
+% 拆分环境名与类型标识。这里是考虑到标识符不一定出现在环境名中，
+% 典型如 \env{proof} 环境默认无编号但也不含星号。
+%    \begin{macrocode}
+    \clist_set:Nn \l_@@_tmp_clist { #1 }
+    \clist_pop:NN \l_@@_tmp_clist \l_@@_tmpa_tl
+    \clist_pop:NN \l_@@_tmp_clist \l_@@_tmpb_tl
+%    \end{macrocode}
+% 判断是否需要证毕符号或编号。
+%    \begin{macrocode}
+    \tl_if_in:NnT  \l_@@_tmpb_tl { + }
+      { \exp_args:NV \theoremsymbol \l_@@_thm_qed_symbol_tl }
+    \tl_if_in:NnTF \l_@@_tmpb_tl { * }
+      { \@@_thm_new:VVn \l_@@_tmpa_tl \c_novalue_tl        {#2} }
+      { \@@_thm_new:VVn \l_@@_tmpa_tl \l_@@_thm_counter_tl {#2} }
+    \bool_if:NT \g_@@_opt_load_cref_bool
+      { \crefname { \l_@@_tmpa_tl } {#2} {#2} }
+%    \end{macrocode}
+% 清除预设的证毕符号。
+%    \begin{macrocode}
+    \theoremsymbol { }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_thm_new:nnn,\@@_thm_new:VVn}
+% 包装 \cs{newtheorem} 以便展开输入的变量。根据 \file{interface3.pdf}
+% 手册 5.3 节最后一段建议的展开顺序，这里将 |V| 型参数放在靠前的位置。
+% \begin{arguments}
+%   \item 环境名
+%   \item 计数器名
+%   \item 头名称
+% \end{arguments}
+% 根据环境结束命令是否存在可以判断该环境是否有定义，
+% 相应地可以利用局部定义切换定义和重定义环境的命令。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_thm_new:nnn #1#2#3
+  {
+    \group_begin:
+      \cs_if_exist:cT { end #1 }
+        { \cs_set_eq:NN \newtheorem \renewtheorem }
+      \tl_if_novalue:nTF {#2}
+        { \newtheorem * {#1} {#3}      }
+        { \newtheorem   {#1} {#3} [#2] }
+    \group_end:
+  }
+\cs_generate_variant:Nn \@@_thm_new:nnn { VVn }
+%    \end{macrocode}
+% \end{macro}
 %
 %
 % \subsection{公式样式}
@@ -5905,7 +6079,6 @@ To produce the documentation run the original source files ending with
             uppercase-greek    = italic
           }
         \@@_um_setup:n { bold-style = ISO }
-        \@@_loadfont_math:
       },
     style / GB                   .code:n  =
       {
@@ -7884,22 +8057,6 @@ To produce the documentation run the original source files ending with
 %</def-g>
 %    \end{macrocode}
 % \end{variable}
-%
-% \subsubsection{定理}
-%
-% 默认定理类型、头名称，以及是否需要编号和证毕符号。
-%    \begin{macrocode}
-\clist_gset:Nn \g_@@_theorem_type_clist
-  {
-    { axiom      } { 公理 } { false },
-    { corollary  } { 推论 } { false },
-    { definition } { 定义 } { false },
-    { example    } { 例   } { false },
-    { lemma      } { 引理 } { false },
-    { proof      } { 证明 } { true  },
-    { theorem    } { 定理 } { false }
-  }
-%    \end{macrocode}
 %
 % \subsubsection{长度}
 % \label{subsubsec:constant-length}
