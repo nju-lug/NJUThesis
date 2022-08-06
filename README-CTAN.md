@@ -2,9 +2,9 @@ The `njuthesis` class
 =====================
 
 The `njuthesis` class is intended for typesetting Nanjing University
-dissertations with LaTeX, providing support for bachelor, master, and
-doctoral thesis. Compilation of this class requires either `xelatex`
-or `lualatex` engine.
+dissertations with LaTeX, providing support for bachelor, master,
+doctoral thesis and postdoctoral report. Compilation of this class
+requires either `xelatex` or `lualatex` engine.
 
 Usage
 -----

@@ -8,8 +8,42 @@
 
 # 新增
 
+- 新增博士后出站报告模板
+- 新增数学字体选项 `math-font`
+- 新增默认字号选项 `zihao`
+- 新增行距选项 `linespread`
+- 新增最小化模式选项 `minimal`
+- 新增禁用若干内置宏包的选项
+- `\njusetup` 提供更多选项输入模式
+- 新增一系列数学符号选项 `math`
+- 新增编号连接符设置 `label-sep` - [#134]
+- 适配 `tabularray` 的表格样式设置 - [#134]
 - 可使用 `\njusetlength` 修改下划线的宽度和偏移 - [#155]
 - 可使用 `\njusetformat` 修改本科摘要标签格式 - [#155]
+- 为页面对象添加书签属性
+
+## 修复
+
+- 修正元素对象的底部间距设置
+
+## 变动
+
+- 调整 `type` 和 `degree` 文档类选项的定义 - [#117]
+- 移除毕业设计封面
+- `nlcover` 选项更名为 `nl-cover`
+- `blind` 选项更名为 `anonymous`
+- 删除定理类环境选项 `theorem`
+- 使用 `create-theorem` 进行默认的定理类环境配置
+- 摘要、目录、页眉页脚设置项更名
+- 调整研究生模板的封面布局 - [#144]
+- 移除研究生英文摘要的下划线
+- 移除内置的 `mathtools`
+- 内部变量与函数重新命名
+
+### 杂项
+
+- 删除手册中的基础教学内容
+- 在手册中以不同颜色指示不同模块
 
 ## [0.20.0] - 2022-06-10
 
@@ -397,12 +431,15 @@
 [#107]: https://github.com/nju-lug/NJUThesis/issues/107
 [#111]: https://github.com/nju-lug/NJUThesis/issues/111
 [#116]: https://github.com/nju-lug/NJUThesis/issues/116
+[#117]: https://github.com/nju-lug/NJUThesis/issues/117
 [#119]: https://github.com/nju-lug/NJUThesis/issues/119
 [#121]: https://github.com/nju-lug/NJUThesis/issues/121
 [#130]: https://github.com/nju-lug/NJUThesis/issues/130
 [#131]: https://github.com/nju-lug/NJUThesis/issues/131
+[#134]: https://github.com/nju-lug/NJUThesis/discussions/134
 [#137]: https://github.com/nju-lug/NJUThesis/issues/137
 [#139]: https://github.com/nju-lug/NJUThesis/discussions/139
+[#144]: https://github.com/nju-lug/NJUThesis/issues/144
 [#147]: https://github.com/nju-lug/NJUThesis/discussions/147
 [#148]: https://github.com/nju-lug/NJUThesis/issues/148
 [#150]: https://github.com/nju-lug/NJUThesis/discussions/150
