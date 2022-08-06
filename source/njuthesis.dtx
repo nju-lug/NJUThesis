@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-06 00:40:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-06 17:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -900,7 +900,7 @@ To produce the documentation run the original source files ending with
 %
 % 典型的 \cls{njuthesis} 主文件结构应该如下所示：
 %
-% \begin{latexexample}[moretexcs={\njusetup,\graphicspath,\tableofcontents,
+% \begin{latexexample}[moretexcs={\njusetup,\tableofcontents,
 %   \maketitle,\mainmatter,\chapter,\printbibliography},emph={[1]document}]
 %   \documentclass{njuthesis}
 %   \njusetup{}
@@ -960,8 +960,9 @@ To produce the documentation run the original source files ending with
 % 是否需要自动生成声明页面，默认关闭。
 % \end{function}
 %
-% 通过此项，对于本科生模板可在封面后添加的诚信承诺书，
-% 对于研究生模板可在封面后添加原创性声明，并且在最后一页添加学位论文出版授权书。
+% 通过此项，对于本科生模板可在封面后添加的诚信承诺书，对于研究生模板可在
+% 封面后添加原创性声明\footnote{其中的打勾符号依赖 \pkg{unicode-math}。}，
+% 并且在最后一页添加学位论文出版授权书。
 %
 % 对于需要手动插入承诺书扫描页的情况，可以在导言区载入 \pkg{pdfpages} 宏包
 % \cite{pdfpages}，并在所需位置使用该宏包提供的 \cs{includepdf} 命令。
@@ -1600,6 +1601,15 @@ To produce the documentation run the original source files ending with
 % 模板默认载入 \pkg{enumitem} 宏包，对三个常用列表环境内的条目间距进行压缩。
 % 可以通过第 \ref{subsubsec:optional-pkg} 节提供的选项禁用该宏包。
 %
+% \subsubsection{图片}
+%
+% \begin{function}[added=2022-08-06]{image/path}
+%   \begin{syntax}
+%     path = \{\marg{路径1},\marg{路径2},...\}
+%   \end{syntax}
+% 图片搜索路径，等效于 \cs{graphicspath}。这个选项仅能设置一次。
+% \end{function}
+%
 % \subsubsection{脚注}
 %
 % \begin{function}[added=2022-05-01,updated=2022-08-03]{footnote/style}
@@ -2064,11 +2074,11 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{封面图片}
 %
-% \begin{function}[added=2021-12-23,updated=2022-02-22]{
-%   style/emblem-img,style/name-img}
+% \begin{function}[added=2021-12-23,updated=2022-08-06]{
+%   image/nju-emblem,image/nju-name}
 %   \begin{syntax}
-%     emblem-img = \Arg{文件}
-%     name-img = \Arg{文件}
+%     nju-emblem = \Arg{文件}
+%     nju-name   = \Arg{文件}
 %   \end{syntax}
 % 校名、校徽图片文件路径。
 % \end{function}
@@ -3981,14 +3991,14 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{用户接口}
 %
-% \begin{macro}{abstract, bib, ext-image, footer, footnote, header,
+% \begin{macro}{abstract, bib, image, footer, footnote, header,
 %   info, label-sep, listoffigures, listoftables,
 %   math, style, theorem, tableofcontents}
 % 定义模块名的元（meta）键值对。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    abstract, bib, ext-image, footer, footnote, header,
+    abstract, bib, image, footer, footnote, header,
     info, label-sep, listoffigures, listoftables,
     math, style, theorem, tableofcontents
   }
@@ -5717,15 +5727,51 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{图片表格}
 %
+% \begin{macro}{image/path}
+% \changes{v1.0}{2021/08/06}{提供图片路径设置。}
+% 外置图片路径，等效于 \cs{graphicspath}。
+%    \begin{macrocode}
+\keys_define:nn { nju / image } { path .code:n = { \graphicspath {#1} } }
+%    \end{macrocode}
+% \end{macro}
+%
 % 设置默认图片扩展名，允许在不键入扩展名时自动进行补全。
 %    \begin{macrocode}
 \DeclareGraphicsExtensions { .pdf, .eps, .jpg, .png }
 %    \end{macrocode}
 %
 % \changes{v0.16}{2022/03/11}{表格内字体设为五号。}
+% \changes{v1.0}{2022/08/06}{兼容 \pkg{tabularray} 设置。}
 % 表格默认居中，字号设置为五号。^^A  https://www.zhihu.com/question/366803177/answer/977853129
 %    \begin{macrocode}
 \BeforeBeginEnvironment { tabular } { \centering \zihao {5} }
+\ctex_at_end_package:nn { tabularray }
+  {
+%    \end{macrocode}
+% 等效于 \cs{UseTblrLibrary}、\cs{SetTblrInner} 与 \cs{SetTblrOuter}。
+%    \begin{macrocode}
+    \__tblr_use_lib_booktabs:
+    \tl_set:Nn \l_@@_tmpb_tl
+      { , abovesep = 4 pt, stretch  = 0.8, cells = { font = \small } }
+    \tl_put_right:NV \l__tblr_default_tblr_inner_tl     \l_@@_tmpb_tl
+    \tl_put_right:NV \l__tblr_default_talltblr_inner_tl \l_@@_tmpb_tl
+    \tl_put_right:Nn \l__tblr_default_talltblr_outer_tl { , headsep = -4 pt }
+%    \end{macrocode}
+% 处理 \env{talltblr} 表注的限宽问题。
+% \footnote{\url{https://github.com/lvjr/tabularray/issues/255}}
+%    \begin{macrocode}
+    \DefTblrTemplate { caption-tag } { default }
+      { \c_@@_name_table_tl \hspace { 0.25em } \thetable }
+    \DefTblrTemplate { caption-sep } { default } { \quad }
+    \DefTblrTemplate { firsthead   } { caption }
+      {
+        \makebox [ \tablewidth ]
+          { \parbox { \columnwidth } { \UseTblrTemplate {caption} {normal} } }
+      }
+    \SetTblrTemplate { firsthead   } { caption }
+    \SetTblrStyle { caption } { font = \normalfont \bfseries \small }
+    \SetTblrStyle { note    } { font = \normalfont \footnotesize    }
+  }
 %    \end{macrocode}
 %
 % \changes{v0.12}{2021/12/06}{删除了可能导致冲突的 \pkg{floatrow}。}
@@ -6734,7 +6780,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_degree_checkbox:n}
-% 信息栏的学位复选框。
+% 信息栏的学位复选框。打勾符号对应 |U+2713|。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_degree_checkbox:n #1
   {
@@ -6742,7 +6788,7 @@ To produce the documentation run the original source files ending with
       { \g_@@_info_degree_int * \g_@@_info_type_int }
       {
         \makebox [ 0   pt ] [l] { \ensuremath { \mdwhtsquare } }
-        \hspace  { 0.1 em }       \ensuremath { ^^^^2713   }
+        \hspace  { 0.1 em }       \ensuremath { \checkmark   }
       }
       { \ensuremath { \mdwhtsquare } }
   }
@@ -6757,6 +6803,7 @@ To produce the documentation run the original source files ending with
     \begin{tblr}
       {
         hlines, vlines, hspan=minimal,
+        cells = {font=\normalsize},
         colspec = {cX[c]cX[c]cX[c]},
         cell{1}{2} = {c=5}{m}, cell{3}{2} = {c=5}{m},
         cell{4}{2} = {c=5}{m}, cell{5}{2} = {c=5}{m}
@@ -7210,24 +7257,24 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{v1.0}{2022/08/01}{外置图片接口更名为 \opt{ext-image} 类。}
+% \changes{v1.0}{2022/08/01}{外置图片接口更名为 \opt{image} 类。}
 %    \begin{macrocode}
-\keys_define:nn { nju / ext-image }
+\keys_define:nn { nju / image }
   {
 %    \end{macrocode}
-% \begin{macro}{ext-image/emblem,\njuemblem}
+% \begin{macro}{image/nju-emblem,\njuemblem}
 % \changes{v0.14}{2021/12/23}{提供选择外置校徽图片的接口。}
 % 校徽图片路径。
 %    \begin{macrocode}
-    emblem .code:n = { \@@_new_img_cmd:nn { emblem } {#1} },
+    nju-emblem .code:n = { \@@_new_img_cmd:nn { emblem } {#1} },
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{ext-image/name,\njuname}
+% \begin{macro}{image/nju-name,\njuname}
 % \changes{v0.14}{2021/12/23}{提供选择外置校名图片的接口。}
 % 校名图片路径。
 %    \begin{macrocode}
-    name   .code:n = { \@@_new_img_cmd:nn { name   } {#1} }
+    nju-name   .code:n = { \@@_new_img_cmd:nn { name   } {#1} }
   }
 %    \end{macrocode}
 % \end{macro}
