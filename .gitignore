@@ -22,6 +22,10 @@
 ## Zip file
 *.zip
 
+## Fonts
+*.ttf
+*.otf
+
 ## Intermediate documents:
 *.hd
 *.dvi
