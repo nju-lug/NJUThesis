@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-07 23:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-08 10:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -351,7 +351,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.0.0 \quad 2022-08-07}
+% \date{v1.0.0 \quad 2022-08-08}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -2764,11 +2764,9 @@ To produce the documentation run the original source files ending with
 % 量。最后一个下划线后的内容指示其类型，但引擎不会根据名称检查变量类型。
 %
 % \begin{variable}{
-%   \l_@@_tmpa_box,\l_@@_tmpb_box,\l_@@_tmpc_box,
-%   \l_@@_tmp_clist,
-%   \l_@@_tmpa_dim,\l_@@_tmpb_dim,
-%   \l_@@_tmpa_int,\l_@@_tmpb_int,
-%   \l_@@_tmpa_tl,\l_@@_tmpb_tl}
+%   \l_@@_tmpa_box,\l_@@_tmpb_box,\l_@@_tmpc_box,\l_@@_tmp_clist,
+%   \l_@@_tmpa_dim,\l_@@_tmpb_dim,\l_@@_tmpa_int,\l_@@_tmpb_int,
+%   \l_@@_tmp_skip,\l_@@_tmpa_tl,\l_@@_tmpb_tl}
 % 临时变量。
 %    \begin{macrocode}
 \box_new:N   \l_@@_tmpa_box
@@ -2779,6 +2777,7 @@ To produce the documentation run the original source files ending with
 \dim_new:N   \l_@@_tmpb_dim
 \int_new:N   \l_@@_tmpa_int
 \int_new:N   \l_@@_tmpb_int
+\skip_new:N  \l_@@_tmp_skip
 \tl_new:N    \l_@@_tmpa_tl
 \tl_new:N    \l_@@_tmpb_tl
 %    \end{macrocode}
@@ -3018,24 +3017,33 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_ulined_center_box:nn}
+% \begin{macro}{\@@_box_ulined:NN,\@@_box_ulined:Nc}
 % 带有下划线的水平盒子。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 %   \item 内容，可带有格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_ulined_center_box:nn #1#2
+\cs_new_protected:Npn \@@_box_ulined:NN #1#2
   {
     \mode_leave_vertical:
     \rule [ \c_@@_ruledpi_dim ] { #1 } { \c_@@_rulehti_dim }
     \skip_horizontal:n { -#1 }
     \hbox_to_wd:nn { #1 } { \tex_hfil:D #2 \tex_hfil:D }
   }
+\cs_generate_variant:Nn \@@_box_ulined:NN { Nc }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_spread_box:nnn,\@@_spread_box:nnV,\@@_spread_box:nnx}
+% \begin{macro}{\@@_box_ulined_info:Nn}
+% 以上盒子只用来打印 \cs{g_@@_info_\meta{描述}_tl} 变量。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_box_ulined_info:Nn #1#2
+  { \@@_box_ulined:Nc #1 { g_@@_info_ #2 _tl } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_box_spread:NNn,\@@_box_spread:NNv}
 % \changes{v0.19}{2022/05/16}{对超出盒子宽度的文字进行水平压缩。}
 % 分散对齐的水平盒子，拉伸算法来自 \cls{fduthesis}。
 % 在文字宽度小于给定宽度时，在字符中间填补 \tn{hfil} 以增大字距。
@@ -3046,10 +3054,10 @@ To produce the documentation run the original source files ending with
 %   \item 内容，不可带有格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_spread_box:nnn #1#2#3
+\cs_new_protected:Npn \@@_box_spread:NNn #1#2#3
   {
     \mode_leave_vertical:
-    \@@_get_text_width:Nn \l_@@_tmpa_dim { #2 #3 }
+    \@@_get_width:Nn \l_@@_tmpa_dim { #2 #3 }
     \hbox_to_wd:nn { #1 }
       {
         \dim_compare:nTF { \l_@@_tmpa_dim > #1 }
@@ -3058,27 +3066,35 @@ To produce the documentation run the original source files ending with
               { \dim_to_decimal_in_unit:nn { #1 } { \l_@@_tmpa_dim } }
               [ 1.0 ] { #2 #3 } \tex_hfil:D
           }
-          { #2 \tl_map_inline:nn { #3 } { ##1 \tex_hfil:D } \unskip }
+          { #2 \tl_map_inline:nn { #3 } { ##1 \tex_hfil:D } \tex_unskip:D }
       }
   }
-\cs_generate_variant:Nn \@@_spread_box:nnn { nnV }
-\cs_generate_variant:Nn \@@_spread_box:nnn { nnx }
+\cs_generate_variant:Nn \@@_box_spread:NNn { NNv }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_center_box:nn,\@@_center_box:Vn}
+% \begin{macro}{\@@_box_spread_name:Nn,\@@_box_spread_name:NNn}
+% 以上盒子只用来打印 \cs{c_@@_name_\meta{描述}_tl} 变量。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_box_spread_name:Nn #1#2
+  { \@@_box_spread:NNv #1 \c_empty_tl { c_@@_name_ #2 _tl } }
+\cs_new_protected:Npn \@@_box_spread_name:NNn #1#2#3
+  { \@@_box_spread:NNv #1 #2 { c_@@_name_ #3 _tl } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_box_center:Nn}
 % 居中对齐的水平盒子。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_center_box:nn #1#2
+\cs_new_protected:Npn \@@_box_center:Nn #1#2
   {
     \mode_leave_vertical:
     \hbox_to_wd:nn {#1} { \tex_hfil:D #2 \tex_hfil:D }
   }
-\cs_generate_variant:Nn \@@_center_box:nn  { Vn }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_multiline_box:NNNn}
+% \begin{macro}{\@@_box_multiline:NNNN}
 % 多行固定长度的下划线内容，用于国家图书馆封面。
 % \begin{arguments}
 %   \item 用于循环的 |int| 型变量
@@ -3088,16 +3104,15 @@ To produce the documentation run the original source files ending with
 % \end{arguments}
 % 默认绘制 4 条下划线。在评阅者人数超过 4 人时添加额外的条目。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_multiline_box:NNNn #1#2#3#4
+\cs_new_protected:Npn \@@_box_multiline:NNNN #1#2#3#4
   {
     \int_set:Nn #1 { 1 }
     \int_set:Nn #2 { \clist_count:N #3 }
-    \int_compare:nF { #2 > 4 }
-      { \int_set:Nn #2 { 4 } }
+    \int_compare:nF { #2 > 4 } { \int_set:Nn #2 { 4 } }
     \int_do_until:nn { #1 > #2 }
       {
-        \@@_ulined_center_box:nn { #4 }
-          { \clist_item:Nn #3 { #1 } } \\
+        \clist_pop:NN #3 \l_@@_tmpa_tl
+        \@@_box_ulined:NN #4 \l_@@_tmpa_tl \tex_par:D
         \int_incr:N #1
       }
   }
@@ -3119,13 +3134,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_uuline:n}
+% \begin{macro}{\@@_uuline:N}
 % 指定宽度的双层下划线。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_uuline:n #1
+\cs_new_protected:Npn \@@_uuline:N #1
   {
     \mode_leave_vertical:
     \rule [ \c_@@_ruledpii_dim  ] { #1 } { \c_@@_rulehtii_dim }
@@ -3136,10 +3151,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{
-%   \@@_get_text_width:Nn,
-%   \@@_get_text_width:NV,
-%   \@@_get_text_width:Nx}
+% \begin{macro}{\@@_get_width:Nn,\@@_get_width:NV,\@@_get_width:Nv}
 % ^^A 来自 fduthesis
 % 获取文本宽度。
 % \begin{arguments}
@@ -3148,17 +3160,17 @@ To produce the documentation run the original source files ending with
 % \end{arguments}
 % 将内容放入 \tn{hbox} 后读取其宽度，存入 |dim| 型变量。
 %    \begin{macrocode}
-\cs_new:Npn \@@_get_text_width:Nn #1#2
+\cs_new:Npn \@@_get_width:Nn #1#2
   {
     \hbox_set:Nn \l_@@_tmpa_box {#2}
     \dim_set:Nn #1 { \box_wd:N \l_@@_tmpa_box }
   }
-\cs_generate_variant:Nn \@@_get_text_width:Nn { NV }
-\cs_generate_variant:Nn \@@_get_text_width:Nn { Nx }
+\cs_generate_variant:Nn \@@_get_width:Nn { NV }
+\cs_generate_variant:Nn \@@_get_width:Nn { Nv }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_get_max_text_width:NN}
+% \begin{macro}{\@@_get_max_width:NN}
 % ^^A 来自 fduthesis，调整了实现方法
 % 获取多个文本中的最大宽度，并存入 |dim| 型变量。
 % 本模板中此函数仅用于处理 |info| 类型文本变量，
@@ -3167,23 +3179,22 @@ To produce the documentation run the original source files ending with
 %   \item |dim| 型变量
 %   \item 文本 |clist|
 % \end{arguments}
-% 当 \cs{l_@@_tmpa_clist} 非空时，弹出最后一个元素
-% 赋给 \cs{l_@@_tmpa_tl}，获取其长度后与 |#1| 进行比较，
-% 二者中较大的那一个将成为 |#1| 的新值。
+% 当 \cs{l_@@_tmpa_clist} 非空时，弹出最后一个元素赋给 \cs{l_@@_tmpa_tl}，
+% 获取其长度后与 |#1| 进行比较，二者中较大的那一个将成为 |#1| 的新值。
 % 不断循环，直至 \cs{l_@@_tmpa_clist} 为空。
 %    \begin{macrocode}
-\cs_new:Npn \@@_get_max_text_width:NN #1#2
+\cs_new:Npn \@@_get_max_width:NN #1#2
   {
     \clist_map_inline:Nn #2
       {
-        \@@_get_text_width:Nx \l_@@_tmpa_dim { \@@_info:n {##1} }
+        \@@_get_width:Nv \l_@@_tmpa_dim { g_@@_info_ ##1 _tl }
         \dim_gset:Nn #1 { \dim_max:nn {#1} { \l_@@_tmpa_dim } }
       }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_full_uline:Nn,\@@_full_uline:NV}
+% \begin{macro}{\@@_full_uline:Nn,\@@_full_uline:Nx}
 % 横跨整页的下划线。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
@@ -3194,10 +3205,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_full_uline:Nn #1#2
   {
-    \@@_get_text_width:Nn #1 { #2 }
+    \@@_get_width:Nn #1 { #2 }
     \dim_set:Nn #1 { \textwidth - #1 } #2
   }
-\cs_generate_variant:Nn \@@_full_uline:Nn { NV }
+\cs_generate_variant:Nn \@@_full_uline:Nn { Nx }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3212,8 +3223,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_uline_entry:Nnnn #1#2#3#4
   {
-    \@@_full_uline:NV #1 { \@@_name:n { #2 } #4 }
-    \@@_ulined_center_box:nn { #1 } { \@@_info:n { #3 } }
+    \@@_full_uline:Nx #1 { \@@_name:n { #2 } #4 }
+    \@@_box_ulined_info:Nn #1 { #3 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3229,9 +3240,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_uline_bientry:Nnnn #1#2#3#4
   {
-    \@@_full_uline:NV #1 { \@@_name:n { #2 } #4 }
+    \@@_full_uline:Nx #1 { \@@_name:n { #2 } #4 }
     \dim_sub:Nn #1 { \textwidth / 2 }
-    \@@_ulined_center_box:nn { #1 } { \@@_info:n { #3 } }
+    \@@_box_ulined_info:Nn #1 { #3 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3420,7 +3431,7 @@ To produce the documentation run the original source files ending with
   {
     \tl_if_empty:NT \g_@@_info_title_tl
       { \msg_error:nn { njuthesis } { missing-title } }
-    \@@_spread_box:nnV { #1 } { #3 } \c_@@_name_title_tl
+    \@@_box_spread_name:NNn #1 #3 { title }
     \mode_leave_vertical: \@@_hskip:
 %    \end{macrocode}
 % 这里需要存储 \tn{prevdepth} 的值，以使 \tn{parbox} 后行距正确。
@@ -3438,64 +3449,64 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry:nNNN}
+% \begin{macro}{\@@_cover_entry:NNNn}
 % 生成单项信息条目。
 % \begin{arguments}
-%   \item 条目名称
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
 %   \item 标签格式
+%   \item 条目名称
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry:nNNN #1#2#3#4
+\cs_new_protected:Npn \@@_cover_entry:NNNn #1#2#3#4
   {
-    \@@_spread_box:nnx { #2 } { #4 } { \@@_name:n { #1 } } \@@_hskip:
-    \@@_ulined_center_box:nn { #3 }  { \@@_info:n { #1 } } \tex_par:D
+    \@@_box_spread_name:NNn #1 #3 { #4 } \@@_hskip:
+    \@@_box_ulined_info:Nn  #2    { #4 } \tex_par:D
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry:nnNNN}
+% \begin{macro}{\@@_cover_entry:NNNnn}
 % 生成两项信息条目，仅用于本科生封面。
 % \begin{arguments}
-%   \item 左侧条目名称
-%   \item 右侧条目名称
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
 %   \item 标签格式
+%   \item 左侧条目名称
+%   \item 右侧条目名称
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry:nnNNN #1#2#3#4#5
+\cs_new_protected:Npn \@@_cover_entry:NNNnn #1#2#3#4#5
   {
-    \@@_spread_box:nnx { #3 } { #5 } { \@@_name:n { #1 } } \@@_hskip:
-    \@@_ulined_center_box:nn  { #4 } { \@@_info:n { #1 } } \@@_hskip:
-    \@@_spread_box:nnx { #3 } { #5 } { \@@_name:n { #2 } } \@@_hskip:
-    \@@_ulined_center_box:nn  { #4 } { \@@_info:n { #2 } } \tex_par:D
+    \@@_box_spread_name:NNn #1 #3 { #4 } \@@_hskip:
+    \@@_box_ulined_info:Nn  #2    { #4 } \@@_hskip:
+    \@@_box_spread_name:NNn #1 #3 { #5 } \@@_hskip:
+    \@@_box_ulined_info:Nn  #2    { #5 } \tex_par:D
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry_supv:nNNN}
+% \begin{macro}{\@@_cover_entry_supv:NNNn}
 % 生成两项导师信息条目，仅用于本科生封面。
 % \begin{arguments}
-%   \item 条目名称
 %   \item 长内容盒子宽度，|dim| 型变量
 %   \item 短内容盒子宽度，|dim| 型变量
 %   \item 标签格式
+%   \item 条目名称
 % \end{arguments}
+% |clist| 最后一个元素为空时弹出的是无法展开的 \cs{q_novalue_tl}，
+% 需要简单处理以使用分散对齐的盒子。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry_supv:nNNN #1#2#3#4
+\cs_new_protected:Npn \@@_cover_entry_supv:NNNn #1#2#3#4
   {
-    \@@_spread_box:nnx { #2 } { #4 } { \@@_name:n { #1 } }
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #3 }
-      { \clist_item:cn { g_@@_info_ #1 _clist } { 1 } }
-    \@@_hskip:
-    \@@_spread_box:nnV { #2 } { #4 } \c_@@_name_supvtitle_tl
-    \@@_hskip:
-    \@@_ulined_center_box:nn { #3 }
-      { \clist_item:cn { g_@@_info_ #1 _clist } { 2 } }
-    \tex_par:D
+    \tl_set:Nn \l_@@_tmpa_tl
+      { \clist_item:cn { g_@@_info_ #4 _clist } { 1 } }
+    \tl_set:Nn \l_@@_tmpb_tl
+      { \clist_item:cn { g_@@_info_ #4 _clist } { 2 } }
+    \@@_box_spread_name:NNn #1 #3 { #4 }        \@@_hskip:
+    \@@_box_ulined:NN #2 \l_@@_tmpa_tl        \@@_hskip:
+    \@@_box_spread_name:NNn #1 #3 { supvtitle } \@@_hskip:
+    \@@_box_ulined:NN #2 \l_@@_tmpb_tl        \tex_par:D
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3527,18 +3538,17 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_abs_title:n,\@@_abs_title:V}
+% \begin{macro}{\@@_abs_title:N}
 % 摘要标题双层下划线格式。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_title:n #1
+\cs_new_protected:Npn \@@_abs_title:N #1
   {
-    \@@_get_text_width:Nn \l_@@_tmpa_dim {#1}
-    \@@_uuline:n { \l_@@_tmpa_dim } #1
+    \@@_get_width:NV \l_@@_tmpa_dim #1
+    \@@_uuline:N     \l_@@_tmpa_dim #1
   }
-\cs_generate_variant:Nn \@@_abs_title:n { V }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3555,35 +3565,35 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\@@_uline_list:nnn,\@@_uline_list:xnn}
+% \begin{macro}{\@@_uline_list:NNn,\@@_uline_list:NNx}
 % \changes{v0.16}{2022/03/25}{使用原生断行算法处理摘要页标题。}
 % 用于研究生摘要页面的多行标题。
 % \begin{arguments}
-%   \item 标签名
 %   \item 内容
 %   \item 左边距
+%   \item 标签
 % \end{arguments}
 % 这里使用了 plain \TeX{} 语法以利用原生的断行算法
 % \footnote{\url{https://tex.stackexchange.com/q/637861/}}。
 % 对其语法的简要介绍可以参考
 % \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline_list:nnn #1#2#3
+\cs_new_protected:Npn \@@_uline_list:NNn #1#2#3
   {
     \vbox_set:Nn \l_@@_tmpa_box
       {
-        \@@_get_text_width:Nn \tex_hangindent:D { #1 }
+        \@@_get_width:Nn \tex_hangindent:D { #3 }
         \int_set:Nn \tex_hangafter:D { -1 }
-        \skip_set:Nn \tex_leftskip:D { #3 }
+        \skip_set_eq:NN \tex_leftskip:D #2
         \skip_set_eq:NN \tex_rightskip:D \tex_leftskip:D
-        \tex_noindent:D #2 \tex_par:D
+        \tex_noindent:D #1 \tex_par:D
 %    \end{macrocode}
 % 使用循环寻找断行点，存入已被清空的 3 号盒子，同时统计行数。
 %    \begin{macrocode}
         \int_gzero:N \l_@@_tmpa_int
         \@@_breakpar_loop:n { \int_gincr:N \l_@@_tmpa_int }
       }
-      \@@_breakpar_print:nn { #1 }
+      \@@_breakpar_print:nn { #3 }
         {
 %    \end{macrocode}
 % 在使用自然断行算法后，研究生的摘要标题可选择 \opt{strict}
@@ -3597,14 +3607,14 @@ To produce the documentation run the original source files ending with
               {
                 { 0 } { \msg_error:nn { njuthesis } { missing-title } }
                 { 1 } { \@@_uline:n { \textwidth } }
-                { 2 } { \prg_do_nothing: }
+                { 2 } { }
               }
               { \msg_warning:nn { njuthesis } { abs-title-too-long } }
             \tex_par:D
           }
       }
   }
-\cs_generate_variant:Nn \@@_uline_list:nnn { xnn }
+\cs_generate_variant:Nn \@@_uline_list:NNn { NNx }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6242,8 +6252,9 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { u / cover / title }
   {
     content     =
-      \@@_spread_box:nnV { 9 em } { \bf } \c_@@_name_type_tl,
-    format      = \zihao { -1 },
+      \dim_set:Nn \l_@@_tmpb_dim { 217 pt }
+      \@@_box_spread_name:Nn \l_@@_tmpb_dim { type },
+    format      = \zihao { -1 } \bfseries,
     bottom-skip = 10 pt plus 1 fill
   }
 %    \end{macrocode}
@@ -6282,15 +6293,15 @@ To produce the documentation run the original source files ending with
 % \cs{dim_ratio:nn} 提供的形式。
 %    \begin{macrocode}
     \dim_set:Nn \l_@@_tmpb_dim { #2 * 1/2 - #1 * 1/2 - #3 }
-    \@@_cover_entry:nNNN { dept  } #1 #2 #4
-    \@@_cover_entry:nNNN { major } #1 #2 #4
+    \@@_cover_entry:NNNn #1 #2 #4 { dept  }
+    \@@_cover_entry:NNNn #1 #2 #4 { major }
     \@@_cover_entry_title:NNN #1 #2 #4
-    \@@_cover_entry:nnNNN { grade } { id } #1 \l_@@_tmpb_dim #4
-    \@@_cover_entry:nNNN { author } #1 #2 #4
-    \@@_cover_entry_supv:nNNN { supv } #1 \l_@@_tmpb_dim #4
+    \@@_cover_entry:NNNnn #1 \l_@@_tmpb_dim #4 { grade } { id }
+    \@@_cover_entry:NNNn #1 #2 #4 { author }
+    \@@_cover_entry_supv:NNNn #1 \l_@@_tmpb_dim #4 { supv }
     \bool_if:NT \l_@@_second_supvbool
-      { \@@_cover_entry_supv:nNNN { supvii } #1 \l_@@_tmpb_dim #4 }
-    \@@_cover_entry:nNNN { submitdate } #1 #2 #4
+      { \@@_cover_entry_supv:NNNn #1 \l_@@_tmpb_dim #4 { supvii } }
+    \@@_cover_entry:NNNn #1 #2 #4 { submitdate }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6394,7 +6405,8 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { g / cover-front / type }
   {
     content     =
-      \@@_spread_box:nnV { 11 em } { } \c_@@_name_type_tl,
+      \dim_set:Nn \l_@@_tmpb_dim { 266 pt }
+      \@@_box_spread_name:Nn \l_@@_tmpb_dim { type },
     format      = \zihao { 1 } \bfseries,
     bottom-skip = 20 pt
   }
@@ -6408,7 +6420,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \c_@@_name_apply_tl,
     format      = \zihao { 1 } \bfseries,
-    bottom-skip = 20 pt plus 1 fil
+    bottom-skip = 40 pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6424,7 +6436,7 @@ To produce the documentation run the original source files ending with
         \c_@@_crulewd_dim
         \c_@@_hsep_dim
         \c_@@_fmt_coverlabel_tl,
-    bottom-skip = 20 pt plus 1 fil
+    bottom-skip = 20 pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6449,9 +6461,9 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_g_cover_info:NNNN #1#2#3#4
   {
     \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
-    \@@_cover_entry_title:NNN  #1 #2 #4
+    \@@_cover_entry_title:NNN #1 #2 #4
     \clist_map_inline:nn { author, major, field, supvfull }
-      { \@@_cover_entry:nNNN { ##1 } #1 #2 #4 }
+      { \@@_cover_entry:NNNn #1 #2 #4 { ##1 } }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6482,11 +6494,11 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_g_cover_back:NN #1#2
   {
     \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
-    \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_id_tl
+    \@@_box_spread_name:NNn #1 #2 { id }
       \c_@@_name_colon_tl \g_@@_info_id_tl \tex_par:D
-    \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_defenddate_tl
+    \@@_box_spread_name:NNn #1 #2 { defenddate }
       \c_@@_name_colon_tl \g_@@_info_defenddate_tl \tex_par:D
-    \@@_spread_box:nnV { #1 } { #2 } \c_@@_name_supvfull_tl
+    \@@_box_spread_name:NNn #1 #2 { supvfull }
       \c_@@_name_colon_tl \skip_horizontal:n { 8 em }
       { #2 \c_@@_name_sign_tl }
   }
@@ -6585,7 +6597,8 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { cover-nl / name }
   {
     content     =
-      \@@_spread_box:nnV { 6 em } { } \c_@@_name_titleb_tl,
+      \dim_set:Nn \l_@@_tmpa_dim { 6 em }
+      \@@_box_spread_name:Nn \l_@@_tmpa_dim { titleb },
     format      = \zihao { -0 },
     bottom-skip = 0 pt plus 1 fil
   }
@@ -6644,12 +6657,14 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_top_nl:
   {
-    \@@_spread_box:nnV { 3.2 em } { } \c_@@_name_clc_tl   \@@_hskip:
-    \@@_ulined_center_box:nn { 9 em } { \g_@@_info_clc_tl      } \hfill
-    \@@_spread_box:nnV { 3.2 em } { } \c_@@_name_secretlv_tl \@@_hskip:
-    \@@_ulined_center_box:nn { 9 em } { \g_@@_info_secretlv_tl } \\
-    \@@_spread_box:nnV { 3.2 em } { } \c_@@_name_udc_tl   \@@_hskip:
-    \@@_ulined_center_box:nn { 9 em } { \g_@@_info_udc_tl      } \hfill \null
+    \dim_set:Nn \l_@@_tmpa_dim { 3.2 em }
+    \dim_set:Nn \l_@@_tmpb_dim { 9   em }
+    \@@_box_spread_name:Nn \l_@@_tmpa_dim { clc } \@@_hskip:
+    \@@_box_ulined_info:Nn \l_@@_tmpb_dim { clc } \tex_hfill:D
+    \@@_box_spread_name:Nn \l_@@_tmpa_dim { secretlv } \@@_hskip:
+    \@@_box_ulined_info:Nn \l_@@_tmpb_dim { secretlv } \tex_par:D
+    \@@_box_spread_name:Nn \l_@@_tmpa_dim { udc } \@@_hskip:
+    \@@_box_ulined_info:Nn \l_@@_tmpb_dim { udc } \tex_hfill:D \hbox:n { }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6663,7 +6678,8 @@ To produce the documentation run the original source files ending with
     \skip_vertical:n { - 0.5 cm }
     { \zihao { 4 } \c_@@_name_subtitle_tl }
     \skip_vertical:N \c_zero_skip
-    \@@_ulined_center_box:nn { 4.5 em } { \g_@@_info_author_tl }
+    \dim_set:Nn \l_@@_tmpa_dim { 4.5 em }
+    \@@_box_ulined_info:Nn \l_@@_tmpa_dim { author }
     \skip_vertical:n { - 0.5 cm }
     { \zihao { 4 } { ( } \c_@@_name_author_tl { ) } }
   }
@@ -6677,18 +6693,20 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_info_nl:
   {
-    \@@_uline_list:nnn { \c_@@_name_supvinfo_tl }
+    \skip_set:Nn \l_@@_tmp_skip { 1 em plus 1 fill }
+    \@@_uline_list:NNn \c_@@_name_supvinfo_tl \l_@@_tmp_skip
       {
-        \clist_use:Nn \g_@@_info_supv_clist    { ~ }
+        \clist_use:Nn \g_@@_info_supv_clist   { ~ }
         \clist_use:Nn \g_@@_info_supvii_clist { ~ }
         \@@_hskip: \g_@@_info_supvcont_tl
       }
-      { 1 em plus 1 fill }
-    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { degree      } { degree     } { }
-    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { majorb     } { major      } { } \\
-    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { submitdate  } { submitdate } { }
-    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { defenddate  } { defenddate } { } \\
-    \@@_uline_entry:Nnnn   \l_@@_tmpa_dim { confer      } { confer     } { }
+    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { degree     } { degree     } { }
+    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { majorb     } { major      } { }
+    \tex_par:D
+    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { submitdate } { submitdate } { }
+    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { defenddate } { defenddate } { }
+    \tex_par:D
+    \@@_uline_entry:Nnnn   \l_@@_tmpa_dim { confer     } { confer     } { }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6700,11 +6718,12 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_bottom_nl:
   {
+    \dim_set:Nn \l_@@_tmpa_dim { 9 em }
     \c_@@_name_chairman_tl \@@_hskip:
-    \@@_ulined_center_box:nn { 9 em } { \g_@@_info_chairman_tl } \\
+    \@@_box_ulined_info:Nn \l_@@_tmpa_dim { chairman } \tex_par:D
     \c_@@_name_reviewer_tl \@@_hskip:
-    \@@_multiline_box:NNNn \l_@@_tmpa_int \l_@@_tmpb_int
-      \g_@@_info_reviewer_clist { 9 em }
+    \@@_box_multiline:NNNN \l_@@_tmpa_int \l_@@_tmpb_int
+      \g_@@_info_reviewer_clist \l_@@_tmpa_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6958,16 +6977,16 @@ To produce the documentation run the original source files ending with
 % 设置信息栏右侧宽度。读取各字段，并将最宽者的宽度赋给
 % \cs{l_@@_tmpb_dim}。
 %    \begin{macrocode}
-    \@@_get_max_text_width:NN \l_@@_tmpb_dim \l_@@_tmp_clist
+    \@@_get_max_width:NN \l_@@_tmpb_dim \l_@@_tmp_clist
 %    \end{macrocode}
 % 用循环输出各字段。
 %    \begin{macrocode}
     \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
     \clist_map_inline:Nn \l_@@_tmp_clist
       {
-        \@@_spread_box:nnx { #1 } { #2 } { \@@_name:n { ##1 } }
+        \@@_box_spread_name:NNn #1 #2 { ##1 }
         \c_@@_name_colon_tl
-        \@@_center_box:Vn \l_@@_tmpb_dim { \@@_info:n { ##1 } }
+        \@@_box_center:Nn \l_@@_tmpb_dim { \@@_info:n { ##1 } }
         \tex_par:D
       }
   }
@@ -7403,7 +7422,7 @@ To produce the documentation run the original source files ending with
 %<*(def-u|def-g|def-p)>
 \@@_declare_element:nn { abstract / title }
   {
-%<def-u|def-g>    content     = \@@_abs_title:V \c_@@_name_abstracttitle_tl,
+%<def-u|def-g>    content     = \@@_abs_title:N \c_@@_name_abstracttitle_tl,
 %<def-p>    content     = \g_@@_info_title_tl,
 %<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
 %<def-p>    format      = \bfseries,
@@ -7417,7 +7436,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { abstract / en / title }
   {
-%<def-u|def-g>    content     = \@@_abs_title:V \c_@@_name_abstracttitle_en_tl,
+%<def-u|def-g>    content     = \@@_abs_title:N \c_@@_name_abstracttitle_en_tl,
 %<def-p>    content     = \g_@@_info_title_en_tl,
 %<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
 %<def-p>    format      = \bfseries,
@@ -7556,27 +7575,26 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_g:N #1
   {
-    \@@_uline_list:xnn { \c_@@_name_titlea_tl #1 }
-      { \g_@@_info_title_tl } { \g_@@_abs_title_left_skip }
+    \@@_uline_list:NNx \g_@@_info_title_tl \g_@@_abs_title_left_skip
+      { \c_@@_name_titlea_tl #1 }
 %    \end{macrocode}
 % 专业、年级、姓名。
 %    \begin{macrocode}
-    \@@_full_uline:NV \l_@@_tmpa_dim
+    \@@_full_uline:Nx \l_@@_tmp_skip
       {
-        \@@_ulined_center_box:nn { 11 em } { \g_@@_info_major_tl }
+        \dim_set:Nn \l_@@_tmpa_dim { 11 em }
+        \dim_set:Nn \l_@@_tmpb_dim { 4  em }
+        \@@_box_ulined_info:Nn \l_@@_tmpa_dim { major }
         \c_@@_name_majora_tl
-        \@@_ulined_center_box:nn { 4  em } { \g_@@_info_grade_tl }
+        \@@_box_ulined_info:Nn \l_@@_tmpb_dim { grade }
         \c_@@_name_grade_tl \c_@@_name_authora_tl #1
       }
-    \@@_ulined_center_box:nn { \l_@@_tmpa_dim }
-      { \g_@@_info_author_tl } \\
+    \@@_box_ulined_info:Nn \l_@@_tmp_skip { author } \tex_par:D
 %    \end{macrocode}
 % 导师姓名、职称。
 %    \begin{macrocode}
-    \@@_full_uline:NV \l_@@_tmpa_dim
-      { \c_@@_name_supva_tl #1 }
-    \@@_ulined_center_box:nn { \l_@@_tmpa_dim }
-      { \g_@@_info_supvfull_tl }
+    \@@_full_uline:Nx \l_@@_tmpa_dim { \c_@@_name_supva_tl #1 }
+    \@@_box_ulined_info:Nn \l_@@_tmpa_dim { supvfull }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7616,7 +7634,7 @@ To produce the documentation run the original source files ending with
       \l_@@_tmpa_tl { c_@@_fmt_abslabel #1 _tl }
     \exp_args:NNv \tl_put_right:Nn
       \l_@@_tmpa_tl { c_@@_name_colon #1 _tl }
-    \@@_get_text_width:NV \l_@@_tmpa_dim \l_@@_tmpa_tl
+    \@@_get_width:NV \l_@@_tmpa_dim \l_@@_tmpa_tl
 %    \end{macrocode}
 % 关键词列表的悬挂缩进样式由 \tn{list} 环境产生。
 %    \begin{macrocode}
@@ -8184,7 +8202,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 下划线深度（偏移量）。
 %    \begin{macrocode}
-    { rule    dp i   } { -.5  ex },
+    { rule    dp i   } { -.7  ex },
     { rule    dp ii  } { -.7  ex },
     { rule    dp iii } { - 1  ex },
 %    \end{macrocode}
