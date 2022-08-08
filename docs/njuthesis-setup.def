@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.0.0 2022-08-07
+% njuthesis 参数设置文件 v1.0.0 2022-08-08
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -160,23 +160,6 @@
     % 说明同上
 }
 
-% 页眉页脚内容设置
-\njusetup{
-    % header/content = {
-    %     {OR}{\thepage},{OL}{\rightmark},
-    %     {EL}{\thepage},{ER}{\leftmark}
-    %   },
-    % 页眉设置，详见手册
-    % 奇数页页眉：左侧章名，右侧页码
-    % 偶数页页眉：左侧页码，右侧节名
-    %
-    % footer/content = {}
-}
-
-% 页眉页脚的字体样式
-% \njusetformat{header}{\small\kaishu}
-% \njusetformat{footer}{}
-
 % abstract 类用于设置摘要样式
 \njusetup[abstract]{
     % toc-entry = false,
@@ -194,6 +177,9 @@
     % listoffigures/toc-entry   = false,
     % listoftables/toc-entry    = false
 }
+
+% 为目录中的章标题添加引导线
+% \njusetup[tableofcontents/dotline]{chapter}
 
 % math 类用于设置数学符号样式，功能详见手册
 \njusetup[math]{
@@ -227,3 +213,25 @@
 
 % footnote 类用于设置脚注样式，功能详见手册
 % \njusetup[footnote/style]{pifont}
+
+% 页眉页脚内容设置
+\njusetup{
+  % header/content = {
+  %     {OR}{\thepage},{OL}{\rightmark},
+  %     {EL}{\thepage},{ER}{\leftmark}
+  %   },
+  % 页眉设置，详见手册
+  % 奇数页页眉：左侧章名，右侧页码
+  % 偶数页页眉：左侧页码，右侧节名
+  %
+  % footer/content = {}
+}
+
+% 页眉页脚的字体样式
+% \njusetformat{header}{\small\kaishu}
+% \njusetformat{footer}{}
+
+% 一些灵活调整
+% \njusetname{notation}{术语表} % 更改符号表名称
+% \njusetname{tableofcontents}{目\qquad{}次} % 更改目录名称
+% \njusetlength{crulewd}{330pt} % 加长封面页下划线

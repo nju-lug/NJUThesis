@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% njuthesis 示例模板 v1.0.0 2022-08-06
+% njuthesis 示例模板 v1.0.0 2022-08-08
 % https://github.com/nju-lug/NJUThesis
 %
 % 贡献者
@@ -30,8 +30,8 @@
     % type = bachelor|master|doctor|postdoc, % 文档类型，默认为本科生
     % degree = academic|professional,        % 学位类型，默认为学术型
     %
-    % nl-cover  = true|false, % 是否需要国家图书馆封面，默认关闭
-    % decl-page = true|false, % 是否需要诚信承诺书或原创性声明，默认关闭
+    % nl-cover,   % 是否需要国家图书馆封面，默认关闭
+    % decl-page,  % 是否需要诚信承诺书或原创性声明，默认关闭
     %
     %   页面模式，详见手册说明
     % draft,                  % 开启草稿模式
@@ -49,7 +49,7 @@
   ]{njuthesis}
 
 % 模板选项设置，包括个人信息、外观样式等
-% 较为冗长且一般不需要修改，放在单独的文件里
+% 较为冗长且一般不需要反复修改，我们把它放在单独的文件里
 \input{njuthesis-setup.def}
 
 % 自行载入所需宏包
@@ -63,11 +63,6 @@
 % 在导言区随意定制所需命令
 % \DeclareMathOperator{\spn}{span}
 % \NewDocumentCommand\mathbi{m}{\textbf{\em #1}}
-
-% 一些灵活调整
-% \njusetname{notation}{术语表} % 更改符号表名称
-% \njusetname{tableofcontents}{目\qquad{}次} % 更改目录名称
-% \njusetlength{crulewd}{330pt} % 加长封面页下划线
 
 % 开始编写论文
 \begin{document}

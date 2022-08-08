@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-08 10:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-08 14:50:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -225,7 +225,7 @@ To produce the documentation run the original source files ending with
 \makeatletter
 \ExplSyntaxOn
 \colorlet    {    at@guard } { njuviolet }
-\definecolor { angle@guard } { gray } { 0.8 }
+\definecolor { angle@guard } { gray } { 0.7 }
 \definecolor {  star@guard } { rgb  } { 0.8 , 0 , 0 }
 \definecolor { u@guard } { HTML } { 5463FF }
 \definecolor { g@guard } { HTML } { 2B7A0B }
@@ -2189,19 +2189,12 @@ To produce the documentation run the original source files ending with
 % 分别生成目录、图片目录和表格目录。
 % \end{function}
 %
-% 目录页的标题名称一般无需修改。用户可以选择使用 \pkg{ctex} 宏集提供的
-%  \tn{ctexset} 命令进行自定义。
-% \begin{latexexample}[moretexcs={\ctexset},
-%   emph={[1]contentsname,listfigurename,listtablename}]
-%   \ctexset{
-%     contentsname   = { 目\hspace{2em}次 },
-%     listfigurename = { 插图清单 },
-%     listtablename  = { 表格清单 }
-%   }
-% \end{latexexample}
-% 实际上，根据《学位论文编写规则》国家标准\cite{gb-t-7713.1-2006}，
-% 尽管“目录”这一说法已流传甚广，但学位论文中理应使用“目次”这一名称
-% 来指代篇目的列表。
+% \begin{function}[added=2022-08-08]{tableofcontents/dotline}
+%   \begin{syntax}
+%     dotline = <chapter|(section)>
+%   \end{syntax}
+% 目录中的引导线设置。选择 \opt{chapter} 会为章标题后添加引导线。
+% \end{function}
 %
 % \begin{function}[added=2022-02-04,updated=2022-07-31]{
 %   tableofcontents/toc-entry,listoffigures/toc-entry,
@@ -2224,16 +2217,20 @@ To produce the documentation run the original source files ending with
 %   }
 % \end{latexexample}
 %
+% 目录页的标题名称一般无需修改\footnote{尽管根据《学位论文编写规则》国家标准
+% \cite{gb-t-7713.1-2006}，学位论文中理应使用“目次”这一名称来指代篇目的列表，
+% 我们仍然建议遵从学校给出的范例。}。如有需求，请参考 \ref{subsubsec:edit-text} 节。
+%
 % \subsubsection{符号表}
 %
 % \DescribeEnv{notation}
 % \DescribeEnv{notation*}
-%   \begin{syntax}
-%     \tn{begin}\{notation\}\oarg{说明宽度}\oarg{符号宽度}
-%     \quad\tn{item}\oarg{符号} \meta{说明}
-%     \tn{end}\{notation\}
-%   \end{syntax}
 % 符号表，或者称为术语表、缩略词对照表。带有星号的符号表环境不会插入目录。
+% \begin{syntax}
+%   \tn{begin}\{notation\}\oarg{说明宽度}\oarg{符号宽度}
+%   \quad\tn{item}\oarg{符号} \meta{说明}
+%   \tn{end}\{notation\}
+% \end{syntax}
 %
 %
 % \subsubsection{致谢页}
@@ -2311,6 +2308,7 @@ To produce the documentation run the original source files ending with
 % 势必需要为用户修改留出空间。这一节将提供一些定制方法。
 %
 % \subsubsection{固定文本}
+% \label{subsubsec:edit-text}
 %
 % \begin{function}{\njusetname,\njusetname*,\njusettext,\njusettext*}
 %   \begin{syntax}
@@ -2324,7 +2322,14 @@ To produce the documentation run the original source files ending with
 % \ref{subsubsec:constant-text} 节。
 % \end{function}
 %
-% 譬如，将英文摘要页的小标题修改为仅首字母大写的样式，示例如下：
+% 譬如，修改目录标题名称，示例如下：
+
+% \begin{latexexample}[moretexcs={\njusetname}]
+%   \njusetname{listoffigures}{插图清单}
+%   \njusetname{listoftables}{表格清单}
+% \end{latexexample}
+%
+% 将英文摘要页的小标题修改为仅首字母大写的样式，示例如下：
 %
 % \begin{latexexample}[moretexcs={\njusetname*}]
 %   \njusetname*{abstract}[b]{Abstract}
@@ -3305,12 +3310,12 @@ To produce the documentation run the original source files ending with
 % 封装 \LaTeX{} 的钩子管理机制，等效于 \tn{AtBeginDocument}。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_at_begin_document:n #1
-  { \hook_gput_next_code:nn { begindocument } { #1 } }
+  { \hook_gput_next_code:nn { begin document } { #1 } }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@@_cs_clear:N}
-% 两个代码块交替执行，如果在\meta{循环体1}结束后满足条件，则退出循环。
+% 清空命令。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cs_clear:N #1
   { \cs_set_eq:NN #1 \prg_do_nothing: }
@@ -3573,10 +3578,9 @@ To produce the documentation run the original source files ending with
 %   \item 左边距
 %   \item 标签
 % \end{arguments}
-% 这里使用了 plain \TeX{} 语法以利用原生的断行算法
-% \footnote{\url{https://tex.stackexchange.com/q/637861/}}。
-% 对其语法的简要介绍可以参考
-% \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。
+% 这里转化了使用 plain \TeX{} 语法实现的的断行算法。
+% \footnote{\url{https://tex.stackexchange.com/q/637861/}，对其语法的简要介绍可以参考
+% \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。}
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_uline_list:NNn #1#2#3
   {
@@ -3921,7 +3925,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\g_@@_opt_linespread_tl}
 % 行距。\LaTeX 默认1.2行距，MS Word 默认行距是1.3，要求1.5倍
 % Word 行距，故默认值为 $1.5\times\frac{1.3}{1.2} = 1.625$。
-% 更详细的说明请参考 \pkg{zhlinespread} 宏包文档。
+% 更详细的说明请参考 \pkg{zhlineskip} 宏包文档。
 %    \begin{macrocode}
     linespread         .tl_set:N  = \g_@@_opt_linespread_tl,
     linespread        .initial:n  = 1.625,
@@ -4070,7 +4074,7 @@ To produce the documentation run the original source files ending with
       {
         \tl_if_in:nnTF { #1 } { / }
           { \keys_set:nn { nju } { #1 = {#2} } }
-          { \keys_set:nn { nju / #1 }   {#2}   }
+          { \keys_set:nn { nju  /  #1 } {#2}   }
       }
   }
 %    \end{macrocode}
@@ -4246,7 +4250,7 @@ To produce the documentation run the original source files ending with
 \bool_if:NT \g_@@_opt_load_nthm_bool
   {
     \PassOptionsToPackage { amsmath, thmmarks, noconfig } { ntheorem }
-    \RequirePackage{ ntheorem }
+    \RequirePackage { ntheorem }
   }
 %    \end{macrocode}
 %
@@ -5111,7 +5115,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 % \end{macro}
 %
-% 载入设置的字体。为了吸收导言区的设置，放在其后载入。
+% 载入设置的字体。^^A 为了吸收导言区的设置，放在其后载入。
 %    \begin{macrocode}
 % \BeforeBeginEnvironment { document } { \@@_loadfont: }
 \@@_loadfont:
@@ -5367,8 +5371,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \keys_set:nn { ctex }
   {
-    chapter        / beforeskip = \c_@@_beforechapter_dim,
-    chapter        / afterskip  = \c_@@_afterchapter_dim,
+    chapter        / beforeskip = \c_@@_chapterbefore_dim,
+    chapter        / afterskip  = \c_@@_chapterafter_dim,
     chapter        / format     = \c_@@_fmt_chapter_tl,
     section        / format     = \c_@@_fmt_section_tl,
     subsection     / format     = \c_@@_fmt_subsection_tl,
@@ -5459,6 +5463,26 @@ To produce the documentation run the original source files ending with
       }
   }
 %    \end{macrocode}
+%
+% \begin{macro}{tableofcontents/dotline}
+% \changes{v1.0}{2022/08/08}{可选择是否为目录中的章名添加引导线。}
+% 修改 \cls{book} 文档类中的命令以添加引导线。
+%    \begin{macrocode}
+\keys_define:nn { nju / tableofcontents }
+  {
+    dotline         .choice:,
+    dotline / chapter .code:n =
+      {
+        \cs_set_protected_nopar:Npn \l@chapter
+          {
+            \skip_vertical:N 1.0 em \@plus \p@ \scan_stop:
+            \@dottedtocline { \z@ } { \z@ } { 1.5 em }
+          }
+      },
+    dotline / section .code:n = { }
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 %
 % \subsection{参考文献}
@@ -5751,8 +5775,8 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}[int]{\@makefntext}
 % 重定义内部脚注文字命令，使脚注编号不使用上标，宽度为 \qty{1.5}{em}。
-% 见 \url{http://tex.stackexchange.com/q/19844} 和
-% \url{https://www.zhihu.com/question/53030087}。
+% \footnote{\url{http://tex.stackexchange.com/q/19844},
+% \url{https://www.zhihu.com/question/53030087}}
 %    \begin{macrocode}
     \cs_set:Npn \@makefntext #1
       {
@@ -5906,7 +5930,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{theorem/type,theorem/define}
-% 使用模板提供的接口定义定理类环境。
+% 定义和创建定理类环境的接口。
 %    \begin{macrocode}
     type         .clist_set:N = \g_@@_thm_type_clist,
     define .value_forbidden:n = true,
@@ -5967,7 +5991,7 @@ To produce the documentation run the original source files ending with
     \bool_if:NT \g_@@_opt_load_cref_bool
       { \crefname { \l_@@_tmpa_tl } {#2} {#2} }
 %    \end{macrocode}
-% 清除预设的证毕符号。
+% 清除保存的证毕符号。
 %    \begin{macrocode}
     \theoremsymbol { }
   }
@@ -6122,21 +6146,21 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{math/uppercase-greek}
-  % 大写希腊字母的样式，正体或斜体。
-  %    \begin{macrocode}
-      uppercase-greek               .choice:,
-      uppercase-greek / upright       .code:n  =
-        { \@@_um_setup:n { math-style = ISO } },
-      uppercase-greek / italic        .code:n  =
-        { \@@_um_setup:n { math-style = TeX } },
-  %    \end{macrocode}
-  % \end{macro}
-  %
-  % \begin{macro}{math/style}
+% 大写希腊字母的样式，正体或斜体。
+%    \begin{macrocode}
+    uppercase-greek               .choice:,
+    uppercase-greek / upright       .code:n  =
+      { \@@_um_setup:n { math-style = ISO } },
+    uppercase-greek / italic        .code:n  =
+      { \@@_um_setup:n { math-style = TeX } },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{math/style}
 % 整体样式。
 %    \begin{macrocode}
-    style                      .choice:,
-    style / TeX                  .code:n  =
+    style                         .choice:,
+    style / TeX                     .code:n  =
       {
         \keys_set:nn { nju / math }
           {
@@ -6151,7 +6175,7 @@ To produce the documentation run the original source files ending with
           }
         \@@_um_setup:n { bold-style = TeX }
       },
-    style / ISO                  .code:n  =
+    style / ISO                     .code:n  =
       {
         \keys_set:nn { nju / math }
           {
@@ -6166,7 +6190,7 @@ To produce the documentation run the original source files ending with
           }
         \@@_um_setup:n { bold-style = ISO }
       },
-    style / GB                   .code:n  =
+    style / GB                      .code:n  =
       {
         \keys_set:nn { nju / math }
           {
@@ -6181,7 +6205,7 @@ To produce the documentation run the original source files ending with
           }
         \@@_um_setup:n { bold-style = ISO }
       },
-    style                     .initial:n  = GB
+    style                        .initial:n  = GB
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6213,9 +6237,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{封面}
 %
-%
 % \subsubsection{绘制部件}
-%
 % \changes{v0.16}{2022/03/01}{将封面部件分离到 \file{.def} 文件。}
 %
 % \paragraph{本科生}
@@ -6288,14 +6310,14 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_u_cover_info:NNNN #1#2#3#4
   {
     \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
+    \@@_cover_entry:NNNn #1 #2 #4 { dept  }
+    \@@_cover_entry:NNNn #1 #2 #4 { major }
+    \@@_cover_entry_title:NNN #1 #2 #4
 %    \end{macrocode}
 % 短内容盒子的长度值是通过计算得到的。|dim| 型变量的乘除需要采取
 % \cs{dim_ratio:nn} 提供的形式。
 %    \begin{macrocode}
     \dim_set:Nn \l_@@_tmpb_dim { #2 * 1/2 - #1 * 1/2 - #3 }
-    \@@_cover_entry:NNNn #1 #2 #4 { dept  }
-    \@@_cover_entry:NNNn #1 #2 #4 { major }
-    \@@_cover_entry_title:NNN #1 #2 #4
     \@@_cover_entry:NNNnn #1 \l_@@_tmpb_dim #4 { grade } { id }
     \@@_cover_entry:NNNn #1 #2 #4 { author }
     \@@_cover_entry_supv:NNNn #1 \l_@@_tmpb_dim #4 { supv }
@@ -6358,7 +6380,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_decl_sign:}
-% 通用的承诺书签名区
+% 通用的承诺书签名区。
 %    \begin{macrocode}
 %<*(def-u|def-g)>
 \cs_new_protected:Npn \@@_decl_sign:
@@ -6737,7 +6759,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \c_@@_name_origdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
-    bottom-skip = \c_@@_afterchapter_dim
+    bottom-skip = \c_@@_chapterafter_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6774,7 +6796,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \c_@@_name_authdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
-    bottom-skip = \c_@@_afterchapter_dim
+    bottom-skip = \c_@@_chapterafter_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7002,7 +7024,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \c_@@_name_origdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
-    bottom-skip = \c_@@_afterchapter_dim
+    bottom-skip = \c_@@_chapterafter_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7037,7 +7059,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \c_@@_name_authdecl_tl,
     format      = \c_@@_fmt_chapter_tl,
-    bottom-skip = \c_@@_afterchapter_dim
+    bottom-skip = \c_@@_chapterafter_dim
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7174,7 +7196,7 @@ To produce the documentation run the original source files ending with
   {
     element     = { title, text, sign },
     prefix      = g / decl / orig /,
-    top-skip    = \c_@@_beforechapter_dim,
+    top-skip    = \c_@@_chapterbefore_dim,
     bottom-skip = 0 pt plus 1 fil,
     bm-text     = \c_@@_name_origdecl_tl,
     bm-name     = origdecl
@@ -7189,7 +7211,7 @@ To produce the documentation run the original source files ending with
   {
     element     = { title, text, sign, info, date },
     prefix      = g / decl / auth /,
-    top-skip    = \c_@@_beforechapter_dim,
+    top-skip    = \c_@@_chapterbefore_dim,
     bottom-skip = 0.5 cm plus 1.5 fill,
     bm-text     = \c_@@_name_authdecl_tl,
     bm-name     = authdecl,
@@ -7226,7 +7248,7 @@ To produce the documentation run the original source files ending with
     prefix      = p / decl /,
     bm-text     = 声明页,
     bm-name     = decl,
-    top-skip    = \c_@@_beforechapter_dim,
+    top-skip    = \c_@@_chapterbefore_dim,
     bottom-skip = 0 pt
   }
 %</def-p>
@@ -7893,7 +7915,7 @@ To produce the documentation run the original source files ending with
     \chapter * { \c_@@_name_notation_tl }
     \@@_make_notation:nn { #1 } { #2 }
   }
-  { \endlist }
+  { \endlist \cleardoublepage }
 %</class>
 %    \end{macrocode}
 % \end{environment}
@@ -8203,8 +8225,8 @@ To produce the documentation run the original source files ending with
 % 下划线深度（偏移量）。
 %    \begin{macrocode}
     { rule    dp i   } { -.7  ex },
-    { rule    dp ii  } { -.7  ex },
-    { rule    dp iii } { - 1  ex },
+    { rule    dp ii  } { -.9  ex },
+    { rule    dp iii } { -1.2 ex },
 %    \end{macrocode}
 % 小幅空格。
 %    \begin{macrocode}
@@ -8213,8 +8235,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 章节标题前后间距。
 %    \begin{macrocode}
-    { before chapter } { 10   pt },
-    { after  chapter } { 60   pt }
+    { chapter before } { 10   pt },
+    { chapter  after } { 60   pt }
   }
   { \@@_define_dim:nn #1 }
 %    \end{macrocode}

@@ -17,9 +17,10 @@
 - 新增最小化模式选项 `minimal`
 - 新增禁用若干内置宏包的选项
 - `\njusetup` 提供更多选项输入模式
-- 新增一系列数学符号选项 `math`
+- 可为目录中的章标题添加引导线 - [#66]
 - 新增编号连接符设置 `label-sep` - [#134]
 - 适配 `tabularray` 的表格样式设置 - [#134]
+- 新增一系列数学符号选项 `math` - [#142]
 - 可使用 `\njusetlength` 修改下划线的宽度和偏移 - [#155]
 - 可使用 `\njusetformat` 修改本科摘要标签格式 - [#155]
 - 为页面对象添加书签属性
@@ -442,6 +443,7 @@
 [#134]: https://github.com/nju-lug/NJUThesis/discussions/134
 [#137]: https://github.com/nju-lug/NJUThesis/issues/137
 [#139]: https://github.com/nju-lug/NJUThesis/discussions/139
+[#142]: https://github.com/nju-lug/NJUThesis/issues/142
 [#144]: https://github.com/nju-lug/NJUThesis/issues/144
 [#147]: https://github.com/nju-lug/NJUThesis/discussions/147
 [#148]: https://github.com/nju-lug/NJUThesis/issues/148
