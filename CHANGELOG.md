@@ -36,7 +36,6 @@
 - `nlcover` 选项更名为 `nl-cover`
 - `blind` 选项更名为 `anonymous`
 - 调整定理类环境选项 `theorem`
-- 使用 `create-theorem` 进行默认的定理类环境配置
 - 摘要、目录、页眉页脚设置项更名
 - 调整研究生模板的封面布局 - [#144]
 - 移除研究生英文摘要的下划线
@@ -396,7 +395,7 @@
 
 
 [未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.0.0...HEAD
-[0.20.0]: https://github.com/nju-lug/NJUThesis/compare/v0.20.0...v1.0.0
+[1.0.0]: https://github.com/nju-lug/NJUThesis/compare/v0.20.0...v1.0.0
 [0.20.0]: https://github.com/nju-lug/NJUThesis/compare/v0.19.0...v0.20.0
 [0.19.0]: https://github.com/nju-lug/NJUThesis/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/nju-lug/NJUThesis/compare/v0.17.0...v0.18.0

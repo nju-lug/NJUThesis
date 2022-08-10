@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.0 2022-08-08 14:50:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.1 2022-08-10 18:50:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -134,13 +134,14 @@ To produce the documentation run the original source files ending with
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass[fontset=fandol]{ctxdoc}
-\usepackage{listings,njuvisual,tabularray,unicode-math,zhlineskip}
+\usepackage{listings,njuvisual,tabularray,unicode-math,xeCJKfntef,zhlineskip}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{
   contents={\njuemblem[white!85!gray]{22cm}{!}},
   scale=1, angle=0, hshift=-4cm
 }
 \definecolor{olgreen}{HTML}{138a07}
+\renewcommand\emph[1]{\CJKunderdot[textformat=\itshape]{#1}}
 \newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
 \newcommand\tikzlogo{Ti\emph{k}Z}
 \hypersetup{
@@ -351,7 +352,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.0.0 \quad 2022-08-08}
+% \date{v1.0.1 \quad 2022-08-10}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -389,17 +390,17 @@ To produce the documentation run the original source files ending with
 % \maketitle
 %
 % \begin{abstract}
-% 南京大学学位论文 \LaTeX 模板 \cls{njuthesis} 基于本科生院的论文撰写
-% 规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学学
-% 位论文排版要求和相应的国家规范、行业标准的学位论文，旨在为同学提供毕业论文书
-% 写的方便。
+% \cls{njuthesis} 是制作南京大学本科生毕业论文、研究生学位论文、博士后出站报告的
+% \LaTeX 文档类。本模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、
+% 博士学位材料包，用于生成符合南京大学排版要求和相应的国家规范、行业标准的学位论
+% 文，力求通过 \LaTeX3 语法实现清晰的实现逻辑、较高的可定制性以及友好的用户接口。
 % \end{abstract}
 %
 % \def\abstractname{Abstract}
 % \begin{abstract}
 % The \cls{njuthesis} class is intended for typesetting Nanjing University
 % dissertations with \LaTeX, providing support for bachelor, master,
-% and doctoral thesis.
+% doctoral theses as well as postdoctoral reports.
 % \end{abstract}
 %
 % \vspace{2cm}
@@ -962,8 +963,8 @@ To produce the documentation run the original source files ending with
 %   \begin{syntax}
 %     type = <(bachelor)|master|doctor|postdoc>
 %   \end{syntax}
-% 选择毕业论文模板类型，这将决定模板整体的外观。
-% 可选值分别为学士（本科生）、硕士研究生和博士研究生，默认为学士。
+% 选择毕业论文模板类型，这将决定模板整体的外观。可选值分别为
+% 学士（本科生）、硕士研究生、博士研究生和博士后，默认为学士。
 % \end{function}
 %
 % \begin{function}[added=2021-09-07,updated=2022-07-01]{degree}
@@ -1202,18 +1203,19 @@ To produce the documentation run the original source files ending with
 % 字体配置。Windows 和 macOS 以外的系统采用 \opt{gyre} 配置。
 %
 % \begin{table}[!htbp]
+%   \def\TG#1{TG~#1~\TA}
 %   \centering
 %   \begin{talltblr} [
 %       caption = {西文字体配置},
-%       label = {tab:latin-fontset},
+%       label   = {tab:latin-fontset},
 %       note{a} = {TG 表示 \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{\TeX~Gyre}。} ]
 %     { colspec = {cccc} }
 %     \toprule
-%       配置名称   & 衬线体          & 无衬线体 & 等宽字体    \\
+%       配置名称   & 衬线体          & 无衬线体   & 等宽字体    \\
 %     \midrule
-%       \opt{win}  & Times~New~Roman & Arial    & Courier~New \\
-%       \opt{mac}  & Times~New~Roman & Arial    & Menlo       \\
-%       \opt{gyre} & TG Termes       & TG Heros & TG Cursor   \\
+%       \opt{win}  & Times~New~Roman & Arial      & Courier~New \\
+%       \opt{mac}  & Times~New~Roman & Arial      & Menlo       \\
+%       \opt{gyre} & \TG{Termes}     & \TG{Heros} & \TG{Cursor} \\
 %     \bottomrule
 %   \end{talltblr}
 % \end{table}
@@ -1223,39 +1225,40 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-02]{math-font}
 %   \begin{syntax}
-%     math-font=<asana|cambria|fira|garamond|lm|...|termes|xits|none>
+%     math-font=<asana|cambria|fira|garamond|lm|...|termes|(xits)|none>
 %   \end{syntax}
-% 设置数学字体。
+% 设置数学字体。完整列表见表 {tab:math-fontset}。
 % \end{function}
 %
-% 本模板采用 \pkg{unicode-math} 宏包配置数学公式环境中使用的字体。
-% 与原生 \LaTeX{} 最接近的字体对应 \opt{lm}，
-% 与 MS Word 最接近的字体对应 \opt{cambria}。
+% 本模板默认采用 \pkg{unicode-math} 宏包配置数学模式下使用的字体。
+% 与原生 \LaTeX{} 最接近的字体对应 \opt{lm}，MS Word 预装的字体对应 \opt{cambria}。
 %
 % \begin{table}[!htbp]
+%   \def\NCM{New Computer Modern}
 %   \centering
 %   \begin{talltblr} [
 %       caption = {数学字体配置},
-%       label = {tab:math-fontset},
+%       label   = {tab:math-fontset},
 %       note{a} = {TG 表示 \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{\TeX~Gyre}。},
 %       note{b} = {粗体使用 XITS Math Bold。} ]
 %     { colspec = {ccl} }
 %   \toprule
-%     配置名称          & 字体名称           & 描述                            \\
+%     配置名称          & 字体名称            & 描述                       \\
 %   \midrule
-%     \opt{asana}       & Asana Math         &                                 \\
-%     \opt{cambria}     & Cambria Math       & 微软 Office 预装的数学字体      \\
-%     \opt{fira}        & Fira Math          & 无衬线数学字体，Fira 风格       \\
-%     \opt{garamond}    & Garamond Math      & Garamond 风格                   \\
-%     \opt{lm}          & Latin Modern Math  & Computer Modern 风格            \\
-%     \opt{libertinus}  & Libertinus Math    &                                 \\
-%     \opt{stix}        & STIX Math          & Times 风格                      \\
-%     \opt{bonum}       & TG Bonum Math   \TblrNote{a} &                       \\
-%     \opt{dejavu}      & TG DejaVu Math  \TblrNote{a} & DejaVu 风格           \\
-%     \opt{pagella}     & TG Pagella Math \TblrNote{a} & Palatino 风格         \\
-%     \opt{schola}      & TG Schola Math  \TblrNote{a} &                       \\
-%     \opt{termes}      & TG Termes Math  \TblrNote{a} & Times 风格            \\
-%     \opt{xits}        & XITS Math       \TblrNote{b} & 基于 STIX，Times 风格 \\
+%     \opt{asana}       & Asana Math          &                            \\
+%     \opt{cambria}     & Cambria Math        & 微软 Office 预装的数学字体 \\
+%     \opt{fira}        & Fira Math           & 无衬线数学字体，Fira 风格  \\
+%     \opt{garamond}    & Garamond Math       & Garamond 风格              \\
+%     \opt{lm}          & Latin Modern Math   & Computer Modern 风格       \\
+%     \opt{libertinus}  & Libertinus Math     &                            \\
+%     \opt{newcm}       & \NCM Math           & Computer Modern 风格       \\
+%     \opt{stix}        & STIX Math           & Times 风格                 \\
+%     \opt{bonum}       & TG Bonum Math   \TA &                            \\
+%     \opt{dejavu}      & TG DejaVu Math  \TA & DejaVu 风格                \\
+%     \opt{pagella}     & TG Pagella Math \TA & Palatino 风格              \\
+%     \opt{schola}      & TG Schola Math  \TA &                            \\
+%     \opt{termes}      & TG Termes Math  \TA & Times 风格                 \\
+%     \opt{xits}        & XITS Math       \TB & 基于 STIX，Times 风格      \\
 %   \bottomrule
 %   \end{talltblr}
 % \end{table}
@@ -1846,23 +1849,24 @@ To produce the documentation run the original source files ending with
 % \end{function}
 %
 % \opt{theorem/type} 初始定义的环境列表如表~\ref{tab:mathenv} 所示。
-% 其中证明环境较为特殊，不编号且会在结尾添加证毕符号。
 % 这些环境并没有预先创建，使用方法见下面的例子。
 %
 % \begin{table}[htbp]
 %   \centering
-%   \caption{预置的数学定理环境}
-%   \label{tab:mathenv}
-%   \begin{tabular}{cc|cc}
+%   \begin{talltblr} [
+%       caption = {预置的数学定理环境},
+%       label   = {tab:mathenv},
+%       note{a} = {证明环境较为特殊，不编号且会在结尾添加证毕符号。} ]
+%     { colspec = {cc|cc} }
 %     \toprule
-%     \bf 标签   & \bf 名称 & \bf 标签   & \bf 名称 \\
+%       标签       & 名称     & 标签       & 名称     \\
 %     \midrule
-%     axiom      & 公理     & lemma      & 引理     \\
-%     corollary  & 推论     & proof      & 证明     \\
-%     definition & 定义     & theorem    & 定理     \\
-%     example    & 例       &            &          \\
+%       axiom      & 公理     & lemma      & 引理     \\
+%       corollary  & 推论     & proof \TA  & 证明     \\
+%       definition & 定义     & theorem    & 定理     \\
+%       example    & 例       &            &          \\
 %     \bottomrule
-%   \end{tabular}
+%   \end{talltblr}
 % \end{table}
 %
 % \begin{function}[added=2022-08-05]{theorem/define}
@@ -2050,16 +2054,15 @@ To produce the documentation run the original source files ending with
 %       note{a} = {在此样式下 \tn{parencite} 效果等同于 \tn{cite}。} ]
 %     { colspec = {cll} }
 %     \toprule
-%       引用方式       & 命令                  & 排版效果                     \\
+%       引用方式       & 命令               & 排版效果                       \\
 %     \midrule
-%       单篇文献       & \tn{cite}\TblrNote{a} &
-%                                              作者加年份用括号包围可设置页码 \\
-%       多篇文献       & \tn{cite}             & 分号隔开                     \\
-%       标注页码       & \tn{pagescite}        & 作者加年份用括号包围自动页码 \\
-%       标注年份       & \tn{yearcite}         & 用括号包围的年份             \\
-%       标注年份、页码 & \tn{yearpagescite}    & 提供年份用括号包围自动页码   \\
-%       标注作者       & \tn{textcite}         & 作者为主语加加括号包围年份   \\
-%       完整脚注       & \tn{footfullcite}     & 脚注方式                     \\
+%       单篇文献       & \tn{cite} \TA      & 作者加年份用括号包围可设置页码 \\
+%       多篇文献       & \tn{cite}          & 分号隔开                       \\
+%       标注页码       & \tn{pagescite}     & 作者加年份用括号包围自动页码   \\
+%       标注年份       & \tn{yearcite}      & 用括号包围的年份               \\
+%       标注年份、页码 & \tn{yearpagescite} & 提供年份用括号包围自动页码     \\
+%       标注作者       & \tn{textcite}      & 作者为主语加加括号包围年份     \\
+%       完整脚注       & \tn{footfullcite}  & 脚注方式                       \\
 %     \bottomrule
 %   \end{talltblr}
 % \end{table}
@@ -2867,23 +2870,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_thm_type_clist}
-% 默认定理类型、头名称，以及是否需要编号和证毕符号。
-%    \begin{macrocode}
-\clist_new:N   \g_@@_thm_type_clist
-\clist_gset:Nn \g_@@_thm_type_clist
-  {
-    { axiom      } { 公理 },
-    { corollary  } { 推论 },
-    { definition } { 定义 },
-    { example    } { 例   },
-    { lemma      } { 引理 },
-    { proof, *+  } { 证明 },
-    { theorem    } { 定理 }
-  }
-%    \end{macrocode}
-% \end{variable}
-%
 % \begin{variable}{\c_@@_today_tl}
 % 编译当天日期，格式为 |yyyy-mm-dd|。
 %    \begin{macrocode}
@@ -2942,6 +2928,13 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsection{内部函数}
+%
+% \begin{macro}{\@@_null:}
+% 等价于 \LaTeXe{} 中的 \tn{null}。
+%    \begin{macrocode}
+\cs_new:Nn \@@_null: { \hbox:n { } }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_quad:,\@@_qquad:}
 % 等价于 \LaTeXe{} 中的 \tn{quad} 和 \tn{qquad}。
@@ -3062,13 +3055,13 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_box_spread:NNn #1#2#3
   {
     \mode_leave_vertical:
-    \@@_get_width:Nn \l_@@_tmpa_dim { #2 #3 }
+    \@@_get_width:Nn \l_@@_tmp_skip { #2 #3 }
     \hbox_to_wd:nn { #1 }
       {
-        \dim_compare:nTF { \l_@@_tmpa_dim > #1 }
+        \dim_compare:nTF { \l_@@_tmp_skip > #1 }
           {
             \tex_hfil:D \scalebox
-              { \dim_to_decimal_in_unit:nn { #1 } { \l_@@_tmpa_dim } }
+              { \dim_to_decimal_in_unit:nn { #1 } { \l_@@_tmp_skip } }
               [ 1.0 ] { #2 #3 } \tex_hfil:D
           }
           { #2 \tl_map_inline:nn { #3 } { ##1 \tex_hfil:D } \tex_unskip:D }
@@ -3199,55 +3192,53 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_full_uline:Nn,\@@_full_uline:Nx}
+% \begin{macro}{\@@_get_width_print:Nn,\@@_get_width_print:Nv,
+%   \@@_get_width_print:Nx}
 % 横跨整页的下划线。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 %   \item 文本
 % \end{arguments}
-% 先使用 \cs{@@_get_text_width:Nn} 获取文本内容宽度，
+% 先使用 \cs{@@_get_width:Nn} 获取文本内容到右边距的宽度，
 % 该宽度存储在调用的 |dim| 型变量中。随后输出文本内容。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_full_uline:Nn #1#2
+\cs_new_protected:Npn \@@_get_width_print:Nn #1#2
   {
     \@@_get_width:Nn #1 { #2 }
     \dim_set:Nn #1 { \textwidth - #1 } #2
   }
-\cs_generate_variant:Nn \@@_full_uline:Nn { Nx }
+\cs_generate_variant:Nn \@@_get_width_print:Nn { Nv }
+\cs_generate_variant:Nn \@@_get_width_print:Nn { Nx }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_uline_entry:Nnnn}
+% \begin{macro}{\@@_uline_entry:Nn}
 % 生成占整页宽度的下划线条目。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 %   \item 文本
-%   \item 文本
-%   \item 分隔符
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline_entry:Nnnn #1#2#3#4
+\cs_new_protected:Npn \@@_uline_entry:Nn #1#2
   {
-    \@@_full_uline:Nx #1 { \@@_name:n { #2 } #4 }
-    \@@_box_ulined_info:Nn #1 { #3 }
+    \@@_get_width_print:Nv #1 { c_@@_name_ #2 _tl }
+    \@@_box_ulined_info:Nn #1 { #2 }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_uline_bientry:Nnnn}
+% \begin{macro}{\@@_uline_bientry:Nn}
 % 生成占半页宽度的下划线条目。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 %   \item 文本
-%   \item 文本
-%   \item 分隔符
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline_bientry:Nnnn #1#2#3#4
+\cs_new_protected:Npn \@@_uline_bientry:Nn #1#2
   {
-    \@@_full_uline:Nx #1 { \@@_name:n { #2 } #4 }
+    \@@_get_width_print:Nv #1 { c_@@_name_ #2 _tl }
     \dim_sub:Nn #1 { \textwidth / 2 }
-    \@@_box_ulined_info:Nn #1 { #3 }
+    \@@_box_ulined_info:Nn #1 { #2 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3677,10 +3668,10 @@ To produce the documentation run the original source files ending with
     bottom-skip = \l_@@_bottom_skip,
     align =
       {
-        l = { \cs_set_eq:NN     \@@_align: \raggedright },
-        r = { \cs_set_eq:NN     \@@_align: \raggedleft  },
-        c = { \cs_set_eq:NN     \@@_align: \centering   },
-        n = { \__nju_cs_clear:N \@@_align:              }
+        l = { \cs_set_eq:NN \@@_align: \raggedright },
+        r = { \cs_set_eq:NN \@@_align: \raggedleft  },
+        c = { \cs_set_eq:NN \@@_align: \centering   },
+        n = { \cs_set:Nn    \@@_align: { }          }
       }
   }
   {
@@ -4274,7 +4265,7 @@ To produce the documentation run the original source files ending with
 \sys_if_engine_luatex:T
   {
     \RequirePackage { lua-ul }
-    \NewDocumentCommand \njuline { m } { \underLine{#1} \null }
+    \NewDocumentCommand \njuline { m } { \underLine{#1} \@@_null: }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5792,7 +5783,7 @@ To produce the documentation run the original source files ending with
 % \subsection{图片表格}
 %
 % \begin{macro}{image/path}
-% \changes{v1.0}{2021/08/06}{提供图片路径设置。}
+% \changes{v1.0}{2022/08/06}{提供图片路径设置。}
 % 外置图片路径，等效于 \tn{graphicspath}。
 %    \begin{macrocode}
 \keys_define:nn { nju / image } { path .code:n = { \graphicspath {#1} } }
@@ -5860,7 +5851,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{label-sep/figure,label-sep/table,label-sep/equation}
-% \changes{1.0}{2022/07/31}{添加编号连接符设置项。}
+% \changes{v1.0}{2022/07/31}{添加编号连接符设置项。}
 % 修改图片、表格、公式编号中的连接符。
 % \footnote{\url{https://tex.stackexchange.com/q/61756/}}
 %    \begin{macrocode}
@@ -5929,10 +5920,26 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{theorem/type,theorem/define}
-% 定义和创建定理类环境的接口。
+% \begin{macro}{theorem/type}
+% 定义定理类环境。
 %    \begin{macrocode}
-    type         .clist_set:N = \g_@@_thm_type_clist,
+    type        .clist_gset:N = \g_@@_thm_type_clist,
+    type           .initial:n =
+      {
+        { axiom      } { 公理 },
+        { corollary  } { 推论 },
+        { definition } { 定义 },
+        { example    } { 例   },
+        { lemma      } { 引理 },
+        { proof, *+  } { 证明 },
+        { theorem    } { 定理 }
+      },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{theorem/define}
+% 创建定理类环境。
+%    \begin{macrocode}
     define .value_forbidden:n = true,
     define            .code:n =
       {
@@ -6679,14 +6686,15 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_top_nl:
   {
-    \dim_set:Nn \l_@@_tmpa_dim { 3.2 em }
-    \dim_set:Nn \l_@@_tmpb_dim { 9   em }
-    \@@_box_spread_name:Nn \l_@@_tmpa_dim { clc } \@@_hskip:
-    \@@_box_ulined_info:Nn \l_@@_tmpb_dim { clc } \tex_hfill:D
+    \dim_set:Nn               \l_@@_tmpa_dim { 38.6 pt  }
+    \dim_set:Nn               \l_@@_tmpb_dim { 109  pt  }
+    \@@_box_spread_name:Nn \l_@@_tmpa_dim { clc      } \@@_hskip:
+    \@@_box_ulined_info:Nn \l_@@_tmpb_dim { clc      } \tex_hfill:D
     \@@_box_spread_name:Nn \l_@@_tmpa_dim { secretlv } \@@_hskip:
     \@@_box_ulined_info:Nn \l_@@_tmpb_dim { secretlv } \tex_par:D
-    \@@_box_spread_name:Nn \l_@@_tmpa_dim { udc } \@@_hskip:
-    \@@_box_ulined_info:Nn \l_@@_tmpb_dim { udc } \tex_hfill:D \hbox:n { }
+    \@@_box_spread_name:Nn \l_@@_tmpa_dim { udc      } \@@_hskip:
+    \@@_box_ulined_info:Nn \l_@@_tmpb_dim { udc      } \tex_hfill:D
+    \@@_null:
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6715,20 +6723,28 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_info_nl:
   {
-    \skip_set:Nn \l_@@_tmp_skip { 1 em plus 1 fill }
-    \@@_uline_list:NNn \c_@@_name_supvinfo_tl \l_@@_tmp_skip
+    \tl_set:Nx \l_@@_tmpa_tl
       {
         \clist_use:Nn \g_@@_info_supv_clist   { ~ }
         \clist_use:Nn \g_@@_info_supvii_clist { ~ }
         \@@_hskip: \g_@@_info_supvcont_tl
       }
-    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { degree     } { degree     } { }
-    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { majorb     } { major      } { }
+    \skip_set:Nn \l_@@_tmp_skip { .5 em plus 1 fill }
+    \@@_uline_list:NNn \l_@@_tmpa_tl \l_@@_tmp_skip
+      { \c_@@_name_supvinfo_tl }
+%    \end{macrocode}
+% 临时替换显示的名称字样。
+%    \begin{macrocode}
+    \group_begin:
+      \tl_set_eq:NN \c_@@_name_major_tl \c_@@_name_majorb_tl
+      \@@_uline_bientry:Nn \l_@@_tmpa_dim { degree   }
+      \@@_uline_bientry:Nn \l_@@_tmpa_dim { major    }
+      \tex_par:D
+    \group_end:
+    \@@_uline_bientry:Nn \l_@@_tmpa_dim { submitdate }
+    \@@_uline_bientry:Nn \l_@@_tmpa_dim { defenddate }
     \tex_par:D
-    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { submitdate } { submitdate } { }
-    \@@_uline_bientry:Nnnn \l_@@_tmpa_dim { defenddate } { defenddate } { }
-    \tex_par:D
-    \@@_uline_entry:Nnnn   \l_@@_tmpa_dim { confer     } { confer     } { }
+    \@@_uline_entry:Nn   \l_@@_tmpa_dim { confer     }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7094,9 +7110,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_p_decl_sign:nn #1#2
   {
-    \@@_name:n {#1} \c_@@_name_colon_tl \hfill
+    \@@_name:n {#1} \c_@@_name_colon_tl \tex_hfill:D
     \@@_name:n {#2} \c_@@_name_colon_tl
-    \skip_horizontal:n { 160 pt } \null \@@_vskip:
+    \skip_horizontal:n { 160 pt } \@@_null: \@@_vskip:
   }
 %</def-p>
 %    \end{macrocode}
@@ -7602,7 +7618,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 专业、年级、姓名。
 %    \begin{macrocode}
-    \@@_full_uline:Nx \l_@@_tmp_skip
+    \@@_get_width_print:Nx \l_@@_tmp_skip
       {
         \dim_set:Nn \l_@@_tmpa_dim { 11 em }
         \dim_set:Nn \l_@@_tmpb_dim { 4  em }
@@ -7615,7 +7631,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 导师姓名、职称。
 %    \begin{macrocode}
-    \@@_full_uline:Nx \l_@@_tmpa_dim { \c_@@_name_supva_tl #1 }
+    \@@_get_width_print:Nx \l_@@_tmpa_dim { \c_@@_name_supva_tl #1 }
     \@@_box_ulined_info:Nn \l_@@_tmpa_dim { supvfull }
   }
 %    \end{macrocode}

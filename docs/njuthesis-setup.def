@@ -146,7 +146,7 @@
 
 % image 类用于载入外置的图片
 \njusetup[image]{
-    % path = {{./figure/}{./image/}}
+    % path = {{./figure/}{./image/}},
     % 图片搜索路径
     %
     nju-emblem = {nju-emblem},
