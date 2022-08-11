@@ -144,6 +144,7 @@ To produce the documentation run the original source files ending with
 \renewcommand\emph[1]{\CJKunderdot[textformat=\itshape]{#1}}
 \newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
 \newcommand\tikzlogo{Ti\emph{k}Z}
+\newcommand\OPT[1]{\textcolor{njuyellow}{\bfseries#1}}
 \hypersetup{
   pdftitle  = {
     The njuthesis class -
@@ -217,7 +218,8 @@ To produce the documentation run the original source files ending with
     alsoletter = {*, -, .},
     texcsstyle = *\color{njuviolet},
     emphstyle  = [1]\color{nju-ai-orange},
-    emphstyle  = [2]\color{nju-cs-green}
+    emphstyle  = [2]\color{nju-cs-green},
+    emphstyle  = [3]\bfseries\color{njuyellow}
   }
 \lstnewenvironment{shellexample}[1][]{%
   \lstset{style=style@shell, #1}}{}
@@ -830,7 +832,7 @@ To produce the documentation run the original source files ending with
 % \begin{description}
 %   \item[Perl] 一般预装于 macOS 和 Linux，而 Windows 用户需要单独安装
 %        \href{https://strawberryperl.com/}{Strawberry Perl}。
-%   \item[\pkg{latexmk}] 如果终端找不到 |latexmk| 命令，需使用包管理器单独安装。
+%   \item[\normalfont\pkg{latexmk}] 如果终端找不到 |latexmk| 命令，需使用包管理器单独安装。
 % \end{description}
 %
 % 该命令的使用方法为
@@ -961,7 +963,7 @@ To produce the documentation run the original source files ending with
 % \subsubsection{学位信息}
 % \begin{function}[added=2021-09-07,updated=2022-07-23]{type}
 %   \begin{syntax}
-%     type = <(bachelor)|master|doctor|postdoc>
+%     \OPT{type} = <(bachelor)|master|doctor|postdoc>
 %   \end{syntax}
 % 选择毕业论文模板类型，这将决定模板整体的外观。可选值分别为
 % 学士（本科生）、硕士研究生、博士研究生和博士后，默认为学士。
@@ -969,7 +971,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2021-09-07,updated=2022-07-01]{degree}
 %   \begin{syntax}
-%     degree = <(academic)|professional>
+%     \OPT{degree} = <(academic)|professional>
 %   \end{syntax}
 % 选择研究生的学位类型。可选值分别学术型和专业型，默认为学术型。
 % \end{function}
@@ -979,7 +981,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2021-09-07,updated=2022-07-05]{nl-cover}
 %   \begin{syntax}
-%     nl-cover = <\TFF>
+%     \OPT{nl-cover} = <\TFF>
 %   \end{syntax}
 % 是否使用国家图书馆封面，默认关闭。
 % \end{function}
@@ -989,7 +991,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[updated=2022-01-06]{decl-page}
 %   \begin{syntax}
-%     decl-page = <\TFF>
+%     \OPT{decl-page} = <\TFF>
 %   \end{syntax}
 % 是否需要自动生成声明页面，默认关闭。
 % \end{function}
@@ -1010,7 +1012,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-01-14]{oneside,twoside}
 %   \begin{syntax}
-%     <oneside|(twoside)>
+%     <\OPT{oneside}|(\OPT{twoside})>
 %   \end{syntax}
 % 开启单面或双面模式，默认为双面模式。
 % \end{function}
@@ -1023,7 +1025,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2021-12-15]{draft}
 %   \begin{syntax}
-%     draft = <\TFF>
+%     \OPT{draft} = <\TFF>
 %   \end{syntax}
 % 是否开启草稿模式，默认关闭。
 % \end{function}
@@ -1045,7 +1047,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-04-19,updated=2022-07-04]{anonymous}
 %   \begin{syntax}
-%     anonymous = <\TFF>
+%     \OPT{anonymous} = <\TFF>
 %   \end{syntax}
 % 是否开启盲审模式。
 % \end{function}
@@ -1069,31 +1071,31 @@ To produce the documentation run the original source files ending with
 %   footmisc,
 %   unicode-math}
 %   \begin{syntax}
-%     biblatex       = <\TTF>
-%     cleveref       = <\TTF>
-%     ntheorem       = <\TTF>
-%     enumitem       = <\TTF>
-%     footmisc       = <\TTF>
-%     unicode-math   = <\TTF>
+%     \OPT{biblatex}     = <\TTF>
+%     \OPT{cleveref}     = <\TTF>
+%     \OPT{ntheorem}     = <\TTF>
+%     \OPT{enumitem}     = <\TTF>
+%     \OPT{footmisc}     = <\TTF>
+%     \OPT{unicode-math} = <\TTF>
 %   \end{syntax}
 % 是否默认载入某些宏包，默认均是。选项名和宏包名是一致的。
 % \end{function}
 %
 % \begin{function}[added=2022-08-03]{minimal}
 %   \begin{syntax}
-%     <minimal>
+%     <\OPT{minimal}>
 %   \end{syntax}
 % 最小化模式，禁用所有上述宏包。
 % \end{function}
 %
 % 本模板内置了一系列宏包以进行功能扩展。这些宏包为：
 % \begin{description}
-%   \item[\pkg{biblatex}] 复杂参考文献数据的处理。
-%   \item[\pkg{cleveref}] 按来源类型自动处理引用标签。
-%   \item[\pkg{ntheorem}] 定理类环境定制。
-%   \item[\pkg{enumitem}] 列表环境样式定制。
-%   \item[\pkg{footmisc}] 脚注样式定制。
-%   \item[\pkg{unicode-math}] 支持 Unicode 数学字体。
+%   \item[\normalfont\pkg{biblatex}] 复杂参考文献数据的处理。
+%   \item[\normalfont\pkg{cleveref}] 按来源类型自动处理引用标签。
+%   \item[\normalfont\pkg{ntheorem}] 定理类环境定制。
+%   \item[\normalfont\pkg{enumitem}] 列表环境样式定制。
+%   \item[\normalfont\pkg{footmisc}] 脚注样式定制。
+%   \item[\normalfont\pkg{unicode-math}] 支持 Unicode 数学字体。
 % \end{description}
 %
 % 在某些情况下，这些宏包会与旧有的经验方法冲突，可以使用上述选项在模板
@@ -1103,7 +1105,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-02-23]{config}
 %   \begin{syntax}
-%     config = \Arg{文件}
+%     \OPT{config} = \Arg{文件}
 %   \end{syntax}
 % 配置文件路径。
 % \end{function}
@@ -1119,8 +1121,8 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2021-09-07,updated=2021-12-18]{cjk-font,latin-font}
 %   \begin{syntax}
-%     cjk-font = <win|mac|fandol|founder|noto|source|none>
-%     latin-font = <win|mac|gyre|none>
+%     \OPT{cjk-font} = <win|mac|fandol|founder|noto|source|none>
+%     \OPT{latin-font} = <win|mac|gyre|none>
 %   \end{syntax}
 % 手动指定字体。
 % \end{function}
@@ -1225,7 +1227,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-02]{math-font}
 %   \begin{syntax}
-%     math-font=<asana|cambria|fira|garamond|lm|...|termes|(xits)|none>
+%     \OPT{math-font} = <asana|cambria|fira|garamond|lm|...|termes|(xits)|none>
 %   \end{syntax}
 % 设置数学字体。完整列表见表 {tab:math-fontset}。
 % \end{function}
@@ -1251,7 +1253,7 @@ To produce the documentation run the original source files ending with
 %     \opt{garamond}    & Garamond Math       & Garamond 风格              \\
 %     \opt{lm}          & Latin Modern Math   & Computer Modern 风格       \\
 %     \opt{libertinus}  & Libertinus Math     &                            \\
-%     \opt{newcm}       & \NCM Math           & Computer Modern 风格       \\
+%     \opt{newcm}       & \NCM~Math           & Computer Modern 风格       \\
 %     \opt{stix}        & STIX Math           & Times 风格                 \\
 %     \opt{bonum}       & TG Bonum Math   \TA &                            \\
 %     \opt{dejavu}      & TG DejaVu Math  \TA & DejaVu 风格                \\
@@ -1267,7 +1269,7 @@ To produce the documentation run the original source files ending with
 %
 % 本节提及的字库中，中文字库只有方正书宋、方正黑体、方正楷体、方正仿宋、
 % 两种思源字体和四种Fandol字体能够\emph{免费商用}；
-% 英文字库中只有 Times New Roman、XITS 和三种 \TeX Gyre字体能够\emph{免费商用}。
+% 英文字库中只有 Times New Roman、XITS 和三种 \TeX~Gyre字体能够\emph{免费商用}。
 % 因此，若需要将本模板用于商业相关的活动，请咨询专业人士。
 %
 %
@@ -1283,49 +1285,53 @@ To produce the documentation run the original source files ending with
 % 根据可选参数填写方式不同，\tn{njusetup} 共有四种等效的使用方式，
 % 可以根据实际情况进行灵活选择。
 %
-% 在键路径留空时，为最基础的用法。此时设置项的参数是一个使用英文
-% 半角逗号分隔的键值列表，通常形如 \meta{key}|=|\meta{value}。
+% 在键路径留空时，为最基础的用法。此时设置项的参数是一个使用
+% \emph{英文半角逗号}分隔的键值列表，通常形如 \meta{key}|=|\meta{value}。
 %
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib},
+%   emph={[3]title,author,resource}]
 %   \njusetup{
 %       info/title   = {奇文},
 %       info/author  = {佚名},
-%       bib/resource = {ref1.bib, ref1.bib}
+%       bib/resource = {ref1.bib, ref2.bib}
 %     }
 % \end{latexexample}
 %
 % 以上为最基础的填写方法，可以分组为：
 %
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib},
+%   emph={[3]title,author,resource}]
 %   \njusetup{
 %       info = {
 %           title    = {奇文},
 %           author   = {佚名}
 %         },
 %       bib = {
-%           resource = {ref1.bib, ref1.bib},
+%           resource = {ref1.bib, ref2.bib},
 %         }
 %     }
 % \end{latexexample}
 %
 % 在键路径填入模块（类）时，只能设定当前模块下的选项。此时参数是键值列表。
 %
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib},
+%   emph={[3]title,author,resource}]
 %   \njusetup[info]{
 %       title    = {奇文},
 %       author   = {佚名}
 %     }
 %   \njusetup[bib]{
-%       resource = {ref1.bib, ref1.bib}
+%       resource = {ref1.bib, ref2.bib}
 %     }
 % \end{latexexample}
 %
 % 在键路径填入具体选项名称时，只能设定该选项的值。
 %
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info,bib},
+%   emph={[3]title,author,resource}]
 %   \njusetup[info/title]{奇文}
 %   \njusetup[info/author]{佚名}
-%   \njusetup[bib/resource]{ref1.bib, ref1.bib}
+%   \njusetup[bib/resource]{ref1.bib, ref2.bib}
 % \end{latexexample}
 %
 %
@@ -1336,8 +1342,8 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[updated=2022-01-14]{info/title,info/title*}
 %   \begin{syntax}
-%     title  = \Arg{标题}
-%     title* = \Arg{英文标题}
+%     \OPT{title}  = \Arg{标题}
+%     \OPT{title*} = \Arg{英文标题}
 %   \end{syntax}
 % 题目。由于封面上提供给中文题目的横线长度有限\footnote{单行最长约为15
 % 个汉字，建议总长度不超过45字，当然你也可以对照 \ref{subsubsec:modify-length}
@@ -1355,8 +1361,8 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[updated=2021-10-01]{info/keywords,info/keywords*}
 %   \begin{syntax}
-%     keywords  = \Arg{关键词}
-%     keywords* = \Arg{英文关键词}
+%     \OPT{keywords}  = \Arg{关键词}
+%     \OPT{keywords*} = \Arg{英文关键词}
 %   \end{syntax}
 % 关键词列表。关键词之间需要使用英文半角逗号隔开，
 % 含有空格的关键字需要使用花括号包裹以避免歧义。可以参照下方的填写示例。
@@ -1364,14 +1370,14 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[updated=2021-10-01]{info/grade}
 %   \begin{syntax}
-%     grade = \Arg{20XX}
+%     \OPT{grade} = \Arg{20XX}
 %   \end{syntax}
 % 年级，推荐格式为“20XX”。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/student-id}
 %   \begin{syntax}
-%     student-id = \Arg{学号或工号}
+%     \OPT{student-id} = \Arg{学号或工号}
 %   \end{syntax}
 % 学号或工号。南京大学本科生为9位数字学号，
 % 研究生为两位大写字母标识加上数字组成的学号（2022级改为纯数字）。
@@ -1379,55 +1385,55 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[updated=2021-10-01]{info/author,info/author*}
 %   \begin{syntax}
-%     author  = \Arg{你的名字}
-%     author* = \Arg{姓名拼音}
+%     \OPT{author}  = \Arg{你的名字}
+%     \OPT{author*} = \Arg{姓名拼音}
 %   \end{syntax}
 % 姓名。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/department,info/department*}
 %   \begin{syntax}
-%     department  = \Arg{院系}
-%     department* = \Arg{院系}
+%     \OPT{department}  = \Arg{院系}
+%     \OPT{department*} = \Arg{院系}
 %   \end{syntax}
 % 院系。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/major,info/major*}
 %   \begin{syntax}
-%     major  = \Arg{专业}
-%     major* = \Arg{专业}
+%     \OPT{major}  = \Arg{专业}
+%     \OPT{major*} = \Arg{专业}
 %   \end{syntax}
 % 专业。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/field,info/field*}
 %   \begin{syntax}
-%     field = \Arg{方向}
-%     field* = \Arg{方向}
+%     \OPT{field}  = \Arg{方向}
+%     \OPT{field*} = \Arg{方向}
 %   \end{syntax}
 % 研究领域。只有研究生存在研究领域的说法，本科生无需填写。
 % \end{function}
 %
 % \begin{function}[updated=2022-01-12]{info/supervisor,info/supervisor*}
 %   \begin{syntax}
-%     supervisor = \Arg{导师姓名,职称}
-%     supervisor* = \Arg{导师英文全称}
+%     \OPT{supervisor}  = \Arg{导师姓名,职称}
+%     \OPT{supervisor*} = \Arg{导师英文全称}
 %   \end{syntax}
 % 导师全称。请使用逗号（ |,| ）分隔导师的中文姓名与职称，英文名则不需添加逗号。
 % \end{function}
 %
 % \begin{function}[updated=2021-01-12]{info/supervisor-ii,info/supervisor-ii*}
 %   \begin{syntax}
-%     supervisor-ii = \Arg{第二导师姓名,职称}
-%     supervisor-ii* = \Arg{第二导师英文全称}
+%     \OPT{supervisor-ii}  = \Arg{第二导师姓名,职称}
+%     \OPT{supervisor-ii*} = \Arg{第二导师英文全称}
 %   \end{syntax}
 % 第二导师全称。无第二导师时不填即可。
 % \end{function}
 %
 % \begin{function}[updated=2022-01-14]{info/submit-date}
 %   \begin{syntax}
-%     submit-date = \Arg{yyyy-mm-dd}
+%     \OPT{submit-date} = \Arg{yyyy-mm-dd}
 %   \end{syntax}
 % 提交日期。中英文日期现在可以由 ISO 日期格式\cite{gb-t-7408-2005}
 % 的字符串统一生成。如果在等号后留空，则原本中文日期处使用空白的年月日字样；
@@ -1436,29 +1442,29 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[updated=2022-01-14]{info/defend-date}
 %   \begin{syntax}
-%     defend-date = \Arg{yyyy-mm-dd}
+%     \OPT{defend-date} = \Arg{yyyy-mm-dd}
 %   \end{syntax}
 % 答辩日期，只对研究生有效，要求同提交日期。
 % \end{function}
 %
 % \begin{function}[updated=2022-05-23]{info/confer-date}
 %   \begin{syntax}
-%     confer-date = \Arg{yyyy-mm-dd}
+%     \OPT{confer-date} = \Arg{yyyy-mm-dd}
 %   \end{syntax}
 % 学位授予日期，只用于国家图书馆封面，要求同提交日期。
 % \end{function}
 %
 % \begin{function}[updated=2022-05-23]{info/bottom-date}
 %   \begin{syntax}
-%     bottom-date = \Arg{yyyy-mm-dd}
+%     \OPT{bottom-date} = \Arg{yyyy-mm-dd}
 %   \end{syntax}
 % 底部日期，只用于国家图书馆封面，要求同提交日期。
 % \end{function}
 %
 % \begin{function}[updated=2022-05-27]{info/chairman,info/reviewer}
 %   \begin{syntax}
-%     chairman = \Arg{答辩主席姓名职称}
-%     reviewer = \Arg{答辩评委姓名职称}
+%     \OPT{chairman} = \Arg{答辩主席姓名职称}
+%     \OPT{reviewer} = \Arg{答辩评委姓名职称}
 %   \end{syntax}
 % 答辩委员会信息，分别为评审委员会主席及成员的姓名加职称，只对研究生有效。
 % 评审成员名单以逗号分隔的列表形式存储，填写方法同关键词。
@@ -1468,10 +1474,10 @@ To produce the documentation run the original source files ending with
 % \begin{function}[updated=2021-10-01]{info/clc,info/secret-level,
 %   info/udc,info/supervisor-contact}
 %   \begin{syntax}
-%     clc = \Arg{中图分类号}
-%     secret-level = <不涉密|秘密|机密|绝密>
-%     udc = \Arg{udc}
-%     supervisor-contact = \Arg{导师联系方式}
+%     \OPT{clc} = \Arg{中图分类号}
+%     \OPT{secret-level} = <不涉密|秘密|机密|绝密>
+%     \OPT{udc} = \Arg{UDC 分类号}
+%     \OPT{supervisor-contact} = \Arg{导师联系方式}
 %   \end{syntax}
 % 国家图书馆封面相关，包括中图分类号、密级、UDC 分类号和导师联系方式。
 % \end{function}
@@ -1481,10 +1487,12 @@ To produce the documentation run the original source files ending with
 %
 % 本科生可以参考如下范例输入个人信息。注意不能有空行。
 %
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info},emph={[3]title,title*,
+%   keywords,keywords*,grade,student-id,author,author*,department,department*,
+%   major,major*,supervisor,supervisor*,submit-date}]
 %   \njusetup[info]{
 %       title        = {第一行标题\\第二行标题},
-%       title*       = {My title in English},
+%       title*       = {My Awesome Work},
 %       keywords     = {我,就是,充数的,关键词},
 %       keywords*    = {Dummy, Keywords, Here, {it is}},
 %       grade        = {2018},
@@ -1503,10 +1511,12 @@ To produce the documentation run the original source files ending with
 %
 % 研究生可以参考如下列表输入个人信息
 %
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info},emph={[3]title,title*,
+%   keywords,keywords*,grade,student-id,author,author*,department,department*,
+%   major,major*,field,field*,supervisor,supervisor*,submit-date,defend-date,email}]
 %   \njusetup[info]{
 %       title        = {第一行标题\\第二行标题\\第三行标题},
-%       title*       = {My title in English},
+%       title*       = {My Awesome Work},
 %       keywords     = {我,就是,充数的,关键词},
 %       keywords*    = {Dummy,Keywords,Here,{it is}},
 %       grade        = {2018},
@@ -1529,7 +1539,8 @@ To produce the documentation run the original source files ending with
 %
 % 如果需要国家图书馆封面，还需要加入如下信息
 %
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info},emph={[3]confer-date,
+%   bottom-date,chairman,reviewer,clc,secret-level,udc,supervisor-contact}]
 %   \njusetup[info]{
 %       confer-date  = {2022-05-20},
 %       bottom-date  = {2022-05-21},
@@ -1544,10 +1555,11 @@ To produce the documentation run the original source files ending with
 %
 % 博士后可以参考如下范例输入个人信息。
 %
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]info},emph={[3]title,title*,
+%   keywords,keywords*,student-id,author,department,major,supervisor,submit-date}]
 %   \njusetup[info]{
 %       title        = {第一行标题\\第二行标题},
-%       title*       = {My title in English},
+%       title*       = {My Awesome Work},
 %       keywords     = {我,就是,充数的,关键词},
 %       keywords*    = {Dummy, Keywords, Here, {it is}},
 %       student-id   = {189114514},
@@ -1591,8 +1603,8 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}{header/content,header/content*,footer/content,footer/content*}
 %   \begin{syntax}
-%     content  = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
-%     content* = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
+%     \OPT{content}  = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
+%     \OPT{content*} = \{\Arg{位置}\Arg{内容},\Arg{位置}\Arg{内容},...\}
 %   \end{syntax}
 % 页眉页脚的格式与内容设置。带有星号的设置项供单面模式下使用。
 % \end{function}
@@ -1607,7 +1619,7 @@ To produce the documentation run the original source files ending with
 % 并将页眉格式设置成五号黑体，奇数页左侧为节名，右侧为页码，
 % 偶数页左侧为页码，右侧为章名。
 % \begin{latexexample}[moretexcs={\njusetup,\sffamily,\njusetformat},
-%   emph={[2]header,footer}]
+%   emph={[2]header,footer},emph={[3]content}]
 %   \njusetup[header/content]{
 %       { OR } { \thepage }, { OL } { \rightmark },
 %       { EL } { \thepage }, { ER } { \leftmark  }
@@ -1642,7 +1654,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-08-06]{image/path}
 %   \begin{syntax}
-%     path = \{\marg{路径1},\marg{路径2},...\}
+%     \OPT{path} = \{\marg{路径1},\marg{路径2},...\}
 %   \end{syntax}
 % 图片搜索路径，等效于 \tn{graphicspath}。这个选项仅能设置一次。
 % \end{function}
@@ -1651,7 +1663,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-05-01,updated=2022-08-03]{footnote/style}
 %   \begin{syntax}
-%     style = <(plain)|pifont>
+%     \OPT{style} = <(plain)|pifont>
 %   \end{syntax}
 % 设置脚注编号样式。默认为普通数字，使用 |pifont|
 % 选项可修改为带圈数字。单一页面内请尽量避免超过 10 条脚注。
@@ -1681,13 +1693,15 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-31]{math/style}
 %   \begin{syntax}
-%     style = <TeX|ISO|(GB)>
+%     \OPT{style} = <TeX|ISO|(GB)>
 %   \end{syntax}
 % 数学符号风格。
 % \end{function}
 %
 % 默认的国标风格 \opt{GB} 相当于在导言区设置了
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]math}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]math},
+%   emph={[3]integral,integral-limits,less-than-or-equal,
+%   math-ellipsis,partial,real-part,vector,uppercase-greek}]
 %   \njusetup[math]{
 %       integral           = upright,
 %       integral-limits    = false,
@@ -1704,7 +1718,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-31]{math/integral}
 %   \begin{syntax}
-%     integral = <upright|slanted>
+%     \OPT{integral} = <upright|slanted>
 %   \end{syntax}
 % 积分号的正/斜体。
 % 该选项需要字体的支持，目前仅限 \opt{xits}、\opt{newcm}。
@@ -1712,7 +1726,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-31]{math/integral-limits}
 %   \begin{syntax}
-%     integral-limits = <\TF>
+%     \OPT{integral-limits} = <\TF>
 %   \end{syntax}
 % 积分号上下限的位置，可选：\opt{true}（在上下）、\opt{false}（在右侧）。
 % 这个设置只影响行间公式，行内公式统一居右侧，不受影响。
@@ -1720,7 +1734,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-31]{math/less-than-or-equal}
 %   \begin{syntax}
-%     less-than-or-equal = <slanted|horizontal>
+%     \OPT{less-than-or-equal} = <slanted|horizontal>
 %   \end{syntax}
 % 小于等于号和大于等于号的字形。
 % 这将控制 \tn{le}、\tn{ge}、\tn{leq} 和 \tn{geq} 的符号是
@@ -1729,7 +1743,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-31]{math/math-ellipsis}
 %   \begin{syntax}
-%     math-ellipsis = <centered|lower>
+%     \OPT{math-ellipsis} = <centered|lower>
 %   \end{syntax}
 % 省略号 \tn{dots} 的样式，可选：\opt{centered}（按照中文的习惯固定居中）、
 % \opt{lower}（取决于前后符号的位置）。
@@ -1738,28 +1752,28 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-31]{math/partial}
 %   \begin{syntax}
-%     partial = <upright|italic>
+%     \OPT{partial} = <upright|italic>
 %   \end{syntax}
 % 偏微分符号的正/斜体。
 % \end{function}
 %
 % \begin{function}[added=2022-07-31]{math/real-part}
 %   \begin{syntax}
-%     real-part = <roman|fraktur>
+%     \OPT{real-part} = <roman|fraktur>
 %   \end{syntax}
 % 实部 \tn{Re} 和虚部 \tn{Im} 的字体。
 % \end{function}
 %
 % \begin{function}[added=2022-07-31]{math/vector}
 %   \begin{syntax}
-%     vector = <boldfont|arrow>
+%     \OPT{vector} = <boldfont|arrow>
 %   \end{syntax}
 % 向量的表示方法，可选粗斜体或箭头。
 % \end{function}
 %
 % \begin{function}[added=2022-07-31]{math/uppercase-greek}
 %   \begin{syntax}
-%     uppercase-greek = <upright|italic>
+%     \OPT{uppercase-greek} = <upright|italic>
 %   \end{syntax}
 % 大写希腊字母的正/斜体。
 % 有限增量符号 $\increment x$ 固定使用正体，推荐使用 \tn{increment} 表示。
@@ -1790,28 +1804,28 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-04-21]{theorem/style}
 %   \begin{syntax}
-%     style = <(plain)|break|change|margin|empty|...>
+%     \OPT{style} = <(plain)|break|change|margin|empty|...>
 %   \end{syntax}
 % 定理基本样式。等效于 \tn{theoremstyle}\marg{样式名称}。
 % \end{function}
 %
 % \begin{function}[added=2022-04-21]{theorem/header-font}
 %   \begin{syntax}
-%     header-font = \meta{头部字体格式}
+%     \OPT{header-font} = \meta{头部字体格式}
 %   \end{syntax}
 % 定理头部字体格式。等效于 \tn{theoremheaderfont}\marg{格式}。
 % \end{function}
 %
 % \begin{function}[added=2022-04-21]{theorem/body-font}
 %   \begin{syntax}
-%     body-font = \meta{内部字体格式}
+%     \OPT{body-font} = \meta{内部字体格式}
 %   \end{syntax}
 % 定理内部字体格式。等效于 \tn{theorembodyfont}\marg{格式}。
 % \end{function}
 %
 % \begin{function}[added=2022-04-21]{theorem/qed-symbol}
 %   \begin{syntax}
-%     qed-symbol = \meta{证毕符号}
+%     \OPT{qed-symbol} = \meta{证毕符号}
 %   \end{syntax}
 % 证毕符号。等效于 \tn{theoremsymbol}\marg{符号}。默认为空心方块（\mdlgwhtsquare）。
 % 禁用 \pkg{unicode-math} 时为实心黑色方块（\rule{1ex}{1ex}）。
@@ -1819,7 +1833,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-04-21]{theorem/counter}
 %   \begin{syntax}
-%     counter = <part|(chapter)|section|...>
+%     \OPT{counter} = <part|(chapter)|section|...>
 %   \end{syntax}
 % 定理计数器范围。
 % \end{function}
@@ -1827,7 +1841,7 @@ To produce the documentation run the original source files ending with
 % 模板的默认设置等效于
 %
 % \begin{latexexample}[moretexcs={\njusetup,\bfseries,\itshape,\mdlgwhtsquare},
-%   emph={[2]theorem}]
+%   emph={[2]theorem},emph={[3]style,header-font,body-font,qed-symbol,counter}]
 %   \njusetup[theorem]{
 %       style       = plain,
 %       header-font = \normalfont \bfseries ,
@@ -1841,7 +1855,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-08-05]{theorem/type}
 %   \begin{syntax}
-%     type = \{\marg{环境名,类型标识} \marg{头名称},...\}
+%     \OPT{type} = \{\marg{环境名,类型标识} \marg{头名称},...\}
 %   \end{syntax}
 % 需要定义的定理类型列表。在可选的 \meta{类型标识} 中，含有\emph{星号}表示
 % 需要编号，含有\emph{加号}需要证毕符号。该选项存储的是用来定义环境的参数，
@@ -1871,7 +1885,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-08-05]{theorem/define}
 %   \begin{syntax}
-%      <define>
+%      <\OPT{define}>
 %   \end{syntax}
 % 创建定理环境。
 % \end{function}
@@ -1884,9 +1898,9 @@ To produce the documentation run the original source files ending with
 % 宋体，定义了 \env{exercise} 和 \env{solution} 两种定理环境，后者没有编号。
 %
 % \begin{latexexample}[moretexcs={\njusetup,\normalfont},
-%   emph={[2]theorem}]
+%   emph={[2]theorem},emph={[3]define,body-font,type}]
 %   \njusetup[theorem]{
-%       define,
+%       define ,
 %       body-font   = \normalfont ,
 %       type        = {
 %           { {exercise} {习题} },
@@ -1901,9 +1915,9 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-07-31]{label-sep/figure,label-sep/table,label-sep/equation}
 %   \begin{syntax}
-%     figure   = \meta{符号}
-%     table    = \meta{符号}
-%     equation = \meta{符号}
+%     \OPT{figure}   = \meta{符号}
+%     \OPT{table}    = \meta{符号}
+%     \OPT{equation} = \meta{符号}
 %   \end{syntax}
 % 图片、表格、公式编号中的连接符样式，默认为短横线（en dash）。
 % \end{function}
@@ -1925,7 +1939,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2021-12-19]{bib/style}
 %   \begin{syntax}
-%     style = <(numeric)|author-year|\meta{自定义样式}>
+%     \OPT{style} = <(numeric)|author-year|\meta{自定义样式}>
 %   \end{syntax}
 % 参考文献样式。可选顺序编码制 \opt{numeric} 和著者-出版年制 \opt{author-year}，
 % 或自行填入任意其他 \pkg{biblatex} 样式。默认为顺序编码制。
@@ -1949,7 +1963,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-02-15]{bib/option}
 %   \begin{syntax}
-%     option = \meta{选项列表}
+%     \OPT{option} = \meta{选项列表}
 %   \end{syntax}
 % 待传入 \pkg{biblatex} 宏包的额外选项列表。
 % \end{function}
@@ -1959,7 +1973,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2021-12-19]{bib/resource}
 %   \begin{syntax}
-%     resource = \Arg{文件}
+%     \OPT{resource} = \Arg{文件}
 %   \end{syntax}
 % 参考文献数据源。类似于 \tn{addbibresource} 命令，但可以使用逗号分隔的
 % 列表形式。必须使用带扩展名（\file{.bib}）的完整文件名。
@@ -1977,7 +1991,8 @@ To produce the documentation run the original source files ending with
 % 可以参考如下范例进行参考文献设置。
 % 其中 \opt{bib/option} 的内容旨在关闭部分不需显示的文献信息，
 % 并采取仅首字母大写的作者姓名格式，可根据需要使用。
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib},
+%   emph={[3]style,resource,option}]
 %   \njusetup[bib]{
 %       style    = author-year,
 %       resource = {njuthesis-sample.bib}，
@@ -2114,8 +2129,8 @@ To produce the documentation run the original source files ending with
 % \begin{function}[added=2021-12-23,updated=2022-08-06]{
 %   image/nju-emblem,image/nju-name}
 %   \begin{syntax}
-%     nju-emblem = \Arg{文件}
-%     nju-name   = \Arg{文件}
+%     \OPT{nju-emblem} = \Arg{文件}
+%     \OPT{nju-name}   = \Arg{文件}
 %   \end{syntax}
 % 校名、校徽图片文件路径。
 % \end{function}
@@ -2144,7 +2159,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-02-04,updated=2022-07-31]{abstract/toc-entry}
 %   \begin{syntax}
-%     toc-entry = <\TTF>
+%     \OPT{toc-entry} = <\TTF>
 %   \end{syntax}
 % 是否将摘要条目插入目录，默认开启。
 % 关闭此选项后摘要页将不会出现在目录中，仅保留其 PDF 书签。
@@ -2152,7 +2167,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-03-26,updated=2022-07-31]{abstract/title-style}
 %   \begin{syntax}
-%     title-style = <(strict)|centered|natural>
+%     \OPT{title-style} = <(strict)|centered|natural>
 %   \end{syntax}
 % 选择研究生摘要标题样式。
 % 默认为严格模式（\opt{strict}），即完全模仿材料包要求。
@@ -2194,7 +2209,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-08-08]{tableofcontents/dotline}
 %   \begin{syntax}
-%     dotline = <chapter|(section)>
+%     \OPT{dotline} = <chapter|(section)>
 %   \end{syntax}
 % 目录中的引导线设置。选择 \opt{chapter} 会为章标题后添加引导线。
 % \end{function}
@@ -2203,7 +2218,7 @@ To produce the documentation run the original source files ending with
 %   tableofcontents/toc-entry,listoffigures/toc-entry,
 %   listoftables/toc-entry}
 %   \begin{syntax}
-%     toc-entry = <\TTF>
+%     \OPT{toc-entry} = <\TTF>
 %   \end{syntax}
 % 是否在目录中显示目录自身的条目，默认开启。关闭后目录、
 % 插图目录和表格目录将不会出现在目录中，仅保留其 PDF 书签。
@@ -2211,7 +2226,7 @@ To produce the documentation run the original source files ending with
 % \end{function}
 %
 % 如果仅需要禁用插图目录和表格目录的条目，可以这样设置
-% \begin{latexexample}[moretexcs={\njusetup},
+% \begin{latexexample}[moretexcs={\njusetup},emph={[3]toc-entry},
 %   emph={[2]tableofcontents,listoffigures,listoftables}]
 %   \njusetup{
 %       tableofcontents/toc-entry = true, % 仅作展示，无需手动启用
@@ -2766,8 +2781,8 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{定义变量}
 %
-% 本模板的变量名称通式为 |\|\meta{作用域}|_@@_|\meta{族}|_|\meta{描述}|_|\meta{类型}
-% （出现在源代码中）或 |\|\meta{作用域}|__nju_|\meta{族}|_|\meta{描述}|_|\meta{类型}
+% 本模板的变量名称通式为 \cs[no-index]{\meta{作用域}_@@_\meta{族}_\meta{描述}_\meta{类型}}
+% （出现在源代码中）或 \cs[no-index,replace=false]{\meta{作用域}_@@_\meta{族}_\meta{描述}_\meta{类型}}
 % （出现在文档中）。作用域为单个字母，|l| 代表局部变量，|g| 代表全局变量，|c| 代表常
 % 量。最后一个下划线后的内容指示其类型，但引擎不会根据名称检查变量类型。
 %
@@ -3034,7 +3049,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_box_ulined_info:Nn}
-% 以上盒子只用来打印 \cs{g_@@_info_\meta{描述}_tl} 变量。
+% 以上盒子只用来打印 \cs[no-index]{g_@@_info_\meta{描述}_tl} 变量。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_box_ulined_info:Nn #1#2
   { \@@_box_ulined:Nc #1 { g_@@_info_ #2 _tl } }
@@ -3072,7 +3087,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_box_spread_name:Nn,\@@_box_spread_name:NNn}
-% 以上盒子只用来打印 \cs{c_@@_name_\meta{描述}_tl} 变量。
+% 以上盒子只用来打印 \cs[no-index]{c_@@_name_\meta{描述}_tl} 变量。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_box_spread_name:Nn #1#2
   { \@@_box_spread:NNv #1 \c_empty_tl { c_@@_name_ #2 _tl } }
