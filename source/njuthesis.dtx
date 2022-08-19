@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.1 2022-08-10 18:50:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.1 2022-08-20 00:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -2806,38 +2806,32 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{
-%   \g_@@_info_degree_int,
-%   \g_@@_info_type_int}
-% 用于存储学位类型的变量。
+% \begin{variable}{\g_@@_info_type_int}
+% 用于存储论文类型的变量。
 %    \begin{macrocode}
-\int_new:N \g_@@_info_degree_int
 \int_new:N \g_@@_info_type_int
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{
-%   \g_@@_info_degree_tl,
-%   \g_@@_info_type_en_tl}
-% 用于存储学位名称的变量。
+% \begin{variable}{\g_@@_opt_academic_bool}
+% 用于判断学术型或专业型学位的变量。
 %    \begin{macrocode}
-\tl_new:N  \g_@@_info_degree_tl
-\tl_new:N  \g_@@_info_type_en_tl
+\bool_new:N \g_@@_opt_academic_bool
 %    \end{macrocode}
 % \end{variable}
 %
 % \begin{variable}{\g_@@_opt_twoside_bool}
 % 定义用于判断是否使用双面模式的变量，初始值为使用双面模式。
 %    \begin{macrocode}
-\bool_new:N \g_@@_opt_twoside_bool
+\bool_new:N      \g_@@_opt_twoside_bool
 \bool_set_true:N \g_@@_opt_twoside_bool
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\l_@@_second_supvbool}
+% \begin{variable}{\g_@@_opt_second_supv_bool}
 % 定义用于判断是否有第二导师的变量。
 %    \begin{macrocode}
-\bool_new:N \l_@@_second_supvbool
+\bool_new:N \g_@@_opt_second_supv_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2874,7 +2868,6 @@ To produce the documentation run the original source files ending with
 % 是否使用独立的字体文件。
 %    \begin{macrocode}
 \bool_new:N \g_@@_font_path_bool
-\bool_gset_false:N \g_@@_font_path_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2897,18 +2890,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{
-%   \c_@@_name_type_clist,
-%   \c_@@_name_type_en_clist,
-%   \c_@@_name_degree_clist}
+% \begin{variable}{\c_@@_name_type_clist,\c_@@_name_type_en_clist}
 % 论文类型与学位类型。
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_type_clist
   { 学士, 硕士, 博士 }
 \clist_const:Nn \c_@@_name_type_en_clist
   { Bachelor, Master, Doctor~of~Philosophy }
-\clist_const:Nn \c_@@_name_degree_clist
-  { \c_empty_tl, 专业 }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -3808,9 +3796,9 @@ To produce the documentation run the original source files ending with
 % \changes{v1.0}{2022/06/30}{修改类型选项。}
 % 学位，默认为学士。
 %    \begin{macrocode}
-    type              .choices:nn = { bachelor, master, doctor, postdoc }
+    type               .choices:nn = { bachelor, master, doctor, postdoc }
       { \int_gset_eq:NN \g_@@_info_type_int   \l_keys_choice_int },
-    type              .initial:n  = bachelor,
+    type               .initial:n  = bachelor,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3818,9 +3806,12 @@ To produce the documentation run the original source files ending with
 % \changes{v1.0}{2022/06/30}{修改学位选项。}
 % 研究生的学位类型，默认为学术学位。
 %    \begin{macrocode}
-    degree            .choices:nn = { academic, professional }
-      { \int_gset_eq:NN \g_@@_info_degree_int \l_keys_choice_int },
-    degree            .initial:n  = academic,
+    degree              .choice:,
+    degree / academic     .code:n  =
+      { \bool_set_true:N  \g_@@_opt_academic_bool },
+    degree / professional .code:n  =
+      { \bool_set_false:N \g_@@_opt_academic_bool },
+    degree             .initial:n  = academic,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3828,8 +3819,8 @@ To produce the documentation run the original source files ending with
 % 是否需要国家图书馆封面。本选项仅用于研究生模板，默认关闭。
 % \footnote{nl 代表 National Library。}
 %    \begin{macrocode}
-    nl-cover         .bool_set:N  = \g_@@_opt_nlcover_bool,
-    nl-cover          .initial:n  = false,
+    nl-cover          .bool_set:N  = \g_@@_opt_nlcover_bool,
+    nl-cover           .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3840,8 +3831,8 @@ To produce the documentation run the original source files ending with
 % \footnote{原创性声明的英文翻译为 Declaration of Originality，
 % 为了使选项表义更清晰同时缩减名称长度，将其修改为“声明页”这一名称。}
 %    \begin{macrocode}
-    decl-page        .bool_set:N  = \g_@@_opt_decl_bool,
-    decl-page         .initial:n  = false,
+    decl-page         .bool_set:N  = \g_@@_opt_decl_bool,
+    decl-page          .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3849,8 +3840,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/15}{新增草稿模式选项。}
 % 是否开启草稿模式（默认关闭）。
 %    \begin{macrocode}
-    draft           .bool_gset:N  = \g_@@_opt_draft_bool,
-    draft             .initial:n  = false,
+    draft            .bool_gset:N  = \g_@@_opt_draft_bool,
+    draft              .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3858,9 +3849,9 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/14}{新增单双面模式选项。}
 % 单双面模式（默认为双面）。
 %    \begin{macrocode}
-    oneside   .value_forbidden:n  = true,
-    twoside   .value_forbidden:n  = true,
-    oneside .bool_gset_inverse:N  = \g_@@_opt_twoside_bool,
+    oneside    .value_forbidden:n  = true,
+    twoside    .value_forbidden:n  = true,
+    oneside  .bool_gset_inverse:N  = \g_@@_opt_twoside_bool,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3870,8 +3861,8 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\g_@@_opt_anon_bool}
 % 盲审模式。
 %    \begin{macrocode}
-    anonymous        .bool_set:N  = \g_@@_opt_anon_bool,
-    anonymous         .initial:n  = false,
+    anonymous         .bool_set:N  = \g_@@_opt_anon_bool,
+    anonymous          .initial:n  = false,
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -3880,10 +3871,10 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2021/12/12}{简化字体选项名称。}
 % 中英文字体选项。
 %    \begin{macrocode}
-    latin-font        .choices:nn =
+    latin-font         .choices:nn =
       { gyre, mac, win, none }
       { \tl_set_eq:NN \g_@@_font_latin_tl \l_keys_choice_tl },
-    cjk-font          .choices:nn =
+    cjk-font           .choices:nn =
       { fandol, founder, mac, noto, source, win, none }
       { \tl_set_eq:NN \g_@@_font_cjk_tl   \l_keys_choice_tl },
 %    \end{macrocode}
@@ -3894,23 +3885,23 @@ To produce the documentation run the original source files ending with
 % 数学字体选项。
 % 由 \pkg{unicode-math} 指定 \XeTeX 和 \LuaTeX 下使用的数学字体。
 %    \begin{macrocode}
-    math-font         .choices:nn =
+    math-font          .choices:nn =
       {
         asana, cambria, fira, garamond, lm, libertinus, newcm,
         stix, bonum, dejavu, pagella, schola, termes, xits, none
       }
       { \tl_set_eq:NN \g_@@_font_math_tl  \l_keys_choice_tl },
-    math-font         .initial:n  = xits,
+    math-font          .initial:n  = xits,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{font-path}
 % 独立字体文件的路径。
 %    \begin{macrocode}
-    font-path            .code:n  =
+    font-path             .code:n  =
       {
         \bool_set_true:N \g_@@_font_path_bool
-        \tl_set_eq:NN \g_@@_font_path_tl  \l_keys_choice_tl
+        \tl_set_eq:NN \g_@@_font_path_tl \l_keys_value_tl
       },
 %    \end{macrocode}
 % \end{macro}
@@ -3920,8 +3911,8 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\g_@@_opt_zihao_tl}
 % 字号。默认为小四号。
 %    \begin{macrocode}
-    zihao              .tl_set:N  = \g_@@_opt_zihao_tl,
-    zihao             .initial:n  = -4,
+    zihao               .tl_set:N  = \g_@@_opt_zihao_tl,
+    zihao              .initial:n  = -4,
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -3933,8 +3924,8 @@ To produce the documentation run the original source files ending with
 % Word 行距，故默认值为 $1.5\times\frac{1.3}{1.2} = 1.625$。
 % 更详细的说明请参考 \pkg{zhlineskip} 宏包文档。
 %    \begin{macrocode}
-    linespread         .tl_set:N  = \g_@@_opt_linespread_tl,
-    linespread        .initial:n  = 1.625,
+    linespread          .tl_set:N  = \g_@@_opt_linespread_tl,
+    linespread         .initial:n  = 1.625,
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -3943,7 +3934,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.16}{2022/02/23}{新增 \opt{config} 选项。}
 % 配置文件路径。
 %    \begin{macrocode}
-    config          .clist_set:N  = \g_@@_config_clist
+    config           .clist_set:N  = \g_@@_config_clist
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4188,10 +4179,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { no-math           } { fontspec     },
-    { perpage           } { footmisc     },
-    { capitalise, nameinlink, noabbrev }
-                          { cleveref     }
+    { no-math                          } { fontspec },
+    { perpage                          } { footmisc },
+    { capitalise, nameinlink, noabbrev } { cleveref }
   }
   { \PassOptionsToPackage #1 }
 %    \end{macrocode}
@@ -4532,23 +4522,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{v0.16}{2022/03/06}{正确处理学位和类型信息。}
-% 设置学位信息。该设置需要放在 \tn{ProcessKeysOptions}
-% 命令以及载入配置文件中的常量信息后进行。
-%    \begin{macrocode}
-\tl_set:Nx \g_@@_info_type_tl
-  {
-    \clist_item:Nn \c_@@_name_type_clist
-      { \g_@@_info_type_int }
-  }
-\tl_set:Nx \g_@@_info_degree_tl
-  {
-    \g_@@_info_type_tl
-    \clist_item:Nn \c_@@_name_degree_clist
-      { \g_@@_info_degree_int }
-  }
-%    \end{macrocode}
-%
 % \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
 % 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，
 % 应当位于载入文档类之后。
@@ -4556,28 +4529,23 @@ To produce the documentation run the original source files ending with
 \ctex_at_end_preamble:n
   {
 %    \end{macrocode}
-% 设置类型信息。
-%    \begin{macrocode}
-    \tl_set:Nx \g_@@_info_type_en_tl
-      { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
-%    \end{macrocode}
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
-    \bool_set:Nn \l_@@_second_supvbool
+    \bool_set:Nn \g_@@_opt_second_supv_bool
       { ! \clist_if_empty_p:N \g_@@_info_supvii_clist }
     \tl_set:Nx \g_@@_info_supvfull_tl
       {
         \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: }
-        \bool_if:NT \l_@@_second_supvbool
+        \bool_if:NT \g_@@_opt_second_supv_bool
           {
             \@@_quad:
             \clist_use:Nn \g_@@_info_supvii_clist { \@@_hskip: }
           }
       }
-    \tl_set:Nx \g_@@_info_supvfull_en_tl
+    \tl_set_eq:NN \g_@@_info_supvfull_en_tl \g_@@_info_supv_en_tl
+    \bool_if:NT \g_@@_opt_second_supv_bool
       {
-        \g_@@_info_supv_en_tl
-        \bool_if:NT \l_@@_second_supvbool
+        \tl_put_right:Nn \g_@@_info_supvfull_en_tl
           { \@@_quad: \g_@@_info_supvii_en_tl }
       }
   }
@@ -4627,6 +4595,39 @@ To produce the documentation run the original source files ending with
 %</def-g>
   }
 %</(def-u|def-g|def-p)>
+%    \end{macrocode}
+% \end{variable}
+%
+% \changes{v0.16}{2022/03/06}{正确处理学位和类型信息。}
+% 设置学位信息。该设置需要放在 \tn{ProcessKeysOptions} 命令后进行。
+%
+% \begin{variable}{\g_@@_info_type_tl}
+% 文档类型字样。
+%    \begin{macrocode}
+%<*def-g>
+\tl_new:N  \g_@@_info_type_tl
+\tl_set:Nx \g_@@_info_type_tl
+  { \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int } }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_info_type_en_tl}
+% 英文的学位字样。
+%    \begin{macrocode}
+\tl_new:N  \g_@@_info_type_en_tl
+\tl_set:Nx \g_@@_info_type_en_tl
+  { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_info_degree_tl}
+% 学位类型字样。
+%    \begin{macrocode}
+\tl_new:N     \g_@@_info_degree_tl
+\tl_set_eq:NN \g_@@_info_degree_tl \g_@@_info_type_tl
+\bool_if:NF \g_@@_opt_academic_bool
+  { \tl_put_right:Nn \g_@@_info_degree_tl { 专业 } }
+%</def-g>
 %    \end{macrocode}
 % \end{variable}
 %
@@ -6343,7 +6344,7 @@ To produce the documentation run the original source files ending with
     \@@_cover_entry:NNNnn #1 \l_@@_tmpb_dim #4 { grade } { id }
     \@@_cover_entry:NNNn #1 #2 #4 { author }
     \@@_cover_entry_supv:NNNn #1 \l_@@_tmpb_dim #4 { supv }
-    \bool_if:NT \l_@@_second_supvbool
+    \bool_if:NT \g_@@_opt_second_supv_bool
       { \@@_cover_entry_supv:NNNn #1 \l_@@_tmpb_dim #4 { supvii } }
     \@@_cover_entry:NNNn #1 #2 #4 { submitdate }
   }
@@ -6589,10 +6590,8 @@ To produce the documentation run the original source files ending with
   {
     content     =
       \c_@@_text_cover_en_tl \@@_vskip:
-      \textsc { \clist_item:Nn \c_@@_name_type_en_clist
-                  { \g_@@_info_degree_int } }
-      \@@_vskip: { in } \@@_vskip:
-      \g_@@_info_major_en_tl,
+      \group_begin: \scshape \g_@@_info_type_en_tl \group_end:
+      \@@_vskip: { in } \@@_vskip: \g_@@_info_major_en_tl,
     bottom-skip = 2 cm
   }
 %    \end{macrocode}
@@ -6881,13 +6880,14 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_degree_checkbox:n}
+% \begin{macro}{\@@_degree_checkbox:Nn}
 % 信息栏的学位复选框。打勾符号对应 |U+2713|。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_degree_checkbox:n #1
+\cs_new_protected:Npn \@@_degree_checkbox:Nn #1#2
   {
-    \int_compare:nNnTF { #1 } { = }
-      { \g_@@_info_degree_int * \g_@@_info_type_int }
+    \bool_lazy_and:nnTF
+      { \g_@@_opt_academic_bool && #1 }
+      { \int_compare_p:n { \g_@@_info_type_int = #2 } }
       {
         \makebox [ 0   pt ] [l] { \ensuremath { \mdwhtsquare } }
         \hspace  { 0.1 em }       \ensuremath { \checkmark   }
@@ -6905,31 +6905,28 @@ To produce the documentation run the original source files ending with
     \begin{tblr}
       {
         hlines, vlines, hspan=minimal,
-        cells = {font=\normalsize},
-        colspec = {cX[c]cX[c]cX[c]},
+        cells      = { font = \normalsize },
+        colspec    = { c X[c] c X[c] c X[c] },
         cell{1}{2} = {c=5}{m}, cell{3}{2} = {c=5}{m},
         cell{4}{2} = {c=5}{m}, cell{5}{2} = {c=5}{m}
       }
       \c_@@_name_titlec_tl  & \g_@@_info_title_tl \\
       \c_@@_name_ida_tl     & \g_@@_info_id_tl    &
       \c_@@_name_depta_tl   & \g_@@_info_dept_tl  &
-      \c_@@_name_year_tl     &
+      \c_@@_name_year_tl    &
         \tl_range:Nnn \g_@@_info_submitdate_raw_tl {1} {4} \\
       \c_@@_name_degreea_tl &
         {
-          \@@_degree_checkbox:n { 2 } 学术学位硕士 \qquad{}
-          \@@_degree_checkbox:n { 4 } 专业学位硕士 \\
-          \@@_degree_checkbox:n { 3 } 学术学位博士 \qquad{}
-          \@@_degree_checkbox:n { 6 } 专业学位博士
+          \@@_degree_checkbox:Nn \c_true_bool  { 2 } 学术学位硕士 \qquad
+          \@@_degree_checkbox:Nn \c_false_bool { 2 } 专业学位硕士 \\
+          \@@_degree_checkbox:Nn \c_true_bool  { 3 } 学术学位博士 \qquad
+          \@@_degree_checkbox:Nn \c_false_bool { 3 } 专业学位博士
         } \\
-      \c_@@_name_email_tl    & \g_@@_info_email_tl \\
+      \c_@@_name_email_tl   & \g_@@_info_email_tl \\
       \c_@@_name_supvb_tl   &
-        \clist_item:Nn \g_@@_info_supv_clist {1}
-        \bool_if:NT \l_@@_second_supvbool
-          {
-            \@@_quad:
-            \clist_item:Nn \g_@@_info_supvii_clist {1}
-          } \\
+        \clist_item:Nn \g_@@_info_supv_clist { 1 }
+        \bool_if:NT \g_@@_opt_second_supv_bool
+          { \@@_quad: \clist_item:Nn \g_@@_info_supvii_clist { 1 } } \\
     \end{tblr}
   }
 %    \end{macrocode}
@@ -8130,7 +8127,7 @@ To produce the documentation run the original source files ending with
 % 对专业硕士的封面条目进行临时修改。
 %    \begin{macrocode}
 %<*def-g>
-\int_compare:nT { \g_@@_info_degree_int == 2 }
+\bool_if:NF \g_@@_opt_academic_bool
   { \tl_set:Nn \c_@@_name_major_tl { 专业学位类别(领域) } }
 %</def-g>
 %    \end{macrocode}
