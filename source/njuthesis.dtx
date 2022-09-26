@@ -1045,7 +1045,7 @@ To produce the documentation run the original source files ending with
 % 宏包的代码环境不会显示内容，具体效果需要参照各个宏包的说明文档。
 % 如需抵消草稿模式的影响，请使用 \opt{final} 选项载入相关宏包。
 %
-% \begin{function}[added=2022-04-19,updated=2022-07-04]{anonymous}
+% \begin{function}[added=2022-04-19,updated=2022-09-26]{anonymous}
 %   \begin{syntax}
 %     \OPT{anonymous} = <\TFF>
 %   \end{syntax}
@@ -1057,6 +1057,7 @@ To produce the documentation run the original source files ending with
 %   \item 不显示校名校徽图片
 %   \item 不显示“南京大学”字样
 %   \item 不显示作者、导师等基本信息
+%   \item 不显示声明页、致谢页
 % \end{itemize}
 %
 %
@@ -2254,7 +2255,8 @@ To produce the documentation run the original source files ending with
 % \subsubsection{致谢页}
 %
 % \DescribeEnv{acknowledgement}
-% 同前言，使用 \env{acknowledgement} 环境。
+% 使用 \env{acknowledgement} 环境生成致谢页，附带有相应目录条目。
+% 在开启盲审模式时，仅显示该目录条目。
 %
 % \begin{latexexample}[emph={[1]acknowledgement}]
 %   \begin{acknowledgement}
@@ -2911,21 +2913,16 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{
-%   \c_@@_name_anon_clist,
-%   \c_@@_name_anon_en_clist,
-%   \c_@@_name_anonlist_clist}
-% 盲审模式下不显示的个人信息项。
+% \begin{variable}{\c_@@_name_anon_clist,\c_@@_name_anon_en_clist}
+% 盲审模式下不显示的个人信息键名。
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_anon_clist
   {
-    author, chairman, clc, dept, email, field, grade,
-    id, major, secretlv, supvcont, udc
+    author, chairman, email, student-id, reviewer,
+    supervisor-contact, supervisor, supervisor-ii
   }
 \clist_const:Nn \c_@@_name_anon_en_clist
-  { author, dept, field, major, supv, supvii }
-\clist_const:Nn \c_@@_name_anonlist_clist
-  { reviewer, supv, supvii }
+  { author, supervisor, supervisor-ii }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -3180,9 +3177,9 @@ To produce the documentation run the original source files ending with
 %   \item |dim| 型变量
 %   \item 文本 |clist|
 % \end{arguments}
-% 当 \cs{l_@@_tmpa_clist} 非空时，弹出最后一个元素赋给 \cs{l_@@_tmpa_tl}，
+% 当 \cs{l_@@_tmp_clist} 非空时，弹出最后一个元素赋给 \cs{l_@@_tmpa_tl}，
 % 获取其长度后与 |#1| 进行比较，二者中较大的那一个将成为 |#1| 的新值。
-% 不断循环，直至 \cs{l_@@_tmpa_clist} 为空。
+% 不断循环，直至 \cs{l_@@_tmp_clist} 为空。
 %    \begin{macrocode}
 \cs_new:Npn \@@_get_max_width:NN #1#2
   {
@@ -4032,6 +4029,13 @@ To produce the documentation run the original source files ending with
   { \tl_const:Nn \c_@@_name_pagemode_tl { oneside } }
 %    \end{macrocode}
 %
+% \changes{v1.1}{2022/09/26}{盲审模式下不显示声明页。}
+% 盲审模式下不显示声明页。
+%    \begin{macrocode}
+\bool_if:NT \g_@@_opt_anon_bool
+  { \bool_set_false:N \g_@@_opt_decl_bool }
+%    \end{macrocode}
+%
 %
 % \subsection{用户接口}
 %
@@ -4047,6 +4051,19 @@ To produce the documentation run the original source files ending with
     math, style, theorem, tableofcontents
   }
   { \keys_define:nn { nju } { #1 .meta:nn = { nju / #1 } {##1} } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_keys_set:nn}
+% \changes{v1.1}{2022/09/26}{使用 \cs{keys_set_filter:nnn} 重构盲审模式。}
+% 在开启盲审模式时，屏蔽被编入 \opt{annoymous} 分组的键值对输入。
+%    \begin{macrocode}
+\bool_if:NTF \g_@@_opt_anon_bool
+  {
+    \cs_new:Npn \@@_keys_set:nn #1#2
+      { \keys_set_filter:nnn {#1} { anonymous } {#2} }
+  }
+  { \cs_new_eq:NN \@@_keys_set:nn \keys_set:nn }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4067,11 +4084,11 @@ To produce the documentation run the original source files ending with
 \NewDocumentCommand \njusetup { o m }
   {
     \tl_if_novalue:nTF { #1 }
-      { \keys_set:nn { nju } { #2 } }
+      { \@@_keys_set:nn { nju } { #2 } }
       {
         \tl_if_in:nnTF { #1 } { / }
-          { \keys_set:nn { nju } { #1 = {#2} } }
-          { \keys_set:nn { nju  /  #1 } {#2}   }
+          { \@@_keys_set:nn { nju } { #1 = {#2} } }
+          { \@@_keys_set:nn { nju  /  #1 } {#2}   }
       }
   }
 %    \end{macrocode}
@@ -4403,10 +4420,10 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/14}{将标题断行控制符修改为 |\\|。}
 % 题目。中文题目可使用 |\\| 手动断行。以下标注星号（|*|）的皆为对应的英文字段。
 %    \begin{macrocode}
-    title               .tl_set:N = \g_@@_info_title_tl,
-    title              .initial:n = { 空 },
-    title*              .tl_set:N = \g_@@_info_title_en_tl,
-    title*             .initial:n = { Empty },
+    title               .tl_set:N = \g_@@_info_title_tl             ,
+    title              .initial:n = { 空 }                            ,
+    title*              .tl_set:N = \g_@@_info_title_en_tl          ,
+    title*             .initial:n = { Empty }                         ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4414,30 +4431,30 @@ To produce the documentation run the original source files ending with
 % \changes{v0.11}{2021/10/01}{修改了添加关键词的方式。}
 % 关键词列表。
 %    \begin{macrocode}
-    keywords         .clist_set:N = \g_@@_info_keywords_clist,
-    keywords*        .clist_set:N = \g_@@_info_keywords_en_clist,
+    keywords         .clist_set:N = \g_@@_info_keywords_clist       ,
+    keywords*        .clist_set:N = \g_@@_info_keywords_en_clist    ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/grade,info/student-id,info/author,info/author*}
 % 年级、学号、姓名。
 %    \begin{macrocode}
-    grade               .tl_set:N = \g_@@_info_grade_tl,
-    student-id          .tl_set:N = \g_@@_info_id_tl,
-    author              .tl_set:N = \g_@@_info_author_tl,
-    author*             .tl_set:N = \g_@@_info_author_en_tl,
+    grade               .tl_set:N = \g_@@_info_grade_tl             ,
+    student-id          .tl_set:N = \g_@@_info_id_tl                ,
+    author              .tl_set:N = \g_@@_info_author_tl            ,
+    author*             .tl_set:N = \g_@@_info_author_en_tl         ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/department,info/department*,info/major,info/major*,info/field,info/field*}
 % 院系、专业、方向。
 %    \begin{macrocode}
-    department          .tl_set:N = \g_@@_info_dept_tl,
-    department*         .tl_set:N = \g_@@_info_dept_en_tl,
-    major               .tl_set:N = \g_@@_info_major_tl,
-    major*              .tl_set:N = \g_@@_info_major_en_tl,
-    field               .tl_set:N = \g_@@_info_field_tl,
-    field*              .tl_set:N = \g_@@_info_field_en_tl,
+    department          .tl_set:N = \g_@@_info_dept_tl              ,
+    department*         .tl_set:N = \g_@@_info_dept_en_tl           ,
+    major               .tl_set:N = \g_@@_info_major_tl             ,
+    major*              .tl_set:N = \g_@@_info_major_en_tl          ,
+    field               .tl_set:N = \g_@@_info_field_tl             ,
+    field*              .tl_set:N = \g_@@_info_field_en_tl          ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4446,16 +4463,16 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/12}{精简导师信息选项。}
 % 导师信息。中文导师全称使用 |clist| 存储，便于在本科生封面中进行分割。
 %    \begin{macrocode}
-    supervisor       .clist_set:N = \g_@@_info_supv_clist,
-    supervisor*         .tl_set:N = \g_@@_info_supv_en_tl,
+    supervisor       .clist_set:N = \g_@@_info_supv_clist           ,
+    supervisor*         .tl_set:N = \g_@@_info_supv_en_tl           ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/supervisor-ii,info/supervisor-ii*}
 % 第二导师信息。
 %    \begin{macrocode}
-    supervisor-ii    .clist_set:N = \g_@@_info_supvii_clist,
-    supervisor-ii*      .tl_set:N = \g_@@_info_supvii_en_tl,
+    supervisor-ii    .clist_set:N = \g_@@_info_supvii_clist         ,
+    supervisor-ii*      .tl_set:N = \g_@@_info_supvii_en_tl         ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4463,8 +4480,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/14}{精简提交日期选项。}
 % 提交日期，初始值为编译当天日期。
 %    \begin{macrocode}
-    submit-date         .tl_set:N = \g_@@_info_submitdate_raw_tl,
-    submit-date        .initial:V = \c_@@_today_tl,
+    submit-date         .tl_set:N = \g_@@_info_submitdate_raw_tl    ,
+    submit-date        .initial:V = \c_@@_today_tl                  ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4472,8 +4489,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/14}{精简答辩日期选项。}
 % 答辩日期。
 %    \begin{macrocode}
-    defend-date         .tl_set:N = \g_@@_info_defenddate_raw_tl,
-    defend-date        .initial:V = \c_@@_today_tl,
+    defend-date         .tl_set:N = \g_@@_info_defenddate_raw_tl    ,
+    defend-date        .initial:V = \c_@@_today_tl                  ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4481,8 +4498,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.19}{2022/05/23}{新增国家图书馆封面的学位授予日期设置项。}
 % 学位授予日期。
 %    \begin{macrocode}
-    confer-date         .tl_set:N = \g_@@_info_conferdate_raw_tl,
-    confer-date        .initial:V = \c_@@_today_tl,
+    confer-date         .tl_set:N = \g_@@_info_conferdate_raw_tl    ,
+    confer-date        .initial:V = \c_@@_today_tl                  ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4490,26 +4507,26 @@ To produce the documentation run the original source files ending with
 % \changes{v0.19}{2022/05/23}{新增国家图书馆封面的底部日期设置项。}
 % 底部日期。
 %    \begin{macrocode}
-    bottom-date         .tl_set:N = \g_@@_info_bottomdate_raw_tl,
-    bottom-date        .initial:V = \c_@@_today_tl,
+    bottom-date         .tl_set:N = \g_@@_info_bottomdate_raw_tl    ,
+    bottom-date        .initial:V = \c_@@_today_tl                  ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/defend-date,info/chairman,info/reviewer}
 % 答辩委员会信息。
 %    \begin{macrocode}
-    chairman            .tl_set:N = \g_@@_info_chairman_tl,
-    reviewer         .clist_set:N = \g_@@_info_reviewer_clist,
+    chairman            .tl_set:N = \g_@@_info_chairman_tl          ,
+    reviewer         .clist_set:N = \g_@@_info_reviewer_clist       ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
 % 国家图书馆封面相关信息。
 %    \begin{macrocode}
-    clc                 .tl_set:N = \g_@@_info_clc_tl,
-    secret-level        .tl_set:N = \g_@@_info_secretlv_tl,
-    udc                 .tl_set:N = \g_@@_info_udc_tl,
-    supervisor-contact  .tl_set:N = \g_@@_info_supvcont_tl,
+    clc                 .tl_set:N = \g_@@_info_clc_tl               ,
+    secret-level        .tl_set:N = \g_@@_info_secretlv_tl          ,
+    udc                 .tl_set:N = \g_@@_info_udc_tl               ,
+    supervisor-contact  .tl_set:N = \g_@@_info_supvcont_tl          ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4519,6 +4536,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     email               .tl_set:N = \g_@@_info_email_tl
   }
+\clist_map_inline:Nn \c_@@_name_anon_clist
+  { \keys_define:nn { nju / info } { #1   .groups:n = { anonymous } } }
+\clist_map_inline:Nn \c_@@_name_anon_en_clist
+  { \keys_define:nn { nju / info } { #1 * .groups:n = { anonymous } } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4526,27 +4547,22 @@ To produce the documentation run the original source files ending with
 % 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，
 % 应当位于载入文档类之后。
 %    \begin{macrocode}
-\ctex_at_end_preamble:n
+\@@_at_begin_document:n
   {
 %    \end{macrocode}
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
-    \bool_set:Nn \g_@@_opt_second_supv_bool
-      { ! \clist_if_empty_p:N \g_@@_info_supvii_clist }
-    \tl_set:Nx \g_@@_info_supvfull_tl
+    \clist_map_inline:nn
+      { \g_@@_info_supv_clist, \g_@@_info_supvii_clist }
       {
-        \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: }
-        \bool_if:NT \g_@@_opt_second_supv_bool
-          {
-            \@@_quad:
-            \clist_use:Nn \g_@@_info_supvii_clist { \@@_hskip: }
-          }
+        \tl_gput_right:Nx \g_@@_info_supvfull_tl
+          { \clist_use:Nn #1 { \@@_hskip: } \@@_quad: }
       }
-    \tl_set_eq:NN \g_@@_info_supvfull_en_tl \g_@@_info_supv_en_tl
-    \bool_if:NT \g_@@_opt_second_supv_bool
+    \tl_gput_right:Nn \g_@@_info_supvfull_tl { \tex_unskip:D }
+    \tl_set:Nn \g_@@_info_supvfull_en_tl
       {
-        \tl_put_right:Nn \g_@@_info_supvfull_en_tl
-          { \@@_quad: \g_@@_info_supvii_en_tl }
+        \g_@@_info_supv_en_tl \@@_quad:
+        \g_@@_info_supvii_en_tl \tex_unskip:D
       }
   }
 %</class>
@@ -4631,22 +4647,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% 盲审模式下抹去个人信息和学校名称。
+% 盲审模式下抹去学校名称。
 %    \begin{macrocode}
 %<*class>
 \bool_if:NT \g_@@_opt_anon_bool
   {
-    \ctex_at_end_preamble:n
-      {
-        \clist_map_inline:Nn \c_@@_name_anon_clist
-          { \tl_gclear:c    { g_@@_info_ #1    _tl } }
-        \clist_map_inline:Nn \c_@@_name_anon_en_clist
-          { \tl_gclear:c    { g_@@_info_ #1 _en_tl } }
-        \clist_map_inline:Nn \c_@@_name_anonlist_clist
-          { \clist_gclear:c { g_@@_info_ #1 _clist } }
-        \tl_gclear:N \c_@@_name_nju_tl
-        \tl_gclear:N \c_@@_name_nju_en_tl
-      }
+    \tl_gclear:N \c_@@_name_nju_tl
+    \tl_gclear:N \c_@@_name_nju_en_tl
   }
 %    \end{macrocode}
 %
@@ -6241,8 +6248,8 @@ To produce the documentation run the original source files ending with
     \use:c { @@_loadfont_math_ \g_@@_font_math_tl : }
     \bool_if:NT \g_@@_opt_math_leq_bool
       {
-        \cs_set_eq:NN \le  \leslant
-        \cs_set_eq:NN \ge  \geslant
+        \cs_set_eq:NN \le  \leqslant
+        \cs_set_eq:NN \ge  \geqslant
         \cs_set_eq:NN \leq \leqslant
         \cs_set_eq:NN \geq \geqslant
       }
@@ -7820,10 +7827,14 @@ To produce the documentation run the original source files ending with
 % 单独制作的前言致谢页。
 %    \begin{macrocode}
 \NewDocumentEnvironment { preface         } { +b }
-  { \@@_chapter:V \c_@@_name_preface_tl         #1 }
+  { \@@_chapter:V \c_@@_name_preface_tl #1 }
   { \cleardoublepage }
 \NewDocumentEnvironment { acknowledgement } { +b }
-  { \@@_chapter:V \c_@@_name_acknowledgement_tl #1 }
+  {
+    \bool_if:NTF \g_@@_opt_anon_bool
+      { \@@_bookmark_toc:V \c_@@_name_acknowledgementa_tl   }
+      { \@@_chapter:V      \c_@@_name_acknowledgement_tl #1 }
+  }
   { \cleardoublepage }
 %    \end{macrocode}
 % \end{environment}
@@ -7972,110 +7983,111 @@ To produce the documentation run the original source files ending with
 %<*(def-u|def-g|def-p)>
 \clist_map_inline:nn
   {
-    { acknowledgement } { 致 \qquad{} 谢                     },
-%<def-g>    { apply           } {（申请 \g_@@_info_degree_tl 学位）},
-%<def-g>    { auth decl       } { 学位论文出版授权书                 },
-%<def-p>    { auth decl       } { 研究报告使用授权书                 },
-%<def-p>    { author          } { 作者                               },
+    { acknowledgement   } { 致 \qquad{} 谢                     },
+    { acknowledgement a } { 致谢（盲审阶段，暂时隐去）         },
+%<def-g>    { apply             } {（申请 \g_@@_info_degree_tl 学位）},
+%<def-g>    { auth decl         } { 学位论文出版授权书                 },
+%<def-p>    { auth decl         } { 研究报告使用授权书                 },
+%<def-p>    { author            } { 作者                               },
 %    \end{macrocode}
 % 用于摘要的作者名称字样
 %    \begin{macrocode}
-%<def-u>    { author        a } { 本科生姓名                         },
-%<def-g>    { author        a } { \g_@@_info_type_tl 生姓名        },
-%<def-g>    { auth sign       } { 作者签名：\njuline{\hspace{6em}}   },
-%<def-p>    { auth sign       } { 本人签名                           },
-%<def-p>    { auth sign     a } { 导师签名                           },
-%<def-g>    { chairman        } { 答辩委员会主席：                   },
-%<def-g>    { clc             } { 分类号                             },
-%<def-g>    { confer          } { 学位授予单位和日期                 },
-    { date            } { 日期                               },
-%<def-g>    { defend date     } { 论文答辩日期                       },
-%<def-g>    { degree          } { 申请学位级别                       },
+%<def-u>    { author          a } { 本科生姓名                         },
+%<def-g>    { author          a } { \g_@@_info_type_tl 生姓名        },
+%<def-g>    { auth sign         } { 作者签名：\njuline{\hspace{6em}}   },
+%<def-p>    { auth sign         } { 本人签名                           },
+%<def-p>    { auth sign       a } { 导师签名                           },
+%<def-g>    { chairman          } { 答辩委员会主席：                   },
+%<def-g>    { clc               } { 分类号                             },
+%<def-g>    { confer            } { 学位授予单位和日期                 },
+    { date              } { 日期                               },
+%<def-g>    { defend date       } { 论文答辩日期                       },
+%<def-g>    { degree            } { 申请学位级别                       },
 %    \end{macrocode}
 % 用于出版授权书的学位名称字样
 %    \begin{macrocode}
-%<def-g>    { degree        a } { 论文级别                           },
-%<def-p>    { dept            } { 系别                               },
+%<def-g>    { degree          a } { 论文级别                           },
+%<def-p>    { dept              } { 系别                               },
 %    \end{macrocode}
 % 用于出版授权书的院系名称字样
 %    \begin{macrocode}
-%<def-g>    { dept          a } { 所在院系                           },
-%<def-g>    { email           } { 作者 Email                         },
-%<def-g>    { field           } { 研究方向                           },
-%<def-u>    { grade           } { 年级                               },
-%<def-g>    { grade           } { 级                                 },
-%<def-u|def-g>    { id              } { 学号                               },
-%<def-p>    { id              } { 工号                               },
+%<def-g>    { dept            a } { 所在院系                           },
+%<def-g>    { email             } { 作者 Email                         },
+%<def-g>    { field             } { 研究方向                           },
+%<def-u>    { grade             } { 年级                               },
+%<def-g>    { grade             } { 级                                 },
+%<def-u|def-g>    { id                } { 学号                               },
+%<def-p>    { id                } { 工号                               },
 %    \end{macrocode}
 % 用于出版授权书的学号名称字样
 %    \begin{macrocode}
-%<def-g>    { id            a } { 研究生学号                         },
-    { listoffigures   } { 插图目录                           },
-    { listoftables    } { 表格目录                           },
-%<def-p>    { major           } { 学科专业                           },
+%<def-g>    { id              a } { 研究生学号                         },
+    { listoffigures     } { 插图目录                           },
+    { listoftables      } { 表格目录                           },
+%<def-p>    { major             } { 学科专业                           },
 %    \end{macrocode}
 % 用于摘要的专业名称字样
 %    \begin{macrocode}
-%<def-g>    { major         a } { 专业                               },
+%<def-g>    { major           a } { 专业                               },
 %    \end{macrocode}
 % 用于国家图书馆封面的专业名称字样
 %    \begin{macrocode}
-%<def-g>    { major         b } { 专业名称                           },
-    { notation        } { 符号表                             },
-%<def-u>    { orig decl       }
-%<def-u>      { 南京大学本科毕业论文（设计） \\ 诚信承诺书           },
-%<def-g>    { orig decl       } { 南京大学学位论文原创性声明         },
-%<def-p>    { orig decl       } { 研究报告原创性声明                 },
-%<def-u>    { orig sign       } { 作者签名                           },
-%<def-g>    { orig sign       } { 研究生签名                         },
-%<def-p>    { orig sign       } { 研究报告作者签名                   },
-    { paper list      } { 发表文章目录                       },
-    { pdf creator     } { LaTeX~ with~ njuthesis~ class      },
-    { preface         } { 前 \qquad{} 言                     },
-%<def-p>    { report          } { 博士后研究工作报告                 },
-%<def-g>    { reviewer        } { 评阅人：                           },
-%<def-g>    { secret lv       } { 密级                               },
-%<def-g>    { secret status   } { 论文涉密情况：                     },
-%<def-g>    { secret free     } { 不保密                             },
-%<def-g>    { secret date     }
+%<def-g>    { major           b } { 专业名称                           },
+    { notation          } { 符号表                             },
+%<def-u>    { orig decl         }
+%<def-u>      { 南京大学本科毕业论文（设计） \\ 诚信承诺书             },
+%<def-g>    { orig decl         } { 南京大学学位论文原创性声明         },
+%<def-p>    { orig decl         } { 研究报告原创性声明                 },
+%<def-u>    { orig sign         } { 作者签名                           },
+%<def-g>    { orig sign         } { 研究生签名                         },
+%<def-p>    { orig sign         } { 研究报告作者签名                   },
+    { paper list        } { 发表文章目录                       },
+    { pdf creator       } { LaTeX~ with~ njuthesis~ class      },
+    { preface           } { 前 \qquad{} 言                     },
+%<def-p>    { report            } { 博士后研究工作报告                 },
+%<def-g>    { reviewer          } { 评阅人：                           },
+%<def-g>    { secret lv         } { 密级                               },
+%<def-g>    { secret status     } { 论文涉密情况：                     },
+%<def-g>    { secret free       } { 不保密                             },
+%<def-g>    { secret date       }
 %<def-g>      { 保密，保密期（ \c_@@_name_blankdatea_tl 至
-%<def-g>                       \c_@@_name_blankdatea_tl ）        },
-%<def-g>    { sign            } { （签字）                           },
-%<def-u>    { submit date     } { 提交日期                           },
-%<def-g>    { submit date     } { 论文提交日期                       },
-%<def-p>    { submit date     } { 完成日期                           },
-%<def-g>    { subtitle        } { （题名和副题名）                   },
-%<def-u>    { supv            } { 指导教师                           },
-%<def-g>    { supv            } { 导师                               },
-%<def-p>    { supv full       } { 合作导师                           },
+%<def-g>                       \c_@@_name_blankdatea_tl ）           },
+%<def-g>    { sign              } { （签字）                           },
+%<def-u>    { submit date       } { 提交日期                           },
+%<def-g>    { submit date       } { 论文提交日期                       },
+%<def-p>    { submit date       } { 完成日期                           },
+%<def-g>    { subtitle          } { （题名和副题名）                   },
+%<def-u>    { supv              } { 指导教师                           },
+%<def-g>    { supv              } { 导师                               },
+%<def-p>    { supv full         } { 合作导师                           },
 %    \end{macrocode}
 % 用于摘要的导师名称字样
 %    \begin{macrocode}
-%<def-g>    { supv          a } { 指导教师（姓名、职称）             },
+%<def-g>    { supv            a } { 指导教师（姓名、职称）             },
 %    \end{macrocode}
 % 用于出版授权书的导师名称字样
 %    \begin{macrocode}
-%<def-g>    { supv          b } { 导师姓名                           },
-%<def-g>    { supv info       }
-%<def-g>      { 指导教师姓名、职务、职称、学位、单位名称及地址       },
-    { supv ii         } { 第二导师                           },
-    { supv title      } { 职称                               },
-    { tableofcontents } { 目 \qquad{} 录                     },
-%<def-p>    { title           } { 报告题目                           },
+%<def-g>    { supv            b } { 导师姓名                           },
+%<def-g>    { supv info         }
+%<def-g>      { 指导教师姓名、职务、职称、学位、单位名称及地址         },
+    { supv ii           } { 第二导师                           },
+    { supv title        } { 职称                               },
+    { tableofcontents   } { 目 \qquad{} 录                     },
+%<def-p>    { title             } { 报告题目                           },
 %    \end{macrocode}
 % 用于摘要的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title         a } { 毕业论文题目                       },
+%<def-g>    { title           a } { 毕业论文题目                       },
 %    \end{macrocode}
 % 用于国家图书馆封面的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title         b } { 学位论文                           },
+%<def-g>    { title           b } { 学位论文                           },
 %    \end{macrocode}
 % 用于出版授权书的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title         c } { 论文题名                           },
-%<def-g>    { udc             } { U D C                              },
-%<def-g>    { year            } { 学位年度                           }
+%<def-g>    { title           c } { 论文题名                           },
+%<def-g>    { udc               } { U D C                              },
+%<def-g>    { year              } { 学位年度                           }
   }
   { \@@_define_name:nn #1 }
 %    \end{macrocode}
