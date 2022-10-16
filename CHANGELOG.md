@@ -17,6 +17,11 @@
 - 更正盲审模式隐藏的个人信息类别
 - 修复 `\le` 和 `\ge` 的定义
 
+### 变动
+
+- 脚注中带圈数字选项修改为 `circled` - [#129]
+  - 删除 `pifont` 选项
+
 ### 杂项
 
 - 手册中以黄色突出选项
@@ -452,6 +457,7 @@
 [#117]: https://github.com/nju-lug/NJUThesis/issues/117
 [#119]: https://github.com/nju-lug/NJUThesis/issues/119
 [#121]: https://github.com/nju-lug/NJUThesis/issues/121
+[#129]: https://github.com/nju-lug/NJUThesis/issues/129
 [#130]: https://github.com/nju-lug/NJUThesis/issues/130
 [#131]: https://github.com/nju-lug/NJUThesis/issues/131
 [#134]: https://github.com/nju-lug/NJUThesis/discussions/134

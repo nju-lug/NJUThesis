@@ -1662,12 +1662,20 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{脚注}
 %
-% \begin{function}[added=2022-05-01,updated=2022-08-03]{footnote/style}
+% \begin{function}[added=2022-05-01,updated=2022-10-16]{footnote/style}
 %   \begin{syntax}
-%     \OPT{style} = <(plain)|pifont>
+%     \OPT{style} = <(plain)|circled|circled*>
 %   \end{syntax}
-% 设置脚注编号样式。默认为普通数字，使用 |pifont|
-% 选项可修改为带圈数字。单一页面内请尽量避免超过 10 条脚注。
+% 设置脚注编号样式。默认为普通数字，使用 \opt{circled} 或 \opt{circled*}
+% 选项可修改为带圈数字，带星号的选项为黑底白字（阴文）。
+% \end{function}
+%
+% \begin{function}[added=2022-10-16]{footnote/circledtext-option}
+%   \begin{syntax}
+%     \OPT{circledtext-option} = \meta{选项列表}
+%   \end{syntax}
+% 带圈数字编号使用 \pkg{circledtext} 宏包绘制，
+% 可使用本选项载入更多定制设置，详见其手册。
 % \end{function}
 %
 % 脚注样式的调整依赖 \pkg{footmisc}。如果希望使用 \LaTeX 的默认样式，
@@ -5516,14 +5524,6 @@ To produce the documentation run the original source files ending with
 % \end{variable}
 %
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { extra-bib-style }
-  {
-    Wrongly-placed~ bib~ style.\\
-    Please~ use~ the~ `bib/style`~ field.
-  }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
 \keys_define:nn { nju / bib }
   {
 %    \end{macrocode}
@@ -5557,17 +5557,13 @@ To produce the documentation run the original source files ending with
 % \changes{v0.15}{2022/02/15}{提供传入 \pkg{biblatex} 宏包选项的接口。}
 % 待传入 \pkg{biblatex} 的额外宏包选项，以列表形式储存。
 % 更为常见的参考文献样式设置已由 \opt{bib/style} 提供，
-% 此处对重复的样式设置进行了检查。本设置项等效于在导言区使用
+% 两者中后传入的设置会覆盖已有的设定。本设置项等效于在导言区使用
 % |\PassoptionToPackage{|\meta{key}|=|\meta{value}|}{biblatex}| 命令。
 %    \begin{macrocode}
     option              .code:n =
       {
-        \tl_if_in:VnTF \l_keys_value_tl { style = }
-          { \msg_error:nn { njuthesis } { extra-bib-style } }
-          {
             \clist_gput_right:NV \g_@@_blx_option_clist
               \l_keys_value_tl
-          }
       },
 %    \end{macrocode}
 % \end{macro}
@@ -5577,10 +5573,7 @@ To produce the documentation run the original source files ending with
 % 参考文献数据源，以列表形式储存。
 %    \begin{macrocode}
     resource            .code:n =
-      {
-        \clist_gput_right:NV \g_@@_blx_resource_clist
-          \l_keys_value_tl
-      },
+      { \clist_gput_right:NV \g_@@_blx_resource_clist \l_keys_value_tl },
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5606,8 +5599,7 @@ To produce the documentation run the original source files ending with
   {
     \cs_undefine:N \addbibresource
     \clist_gput_right:Nn \g_@@_blx_option_clist { backend = biber }
-    \exp_args:NV \PassOptionsToPackage
-      \g_@@_blx_option_clist { biblatex }
+    \exp_args:NV \PassOptionsToPackage \g_@@_blx_option_clist { biblatex }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5640,9 +5632,9 @@ To produce the documentation run the original source files ending with
 % 使用 \pkg{etoolbox} 提供的 \tn{BeforeBeginEnvironment}，在 \env{document} 环境
 % 开始的钩子前载入 \pkg{biblatex} 并进行相关设置。
 %    \begin{macrocode}
-\BeforeBeginEnvironment { document }
+\bool_if:NT \g_@@_opt_load_blx_bool
   {
-    \bool_if:NT \g_@@_opt_load_blx_bool
+    \BeforeBeginEnvironment { document }
       {
         \@@_blx_pre_setup:
         \RequirePackage { biblatex }
@@ -5718,61 +5710,76 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{脚注}
 % \changes{v0.18}{2022/05/01}{提供脚注设置项。}
-% ^^A 来自 fduthesis
+% ^^A 借鉴 fduthesis
+%
+% \begin{variable}{\g_@@_fn_ctext_option_clist}
+% 存储传入 \pkg{circledtext} 宏包的选项列表。
+% 由于当前版本放在编号位置的带圈数字无法正确缩放，这里手动指定了字体大小。
 %    \begin{macrocode}
-\tl_new:N \g_@@_fn_style_tl
+\clist_set:Nn \g_@@_fn_ctext_option_clist { charf = \scriptsize }
+%    \end{macrocode}
+% \end{variable}
+%
+%    \begin{macrocode}
 \keys_define:nn { nju / footnote }
   {
 %    \end{macrocode}
 % \begin{macro}{footnote/style}
+% \changes{v1.1}{2022/10/16}{将生成脚注圈码的 \pkg{pifont} 替换为 \pkg{circledtext}。}
+% 脚注编号的样式。
 %    \begin{macrocode}
-    style .choices:nn = { plain, pifont }
-%    \end{macrocode}
-% 若使用 \opt{pifont} 类型，则需引入 \pkg{pifont} 宏包。
-%    \begin{macrocode}
+    style .choices:nn = { plain, circled, circled* }
       {
-        \tl_gset_eq:NN \g_@@_fn_style_tl \l_keys_choice_tl
-        \int_compare:nT { \l_keys_choice_int = 2 }
-          { \RequirePackage { pifont } }
-      }
+        \int_case:nnTF { \l_keys_choice_int }
+          {
+%    \end{macrocode}
+% \opt{circled} 类型，带星号的版本为阴文。
+%    \begin{macrocode}
+            { 2 } { \cs_set:Npn \@@_fn_number:N
+                      { \@@_fn_number_circled:NV \c_false_bool } }
+            { 3 } { \cs_set:Npn \@@_fn_number:N
+                      { \@@_fn_number_circled:NV \c_true_bool  } }
+          }
+%    \end{macrocode}
+% 若使用 \opt{circled} 类型，则需引入 \pkg{circledtext} 宏包。
+%    \begin{macrocode}
+          { \RequirePackage { circledtext } }
+%    \end{macrocode}
+% \opt{plain} 或未知类型直接使用计数器的值。
+%    \begin{macrocode}
+          { \cs_set_eq:NN \@@_fn_number:N \int_use:N }
+      },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{footnote/circledtext-option}
+% \pkg{circledtext} 宏包选项。
+%    \begin{macrocode}
+    circledtext-option .code:n =
+      { \clist_gput_right:Nn \g_@@_fn_ctext_option_clist {#1} }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_fn_symbol_pifont:n}
-% \opt{pifont} 普通版。以下四种都只包含 \numrange{1}{10}。
+% \begin{macro}{\@@_fn_number_circled:Nn,\@@_fn_number_circled:NV}
+% \opt{circled} 选项提供的带圈数字。
 %    \begin{macrocode}
-\cs_new:Npn \@@_fn_symbol_pifont:n #1
-  { \ding { \int_eval:n { 171 + #1 } } }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_footnote_number:N}
-% 脚注编号样式。
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_fn_style_plain_tl  { plain  }
-\tl_const:Nn \c_@@_fn_style_pifont_tl { pifont }
-\cs_new:Npn \@@_footnote_number:N #1
+\cs_generate_variant:Nn \__circledtext_handle:nn { Vn }
+\cs_new_protected:Npn \@@_fn_number_circled:Nn #1#2
   {
-    \tl_case:NnF \g_@@_fn_style_tl
-      {
-%    \end{macrocode}
-% \opt{plain} 类型直接使用计数器 |footnote| 的值。
-%    \begin{macrocode}
-        \c_@@_fn_style_plain_tl
-          { \int_use:N #1 }
-%    \end{macrocode}
-% \opt{pifont} 类型无需进行额外的操作。
-%    \begin{macrocode}
-        \c_@@_fn_style_pifont_tl
-          { \@@_fn_symbol_pifont:n {#1} }
-      }
-%    \end{macrocode}
-% 变量 \cs{l_@@_fn_style_tl} 保存的类型未知时，默认使用 \opt{plain}
-% 类型。
-%    \begin{macrocode}
-      { \int_use:N #1 }
+    \group_begin:
+      \bool_set_eq:NN \l__circledtext_negative_bool #1
+      \__circledtext_handle:Vn \g_@@_fn_ctext_option_clist { #2 }
+    \group_end:
   }
+\cs_generate_variant:Nn \@@_fn_number_circled:Nn { NV }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_fn_number:N}
+% 脚注编号。默认使用计数器 |footnote| 的值。
+%    \begin{macrocode}
+\cs_new_eq:NN \@@_fn_number:N \int_use:N
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5781,7 +5788,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \bool_if:NT \g_@@_opt_load_fm_bool
   {
-    \cs_set:Npn \thefootnote { \@@_footnote_number:N \c@footnote }
+    \cs_set:Npn \thefootnote { \@@_fn_number:N \c@footnote }
 %    \end{macrocode}
 % \end{macro}
 %
