@@ -118,7 +118,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.1 2022-08-20 00:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.0 2022-10-16 15:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -354,7 +354,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.0.1 \quad 2022-08-10}
+% \date{v1.1.0 \quad 2022-10-16}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -1676,6 +1676,13 @@ To produce the documentation run the original source files ending with
 %   \end{syntax}
 % 带圈数字编号使用 \pkg{circledtext} 宏包绘制，
 % 可使用本选项载入更多定制设置，详见其手册。
+% \end{function}
+%
+% \begin{function}[added=2022-10-16]{footnote/hang}
+%   \begin{syntax}
+%     \OPT{hang} = \TTF
+%   \end{syntax}
+% 是否进行悬挂缩进。默认为是，缩进宽度为 \qty{1.5}{em}。
 % \end{function}
 %
 % 脚注样式的调整依赖 \pkg{footmisc}。如果希望使用 \LaTeX 的默认样式，
@@ -5725,8 +5732,8 @@ To produce the documentation run the original source files ending with
   {
 %    \end{macrocode}
 % \begin{macro}{footnote/style}
-% \changes{v1.1}{2022/10/16}{将生成脚注圈码的 \pkg{pifont} 替换为 \pkg{circledtext}。}
-% 脚注编号的样式。
+  % \changes{v1.1}{2022/10/16}{将 \opt{pifont} 选项修改为 \pkg{circled}。}
+  % 脚注编号的样式。
 %    \begin{macrocode}
     style .choices:nn = { plain, circled, circled* }
       {
@@ -5753,10 +5760,20 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{footnote/circledtext-option}
+% \changes{v1.1}{2022/10/16}{将生成脚注圈码的 \pkg{pifont} 替换为 \pkg{circledtext}。}
 % \pkg{circledtext} 宏包选项。
 %    \begin{macrocode}
     circledtext-option .code:n =
-      { \clist_gput_right:Nn \g_@@_fn_ctext_option_clist {#1} }
+      { \clist_gput_right:Nn \g_@@_fn_ctext_option_clist {#1} },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{footnote/hang}
+% \changes{v1.1}{2022/10/16}{新增悬挂缩进选项。}
+% 是否悬挂缩进。
+%    \begin{macrocode}
+    hang          .bool_gset:N = \g_@@_fn_hang_bool,
+    hang            .initial:n = true
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5795,14 +5812,21 @@ To produce the documentation run the original source files ending with
 % \subsubsection{整体样式}
 %
 % \begin{macro}[int]{\@makefntext}
-% 重定义内部脚注文字命令，使脚注编号不使用上标，宽度为 \qty{1.5}{em}。
+% 重定义内部脚注文字命令，使脚注编号不使用上标，宽度为 \qty{1.5}{em}
 % \footnote{\url{http://tex.stackexchange.com/q/19844},
-% \url{https://www.zhihu.com/question/53030087}}
+% \url{https://www.zhihu.com/question/53030087}}，
+% 并自行实现悬挂缩进。注意这个操作会使 \pkg{footmisc} 宏包内建的 \opt{hang} 选项失效。
 %    \begin{macrocode}
     \cs_set:Npn \@makefntext #1
       {
         \mode_leave_vertical:
-        \hbox_to_wd:nn { 1.5 em } { \@thefnmark \tex_hfil:D }
+        \hbox_to_wd:nn { \c_@@_fnhang_dim } { \@thefnmark \tex_hfil:D }
+        \tex_penalty:D \@M
+        \bool_if:NT \g_@@_fn_hang_bool
+          {
+            \int_set:Nn \tex_hangafter:D { 1 }
+            \dim_set_eq:NN \tex_hangindent:D \c_@@_fnhang_dim
+          }
         #1
       }
   }
@@ -8283,7 +8307,11 @@ To produce the documentation run the original source files ending with
 % 章节标题前后间距。
 %    \begin{macrocode}
     { chapter before } { 10   pt },
-    { chapter  after } { 60   pt }
+    { chapter  after } { 60   pt },
+%    \end{macrocode}
+% 脚注编号宽度。
+%    \begin{macrocode}
+    { fn hang        } { 13.5 pt }
   }
   { \@@_define_dim:nn #1 }
 %    \end{macrocode}

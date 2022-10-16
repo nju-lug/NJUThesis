@@ -212,7 +212,13 @@
 }
 
 % footnote 类用于设置脚注样式，功能详见手册
-% \njusetup[footnote/style]{circled}
+\njusetup[footnote]{
+  % style = circled,
+  % 使用圈码编号
+  %
+  % hang = false,
+  % 不使用悬挂缩进
+}
 
 % 页眉页脚内容设置
 \njusetup{
