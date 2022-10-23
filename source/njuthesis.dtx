@@ -20,8 +20,9 @@
 % This work consists of the files njuthesis.dtx,
 %           and the derived files njuthesis.ins,
 %                                 njuthesis.cls,
-%                                 njuthesis-undergraduate.def,
 %                                 njuthesis-graduate.def,
+%                                 njuthesis-postdoctoral.def,
+%                                 njuthesis-undergraduate.def,
 %                                 njuthesis.pdf,
 %                             and README.md.
 %
@@ -61,7 +62,7 @@ the LaTeX Project Public License, either version 1.3c of this license
 or (at your option) any later version.  The latest version of this
 license is in:
 
-   http://www.latex-project.org/lppl.txt
+  http://www.latex-project.org/lppl.txt
 
 and version 1.3 or later is part of all distributions of LaTeX version
 2005/12/01 or later.
@@ -118,7 +119,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.0.1 2022-08-20 00:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.0 2022-10-23 12:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -354,7 +355,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.0.1 \quad 2022-08-10}
+% \date{v1.1.0 \quad 2022-10-23}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -655,6 +656,7 @@ To produce the documentation run the original source files ending with
 %     \file{njuthesis-sample.bib}        & 示例参考文献列表                 \\
 %     \file{njuthesis-sample.tex}        & 示例文档，不妨以此为基础撰写论文 \\
 %     \file{njuthesis-graduate.def}      & 研究生参数配置文件               \\
+%     \file{njuthesis-postdoctoral.def}  & 博士后参数配置文件               \\
 %     \file{njuthesis-undergraduate.def} & 本科生参数配置文件               \\
 %     \file{README.md}                   & 自述文件                         \\
 %     \bottomrule
@@ -1045,7 +1047,7 @@ To produce the documentation run the original source files ending with
 % 宏包的代码环境不会显示内容，具体效果需要参照各个宏包的说明文档。
 % 如需抵消草稿模式的影响，请使用 \opt{final} 选项载入相关宏包。
 %
-% \begin{function}[added=2022-04-19,updated=2022-07-04]{anonymous}
+% \begin{function}[added=2022-04-19,updated=2022-09-26]{anonymous}
 %   \begin{syntax}
 %     \OPT{anonymous} = <\TFF>
 %   \end{syntax}
@@ -1057,6 +1059,7 @@ To produce the documentation run the original source files ending with
 %   \item 不显示校名校徽图片
 %   \item 不显示“南京大学”字样
 %   \item 不显示作者、导师等基本信息
+%   \item 不显示声明页、致谢页
 % \end{itemize}
 %
 %
@@ -1661,12 +1664,29 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{脚注}
 %
-% \begin{function}[added=2022-05-01,updated=2022-08-03]{footnote/style}
+% \begin{function}[added=2022-05-01,updated=2022-10-16]{footnote/style}
 %   \begin{syntax}
-%     \OPT{style} = <(plain)|pifont>
+%     \OPT{style} = <(plain)|pifont|circled|circled*>
 %   \end{syntax}
-% 设置脚注编号样式。默认为普通数字，使用 |pifont|
-% 选项可修改为带圈数字。单一页面内请尽量避免超过 10 条脚注。
+% 设置脚注编号样式。默认为普通数字；使用 \opt{pifont} 可修改为带圈数字，
+% 此样式受到字符闲置，单页不建议超过10条脚注；使用 \opt{circled} 或 \opt{circled*}
+% 选项同样可修改为带圈数字，且不受单页脚注数量的限制，带星号的选项为黑底白字（阴文）。
+% \footnote{此功能依赖的 \pkg{circledtext} 宏包于 2022 年 4 月发布，可能需要手动安装。}
+% \end{function}
+%
+% \begin{function}[added=2022-10-16]{footnote/circledtext-option}
+%   \begin{syntax}
+%     \OPT{circledtext-option} = \meta{选项列表}
+%   \end{syntax}
+% \opt{circled} 或 \opt{circled*} 选项的带圈数字编号使用 \pkg{circledtext}
+% 宏包绘制，可使用本选项载入更多定制设置，详见其手册。
+% \end{function}
+%
+% \begin{function}[added=2022-10-16]{footnote/hang}
+%   \begin{syntax}
+%     \OPT{hang} = \TTF
+%   \end{syntax}
+% 是否进行悬挂缩进。默认为是，缩进宽度为 \qty{1.5}{em}。
 % \end{function}
 %
 % 脚注样式的调整依赖 \pkg{footmisc}。如果希望使用 \LaTeX 的默认样式，
@@ -2254,7 +2274,8 @@ To produce the documentation run the original source files ending with
 % \subsubsection{致谢页}
 %
 % \DescribeEnv{acknowledgement}
-% 同前言，使用 \env{acknowledgement} 环境。
+% 使用 \env{acknowledgement} 环境生成致谢页，附带有相应目录条目。
+% 在开启盲审模式时，仅显示该目录条目。
 %
 % \begin{latexexample}[emph={[1]acknowledgement}]
 %   \begin{acknowledgement}
@@ -2439,6 +2460,9 @@ To produce the documentation run the original source files ending with
 %   \item \pkg{fandol}、\pkg{tex-gyre}、\pkg{tex-gyre-math}、\pkg{xits} 等，
 %         提供自由字体。
 %   \item \pkg{emptypage}，在双面模式下清空空白页的页眉、页脚和页码。
+%   \item \pkg{circledtext} 和 \pkg{l3experimental}，用于在 \opt{footnote/circled}
+%         和 \opt{footnote/circled*} 选项下生成脚注圈码。
+%   \item \pkg{pifont}，用于在 \opt{footnote/pifont} 选项下生成脚注圈码。
 %   \item \pkg{tikz} 和 \pkg{njuvisual}，用于绘制封面的校名校徽。
 %   \item \pkg{tabularray}，用于绘制研究生的出版授权书信息表格。
 %   \item \pkg{xeCJKfntef} 或 \pkg{lua-ul}，用于在对应引擎下绘制下划线。
@@ -2483,8 +2507,8 @@ To produce the documentation run the original source files ending with
 % \bibitem{install-latex-guide-zh-cn}
 % 王然.
 % \newblock \textit{一份简短的关于 \LaTeX 安装的介绍} [EB/OL].
-% \newblock version 2021.12.1,
-% \newblock (2021-12-01)
+% \newblock version 2022.10.1,
+% \newblock (2022-10-01)
 % \urlprefix\url{https://ctan.org/pkg/install-latex-guide-zh-cn}
 % \urlprefix\CTANurl[文档：]{info/install-latex-guide-zh-cn/install-latex-guide-zh-cn.pdf}
 %
@@ -2564,8 +2588,8 @@ To produce the documentation run the original source files ending with
 % \bibitem{biblatex-gb7714-2015}
 % 胡振震.
 % \newblock \textit{符合 GB/T 7714-2015 标准的 biblatex 参考文献样式} [EB/OL].
-% \newblock version 1.1b,
-% \newblock (2021-12-11)
+% \newblock version 1.1j,
+% \newblock (2022-08-29)
 % \urlprefix\url{https://ctan.org/pkg/biblatex-gb7714-2015}
 % \urlprefix\CTANurl[文档：]{biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf}
 %
@@ -2576,6 +2600,14 @@ To produce the documentation run the original source files ending with
 % \newblock (2021-12-12)
 % \urlprefix\url{https://ctan.org/pkg/ctex}
 % \urlprefix\CTANurl[文档及源代码：]{language/chinese/ctex/ctex.pdf}
+%
+% \bibitem{circledtext}
+% 耿楠.
+% \newblock \textit{Create circled text} [EB/OL].
+% \newblock version 1.1.0,
+% \newblock (2022-04-28)
+% \urlprefix\url{https://ctan.org/pkg/circledtext}
+% \urlprefix\CTANurl[文档：]{macros/latex/contrib/circledtext/circledtext.pdf}
 %
 % \bibitem{latexmk}
 % \textsc{Collins J}.
@@ -2911,21 +2943,16 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{
-%   \c_@@_name_anon_clist,
-%   \c_@@_name_anon_en_clist,
-%   \c_@@_name_anonlist_clist}
-% 盲审模式下不显示的个人信息项。
+% \begin{variable}{\c_@@_name_anon_clist,\c_@@_name_anon_en_clist}
+% 盲审模式下不显示的个人信息键名。
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_anon_clist
   {
-    author, chairman, clc, dept, email, field, grade,
-    id, major, secretlv, supvcont, udc
+    author, chairman, email, student-id, reviewer,
+    supervisor-contact, supervisor, supervisor-ii
   }
 \clist_const:Nn \c_@@_name_anon_en_clist
-  { author, dept, field, major, supv, supvii }
-\clist_const:Nn \c_@@_name_anonlist_clist
-  { reviewer, supv, supvii }
+  { author, supervisor, supervisor-ii }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -3180,9 +3207,9 @@ To produce the documentation run the original source files ending with
 %   \item |dim| 型变量
 %   \item 文本 |clist|
 % \end{arguments}
-% 当 \cs{l_@@_tmpa_clist} 非空时，弹出最后一个元素赋给 \cs{l_@@_tmpa_tl}，
+% 当 \cs{l_@@_tmp_clist} 非空时，弹出最后一个元素赋给 \cs{l_@@_tmpa_tl}，
 % 获取其长度后与 |#1| 进行比较，二者中较大的那一个将成为 |#1| 的新值。
-% 不断循环，直至 \cs{l_@@_tmpa_clist} 为空。
+% 不断循环，直至 \cs{l_@@_tmp_clist} 为空。
 %    \begin{macrocode}
 \cs_new:Npn \@@_get_max_width:NN #1#2
   {
@@ -4032,6 +4059,13 @@ To produce the documentation run the original source files ending with
   { \tl_const:Nn \c_@@_name_pagemode_tl { oneside } }
 %    \end{macrocode}
 %
+% \changes{v1.1}{2022/09/26}{盲审模式下不显示声明页。}
+% 盲审模式下不显示声明页。
+%    \begin{macrocode}
+\bool_if:NT \g_@@_opt_anon_bool
+  { \bool_set_false:N \g_@@_opt_decl_bool }
+%    \end{macrocode}
+%
 %
 % \subsection{用户接口}
 %
@@ -4047,6 +4081,19 @@ To produce the documentation run the original source files ending with
     math, style, theorem, tableofcontents
   }
   { \keys_define:nn { nju } { #1 .meta:nn = { nju / #1 } {##1} } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_keys_set:nn}
+% \changes{v1.1}{2022/09/26}{使用 \cs{keys_set_filter:nnn} 重构盲审模式。}
+% 在开启盲审模式时，屏蔽被编入 \opt{annoymous} 分组的键值对输入。
+%    \begin{macrocode}
+\bool_if:NTF \g_@@_opt_anon_bool
+  {
+    \cs_new:Npn \@@_keys_set:nn #1#2
+      { \keys_set_filter:nnn {#1} { anonymous } {#2} }
+  }
+  { \cs_new_eq:NN \@@_keys_set:nn \keys_set:nn }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4067,11 +4114,11 @@ To produce the documentation run the original source files ending with
 \NewDocumentCommand \njusetup { o m }
   {
     \tl_if_novalue:nTF { #1 }
-      { \keys_set:nn { nju } { #2 } }
+      { \@@_keys_set:nn { nju } { #2 } }
       {
         \tl_if_in:nnTF { #1 } { / }
-          { \keys_set:nn { nju } { #1 = {#2} } }
-          { \keys_set:nn { nju  /  #1 } {#2}   }
+          { \@@_keys_set:nn { nju } { #1 = {#2} } }
+          { \@@_keys_set:nn { nju  /  #1 } {#2}   }
       }
   }
 %    \end{macrocode}
@@ -4179,8 +4226,12 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { no-math                          } { fontspec },
-    { perpage                          } { footmisc },
+%    \end{macrocode}
+% 隐藏 |does not contain script "CJK"| 警告。
+%    \begin{macrocode}
+    { quiet   } { xeCJK    },
+    { no-math } { fontspec },
+    { perpage } { footmisc },
     { capitalise, nameinlink, noabbrev } { cleveref }
   }
   { \PassOptionsToPackage #1 }
@@ -4403,10 +4454,10 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/14}{将标题断行控制符修改为 |\\|。}
 % 题目。中文题目可使用 |\\| 手动断行。以下标注星号（|*|）的皆为对应的英文字段。
 %    \begin{macrocode}
-    title               .tl_set:N = \g_@@_info_title_tl,
-    title              .initial:n = { 空 },
-    title*              .tl_set:N = \g_@@_info_title_en_tl,
-    title*             .initial:n = { Empty },
+    title               .tl_set:N = \g_@@_info_title_tl             ,
+    title              .initial:n = { 空 }                            ,
+    title*              .tl_set:N = \g_@@_info_title_en_tl          ,
+    title*             .initial:n = { Empty }                         ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4414,30 +4465,30 @@ To produce the documentation run the original source files ending with
 % \changes{v0.11}{2021/10/01}{修改了添加关键词的方式。}
 % 关键词列表。
 %    \begin{macrocode}
-    keywords         .clist_set:N = \g_@@_info_keywords_clist,
-    keywords*        .clist_set:N = \g_@@_info_keywords_en_clist,
+    keywords         .clist_set:N = \g_@@_info_keywords_clist       ,
+    keywords*        .clist_set:N = \g_@@_info_keywords_en_clist    ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/grade,info/student-id,info/author,info/author*}
 % 年级、学号、姓名。
 %    \begin{macrocode}
-    grade               .tl_set:N = \g_@@_info_grade_tl,
-    student-id          .tl_set:N = \g_@@_info_id_tl,
-    author              .tl_set:N = \g_@@_info_author_tl,
-    author*             .tl_set:N = \g_@@_info_author_en_tl,
+    grade               .tl_set:N = \g_@@_info_grade_tl             ,
+    student-id          .tl_set:N = \g_@@_info_id_tl                ,
+    author              .tl_set:N = \g_@@_info_author_tl            ,
+    author*             .tl_set:N = \g_@@_info_author_en_tl         ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/department,info/department*,info/major,info/major*,info/field,info/field*}
 % 院系、专业、方向。
 %    \begin{macrocode}
-    department          .tl_set:N = \g_@@_info_dept_tl,
-    department*         .tl_set:N = \g_@@_info_dept_en_tl,
-    major               .tl_set:N = \g_@@_info_major_tl,
-    major*              .tl_set:N = \g_@@_info_major_en_tl,
-    field               .tl_set:N = \g_@@_info_field_tl,
-    field*              .tl_set:N = \g_@@_info_field_en_tl,
+    department          .tl_set:N = \g_@@_info_dept_tl              ,
+    department*         .tl_set:N = \g_@@_info_dept_en_tl           ,
+    major               .tl_set:N = \g_@@_info_major_tl             ,
+    major*              .tl_set:N = \g_@@_info_major_en_tl          ,
+    field               .tl_set:N = \g_@@_info_field_tl             ,
+    field*              .tl_set:N = \g_@@_info_field_en_tl          ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4446,16 +4497,16 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/12}{精简导师信息选项。}
 % 导师信息。中文导师全称使用 |clist| 存储，便于在本科生封面中进行分割。
 %    \begin{macrocode}
-    supervisor       .clist_set:N = \g_@@_info_supv_clist,
-    supervisor*         .tl_set:N = \g_@@_info_supv_en_tl,
+    supervisor       .clist_set:N = \g_@@_info_supv_clist           ,
+    supervisor*         .tl_set:N = \g_@@_info_supv_en_tl           ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/supervisor-ii,info/supervisor-ii*}
 % 第二导师信息。
 %    \begin{macrocode}
-    supervisor-ii    .clist_set:N = \g_@@_info_supvii_clist,
-    supervisor-ii*      .tl_set:N = \g_@@_info_supvii_en_tl,
+    supervisor-ii    .clist_set:N = \g_@@_info_supvii_clist         ,
+    supervisor-ii*      .tl_set:N = \g_@@_info_supvii_en_tl         ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4463,8 +4514,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/14}{精简提交日期选项。}
 % 提交日期，初始值为编译当天日期。
 %    \begin{macrocode}
-    submit-date         .tl_set:N = \g_@@_info_submitdate_raw_tl,
-    submit-date        .initial:V = \c_@@_today_tl,
+    submit-date         .tl_set:N = \g_@@_info_submitdate_raw_tl    ,
+    submit-date        .initial:V = \c_@@_today_tl                  ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4472,8 +4523,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/14}{精简答辩日期选项。}
 % 答辩日期。
 %    \begin{macrocode}
-    defend-date         .tl_set:N = \g_@@_info_defenddate_raw_tl,
-    defend-date        .initial:V = \c_@@_today_tl,
+    defend-date         .tl_set:N = \g_@@_info_defenddate_raw_tl    ,
+    defend-date        .initial:V = \c_@@_today_tl                  ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4481,8 +4532,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.19}{2022/05/23}{新增国家图书馆封面的学位授予日期设置项。}
 % 学位授予日期。
 %    \begin{macrocode}
-    confer-date         .tl_set:N = \g_@@_info_conferdate_raw_tl,
-    confer-date        .initial:V = \c_@@_today_tl,
+    confer-date         .tl_set:N = \g_@@_info_conferdate_raw_tl    ,
+    confer-date        .initial:V = \c_@@_today_tl                  ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4490,26 +4541,26 @@ To produce the documentation run the original source files ending with
 % \changes{v0.19}{2022/05/23}{新增国家图书馆封面的底部日期设置项。}
 % 底部日期。
 %    \begin{macrocode}
-    bottom-date         .tl_set:N = \g_@@_info_bottomdate_raw_tl,
-    bottom-date        .initial:V = \c_@@_today_tl,
+    bottom-date         .tl_set:N = \g_@@_info_bottomdate_raw_tl    ,
+    bottom-date        .initial:V = \c_@@_today_tl                  ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/defend-date,info/chairman,info/reviewer}
 % 答辩委员会信息。
 %    \begin{macrocode}
-    chairman            .tl_set:N = \g_@@_info_chairman_tl,
-    reviewer         .clist_set:N = \g_@@_info_reviewer_clist,
+    chairman            .tl_set:N = \g_@@_info_chairman_tl          ,
+    reviewer         .clist_set:N = \g_@@_info_reviewer_clist       ,
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
 % 国家图书馆封面相关信息。
 %    \begin{macrocode}
-    clc                 .tl_set:N = \g_@@_info_clc_tl,
-    secret-level        .tl_set:N = \g_@@_info_secretlv_tl,
-    udc                 .tl_set:N = \g_@@_info_udc_tl,
-    supervisor-contact  .tl_set:N = \g_@@_info_supvcont_tl,
+    clc                 .tl_set:N = \g_@@_info_clc_tl               ,
+    secret-level        .tl_set:N = \g_@@_info_secretlv_tl          ,
+    udc                 .tl_set:N = \g_@@_info_udc_tl               ,
+    supervisor-contact  .tl_set:N = \g_@@_info_supvcont_tl          ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4519,6 +4570,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     email               .tl_set:N = \g_@@_info_email_tl
   }
+\clist_map_inline:Nn \c_@@_name_anon_clist
+  { \keys_define:nn { nju / info } { #1   .groups:n = { anonymous } } }
+\clist_map_inline:Nn \c_@@_name_anon_en_clist
+  { \keys_define:nn { nju / info } { #1 * .groups:n = { anonymous } } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4526,27 +4581,22 @@ To produce the documentation run the original source files ending with
 % 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，
 % 应当位于载入文档类之后。
 %    \begin{macrocode}
-\ctex_at_end_preamble:n
+\@@_at_begin_document:n
   {
 %    \end{macrocode}
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
-    \bool_set:Nn \g_@@_opt_second_supv_bool
-      { ! \clist_if_empty_p:N \g_@@_info_supvii_clist }
-    \tl_set:Nx \g_@@_info_supvfull_tl
+    \clist_map_inline:nn
+      { \g_@@_info_supv_clist, \g_@@_info_supvii_clist }
       {
-        \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: }
-        \bool_if:NT \g_@@_opt_second_supv_bool
-          {
-            \@@_quad:
-            \clist_use:Nn \g_@@_info_supvii_clist { \@@_hskip: }
-          }
+        \tl_gput_right:Nx \g_@@_info_supvfull_tl
+          { \clist_use:Nn #1 { \@@_hskip: } \@@_quad: }
       }
-    \tl_set_eq:NN \g_@@_info_supvfull_en_tl \g_@@_info_supv_en_tl
-    \bool_if:NT \g_@@_opt_second_supv_bool
+    \tl_gput_right:Nn \g_@@_info_supvfull_tl { \tex_unskip:D }
+    \tl_set:Nn \g_@@_info_supvfull_en_tl
       {
-        \tl_put_right:Nn \g_@@_info_supvfull_en_tl
-          { \@@_quad: \g_@@_info_supvii_en_tl }
+        \g_@@_info_supv_en_tl \@@_quad:
+        \g_@@_info_supvii_en_tl \tex_unskip:D
       }
   }
 %</class>
@@ -4631,22 +4681,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% 盲审模式下抹去个人信息和学校名称。
+% 盲审模式下抹去学校名称。
 %    \begin{macrocode}
 %<*class>
 \bool_if:NT \g_@@_opt_anon_bool
   {
-    \ctex_at_end_preamble:n
-      {
-        \clist_map_inline:Nn \c_@@_name_anon_clist
-          { \tl_gclear:c    { g_@@_info_ #1    _tl } }
-        \clist_map_inline:Nn \c_@@_name_anon_en_clist
-          { \tl_gclear:c    { g_@@_info_ #1 _en_tl } }
-        \clist_map_inline:Nn \c_@@_name_anonlist_clist
-          { \clist_gclear:c { g_@@_info_ #1 _clist } }
-        \tl_gclear:N \c_@@_name_nju_tl
-        \tl_gclear:N \c_@@_name_nju_en_tl
-      }
+    \tl_gclear:N \c_@@_name_nju_tl
+    \tl_gclear:N \c_@@_name_nju_en_tl
   }
 %    \end{macrocode}
 %
@@ -4796,17 +4837,18 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_cjk_mac:
   {
     \@@_hide_no_script_msg:
-    \setCJKmainfont{Songti~SC~Light}[
-      BoldFont=Songti~SC~Bold,
-      ItalicFont=Kaiti~SC,
-      BoldItalicFont=Kaiti~SC~Bold]
-    \setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-    \setCJKmonofont{STFangsong}
-    \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
-    \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-    \setCJKfamilyfont{zhfs}{STFangsong}
-    \setCJKfamilyfont{zhkai}{Kaiti~SC}[BoldFont=Kaiti~SC~Bold]
-    \setCJKfamilyfont{zhnewhei}{PingFang~SC}
+    \setCJKmainfont { Songti~SC~Light }
+      [
+        BoldFont       = Songti~SC~Bold,
+        ItalicFont     = Kaiti~SC,
+        BoldItalicFont = Kaiti~SC~Bold
+      ]
+    \setCJKsansfont { Heiti~SC~Light  } [ BoldFont = Heiti~SC~Medium ]
+    \setCJKmonofont { STFangsong      }
+    \setCJKfamilyfont { zhsong } { Songti~SC~Light } [ BoldFont = Songti~SC~Bold ]
+    \setCJKfamilyfont { zhhei  } { Heiti~SC~Light  } [ BoldFont = Heiti~SC~Medium ]
+    \setCJKfamilyfont { zhfs   } { STFangsong      }
+    \setCJKfamilyfont { zhkai  } { Kaiti~SC        } [ BoldFont = Kaiti~SC~Bold ]
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4858,7 +4900,8 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_cjk_founder:
   {
 %    \end{macrocode}
-% 调整方正字体括号位置。\footnote{\XeTeX 的调整方法来自 \url{https://www.zhihu.com/question/46241367/answer/101660183}。}
+% 调整方正字体括号位置。
+% \footnote{\XeTeX 的调整方法来自 \url{https://www.zhihu.com/question/46241367/answer/101660183}。}
 %    \begin{macrocode}
     \sys_if_engine_xetex:T
       { \xeCJKEditPunctStyle {quanjiao} { optimize-kerning = true } }
@@ -5509,14 +5552,6 @@ To produce the documentation run the original source files ending with
 % \end{variable}
 %
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { extra-bib-style }
-  {
-    Wrongly-placed~ bib~ style.\\
-    Please~ use~ the~ `bib/style`~ field.
-  }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
 \keys_define:nn { nju / bib }
   {
 %    \end{macrocode}
@@ -5550,17 +5585,13 @@ To produce the documentation run the original source files ending with
 % \changes{v0.15}{2022/02/15}{提供传入 \pkg{biblatex} 宏包选项的接口。}
 % 待传入 \pkg{biblatex} 的额外宏包选项，以列表形式储存。
 % 更为常见的参考文献样式设置已由 \opt{bib/style} 提供，
-% 此处对重复的样式设置进行了检查。本设置项等效于在导言区使用
-% |\PassoptionToPackage{|\meta{key}|=|\meta{value}|}{biblatex}| 命令。
+% 两者中后传入的设置会覆盖已有的设定。本设置项等效于在导言区使用
+% |\PassoptionsToPackage{|\meta{key}|=|\meta{value}|}{biblatex}| 命令。
 %    \begin{macrocode}
     option              .code:n =
       {
-        \tl_if_in:VnTF \l_keys_value_tl { style = }
-          { \msg_error:nn { njuthesis } { extra-bib-style } }
-          {
             \clist_gput_right:NV \g_@@_blx_option_clist
               \l_keys_value_tl
-          }
       },
 %    \end{macrocode}
 % \end{macro}
@@ -5570,10 +5601,7 @@ To produce the documentation run the original source files ending with
 % 参考文献数据源，以列表形式储存。
 %    \begin{macrocode}
     resource            .code:n =
-      {
-        \clist_gput_right:NV \g_@@_blx_resource_clist
-          \l_keys_value_tl
-      },
+      { \clist_gput_right:NV \g_@@_blx_resource_clist \l_keys_value_tl },
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5599,8 +5627,7 @@ To produce the documentation run the original source files ending with
   {
     \cs_undefine:N \addbibresource
     \clist_gput_right:Nn \g_@@_blx_option_clist { backend = biber }
-    \exp_args:NV \PassOptionsToPackage
-      \g_@@_blx_option_clist { biblatex }
+    \exp_args:NV \PassOptionsToPackage \g_@@_blx_option_clist { biblatex }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5633,9 +5660,9 @@ To produce the documentation run the original source files ending with
 % 使用 \pkg{etoolbox} 提供的 \tn{BeforeBeginEnvironment}，在 \env{document} 环境
 % 开始的钩子前载入 \pkg{biblatex} 并进行相关设置。
 %    \begin{macrocode}
-\BeforeBeginEnvironment { document }
+\bool_if:NT \g_@@_opt_load_blx_bool
   {
-    \bool_if:NT \g_@@_opt_load_blx_bool
+    \BeforeBeginEnvironment { document }
       {
         \@@_blx_pre_setup:
         \RequirePackage { biblatex }
@@ -5711,61 +5738,105 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{脚注}
 % \changes{v0.18}{2022/05/01}{提供脚注设置项。}
-% ^^A 来自 fduthesis
+% ^^A 借鉴 fduthesis
+%
+% \begin{variable}{\g_@@_fn_ctext_option_clist}
+% 存储传入 \pkg{circledtext} 宏包的选项列表。
+% 由于当前版本放在编号位置的带圈数字无法正确缩放，这里手动指定了字体大小。
 %    \begin{macrocode}
-\tl_new:N \g_@@_fn_style_tl
+\clist_set:Nn \g_@@_fn_ctext_option_clist { charf = \scriptsize }
+%    \end{macrocode}
+% \end{variable}
+%
+%    \begin{macrocode}
 \keys_define:nn { nju / footnote }
   {
 %    \end{macrocode}
 % \begin{macro}{footnote/style}
+% \changes{v1.1}{2022/10/16}{增加 \opt{circled} 和 \opt{circled*} 选项。}
+% 脚注编号的样式。
 %    \begin{macrocode}
-    style .choices:nn = { plain, pifont }
-%    \end{macrocode}
-% 若使用 \opt{pifont} 类型，则需引入 \pkg{pifont} 宏包。
-%    \begin{macrocode}
+    style .choices:nn = { plain, pifont, circled, circled* }
       {
-        \tl_gset_eq:NN \g_@@_fn_style_tl \l_keys_choice_tl
-        \int_compare:nT { \l_keys_choice_int = 2 }
-          { \RequirePackage { pifont } }
-      }
+        \int_case:nnF { \l_keys_choice_int }
+          {
+%    \end{macrocode}
+% \opt{pifont} 类型，用作对旧发行版的兼容选项。
+%    \begin{macrocode}
+            { 2 }
+              {
+                \RequirePackage { pifont }
+                \cs_set_eq:NN \@@_fn_number:N \@@_fn_number_pifont:N
+              }
+%    \end{macrocode}
+% \opt{circled} 类型，带星号的版本为阴文，需引入 \pkg{circledtext} 宏包。
+%    \begin{macrocode}
+            { 3 }
+              {
+                \RequirePackage { circledtext }
+                \cs_set:Npn \@@_fn_number:N
+                  { \@@_fn_number_circled:NV \c_false_bool }
+              }
+            { 4 }
+              {
+                \RequirePackage { circledtext }
+                \cs_set:Npn \@@_fn_number:N
+                  { \@@_fn_number_circled:NV \c_true_bool }
+              }
+          }
+%    \end{macrocode}
+% \opt{plain} 或未知类型直接使用计数器的值。
+%    \begin{macrocode}
+          { \cs_set_eq:NN \@@_fn_number:N \int_use:N }
+      },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{footnote/circledtext-option}
+% \changes{v1.1}{2022/10/16}{将生成脚注圈码的 \pkg{pifont} 替换为 \pkg{circledtext}。}
+% \pkg{circledtext} 宏包选项。
+%    \begin{macrocode}
+    circledtext-option .code:n =
+      { \clist_gput_right:Nn \g_@@_fn_ctext_option_clist {#1} },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{footnote/hang}
+% \changes{v1.1}{2022/10/16}{新增悬挂缩进选项。}
+% 是否悬挂缩进。
+%    \begin{macrocode}
+    hang          .bool_gset:N = \g_@@_fn_hang_bool,
+    hang            .initial:n = true
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_fn_symbol_pifont:n}
-% \opt{pifont} 普通版。以下四种都只包含 \numrange{1}{10}。
+% \begin{macro}{\@@_fn_number_pifont:N}
+% \opt{pifont} 选项提供的带圈数字。
 %    \begin{macrocode}
-\cs_new:Npn \@@_fn_symbol_pifont:n #1
-  { \ding { \int_eval:n { 171 + #1 } } }
+\cs_new:Npn \@@_fn_number_pifont:N #1 { \ding { \int_eval:n { 171 + #1 } } }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_footnote_number:N}
-% 脚注编号样式。
+% \begin{macro}{\@@_fn_number_circled:Nn,\@@_fn_number_circled:NV}
+% \opt{circled} 选项提供的带圈数字。
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_fn_style_plain_tl  { plain  }
-\tl_const:Nn \c_@@_fn_style_pifont_tl { pifont }
-\cs_new:Npn \@@_footnote_number:N #1
+\cs_generate_variant:Nn \__circledtext_handle:nn { Vn }
+\cs_new_protected:Npn \@@_fn_number_circled:Nn #1#2
   {
-    \tl_case:NnF \g_@@_fn_style_tl
-      {
-%    \end{macrocode}
-% \opt{plain} 类型直接使用计数器 |footnote| 的值。
-%    \begin{macrocode}
-        \c_@@_fn_style_plain_tl
-          { \int_use:N #1 }
-%    \end{macrocode}
-% \opt{pifont} 类型无需进行额外的操作。
-%    \begin{macrocode}
-        \c_@@_fn_style_pifont_tl
-          { \@@_fn_symbol_pifont:n {#1} }
-      }
-%    \end{macrocode}
-% 变量 \cs{l_@@_fn_style_tl} 保存的类型未知时，默认使用 \opt{plain}
-% 类型。
-%    \begin{macrocode}
-      { \int_use:N #1 }
+    \group_begin:
+      \bool_set_eq:NN \l__circledtext_negative_bool #1
+      \__circledtext_handle:Vn \g_@@_fn_ctext_option_clist { #2 }
+    \group_end:
   }
+\cs_generate_variant:Nn \@@_fn_number_circled:Nn { NV }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_fn_number:N}
+% 脚注编号。默认使用计数器 |footnote| 的值。
+%    \begin{macrocode}
+\cs_new_eq:NN \@@_fn_number:N \int_use:N
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5774,21 +5845,28 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \bool_if:NT \g_@@_opt_load_fm_bool
   {
-    \cs_set:Npn \thefootnote { \@@_footnote_number:N \c@footnote }
+    \cs_set:Npn \thefootnote { \@@_fn_number:N \c@footnote }
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsubsection{整体样式}
 %
 % \begin{macro}[int]{\@makefntext}
-% 重定义内部脚注文字命令，使脚注编号不使用上标，宽度为 \qty{1.5}{em}。
+% 重定义内部脚注文字命令，使脚注编号不使用上标，宽度为 \qty{1.5}{em}
 % \footnote{\url{http://tex.stackexchange.com/q/19844},
-% \url{https://www.zhihu.com/question/53030087}}
+% \url{https://www.zhihu.com/question/53030087}}，
+% 并自行实现悬挂缩进。注意这个操作会使 \pkg{footmisc} 宏包内建的 \opt{hang} 选项失效。
 %    \begin{macrocode}
     \cs_set:Npn \@makefntext #1
       {
         \mode_leave_vertical:
-        \hbox_to_wd:nn { 1.5 em } { \@thefnmark \tex_hfil:D }
+        \hbox_to_wd:nn { \c_@@_fnhang_dim } { \@thefnmark \tex_hfil:D }
+        \tex_penalty:D \@M
+        \bool_if:NT \g_@@_fn_hang_bool
+          {
+            \int_set:Nn \tex_hangafter:D { 1 }
+            \dim_set_eq:NN \tex_hangindent:D \c_@@_fnhang_dim
+          }
         #1
       }
   }
@@ -6241,8 +6319,8 @@ To produce the documentation run the original source files ending with
     \use:c { @@_loadfont_math_ \g_@@_font_math_tl : }
     \bool_if:NT \g_@@_opt_math_leq_bool
       {
-        \cs_set_eq:NN \le  \leslant
-        \cs_set_eq:NN \ge  \geslant
+        \cs_set_eq:NN \le  \leqslant
+        \cs_set_eq:NN \ge  \geqslant
         \cs_set_eq:NN \leq \leqslant
         \cs_set_eq:NN \geq \geqslant
       }
@@ -7820,10 +7898,14 @@ To produce the documentation run the original source files ending with
 % 单独制作的前言致谢页。
 %    \begin{macrocode}
 \NewDocumentEnvironment { preface         } { +b }
-  { \@@_chapter:V \c_@@_name_preface_tl         #1 }
+  { \@@_chapter:V \c_@@_name_preface_tl #1 }
   { \cleardoublepage }
 \NewDocumentEnvironment { acknowledgement } { +b }
-  { \@@_chapter:V \c_@@_name_acknowledgement_tl #1 }
+  {
+    \bool_if:NTF \g_@@_opt_anon_bool
+      { \@@_bookmark_toc:V \c_@@_name_acknowledgementa_tl   }
+      { \@@_chapter:V      \c_@@_name_acknowledgement_tl #1 }
+  }
   { \cleardoublepage }
 %    \end{macrocode}
 % \end{environment}
@@ -7972,110 +8054,111 @@ To produce the documentation run the original source files ending with
 %<*(def-u|def-g|def-p)>
 \clist_map_inline:nn
   {
-    { acknowledgement } { 致 \qquad{} 谢                     },
-%<def-g>    { apply           } {（申请 \g_@@_info_degree_tl 学位）},
-%<def-g>    { auth decl       } { 学位论文出版授权书                 },
-%<def-p>    { auth decl       } { 研究报告使用授权书                 },
-%<def-p>    { author          } { 作者                               },
+    { acknowledgement   } { 致 \qquad{} 谢                     },
+    { acknowledgement a } { 致谢（盲审阶段，暂时隐去）         },
+%<def-g>    { apply             } {（申请 \g_@@_info_degree_tl 学位）},
+%<def-g>    { auth decl         } { 学位论文出版授权书                 },
+%<def-p>    { auth decl         } { 研究报告使用授权书                 },
+%<def-p>    { author            } { 作者                               },
 %    \end{macrocode}
 % 用于摘要的作者名称字样
 %    \begin{macrocode}
-%<def-u>    { author        a } { 本科生姓名                         },
-%<def-g>    { author        a } { \g_@@_info_type_tl 生姓名        },
-%<def-g>    { auth sign       } { 作者签名：\njuline{\hspace{6em}}   },
-%<def-p>    { auth sign       } { 本人签名                           },
-%<def-p>    { auth sign     a } { 导师签名                           },
-%<def-g>    { chairman        } { 答辩委员会主席：                   },
-%<def-g>    { clc             } { 分类号                             },
-%<def-g>    { confer          } { 学位授予单位和日期                 },
-    { date            } { 日期                               },
-%<def-g>    { defend date     } { 论文答辩日期                       },
-%<def-g>    { degree          } { 申请学位级别                       },
+%<def-u>    { author          a } { 本科生姓名                         },
+%<def-g>    { author          a } { \g_@@_info_type_tl 生姓名        },
+%<def-g>    { auth sign         } { 作者签名：\njuline{\hspace{6em}}   },
+%<def-p>    { auth sign         } { 本人签名                           },
+%<def-p>    { auth sign       a } { 导师签名                           },
+%<def-g>    { chairman          } { 答辩委员会主席：                   },
+%<def-g>    { clc               } { 分类号                             },
+%<def-g>    { confer            } { 学位授予单位和日期                 },
+    { date              } { 日期                               },
+%<def-g>    { defend date       } { 论文答辩日期                       },
+%<def-g>    { degree            } { 申请学位级别                       },
 %    \end{macrocode}
 % 用于出版授权书的学位名称字样
 %    \begin{macrocode}
-%<def-g>    { degree        a } { 论文级别                           },
-%<def-p>    { dept            } { 系别                               },
+%<def-g>    { degree          a } { 论文级别                           },
+%<def-p>    { dept              } { 系别                               },
 %    \end{macrocode}
 % 用于出版授权书的院系名称字样
 %    \begin{macrocode}
-%<def-g>    { dept          a } { 所在院系                           },
-%<def-g>    { email           } { 作者 Email                         },
-%<def-g>    { field           } { 研究方向                           },
-%<def-u>    { grade           } { 年级                               },
-%<def-g>    { grade           } { 级                                 },
-%<def-u|def-g>    { id              } { 学号                               },
-%<def-p>    { id              } { 工号                               },
+%<def-g>    { dept            a } { 所在院系                           },
+%<def-g>    { email             } { 作者 Email                         },
+%<def-g>    { field             } { 研究方向                           },
+%<def-u>    { grade             } { 年级                               },
+%<def-g>    { grade             } { 级                                 },
+%<def-u|def-g>    { id                } { 学号                               },
+%<def-p>    { id                } { 工号                               },
 %    \end{macrocode}
 % 用于出版授权书的学号名称字样
 %    \begin{macrocode}
-%<def-g>    { id            a } { 研究生学号                         },
-    { listoffigures   } { 插图目录                           },
-    { listoftables    } { 表格目录                           },
-%<def-p>    { major           } { 学科专业                           },
+%<def-g>    { id              a } { 研究生学号                         },
+    { listoffigures     } { 插图目录                           },
+    { listoftables      } { 表格目录                           },
+%<def-p>    { major             } { 学科专业                           },
 %    \end{macrocode}
 % 用于摘要的专业名称字样
 %    \begin{macrocode}
-%<def-g>    { major         a } { 专业                               },
+%<def-g>    { major           a } { 专业                               },
 %    \end{macrocode}
 % 用于国家图书馆封面的专业名称字样
 %    \begin{macrocode}
-%<def-g>    { major         b } { 专业名称                           },
-    { notation        } { 符号表                             },
-%<def-u>    { orig decl       }
-%<def-u>      { 南京大学本科毕业论文（设计） \\ 诚信承诺书           },
-%<def-g>    { orig decl       } { 南京大学学位论文原创性声明         },
-%<def-p>    { orig decl       } { 研究报告原创性声明                 },
-%<def-u>    { orig sign       } { 作者签名                           },
-%<def-g>    { orig sign       } { 研究生签名                         },
-%<def-p>    { orig sign       } { 研究报告作者签名                   },
-    { paper list      } { 发表文章目录                       },
-    { pdf creator     } { LaTeX~ with~ njuthesis~ class      },
-    { preface         } { 前 \qquad{} 言                     },
-%<def-p>    { report          } { 博士后研究工作报告                 },
-%<def-g>    { reviewer        } { 评阅人：                           },
-%<def-g>    { secret lv       } { 密级                               },
-%<def-g>    { secret status   } { 论文涉密情况：                     },
-%<def-g>    { secret free     } { 不保密                             },
-%<def-g>    { secret date     }
+%<def-g>    { major           b } { 专业名称                           },
+    { notation          } { 符号表                             },
+%<def-u>    { orig decl         }
+%<def-u>      { 南京大学本科毕业论文（设计） \\ 诚信承诺书             },
+%<def-g>    { orig decl         } { 南京大学学位论文原创性声明         },
+%<def-p>    { orig decl         } { 研究报告原创性声明                 },
+%<def-u>    { orig sign         } { 作者签名                           },
+%<def-g>    { orig sign         } { 研究生签名                         },
+%<def-p>    { orig sign         } { 研究报告作者签名                   },
+    { paper list        } { 发表文章目录                       },
+    { pdf creator       } { LaTeX~ with~ njuthesis~ class      },
+    { preface           } { 前 \qquad{} 言                     },
+%<def-p>    { report            } { 博士后研究工作报告                 },
+%<def-g>    { reviewer          } { 评阅人：                           },
+%<def-g>    { secret lv         } { 密级                               },
+%<def-g>    { secret status     } { 论文涉密情况：                     },
+%<def-g>    { secret free       } { 不保密                             },
+%<def-g>    { secret date       }
 %<def-g>      { 保密，保密期（ \c_@@_name_blankdatea_tl 至
-%<def-g>                       \c_@@_name_blankdatea_tl ）        },
-%<def-g>    { sign            } { （签字）                           },
-%<def-u>    { submit date     } { 提交日期                           },
-%<def-g>    { submit date     } { 论文提交日期                       },
-%<def-p>    { submit date     } { 完成日期                           },
-%<def-g>    { subtitle        } { （题名和副题名）                   },
-%<def-u>    { supv            } { 指导教师                           },
-%<def-g>    { supv            } { 导师                               },
-%<def-p>    { supv full       } { 合作导师                           },
+%<def-g>                       \c_@@_name_blankdatea_tl ）           },
+%<def-g>    { sign              } { （签字）                           },
+%<def-u>    { submit date       } { 提交日期                           },
+%<def-g>    { submit date       } { 论文提交日期                       },
+%<def-p>    { submit date       } { 完成日期                           },
+%<def-g>    { subtitle          } { （题名和副题名）                   },
+%<def-u>    { supv              } { 指导教师                           },
+%<def-g>    { supv              } { 导师                               },
+%<def-p>    { supv full         } { 合作导师                           },
 %    \end{macrocode}
 % 用于摘要的导师名称字样
 %    \begin{macrocode}
-%<def-g>    { supv          a } { 指导教师（姓名、职称）             },
+%<def-g>    { supv            a } { 指导教师（姓名、职称）             },
 %    \end{macrocode}
 % 用于出版授权书的导师名称字样
 %    \begin{macrocode}
-%<def-g>    { supv          b } { 导师姓名                           },
-%<def-g>    { supv info       }
-%<def-g>      { 指导教师姓名、职务、职称、学位、单位名称及地址       },
-    { supv ii         } { 第二导师                           },
-    { supv title      } { 职称                               },
-    { tableofcontents } { 目 \qquad{} 录                     },
-%<def-p>    { title           } { 报告题目                           },
+%<def-g>    { supv            b } { 导师姓名                           },
+%<def-g>    { supv info         }
+%<def-g>      { 指导教师姓名、职务、职称、学位、单位名称及地址         },
+    { supv ii           } { 第二导师                           },
+    { supv title        } { 职称                               },
+    { tableofcontents   } { 目 \qquad{} 录                     },
+%<def-p>    { title             } { 报告题目                           },
 %    \end{macrocode}
 % 用于摘要的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title         a } { 毕业论文题目                       },
+%<def-g>    { title           a } { 毕业论文题目                       },
 %    \end{macrocode}
 % 用于国家图书馆封面的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title         b } { 学位论文                           },
+%<def-g>    { title           b } { 学位论文                           },
 %    \end{macrocode}
 % 用于出版授权书的标题名称字样
 %    \begin{macrocode}
-%<def-g>    { title         c } { 论文题名                           },
-%<def-g>    { udc             } { U D C                              },
-%<def-g>    { year            } { 学位年度                           }
+%<def-g>    { title           c } { 论文题名                           },
+%<def-g>    { udc               } { U D C                              },
+%<def-g>    { year              } { 学位年度                           }
   }
   { \@@_define_name:nn #1 }
 %    \end{macrocode}
@@ -8264,7 +8347,11 @@ To produce the documentation run the original source files ending with
 % 章节标题前后间距。
 %    \begin{macrocode}
     { chapter before } { 10   pt },
-    { chapter  after } { 60   pt }
+    { chapter  after } { 60   pt },
+%    \end{macrocode}
+% 脚注编号宽度。
+%    \begin{macrocode}
+    { fn hang        } { 13.5 pt }
   }
   { \@@_define_dim:nn #1 }
 %    \end{macrocode}
