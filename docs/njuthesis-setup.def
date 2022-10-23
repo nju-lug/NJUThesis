@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.0.0 2022-08-08
+% njuthesis 参数设置文件 v1.1.0 2022-10-23
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -213,7 +213,7 @@
 
 % footnote 类用于设置脚注样式，功能详见手册
 \njusetup[footnote]{
-  % style = circled,
+  % style = pifont|circled,
   % 使用圈码编号
   %
   % hang = false,

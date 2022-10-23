@@ -20,8 +20,9 @@
 % This work consists of the files njuthesis.dtx,
 %           and the derived files njuthesis.ins,
 %                                 njuthesis.cls,
-%                                 njuthesis-undergraduate.def,
 %                                 njuthesis-graduate.def,
+%                                 njuthesis-postdoctoral.def,
+%                                 njuthesis-undergraduate.def,
 %                                 njuthesis.pdf,
 %                             and README.md.
 %
@@ -61,7 +62,7 @@ the LaTeX Project Public License, either version 1.3c of this license
 or (at your option) any later version.  The latest version of this
 license is in:
 
-   http://www.latex-project.org/lppl.txt
+  http://www.latex-project.org/lppl.txt
 
 and version 1.3 or later is part of all distributions of LaTeX version
 2005/12/01 or later.
@@ -118,7 +119,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.0 2022-10-16 15:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.0 2022-10-23 12:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -354,7 +355,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.1.0 \quad 2022-10-16}
+% \date{v1.1.0 \quad 2022-10-23}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -655,6 +656,7 @@ To produce the documentation run the original source files ending with
 %     \file{njuthesis-sample.bib}        & 示例参考文献列表                 \\
 %     \file{njuthesis-sample.tex}        & 示例文档，不妨以此为基础撰写论文 \\
 %     \file{njuthesis-graduate.def}      & 研究生参数配置文件               \\
+%     \file{njuthesis-postdoctoral.def}  & 博士后参数配置文件               \\
 %     \file{njuthesis-undergraduate.def} & 本科生参数配置文件               \\
 %     \file{README.md}                   & 自述文件                         \\
 %     \bottomrule
@@ -1664,18 +1666,20 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2022-05-01,updated=2022-10-16]{footnote/style}
 %   \begin{syntax}
-%     \OPT{style} = <(plain)|circled|circled*>
+%     \OPT{style} = <(plain)|pifont|circled|circled*>
 %   \end{syntax}
-% 设置脚注编号样式。默认为普通数字，使用 \opt{circled} 或 \opt{circled*}
-% 选项可修改为带圈数字，带星号的选项为黑底白字（阴文）。
+% 设置脚注编号样式。默认为普通数字；使用 \opt{pifont} 可修改为带圈数字，
+% 此样式受到字符闲置，单页不建议超过10条脚注；使用 \opt{circled} 或 \opt{circled*}
+% 选项同样可修改为带圈数字，且不受单页脚注数量的限制，带星号的选项为黑底白字（阴文）。
+% \footnote{此功能依赖的 \pkg{circledtext} 宏包于 2022 年 4 月发布，可能需要手动安装。}
 % \end{function}
 %
 % \begin{function}[added=2022-10-16]{footnote/circledtext-option}
 %   \begin{syntax}
 %     \OPT{circledtext-option} = \meta{选项列表}
 %   \end{syntax}
-% 带圈数字编号使用 \pkg{circledtext} 宏包绘制，
-% 可使用本选项载入更多定制设置，详见其手册。
+% \opt{circled} 或 \opt{circled*} 选项的带圈数字编号使用 \pkg{circledtext}
+% 宏包绘制，可使用本选项载入更多定制设置，详见其手册。
 % \end{function}
 %
 % \begin{function}[added=2022-10-16]{footnote/hang}
@@ -2500,8 +2504,8 @@ To produce the documentation run the original source files ending with
 % \bibitem{install-latex-guide-zh-cn}
 % 王然.
 % \newblock \textit{一份简短的关于 \LaTeX 安装的介绍} [EB/OL].
-% \newblock version 2021.12.1,
-% \newblock (2021-12-01)
+% \newblock version 2022.10.1,
+% \newblock (2022-10-01)
 % \urlprefix\url{https://ctan.org/pkg/install-latex-guide-zh-cn}
 % \urlprefix\CTANurl[文档：]{info/install-latex-guide-zh-cn/install-latex-guide-zh-cn.pdf}
 %
@@ -2581,8 +2585,8 @@ To produce the documentation run the original source files ending with
 % \bibitem{biblatex-gb7714-2015}
 % 胡振震.
 % \newblock \textit{符合 GB/T 7714-2015 标准的 biblatex 参考文献样式} [EB/OL].
-% \newblock version 1.1b,
-% \newblock (2021-12-11)
+% \newblock version 1.1j,
+% \newblock (2022-08-29)
 % \urlprefix\url{https://ctan.org/pkg/biblatex-gb7714-2015}
 % \urlprefix\CTANurl[文档：]{biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf}
 %
@@ -2593,6 +2597,14 @@ To produce the documentation run the original source files ending with
 % \newblock (2021-12-12)
 % \urlprefix\url{https://ctan.org/pkg/ctex}
 % \urlprefix\CTANurl[文档及源代码：]{language/chinese/ctex/ctex.pdf}
+%
+% \bibitem{circledtext}
+% 耿楠.
+% \newblock \textit{Create circled text} [EB/OL].
+% \newblock version 1.1.0,
+% \newblock (2022-04-28)
+% \urlprefix\url{https://ctan.org/pkg/circledtext}
+% \urlprefix\CTANurl[文档：]{macros/latex/contrib/circledtext/circledtext.pdf}
 %
 % \bibitem{latexmk}
 % \textsc{Collins J}.
@@ -4211,8 +4223,12 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { no-math                          } { fontspec },
-    { perpage                          } { footmisc },
+%    \end{macrocode}
+% 隐藏 |does not contain script "CJK"| 警告。
+%    \begin{macrocode}
+    { quiet   } { xeCJK    },
+    { no-math } { fontspec },
+    { perpage } { footmisc },
     { capitalise, nameinlink, noabbrev } { cleveref }
   }
   { \PassOptionsToPackage #1 }
@@ -4818,17 +4834,18 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_cjk_mac:
   {
     \@@_hide_no_script_msg:
-    \setCJKmainfont{Songti~SC~Light}[
-      BoldFont=Songti~SC~Bold,
-      ItalicFont=Kaiti~SC,
-      BoldItalicFont=Kaiti~SC~Bold]
-    \setCJKsansfont{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-    \setCJKmonofont{STFangsong}
-    \setCJKfamilyfont{zhsong}{Songti~SC~Light}[BoldFont=Songti~SC~Bold]
-    \setCJKfamilyfont{zhhei}{Heiti~SC~Light}[BoldFont=Heiti~SC~Medium]
-    \setCJKfamilyfont{zhfs}{STFangsong}
-    \setCJKfamilyfont{zhkai}{Kaiti~SC}[BoldFont=Kaiti~SC~Bold]
-    \setCJKfamilyfont{zhnewhei}{PingFang~SC}
+    \setCJKmainfont { Songti~SC~Light }
+      [
+        BoldFont       = Songti~SC~Bold,
+        ItalicFont     = Kaiti~SC,
+        BoldItalicFont = Kaiti~SC~Bold
+      ]
+    \setCJKsansfont { Heiti~SC~Light  } [ BoldFont = Heiti~SC~Medium ]
+    \setCJKmonofont { STFangsong      }
+    \setCJKfamilyfont { zhsong } { Songti~SC~Light } [ BoldFont = Songti~SC~Bold ]
+    \setCJKfamilyfont { zhhei  } { Heiti~SC~Light  } [ BoldFont = Heiti~SC~Medium ]
+    \setCJKfamilyfont { zhfs   } { STFangsong      }
+    \setCJKfamilyfont { zhkai  } { Kaiti~SC        } [ BoldFont = Kaiti~SC~Bold ]
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4880,7 +4897,8 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_cjk_founder:
   {
 %    \end{macrocode}
-% 调整方正字体括号位置。\footnote{\XeTeX 的调整方法来自 \url{https://www.zhihu.com/question/46241367/answer/101660183}。}
+% 调整方正字体括号位置。
+% \footnote{\XeTeX 的调整方法来自 \url{https://www.zhihu.com/question/46241367/answer/101660183}。}
 %    \begin{macrocode}
     \sys_if_engine_xetex:T
       { \xeCJKEditPunctStyle {quanjiao} { optimize-kerning = true } }
@@ -5565,7 +5583,7 @@ To produce the documentation run the original source files ending with
 % 待传入 \pkg{biblatex} 的额外宏包选项，以列表形式储存。
 % 更为常见的参考文献样式设置已由 \opt{bib/style} 提供，
 % 两者中后传入的设置会覆盖已有的设定。本设置项等效于在导言区使用
-% |\PassoptionToPackage{|\meta{key}|=|\meta{value}|}{biblatex}| 命令。
+% |\PassoptionsToPackage{|\meta{key}|=|\meta{value}|}{biblatex}| 命令。
 %    \begin{macrocode}
     option              .code:n =
       {
@@ -5732,25 +5750,37 @@ To produce the documentation run the original source files ending with
   {
 %    \end{macrocode}
 % \begin{macro}{footnote/style}
-  % \changes{v1.1}{2022/10/16}{将 \opt{pifont} 选项修改为 \pkg{circled}。}
-  % 脚注编号的样式。
+% \changes{v1.1}{2022/10/16}{增加 \opt{circled} 和 \opt{circled*} 选项。}
+% 脚注编号的样式。
 %    \begin{macrocode}
-    style .choices:nn = { plain, circled, circled* }
+    style .choices:nn = { plain, pifont, circled, circled* }
       {
-        \int_case:nnTF { \l_keys_choice_int }
+        \int_case:nnF { \l_keys_choice_int }
           {
 %    \end{macrocode}
-% \opt{circled} 类型，带星号的版本为阴文。
+% \opt{pifont} 类型，用作对旧发行版的兼容选项。
 %    \begin{macrocode}
-            { 2 } { \cs_set:Npn \@@_fn_number:N
-                      { \@@_fn_number_circled:NV \c_false_bool } }
-            { 3 } { \cs_set:Npn \@@_fn_number:N
-                      { \@@_fn_number_circled:NV \c_true_bool  } }
-          }
+            { 2 }
+              {
+                \RequirePackage { pifont }
+                \cs_set_eq:NN \@@_fn_number:N \@@_fn_number_pifont:N
+              }
 %    \end{macrocode}
-% 若使用 \opt{circled} 类型，则需引入 \pkg{circledtext} 宏包。
+% \opt{circled} 类型，带星号的版本为阴文，需引入 \pkg{circledtext} 宏包。
 %    \begin{macrocode}
-          { \RequirePackage { circledtext } }
+            { 3 }
+              {
+                \RequirePackage { circledtext }
+                \cs_set:Npn \@@_fn_number:N
+                  { \@@_fn_number_circled:NV \c_false_bool }
+              }
+            { 4 }
+              {
+                \RequirePackage { circledtext }
+                \cs_set:Npn \@@_fn_number:N
+                  { \@@_fn_number_circled:NV \c_true_bool }
+              }
+          }
 %    \end{macrocode}
 % \opt{plain} 或未知类型直接使用计数器的值。
 %    \begin{macrocode}
@@ -5775,6 +5805,13 @@ To produce the documentation run the original source files ending with
     hang          .bool_gset:N = \g_@@_fn_hang_bool,
     hang            .initial:n = true
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_fn_number_pifont:N}
+% \opt{pifont} 选项提供的带圈数字。
+%    \begin{macrocode}
+\cs_new:Npn \@@_fn_number_pifont:N #1 { \ding { \int_eval:n { 171 + #1 } } }
 %    \end{macrocode}
 % \end{macro}
 %
