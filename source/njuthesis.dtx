@@ -4086,7 +4086,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_keys_set:nn}
 % \changes{v1.1}{2022/09/26}{使用 \cs{keys_set_filter:nnn} 重构盲审模式。}
-% 在开启盲审模式时，屏蔽被编入 \opt{annoymous} 分组的键值对输入。
+% 在开启盲审模式时，屏蔽被编入 \opt{anonymous} 分组的键值对输入。
 %    \begin{macrocode}
 \bool_if:NTF \g_@@_opt_anon_bool
   {
@@ -4570,6 +4570,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     email               .tl_set:N = \g_@@_info_email_tl
   }
+%    \end{macrocode}
+%
+% 将指定信息项归入 \opt{anonymous} 组，以在盲审模式下选择性屏蔽。
+%    \begin{macrocode}
 \clist_map_inline:Nn \c_@@_name_anon_clist
   { \keys_define:nn { nju / info } { #1   .groups:n = { anonymous } } }
 \clist_map_inline:Nn \c_@@_name_anon_en_clist
@@ -4578,6 +4582,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
+% \changes{v1.1}{2022/11/04}{修复研究生模板封面的导师信息居中问题。}
 % 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，
 % 应当位于载入文档类之后。
 %    \begin{macrocode}
@@ -4586,17 +4591,18 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
-    \clist_map_inline:nn
-      { \g_@@_info_supv_clist, \g_@@_info_supvii_clist }
+    \tl_set:Nx \g_@@_info_supvfull_tl
+      { \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: } }
+    \clist_if_empty:NF \g_@@_info_supvii_clist
       {
         \tl_gput_right:Nx \g_@@_info_supvfull_tl
-          { \clist_use:Nn #1 { \@@_hskip: } \@@_quad: }
+          { \@@_quad: \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: } }
       }
-    \tl_gput_right:Nn \g_@@_info_supvfull_tl { \tex_unskip:D }
-    \tl_set:Nn \g_@@_info_supvfull_en_tl
+    \tl_set_eq:NN \g_@@_info_supvfull_en_tl \g_@@_info_supv_en_tl
+    \tl_if_empty:NF \g_@@_info_supvii_en_tl
       {
-        \g_@@_info_supv_en_tl \@@_quad:
-        \g_@@_info_supvii_en_tl \tex_unskip:D
+        \tl_gput_right:Nx \g_@@_info_supvfull_en_tl
+          { \@@_quad: \g_@@_info_supvii_en_tl }
       }
   }
 %</class>

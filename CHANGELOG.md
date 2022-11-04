@@ -6,6 +6,12 @@
 
 ## [未发布]
 
+### 修复
+
+- 修复研究生封面上导师信息的居中问题 - [#165]
+
+## [1.1.0] - 2022-10-23
+
 ### 新增
 
 - 盲审模式下不显示致谢
@@ -415,8 +421,11 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.0.0...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.1.0...HEAD
+
+[1.1.0]: https://github.com/nju-lug/NJUThesis/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/nju-lug/NJUThesis/compare/v0.20.0...v1.0.0
+
 [0.20.0]: https://github.com/nju-lug/NJUThesis/compare/v0.19.0...v0.20.0
 [0.19.0]: https://github.com/nju-lug/NJUThesis/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/nju-lug/NJUThesis/compare/v0.17.0...v0.18.0
@@ -470,6 +479,7 @@
 [#148]: https://github.com/nju-lug/NJUThesis/issues/148
 [#150]: https://github.com/nju-lug/NJUThesis/discussions/150
 [#155]: https://github.com/nju-lug/NJUThesis/discussions/155
+[#165]: https://github.com/nju-lug/NJUThesis/discussions/165
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
