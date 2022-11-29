@@ -2447,7 +2447,7 @@ To produce the documentation run the original source files ending with
 %
 % 以下宏包可以在文档类选项中禁用：
 % \begin{itemize}
-%   \item \pkg{amsthm} 和 \pkg{create-theorem}，提供定理类环境支持。
+%   \item \pkg{ntheorem}，提供定理类环境支持。
 %   \item \pkg{unicode-math}，负责处理 Unicode 编码的 OpenType 数学字体。
 %   \item \pkg{footmisc}，处理脚注。
 %   \item \pkg{enumitem}，调整列表环境。
@@ -3135,11 +3135,16 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_box_multiline:NNNN #1#2#3#4
   {
     \int_set:Nn #1 { 1 }
-    \int_set:Nn #2 { \clist_count:N #3 }
-    \int_compare:nF { #2 > 4 } { \int_set:Nn #2 { 4 } }
+    \int_set:Nn #2 { \int_max:nn { \clist_count:N #3 } { 4 } }
     \int_do_until:nn { #1 > #2 }
       {
         \clist_pop:NN #3 \l_@@_tmpa_tl
+%    \end{macrocode}
+% \changes{v1.1}{2022/11/29}{修复空返回值在国家图书馆封面引发的死循环。}
+% 防止空的返回值引发死循环。
+%    \begin{macrocode}
+        \quark_if_no_value:NT \l__nju_tmpa_tl
+          { \tl_set_eq:NN \l_@@_tmpa_tl \c_empty_tl }
         \@@_box_ulined:NN #4 \l_@@_tmpa_tl \tex_par:D
         \int_incr:N #1
       }
@@ -5811,7 +5816,16 @@ To produce the documentation run the original source files ending with
 % \changes{v1.1}{2022/10/16}{新增悬挂缩进选项。}
 % 是否悬挂缩进。
 %    \begin{macrocode}
-    hang          .bool_gset:N = \g_@@_fn_hang_bool,
+    hang             .choice:,
+    hang / true        .code:n =
+      {
+        \cs_set:Npn \@@_fn_hang:
+          {
+            \int_set:Nn \tex_hangafter:D { 1 }
+            \dim_set_eq:NN \tex_hangindent:D \c_@@_fnhang_dim
+          }
+      },
+    hang / false       .code:n = { \@@_cs_clear:N \@@_fn_hang: },
     hang            .initial:n = true
   }
 %    \end{macrocode}
@@ -5868,11 +5882,7 @@ To produce the documentation run the original source files ending with
         \mode_leave_vertical:
         \hbox_to_wd:nn { \c_@@_fnhang_dim } { \@thefnmark \tex_hfil:D }
         \tex_penalty:D \@M
-        \bool_if:NT \g_@@_fn_hang_bool
-          {
-            \int_set:Nn \tex_hangafter:D { 1 }
-            \dim_set_eq:NN \tex_hangindent:D \c_@@_fnhang_dim
-          }
+        \@@_fn_hang:
         #1
       }
   }
