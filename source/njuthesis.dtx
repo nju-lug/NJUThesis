@@ -119,7 +119,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.1 2022-12-03 18:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.1 2022-12-04 00:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -355,7 +355,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.1.1 \quad 2022-12-03}
+% \date{v1.1.1 \quad 2022-12-04}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -444,51 +444,51 @@ To produce the documentation run the original source files ending with
 % 封面、摘要的设计参考了部分既有报告。
 %
 %
-% \subsection{开始之前}
-% \label{subsec:first-things-first}
+% ^^A \subsection{开始之前}
+% ^^A \label{subsec:first-things-first}
 %
-% 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \TeX{}
-% 排版系统。话不多说，请先按部就班体验一遍下述的工作流程：
+% ^^A 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \TeX{}
+% ^^A 排版系统。话不多说，请先按部就班体验一遍下述的工作流程：
 %
-% \bigskip
-% \fcolorbox{olgreen}{gray!5}{\parbox{\textwidth-5em}{%
-% \hspace{2em}\begin{minipage}[c]{10cm}
-% \begin{enumerate}
-%   \item 访问 \url{https://tex.nju.edu.cn}
-%   \item 点击右上角~\olbutton{注册}~按钮，
-%        用\href{https://itsc.nju.edu.cn/1b/ce/c21586a334798/page.htm}
-%        {南大邮箱}注册账号
-%   \item 登录您的账号
-%   \item 点击左上角~\olbutton{创建新项目}~按钮，选择~\olbutton{论文模板}
-%   \item 随意取名，点击~\olbutton{创建}~按钮
-% \end{enumerate}
-% \end{minipage}}}
+% ^^A \bigskip
+% ^^A \fcolorbox{olgreen}{gray!5}{\parbox{\textwidth-5em}{%
+% ^^A \hspace{2em}\begin{minipage}[c]{10cm}
+% ^^A \begin{enumerate}
+% ^^A   \item 访问 \url{https://tex.nju.edu.cn}
+% ^^A   \item 点击右上角~\olbutton{注册}~按钮，
+% ^^A        用\href{https://itsc.nju.edu.cn/1b/ce/c21586a334798/page.htm}
+% ^^A        {南大邮箱}注册账号
+% ^^A   \item 登录您的账号
+% ^^A   \item 点击左上角~\olbutton{创建新项目}~按钮，选择~\olbutton{论文模板}
+% ^^A   \item 随意取名，点击~\olbutton{创建}~按钮
+% ^^A \end{enumerate}
+% ^^A \end{minipage}}}
 %
-% \bigskip
-% 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。
-% 如果它的效果令您满意，不妨以本模板为基础开始写作。
+% ^^A \bigskip
+% ^^A 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。
+% ^^A 如果它的效果令您满意，不妨以本模板为基础开始写作。
 %
-% \subparagraph{我一定要体验上述流程吗？}
-% 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一
-% 条路走到底}的教程，而不是\emph{长篇累牍的精细介绍}，其核心论据在于：
-% 现代人类总体上需要快速取得成就感，而且大部分可能用到本模板的同学不
-% 会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，
-% 尤其是在您可能早已掌握基本用法的情况下。但，不论如何，这番操作总会
-% 使您预览到 \cls{njuthesis} 论文模板的实际样式。
+% ^^A \subparagraph{我一定要体验上述流程吗？}
+% ^^A 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一
+% ^^A 条路走到底}的教程，而不是\emph{长篇累牍的精细介绍}，其核心论据在于：
+% ^^A 现代人类总体上需要快速取得成就感，而且大部分可能用到本模板的同学不
+% ^^A 会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，
+% ^^A 尤其是在您可能早已掌握基本用法的情况下。但，不论如何，这番操作总会
+% ^^A 使您预览到 \cls{njuthesis} 论文模板的实际样式。
 %
-% \subparagraph{我并没有见到理想的结果。}
-% 具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果
-% \emph{不能访问前文提到的在线编译网站}，请考虑检查网络连接，依次咨询
-% 本校\href{https://itsc.nju.edu.cn}{信息化管理建设服务中心}和该网站
-% 的维护者\href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请
-% 点击左上角的菜单按钮，查看编译器是否显示为 |XeLaTeX|；
-% 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个极其
-% 有益的结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉
-% \TeX{} 排版软件使用方法所需的可观时间。
+% ^^A \subparagraph{我并没有见到理想的结果。}
+% ^^A 具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果
+% ^^A \emph{不能访问前文提到的在线编译网站}，请考虑检查网络连接，依次咨询
+% ^^A 本校\href{https://itsc.nju.edu.cn}{信息化管理建设服务中心}和该网站
+% ^^A 的维护者\href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请
+% ^^A 点击左上角的菜单按钮，查看编译器是否显示为 |XeLaTeX|；
+% ^^A 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个极其
+% ^^A 有益的结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉
+% ^^A \TeX{} 排版软件使用方法所需的可观时间。
 %
-% \subparagraph{但我依然对 \LaTeX 一无所知！}
-% 这意味着您真的得花些时间在\emph{长篇累牍的精细介绍}上。
-% 如果您已经下定决心，请接着向后阅读，有需要时善用搜索引擎。
+% ^^A \subparagraph{但我依然对 \LaTeX 一无所知！}
+% ^^A 这意味着您真的得花些时间在\emph{长篇累牍的精细介绍}上。
+% ^^A 如果您已经下定决心，请接着向后阅读，有需要时善用搜索引擎。
 %
 %
 % \subsection{历史沿革}
@@ -868,37 +868,37 @@ To produce the documentation run the original source files ending with
 % {\color{red}|[!]|} 请注意，在线编辑器不一定提供良好的文件恢复和版本管理机制。
 % 请谨慎备份您的心血结晶。
 %
-% \subsubsection{南大 \TeX 平台简介}
-% \changes{v0.2}{2021/09/07}{添加对南大 \TeX 的支持。}
+% ^^A \subsubsection{南大 \TeX 平台简介}
+% ^^A \changes{v0.2}{2021/09/07}{添加对南大 \TeX 的支持。}
 %
-% \href{https://tex.nju.edu.cn}{南大 \TeX} 基于开源的 Overleaf 社区版平台构建
-% \footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到
-% 一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正
-% 式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的
-% \LaTeX 在线编辑器，首次使用需凭学校邮箱自助注册账号。
+% ^^A \href{https://tex.nju.edu.cn}{南大 \TeX} 基于开源的 Overleaf 社区版平台构建
+% ^^A \footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到
+% ^^A 一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正
+% ^^A 式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的
+% ^^A \LaTeX 在线编辑器，首次使用需凭学校邮箱自助注册账号。
 %
-% {\color{red}|[!]|} 在 2022 年 5 月的运行中，该网站出现了多次崩溃事件，
-% 初步判断原因是由社区版并没有为高并发数做优化引发的。
-% 高峰时期，仍然建议在本地部署 \TeX 发行版。
+% ^^A {\color{red}|[!]|} 在 2022 年 5 月的运行中，该网站出现了多次崩溃事件，
+% ^^A 初步判断原因是由社区版并没有为高并发数做优化引发的。
+% ^^A 高峰时期，仍然建议在本地部署 \TeX 发行版。
 %
-% \subsubsection{操作步骤}
+% ^^A \subsubsection{操作步骤}
 %
-% 本说明手册开头的 \ref{subsec:first-things-first} 即呈现了网站内嵌的
-% \cls{njuthesis} 模板的使用方法。由于南大 \TeX 网站已预装 \cls{njuthesis}，
-% 可以直接编写正文，无需 \file{.cls} 等格式文件。
-% 如果有其他要求，也可以按如下步骤手动上传包含模板的压缩包。
+% ^^A 本说明手册开头的 \ref{subsec:first-things-first} 即呈现了网站内嵌的
+% ^^A \cls{njuthesis} 模板的使用方法。由于南大 \TeX 网站已预装 \cls{njuthesis}，
+% ^^A 可以直接编写正文，无需 \file{.cls} 等格式文件。
+% ^^A 如果有其他要求，也可以按如下步骤手动上传包含模板的压缩包。
 %
-% \begin{enumerate}
-%   \item 访问\href{https://tex.nju.edu.cn}{南大 \TeX 网站}，
-%         点击界面右上方“注册”按钮，使用\emph{南京大学邮箱}注册账号并登录
-%   \item 新建空白项目，或者上传 \ref{subsubsec:on-the-fly-installation} 节得到的压缩文件。
-%   \item 在项目页面左上角的“菜单”中，确认编译器为 |XeLaTeX| 或者 |LuaLaTeX|
-%   \item 仿照 \file{njuthesis-sample.tex} 编写论文
-%   \item 点击“重新编译”按钮进行编译和预览
-% \end{enumerate}
+% ^^A \begin{enumerate}
+% ^^A   \item 访问\href{https://tex.nju.edu.cn}{南大 \TeX 网站}，
+% ^^A         点击界面右上方“注册”按钮，使用\emph{南京大学邮箱}注册账号并登录
+% ^^A   \item 新建空白项目，或者上传 \ref{subsubsec:on-the-fly-installation} 节得到的压缩文件。
+% ^^A   \item 在项目页面左上角的“菜单”中，确认编译器为 |XeLaTeX| 或者 |LuaLaTeX|
+% ^^A   \item 仿照 \file{njuthesis-sample.tex} 编写论文
+% ^^A   \item 点击“重新编译”按钮进行编译和预览
+% ^^A \end{enumerate}
 %
 %
-% \subsubsection{其他平台}
+% ^^A \subsubsection{其他平台}
 %
 % \subparagraph{Overleaf}
 % \changes{v0.12}{2021/12/07}{更新了对 Overleaf 的支持情况。}
