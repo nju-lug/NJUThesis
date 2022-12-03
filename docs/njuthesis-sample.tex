@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% njuthesis 示例模板 v1.1.0 2022-10-23
+% njuthesis 示例模板 v1.1.1 2022-12-04
 % https://github.com/nju-lug/NJUThesis
 %
 % 贡献者
@@ -45,7 +45,7 @@
     %   字体设置，不填写则自动调用系统预装字体
     % latin-font = win|mac|gyre|none,
     % cjk-font   = win|mac|fandol|founder|noto|source|none,
-    % math-font  = cambria|newcm|xits,   % 完整列表见手册
+    % math-font  = cambria|newcm|xits, % 完整列表见手册
   ]{njuthesis}
 
 % 模板选项设置，包括个人信息、外观样式等
@@ -55,7 +55,7 @@
 % 自行载入所需宏包
 % \usepackage{subcaption} % 嵌套小幅图像，比 subfig 和 subfigure 更新更好
 % \usepackage{siunitx} % 标准单位符号
-% \usepackage[version=4]{mhchem} % 物理百宝箱
+% \usepackage{physics} % 物理百宝箱
 % \usepackage[version=4]{mhchem} % 绘制分子式
 % \usepackage{listings} % 展示代码
 % \usepackage{algorithm,algorithmic} % 展示算法伪代码
@@ -80,11 +80,11 @@
 % \raggedbottom
 
 \begin{abstract}
-    中文摘要
+  中文摘要
 \end{abstract}
 
 \begin{abstract*}
-    English abstract
+  English abstract
 \end{abstract*}
 
 % 生成目录
@@ -117,9 +117,10 @@
 
 \chapter{引言}
 
-\section{tDMRG}
+\section{量子计算}
 
-矩阵乘积态也被用于含时薛定谔方程的求解，形成了含时密度矩阵重正化群方法\cite{schollwock2011}。
+John Preskill 认为我们现在处于“含噪声的中型量子时代”。\cite{preskill2018}
+量子位的不稳定性和有限的量子比特数量限制了量子计算机的复杂度和纠错能力。
 
 %---------------------------------------------------------------------
 %	参考文献
@@ -133,7 +134,7 @@
 %---------------------------------------------------------------------
 
 \begin{acknowledgement}
-    感谢 \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{LUG@NJU}。
+  感谢 \href{https://git.nju.edu.cn/nju-lug/lug-introduction}{LUG@NJU}。
 \end{acknowledgement}
 
 %---------------------------------------------------------------------

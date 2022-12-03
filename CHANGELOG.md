@@ -6,6 +6,21 @@
 
 ## [未发布]
 
+## [1.1.1] - 2022-12-04
+
+### 修复
+
+- 修复研究生封面上导师信息的居中问题 - [#165]
+- 修复 macOS 下 Times New Roman 字体缺失字型的问题 - [#169]
+  - 感谢 [@AlphaZTX]！
+- 修复国家图书馆封面的编译死循环问题 - [#170]
+
+### 杂项
+
+- 手册中暂时撤去关于南大 TeX 网站的内容
+
+## [1.1.0] - 2022-10-23
+
 ### 新增
 
 - 盲审模式下不显示致谢
@@ -415,8 +430,12 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.0.0...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.1.1...HEAD
+
+[1.1.1]: https://github.com/nju-lug/NJUThesis/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/nju-lug/NJUThesis/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/nju-lug/NJUThesis/compare/v0.20.0...v1.0.0
+
 [0.20.0]: https://github.com/nju-lug/NJUThesis/compare/v0.19.0...v0.20.0
 [0.19.0]: https://github.com/nju-lug/NJUThesis/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/nju-lug/NJUThesis/compare/v0.17.0...v0.18.0
@@ -470,6 +489,9 @@
 [#148]: https://github.com/nju-lug/NJUThesis/issues/148
 [#150]: https://github.com/nju-lug/NJUThesis/discussions/150
 [#155]: https://github.com/nju-lug/NJUThesis/discussions/155
+[#165]: https://github.com/nju-lug/NJUThesis/discussions/165
+[#169]: https://github.com/nju-lug/NJUThesis/issues/169
+[#170]: https://github.com/nju-lug/NJUThesis/issues/170
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
@@ -480,3 +502,4 @@
 [@hushidong]: https://github.com/hushidong
 [@zhoujian9410]: https://github.com/zhoujian9410
 [@note286]: https://github.com/note286
+[@AlphaZTX]: https://github.com/AlphaZTX

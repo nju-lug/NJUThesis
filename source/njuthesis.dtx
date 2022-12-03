@@ -119,7 +119,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.0 2022-10-23 12:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.1 2022-12-04 00:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -355,7 +355,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.1.0 \quad 2022-10-23}
+% \date{v1.1.1 \quad 2022-12-04}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -444,51 +444,51 @@ To produce the documentation run the original source files ending with
 % 封面、摘要的设计参考了部分既有报告。
 %
 %
-% \subsection{开始之前}
-% \label{subsec:first-things-first}
+% ^^A \subsection{开始之前}
+% ^^A \label{subsec:first-things-first}
 %
-% 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \TeX{}
-% 排版系统。话不多说，请先按部就班体验一遍下述的工作流程：
+% ^^A 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \TeX{}
+% ^^A 排版系统。话不多说，请先按部就班体验一遍下述的工作流程：
 %
-% \bigskip
-% \fcolorbox{olgreen}{gray!5}{\parbox{\textwidth-5em}{%
-% \hspace{2em}\begin{minipage}[c]{10cm}
-% \begin{enumerate}
-%   \item 访问 \url{https://tex.nju.edu.cn}
-%   \item 点击右上角~\olbutton{注册}~按钮，
-%        用\href{https://itsc.nju.edu.cn/1b/ce/c21586a334798/page.htm}
-%        {南大邮箱}注册账号
-%   \item 登录您的账号
-%   \item 点击左上角~\olbutton{创建新项目}~按钮，选择~\olbutton{论文模板}
-%   \item 随意取名，点击~\olbutton{创建}~按钮
-% \end{enumerate}
-% \end{minipage}}}
+% ^^A \bigskip
+% ^^A \fcolorbox{olgreen}{gray!5}{\parbox{\textwidth-5em}{%
+% ^^A \hspace{2em}\begin{minipage}[c]{10cm}
+% ^^A \begin{enumerate}
+% ^^A   \item 访问 \url{https://tex.nju.edu.cn}
+% ^^A   \item 点击右上角~\olbutton{注册}~按钮，
+% ^^A        用\href{https://itsc.nju.edu.cn/1b/ce/c21586a334798/page.htm}
+% ^^A        {南大邮箱}注册账号
+% ^^A   \item 登录您的账号
+% ^^A   \item 点击左上角~\olbutton{创建新项目}~按钮，选择~\olbutton{论文模板}
+% ^^A   \item 随意取名，点击~\olbutton{创建}~按钮
+% ^^A \end{enumerate}
+% ^^A \end{minipage}}}
 %
-% \bigskip
-% 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。
-% 如果它的效果令您满意，不妨以本模板为基础开始写作。
+% ^^A \bigskip
+% ^^A 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。
+% ^^A 如果它的效果令您满意，不妨以本模板为基础开始写作。
 %
-% \subparagraph{我一定要体验上述流程吗？}
-% 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一
-% 条路走到底}的教程，而不是\emph{长篇累牍的精细介绍}，其核心论据在于：
-% 现代人类总体上需要快速取得成就感，而且大部分可能用到本模板的同学不
-% 会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，
-% 尤其是在您可能早已掌握基本用法的情况下。但，不论如何，这番操作总会
-% 使您预览到 \cls{njuthesis} 论文模板的实际样式。
+% ^^A \subparagraph{我一定要体验上述流程吗？}
+% ^^A 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一
+% ^^A 条路走到底}的教程，而不是\emph{长篇累牍的精细介绍}，其核心论据在于：
+% ^^A 现代人类总体上需要快速取得成就感，而且大部分可能用到本模板的同学不
+% ^^A 会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，
+% ^^A 尤其是在您可能早已掌握基本用法的情况下。但，不论如何，这番操作总会
+% ^^A 使您预览到 \cls{njuthesis} 论文模板的实际样式。
 %
-% \subparagraph{我并没有见到理想的结果。}
-% 具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果
-% \emph{不能访问前文提到的在线编译网站}，请考虑检查网络连接，依次咨询
-% 本校\href{https://itsc.nju.edu.cn}{信息化管理建设服务中心}和该网站
-% 的维护者\href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请
-% 点击左上角的菜单按钮，查看编译器是否显示为 |XeLaTeX|；
-% 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个极其
-% 有益的结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉
-% \TeX{} 排版软件使用方法所需的可观时间。
+% ^^A \subparagraph{我并没有见到理想的结果。}
+% ^^A 具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果
+% ^^A \emph{不能访问前文提到的在线编译网站}，请考虑检查网络连接，依次咨询
+% ^^A 本校\href{https://itsc.nju.edu.cn}{信息化管理建设服务中心}和该网站
+% ^^A 的维护者\href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请
+% ^^A 点击左上角的菜单按钮，查看编译器是否显示为 |XeLaTeX|；
+% ^^A 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个极其
+% ^^A 有益的结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉
+% ^^A \TeX{} 排版软件使用方法所需的可观时间。
 %
-% \subparagraph{但我依然对 \LaTeX 一无所知！}
-% 这意味着您真的得花些时间在\emph{长篇累牍的精细介绍}上。
-% 如果您已经下定决心，请接着向后阅读，有需要时善用搜索引擎。
+% ^^A \subparagraph{但我依然对 \LaTeX 一无所知！}
+% ^^A 这意味着您真的得花些时间在\emph{长篇累牍的精细介绍}上。
+% ^^A 如果您已经下定决心，请接着向后阅读，有需要时善用搜索引擎。
 %
 %
 % \subsection{历史沿革}
@@ -868,37 +868,37 @@ To produce the documentation run the original source files ending with
 % {\color{red}|[!]|} 请注意，在线编辑器不一定提供良好的文件恢复和版本管理机制。
 % 请谨慎备份您的心血结晶。
 %
-% \subsubsection{南大 \TeX 平台简介}
-% \changes{v0.2}{2021/09/07}{添加对南大 \TeX 的支持。}
+% ^^A \subsubsection{南大 \TeX 平台简介}
+% ^^A \changes{v0.2}{2021/09/07}{添加对南大 \TeX 的支持。}
 %
-% \href{https://tex.nju.edu.cn}{南大 \TeX} 基于开源的 Overleaf 社区版平台构建
-% \footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到
-% 一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正
-% 式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的
-% \LaTeX 在线编辑器，首次使用需凭学校邮箱自助注册账号。
+% ^^A \href{https://tex.nju.edu.cn}{南大 \TeX} 基于开源的 Overleaf 社区版平台构建
+% ^^A \footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到
+% ^^A 一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正
+% ^^A 式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的
+% ^^A \LaTeX 在线编辑器，首次使用需凭学校邮箱自助注册账号。
 %
-% {\color{red}|[!]|} 在 2022 年 5 月的运行中，该网站出现了多次崩溃事件，
-% 初步判断原因是由社区版并没有为高并发数做优化引发的。
-% 高峰时期，仍然建议在本地部署 \TeX 发行版。
+% ^^A {\color{red}|[!]|} 在 2022 年 5 月的运行中，该网站出现了多次崩溃事件，
+% ^^A 初步判断原因是由社区版并没有为高并发数做优化引发的。
+% ^^A 高峰时期，仍然建议在本地部署 \TeX 发行版。
 %
-% \subsubsection{操作步骤}
+% ^^A \subsubsection{操作步骤}
 %
-% 本说明手册开头的 \ref{subsec:first-things-first} 即呈现了网站内嵌的
-% \cls{njuthesis} 模板的使用方法。由于南大 \TeX 网站已预装 \cls{njuthesis}，
-% 可以直接编写正文，无需 \file{.cls} 等格式文件。
-% 如果有其他要求，也可以按如下步骤手动上传包含模板的压缩包。
+% ^^A 本说明手册开头的 \ref{subsec:first-things-first} 即呈现了网站内嵌的
+% ^^A \cls{njuthesis} 模板的使用方法。由于南大 \TeX 网站已预装 \cls{njuthesis}，
+% ^^A 可以直接编写正文，无需 \file{.cls} 等格式文件。
+% ^^A 如果有其他要求，也可以按如下步骤手动上传包含模板的压缩包。
 %
-% \begin{enumerate}
-%   \item 访问\href{https://tex.nju.edu.cn}{南大 \TeX 网站}，
-%         点击界面右上方“注册”按钮，使用\emph{南京大学邮箱}注册账号并登录
-%   \item 新建空白项目，或者上传 \ref{subsubsec:on-the-fly-installation} 节得到的压缩文件。
-%   \item 在项目页面左上角的“菜单”中，确认编译器为 |XeLaTeX| 或者 |LuaLaTeX|
-%   \item 仿照 \file{njuthesis-sample.tex} 编写论文
-%   \item 点击“重新编译”按钮进行编译和预览
-% \end{enumerate}
+% ^^A \begin{enumerate}
+% ^^A   \item 访问\href{https://tex.nju.edu.cn}{南大 \TeX 网站}，
+% ^^A         点击界面右上方“注册”按钮，使用\emph{南京大学邮箱}注册账号并登录
+% ^^A   \item 新建空白项目，或者上传 \ref{subsubsec:on-the-fly-installation} 节得到的压缩文件。
+% ^^A   \item 在项目页面左上角的“菜单”中，确认编译器为 |XeLaTeX| 或者 |LuaLaTeX|
+% ^^A   \item 仿照 \file{njuthesis-sample.tex} 编写论文
+% ^^A   \item 点击“重新编译”按钮进行编译和预览
+% ^^A \end{enumerate}
 %
 %
-% \subsubsection{其他平台}
+% ^^A \subsubsection{其他平台}
 %
 % \subparagraph{Overleaf}
 % \changes{v0.12}{2021/12/07}{更新了对 Overleaf 的支持情况。}
@@ -1225,6 +1225,19 @@ To produce the documentation run the original source files ending with
 %   \end{talltblr}
 % \end{table}
 %
+% macOS 用户需要额外注意的是，此系统内置的 Times New Roman 并没有 smcp
+% 这一特性，所以 \tn{textsc} 命令无法产生正确的小型大写字母字型，导致
+% 研究生模板英文封面的部分内容不能正确显示。另外，macOS 中的 Times 字体
+% 也不包含 smcp 特性。
+% 相应的解决办法是拷贝一份 Windows 预装的 Times New Roman
+% \footnote{Times New Roman（或 TimesNewRomanPSMT）在 Windows 和 macOS
+% 下的区别在于版本。根据我们的测试，Windows 10 下该字体的版本为 7.00，
+% 而 macOS Monterey 下该字体的版本为 5.01.3x。这显然是苹果的问题。}，
+% 或者使用 \TeX{} Live 内置的 \TeX{} Gyre Termes 字体
+% \footnote{\TeX{} Gyre Termes 可以视作 Times New Roman 的重制版，两者的
+% 视觉感受是一致的。}，这两个字体都具备 smcp 特性。
+% 本模板在检测到 Times New Roman 不包含 smcp 特性时，会抛出警告并使用
+% \TeX{} Gyre Termes 字体进行替换。
 %
 % \paragraph{数学}
 %
@@ -2447,7 +2460,7 @@ To produce the documentation run the original source files ending with
 %
 % 以下宏包可以在文档类选项中禁用：
 % \begin{itemize}
-%   \item \pkg{amsthm} 和 \pkg{create-theorem}，提供定理类环境支持。
+%   \item \pkg{ntheorem}，提供定理类环境支持。
 %   \item \pkg{unicode-math}，负责处理 Unicode 编码的 OpenType 数学字体。
 %   \item \pkg{footmisc}，处理脚注。
 %   \item \pkg{enumitem}，调整列表环境。
@@ -3135,11 +3148,16 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_box_multiline:NNNN #1#2#3#4
   {
     \int_set:Nn #1 { 1 }
-    \int_set:Nn #2 { \clist_count:N #3 }
-    \int_compare:nF { #2 > 4 } { \int_set:Nn #2 { 4 } }
+    \int_set:Nn #2 { \int_max:nn { \clist_count:N #3 } { 4 } }
     \int_do_until:nn { #1 > #2 }
       {
         \clist_pop:NN #3 \l_@@_tmpa_tl
+%    \end{macrocode}
+% \changes{v1.1}{2022/11/29}{修复空返回值在国家图书馆封面引发的死循环。}
+% 防止空的返回值引发死循环。
+%    \begin{macrocode}
+        \quark_if_no_value:NT \l__nju_tmpa_tl
+          { \tl_set_eq:NN \l_@@_tmpa_tl \c_empty_tl }
         \@@_box_ulined:NN #4 \l_@@_tmpa_tl \tex_par:D
         \int_incr:N #1
       }
@@ -3343,18 +3361,15 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_msg:nn}
+% 简化提示信息的创建。
+%    \begin{macrocode}
+\cs_new:Npn \@@_msg:nn { \msg_new:nnn { njuthesis } }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{封面相关}
 % \changes{v0.16}{2022/03/10}{将封面和摘要内部函数定义移动到前部。}
-%
-% 定义关于标题的报错信息。
-%    \begin{macrocode}
-\msg_new:nnn { njuthesis } { missing-title }
-  {
-    The~ title~ should~ not~ be~ left~ blank.\\
-    Please~ check~ whether~ you~ have~ fill~ in~
-    both~ Chinese~ and~ English~ titles.
-  }
-%    \end{macrocode}
 %
 % \begin{macro}{\@@_loop_until:nnn}
 % 等效于 plain \TeX 的 \tn{loop} 循环，原始结构为\\
@@ -3578,19 +3593,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 定义关于标题的报错信息。
-%    \begin{macrocode}
-\msg_new:nnn { njuthesis } { abs-title-too-long }
-  {
-    Your~ title~ is~ too~ long~ to~ fit~ in~ two~ lines.\\
-    I~ have~ drawn~ additional~ lines~ to~ contain~ it,~
-    which~ will~ probably~ make~ your~ abstract~ page~
-    look~ slightly~ different~ from~ the~ standard.\\
-    You~ can~ use~ the~ "abstract/title-style"~ key~
-    to~ disable~ this~ message.
-  }
-%    \end{macrocode}
-%
 % \begin{macro}{\@@_uline_list:NNn,\@@_uline_list:NNx}
 % \changes{v0.16}{2022/03/25}{使用原生断行算法处理摘要页标题。}
 % 用于研究生摘要页面的多行标题。
@@ -3811,6 +3813,75 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 %
+% \subsection{提示信息}
+% \changes{v1.1}{2022/12/03}{整理提示信息。}
+%
+% 本节集中定义模板中的错误信息。
+%    \begin{macrocode}
+\@@_msg:nn { abs-title-too-long }
+  {
+    Your~ title~ seems~ too~ long~ to~ fit~ in~ two~ lines.\\
+    I~ have~ drawn~ additional~ lines~ to~ contain~ it,~
+    which~ will~ probably~ make~ your~ abstract~ page~
+    look~ slightly~ different~ from~ the~ standard.~
+    You~ can~ use~ the~ "abstract/title-style"~ key~
+    to~ disable~ this~ message.
+  }
+\@@_msg:nn { empty-theorem-type }
+  {
+    Empty~ theorem~ list~ to~ define.\\
+    The~ key~ "theorem/type"~ should~ not~ be~ left~ empty.
+  }
+\@@_msg:nn { load-config  }
+  { I~ am~ loading~ config~ file~ "#1". }
+\@@_msg:nn { missing-image }
+  {
+    You~ have~ not~ selected~ local~ files~
+    for~ emblem~ and~ name~ images.\\
+    It~ seems~ that~ you~ haven't~ fill~ in~ both~
+    "image/nju-emblem"~ and~ "image/nju-name",~ therefore
+    I~ am~ using~ the~ package~ "njuvisual"~ instead,~
+    which~ may~ slow~ down~ the~ compilation.
+  }
+\@@_msg:nn { missing-ntheorem }
+  {
+    "ntheorem"~ package~ not~ detected.\\
+    The~ functionality~ of~ built-in~ theorem~ settings~
+    requires~ loading~ the~ class~ with~ "ntheorem"~ option~
+    set~ to~ "true".
+  }
+\@@_msg:nn { missing-title }
+  {
+    Thesis~ title~ should~ not~ be~ left~ blank.\\
+    Please~ check~ whether~ you~ have~ fill~ in~
+    both Chinese~ and~ English~ titles.
+  }
+\@@_msg:nn { no-small-caps }
+  {
+    I~ am~ using~ TeX~ Gyre~ Termes~ as~ default~ Roman~ font.\\
+    This~ is~ because~ the~ "Times~ New~ Roman"~ font~ in~ your~
+    system~ does~ not~ embed~ glyphs~ for~ small~ capitals.~
+    You~ can~ ignore~ this~ warning~ if~ you~ do~ not~ need~
+    \string\textsc.~ For~ more~ information,~
+    please~ refer~ to~ section~ 3.2.6~ of~ the~ documentation.
+  }
+\@@_msg:nn { package-too-old }
+  {
+    Package~ "#1"~ is~ too~ old.\\
+    The~ "njuthesis"~ class only~ supports~ "#1"~ with~
+    a~ version~ higher~ than~ v#2.~
+    Please~ update~ an~ up-to-date~ version~ of~ it~
+    using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
+  }
+\@@_msg:nn { package-conflict }
+  {
+    The~ "#2"~ package~ is~ incompatible~ with~ "#1".\\
+    I~ have~ loaded~ "#1"~ by~ default.~ Maybe~ You~ should~
+    refer~ to~ section~ 4~ of~ the~ documentation.
+  }
+%    \end{macrocode}
+%
+%
 % \subsection{模板选项}
 % \changes{v0.11}{2021/11/15}{进行了效率优化。}
 %
@@ -3824,7 +3895,7 @@ To produce the documentation run the original source files ending with
 % 学位，默认为学士。
 %    \begin{macrocode}
     type               .choices:nn = { bachelor, master, doctor, postdoc }
-      { \int_gset_eq:NN \g_@@_info_type_int   \l_keys_choice_int },
+      { \int_gset_eq:NN \g_@@_info_type_int \l_keys_choice_int },
     type               .initial:n  = bachelor,
 %    \end{macrocode}
 % \end{macro}
@@ -4086,7 +4157,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_keys_set:nn}
 % \changes{v1.1}{2022/09/26}{使用 \cs{keys_set_filter:nnn} 重构盲审模式。}
-% 在开启盲审模式时，屏蔽被编入 \opt{annoymous} 分组的键值对输入。
+% 在开启盲审模式时，屏蔽被编入 \opt{anonymous} 分组的键值对输入。
 %    \begin{macrocode}
 \bool_if:NTF \g_@@_opt_anon_bool
   {
@@ -4346,14 +4417,6 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_check_pkg_version:nnn}
 % 检查宏包版本是否过时。
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { package-too-old }
-  {
-    Package~ "#1"~ is~ too~ old.\\
-    The~ njuthesis~ class~ only~ supports~ "#1"~ with~
-    a~ version higher~ than~ v#2.\\
-    Please~ update~ an~ up-to-date~ version~ of~ it~
-    using~ your TeX~ package~ manager~ or~ from~ CTAN.
-  }
 \cs_new_protected:Npn \@@_check_pkg_version:nnn #1#2#3
   {
     \@ifpackagelater {#1} {#2}
@@ -4379,12 +4442,6 @@ To produce the documentation run the original source files ending with
 %   \item 产生冲突的宏包
 % \end{arguments}
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { package-conflict }
-  {
-    The~ "#2"~ package~ is~ incompatible~ with~ "#1".\\
-    I~ have~ loaded~ "#1"~ by~ default.~ Maybe~ You~ should~
-    refer~ to~ section~ 4~ of~ the~ "njuthesis"~ manual.
-  }
 \cs_new_protected:Npn \@@_check_pkg_conflict:nn #1#2
   {
     \ctex_at_begin_package:nn { #2 }
@@ -4430,8 +4487,6 @@ To produce the documentation run the original source files ending with
 %
 % 载入用户设置，可用于对模板做额外修改。
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { load-config }
-  { I~ am~ loading~ config~ file~ "#1". }
 \clist_map_inline:Nn \g_@@_config_clist
   {
     \msg_info:nnn { njuthesis } { load-config } { #1 }
@@ -4480,7 +4535,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{info/department,info/department*,info/major,info/major*,info/field,info/field*}
+% \begin{macro}{info/department,info/department*,
+%   info/major,info/major*,info/field,info/field*}
 % 院系、专业、方向。
 %    \begin{macrocode}
     department          .tl_set:N = \g_@@_info_dept_tl              ,
@@ -4570,6 +4626,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     email               .tl_set:N = \g_@@_info_email_tl
   }
+%    \end{macrocode}
+%
+% 将指定信息项归入 \opt{anonymous} 组，以在盲审模式下选择性屏蔽。
+%    \begin{macrocode}
 \clist_map_inline:Nn \c_@@_name_anon_clist
   { \keys_define:nn { nju / info } { #1   .groups:n = { anonymous } } }
 \clist_map_inline:Nn \c_@@_name_anon_en_clist
@@ -4578,6 +4638,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
+% \changes{v1.1}{2022/11/04}{修复研究生模板封面的导师信息居中问题。}
 % 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，
 % 应当位于载入文档类之后。
 %    \begin{macrocode}
@@ -4586,17 +4647,18 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
-    \clist_map_inline:nn
-      { \g_@@_info_supv_clist, \g_@@_info_supvii_clist }
+    \tl_set:Nx \g_@@_info_supvfull_tl
+      { \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: } }
+    \clist_if_empty:NF \g_@@_info_supvii_clist
       {
         \tl_gput_right:Nx \g_@@_info_supvfull_tl
-          { \clist_use:Nn #1 { \@@_hskip: } \@@_quad: }
+          { \@@_quad: \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: } }
       }
-    \tl_gput_right:Nn \g_@@_info_supvfull_tl { \tex_unskip:D }
-    \tl_set:Nn \g_@@_info_supvfull_en_tl
+    \tl_set_eq:NN \g_@@_info_supvfull_en_tl \g_@@_info_supv_en_tl
+    \tl_if_empty:NF \g_@@_info_supvii_en_tl
       {
-        \g_@@_info_supv_en_tl \@@_quad:
-        \g_@@_info_supvii_en_tl \tex_unskip:D
+        \tl_gput_right:Nx \g_@@_info_supvfull_en_tl
+          { \@@_quad: \g_@@_info_supvii_en_tl }
       }
   }
 %</class>
@@ -4698,36 +4760,18 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{操作系统检测}
 %
+% 调用 \pkg{ctex} 提供的操作系统检测。
+%    \begin{macrocode}
+\ctex_detect_platform:
+%    \end{macrocode}
 % 判断用户是否自定义了中英文字体。如果其中任意一种未被定义，
 % 则使用系统预装字体覆盖字体选项。
+% Windows 或 macOS 外的系统被判断为 Linux，一律使用自由字体。
 %    \begin{macrocode}
-\bool_lazy_or:nnT
-  { \tl_if_empty_p:N \g_@@_font_latin_tl }
-  { \tl_if_empty_p:N \g_@@_font_cjk_tl   }
-%    \end{macrocode}
-% 进行操作系统检测。
-% 检测 Windows 的命令由 \pkg{l3kernel} 提供，
-% 检测 macOS 的命令由 \pkg{ctex} 提供，
-% 这两种情况外的系统被判断为 Linux，一律使用自由字体。
-%    \begin{macrocode}
-  {
-    \sys_if_platform_windows:TF
-      {
-        \tl_set:Nn \g_@@_font_latin_tl     { win    }
-        \tl_set:Nn \g_@@_font_cjk_tl       { win    }
-      }
-      {
-        \ctex_if_platform_macos:TF
-          {
-            \tl_set:Nn \g_@@_font_latin_tl { mac    }
-            \tl_set:Nn \g_@@_font_cjk_tl   { mac    }
-          }
-          {
-            \tl_set:Nn \g_@@_font_latin_tl { gyre   }
-            \tl_set:Nn \g_@@_font_cjk_tl   { fandol }
-          }
-      }
-  }
+\tl_if_empty:NT \g_@@_font_latin_tl
+  { \tl_gset_eq:NN \g_@@_font_latin_tl \g__ctex_fontset_tl }
+\tl_if_empty:NT \g_@@_font_cjk_tl
+  { \tl_gset_eq:NN \g_@@_font_cjk_tl   \g__ctex_fontset_tl }
 %    \end{macrocode}
 %
 %
@@ -4735,71 +4779,69 @@ To produce the documentation run the original source files ending with
 %
 % 接下来逐个定义所需要使用的字库。
 %
-% \begin{macro}{\@@_loadfont_latin_win:}
-% Windows 西文字体
+% \begin{macro}{\@@_loadfont_latin:n,
+%   \@@_loadfont_latin_win:,\@@_loadfont_latin_mac:}
+% Windows 与 macOS 西文字体的区别主要在于默认等宽字体。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_loadfont_latin_win:
+\cs_new_protected:Npn \@@_loadfont_latin:n #1
   {
     \__fontspec_main_setmainfont:nn { } { Times~New~Roman }
     \__fontspec_main_setsansfont:nn { } { Arial           }
-    \__fontspec_main_setmonofont:nn
-      { Scale = MatchLowercase }
-      { Courier~New }
+    \__fontspec_main_setmonofont:nn { Scale = MatchLowercase } { #1 }
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_loadfont_latin_mac:}
-% macOS 西文字体。
-%    \begin{macrocode}
+\cs_new_protected:Npn \@@_loadfont_latin_win:
+  { \@@_loadfont_latin:n { Courier~New } }
 \cs_new_protected:Npn \@@_loadfont_latin_mac:
   {
-    \__fontspec_main_setmainfont:nn { } { Times~New~Roman }
-    \__fontspec_main_setsansfont:nn { } { Arial           }
-    \__fontspec_main_setmonofont:nn
-      { Scale = MatchLowercase }
-      { Menlo }
+    \@@_loadfont_latin:n { Menlo }
+%    \end{macrocode}
+% \changes{v1.1}{2022/12/03}{添加对 Times New Roman 的 smcp 特性的检测。}
+% 检测 Times New Roman 是否具有小型大写字母（small caps）字型。
+% 这是 macOS 预装的字体版本较旧导致的。
+%    \begin{macrocode}
+    \fontspec_if_small_caps:F
+  {
+        \msg_warning:nn { njuthesis } { no-small-caps }
+        \__fontspec_main_setmainfont:nn
+          { \c_@@_name_gyrefeature_clist } { texgyretermes }
+      }
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@@_loadfont_latin_gyre:}
-% 开源的 gyre 西文字体。
+% 开源的 \TeX Gyre 西文字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_latin_gyre:
   {
     \__fontspec_main_setmainfont:nn
-      {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic
-      }
-      { texgyretermes }
+      { \c_@@_name_gyrefeature_clist } { texgyretermes }
     \__fontspec_main_setsansfont:nn
-      {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic
-      }
-      { texgyreheros  }
+      { \c_@@_name_gyrefeature_clist } { texgyreheros  }
     \__fontspec_main_setmonofont:nn
       {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic,
-        Scale          = MatchLowercase,
-        Ligatures      = CommonOff
+        \c_@@_name_gyrefeature_clist,
+        Scale     = MatchLowercase,
+        Ligatures = CommonOff
       }
       { texgyrecursor }
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{variable}{\c_@@_name_gyrefeature_clist}
+% 用于 \pkg{fontspec} 的 \TeX Gyre 字体特性列表。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_name_gyrefeature_clist
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic
+      }
+%    \end{macrocode}
+% \end{variable}
 %
 %
 % \subsubsection{定义中文字库}
@@ -4818,13 +4860,13 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_cjk_win:
   {
     \setCJKmainfont { SimSun   }
-      [ AutoFakeBold = 2.17, ItalicFont = KaiTi ]
-    \setCJKsansfont { SimHei   } [ AutoFakeBold = 2.17 ]
-    \setCJKmonofont { FangSong } [ AutoFakeBold = 2.17 ]
-    \setCJKfamilyfont { zhsong } { SimSun   } [ AutoFakeBold = 2.17 ]
-    \setCJKfamilyfont { zhhei  } { SimHei   } [ AutoFakeBold = 2.17 ]
-    \setCJKfamilyfont { zhfs   } { FangSong } [ AutoFakeBold = 2.17 ]
-    \setCJKfamilyfont { zhkai  } { KaiTi    } [ AutoFakeBold = 2.17 ]
+      [ \c_@@_name_fakebold_tl, ItalicFont = KaiTi ]
+    \setCJKsansfont { SimHei   } [ \c_@@_name_fakebold_tl ]
+    \setCJKmonofont { FangSong } [ \c_@@_name_fakebold_tl ]
+    \setCJKfamilyfont { zhsong } { SimSun   } [ \c_@@_name_fakebold_tl ]
+    \setCJKfamilyfont { zhhei  } { SimHei   } [ \c_@@_name_fakebold_tl ]
+    \setCJKfamilyfont { zhfs   } { FangSong } [ \c_@@_name_fakebold_tl ]
+    \setCJKfamilyfont { zhkai  } { KaiTi    } [ \c_@@_name_fakebold_tl ]
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4861,34 +4903,31 @@ To produce the documentation run the original source files ending with
     \@@_hide_no_script_msg:
     \setCJKmainfont { FandolSong-Regular }
       [
-        Extension    = .otf,
-        BoldFont     = FandolSong-Bold,
-        ItalicFont   = FandolKai-Regular
+        Extension  = .otf,
+        BoldFont   = FandolSong-Bold,
+        ItalicFont = FandolKai-Regular
       ]
     \setCJKsansfont { FandolHei-Regular  }
       [
-        Extension    = .otf,
-        BoldFont     = FandolHei-Bold
+        Extension = .otf,
+        BoldFont  = FandolHei-Bold
       ]
     \setCJKmonofont { FandolFang-Regular }
-      [ Extension    = .otf ]
+      [ Extension = .otf ]
     \setCJKfamilyfont { zhsong } { FandolSong-Regular }
       [
-        Extension    = .otf,
-        BoldFont     = FandolSong-Bold
+        Extension = .otf,
+        BoldFont  = FandolSong-Bold
       ]
     \setCJKfamilyfont { zhhei  } { FandolHei-Regular  }
       [
-        Extension    = .otf,
-        BoldFont     = FandolHei-Bold
+        Extension = .otf,
+        BoldFont  = FandolHei-Bold
       ]
     \setCJKfamilyfont { zhfs   } { FandolFang-Regular }
-      [ Extension    = .otf ]
+      [ Extension = .otf ]
     \setCJKfamilyfont { zhkai  } { FandolKai-Regular  }
-      [
-        Extension    = .otf,
-        AutoFakeBold = 2.17
-      ]
+      [ Extension = .otf, \c_@@_name_fakebold_tl ]
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4914,11 +4953,11 @@ To produce the documentation run the original source files ending with
     \setCJKfamilyfont { zhsong } { FZShuSong-Z01  }
       [ BoldFont = FZXiaoBiaoSong-B05 ]
     \setCJKfamilyfont { zhhei  } { FZHei-B01      }
-      [ AutoFakeBold = 2.17 ]
+      [ \c_@@_name_fakebold_tl ]
     \setCJKfamilyfont { zhkai  } { FZKai-Z03      }
-      [ AutoFakeBold = 2.17 ]
+      [ \c_@@_name_fakebold_tl ]
     \setCJKfamilyfont { zhfs   } { FZFangSong-Z02 }
-    \defaultCJKfontfeatures{}
+    \defaultCJKfontfeatures { }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4928,24 +4967,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_cjk_noto:
   {
-    \setCJKmainfont
-      [
-        UprightFont        = NotoSerifCJKsc-Regular,
-        BoldFont           = NotoSerifCJKsc-Bold,
-        ItalicFont         = NotoSerifCJKsc-Regular,
-        BoldItalicFont     = NotoSerifCJKsc-Bold,
-        ItalicFeatures     = FakeSlant,
-        BoldItalicFeatures = FakeSlant
-      ] { Noto~Serif~CJK~SC     }
-    \setCJKsansfont
-      [
-        UprightFont        = NotoSansCJKsc-Regular,
-        BoldFont           = NotoSansCJKsc-Bold,
-        ItalicFont         = NotoSansCJKsc-Regular,
-        BoldItalicFont     = NotoSansCJKsc-Bold,
-        ItalicFeatures     = FakeSlant,
-        BoldItalicFeatures = FakeSlant
-      ] { Noto~Sans~CJK~SC      }
+    \setCJKmainfont [ \c_@@_name_notofeature_clist ]
+      { NotoSerifCJKsc }
+    \setCJKsansfont [ \c_@@_name_notofeature_clist ]
+      { NotoSansCJKsc  }
     \setCJKmonofont { Noto~Sans~Mono~CJK~SC }
     \setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC }
     \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC  }
@@ -4962,33 +4987,41 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_cjk_source:
   {
-    \setCJKmainfont
-      [
-        UprightFont        = SourceHanSerifSC-Regular,
-        BoldFont           = SourceHanSerifSC-Bold,
-        ItalicFont         = SourceHanSerifSC-Regular,
-        BoldItalicFont     = SourceHanSerifSC-Bold,
-        ItalicFeatures     = FakeSlant,
-        BoldItalicFeatures = FakeSlant
-      ] { Source~Han~Serif~SC     }
-    \setCJKsansfont
-      [
-        UprightFont        = SourceHanSansSC-Regular,
-        BoldFont           = SourceHanSansSC-Bold,
-        ItalicFont         = SourceHanSansSC-Regular,
-        BoldItalicFont     = SourceHanSansSC-Bold,
-        ItalicFeatures     = FakeSlant,
-        BoldItalicFeatures = FakeSlant
-      ] { Source~Han~Sans~SC      }
-    \setCJKmonofont { FZFangSong-Z02      }
+    \setCJKmainfont [ \c_@@_name_notofeature_clist ]
+      { SourceHanSerifSC }
+    \setCJKsansfont [ \c_@@_name_notofeature_clist ]
+      { SourceHanSansSC  }
+    \setCJKmonofont { FZFangSong-Z02 }
     \setCJKfamilyfont { zhsong } { Source~Han~Serif~SC }
     \setCJKfamilyfont { zhhei  } { Source~Han~Sans~SC  }
     \setCJKfamilyfont { zhfs   } { FZFangSong-Z02      }
     \setCJKfamilyfont { zhkai  } { FZKai-Z03           }
-      [AutoFakeBold=2.17]
+      [ \c_@@_name_fakebold_tl ]
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{variable}{\c_@@_name_fakebold_tl}
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_name_fakebold_tl { AutoFakeBold = 2.17 }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\c_@@_name_notofeature_clist}
+% 用于 \pkg{fontspec} 的思源字体特性列表。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_name_notofeature_clist
+  {
+    Extension          = .otf,
+    UprightFont        = *-Regular,
+    BoldFont           = *-Bold,
+    ItalicFont         = *-Regular,
+    BoldItalicFont     = *-Bold,
+    ItalicFeatures     = FakeSlant,
+    BoldItalicFeatures = FakeSlant
+  }
+%    \end{macrocode}
+% \end{variable}
 %
 %
 % \subsubsection{定义数学字库}
@@ -5133,13 +5166,23 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_loadfont_math_none:}
 % 不进行数学字体配置。
 %    \begin{macrocode}
-\cs_new:Npn \@@_loadfont_math_none: { }
+\@@_cs_clear:N \@@_loadfont_math_none:
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{载入指定字库}
 % \changes{v0.10}{2021/09/28}{修正了数学字体。}
+%
+% \begin{macro}{\@@_loadfont_latin_windows:
+%   \@@_loadfont_latin_fandol:,\@@_loadfont_cjk_windows:}
+% 为兼容 \pkg{ctex} 做出的名称改变。
+%    \begin{macrocode}
+\cs_new_eq:NN \@@_loadfont_latin_windows: \@@_loadfont_latin_win:
+\cs_new_eq:NN \@@_loadfont_latin_fandol:  \@@_loadfont_latin_gyre:
+\cs_new_eq:NN \@@_loadfont_cjk_windows:   \@@_loadfont_cjk_win:
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_loadfont:}
 % 载入字体命令。
@@ -5805,7 +5848,16 @@ To produce the documentation run the original source files ending with
 % \changes{v1.1}{2022/10/16}{新增悬挂缩进选项。}
 % 是否悬挂缩进。
 %    \begin{macrocode}
-    hang          .bool_gset:N = \g_@@_fn_hang_bool,
+    hang             .choice:,
+    hang / true        .code:n =
+      {
+        \cs_set:Npn \@@_fn_hang:
+          {
+            \int_set:Nn \tex_hangafter:D { 1 }
+            \dim_set_eq:NN \tex_hangindent:D \c_@@_fnhang_dim
+          }
+      },
+    hang / false       .code:n = { \@@_cs_clear:N \@@_fn_hang: },
     hang            .initial:n = true
   }
 %    \end{macrocode}
@@ -5862,11 +5914,7 @@ To produce the documentation run the original source files ending with
         \mode_leave_vertical:
         \hbox_to_wd:nn { \c_@@_fnhang_dim } { \@thefnmark \tex_hfil:D }
         \tex_penalty:D \@M
-        \bool_if:NT \g_@@_fn_hang_bool
-          {
-            \int_set:Nn \tex_hangafter:D { 1 }
-            \dim_set_eq:NN \tex_hangindent:D \c_@@_fnhang_dim
-          }
+        \@@_fn_hang:
         #1
       }
   }
@@ -6045,20 +6093,6 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{macro}
-%
-%    \begin{macrocode}
-\msg_new:nnn { njuthesis } { empty-theorem-type }
-  {
-    Empty~ theorem~ list~ to~ define.\\
-    The~ key~ "theorem/type"~ should~ not~ be~ set~ empty.
-  }
-\msg_new:nnn { njuthesis } { missing-ntheorem }
-  {
-    "ntheorem"~ package~ not~ detected.\\
-    The~ functionality~ of~ built-in~ theorem~ settings~ require~
-    loading~ the~ class~ with~ "ntheorem"~ option~ set~ to~ "true".
-  }
-%    \end{macrocode}
 %
 % \begin{macro}{\@@_thm_define:nn}
 % 配置定理环境。
@@ -7459,14 +7493,6 @@ To produce the documentation run the original source files ending with
 % \changes{v0.16}{2022/02/22}{不再默认载入 \pkg{njuvisual}。}
 % 检查 \tn{njuemblem} 和 \tn{njuname} 命令是否有定义。
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { missing-image }
-  {
-    Local~ images~ not~ designated.\\
-    It~ seems~ that~ you~ haven't~ fill~ in~ both~
-    "style/emblem-img"~ and~ "style/name-img",~
-    therefore~ I~ am~ using~ package~ "njuvisual"~
-    instead,~ which~ may~ slow~ down~ the~ compilation.
-  }
 \ctex_at_end_preamble:n
   {
 %    \end{macrocode}
