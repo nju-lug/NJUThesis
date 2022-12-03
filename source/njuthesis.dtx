@@ -119,7 +119,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.1 2022-12-03 17:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.1 2022-12-03 18:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -355,7 +355,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.1.0 \quad 2022-10-23}
+% \date{v1.1.1 \quad 2022-12-03}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -3361,18 +3361,15 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_msg:nn}
+% 简化提示信息的创建。
+%    \begin{macrocode}
+\cs_new:Npn \@@_msg:nn { \msg_new:nnn { njuthesis } }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{封面相关}
 % \changes{v0.16}{2022/03/10}{将封面和摘要内部函数定义移动到前部。}
-%
-% 定义关于标题的报错信息。
-%    \begin{macrocode}
-\msg_new:nnn { njuthesis } { missing-title }
-  {
-    The~ title~ should~ not~ be~ left~ blank.\\
-    Please~ check~ whether~ you~ have~ fill~ in~
-    both~ Chinese~ and~ English~ titles.
-  }
-%    \end{macrocode}
 %
 % \begin{macro}{\@@_loop_until:nnn}
 % 等效于 plain \TeX 的 \tn{loop} 循环，原始结构为\\
@@ -3596,19 +3593,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 定义关于标题的报错信息。
-%    \begin{macrocode}
-\msg_new:nnn { njuthesis } { abs-title-too-long }
-  {
-    Your~ title~ is~ too~ long~ to~ fit~ in~ two~ lines.\\
-    I~ have~ drawn~ additional~ lines~ to~ contain~ it,~
-    which~ will~ probably~ make~ your~ abstract~ page~
-    look~ slightly~ different~ from~ the~ standard.\\
-    You~ can~ use~ the~ "abstract/title-style"~ key~
-    to~ disable~ this~ message.
-  }
-%    \end{macrocode}
-%
 % \begin{macro}{\@@_uline_list:NNn,\@@_uline_list:NNx}
 % \changes{v0.16}{2022/03/25}{使用原生断行算法处理摘要页标题。}
 % 用于研究生摘要页面的多行标题。
@@ -3827,6 +3811,75 @@ To produce the documentation run the original source files ending with
   { \DeclareInstance { nju } {#1} { page    } {#2} }
 %    \end{macrocode}
 % \end{macro}
+%
+%
+% \subsection{提示信息}
+% \changes{v1.1}{2022/12/03}{整理提示信息。}
+%
+% 本节集中定义模板中的错误信息。
+%    \begin{macrocode}
+\@@_msg:nn { abs-title-too-long }
+  {
+    Your~ title~ seems~ too~ long~ to~ fit~ in~ two~ lines.\\
+    I~ have~ drawn~ additional~ lines~ to~ contain~ it,~
+    which~ will~ probably~ make~ your~ abstract~ page~
+    look~ slightly~ different~ from~ the~ standard.~
+    You~ can~ use~ the~ "abstract/title-style"~ key~
+    to~ disable~ this~ message.
+  }
+\@@_msg:nn { empty-theorem-type }
+  {
+    Empty~ theorem~ list~ to~ define.\\
+    The~ key~ "theorem/type"~ should~ not~ be~ left~ empty.
+  }
+\@@_msg:nn { load-config  }
+  { I~ am~ loading~ config~ file~ "#1". }
+\@@_msg:nn { missing-image }
+  {
+    You~ have~ not~ selected~ local~ files~
+    for~ emblem~ and~ name~ images.\\
+    It~ seems~ that~ you~ haven't~ fill~ in~ both~
+    "image/nju-emblem"~ and~ "image/nju-name",~ therefore
+    I~ am~ using~ the~ package~ "njuvisual"~ instead,~
+    which~ may~ slow~ down~ the~ compilation.
+  }
+\@@_msg:nn { missing-ntheorem }
+  {
+    "ntheorem"~ package~ not~ detected.\\
+    The~ functionality~ of~ built-in~ theorem~ settings~
+    requires~ loading~ the~ class~ with~ "ntheorem"~ option~
+    set~ to~ "true".
+  }
+\@@_msg:nn { missing-title }
+  {
+    Thesis~ title~ should~ not~ be~ left~ blank.\\
+    Please~ check~ whether~ you~ have~ fill~ in~
+    both Chinese~ and~ English~ titles.
+  }
+\@@_msg:nn { no-small-caps }
+  {
+    I~ am~ using~ TeX~ Gyre~ Termes~ as~ default~ Roman~ font.\\
+    This~ is~ because~ the~ "Times~ New~ Roman"~ font~ in~ your~
+    system~ does~ not~ embed~ glyphs~ for~ small~ capitals.~
+    You~ can~ ignore~ this~ warning~ if~ you~ do~ not~ need~
+    \string\textsc.~ For~ more~ information,~
+    please~ refer~ to~ section~ 3.2.6~ of~ the~ documentation.
+  }
+\@@_msg:nn { package-too-old }
+  {
+    Package~ "#1"~ is~ too~ old.\\
+    The~ "njuthesis"~ class only~ supports~ "#1"~ with~
+    a~ version~ higher~ than~ v#2.~
+    Please~ update~ an~ up-to-date~ version~ of~ it~
+    using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
+  }
+\@@_msg:nn { package-conflict }
+  {
+    The~ "#2"~ package~ is~ incompatible~ with~ "#1".\\
+    I~ have~ loaded~ "#1"~ by~ default.~ Maybe~ You~ should~
+    refer~ to~ section~ 4~ of~ the~ documentation.
+  }
+%    \end{macrocode}
 %
 %
 % \subsection{模板选项}
@@ -4364,14 +4417,6 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_check_pkg_version:nnn}
 % 检查宏包版本是否过时。
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { package-too-old }
-  {
-    Package~ "#1"~ is~ too~ old.\\
-    The~ njuthesis~ class~ only~ supports~ "#1"~ with~
-    a~ version higher~ than~ v#2.\\
-    Please~ update~ an~ up-to-date~ version~ of~ it~
-    using~ your TeX~ package~ manager~ or~ from~ CTAN.
-  }
 \cs_new_protected:Npn \@@_check_pkg_version:nnn #1#2#3
   {
     \@ifpackagelater {#1} {#2}
@@ -4397,12 +4442,6 @@ To produce the documentation run the original source files ending with
 %   \item 产生冲突的宏包
 % \end{arguments}
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { package-conflict }
-  {
-    The~ "#2"~ package~ is~ incompatible~ with~ "#1".\\
-    I~ have~ loaded~ "#1"~ by~ default.~ Maybe~ You~ should~
-    refer~ to~ section~ 4~ of~ the~ "njuthesis"~ manual.
-  }
 \cs_new_protected:Npn \@@_check_pkg_conflict:nn #1#2
   {
     \ctex_at_begin_package:nn { #2 }
@@ -4448,8 +4487,6 @@ To produce the documentation run the original source files ending with
 %
 % 载入用户设置，可用于对模板做额外修改。
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { load-config }
-  { I~ am~ loading~ config~ file~ "#1". }
 \clist_map_inline:Nn \g_@@_config_clist
   {
     \msg_info:nnn { njuthesis } { load-config } { #1 }
@@ -4723,7 +4760,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{操作系统检测}
 %
-% 调用\pkg{ctex} 提供操作系统检测。
+% 调用 \pkg{ctex} 提供的操作系统检测。
 %    \begin{macrocode}
 \ctex_detect_platform:
 %    \end{macrocode}
@@ -4746,15 +4783,6 @@ To produce the documentation run the original source files ending with
 %   \@@_loadfont_latin_win:,\@@_loadfont_latin_mac:}
 % Windows 与 macOS 西文字体的区别主要在于默认等宽字体。
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { no-small-caps }
-  {
-    I~ am~ using~ TeX~ Gyre~ Termes~ as~ default~ Roman~ font.\\
-    This~ is~ because~ the~ "Times~ New~ Roman"~ font~ in~ your~
-    system~ does~ not~ embed~ glyphs~ for~ small~ capitals.~
-    You~ can~ ignore~ this~ warning~ if~ you~ do~ not~ need~
-    \string\textsc.~ For~ more~ information,~
-    please~ refer~ to~ section~ 3.2.6~ of~ the~ documentation.
-  }
 \cs_new_protected:Npn \@@_loadfont_latin:n #1
   {
     \__fontspec_main_setmainfont:nn { } { Times~New~Roman }
@@ -6065,20 +6093,6 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{macro}
-%
-%    \begin{macrocode}
-\msg_new:nnn { njuthesis } { empty-theorem-type }
-  {
-    Empty~ theorem~ list~ to~ define.\\
-    The~ key~ "theorem/type"~ should~ not~ be~ set~ empty.
-  }
-\msg_new:nnn { njuthesis } { missing-ntheorem }
-  {
-    "ntheorem"~ package~ not~ detected.\\
-    The~ functionality~ of~ built-in~ theorem~ settings~ require~
-    loading~ the~ class~ with~ "ntheorem"~ option~ set~ to~ "true".
-  }
-%    \end{macrocode}
 %
 % \begin{macro}{\@@_thm_define:nn}
 % 配置定理环境。
@@ -7479,14 +7493,6 @@ To produce the documentation run the original source files ending with
 % \changes{v0.16}{2022/02/22}{不再默认载入 \pkg{njuvisual}。}
 % 检查 \tn{njuemblem} 和 \tn{njuname} 命令是否有定义。
 %    \begin{macrocode}
-\msg_new:nnn { njuthesis } { missing-image }
-  {
-    Local~ images~ not~ designated.\\
-    It~ seems~ that~ you~ haven't~ fill~ in~ both~
-    "style/emblem-img"~ and~ "style/name-img",~
-    therefore~ I~ am~ using~ package~ "njuvisual"~
-    instead,~ which~ may~ slow~ down~ the~ compilation.
-  }
 \ctex_at_end_preamble:n
   {
 %    \end{macrocode}
