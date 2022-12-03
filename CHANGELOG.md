@@ -9,6 +9,8 @@
 ### 修复
 
 - 修复研究生封面上导师信息的居中问题 - [#165]
+- 修复 macOS 下 Times New Roman 字体缺失字型的问题 - [#169]
+  - 感谢 [@AlphaZTX]！
 - 修复国家图书馆封面的编译死循环问题 - [#170]
 
 ## [1.1.0] - 2022-10-23
@@ -481,6 +483,7 @@
 [#150]: https://github.com/nju-lug/NJUThesis/discussions/150
 [#155]: https://github.com/nju-lug/NJUThesis/discussions/155
 [#165]: https://github.com/nju-lug/NJUThesis/discussions/165
+[#169]: https://github.com/nju-lug/NJUThesis/issues/169
 [#170]: https://github.com/nju-lug/NJUThesis/issues/170
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
@@ -492,3 +495,4 @@
 [@hushidong]: https://github.com/hushidong
 [@zhoujian9410]: https://github.com/zhoujian9410
 [@note286]: https://github.com/note286
+[@AlphaZTX]: https://github.com/AlphaZTX

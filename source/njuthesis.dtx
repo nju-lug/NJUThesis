@@ -119,7 +119,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.0 2022-10-23 12:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.1 2022-12-03 17:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -1225,6 +1225,19 @@ To produce the documentation run the original source files ending with
 %   \end{talltblr}
 % \end{table}
 %
+% macOS 用户需要额外注意的是，此系统内置的 Times New Roman 并没有 smcp
+% 这一特性，所以 \tn{textsc} 命令无法产生正确的小型大写字母字型，导致
+% 研究生模板英文封面的部分内容不能正确显示。另外，macOS 中的 Times 字体
+% 也不包含 smcp 特性。
+% 相应的解决办法是拷贝一份 Windows 预装的 Times New Roman
+% \footnote{Times New Roman（或 TimesNewRomanPSMT）在 Windows 和 macOS
+% 下的区别在于版本。根据我们的测试，Windows 10 下该字体的版本为 7.00，
+% 而 macOS Monterey 下该字体的版本为 5.01.3x。这显然是苹果的问题。}，
+% 或者使用 \TeX{} Live 内置的 \TeX{} Gyre Termes 字体
+% \footnote{\TeX{} Gyre Termes 可以视作 Times New Roman 的重制版，两者的
+% 视觉感受是一致的。}，这两个字体都具备 smcp 特性。
+% 本模板在检测到 Times New Roman 不包含 smcp 特性时，会抛出警告并使用
+% \TeX{} Gyre Termes 字体进行替换。
 %
 % \paragraph{数学}
 %
@@ -3829,7 +3842,7 @@ To produce the documentation run the original source files ending with
 % 学位，默认为学士。
 %    \begin{macrocode}
     type               .choices:nn = { bachelor, master, doctor, postdoc }
-      { \int_gset_eq:NN \g_@@_info_type_int   \l_keys_choice_int },
+      { \int_gset_eq:NN \g_@@_info_type_int \l_keys_choice_int },
     type               .initial:n  = bachelor,
 %    \end{macrocode}
 % \end{macro}
@@ -4485,7 +4498,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{info/department,info/department*,info/major,info/major*,info/field,info/field*}
+% \begin{macro}{info/department,info/department*,
+%   info/major,info/major*,info/field,info/field*}
 % 院系、专业、方向。
 %    \begin{macrocode}
     department          .tl_set:N = \g_@@_info_dept_tl              ,
@@ -4709,36 +4723,18 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{操作系统检测}
 %
+% 调用\pkg{ctex} 提供操作系统检测。
+%    \begin{macrocode}
+\ctex_detect_platform:
+%    \end{macrocode}
 % 判断用户是否自定义了中英文字体。如果其中任意一种未被定义，
 % 则使用系统预装字体覆盖字体选项。
+% Windows 或 macOS 外的系统被判断为 Linux，一律使用自由字体。
 %    \begin{macrocode}
-\bool_lazy_or:nnT
-  { \tl_if_empty_p:N \g_@@_font_latin_tl }
-  { \tl_if_empty_p:N \g_@@_font_cjk_tl   }
-%    \end{macrocode}
-% 进行操作系统检测。
-% 检测 Windows 的命令由 \pkg{l3kernel} 提供，
-% 检测 macOS 的命令由 \pkg{ctex} 提供，
-% 这两种情况外的系统被判断为 Linux，一律使用自由字体。
-%    \begin{macrocode}
-  {
-    \sys_if_platform_windows:TF
-      {
-        \tl_set:Nn \g_@@_font_latin_tl     { win    }
-        \tl_set:Nn \g_@@_font_cjk_tl       { win    }
-      }
-      {
-        \ctex_if_platform_macos:TF
-          {
-            \tl_set:Nn \g_@@_font_latin_tl { mac    }
-            \tl_set:Nn \g_@@_font_cjk_tl   { mac    }
-          }
-          {
-            \tl_set:Nn \g_@@_font_latin_tl { gyre   }
-            \tl_set:Nn \g_@@_font_cjk_tl   { fandol }
-          }
-      }
-  }
+\tl_if_empty:NT \g_@@_font_latin_tl
+  { \tl_gset_eq:NN \g_@@_font_latin_tl \g__ctex_fontset_tl }
+\tl_if_empty:NT \g_@@_font_cjk_tl
+  { \tl_gset_eq:NN \g_@@_font_cjk_tl   \g__ctex_fontset_tl }
 %    \end{macrocode}
 %
 %
@@ -4746,71 +4742,78 @@ To produce the documentation run the original source files ending with
 %
 % 接下来逐个定义所需要使用的字库。
 %
-% \begin{macro}{\@@_loadfont_latin_win:}
-% Windows 西文字体
+% \begin{macro}{\@@_loadfont_latin:n,
+%   \@@_loadfont_latin_win:,\@@_loadfont_latin_mac:}
+% Windows 与 macOS 西文字体的区别主要在于默认等宽字体。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_loadfont_latin_win:
+\msg_new:nnn { njuthesis } { no-small-caps }
+  {
+    I~ am~ using~ TeX~ Gyre~ Termes~ as~ default~ Roman~ font.\\
+    This~ is~ because~ the~ "Times~ New~ Roman"~ font~ in~ your~
+    system~ does~ not~ embed~ glyphs~ for~ small~ capitals.~
+    You~ can~ ignore~ this~ warning~ if~ you~ do~ not~ need~
+    \string\textsc.~ For~ more~ information,~
+    please~ refer~ to~ section~ 3.2.6~ of~ the~ documentation.
+  }
+\cs_new_protected:Npn \@@_loadfont_latin:n #1
   {
     \__fontspec_main_setmainfont:nn { } { Times~New~Roman }
     \__fontspec_main_setsansfont:nn { } { Arial           }
-    \__fontspec_main_setmonofont:nn
-      { Scale = MatchLowercase }
-      { Courier~New }
+    \__fontspec_main_setmonofont:nn { Scale = MatchLowercase } { #1 }
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_loadfont_latin_mac:}
-% macOS 西文字体。
-%    \begin{macrocode}
+\cs_new_protected:Npn \@@_loadfont_latin_win:
+  { \@@_loadfont_latin:n { Courier~New } }
 \cs_new_protected:Npn \@@_loadfont_latin_mac:
   {
-    \__fontspec_main_setmainfont:nn { } { Times~New~Roman }
-    \__fontspec_main_setsansfont:nn { } { Arial           }
-    \__fontspec_main_setmonofont:nn
-      { Scale = MatchLowercase }
-      { Menlo }
+    \@@_loadfont_latin:n { Menlo }
+%    \end{macrocode}
+% \changes{v1.1}{2022/12/03}{添加对 Times New Roman 的 smcp 特性的检测。}
+% 检测 Times New Roman 是否具有小型大写字母（small caps）字型。
+% 这是 macOS 预装的字体版本较旧导致的。
+%    \begin{macrocode}
+    \fontspec_if_small_caps:F
+  {
+        \msg_warning:nn { njuthesis } { no-small-caps }
+        \__fontspec_main_setmainfont:nn
+          { \c_@@_name_gyrefeature_clist } { texgyretermes }
+      }
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@@_loadfont_latin_gyre:}
-% 开源的 gyre 西文字体。
+% 开源的 \TeX Gyre 西文字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_latin_gyre:
   {
     \__fontspec_main_setmainfont:nn
-      {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic
-      }
-      { texgyretermes }
+      { \c_@@_name_gyrefeature_clist } { texgyretermes }
     \__fontspec_main_setsansfont:nn
-      {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic
-      }
-      { texgyreheros  }
+      { \c_@@_name_gyrefeature_clist } { texgyreheros  }
     \__fontspec_main_setmonofont:nn
       {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic,
-        Scale          = MatchLowercase,
-        Ligatures      = CommonOff
+        \c_@@_name_gyrefeature_clist,
+        Scale     = MatchLowercase,
+        Ligatures = CommonOff
       }
       { texgyrecursor }
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{variable}{\c_@@_name_gyrefeature_clist}
+% 用于 \pkg{fontspec} 的 \TeX Gyre 字体特性列表。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_name_gyrefeature_clist
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic
+      }
+%    \end{macrocode}
+% \end{variable}
 %
 %
 % \subsubsection{定义中文字库}
@@ -4829,13 +4832,13 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_cjk_win:
   {
     \setCJKmainfont { SimSun   }
-      [ AutoFakeBold = 2.17, ItalicFont = KaiTi ]
-    \setCJKsansfont { SimHei   } [ AutoFakeBold = 2.17 ]
-    \setCJKmonofont { FangSong } [ AutoFakeBold = 2.17 ]
-    \setCJKfamilyfont { zhsong } { SimSun   } [ AutoFakeBold = 2.17 ]
-    \setCJKfamilyfont { zhhei  } { SimHei   } [ AutoFakeBold = 2.17 ]
-    \setCJKfamilyfont { zhfs   } { FangSong } [ AutoFakeBold = 2.17 ]
-    \setCJKfamilyfont { zhkai  } { KaiTi    } [ AutoFakeBold = 2.17 ]
+      [ \c_@@_name_fakebold_tl, ItalicFont = KaiTi ]
+    \setCJKsansfont { SimHei   } [ \c_@@_name_fakebold_tl ]
+    \setCJKmonofont { FangSong } [ \c_@@_name_fakebold_tl ]
+    \setCJKfamilyfont { zhsong } { SimSun   } [ \c_@@_name_fakebold_tl ]
+    \setCJKfamilyfont { zhhei  } { SimHei   } [ \c_@@_name_fakebold_tl ]
+    \setCJKfamilyfont { zhfs   } { FangSong } [ \c_@@_name_fakebold_tl ]
+    \setCJKfamilyfont { zhkai  } { KaiTi    } [ \c_@@_name_fakebold_tl ]
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4872,34 +4875,31 @@ To produce the documentation run the original source files ending with
     \@@_hide_no_script_msg:
     \setCJKmainfont { FandolSong-Regular }
       [
-        Extension    = .otf,
-        BoldFont     = FandolSong-Bold,
-        ItalicFont   = FandolKai-Regular
+        Extension  = .otf,
+        BoldFont   = FandolSong-Bold,
+        ItalicFont = FandolKai-Regular
       ]
     \setCJKsansfont { FandolHei-Regular  }
       [
-        Extension    = .otf,
-        BoldFont     = FandolHei-Bold
+        Extension = .otf,
+        BoldFont  = FandolHei-Bold
       ]
     \setCJKmonofont { FandolFang-Regular }
-      [ Extension    = .otf ]
+      [ Extension = .otf ]
     \setCJKfamilyfont { zhsong } { FandolSong-Regular }
       [
-        Extension    = .otf,
-        BoldFont     = FandolSong-Bold
+        Extension = .otf,
+        BoldFont  = FandolSong-Bold
       ]
     \setCJKfamilyfont { zhhei  } { FandolHei-Regular  }
       [
-        Extension    = .otf,
-        BoldFont     = FandolHei-Bold
+        Extension = .otf,
+        BoldFont  = FandolHei-Bold
       ]
     \setCJKfamilyfont { zhfs   } { FandolFang-Regular }
-      [ Extension    = .otf ]
+      [ Extension = .otf ]
     \setCJKfamilyfont { zhkai  } { FandolKai-Regular  }
-      [
-        Extension    = .otf,
-        AutoFakeBold = 2.17
-      ]
+      [ Extension = .otf, \c_@@_name_fakebold_tl ]
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4925,11 +4925,11 @@ To produce the documentation run the original source files ending with
     \setCJKfamilyfont { zhsong } { FZShuSong-Z01  }
       [ BoldFont = FZXiaoBiaoSong-B05 ]
     \setCJKfamilyfont { zhhei  } { FZHei-B01      }
-      [ AutoFakeBold = 2.17 ]
+      [ \c_@@_name_fakebold_tl ]
     \setCJKfamilyfont { zhkai  } { FZKai-Z03      }
-      [ AutoFakeBold = 2.17 ]
+      [ \c_@@_name_fakebold_tl ]
     \setCJKfamilyfont { zhfs   } { FZFangSong-Z02 }
-    \defaultCJKfontfeatures{}
+    \defaultCJKfontfeatures { }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4939,24 +4939,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_cjk_noto:
   {
-    \setCJKmainfont
-      [
-        UprightFont        = NotoSerifCJKsc-Regular,
-        BoldFont           = NotoSerifCJKsc-Bold,
-        ItalicFont         = NotoSerifCJKsc-Regular,
-        BoldItalicFont     = NotoSerifCJKsc-Bold,
-        ItalicFeatures     = FakeSlant,
-        BoldItalicFeatures = FakeSlant
-      ] { Noto~Serif~CJK~SC     }
-    \setCJKsansfont
-      [
-        UprightFont        = NotoSansCJKsc-Regular,
-        BoldFont           = NotoSansCJKsc-Bold,
-        ItalicFont         = NotoSansCJKsc-Regular,
-        BoldItalicFont     = NotoSansCJKsc-Bold,
-        ItalicFeatures     = FakeSlant,
-        BoldItalicFeatures = FakeSlant
-      ] { Noto~Sans~CJK~SC      }
+    \setCJKmainfont [ \c_@@_name_notofeature_clist ]
+      { NotoSerifCJKsc }
+    \setCJKsansfont [ \c_@@_name_notofeature_clist ]
+      { NotoSansCJKsc  }
     \setCJKmonofont { Noto~Sans~Mono~CJK~SC }
     \setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC }
     \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC  }
@@ -4973,33 +4959,41 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_cjk_source:
   {
-    \setCJKmainfont
-      [
-        UprightFont        = SourceHanSerifSC-Regular,
-        BoldFont           = SourceHanSerifSC-Bold,
-        ItalicFont         = SourceHanSerifSC-Regular,
-        BoldItalicFont     = SourceHanSerifSC-Bold,
-        ItalicFeatures     = FakeSlant,
-        BoldItalicFeatures = FakeSlant
-      ] { Source~Han~Serif~SC     }
-    \setCJKsansfont
-      [
-        UprightFont        = SourceHanSansSC-Regular,
-        BoldFont           = SourceHanSansSC-Bold,
-        ItalicFont         = SourceHanSansSC-Regular,
-        BoldItalicFont     = SourceHanSansSC-Bold,
-        ItalicFeatures     = FakeSlant,
-        BoldItalicFeatures = FakeSlant
-      ] { Source~Han~Sans~SC      }
-    \setCJKmonofont { FZFangSong-Z02      }
+    \setCJKmainfont [ \c_@@_name_notofeature_clist ]
+      { SourceHanSerifSC }
+    \setCJKsansfont [ \c_@@_name_notofeature_clist ]
+      { SourceHanSansSC  }
+    \setCJKmonofont { FZFangSong-Z02 }
     \setCJKfamilyfont { zhsong } { Source~Han~Serif~SC }
     \setCJKfamilyfont { zhhei  } { Source~Han~Sans~SC  }
     \setCJKfamilyfont { zhfs   } { FZFangSong-Z02      }
     \setCJKfamilyfont { zhkai  } { FZKai-Z03           }
-      [AutoFakeBold=2.17]
+      [ \c_@@_name_fakebold_tl ]
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{variable}{\c_@@_name_fakebold_tl}
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_name_fakebold_tl { AutoFakeBold = 2.17 }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\c_@@_name_notofeature_clist}
+% 用于 \pkg{fontspec} 的思源字体特性列表。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_name_notofeature_clist
+  {
+    Extension          = .otf,
+    UprightFont        = *-Regular,
+    BoldFont           = *-Bold,
+    ItalicFont         = *-Regular,
+    BoldItalicFont     = *-Bold,
+    ItalicFeatures     = FakeSlant,
+    BoldItalicFeatures = FakeSlant
+  }
+%    \end{macrocode}
+% \end{variable}
 %
 %
 % \subsubsection{定义数学字库}
@@ -5144,13 +5138,23 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_loadfont_math_none:}
 % 不进行数学字体配置。
 %    \begin{macrocode}
-\cs_new:Npn \@@_loadfont_math_none: { }
+\@@_cs_clear:N \@@_loadfont_math_none:
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \subsubsection{载入指定字库}
 % \changes{v0.10}{2021/09/28}{修正了数学字体。}
+%
+% \begin{macro}{\@@_loadfont_latin_windows:
+%   \@@_loadfont_latin_fandol:,\@@_loadfont_cjk_windows:}
+% 为兼容 \pkg{ctex} 做出的名称改变。
+%    \begin{macrocode}
+\cs_new_eq:NN \@@_loadfont_latin_windows: \@@_loadfont_latin_win:
+\cs_new_eq:NN \@@_loadfont_latin_fandol:  \@@_loadfont_latin_gyre:
+\cs_new_eq:NN \@@_loadfont_cjk_windows:   \@@_loadfont_cjk_win:
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_loadfont:}
 % 载入字体命令。
