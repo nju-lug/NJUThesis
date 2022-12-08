@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+### 修复
+
+- 修复研究生封面上第二导师的显示问题 - [#172]
+
 ## [1.1.1] - 2022-12-04
 
 ### 修复
@@ -492,6 +496,7 @@
 [#165]: https://github.com/nju-lug/NJUThesis/discussions/165
 [#169]: https://github.com/nju-lug/NJUThesis/issues/169
 [#170]: https://github.com/nju-lug/NJUThesis/issues/170
+[#172]: https://github.com/nju-lug/NJUThesis/issues/172
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

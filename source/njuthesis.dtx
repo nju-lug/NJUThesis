@@ -119,7 +119,7 @@ To produce the documentation run the original source files ending with
 %<*!(driver|install)>
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.1 2022-12-04 00:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.2 2022-12-08 23:43:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -355,7 +355,7 @@ To produce the documentation run the original source files ending with
 % \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.1.1 \quad 2022-12-04}
+% \date{v1.1.2 \quad 2022-12-08}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -2873,10 +2873,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_opt_second_supv_bool}
+% \begin{variable}{\g_@@_opt_supvii_bool}
 % 定义用于判断是否有第二导师的变量。
 %    \begin{macrocode}
-\bool_new:N \g_@@_opt_second_supv_bool
+\bool_new:N \g_@@_opt_supvii_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -4651,8 +4651,9 @@ To produce the documentation run the original source files ending with
       { \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: } }
     \clist_if_empty:NF \g_@@_info_supvii_clist
       {
+        \bool_gset_true:N \g_@@_opt_supvii_bool
         \tl_gput_right:Nx \g_@@_info_supvfull_tl
-          { \@@_quad: \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: } }
+          { \@@_quad: \clist_use:Nn \g_@@_info_supvii_clist { \@@_hskip: } }
       }
     \tl_set_eq:NN \g_@@_info_supvfull_en_tl \g_@@_info_supv_en_tl
     \tl_if_empty:NF \g_@@_info_supvii_en_tl
@@ -6456,7 +6457,7 @@ To produce the documentation run the original source files ending with
     \@@_cover_entry:NNNnn #1 \l_@@_tmpb_dim #4 { grade } { id }
     \@@_cover_entry:NNNn #1 #2 #4 { author }
     \@@_cover_entry_supv:NNNn #1 \l_@@_tmpb_dim #4 { supv }
-    \bool_if:NT \g_@@_opt_second_supv_bool
+    \bool_if:NT \g_@@_opt_supvii_bool
       { \@@_cover_entry_supv:NNNn #1 \l_@@_tmpb_dim #4 { supvii } }
     \@@_cover_entry:NNNn #1 #2 #4 { submitdate }
   }
@@ -7037,7 +7038,7 @@ To produce the documentation run the original source files ending with
       \c_@@_name_email_tl   & \g_@@_info_email_tl \\
       \c_@@_name_supvb_tl   &
         \clist_item:Nn \g_@@_info_supv_clist { 1 }
-        \bool_if:NT \g_@@_opt_second_supv_bool
+        \bool_if:NT \g_@@_opt_supvii_bool
           { \@@_quad: \clist_item:Nn \g_@@_info_supvii_clist { 1 } } \\
     \end{tblr}
   }
