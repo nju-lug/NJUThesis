@@ -35,11 +35,6 @@
 % for those people who are interested.
 %
 %<*internal>
-\iffalse
-%</internal>
-%
-%<*internal>
-\fi
 \begingroup
   \def\NameOfLaTeXe{LaTeX2e}
 \expandafter\endgroup\ifx\NameOfLaTeXe\fmtname\else
@@ -4227,11 +4222,12 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\njusetname,\njusetname*,\njusettext,\njusettext*}
 % \changes{v0.17}{2022/04/01}{提供修改固定文本的接口。}
+% \changes{v1.1}{2022/12/12}{修复 \tn{njusetname} 和 \tn{njusettext} 的可选参数问题。}
 % 定义修改固定文本的接口。
 %    \begin{macrocode}
-\NewDocumentCommand \njusetname { s m o m }
+\NewDocumentCommand \njusetname { s m O{} m }
   { \@@_set_tokenlist:nnnnn {#1} {#2} {#3} {#4} { name } }
-\NewDocumentCommand \njusettext { s m o m }
+\NewDocumentCommand \njusettext { s m O{} m }
   { \@@_set_tokenlist:nnnnn {#1} {#2} {#3} {#4} { text } }
 %    \end{macrocode}
 % \end{macro}
@@ -4801,7 +4797,7 @@ To produce the documentation run the original source files ending with
 % 这是 macOS 预装的字体版本较旧导致的。
 %    \begin{macrocode}
     \fontspec_if_small_caps:F
-  {
+      {
         \msg_warning:nn { njuthesis } { no-small-caps }
         \__fontspec_main_setmainfont:nn
           { \c_@@_name_gyrefeature_clist } { texgyretermes }
@@ -4834,13 +4830,13 @@ To produce the documentation run the original source files ending with
 % 用于 \pkg{fontspec} 的 \TeX Gyre 字体特性列表。
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_gyrefeature_clist
-      {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic
-      }
+  {
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic
+  }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -4977,7 +4973,7 @@ To produce the documentation run the original source files ending with
     \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC  }
     \setCJKfamilyfont { zhfs   } { FZFangSong-Z02    }
     \setCJKfamilyfont { zhkai  } { FZKai-Z03         }
-      [AutoFakeBold=2.17]
+      [ \c__nju_name_fakebold_tl ]
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6689,7 +6685,8 @@ To produce the documentation run the original source files ending with
       \skip_vertical:n { .5 cm }
       { Supervised~ by }
       \skip_vertical:N \c_zero_skip
-      \textsf { \g_@@_info_supvfull_en_tl },
+      \textsf { \g_@@_info_supv_en_tl
+        \tex_par:D \g_@@_info_supvii_en_tl },
     format      = \zihao { 4 },
     bottom-skip = 0 pt plus 1.2 fil
   }
@@ -7756,6 +7753,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_abs_info_en_g:N}
 % \changes{v1.0}{2022/07/01}{移除研究生英文摘要的下划线。}
+% \changes{v1.1}{2022/12/12}{恢复研究生英文摘要的下划线。}
 % 绘制研究生英文摘要信息栏。
 % \begin{arguments}
 %   \item 分隔符
@@ -7763,8 +7761,15 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_en_g:N #1
   {
-    \clist_map_inline:nn { title, major, author, supvfull }
-      { \@@_name:n { ##1 _en } #1 \@@_info:n { ##1 _en } \\ }
+    \@@_uline_list:NNx \g_@@_info_title_en_tl \g_@@_abs_title_left_skip
+      { \c_@@_name_title_en_tl #1 }
+    \clist_map_inline:nn { major, author, supvfull }
+      {
+        \tex_par:D
+        \@@_get_width_print:Nx \l_@@_tmpa_dim
+          { \@@_name:n { ##1 _en } #1 }
+        \@@_box_ulined_info:Nn \l_@@_tmpa_dim { ##1 _en }
+      }
   }
 %</def-g>
 %    \end{macrocode}
