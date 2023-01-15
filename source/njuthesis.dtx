@@ -115,7 +115,7 @@ To produce the documentation run the original source files ending with
 %<class>\ProvidesExplClass{njuthesis}
 %<def-u>  {Undergraduate definition file for njuthesis}
 %<def-u>\ProvidesExplFile{njuthesis-undergraduate.def}
-%<def-g>  {Graduate definition file for njuthesis}`'
+%<def-g>  {Graduate definition file for njuthesis}
 %<def-g>\ProvidesExplFile{njuthesis-graduate.def}
 % ^^A 诚耀百廿，雄创一流
 % ^^A 南京大学一百二十周年华诞邀您共襄盛举！
@@ -6352,14 +6352,14 @@ To produce the documentation run the original source files ending with
 % \subparagraph{封面}
 %
 % \begin{macro}{u/cover/emblem-img}
+% \changes{v1.1}{2023/01/15}{本科生模板封面校徽居中。}
 % 本科生封面校徽图片实例。
 %    \begin{macrocode}
 %<*def-u>
 \@@_declare_element:nn { u / cover / emblem-img }
   {
     content     = \@@_emblem:N \c_@@_emblemwd_dim,
-    bottom-skip = 10 pt,
-    align       = l
+    bottom-skip = 10 pt
   }
 %    \end{macrocode}
 % \end{macro}

@@ -14,6 +14,10 @@
 - 修复研究生封面上第二导师的显示问题 - [#172]
 - 修复 `\njusetname` 的可选参数问题
 
+### 变动
+
+- 本科生模板封面校徽居中 - [#173]
+
 ### 杂项
 
 - 跟进 2023 年本科毕业论文规定
@@ -507,6 +511,7 @@
 [#169]: https://github.com/nju-lug/NJUThesis/issues/169
 [#170]: https://github.com/nju-lug/NJUThesis/issues/170
 [#172]: https://github.com/nju-lug/NJUThesis/issues/172
+[#173]: https://github.com/nju-lug/NJUThesis/issues/173
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
