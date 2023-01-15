@@ -1,12 +1,12 @@
 # NJU Thesis: 南京大学学位论文 LaTeX 模板
 
-[![njuthesis](https://img.shields.io/badge/njuthesis-latex-blue)](https://git.nju.edu.cn/nju-lug/nju-latex-templates)
-[![overleaf](https://img.shields.io/badge/overleaf-supported-brightgreen)](https://tex.nju.edu.cn)
 ![build status](https://github.com/nju-lug/NJUThesis/actions/workflows/build.yml/badge.svg)
 [![CTAN](https://img.shields.io/ctan/v/njuthesis.svg)](https://www.ctan.org/pkg/njuthesis)
 [![GitHub release](https://img.shields.io/github/release/nju-lug/NJUThesis/all.svg)](https://github.com/nju-lug/NJUThesis/releases/latest)
+[![overleaf](https://img.shields.io/badge/online_editor-supported-brightgreen)](https://tex.nju.edu.cn/template)
+[![nju-git](https://img.shields.io/gitlab/stars/nju-lug/nju-latex-templates/njuthesis?gitlab_url=https%3A%2F%2Fgit.nju.edu.cn&style=social)](https://git.nju.edu.cn/nju-lug/nju-latex-templates/njuthesis)
 
-`njuthesis` 是制作南京大学本科生毕业论文、研究生学位论文、博士后出站报告的 LaTeX 文档类。本模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学排版要求和相应的国家规范、行业标准的学位论文，力求通过 LaTeX3 语法实现清晰的实现逻辑、较高的可定制性以及友好的用户接口。
+`njuthesis` 是制作南京大学本科生毕业论文、研究生学位论文、博士后出站报告的 LaTeX 文档类。本模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、博士学位材料包，用于生成符合南京大学排版要求和相应的国家标准的学位论文，力求通过 LaTeX3 语法实现清晰的实现逻辑、较高的可定制性以及友好的用户接口。
 
 ## 快速开始
 

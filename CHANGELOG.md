@@ -6,11 +6,18 @@
 
 ## [未发布]
 
+## [1.1.2] - 2023-01-15
+
 ### 修复
 
 - 补回研究生英文摘要页的下划线 - [#166]
 - 修复研究生封面上第二导师的显示问题 - [#172]
 - 修复 `\njusetname` 的可选参数问题
+
+### 杂项
+
+- 跟进 2023 年本科毕业论文规定
+- 跟进新版南大 TeX 网站
 
 ## [1.1.1] - 2022-12-04
 
@@ -436,8 +443,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.1.1...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.1.2...HEAD
 
+[1.1.2]: https://github.com/nju-lug/NJUThesis/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/nju-lug/NJUThesis/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/nju-lug/NJUThesis/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/nju-lug/NJUThesis/compare/v0.20.0...v1.0.0

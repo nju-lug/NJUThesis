@@ -2,7 +2,7 @@
 % !TeX program  = XeLaTeX
 % !TeX encoding = UTF-8
 %
-% Copyright (C) 2021 - 2022
+% Copyright (C) 2021 - 2023
 % by Nanjing University Linux User Group
 % <git+nju-lug-email-3104-issue-@yaoge123.cn>
 %
@@ -48,7 +48,7 @@
 
 \preamble
 
-Copyright (C) 2021 - 2022
+Copyright (C) 2021 - 2023
 by Nanjing University Linux User Group
 <git+nju-lug-email-3104-issue-@yaoge123.cn>
 
@@ -107,21 +107,18 @@ To produce the documentation run the original source files ending with
 \fi
 %</internal>
 %
-% ^^A 故意留白
-% ^^A 故意留白
-%
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-% ^^A 诚耀百廿，雄创一流
-% ^^A 南京大学一百二十周年华诞邀您共襄盛举！
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.2 2022-12-08 23:43:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.2 2023-01-15 14:35:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<def-u>  {Undergraduate definition file for njuthesis}
 %<def-u>\ProvidesExplFile{njuthesis-undergraduate.def}
-%<def-g>  {Graduate definition file for njuthesis}
+%<def-g>  {Graduate definition file for njuthesis}`'
 %<def-g>\ProvidesExplFile{njuthesis-graduate.def}
+% ^^A 诚耀百廿，雄创一流
+% ^^A 南京大学一百二十周年华诞邀您共襄盛举！
 %<def-p>  {Postdoctoral definition file for njuthesis}
 %<def-p>\ProvidesExplFile{njuthesis-postdoctoral.def}
 %<!driver>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -136,9 +133,9 @@ To produce the documentation run the original source files ending with
   contents={\njuemblem[white!85!gray]{22cm}{!}},
   scale=1, angle=0, hshift=-4cm
 }
-\definecolor{olgreen}{HTML}{138a07}
+\definecolor{tpblue}{HTML}{495A80}
 \renewcommand\emph[1]{\CJKunderdot[textformat=\itshape]{#1}}
-\newcommand\olbutton[1]{\textcolor{olgreen}{\bfseries #1}}
+\newcommand\tpbutton[1]{\textcolor{tpblue}{\bfseries #1}}
 \newcommand\tikzlogo{Ti\emph{k}Z}
 \newcommand\OPT[1]{\textcolor{njuyellow}{\bfseries#1}}
 \hypersetup{
@@ -148,7 +145,7 @@ To produce the documentation run the original source files ending with
   citecolor = njublue,
   linkcolor = njuviolet,
   urlcolor  = njumagenta}
-\UseTblrLibrary{booktabs,diagbox,siunitx}
+\UseTblrLibrary{booktabs,siunitx}
 \DefTblrTemplate{caption-tag}{default}{表\hspace{0.25em}\thetable}
 \SetTblrStyle{caption-tag}{font=\bfseries}
 \SetTblrInner{row{1}={font=\bfseries}}
@@ -342,16 +339,6 @@ To produce the documentation run the original source files ending with
 %</driver>
 % \fi
 %
-% \title{\color{njuviolet}{The \cls{njuthesis} class\\
-%   \textbf{南京大学学位论文模板}}}
-%
-% \author{^^A
-% 南京大学 Linux 用户组
-% \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
-%   {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
-%
-% \date{v1.1.2 \quad 2022-12-08}
-%
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
 % \changes{v0.3}{2021/09/09}{使用自动构建工具进行测试。}
@@ -383,18 +370,28 @@ To produce the documentation run the original source files ending with
 % \changes{v1.0}{2022/07/23}{新增博士后出站报告模板。}
 % \changes{v1.0}{2022/07/28}{在手册中以不同颜色指示不同模块。}
 % \changes{v1.0}{2022/08/02}{删除 \LaTeX 基础用法的说明。}
+% \changes{v1.1}{2023/01/05}{适配2023届本科生毕业毕业论文（设计）规范。}
+% \changes{v1.1}{2023/01/05}{适配新版南大 \LaTeX 在线编辑器。}
 %
+% \title{\color{njuviolet}{The \cls{njuthesis} class\\
+%   \textbf{南京大学学位论文模板}}}
+%
+% \author{南京大学 Linux 用户组
+%   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
+%     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
+%
+% \date{v1.1.2 \quad 2023-01-15}
 %
 % \maketitle
 %
+% \let\abstractname\relax
 % \begin{abstract}
 % \cls{njuthesis} 是制作南京大学本科生毕业论文、研究生学位论文、博士后出站报告的
 % \LaTeX 文档类。本模板基于本科生院的论文撰写规范制作，同时参考研究生院提供的硕士、
-% 博士学位材料包，用于生成符合南京大学排版要求和相应的国家规范、行业标准的学位论
+% 博士学位材料包，用于生成符合南京大学排版要求和相应的国家标准的学位论
 % 文，力求通过 \LaTeX3 语法实现清晰的实现逻辑、较高的可定制性以及友好的用户接口。
 % \end{abstract}
 %
-% \def\abstractname{Abstract}
 % \begin{abstract}
 % The \cls{njuthesis} class is intended for typesetting Nanjing University
 % dissertations with \LaTeX, providing support for bachelor, master,
@@ -433,57 +430,54 @@ To produce the documentation run the original source files ending with
 % 用户组维护的，用于处理本校学生毕业论文排版需求的 \LaTeX 模板。
 %
 % 本模板使用的本科生毕业论文模板格式依据
-% 《关于启动南京大学2022届本科毕业论文（设计）工作的通知》\cite{nju-bachelor-2022}，
+% 《关于启动南京大学2023届本科毕业论文（设计）工作的通知》\cite{nju-bachelor-2023}，
 % 研究生学位论文格式依据研究生院提供的材料包\cite{nju-master-2022,nju-doctor-2022}。
 % 博士后出站报告格式要求与博士学位论文一致\cite{nju-postdoc-2022}，
 % 封面、摘要的设计参考了部分既有报告。
 %
 %
-% ^^A \subsection{开始之前}
-% ^^A \label{subsec:first-things-first}
+% \subsection{开始之前}
+% \label{subsec:first-things-first}
 %
-% ^^A 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \TeX{}
-% ^^A 排版系统。话不多说，请先按部就班体验一遍下述的工作流程：
+% 在本文正式介绍 \cls{njuthesis} 论文模板前，您也许并不熟悉 \LaTeX 模板的使用方法。
+% 话不多说，请先按部就班体验一遍下述的工作流程：
 %
-% ^^A \bigskip
-% ^^A \fcolorbox{olgreen}{gray!5}{\parbox{\textwidth-5em}{%
-% ^^A \hspace{2em}\begin{minipage}[c]{10cm}
-% ^^A \begin{enumerate}
-% ^^A   \item 访问 \url{https://tex.nju.edu.cn}
-% ^^A   \item 点击右上角~\olbutton{注册}~按钮，
-% ^^A        用\href{https://itsc.nju.edu.cn/1b/ce/c21586a334798/page.htm}
-% ^^A        {南大邮箱}注册账号
-% ^^A   \item 登录您的账号
-% ^^A   \item 点击左上角~\olbutton{创建新项目}~按钮，选择~\olbutton{论文模板}
-% ^^A   \item 随意取名，点击~\olbutton{创建}~按钮
-% ^^A \end{enumerate}
-% ^^A \end{minipage}}}
+% \bigskip
+% \fcolorbox{tpblue}{gray!5}{\parbox{\textwidth-5em}{%
+% \hspace{2em}\begin{minipage}[c]{10cm}
+% \begin{enumerate}
+%   \item 访问 \url{https://tex.nju.edu.cn}
+%   \item 点击\tpbutton{使用南大统一身份认证登录}
+%   \item 点击右上角\tpbutton{LaTeX 模板}，选择\tpbutton{南京大学学位论文}
+%   \item 点击进入刚刚新建的项目
+% \end{enumerate}
+% \end{minipage}}}
 %
-% ^^A \bigskip
-% ^^A 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。
-% ^^A 如果它的效果令您满意，不妨以本模板为基础开始写作。
+% \bigskip
+% 稍等片刻，您会在浏览器右侧发现一份新生成的空白论文。
+% 如果它的效果令您满意，不妨以 \file{njuthesis-sample.tex} 为基础开始写作。
 %
-% ^^A \subparagraph{我一定要体验上述流程吗？}
-% ^^A 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一
-% ^^A 条路走到底}的教程，而不是\emph{长篇累牍的精细介绍}，其核心论据在于：
-% ^^A 现代人类总体上需要快速取得成就感，而且大部分可能用到本模板的同学不
-% ^^A 会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，
-% ^^A 尤其是在您可能早已掌握基本用法的情况下。但，不论如何，这番操作总会
-% ^^A 使您预览到 \cls{njuthesis} 论文模板的实际样式。
+% \subparagraph{我一定要体验上述流程吗？}
+% 是，但也不一定。有人坚持认为应该做一些\emph{直观、清晰、有手就行、一
+% 条路走到底}的教程，而不是\emph{长篇累牍的精细介绍}，其核心论据在于：
+% 现代人类总体上需要快速取得成就感，而且大部分可能用到本模板的同学不
+% 会具备必要的基础知识。反驳的观点在于过分简单的实验总是浪费时间的，
+% 尤其是在您可能早已掌握基本用法的情况下。但，不论如何，这番操作总会
+% 使您预览到 \cls{njuthesis} 论文模板的实际样式。
 %
-% ^^A \subparagraph{我并没有见到理想的结果。}
-% ^^A 具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果
-% ^^A \emph{不能访问前文提到的在线编译网站}，请考虑检查网络连接，依次咨询
-% ^^A 本校\href{https://itsc.nju.edu.cn}{信息化管理建设服务中心}和该网站
-% ^^A 的维护者\href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请
-% ^^A 点击左上角的菜单按钮，查看编译器是否显示为 |XeLaTeX|；
-% ^^A 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个极其
-% ^^A 有益的结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉
-% ^^A \TeX{} 排版软件使用方法所需的可观时间。
+% \subparagraph{我并没有见到理想的结果。}
+% 具体是哪里不满意？如果是\emph{样式存在偏差}，请联系模板的作者；如果
+% \emph{不能访问前文提到的在线编译网站}，请考虑检查网络连接，依次咨询
+% 本校\href{https://itsc.nju.edu.cn}{信息化管理建设服务中心}和该网站
+% 的维护者\href{mailto:my@yaoge123.cn}{姚舸老师}；如果\emph{报错}，请
+% 点击左上角的菜单按钮，查看编译器是否显示为 |XeLaTeX|；
+% 再如果\emph{还有其他原因}，通过这几分钟的实验我们也可以得到一个极其
+% 有益的结论：\emph{也许 Word 模板更加适合您}。这可以节省下熟悉
+% \TeX{} 排版软件使用方法所需的可观时间。
 %
-% ^^A \subparagraph{但我依然对 \LaTeX 一无所知！}
-% ^^A 这意味着您真的得花些时间在\emph{长篇累牍的精细介绍}上。
-% ^^A 如果您已经下定决心，请接着向后阅读，有需要时善用搜索引擎。
+% \subparagraph{但我依然对 \LaTeX 一无所知！}
+% 这意味着您真的得花些时间在\emph{长篇累牍的精细介绍}上。
+% 如果您已经下定决心，请接着向后阅读，有需要时善用搜索引擎。
 %
 %
 % \subsection{历史沿革}
@@ -522,9 +516,9 @@ To produce the documentation run the original source files ending with
 %
 % 目前，本模板的主要维护者包括：
 % \begin{itemize}
-%   \item 赵懿晨
+%   ^^A \item 赵懿晨
 %   \item 熊煜
-%   \item 马畅
+%   ^^A \item 马畅
 % \end{itemize}
 %
 %
@@ -541,8 +535,8 @@ To produce the documentation run the original source files ending with
 % 如果您希望在使用本模板前了解一些关于这个排版软件的基础知识，在此尝试列举一些有
 % 所帮助的资料：
 % \begin{description}
-%   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，可以参考英文版
-%                          \cite{lshort}及其中文翻译版\cite{lshort-zh-cn}。
+%   \item[\textit{lshort}] 著名的介绍文档，已被译为多种语言，
+%                          推荐通读其中文版\cite{lshort-zh-cn}。
 %   \item[《\LaTeX 入门》] 刘海洋著\cite{刘海洋2013latex入门}。
 % \end{description}
 %
@@ -569,7 +563,7 @@ To produce the documentation run the original source files ending with
 % \cls{njuthesis} 文档类，或者在本文中简称为本模板。
 %
 % \subparagraph{版权信息}
-%   本模板之版权隶属于 © 2021 - 2022 南京大学 Linux 用户组。
+%   本模板之版权隶属于 © 2021 - 2023 南京大学 Linux 用户组。
 %
 % \subparagraph{发布和修改}
 %   本模板的发布和（或）修改遵守 LaTeX Project Public License（版本 1.3c 或更高）
@@ -726,11 +720,11 @@ To produce the documentation run the original source files ending with
 %   \label{tab:texdistribution}
 %   \begin{tabular}{cccc}
 %     \toprule
-%     \TeX        & Windows   & macOS     & Linux     \\
+%     \TeX    & Windows   & macOS     & Linux     \\
 %     \midrule
-%     \TL      & $\bullet$ &           & $\bullet$ \\
-%     \MacTeX     &           & $\bullet$ &           \\
-%     \MiKTeX     & $\bullet$ & $\bullet$ & $\bullet$ \\
+%     \TL     & $\bullet$ &           & $\bullet$ \\
+%     \MacTeX &           & $\bullet$ &           \\
+%     \MiKTeX & $\bullet$ & $\bullet$ & $\bullet$ \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -860,49 +854,30 @@ To produce the documentation run the original source files ending with
 % 速度的差异，同一个模板在 Linux 编译可以相对 Windows 节省约一半耗时。}。
 % 拒绝接受这些麻烦的同学可以尝试本节介绍的在线编译方法。
 %
-% {\color{red}|[!]|} 请注意，在线编辑器不一定提供良好的文件恢复和版本管理机制。
-% 请谨慎备份您的心血结晶。
+% {\color{red}|[!]|} 使用在线编辑器时请谨慎备份您的心血结晶。
 %
-% ^^A \subsubsection{南大 \TeX 平台简介}
-% ^^A \changes{v0.2}{2021/09/07}{添加对南大 \TeX 的支持。}
+% \subsubsection{南大 \TeX 平台简介}
+% \changes{v0.2}{2021/09/07}{添加对南大 \TeX 的支持。}
 %
-% ^^A \href{https://tex.nju.edu.cn}{南大 \TeX} 基于开源的 Overleaf 社区版平台构建
-% ^^A \footnote{理论上在\href{https://doc.nju.edu.cn/books/latex}{这个网站}能找到
-% ^^A 一段平台简介，实际上大家都有意无意地鸽了，下次一定补上。}，于2021年3月4日正
-% ^^A 式上线，是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的
-% ^^A \LaTeX 在线编辑器，首次使用需凭学校邮箱自助注册账号。
-%
-% ^^A {\color{red}|[!]|} 在 2022 年 5 月的运行中，该网站出现了多次崩溃事件，
-% ^^A 初步判断原因是由社区版并没有为高并发数做优化引发的。
-% ^^A 高峰时期，仍然建议在本地部署 \TeX 发行版。
-%
-% ^^A \subsubsection{操作步骤}
-%
-% ^^A 本说明手册开头的 \ref{subsec:first-things-first} 即呈现了网站内嵌的
-% ^^A \cls{njuthesis} 模板的使用方法。由于南大 \TeX 网站已预装 \cls{njuthesis}，
-% ^^A 可以直接编写正文，无需 \file{.cls} 等格式文件。
-% ^^A 如果有其他要求，也可以按如下步骤手动上传包含模板的压缩包。
-%
-% ^^A \begin{enumerate}
-% ^^A   \item 访问\href{https://tex.nju.edu.cn}{南大 \TeX 网站}，
-% ^^A         点击界面右上方“注册”按钮，使用\emph{南京大学邮箱}注册账号并登录
-% ^^A   \item 新建空白项目，或者上传 \ref{subsubsec:on-the-fly-installation} 节得到的压缩文件。
-% ^^A   \item 在项目页面左上角的“菜单”中，确认编译器为 |XeLaTeX| 或者 |LuaLaTeX|
-% ^^A   \item 仿照 \file{njuthesis-sample.tex} 编写论文
-% ^^A   \item 点击“重新编译”按钮进行编译和预览
-% ^^A \end{enumerate}
+% 当前的\href{https://tex.nju.edu.cn}{南大 \TeX} 基于
+% \href{https://www.texpage.com}{TeXPage} 提供的服务，
+% 是 \href{https://sci.nju.edu.cn/}{eScience 中心}为南大在校师生提供的
+% 免费 \LaTeX 在线编辑器，首次使用时需凭统一身份认证激活账号。
 %
 %
-% ^^A \subsubsection{其他平台}
+% \subsubsection{操作步骤}
 %
-% \subparagraph{Overleaf}
-% \changes{v0.12}{2021/12/07}{更新了对 Overleaf 的支持情况。}
-% \pkg{njuthesis} 现已支持 \href{https://www.overleaf.com/}{Overleaf} 平台。
+% 本说明手册开头的 \ref{subsec:first-things-first} 即呈现了网站内嵌的
+% \cls{njuthesis} 模板的使用方法。
+% 如果网站更新不及时，也可以按如下步骤手动上传包含模板的压缩包。
 %
-% \subparagraph{TeXPage}
-% \href{https://www.texpage.com/}{TeXPage} 是国人研发的 \LaTeX 在线编辑器，
-% 当前版本已具备较为完善的编辑编译功能，而且免费版相对 Overleaf 增加了公式识别、
-% 编辑历史等实用工具，也可以作为一个备选项。
+% \begin{enumerate}
+%   \item 登录\href{https://tex.nju.edu.cn}{南大 \TeX 网站}
+%   \item 上传~\ref{subsubsec:on-the-fly-installation}~节得到的压缩文件。
+%   \item 在项目页面左上角的\tpbutton{设置}中，确认编译器为 |XeLaTeX| 或者 |LuaLaTeX|
+%   \item 仿照 \file{njuthesis-sample.tex} 编写论文
+%   \item 点击右上角\tpbutton{编译}按钮进行编译和预览
+% \end{enumerate}
 %
 %
 % \subsection{版本升级}
@@ -1595,9 +1570,9 @@ To produce the documentation run the original source files ending with
 % \begin{function}{\chaptermark,\sectionmark}
 %   \begin{syntax}
 %     \tn{chapter}\oarg{用在页眉的章标题}\marg{完整的章标题}
-%     \tn{sectionmark}\marg{用在目录的章标题}
+%     \tn{sectionmark}\marg{用在目录中的章标题}
 %     \tn{section}\oarg{用在页眉的章标题}\marg{完整的节标题}
-%     \tn{sectionmark}\marg{用在目录节标题}
+%     \tn{sectionmark}\marg{用在目录中的节标题}
 %   \end{syntax}
 % 如果页眉内容发生了冲突，可使用这两个命令细化定制。
 % \end{function}
@@ -1677,7 +1652,7 @@ To produce the documentation run the original source files ending with
 %     \OPT{style} = <(plain)|pifont|circled|circled*>
 %   \end{syntax}
 % 设置脚注编号样式。默认为普通数字；使用 \opt{pifont} 可修改为带圈数字，
-% 此样式受到字符闲置，单页不建议超过10条脚注；使用 \opt{circled} 或 \opt{circled*}
+% 由于字体包含的字符数量有限，单页不建议超过10条脚注；使用 \opt{circled} 或 \opt{circled*}
 % 选项同样可修改为带圈数字，且不受单页脚注数量的限制，带星号的选项为黑底白字（阴文）。
 % \footnote{此功能依赖的 \pkg{circledtext} 宏包于 2022 年 4 月发布，可能需要手动安装。}
 % \end{function}
@@ -1987,7 +1962,7 @@ To produce the documentation run the original source files ending with
 % \end{description}
 %
 % 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号
-% 表示”\cite{nju-bachelor-2022}，符合顺序编码制的格式，保持默认设置即可。
+% 表示”\cite{nju-bachelor-2023}，符合顺序编码制的格式，保持默认设置即可。
 %
 % \begin{function}[added=2022-02-15]{bib/option}
 %   \begin{syntax}
@@ -2045,7 +2020,7 @@ To produce the documentation run the original source files ending with
 %
 % 假如需要在每章末尾附上单独的参考文献表，导言区添加以下设置，
 % 并在每章后使用 \tn{printbibliography} 即可。
-% \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib}]
+% \begin{latexexample}[moretexcs={\njusetup},emph={[2]bib},emph={[3]option}]
 %   \njusetup[bib/option]{refsection = chapter}
 % \end{latexexample}
 %
@@ -2558,11 +2533,11 @@ To produce the documentation run the original source files ending with
 % \newblock \textit{信息与文献\quad 参考文献著录规则: GB/T 7714--2015} [S].
 % \newblock 北京: 中国标准出版社, 2015
 %
-% \bibitem{nju-bachelor-2022}
+% \bibitem{nju-bachelor-2023}
 % 南京大学本科生院.
 % \newblock \textit{关于启动南京大学2022届本科毕业论文（设计）工作的通知} [EB/OL].
-% \newblock (2021-12-14)
-% \urlprefix\url{https://jw.nju.edu.cn/7c/86/c26263a556166/page.htm}
+% \newblock (2022-12-19)
+% \urlprefix\url{https://jw.nju.edu.cn/29/d8/c26263a600536/page.htm}
 %
 % \bibitem{nju-master-2022}
 % 南京大学研究生院.
