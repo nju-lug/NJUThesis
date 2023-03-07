@@ -1572,7 +1572,7 @@ To produce the documentation run the original source files ending with
 %     \tn{chapter}\oarg{用在页眉的章标题}\marg{完整的章标题}
 %     \tn{sectionmark}\marg{用在目录中的章标题}
 %     \tn{section}\oarg{用在页眉的章标题}\marg{完整的节标题}
-%     \tn{sectionmark}\marg{用在目录中的节标题}
+%     \tn{sectionmark}\marg{用在目录节标题}
 %   \end{syntax}
 % 如果页眉内容发生了冲突，可使用这两个命令细化定制。
 % \end{function}
@@ -2926,12 +2926,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
+% \changes{v1.1}{2023/03/07}{盲审模式下隐藏年级和学校名称。}
 % \begin{variable}{\c_@@_name_anon_clist,\c_@@_name_anon_en_clist}
 % 盲审模式下不显示的个人信息键名。
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_anon_clist
   {
-    author, chairman, email, student-id, reviewer,
+    author, chairman, email, grade, student-id, reviewer,
     supervisor-contact, supervisor, supervisor-ii
   }
 \clist_const:Nn \c_@@_name_anon_en_clist
@@ -8184,10 +8185,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     { abstract    b } { 摘\qquad{}要    } { ABSTRACT              },
 %<def-u|def-g>    { abstracttitle }
-%<def-u>      { 南京大学本科生毕业论文（设计、作品）中文摘要              }
-%<def-u>      { 南京大学本科生毕业论文（设计、作品）英文摘要              },
-%<def-g>      { 南京大学研究生毕业论文中文摘要首页用纸                    }
-%<def-g>      { 南京大学研究生毕业论文英文摘要首页用纸                    },
+%<def-u>      { \c_@@_name_nju_tl 本科生毕业论文（设计、作品）中文摘要  }
+%<def-u>      { \c_@@_name_nju_tl 本科生毕业论文（设计、作品）英文摘要  },
+%<def-g>      { \c_@@_name_nju_tl 研究生毕业论文中文摘要首页用纸        }
+%<def-g>      { \c_@@_name_nju_tl 研究生毕业论文英文摘要首页用纸        },
     { appendix      } { 附录            } { appendix              },
 %<def-u>    { author        } { 学生姓名        } { UNDERGRADUATE         },
 %<def-g>    { author        } { 作者姓名        } { POSTGRADUATE          },
