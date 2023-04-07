@@ -977,6 +977,7 @@ To produce the documentation run the original source files ending with
 % 例如，可以用如下所示的命令插入扫描件的第一页，并插入紧随的一个空白页。
 % \begin{latexexample}[moretexcs={\includepdf},emph={[2]pages}]
 %   \includepdf[pages={1,{}}]{scanned.pdf}
+%   % \setcounter{page}{1} % 使扫描页不占用页码
 % \end{latexexample}
 %
 %
@@ -7935,32 +7936,26 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 修改姓名的显示方式，使被注解的姓名可被加粗下划线表示。
 %    \begin{macrocode}
-    \RenewDocumentCommand \mkbibnamegiven  { m }
-      { \ifitemannotation { thesisauthor }
-          { \njuline { \bf ##1 } } { ##1 } }
-    \RenewDocumentCommand \mkbibnamefamily { m }
-      { \ifitemannotation { thesisauthor }
-          { \njuline { \bf ##1 } } { ##1 } }
+      \RenewDocumentCommand \mkbibnamegiven  { m }
+        { \ifitemannotation { thesisauthor }
+            { \njuline { \bf ##1 } } { ##1 } }
+      \RenewDocumentCommand \mkbibnamefamily { m }
+        { \ifitemannotation { thesisauthor }
+            { \njuline { \bf ##1 } } { ##1 } }
 %    \end{macrocode}
 % 修改年份的显示方式，默认进行加粗。
 %    \begin{macrocode}
-    \RenewDocumentCommand \mkbibdateshort { m m m }
-      { \textbf { \thefield { ##1 } } }
+      \RenewDocumentCommand \mkbibdateshort { m m m }
+        { \textbf { \thefield { ##1 } } }
 %    \end{macrocode}
-% 在使用章末参考文献表时，\env{refsection} 在单独一章范围内生效，
-% 无需额外添加环境。 ^^A TODO: 待修改为更简洁的形式
+% \changes{v1.1}{2023/04/07}{修复章末参考文献表与成果列表的冲突问题。}
+% 相较于直接使用 \env{refsection} 环境，\tn{newrefsection} 命令可以
+% 自动结束上一个 \env{refsection}，与章末参考文献表格式兼容更好。
 %    \begin{macrocode}
-    \tl_if_eq:NnTF \blx@refsecreset@level { 2 }
-      {
-        \nocite { #2 }
-        \printbibliography [ heading = subbibliography, title = #1 ]
-      }
-      {
-        \begin{refsection}
-          \nocite { #2 }
-          \printbibliography [ heading = subbibliography, title = #1 ]
-        \end{refsection}
-      }
+      \newrefsection
+      \nocite { #2 }
+      \printbibliography [ heading = subbibliography, title = #1 ]
+      \endrefsection
     \group_end:
   }
 %    \end{macrocode}
