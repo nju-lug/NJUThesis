@@ -165,6 +165,9 @@
     % toc-entry = false,
     % 摘要是否显示在目录条目中
     %
+    % underline = false,
+    % 研究生英文摘要页条目内容是否添加下划线
+    %
     % title-style = strict|centered|natural
     % 研究生摘要标题样式，详见手册
 }

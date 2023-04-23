@@ -6,9 +6,14 @@
 
 ## [未发布]
 
+### 新增
+
+- 新增研究生英文摘要条目内容下划线选项 `abstract/underline` - [#202]
+
 ### 修复
 
 - 盲审模式下隐藏年级和学校名称 - [#181]
+- 修复章末参考文献表与成果列表的冲突问题 - [#191]
 
 ## [1.1.2] - 2023-01-15
 
@@ -45,7 +50,7 @@
 ### 新增
 
 - 盲审模式下不显示致谢
-- 新增脚注圈码选项 `circled` 和 `circled*` - [#129]
+- 新增脚注圈码选项 `footnote/circled` 和 `footnote/circled*` - [#129]
 - 新增脚注的悬挂缩进选项 `hang` - [#129]
 
 ### 修复
@@ -516,6 +521,9 @@
 [#170]: https://github.com/nju-lug/NJUThesis/issues/170
 [#172]: https://github.com/nju-lug/NJUThesis/issues/172
 [#173]: https://github.com/nju-lug/NJUThesis/issues/173
+[#181]: https://github.com/nju-lug/NJUThesis/issues/181
+[#191]: https://github.com/nju-lug/NJUThesis/issues/191
+[#202]: https://github.com/nju-lug/NJUThesis/discussions/202
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

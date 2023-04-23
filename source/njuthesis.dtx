@@ -2169,6 +2169,13 @@ To produce the documentation run the original source files ending with
 % 关闭此选项后摘要页将不会出现在目录中，仅保留其 PDF 书签。
 % \end{function}
 %
+% \begin{function}[added=2023-04-23]{abstract/underline}
+%   \begin{syntax}
+%     \OPT{underline} = <\TTF>
+%   \end{syntax}
+% 选择研究生英文摘要条目内容是否需要下划线。默认添加。
+% \end{function}
+%
 % \begin{function}[added=2022-03-26,updated=2022-07-31]{abstract/title-style}
 %   \begin{syntax}
 %     \OPT{title-style} = <(strict)|centered|natural>
@@ -7731,21 +7738,29 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_abs_info_en_g:N}
 % \changes{v1.0}{2022/07/01}{移除研究生英文摘要的下划线。}
 % \changes{v1.1}{2022/12/12}{恢复研究生英文摘要的下划线。}
-% 绘制研究生英文摘要信息栏。
+% 绘制研究生英文摘要信息栏。因为到底要不要下划线这回事说不清楚，
+% 所以不做选择了全都整上。
 % \begin{arguments}
 %   \item 分隔符
 % \end{arguments}
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_en_g:N #1
   {
-    \@@_uline_list:NNx \g_@@_info_title_en_tl \g_@@_abs_title_left_skip
-      { \c_@@_name_title_en_tl #1 }
-    \clist_map_inline:nn { major, author, supvfull }
+    \bool_if:NTF \g_@@_abs_underline_bool
       {
-        \tex_par:D
-        \@@_get_width_print:Nx \l_@@_tmpa_dim
-          { \@@_name:n { ##1 _en } #1 }
-        \@@_box_ulined_info:Nn \l_@@_tmpa_dim { ##1 _en }
+        \@@_uline_list:NNx \g_@@_info_title_en_tl
+          \g_@@_abs_title_left_skip { \c_@@_name_title_en_tl #1 }
+        \clist_map_inline:nn { major, author, supvfull }
+          {
+            \tex_par:D
+            \@@_get_width_print:Nx \l_@@_tmpa_dim
+              { \@@_name:n { ##1 _en } #1 }
+            \@@_box_ulined_info:Nn \l_@@_tmpa_dim { ##1 _en }
+          }
+      }
+      {
+        \clist_map_inline:nn { title, major, author, supvfull }
+          { \@@_name:n { ##1 _en } #1 \@@_info:n { ##1 _en } \\ }
       }
   }
 %</def-g>
@@ -7843,7 +7858,16 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{style/title-style}
+% \begin{macro}{abstract/underline}
+% \changes{v1.2}{2023/04/23}{新增研究生英文摘要页下划线选项。}
+% 是否为研究生英文摘要条目内容添加下划线。
+%    \begin{macrocode}
+    underline          .bool_set:N = \g_@@_abs_underline_bool,
+    underline           .initial:n = true,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{abstract/title-style}
 % \changes{v0.16}{2022/03/26}{可选择研究生摘要标题样式。}
 % 选择摘要样式，默认为 \opt{strict}。
 %    \begin{macrocode}
