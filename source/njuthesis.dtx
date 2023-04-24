@@ -1469,6 +1469,15 @@ To produce the documentation run the original source files ending with
 % 国家图书馆封面相关，包括中图分类号、密级、UDC 分类号和导师联系方式。
 % \end{function}
 %
+% \begin{function}[added=2023-04-24]{info/degree,info/degree*}
+%   \begin{syntax}
+%     \OPT{degree}  = \Arg{中文学位名}
+%     \OPT{degree*} = \Arg{英文学位名}
+%   \end{syntax}
+% 研究生中英文封面上的学位名称。默认会由模板通过 \opt{degree} 和 \opt{type}
+% 文档类选项生成，也可以由本选项自定义名称。
+% \end{function}
+%
 %
 % \subsubsection{输入示范}
 %
@@ -3335,8 +3344,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_cs_clear:N}
 % 清空命令。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cs_clear:N #1
-  { \cs_set_eq:NN #1 \prg_do_nothing: }
+\cs_new:Npn \@@_cs_clear:N #1 { \cs_set_eq:NN #1 \tex_relax:D }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4604,9 +4612,19 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2022/01/12}{新增电邮地址信息项。}
 % 用于学位论文出版授权书的电子邮件地址。
 %    \begin{macrocode}
-    email               .tl_set:N = \g_@@_info_email_tl
+    email               .tl_set:N = \g_@@_info_email_tl             ,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/degree,info/degree*}
+% \changes{v1.2}{2023/04/24}{新增学位名称设置项。}
+% 覆盖预定义的学位字段。
+%    \begin{macrocode}
+    degree              .tl_set:N = \g_@@_info_degree_tl            ,
+    degree*             .tl_set:N = \g_@@_info_degree_en_tl
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % 将指定信息项归入 \opt{anonymous} 组，以在盲审模式下选择性屏蔽。
 %    \begin{macrocode}
@@ -4615,7 +4633,6 @@ To produce the documentation run the original source files ending with
 \clist_map_inline:Nn \c_@@_name_anon_en_clist
   { \keys_define:nn { nju / info } { #1 * .groups:n = { anonymous } } }
 %    \end{macrocode}
-% \end{macro}
 %
 % \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
 % \changes{v1.1}{2022/11/04}{修复研究生模板封面的导师信息居中问题。}
@@ -4704,15 +4721,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_info_type_en_tl}
-% 英文的学位字样。
-%    \begin{macrocode}
-\tl_new:N  \g_@@_info_type_en_tl
-\tl_set:Nx \g_@@_info_type_en_tl
-  { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
-%    \end{macrocode}
-% \end{variable}
-%
 % \begin{variable}{\g_@@_info_degree_tl}
 % 学位类型字样。
 %    \begin{macrocode}
@@ -4720,6 +4728,15 @@ To produce the documentation run the original source files ending with
 \tl_set_eq:NN \g_@@_info_degree_tl \g_@@_info_type_tl
 \bool_if:NF \g_@@_opt_academic_bool
   { \tl_put_right:Nn \g_@@_info_degree_tl { 专业 } }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_info_degree_en_tl}
+% 英文的学位字样。
+%    \begin{macrocode}
+\tl_new:N  \g_@@_info_degree_en_tl
+\tl_set:Nx \g_@@_info_degree_en_tl
+  { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
 %</def-g>
 %    \end{macrocode}
 % \end{variable}
@@ -6684,7 +6701,7 @@ To produce the documentation run the original source files ending with
   {
     content     =
       \c_@@_text_cover_en_tl \@@_vskip:
-      \group_begin: \scshape \g_@@_info_type_en_tl \group_end:
+      \group_begin: \scshape \g_@@_info_degree_en_tl \group_end:
       \@@_vskip: { in } \@@_vskip: \g_@@_info_major_en_tl,
     bottom-skip = 2 cm
   }

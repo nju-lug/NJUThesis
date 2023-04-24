@@ -8,6 +8,7 @@
 
 ### 新增
 
+- 新增研究生中英文学位名称选项 `info/degree` 和 `info/degree*` - [#200]
 - 新增研究生英文摘要条目内容下划线选项 `abstract/underline` - [#202]
 
 ### 修复
@@ -523,6 +524,7 @@
 [#173]: https://github.com/nju-lug/NJUThesis/issues/173
 [#181]: https://github.com/nju-lug/NJUThesis/issues/181
 [#191]: https://github.com/nju-lug/NJUThesis/issues/191
+[#200]: https://github.com/nju-lug/NJUThesis/discussions/200
 [#202]: https://github.com/nju-lug/NJUThesis/discussions/202
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
