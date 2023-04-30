@@ -3082,7 +3082,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\cs_new:Npo}
 % \begin{macro}{\@@_set_ccglue:n}
 % 调整间距。由于涉及载入 \cls{ctexbook} 后才能生效的 \pkg{xeCJK} 或 \pkg{luatexja}
-% 的内部命令，我们只展开一次完成引擎判断，而不用 \exp{x} 型全部展开。
+% 的内部命令，我们只展开一次完成引擎判断，而不用 |x| 型全部展开。
 %    \begin{macrocode}
 \cs_generate_variant:Nn \cs_new:Npn { Npo }
 \cs_new:Npo \@@_set_ccglue:n #1
@@ -3919,6 +3919,12 @@ To produce the documentation run the original source files ending with
     I~ have~ loaded~ "#1"~ by~ default.~ Maybe~ You~ should~
     refer~ to~ section~ 4~ of~ the~ documentation.
   }
+\@@_msg:nn { missing-stzhongs }
+  {
+    "STZHONGS.TTF"~ is~ not~ found~ in~ your~ system.\\
+    The~ font~ is~ normally~ distributed~ with~ MS~ Windows.~
+    I~ have~ used~ songti~ for~ substitution.
+  }
 %    \end{macrocode}
 %
 %
@@ -4435,29 +4441,21 @@ To produce the documentation run the original source files ending with
     \RequirePackage { lua-ul }
     \NewDocumentCommand \njuline { m } { \underLine{#1} \@@_null: }
   }
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
 % 使用 \pkg{tabularray} 绘制研究生的出版授权书。
 %    \begin{macrocode}
-%</class>
 %<def-g>\bool_if:NT \g_@@_opt_decl_bool { \RequirePackage { tabularray } }
-%<*class>
 %    \end{macrocode}
 %
 % \subsubsection{检查宏包}
 %
-% \begin{macro}{\@@_if_pkg_loaded:nTF}
-% 等效于 \tn{IfPackageLoadedTF}。
-%    \begin{macrocode}
-% \prg_new_conditional:Npnn \@@_if_pkg_loaded:n #1 { T }
-%  { \@ifpackageloaded {#1} { \prg_return_true: } { \prg_return_false: } }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_check_pkg_version:nnn}
 % 检查宏包版本是否过时。
 %    \begin{macrocode}
+%<*class>
 \cs_new_protected:Npn \@@_check_pkg_version:nnn #1#2#3
   {
     \@ifpackagelater {#1} {#2}
@@ -5083,6 +5081,22 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{macro}{\@@_loadfont_stzhongs:,\@@_stzhongs:}
+% \changes{v1.2}{2023/04/30}{在研究生模板载入华文中宋。}
+% 研究生封面额外需要的华文中宋。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_loadfont_stzhongs:
+  {
+    \fontspec_font_if_exist:nTF { 华文中宋 }
+      { \newCJKfontfamily \@@_stzhongs: { 华文中宋 } }
+      {
+        \cs_set_eq:NN \@@_stzhongs: \rmfamily
+        \msg_warning:nn { njuthesis } { missing-stzhongs }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 %
 % \subsubsection{定义数学字库}
 %
@@ -5272,6 +5286,12 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 % \BeforeBeginEnvironment { document } { \@@_loadfont: }
 \@@_loadfont:
+%</class>
+%    \end{macrocode}
+%
+% 只有研究生模板需要华文中宋。我们把它放在文档类最后载入。
+%    \begin{macrocode}
+%<def-g>\ctex_at_end:n { \@@_loadfont_stzhongs: }
 %    \end{macrocode}
 %
 %
@@ -5281,6 +5301,7 @@ To produce the documentation run the original source files ending with
 %
 % 使用\pkg{geometry}设置页边距。
 %    \begin{macrocode}
+%<*class>
 \geometry
   {
     vmargin    = 2.54 cm,
@@ -6640,7 +6661,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \@@_info:n { type } \@@_name:n { type },
     format      =
-      \@@_fontsize:nn { 28 bp } { 1.3 } \normalfont \bfseries
+      \@@_fontsize:nn { 28 bp } { 1.3 } \@@_stzhongs: \bfseries
       \@@_set_ccglue:n { .5 em },
     bottom-skip = 20 pt plus 1 fill
   }
