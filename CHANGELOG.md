@@ -518,6 +518,7 @@
 [#150]: https://github.com/nju-lug/NJUThesis/discussions/150
 [#155]: https://github.com/nju-lug/NJUThesis/discussions/155
 [#165]: https://github.com/nju-lug/NJUThesis/discussions/165
+[#166]: https://github.com/nju-lug/NJUThesis/discussions/166
 [#169]: https://github.com/nju-lug/NJUThesis/issues/169
 [#170]: https://github.com/nju-lug/NJUThesis/issues/170
 [#172]: https://github.com/nju-lug/NJUThesis/issues/172

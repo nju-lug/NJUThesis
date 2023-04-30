@@ -109,7 +109,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.1.2 2023-01-15 14:35:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.2.0 2023-04-27 00:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -380,7 +380,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.1.2 \quad 2023-01-15}
+% \date{v1.2.0 \quad 2023-04-27}
 %
 % \maketitle
 %
@@ -1461,12 +1461,14 @@ To produce the documentation run the original source files ending with
 % \begin{function}[updated=2021-10-01]{info/clc,info/secret-level,
 %   info/udc,info/supervisor-contact}
 %   \begin{syntax}
-%     \OPT{clc} = \Arg{中图分类号}
+%     \OPT{clc} = \Arg{中国图书分类号}
+%     \OPT{udc} = \Arg{国际图书分类号}
 %     \OPT{secret-level} = <不涉密|秘密|机密|绝密>
-%     \OPT{udc} = \Arg{UDC 分类号}
 %     \OPT{supervisor-contact} = \Arg{导师联系方式}
 %   \end{syntax}
-% 国家图书馆封面相关，包括中图分类号、密级、UDC 分类号和导师联系方式。
+% 国家图书馆封面相关，包括\href{http://www.ztflh.com/}{中国图书分类号}、
+% \href{http://www.udcsummary.info/php/index.php?lang=chi&pr=Y}{国际图书分类号}、
+% 密级和导师联系方式。
 % \end{function}
 %
 % \begin{function}[added=2023-04-24]{info/degree,info/degree*}
@@ -3046,6 +3048,53 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_fontsize:nn,\@@_fontsize:nnn}
+% 用于设置字号的辅助函数。\pkg{ctex} 默认使用的行距是 1.2，我们在这里重新计算
+% \tn{baselineskip}，抛弃 \cs{l__ctex_font_size_tl} 中的第二个值。
+%    \begin{macrocode}
+\cs_new:Npn \@@_fontsize:nn #1#2
+  { \fontsize { #1 } { #2 } \selectfont }
+\cs_new:Npn \@@_fontsize:nnn #1#2#3
+  { \@@_fontsize:nn { #1 } { \fp_to_decimal:n { #3 * #1 } } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_zihao:nn,\@@_zihao:n}
+% 设置字号，类似于 \cs{ctex_zihao:n}。
+% \begin{arguments}
+%   \item 行距倍数
+%   \item 字号值，同 \tn{zihao}
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new:Npn \@@_zihao:nn #1#2
+  {
+    \prop_get:NnNTF \c__ctex_font_size_prop { #2 } \l__ctex_font_size_tl
+      { \exp_after:wN \@@_fontsize:nnn \l__ctex_font_size_tl { #1 } }
+      { \msg_error:nnn { ctex } { fontsize } { #2 } }
+  }
+%    \end{macrocode}
+% 默认行距倍数为 1.3。
+%    \begin{macrocode}
+\cs_new:Npn \@@_zihao:n { \@@_zihao:nn { 1.3 } }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cs_new:Npo}
+% \begin{macro}{\@@_set_ccglue:n}
+% 调整间距。由于涉及载入 \cls{ctexbook} 后才能生效的 \pkg{xeCJK} 或 \pkg{luatexja}
+% 的内部命令，我们只展开一次完成引擎判断，而不用 \exp{x} 型全部展开。
+%    \begin{macrocode}
+\cs_generate_variant:Nn \cs_new:Npn { Npo }
+\cs_new:Npo \@@_set_ccglue:n #1
+  {
+    \sys_if_engine_xetex:TF
+      { \skip_set:Nn \l__ctex_ccglue_skip { #1 } }
+      { \ltjsetparameter { kanjiskip = { #1 } } }
+  }
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
 % \begin{macro}{\@@_box_ulined:NN,\@@_box_ulined:Nc}
 % 带有下划线的水平盒子。
 % \begin{arguments}
@@ -3072,7 +3121,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_box_spread:NNn,\@@_box_spread:NNv}
+% \begin{macro}{\@@_box_spread:NNn,\@@_box_spread:NNv,\@@_box_spread:NNx}
 % \changes{v0.19}{2022/05/16}{对超出盒子宽度的文字进行水平压缩。}
 % 分散对齐的水平盒子，拉伸算法来自 \cls{fduthesis}。
 % 在文字宽度小于给定宽度时，在字符中间填补 \tn{hfil} 以增大字距。
@@ -3099,6 +3148,7 @@ To produce the documentation run the original source files ending with
       }
   }
 \cs_generate_variant:Nn \@@_box_spread:NNn { NNv }
+\cs_generate_variant:Nn \@@_box_spread:NNn { NNx }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3447,50 +3497,53 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry_title:NNN}
+% \begin{macro}{\@@_cover_entry_title:NNNN,\@@_cover_entry_title:NNN}
 % 生成普通封面页的标题条目，包括标签和标题本身。
 % \begin{arguments}
+%   \item 分隔符
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
 %   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry_title:NNN #1#2#3
+\cs_new_protected:Npn \@@_cover_entry_title:NNNN #1#2#3#4
   {
     \tl_if_empty:NT \g_@@_info_title_tl
       { \msg_error:nn { njuthesis } { missing-title } }
-    \@@_box_spread_name:NNn #1 #3 { title }
-    \mode_leave_vertical: \@@_hskip:
+    \@@_box_spread_name:NNn #2 #4 { title }
+    \mode_leave_vertical: #1
 %    \end{macrocode}
 % 这里需要存储 \tn{prevdepth} 的值，以使 \tn{parbox} 后行距正确。
 % \footnote{\url{https://tex.stackexchange.com/q/34971/}}
 %    \begin{macrocode}
-    \parbox [ t ] { #2 }
+    \parbox [ t ] { #3 }
       {
-        \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
         \c_@@_fmt_covertitle_tl \@@_uline_title:
         \dim_gset_eq:NN \l_@@_tmpa_dim \tex_prevdepth:D
       }
     \tex_par:D
     \dim_set_eq:NN \tex_prevdepth:D \l_@@_tmpa_dim
   }
+\cs_new:Npn \@@_cover_entry_title:NNN { \@@_cover_entry_title:NNNN \@@_hskip: }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry:NNNn}
+% \begin{macro}{\@@_cover_entry:NNNNn,\@@_cover_entry:NNNn}
 % 生成单项信息条目。
 % \begin{arguments}
+%   \item 分隔符
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
 %   \item 标签格式
 %   \item 条目名称
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry:NNNn #1#2#3#4
+\cs_new_protected:Npn \@@_cover_entry:NNNNn #1#2#3#4#5
   {
-    \@@_box_spread_name:NNn #1 #3 { #4 } \@@_hskip:
-    \@@_box_ulined_info:Nn  #2    { #4 } \tex_par:D
+    \@@_box_spread_name:NNn #2 #4 { #5 } #1
+    \@@_box_ulined_info:Nn  #3    { #5 } \tex_par:D
   }
+\cs_new:Npn \@@_cover_entry:NNNn { \@@_cover_entry:NNNNn \@@_hskip: }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4616,6 +4669,15 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{info/defend-date}
+% \changes{v0.14}{2022/01/14}{精简答辩日期选项。}
+% 答辩日期。
+%    \begin{macrocode}
+    school-code         .tl_set:N = \g_@@_info_code_tl    ,
+    school-code        .initial:n = { 10284 }                 ,
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{info/degree,info/degree*}
 % \changes{v1.2}{2023/04/24}{新增学位名称设置项。}
 % 覆盖预定义的学位字段。
@@ -5221,8 +5283,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \geometry
   {
-    vmargin    = 2.5 cm,
-    hmargin    = 3.2 cm,
+    vmargin    = 2.54 cm,
+    hmargin    = 3.18 cm,
     headheight = 15 pt
   }
 %    \end{macrocode}
@@ -6528,17 +6590,34 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{研究生}
 % \changes{v1.0}{2022/06/30}{调整研究生封面布局。}
+% \changes{v1.2}{2023/05/01}{调整研究生封面布局。}
 %
 % \subparagraph{正面} 包括校名、校徽、标题、信息栏。
+%
+% \begin{macro}{g/cover-front/top}
+% 研究生封面顶部信息实例。
+% 因为我们设置了全局的 |linespread=1.625|，此处单倍行距对应的倍数为 $1.3/1.2$。
+%    \begin{macrocode}
+%<*def-g>
+\@@_declare_element:nn { g / cover-front / top }
+  {
+    content     =
+      \skip_vertical:n { -9 bp } \skip_horizontal:n { -.5 cm }
+      \vbox:n { \@@_g_cover_top: },
+    format      = \normalfont \@@_zihao:nn { 1.083 } { -5 },
+    bottom-skip = 20 pt,
+    align       = l
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{g/cover-front/emblem-img}
 % 研究生封面校徽图片实例。
 %    \begin{macrocode}
-%<*def-g>
 \@@_declare_element:nn { g / cover-front / emblem-img }
   {
-    content     = \@@_emblem:N \c_@@_emblemwdi_dim,
-    bottom-skip = 20 pt
+    content     = \@@_emblem:N \c_@@_emblemwd_dim,
+    bottom-skip = .47 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6549,7 +6628,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { g / cover-front / name-img }
   {
     content     = \@@_name:N \c_@@_namewd_dim,
-    bottom-skip = 70 pt
+    bottom-skip = 2.25 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6559,23 +6638,11 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-front / type }
   {
-    content     =
-      \dim_set:Nn \l_@@_tmpb_dim { 266 pt }
-      \@@_box_spread_name:Nn \l_@@_tmpb_dim { type },
-    format      = \zihao { 1 } \bfseries,
-    bottom-skip = 20 pt
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{g/cover-front/degree}
-% 研究生封面标题实例。
-%    \begin{macrocode}
-\@@_declare_element:nn { g / cover-front / degree }
-  {
-    content     = \c_@@_name_apply_tl,
-    format      = \zihao { 1 } \bfseries,
-    bottom-skip = 40 pt plus 1 fill
+    content     = \@@_info:n { type } \@@_name:n { type },
+    format      =
+      \@@_fontsize:nn { 28 bp } { 1.3 } \normalfont \bfseries
+      \@@_set_ccglue:n { .5 em },
+    bottom-skip = 20 pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6585,12 +6652,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-front / info }
   {
-    content     =
-      \@@_g_cover_info:NNNN
-        \c_@@_clabelwd_dim
-        \c_@@_crulewd_dim
-        \c_@@_hsep_dim
-        \c_@@_fmt_coverlabel_tl,
+    content     = \@@_g_cover_info:,
     bottom-skip = 20 pt plus 1 fill
   }
 %    \end{macrocode}
@@ -6600,25 +6662,48 @@ To produce the documentation run the original source files ending with
 % 研究封面日期实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-front / date }
-  { content = \g_@@_info_submitdate_tl }
+  {
+    content     = \g_@@_info_submitdate_tl,
+    bottom-skip = 2.2 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_g_cover_top:}
+% 研究生封面顶部信息栏。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_g_cover_top:
+  {
+    \dim_set:Nn \l_@@_tmpa_dim { 4 em }
+    \dim_set:Nn \l_@@_tmpb_dim { 5 em }
+    \clist_map_inline:nn { code, clc, secretlv, udc, id }
+      {
+        \@@_cover_entry:NNNNn \c_@@_name_colon_tl \l_@@_tmpa_dim
+          \l_@@_tmpb_dim \tex_relax:D { ##1 }
+      }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@@_g_cover_info:NNNN}
-% 研究生封面信息栏。
-% \begin{arguments}
-%   \item 名称盒子宽度，|dim| 型变量
-%   \item 内容盒子宽度，|dim| 型变量
-%   \item 间隔宽度，|dim| 型变量
-%   \item 标签格式
-% \end{arguments}
+% 研究生封面中部信息栏。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_g_cover_info:NNNN #1#2#3#4
   {
-    \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
-    \@@_cover_entry_title:NNN #1 #2 #4
+    \@@_cover_entry_title:NNNN #1 #2 #3 #4
     \clist_map_inline:nn { author, major, field, supvfull }
-      { \@@_cover_entry:NNNn #1 #2 #4 { ##1 } }
+      { \@@_cover_entry:NNNNn #1 #2 #3 #4 { ##1 } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_g_cover_info:}
+%    \begin{macrocode}
+\cs_new:Npn \@@_g_cover_info:
+  {
+    \tl_set:Nn \l_@@_tmpa_tl { \skip_horizontal:n { .7 cm } }
+    \@@_g_cover_info:NNNN \l_@@_tmpa_tl
+      \c_@@_clabelwd_dim \c_@@_crulewd_dim \c_@@_fmt_coverlabel_tl
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6648,7 +6733,6 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_g_cover_back:NN #1#2
   {
-    \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
     \@@_box_spread_name:NNn #1 #2 { id }
       \c_@@_name_colon_tl \g_@@_info_id_tl \tex_par:D
     \@@_box_spread_name:NNn #1 #2 { defenddate }
@@ -7283,7 +7367,7 @@ To produce the documentation run the original source files ending with
 %<*def-g>
 \@@_declare_page:nn { cover-g-front }
   {
-    element  = { emblem-img, name-img, type, degree, info, date },
+    element  = { top, emblem-img, name-img, type, info, date },
     prefix   = g / cover-front /,
     format   = \zihao { 3 } \kaishu,
     top-skip = 0 pt
@@ -8114,6 +8198,7 @@ To produce the documentation run the original source files ending with
 %<def-p>    { auth sign       a } { 导师签名                           },
 %<def-g>    { chairman          } { 答辩委员会主席：                   },
 %<def-g>    { clc               } { 分类号                             },
+%<def-g>    { code              } { 学校代码                           },
 %<def-g>    { confer            } { 学位授予单位和日期                 },
     { date              } { 日期                               },
 %<def-g>    { defend date       } { 论文答辩日期                       },
@@ -8241,12 +8326,12 @@ To produce the documentation run the original source files ending with
     { nju           } { 南京大学        } { Nanjing~ University   },
     { suffix        } {                 } { _en                   },
 %<def-u>    { supv full     } { 指导教师（姓名、职称）   } { MENTOR       },
-%<def-g>    { supv full     } { 指导教师        } { MENTOR                },
+%<def-g>    { supv full     } { 导师姓名        } { MENTOR                },
     { table         } { 表              } { table                 },
 %<def-u>    { title         } { 题目            } { THESIS                },
 %<def-g>    { title         } { 论文题目        } { THESIS                },
-%<def-u>    { type          } { 本科毕业论文    } { u                     }
-%<def-g>    { type          } { 研究生毕业论文  } { g                     }
+%<def-u>    { type          } { 本科毕业论文                        } { u }
+%<def-g>    { type          } {     学位论文                        } { g }
   }
   { \@@_define_name:nnn #1 }
 %    \end{macrocode}
@@ -8337,39 +8422,39 @@ To produce the documentation run the original source files ending with
 %
 % \changes{v0.17}{2022/04/09}{将长度值分离到 \file{.def} 文件。}
 % \changes{v1.0}{2022/06/11}{可以单独指定下划线的宽度和偏移。}
-% 默认固定长度值。
+% 默认固定长度值。此处名称的空格仅用来提升可读性，在生成变量名时会被删去。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
 %    \end{macrocode}
-% 封面信息栏的行距。此处的空格仅用来提升可读性，在生成变量名时会被删去。
+% 封面信息栏的行距。
 %    \begin{macrocode}
 %<def-u>    { c lineskip     } { 36   pt },
-%<def-g>    { c lineskip     } { 32   pt },
 %<def-p>    { c lineskip     } { 28   pt },
 %    \end{macrocode}
 % 封面信息栏标签的宽度。
 %    \begin{macrocode}
 %<def-u>    { c label wd     } { 68   pt },
-%<def-g>    { c label wd     } { 80   pt },
+%<def-g>    { c label wd     } { 2.97 cm },
 %<def-p>    { c label wd     } { 50   pt },
 %    \end{macrocode}
 % 封面信息栏横线的宽度。
 %    \begin{macrocode}
 %<def-u>    { c rule  wd     } { 270  pt },
 %<def-g>    { c rule  wd     } { 240  pt },
+%<def-g>    { c type  wd     } { 239  pt },
 %    \end{macrocode}
 % 校徽图片的宽度。
 %    \begin{macrocode}
 %<def-u>    { emblem  wd     } { 68   pt },
+%<def-g>    { emblem  wd     } { 40   pt },
 %<def-u>    { emblem  wd i   } { 68   pt },
-%<def-g>    { emblem  wd i   } { 46   pt },
 %<def-g>    { emblem  wd ii  } { 61   pt },
 %    \end{macrocode}
 % 校名图片的宽度。
 %    \begin{macrocode}
 %<def-u>    { name    wd     } { 300  pt },
-%<def-g>    { name    wd     } { 126  pt },
+%<def-g>    { name    wd     } { 111  pt },
 %<def-p>    { name    wd     } { 220  pt },
 %    \end{macrocode}
 % 下划线高度（厚度）。下划线绘制命令是通用的，因此没有作文件区分。
