@@ -6,9 +6,12 @@
 
 ## [未发布]
 
+## [1.2.0] - 2023-05-01
+
 ### 新增
 
-- 新增研究生中英文学位名称选项 `info/degree` 和 `info/degree*` - [#200]
+- 跟进 2023 年研究生学位论文模板新设计 - [#204]
+- 新增研究生中英文学位名称选项 `info/degree*` - [#200]
 - 新增研究生英文摘要条目内容下划线选项 `abstract/underline` - [#202]
 
 ### 修复
@@ -457,7 +460,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.1.2...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.2.0...HEAD
+
+[1.2.0]: https://github.com/nju-lug/NJUThesis/compare/v1.1.2...v1.2.0
 
 [1.1.2]: https://github.com/nju-lug/NJUThesis/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/nju-lug/NJUThesis/compare/v1.1.0...v1.1.1
@@ -527,6 +532,7 @@
 [#191]: https://github.com/nju-lug/NJUThesis/issues/191
 [#200]: https://github.com/nju-lug/NJUThesis/discussions/200
 [#202]: https://github.com/nju-lug/NJUThesis/discussions/202
+[#204]: https://github.com/nju-lug/NJUThesis/issues/204
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

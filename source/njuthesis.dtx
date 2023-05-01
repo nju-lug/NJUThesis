@@ -109,7 +109,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.2.0 2023-04-27 00:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.2.0 2023-05-01 14:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -380,7 +380,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.2.0 \quad 2023-04-27}
+% \date{v1.2.0 \quad 2023-05-01}
 %
 % \maketitle
 %
@@ -431,7 +431,7 @@ To produce the documentation run the original source files ending with
 %
 % 本模板使用的本科生毕业论文模板格式依据
 % 《关于启动南京大学2023届本科毕业论文（设计）工作的通知》\cite{nju-bachelor-2023}，
-% 研究生学位论文格式依据研究生院提供的材料包\cite{nju-master-2022,nju-doctor-2022}。
+% 研究生学位论文格式依据研究生院提供的材料包\cite{nju-graduate-2023}。
 % 博士后出站报告格式要求与博士学位论文一致\cite{nju-postdoc-2022}，
 % 封面、摘要的设计参考了部分既有报告。
 %
@@ -1462,8 +1462,6 @@ To produce the documentation run the original source files ending with
 %   \begin{syntax}
 %     \OPT{clc} = \Arg{中国图书分类号}
 %     \OPT{udc} = \Arg{国际图书分类号}
-%     \OPT{secret-level} = <不涉密|秘密|机密|绝密>
-%     \OPT{supervisor-contact} = \Arg{导师联系方式}
 %   \end{syntax}
 % 研究生学位论文封面上的\href{http://www.ztflh.com/}{中国图书分类号}和\ignorespaces
 % \href{http://www.udcsummary.info/php/index.php?lang=chi&pr=Y}{国际图书分类号}。
@@ -2576,17 +2574,11 @@ To produce the documentation run the original source files ending with
 % \newblock (2022-12-19)
 % \urlprefix\url{https://jw.nju.edu.cn/29/d8/c26263a600536/page.htm}
 %
-% \bibitem{nju-master-2022}
+% \bibitem{nju-graduate-2023}
 % 南京大学研究生院.
-% \newblock \textit{硕士研究生申请学位材料下载} [EB/OL].
-% \newblock (2022-04-26)
-% \urlprefix\url{https://grawww.nju.edu.cn/1077/list.htm}
-%
-% \bibitem{nju-doctor-2022}
-% 南京大学研究生院.
-% \newblock \textit{博士研究生申请学位材料下载} [EB/OL].
-% \newblock (2022-04-26)
-% \urlprefix\url{https://grawww.nju.edu.cn/1076/list.htm}
+% \newblock \textit{关于开展六月份学位申请、审核工作的通知} [EB/OL].
+% \newblock (2023-04-26)
+% \urlprefix\url{https://grawww.nju.edu.cn/63/a9/c905a615337/page.htm}
 %
 % \bibitem{nju-postdoc-2022}
 % 南京大学人力资源处.
@@ -4666,12 +4658,24 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{info/clc,info/secret-level,info/udc,info/supervisor-contact}
-% 国家图书馆封面相关信息。
+% \begin{macro}{info/clc,info/udc}
+% 分类号。
 %    \begin{macrocode}
     clc                 .tl_set:N = \g_@@_info_clc_tl               ,
-    secret-level        .tl_set:N = \g_@@_info_secretlv_tl          ,
     udc                 .tl_set:N = \g_@@_info_udc_tl               ,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/secret-level}
+% 密级。
+%    \begin{macrocode}
+    secret-level        .tl_set:N = \g_@@_info_secretlv_tl          ,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/supervisor-contact}
+% 导师联系方式。
+%    \begin{macrocode}
     supervisor-contact  .tl_set:N = \g_@@_info_supvcont_tl          ,
 %    \end{macrocode}
 % \end{macro}
@@ -4685,8 +4689,8 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{info/school-code}
-% \changes{v1.2}{2022/04/29}{新增学校代码设置项。}
-% 答辩日期。
+% \changes{v1.2}{2023/04/27}{新增学校代码设置项。}
+% 学校代码。
 %    \begin{macrocode}
     school-code         .tl_set:N = \g_@@_info_code_tl              ,
     school-code        .initial:n = { 10284 }                       ,
@@ -5094,7 +5098,10 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_stzhongs:
   {
     \fontspec_font_if_exist:nTF { 华文中宋 }
-      { \newCJKfontfamily \@@_stzhongs: { 华文中宋 } }
+      {
+        \newCJKfontfamily \@@_stzhongs: { 华文中宋 }
+          [ \c_@@_name_fakebold_tl ]
+      }
       {
         \cs_set_eq:NN \@@_stzhongs: \rmfamily
         \msg_warning:nn { njuthesis } { missing-stzhongs }
@@ -6617,7 +6624,7 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{研究生}
 % \changes{v1.0}{2022/06/30}{调整研究生封面布局。}
-% \changes{v1.2}{2023/05/01}{调整研究生封面布局。}
+% \changes{v1.2}{2023/05/01}{更新2023年新版研究生学位论文封面布局。}
 %
 % \subparagraph{正面} 包括校名、校徽、标题、信息栏。
 %
@@ -8117,7 +8124,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\njupaperlist}
 % \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
 % \changes{v0.14}{2021/12/20}{成果列表中可突出指定作者姓名及年份。}
-% \changes{v0.19}{2022/05/22}{修复成果列表与章末参考文献表的冲突。}
+% \changes{v1.2}{2023/04/07}{修复成果列表与章末参考文献表的冲突。}
 % 成果列表。
 %    \begin{macrocode}
 \NewDocumentCommand \njupaperlist
