@@ -1458,25 +1458,43 @@ To produce the documentation run the original source files ending with
 % 如果是盲审，填入“盲审”二字即可。
 % \end{function}
 %
-% \begin{function}[updated=2021-10-01]{info/clc,info/secret-level,
-%   info/udc,info/supervisor-contact}
+% \begin{function}[updated=2021-10-01]{info/clc,info/udc}
 %   \begin{syntax}
 %     \OPT{clc} = \Arg{中国图书分类号}
 %     \OPT{udc} = \Arg{国际图书分类号}
 %     \OPT{secret-level} = <不涉密|秘密|机密|绝密>
 %     \OPT{supervisor-contact} = \Arg{导师联系方式}
 %   \end{syntax}
-% 国家图书馆封面相关，包括\href{http://www.ztflh.com/}{中国图书分类号}、
-% \href{http://www.udcsummary.info/php/index.php?lang=chi&pr=Y}{国际图书分类号}、
-% 密级和导师联系方式。
+% 研究生学位论文封面上的\href{http://www.ztflh.com/}{中国图书分类号}和\ignorespaces
+% \href{http://www.udcsummary.info/php/index.php?lang=chi&pr=Y}{国际图书分类号}。
 % \end{function}
 %
-% \begin{function}[added=2023-04-24]{info/degree,info/degree*}
+% \begin{function}[updated=2021-10-01]{info/secret-level}
 %   \begin{syntax}
-%     \OPT{degree}  = \Arg{中文学位名}
+%     \OPT{secret-level} = <不涉密|秘密|机密|绝密>
+%   \end{syntax}
+% 研究生学位论文封面上的密级。
+% \end{function}
+%
+% \begin{function}[updated=2021-10-01]{info/supervisor-contact}
+%   \begin{syntax}
+%     \OPT{supervisor-contact} = \Arg{导师联系方式}
+%   \end{syntax}
+% 国家图书馆封面上的导师联系方式。
+% \end{function}
+%
+% \begin{function}[added=2023-04-29]{info/school-code}
+%   \begin{syntax}
+%     \OPT{school-code} = \Arg{10284}
+%   \end{syntax}
+% 研究生学位论文封面上的学校代码。\CJKsout{你不会真的想改这个吧？}
+% \end{function}
+%
+% \begin{function}[added=2023-04-24]{info/degree*}
+%   \begin{syntax}
 %     \OPT{degree*} = \Arg{英文学位名}
 %   \end{syntax}
-% 研究生中英文封面上的学位名称。默认会由模板通过 \opt{degree} 和 \opt{type}
+% 研究生英文封面上的学位名称。默认会由模板通过 \opt{degree} 和 \opt{type}
 % 文档类选项生成，也可以由本选项自定义名称。
 % \end{function}
 %
@@ -3173,33 +3191,32 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_box_multiline:NNNN}
-% 多行固定长度的下划线内容，用于国家图书馆封面。
+% \begin{macro}{\@@_box_multiline:NNNn,\@@_box_multiline:NNn}
+% 多行固定长度的下划线内容。
 % \begin{arguments}
-%   \item 用于循环的 |int| 型变量
 %   \item 用于存储条目数量的 |int| 型变量
 %   \item 内容，|clist| 型变量
 %   \item 宽度，|dim| 型变量
+%   \item 条目数量
 % \end{arguments}
 % 默认绘制 4 条下划线。在评阅者人数超过 4 人时添加额外的条目。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_box_multiline:NNNN #1#2#3#4
+\cs_new_protected:Npn \@@_box_multiline:NNNn #1#2#3#4
   {
-    \int_set:Nn #1 { 1 }
-    \int_set:Nn #2 { \int_max:nn { \clist_count:N #3 } { 4 } }
-    \int_do_until:nn { #1 > #2 }
+    \int_set:Nn #1 { \int_max:nn { \clist_count:N #2 } { #4 } }
+    \int_step_inline:nn { #1 }
       {
-        \clist_pop:NN #3 \l_@@_tmpa_tl
+        \clist_pop:NN #2 \l_@@_tmpa_tl
 %    \end{macrocode}
 % \changes{v1.1}{2022/11/29}{修复空返回值在国家图书馆封面引发的死循环。}
 % 防止空的返回值引发死循环。
 %    \begin{macrocode}
         \quark_if_no_value:NT \l__nju_tmpa_tl
           { \tl_set_eq:NN \l_@@_tmpa_tl \c_empty_tl }
-        \@@_box_ulined:NN #4 \l_@@_tmpa_tl \tex_par:D
-        \int_incr:N #1
+        \@@_box_ulined:NN #3 \l_@@_tmpa_tl \tex_par:D
       }
   }
+\cs_new:Npn \@@_box_multiline:NNn { \@@_box_multiline:NNNn \l_@@_tmpa_int }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4660,27 +4677,26 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{info/email}
-% \changes{v0.14}{2022/01/12}{新增电邮地址信息项。}
+% \changes{v0.14}{2022/01/12}{新增电邮地址设置项。}
 % 用于学位论文出版授权书的电子邮件地址。
 %    \begin{macrocode}
     email               .tl_set:N = \g_@@_info_email_tl             ,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{info/defend-date}
-% \changes{v0.14}{2022/01/14}{精简答辩日期选项。}
+% \begin{macro}{info/school-code}
+% \changes{v1.2}{2022/04/29}{新增学校代码设置项。}
 % 答辩日期。
 %    \begin{macrocode}
-    school-code         .tl_set:N = \g_@@_info_code_tl    ,
-    school-code        .initial:n = { 10284 }                 ,
+    school-code         .tl_set:N = \g_@@_info_code_tl              ,
+    school-code        .initial:n = { 10284 }                       ,
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{info/degree,info/degree*}
+% \begin{macro}{info/degree*}
 % \changes{v1.2}{2023/04/24}{新增学位名称设置项。}
 % 覆盖预定义的学位字段。
 %    \begin{macrocode}
-    degree              .tl_set:N = \g_@@_info_degree_tl            ,
     degree*             .tl_set:N = \g_@@_info_degree_en_tl
   }
 %    \end{macrocode}
@@ -4778,16 +4794,6 @@ To produce the documentation run the original source files ending with
 \tl_new:N  \g_@@_info_type_tl
 \tl_set:Nx \g_@@_info_type_tl
   { \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int } }
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\g_@@_info_degree_tl}
-% 学位类型字样。
-%    \begin{macrocode}
-\tl_new:N     \g_@@_info_degree_tl
-\tl_set_eq:NN \g_@@_info_degree_tl \g_@@_info_type_tl
-\bool_if:NF \g_@@_opt_academic_bool
-  { \tl_put_right:Nn \g_@@_info_degree_tl { 专业 } }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -6736,31 +6742,71 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-back / info }
   {
-    content =
-      \@@_g_cover_back:NN
-        \c_@@_clabelwd_dim
-        \c_@@_fmt_coverlabel_tl,
+    content     = \@@_g_cover_back:,
+    bottom-skip = 8.1 cm
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{g/cover-back/sign}
+% 研究生封面背面信息实例。
+%    \begin{macrocode}
+\@@_declare_element:nn { g / cover-back / sign }
+  {
+    content = \@@_g_cover_sign:,
     align   = l
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_back_g:NN}
-% 研究生封面背面信息。格式存在变化，没有使用循环来简化。
+% \begin{macro}{\@@_cover_back_g:NNN,\@@_cover_back_g:}
+% 研究生封面背面信息。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
+%   \item 内容盒子宽度，|dim| 型变量
 %   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_g_cover_back:NN #1#2
+\cs_new_protected:Npn \@@_g_cover_back:NNN #1#2#3
   {
-    \@@_box_spread_name:NNn #1 #2 { id }
-      \c_@@_name_colon_tl \g_@@_info_id_tl \tex_par:D
-    \@@_box_spread_name:NNn #1 #2 { defenddate }
-      \c_@@_name_colon_tl \g_@@_info_defenddate_tl \tex_par:D
-    \@@_box_spread_name:NNn #1 #2 { supvfull }
-      \c_@@_name_colon_tl \skip_horizontal:n { 8 em }
-      { #2 \c_@@_name_sign_tl }
+    \@@_cover_entry:NNNNn \c_empty_tl #1 #2 #3 { chairman }
+    \tex_par:D
+    \@@_box_spread_name:NNn #1 #3 { reviewer }
+    \parbox [ t ] { #2 }
+      {
+        \@@_box_multiline:NNn \g_@@_info_reviewer_clist #2 { 5 }
+        \dim_gset_eq:NN \l_@@_tmpa_dim \tex_prevdepth:D
+      }
+    \tex_par:D
+    \dim_set_eq:NN \tex_prevdepth:D \l_@@_tmpa_dim
+    \@@_box_spread_name:NNn #1 #3 { defend date }
+    \@@_box_center:Nn #2 { \@@_info:n { defend date } }
+  }
+\cs_new:Npn \@@_g_cover_back:
+  {
+    \@@_g_cover_back:NNN \c_@@_clabelwdi_dim
+      \c_@@_crulewdi_dim \c_@@_fmt_coverlabel_tl
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_cover_sign_g:NNN,\@@_cover_sign_g:}
+% 研究生封面背面信息。
+% \begin{arguments}
+%   \item 名称盒子宽度，|dim| 型变量
+%   \item 标签格式
+%   \item 分隔符
+% \end{arguments}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_g_cover_sign:NNN #1#2#3
+  {
+    \@@_box_spread_name:NNn #1 #2 { sign a } #3 \tex_par:D
+    \@@_box_spread_name:NNn #1 #2 { sign b } #3
+  }
+\cs_new:Npn \@@_g_cover_sign:
+  {
+    \@@_g_cover_sign:NNN \c_@@_clabelwdii_dim
+      \c_@@_fmt_coverlabel_tl \c_@@_name_colon_tl
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6987,11 +7033,10 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_cover_bottom_nl:
   {
     \dim_set:Nn \l_@@_tmpa_dim { 9 em }
-    \c_@@_name_chairman_tl \@@_hskip:
+    \@@_name:n { chairman } \@@_name:n { colon } \@@_hskip:
     \@@_box_ulined_info:Nn \l_@@_tmpa_dim { chairman } \tex_par:D
-    \c_@@_name_reviewer_tl \@@_hskip:
-    \@@_box_multiline:NNNN \l_@@_tmpa_int \l_@@_tmpb_int
-      \g_@@_info_reviewer_clist \l_@@_tmpa_dim
+    \@@_name:n { reviewer } \@@_name:n { colon } \@@_hskip:
+    \@@_box_multiline:NNn \g_@@_info_reviewer_clist \l_@@_tmpa_dim { 4 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7401,10 +7446,10 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_page:nn { cover-g-back }
   {
-    element  = { info },
+    element  = { info, sign },
     prefix   = g / cover-back /,
     format   = \zihao { 3 } \kaishu,
-    top-skip = 500 pt
+    top-skip = 5.3 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -8205,7 +8250,6 @@ To produce the documentation run the original source files ending with
   {
     { acknowledgement   } { 致 \qquad{} 谢                     },
     { acknowledgement a } { 致谢（盲审阶段，暂时隐去）         },
-%<def-g>    { apply             } {（申请 \g_@@_info_degree_tl 学位）},
 %<def-g>    { auth decl         } { 学位论文出版授权书                 },
 %<def-p>    { auth decl         } { 研究报告使用授权书                 },
 %<def-p>    { author            } { 作者                               },
@@ -8217,7 +8261,7 @@ To produce the documentation run the original source files ending with
 %<def-g>    { auth sign         } { 作者签名：\njuline{\hspace{6em}}   },
 %<def-p>    { auth sign         } { 本人签名                           },
 %<def-p>    { auth sign       a } { 导师签名                           },
-%<def-g>    { chairman          } { 答辩委员会主席：                   },
+%<def-g>    { chairman          } { 答辩委员会主席                     },
 %<def-g>    { clc               } { 分类号                             },
 %<def-g>    { code              } { 学校代码                           },
 %<def-g>    { confer            } { 学位授予单位和日期                 },
@@ -8266,7 +8310,7 @@ To produce the documentation run the original source files ending with
     { pdf creator       } { LaTeX~ with~ njuthesis~ class      },
     { preface           } { 前 \qquad{} 言                     },
 %<def-p>    { report            } { 博士后研究工作报告                 },
-%<def-g>    { reviewer          } { 评阅人：                           },
+%<def-g>    { reviewer          } { 评阅人                             },
 %<def-g>    { secret lv         } { 密级                               },
 %<def-g>    { secret status     } { 论文涉密情况：                     },
 %<def-g>    { secret free       } { 不保密                             },
@@ -8274,6 +8318,8 @@ To produce the documentation run the original source files ending with
 %<def-g>      { 保密，保密期（ \c_@@_name_blankdatea_tl 至
 %<def-g>                       \c_@@_name_blankdatea_tl ）           },
 %<def-g>    { sign              } { （签字）                           },
+%<def-g>    { sign            a } { 研究生签名                         },
+%<def-g>    { sign            b } { 导师签名                           },
 %<def-u>    { submit date       } { 提交日期                           },
 %<def-g>    { submit date       } { 论文提交日期                       },
 %<def-p>    { submit date       } { 完成日期                           },
@@ -8457,12 +8503,15 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 %<def-u>    { c label wd     } { 68   pt },
 %<def-g>    { c label wd     } { 2.97 cm },
+%<def-g>    { c label wd i   } { 3.90 cm },
+%<def-g>    { c label wd ii  } { 2.62 cm },
 %<def-p>    { c label wd     } { 50   pt },
 %    \end{macrocode}
 % 封面信息栏横线的宽度。
 %    \begin{macrocode}
 %<def-u>    { c rule  wd     } { 270  pt },
-%<def-g>    { c rule  wd     } { 240  pt },
+%<def-g>    { c rule  wd     } { 6.7  cm },
+%<def-g>    { c rule  wd i   } { 6.2  cm },
 %<def-g>    { c type  wd     } { 239  pt },
 %    \end{macrocode}
 % 校徽图片的宽度。
