@@ -6,9 +6,19 @@
 
 ## [未发布]
 
+## [1.2.0] - 2023-05-01
+
+### 新增
+
+- 跟进 2023 年研究生学位论文模板新设计 - [#204]
+- 新增研究生中英文学位名称选项 `info/degree*` - [#200]
+- 新增研究生英文摘要条目内容下划线选项 `abstract/underline` - [#202]
+
 ### 修复
 
+- 更正本科生模板封面和承诺书样式
 - 盲审模式下隐藏年级和学校名称 - [#181]
+- 修复章末参考文献表与成果列表的冲突问题 - [#191]
 
 ## [1.1.2] - 2023-01-15
 
@@ -45,7 +55,7 @@
 ### 新增
 
 - 盲审模式下不显示致谢
-- 新增脚注圈码选项 `circled` 和 `circled*` - [#129]
+- 新增脚注圈码选项 `footnote/circled` 和 `footnote/circled*` - [#129]
 - 新增脚注的悬挂缩进选项 `hang` - [#129]
 
 ### 修复
@@ -451,7 +461,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.1.2...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.2.0...HEAD
+
+[1.2.0]: https://github.com/nju-lug/NJUThesis/compare/v1.1.2...v1.2.0
 
 [1.1.2]: https://github.com/nju-lug/NJUThesis/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/nju-lug/NJUThesis/compare/v1.1.0...v1.1.1
@@ -512,10 +524,16 @@
 [#150]: https://github.com/nju-lug/NJUThesis/discussions/150
 [#155]: https://github.com/nju-lug/NJUThesis/discussions/155
 [#165]: https://github.com/nju-lug/NJUThesis/discussions/165
+[#166]: https://github.com/nju-lug/NJUThesis/discussions/166
 [#169]: https://github.com/nju-lug/NJUThesis/issues/169
 [#170]: https://github.com/nju-lug/NJUThesis/issues/170
 [#172]: https://github.com/nju-lug/NJUThesis/issues/172
 [#173]: https://github.com/nju-lug/NJUThesis/issues/173
+[#181]: https://github.com/nju-lug/NJUThesis/issues/181
+[#191]: https://github.com/nju-lug/NJUThesis/issues/191
+[#200]: https://github.com/nju-lug/NJUThesis/discussions/200
+[#202]: https://github.com/nju-lug/NJUThesis/discussions/202
+[#204]: https://github.com/nju-lug/NJUThesis/issues/204
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
