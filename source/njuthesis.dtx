@@ -109,7 +109,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.2.0 2023-05-01 14:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.2.0 2023-05-02 16:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -380,7 +380,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.2.0 \quad 2023-05-01}
+% \date{v1.2.0 \quad 2023-05-02}
 %
 % \maketitle
 %
@@ -3059,7 +3059,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_fontsize:nn,\@@_fontsize:nnn}
-% 用于设置字号的辅助函数。\pkg{ctex} 默认使用的行距是 1.2，我们在这里重新计算
+% 用于设置字号的辅助函数。\pkg{ctex} 默认使用的行距倍数是 1.2，我们在这里重新计算
 % \tn{baselineskip}，抛弃 \cs{l__ctex_font_size_tl} 中的第二个值。
 %    \begin{macrocode}
 \cs_new:Npn \@@_fontsize:nn #1#2
@@ -6475,13 +6475,14 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{u/cover/emblem-img}
 % \changes{v1.1}{2023/01/15}{本科生模板封面校徽居中。}
+% \changes{v1.2}{2023/05/02}{更正本科生模板封面字体和行距。}
 % 本科生封面校徽图片实例。
 %    \begin{macrocode}
 %<*def-u>
 \@@_declare_element:nn { u / cover / emblem-img }
   {
     content     = \@@_emblem:N \c_@@_emblemwd_dim,
-    bottom-skip = 10 pt
+    bottom-skip = 1.2 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6492,7 +6493,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { u / cover / name-img }
   {
     content     = \@@_name:N \c_@@_namewd_dim,
-    bottom-skip = 10 pt,
+    bottom-skip = 1 cm,
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6502,11 +6503,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / title }
   {
-    content     =
-      \dim_set:Nn \l_@@_tmpb_dim { 217 pt }
-      \@@_box_spread_name:Nn \l_@@_tmpb_dim { type },
-    format      = \zihao { -1 } \bfseries,
-    bottom-skip = 10 pt plus 1 fill
+    content     = \@@_name:n { type },
+    format      = \zihao { 1 } \bfseries \@@_set_ccglue:n { .5 em },
+    bottom-skip = 0 cm plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6516,13 +6515,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / info }
   {
-    content =
-      \@@_u_cover_info:NNNN
-        \c_@@_clabelwd_dim
-        \c_@@_crulewd_dim
-        \c_@@_hsep_dim
-        \c_@@_fmt_coverlabel_tl,
-    format  = \zihao { 3 }
+    content = \@@_u_cover_info:,
+    format  = \zihao { 3 } \kaishu
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6538,7 +6532,6 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_u_cover_info:NNNN #1#2#3#4
   {
-    \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
     \@@_cover_entry:NNNn #1 #2 #4 { dept  }
     \@@_cover_entry:NNNn #1 #2 #4 { major }
     \@@_cover_entry_title:NNN #1 #2 #4
@@ -6557,7 +6550,18 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_u_cover_info:}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_u_cover_info:
+  {
+    \@@_u_cover_info:NNNN \c_@@_clabelwd_dim \c_@@_crulewd_dim
+      \c_@@_hsep_dim \c_empty_tl
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subparagraph{诚信承诺书}
+% \changes{v1.2}{2023/05/02}{更正本科生模板承诺书行距。}
 %
 % \begin{macro}{u/decl/orig/emblem}
 % 本科生诚信承诺书校徽实例。
@@ -6572,11 +6576,12 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{u/decl/orig/title}
 % 本科生诚信承诺书标题实例。
+% Word 模板中的行距是固定值 \qty{36}{bp}，这里需要除以 1.625 的 \tn{linespread}。
 %    \begin{macrocode}
 \@@_declare_element:nn { u / decl / orig / title }
   {
     content     = \c_@@_name_origdecl_tl,
-    format      = \zihao { -1 } \sffamily,
+    format      = \sffamily \@@_fontsize:nn { 24 bp } { 22.15 bp } \bfseries,
     bottom-skip = 50 pt
   }
 %    \end{macrocode}
@@ -6588,9 +6593,9 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { u / decl / orig / text }
   {
     content     = \c_@@_text_origdecl_tl,
-    format      = \zihao { -3 },
+    format      = \@@_zihao:nn { 1.9 } { -3 },
     align       = n,
-    bottom-skip = 0 pt plus 1 fil
+    bottom-skip = 2.7 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6600,9 +6605,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { u / decl / orig / sign }
   {
-    content  = \@@_decl_sign:,
-    format   = \zihao { -3 },
-    align    = r
+    content = \@@_decl_sign:,
+    format  = \zihao { -3 } \sffamily,
+    align   = r
   }
 %</def-u>
 %    \end{macrocode}
@@ -6616,7 +6621,7 @@ To produce the documentation run the original source files ending with
   {
 %<def-u>    \clist_map_inline:nn { origsign, id, date }
 %<def-g>    \clist_map_inline:nn { origsign,     date }
-      { \@@_vskip: \@@_name:n { ##1 } ： \@@_uline:n { 7 em } }
+      { \tex_par:D \@@_name:n { ##1 } ： \hbox_to_wd:nn { 6 em } { } }
   }
 %</(def-u|def-g)>
 %    \end{macrocode}
@@ -6674,7 +6679,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \@@_info:n { type } \@@_name:n { type },
     format      =
-      \@@_fontsize:nn { 28 bp } { 1.3 } \@@_stzhongs: \bfseries
+      \@@_fontsize:nn { 28 bp } { 28 bp } \@@_stzhongs: \bfseries
       \@@_set_ccglue:n { .5 em },
     bottom-skip = 20 pt plus 1 fill
   }
@@ -6841,13 +6846,13 @@ To produce the documentation run the original source files ending with
       { by }
       \skip_vertical:N \c_zero_skip
       \textbf { \sffamily \g_@@_info_author_en_tl }
-      \skip_vertical:n { .5 cm }
+      \skip_vertical:n { .5 cm minus .5 cm }
       { Supervised~ by }
       \skip_vertical:N \c_zero_skip
       \textsf { \g_@@_info_supv_en_tl
         \tex_par:D \g_@@_info_supvii_en_tl },
     format      = \zihao { 4 },
-    bottom-skip = 0 pt plus 1.2 fil
+    bottom-skip = 0 pt plus 1.2 fil minus 1 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7299,7 +7304,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 用循环输出各字段。
 %    \begin{macrocode}
-    \dim_set_eq:NN \tex_baselineskip:D \c_@@_clineskip_dim
     \clist_map_inline:Nn \l_@@_tmp_clist
       {
         \@@_box_spread_name:NNn #1 #2 { ##1 }
@@ -7415,6 +7419,7 @@ To produce the documentation run the original source files ending with
   {
     element     = { emblem-img, name-img, title, info },
     prefix      = u / cover /,
+    top-skip    = -.3 cm,
     bottom-skip = 0 pt plus 1 fill
   }
 %    \end{macrocode}
@@ -7427,7 +7432,6 @@ To produce the documentation run the original source files ending with
   {
     element     = { emblem, title, text, sign },
     prefix      = u / decl / orig /,
-    top-skip    = 0 pt,
     bottom-skip = 0 pt plus 1 fil
   }
 %</def-u>
@@ -8501,11 +8505,6 @@ To produce the documentation run the original source files ending with
 \clist_map_inline:nn
   {
 %    \end{macrocode}
-% 封面信息栏的行距。
-%    \begin{macrocode}
-%<def-u>    { c lineskip     } { 36   pt },
-%<def-p>    { c lineskip     } { 28   pt },
-%    \end{macrocode}
 % 封面信息栏标签的宽度。
 %    \begin{macrocode}
 %<def-u>    { c label wd     } { 68   pt },
@@ -8516,7 +8515,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 封面信息栏横线的宽度。
 %    \begin{macrocode}
-%<def-u>    { c rule  wd     } { 270  pt },
+%<def-u>    { c rule  wd     } { 8    cm },
 %<def-g>    { c rule  wd     } { 6.7  cm },
 %<def-g>    { c rule  wd i   } { 6.2  cm },
 %<def-g>    { c type  wd     } { 239  pt },
@@ -8547,7 +8546,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 小幅空格。
 %    \begin{macrocode}
-    { h sep          } { 5    pt },
+%<def-u>    { h sep          } { 0    pt },
+%<def-g|def-p>    { h sep          } { 5    pt },
     { v sep          } { 1    ex },
 %    \end{macrocode}
 % 章节标题前后间距。
@@ -8575,8 +8575,7 @@ To produce the documentation run the original source files ending with
 %<def-g|def-p>    { pagestyle     } { headings                          },
     { abslabel      } { \bfseries                         },
     { abslabel_en   } {                                   },
-%<def-u>    { cover title   } { \bfseries                         },
-%<def-g>    { cover title   } {                                   },
+    { cover title   } {                                   },
 %<def-u>    { cover label   } { \kaishu                           },
 %<def-g>    { cover label   } { \bfseries                         },
 %<def-p>    { cover label   } {                                   },
