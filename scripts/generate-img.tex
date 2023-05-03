@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 本文件用于生成黑色的校徽和校名图片
+% 本文件用于生成校徽和校名图片
 % 编译命令为 pdflatex --shell-escape generate-img
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass{article}
@@ -7,6 +7,10 @@
 \usetikzlibrary{external}
 \tikzexternalize[prefix=nju-]
 \begin{document}
-\tikzsetnextfilename{emblem}\njuemblem[black]{!}{!}
-\tikzsetnextfilename{name}\njuname[black]{!}{!}
+% 黑色
+\tikzsetnextfilename{emblem}         \njuemblem[black]{!}{!}
+\tikzsetnextfilename{name}           \njuname  [black]{!}{!}
+% 紫色
+\tikzsetnextfilename{emblem-purple}  \njuemblem[njupurple]{!}{!}
+\tikzsetnextfilename{name-purple}    \njuname  [njupurple]{!}{!}
 \end{document}
