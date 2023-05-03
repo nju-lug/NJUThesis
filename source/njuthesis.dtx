@@ -109,7 +109,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.2.0 2023-05-02 16:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.2.1 2023-05-03 13:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -380,7 +380,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.2.0 \quad 2023-05-02}
+% \date{v1.2.1 \quad 2023-05-03}
 %
 % \maketitle
 %
@@ -1488,13 +1488,14 @@ To produce the documentation run the original source files ending with
 % 研究生学位论文封面上的学校代码。\CJKsout{你不会真的想改这个吧？}
 % \end{function}
 %
-% \begin{function}[added=2023-04-24]{info/degree*}
-%   \begin{syntax}
-%     \OPT{degree*} = \Arg{英文学位名}
-%   \end{syntax}
-% 研究生英文封面上的学位名称。默认会由模板通过 \opt{degree} 和 \opt{type}
-% 文档类选项生成，也可以由本选项自定义名称。
-% \end{function}
+% \begin{function}[added=2023-04-24]{info/degree,info/degree*}
+  %   \begin{syntax}
+  %     \OPT{degree}  = \Arg{中文学位名}
+  %     \OPT{degree*} = \Arg{英文学位名}
+  %   \end{syntax}
+  % 研究生国家图书馆封面英文封面上的学位名称。默认会由模板通过 \opt{degree}
+  % 和 \opt{type} 文档类选项生成，也可以由本选项自定义名称。
+  % \end{function}
 %
 %
 % \subsubsection{输入示范}
@@ -4697,10 +4698,11 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{info/degree*}
+% \begin{macro}{info/degree,info/degree*}
 % \changes{v1.2}{2023/04/24}{新增学位名称设置项。}
 % 覆盖预定义的学位字段。
 %    \begin{macrocode}
+    degree              .tl_set:N = \g_@@_info_degree_tl            ,
     degree*             .tl_set:N = \g_@@_info_degree_en_tl
   }
 %    \end{macrocode}
@@ -4798,6 +4800,16 @@ To produce the documentation run the original source files ending with
 \tl_new:N  \g_@@_info_type_tl
 \tl_set:Nx \g_@@_info_type_tl
   { \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int } }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_info_degree_tl}
+% 学位类型字样。
+%    \begin{macrocode}
+\tl_new:N     \g_@@_info_degree_tl
+\tl_set_eq:NN \g_@@_info_degree_tl \g_@@_info_type_tl
+\bool_if:NF \g_@@_opt_academic_bool
+  { \tl_put_right:Nn \g_@@_info_degree_tl { 专业 } }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -6709,12 +6721,13 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_g_cover_top:}
+% \changes{v1.2}{2023/05/03}{根据学号长度确定研究生封面顶部的下划线长度。}
 % 研究生封面顶部信息栏。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_g_cover_top:
   {
     \dim_set:Nn \l_@@_tmpa_dim { 4 em }
-    \dim_set:Nn \l_@@_tmpb_dim { 5 em }
+    \@@_get_width:NV \l_@@_tmpb_dim \g_@@_info_id_tl
     \clist_map_inline:nn { code, clc, secretlv, udc, id }
       {
         \@@_cover_entry:NNNNn \c_@@_name_colon_tl \l_@@_tmpa_dim

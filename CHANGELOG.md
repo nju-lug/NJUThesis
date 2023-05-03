@@ -6,12 +6,23 @@
 
 ## [未发布]
 
-## [1.2.0] - 2023-05-01
+## [1.2.1] - 2023-05-03
+
+### 新增
+
+- 新增研究生中文学位名称选项 `info/degree` - [#200]
+
+### 修复
+
+- 修复国家图书馆封面学位丢失的学位名称 - [#204]
+- 修复研究生封面上学号下划线长度不足的问题
+
+## [1.2.0] - 2023-05-02
 
 ### 新增
 
 - 跟进 2023 年研究生学位论文模板新设计 - [#204]
-- 新增研究生中英文学位名称选项 `info/degree*` - [#200]
+- 新增研究生英文学位名称选项 `info/degree*` - [#200]
 - 新增研究生英文摘要条目内容下划线选项 `abstract/underline` - [#202]
 
 ### 修复
@@ -461,8 +472,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.2.0...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.2.1...HEAD
 
+[1.2.1]: https://github.com/nju-lug/NJUThesis/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/nju-lug/NJUThesis/compare/v1.1.2...v1.2.0
 
 [1.1.2]: https://github.com/nju-lug/NJUThesis/compare/v1.1.1...v1.1.2

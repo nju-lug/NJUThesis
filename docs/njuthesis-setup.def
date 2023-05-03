@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.2.0 2023-05-01
+% njuthesis 参数设置文件 v1.2.1 2023-05-03
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -60,7 +60,7 @@
     % 第二导师全称
     % 如果确实没有第二导师，不填写即可
     %
-    submit-date = {2021-08-10},
+    submit-date = {2022-05-20},
     % 提交日期
     % 格式为 yyyy-mm-dd
     % 不填就是编译当天日期
@@ -68,8 +68,9 @@
     %
     % 以下均为研究生项
     %
+    % degree = {工程硕士},
     % degree* = {Master of Engineering}
-    % 覆盖英文封面的默认学位名称
+    % 覆盖默认学位名称
     %
     field = {物理化学},
     field* = {Physical Chemistry},
@@ -96,7 +97,7 @@
     secret-level = {不涉密},
     % 密级
     %
-    defend-date = {2021-09-19},
+    defend-date = {2022-05-21},
     % 答辩日期
     % 格式为 yyyy-mm-dd
     % 不填就是编译当天日期
@@ -107,10 +108,10 @@
     %
     %
     % 以下用于国家图书馆封面
-    confer-date = {2022-05-20},
+    confer-date = {2022-05-22},
     % 学位授予日期
     %
-    bottom-date = {2022-05-21},
+    bottom-date = {2022-05-23},
     % 封面底部日期
     %
     supervisor-contact = {
