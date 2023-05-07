@@ -109,7 +109,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.2.1 2023-05-03 13:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.0 2023-05-07 19:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -380,7 +380,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.2.1 \quad 2023-05-03}
+% \date{v1.3.0 \quad 2023-05-07}
 %
 % \maketitle
 %
@@ -1870,16 +1870,24 @@ To produce the documentation run the original source files ending with
 % 定理计数器范围。
 % \end{function}
 %
+% \begin{function}[added=2023-05-07]{theorem/share-counter}
+%   \begin{syntax}
+%     \OPT{share-counter} = <\TFF>
+%   \end{syntax}
+% 是否共享计数器。
+% \end{function}
+%
 % 模板的默认设置等效于
 %
 % \begin{latexexample}[moretexcs={\njusetup,\bfseries,\itshape,\mdlgwhtsquare},
 %   emph={[2]theorem},emph={[3]style,header-font,body-font,qed-symbol,counter}]
 %   \njusetup[theorem]{
-%       style       = plain,
-%       header-font = \normalfont \bfseries ,
-%       body-font   = \itshape ,
-%       qed-symbol  = \ensuremath { \mdlgwhtsquare },
-%       counter     = chapter
+%       style         = plain,
+%       header-font   = \normalfont \bfseries ,
+%       body-font     = \itshape ,
+%       qed-symbol    = \ensuremath { \mdlgwhtsquare },
+%       counter       = chapter,
+%       share-counter = false
 %   }
 % \end{latexexample}
 %
@@ -1926,12 +1934,14 @@ To produce the documentation run the original source files ending with
 % \opt{theorem/type} 保存的列表以及前方的样式设置并创建相应环境。
 % 这也就意味着该选项在 \opt{theorem/type} 为空时会报错。
 %
-% 在下面这个例子中，我们先创建了预置的七种环境，随后将定理内部文字字体改为
+% 在下面这个例子中，我们先创建了预置的七种环境。除了无编号的
+% \env{proof}，其余六种共用一个计数器。随后我们将定理内部文字字体改为
 % 宋体，定义了 \env{exercise} 和 \env{solution} 两种定理环境，后者没有编号。
 %
 % \begin{latexexample}[moretexcs={\njusetup,\normalfont},
 %   emph={[2]theorem},emph={[3]define,body-font,type}]
 %   \njusetup[theorem]{
+%       share-counter = true ,
 %       define ,
 %       body-font   = \normalfont ,
 %       type        = {
@@ -6143,6 +6153,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\l_@@_thm_share_tl}
+% 存储共享的计数器名称。
+%    \begin{macrocode}
+\tl_new:N \l_@@_thm_share_tl
+%    \end{macrocode}
+% \end{macro}
+%
 %    \begin{macrocode}
 \keys_define:nn { nju / theorem }
   {
@@ -6185,6 +6202,15 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{theorem/share-counter}
+% \changes{v1.3}{2023/05/07}{批量创建定理类环境时可以共享计数器。}
+% 是否在分组内使用同一计数器。
+%    \begin{macrocode}
+    share-counter .bool_set:N = \l_@@_thm_share_bool,
+    share-counter  .initial:n = false,
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{theorem/define}
 % 创建定理类环境。
 %    \begin{macrocode}
@@ -6193,21 +6219,22 @@ To produce the documentation run the original source files ending with
       {
         \clist_if_empty:NT \g_@@_thm_type_clist
           { \msg_error:nn { njuthesis } { empty-theorem-type } }
+        \tl_clear:N \l_@@_thm_share_tl
         \clist_map_inline:Nn \g_@@_thm_type_clist
-          { \@@_thm_define:nn ##1 }
+          { \@@_thm_define:Nnn \l_@@_thm_share_tl ##1 }
       }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_thm_define:nn}
+% \begin{macro}{\@@_thm_define:Nnn}
 % 配置定理环境。
 % \begin{arguments}
 %   \item 环境名与类型标识，|clist| 型变量
 %   \item 定理头名称
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_thm_define:nn #1#2
+\cs_new_protected:Npn \@@_thm_define:Nnn #1#2#3
   {
     \bool_if:NF \g_@@_opt_load_nthm_bool
       { \msg_error:nn { njuthesis } { missing-ntheorem } }
@@ -6218,7 +6245,7 @@ To produce the documentation run the original source files ending with
 % 拆分环境名与类型标识。这里是考虑到标识符不一定出现在环境名中，
 % 典型如 \env{proof} 环境默认无编号但也不含星号。
 %    \begin{macrocode}
-    \clist_set:Nn \l_@@_tmp_clist { #1 }
+    \clist_set:Nn \l_@@_tmp_clist { #2 }
     \clist_pop:NN \l_@@_tmp_clist \l_@@_tmpa_tl
     \clist_pop:NN \l_@@_tmp_clist \l_@@_tmpb_tl
 %    \end{macrocode}
@@ -6227,10 +6254,21 @@ To produce the documentation run the original source files ending with
     \tl_if_in:NnT  \l_@@_tmpb_tl { + }
       { \exp_args:NV \theoremsymbol \l_@@_thm_qed_symbol_tl }
     \tl_if_in:NnTF \l_@@_tmpb_tl { * }
-      { \@@_thm_new:VVn \l_@@_tmpa_tl \c_novalue_tl        {#2} }
-      { \@@_thm_new:VVn \l_@@_tmpa_tl \l_@@_thm_counter_tl {#2} }
+      { \@@_thm_new:VVVn \l_@@_tmpa_tl \c_novalue_tl        #1 {#3} }
+      { \@@_thm_new:VVVn \l_@@_tmpa_tl \l_@@_thm_counter_tl #1 {#3} }
+%    \end{macrocode}
+% 存储共享的计数器。
+%    \begin{macrocode}
+    \bool_if:NT \l_@@_thm_share_bool
+      {
+        \tl_gset_eq:NN #1 \l_@@_tmpa_tl
+        \bool_gset_false:N \l_@@_thm_share_bool
+      }
+%    \end{macrocode}
+% 设置 \pkg{cleveref} 引用名。
+%    \begin{macrocode}
     \bool_if:NT \g_@@_opt_load_cref_bool
-      { \crefname { \l_@@_tmpa_tl } {#2} {#2} }
+      { \exp_args:NV \crefname \l_@@_tmpa_tl {#3} {#3} }
 %    \end{macrocode}
 % 清除保存的证毕符号。
 %    \begin{macrocode}
@@ -6239,7 +6277,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_thm_new:nnn,\@@_thm_new:VVn}
+% \begin{macro}{\@@_thm_new:nnnn,\@@_thm_new:VVVn}
 % 包装 \tn{newtheorem} 以便展开输入的变量。根据 \file{interface3.pdf}
 % 手册 5.3 节最后一段建议的展开顺序，这里将 |V| 型参数放在靠前的位置。
 % \begin{arguments}
@@ -6250,17 +6288,21 @@ To produce the documentation run the original source files ending with
 % 根据环境结束命令是否存在可以判断该环境是否有定义，
 % 相应地可以利用局部定义切换定义和重定义环境的命令。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_thm_new:nnn #1#2#3
+\cs_new_protected:Npn \@@_thm_new:nnnn #1#2#3#4
   {
     \group_begin:
       \cs_if_exist:cT { end #1 }
         { \cs_set_eq:NN \newtheorem \renewtheorem }
       \tl_if_novalue:nTF {#2}
-        { \newtheorem * {#1} {#3}      }
-        { \newtheorem   {#1} {#3} [#2] }
+        { \newtheorem * {#1} {#4} }
+        {
+          \tl_if_empty:nTF {#3}
+            { \newtheorem {#1}      {#4} [#2] }
+            { \newtheorem {#1} [#3] {#4}      }
+        }
     \group_end:
   }
-\cs_generate_variant:Nn \@@_thm_new:nnn { VVn }
+\cs_generate_variant:Nn \@@_thm_new:nnnn { VVVn }
 %    \end{macrocode}
 % \end{macro}
 %

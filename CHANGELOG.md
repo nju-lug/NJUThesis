@@ -6,6 +6,14 @@
 
 ## [未发布]
 
+### 新增
+
+- 新增定理类环境共享计数器选项 `theorem/share-counter` - [#207]
+
+### 修复
+
+- 修复批量创建环境时缺少 `\crefname` 的问题 - [#206]
+
 ## [1.2.1] - 2023-05-03
 
 ### 修复
@@ -547,6 +555,8 @@
 [#200]: https://github.com/nju-lug/NJUThesis/discussions/200
 [#202]: https://github.com/nju-lug/NJUThesis/discussions/202
 [#204]: https://github.com/nju-lug/NJUThesis/issues/204
+[#206]: https://github.com/nju-lug/NJUThesis/issues/206
+[#207]: https://github.com/nju-lug/NJUThesis/issues/207
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

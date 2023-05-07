@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.2.1 2023-05-03
+% njuthesis 参数设置文件 v1.3.0 2023-05-07
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -214,12 +214,13 @@
     % define,
     % 默认创建内置的七种定理环境
     %
-    % style       = remark,
-    % header-font = \sffamily \bfseries,
-    % body-font   = \normalfont,
-    % qed-symbol  = \ensuremath { \male },
-    % counter     = section,
-    % type        = {...}
+    % style         = remark,
+    % header-font   = \sffamily \bfseries,
+    % body-font     = \normalfont,
+    % qed-symbol    = \ensuremath { \male },
+    % counter       = section,
+    % share-counter = true,
+    % type          = {...}
     % 以上设置项在重新调用 theorem/define 后生效
 }
 
