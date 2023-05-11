@@ -9,6 +9,8 @@
 ### 新增
 
 - 新增定理类环境共享计数器选项 `theorem/share-counter` - [#207]
+- 自动补全研究生专业型学位封面上的专业信息 - [#208]
+  - 增加 `info/major` 定义方式
 
 ### 修复
 
@@ -557,6 +559,7 @@
 [#204]: https://github.com/nju-lug/NJUThesis/issues/204
 [#206]: https://github.com/nju-lug/NJUThesis/issues/206
 [#207]: https://github.com/nju-lug/NJUThesis/issues/207
+[#208]: https://github.com/nju-lug/NJUThesis/issues/208
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
