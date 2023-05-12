@@ -127,7 +127,16 @@ To produce the documentation run the original source files ending with
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
 \documentclass[fontset=fandol]{ctxdoc}
-\usepackage{listings,njuvisual,tabularray,unicode-math,xeCJKfntef,zhlineskip}
+\usepackage{
+  codehigh,
+  listings,
+  njuvisual,
+  tabularray,
+  unicode-math,
+  xeCJKfntef,
+  zhlineskip
+}
+\CodeHigh{language=latex/latex3}
 \usepackage[firstpage=true]{background}
 \backgroundsetup{
   contents={\njuemblem[white!85!gray]{22cm}{!}},
@@ -323,6 +332,13 @@ To produce the documentation run the original source files ending with
       \group_end:
     }
 \group_end:
+\cs_set_protected_nopar:Npn \__ctxdoc_output_line:
+  {
+    \tex_noindent:D
+    \__ctxdoc_replace_at_at:N \l__ctxdoc_verbatim_line_tl
+    \tl_gset_eq:NN \g__codehigh_code_tl \l__ctxdoc_verbatim_line_tl
+    \__codehigh_typeset_code_text: \tex_par:D
+  }
 \NewDocumentCommand \grd { m }
   { \__ctxdoc_module_angle:n { \color { njuviolet } #1 } }
 \NewDocumentCommand \sgrd { m }
@@ -332,6 +348,8 @@ To produce the documentation run the original source files ending with
 \ExplSyntaxOff
 \makeatother
 \begin{document}
+  ^^A \DisableDocumentation
+  ^^A \DisableImplementation
   \DocInput{njuthesis.dtx}
   \PrintChanges
   \PrintIndex
