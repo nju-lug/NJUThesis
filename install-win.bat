@@ -15,5 +15,6 @@ xetex "njuthesis.dtx"                      > NUL
 DEL "*.dtx"
 DEL "*.ins"
 DEL "*.log"
+DEL "njuthesis-doc.cls"
 
 CD ..

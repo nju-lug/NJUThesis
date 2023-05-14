@@ -10,7 +10,7 @@ on:
 
 env:
   CTAN_URL: https://mirrors.rit.edu/CTAN
-  TL_PACKAGES: alphalph auxhook background bibtex bigfoot booktabs caption cm-unicode colortbl csquotes ctex dashundergaps diagbox enumitem everypage fancyhdr fancyvrb fandol footmisc hologo hycolor hypdoc hyperref l3build lexend libertinus-fonts listings lm-math makecell makeindex mathtools natbib ninecolors njuvisual pict2e poormanlog preview psnfss setspace siunitx symbol tabularray tex-gyre tex-gyre-math threeparttable translator underscore unicode-math url xint xits xstring zhlineskip zref
+  TL_PACKAGES: alphalph auxhook background bibtex bigfoot booktabs caption cm-unicode catchfile codehigh colortbl csquotes ctex dashundergaps diagbox enumitem everypage fancyhdr fancyvrb fandol footmisc hologo hycolor hypdoc hyperref l3build lexend libertinus-fonts listings lm-math makecell makeindex mathtools natbib ninecolors njuvisual pict2e poormanlog preview psnfss setspace siunitx symbol tabularray tex-gyre tex-gyre-math threeparttable translator underscore unicode-math url varwidth xint xits xstring zhlineskip zref
 
 jobs:
   release:
@@ -59,7 +59,7 @@ jobs:
           mv njuthesis-ctan.zip njuthesis-ctan-$VERSION.zip
           mv njuthesis.pdf njuthesis-$VERSION.pdf
 
-      - name: Zip RELEASE package
+      - name: Zip USER package
         run: |
           ${{ env.SET_PATH }}
           mv docs/* .
