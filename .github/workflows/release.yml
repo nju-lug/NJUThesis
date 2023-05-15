@@ -10,7 +10,7 @@ on:
 
 env:
   CTAN_URL: https://mirrors.rit.edu/CTAN
-  TL_PACKAGES: alphalph auxhook background bibtex bigfoot booktabs caption cm-unicode catchfile codehigh colortbl csquotes ctex dashundergaps diagbox enumitem everypage fancyhdr fancyvrb fandol footmisc hologo hycolor hypdoc hyperref l3build lexend libertinus-fonts listings lm-math makecell makeindex mathtools natbib ninecolors njuvisual pict2e poormanlog preview psnfss setspace siunitx symbol tabularray tex-gyre tex-gyre-math threeparttable translator underscore unicode-math url varwidth xint xits xstring zhlineskip zref
+  PACKAGES: cm-unicode tex-gyre tex-gyre-math lexend xits natbib makeindex
 
 jobs:
   release:
@@ -32,8 +32,19 @@ jobs:
           wget ${{ env.CTAN_URL }}/systems/texlive/tlnet/install-tl-unx.tar.gz
           tar -xzf install-tl-unx.tar.gz
           cd install-tl-20* && ./install-tl --profile ../.github/workflows/texlive.profile
+
+      - name: Install latest njuthesis
+        run: |
+          ${{ env.SET_PATH }}
           tlmgr option repository ${{ env.CTAN_URL }}/systems/texlive/tlnet/
-          tlmgr install ${{ env.TL_PACKAGES }}
+          tlmgr install xetex l3build
+          l3build install
+          cd scripts
+          bash download.sh ${{ env.CTAN_URL }}
+          cd data
+          wget https://raw.githubusercontent.com/stone-zeng/tl-depend-analysis/data/data/tl-depend.json
+          cd ..
+          python3 main.py --pkg "${{ env.PACKAGES }}" --exclude "njuthesis.cls"
           tlmgr update --self --all --no-auto-install
 
       - name: Install fonts

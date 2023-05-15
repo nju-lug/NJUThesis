@@ -18,8 +18,10 @@
 
 ### 杂项
 
-- 手册源码部分添加语法高亮 
+- 手册源码部分添加语法高亮
 - 手册样式设置拆分为单独的 `njuthesis-doc.cls`
+- 使用 [`tl-depend-analysis`] 重构 CI 脚本
+  - 感谢 [@stone-zeng]！
 
 ## [1.2.1] - 2023-05-03
 
@@ -570,9 +572,11 @@
 [语义化版本]: https://semver.org/lang/zh-CN/
 [南大 TeX]: https://tex.nju.edu.cn/
 [NJU Thesis 2021]: https://github.com/FengChendian/NJUThesis2021
+[`tl-depend-analysis`]: https://github.com/stone-zeng/tl-depend-analysis/
 
 [@zepinglee]: https://github.com/zepinglee
 [@hushidong]: https://github.com/hushidong
 [@zhoujian9410]: https://github.com/zhoujian9410
 [@note286]: https://github.com/note286
 [@AlphaZTX]: https://github.com/AlphaZTX
+[@stone-zeng]: https://github.com/stone-zeng

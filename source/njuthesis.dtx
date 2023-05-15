@@ -20,6 +20,7 @@
 % This work consists of the files njuthesis.dtx,
 %           and the derived files njuthesis.ins,
 %                                 njuthesis.cls,
+%                                 njuthesis-doc.cls,
 %                                 njuthesis-graduate.def,
 %                                 njuthesis-postdoctoral.def,
 %                                 njuthesis-undergraduate.def,
@@ -89,6 +90,7 @@ To produce the documentation run the original source files ending with
 \Msg{* The recommended directory is TDS:tex/latex/njuthesis      *}
 \Msg{*                                                           *}
 \Msg{*     njuthesis.cls                                         *}
+\Msg{*     njuthesis-doc.cls                                     *}
 \Msg{*     njuthesis-graduate.def                                *}
 \Msg{*     njuthesis-postdoctoral.def                            *}
 \Msg{*     njuthesis-undergraduate.def                           *}
@@ -8488,7 +8490,7 @@ To produce the documentation run the original source files ending with
   { \@@_define_fmt:nn #1 }
 %</(def-u|def-g|def-p)>
 %    \end{macrocode}
-% 
+%
 %
 % \subsection{手册文档类 \cls{njudoc}}
 % \changes{v1.3}{2023/05/12}{将手册样式设置拆分为单独的 \cls{njuthesis-doc} 文档类。}
@@ -8497,7 +8499,7 @@ To produce the documentation run the original source files ending with
 %<*doc-cls>
 %<@@=njudoc>
 %    \end{macrocode}
-% 
+%
 %
 %    \begin{macrocode}
 \RequirePackage { l3keys2e }
@@ -8515,16 +8517,19 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \subsubsection{载入宏包}
-% 
+%
+%    \begin{macrocode}
+\PassOptionsToPackage { fontset = fandol } { ctex       }
+\PassOptionsToPackage { firstpage = true } { background }
+%    \end{macrocode}
+%
 % 载入基础文档类。
 %    \begin{macrocode}
-\PassOptionsToClass { fontset = fandol } { ctxdoc }
 \LoadClass { ctxdoc }
 %    \end{macrocode}
-% 
+%
 % 载入宏包。
 %    \begin{macrocode}
-\PassOptionsToPackage { firstpage=true } { background }
 \RequirePackage
   {
     background,
@@ -8536,7 +8541,7 @@ To produce the documentation run the original source files ending with
     zhlineskip
   }
 \sys_if_engine_xetex:TF
-  { 
+  {
     \RequirePackage { xeCJKfntef }
     \renewcommand\emph[1]{\CJKunderdot[textformat=\itshape]{#1}}
   }
@@ -8550,7 +8555,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \subsubsection{杂项}
-% 
+%
 % 封面背景图案。
 %    \begin{macrocode}
 \backgroundsetup{
@@ -8558,7 +8563,7 @@ To produce the documentation run the original source files ending with
   scale=1, angle=0, hshift=-4cm
 }
 %    \end{macrocode}
-% 
+%
 % 文档命令。
 %    \begin{macrocode}
 \definecolor{tpblue}{HTML}{495A80}
@@ -8566,7 +8571,7 @@ To produce the documentation run the original source files ending with
 \newcommand\tikzlogo{Ti\emph{k}Z}
 \newcommand\OPT[1]{\textcolor{njuyellow}{\bfseries#1}}
 %    \end{macrocode}
-% 
+%
 % \pkg{hyperref} 设置。
 %    \begin{macrocode}
 \hypersetup{
@@ -8577,7 +8582,7 @@ To produce the documentation run the original source files ending with
   linkcolor = njuviolet,
   urlcolor  = njumagenta}
 %    \end{macrocode}
-% 
+%
 % \pkg{tabularray} 设置。
 %    \begin{macrocode}
 \UseTblrLibrary{booktabs,siunitx}
@@ -8587,7 +8592,7 @@ To produce the documentation run the original source files ending with
 \SetTblrInner[talltblr]{row{1}={font=\bfseries}}
 \DefTblrTemplate{caption-sep}{default}{\quad}
 %    \end{macrocode}
-% 
+%
 % \pkg{tabularray} 表格标签简写。
 %    \begin{macrocode}
 \def\TA{\TblrNote{a}}
@@ -8596,7 +8601,7 @@ To produce the documentation run the original source files ending with
 \def\TD{\TblrNote{d}}
 \def\TE{\TblrNote{e}}
 %    \end{macrocode}
-% 
+%
 %
 % \TeX{} 相关的名称简写。
 %    \begin{macrocode}
@@ -8605,14 +8610,30 @@ To produce the documentation run the original source files ending with
 \def\biber{\hologo{biber}}
 \def\LaTeXe{\hologo{LaTeX2e}}
 %    \end{macrocode}
-% 
+%
 % \pkg{zhlineskip} 设置。
 %    \begin{macrocode}
 \SetTextEnvironmentSinglespace{1.112}
 \SetMathEnvironmentSinglespace{1.112}
 %    \end{macrocode}
-% 
+%
 % \subsubsection{字体设置}
+%
+%    \begin{macrocode}
+\setmainfont { texgyretermes }
+  [
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic
+  ]
+%    \end{macrocode}
+%
+% 需要 \pkg{lexend}。
+%    \begin{macrocode}
+\setsansfont{LexendDeca}
+%    \end{macrocode}
 %
 % Iosevka。
 %    \begin{macrocode}
@@ -8626,12 +8647,7 @@ To produce the documentation run the original source files ending with
       ]
   }
 %    \end{macrocode}
-% 
-% 需要 \pkg{lexend}。
-%    \begin{macrocode}
-\setsansfont{LexendDeca}
-%    \end{macrocode}
-% 
+%
 % 思源宋体。
 %    \begin{macrocode}
 \fontspec_font_if_exist:nT { Source~ Han~ Serif~ SC }
@@ -8645,14 +8661,24 @@ To produce the documentation run the original source files ending with
       ]
   }
 %    \end{macrocode}
-% 
+%
+%    \begin{macrocode}
+\setCJKsansfont { FandolHei-Regular }
+  [
+    Extension = .otf,
+    BoldFont  = FandolHei-Bold
+  ]
+\setCJKmonofont { FandolFang-Regular }
+  [ Extension = .otf ]
+%    \end{macrocode}
+%
 % XITS。
 %    \begin{macrocode}
 \setmathfont{XITSMath-Regular}[
   BoldFont = XITSMath-Bold,
   Extension = .otf]
 %    \end{macrocode}
-% 
+%
 % \pkg{listings} 设置。
 %    \begin{macrocode}
 \lstdefinestyle{style@base}
@@ -8693,7 +8719,7 @@ To produce the documentation run the original source files ending with
     emphstyle  = [3]\bfseries\color{njuyellow}
   }
 %    \end{macrocode}
-% 
+%
 % 代码框环境。
 %    \begin{macrocode}
 \lstnewenvironment{shellexample}[1][]{%
@@ -8701,7 +8727,7 @@ To produce the documentation run the original source files ending with
 \lstnewenvironment{latexexample}[1][]{%
   \lstset{style=style@latex, #1}}{}
 %    \end{macrocode}
-% 
+%
 %
 % \subsubsection{标签颜色设置}
 %
@@ -8717,7 +8743,7 @@ To produce the documentation run the original source files ending with
 \definecolor { p@guard } { HTML } { FF1818 }
 \definecolor { c@guard } { HTML } { FFC300 }
 %    \end{macrocode}
-% 
+%
 % \begin{variable}{\c@@_module_color_prop}
 % 存储 guard 名称和对应的颜色。
 %    \begin{macrocode}
@@ -8731,7 +8757,7 @@ To produce the documentation run the original source files ending with
 % \end{variable}
 %
 % \begin{macro}{\@@_set_module_color:n}
-% 
+%
 %    \begin{macrocode}
 \cs_new:Npn \@@_set_module_color:Nn #1#2
   {
@@ -8739,7 +8765,7 @@ To produce the documentation run the original source files ending with
       { \tl_set:Nn #1 { c@guard } }
     \exp_args:NV \color #1 #2
   }
-\cs_new:Npn \@@_set_module_color:n 
+\cs_new:Npn \@@_set_module_color:n
   { \@@_set_module_color:Nn \l_tmpa_tl }
 %    \end{macrocode}
 % \end{macro}
@@ -8765,7 +8791,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_colored_module_angle:NN}
-% 
+%
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_colored_module_angle:NN #1#2
   {
@@ -8780,7 +8806,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_print_module:n}
-% 
+%
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_print_module:n #1
   {
@@ -8806,7 +8832,7 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 %
 % \begin{macro}{\@@_split_pm:n}
 % 通过竖线分割 guard 标签。
@@ -8817,7 +8843,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_split_m:n}
-% 
+%
 %    \begin{macrocode}
 \cs_new_protected_nopar:Npn \@@_split_m:n #1
   {
@@ -8828,13 +8854,13 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 %    \begin{macrocode}
 \group_begin:
   \char_set_catcode_active:N \>
 %    \end{macrocode}
-% 
+%
 % \begin{macro}{\__ctxdoc_module_star:w}
 %    \begin{macrocode}
   \cs_gset_protected:Npn \__ctxdoc_module_star:w #1 > #2 \q_stop
@@ -8848,7 +8874,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 
+%
 % \begin{macro}{\__ctxdoc_module_slash:w}
 %    \begin{macrocode}
   \cs_gset_protected:Npn \__ctxdoc_module_slash:w #1 > #2 \q_stop
@@ -8862,7 +8888,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 
+%
 % \begin{macro}{\__ctxdoc_module_pm:w}
 %    \begin{macrocode}
   \cs_gset_protected:Npn \__ctxdoc_module_pm:w #1 > #2 \q_stop
@@ -8908,27 +8934,27 @@ To produce the documentation run the original source files ending with
 \cs_set_protected_nopar:Npn \@@_output_line:N #1
   {
     \tex_noindent:D
-    \__ctxdoc_replace_at_at:N #1 
+    \__ctxdoc_replace_at_at:N #1
     \tl_remove_once:NV #1 \c__ctxdoc_active_cr_tl
-    \__codehigh_parse_code:nN { latex / latex3 } #1 
+    \__codehigh_parse_code:nN { latex / latex3 } #1
     \tex_par:D
   }
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\__ctxdoc_output_line:}
 % 在 \XeTeX{} 引擎下，\pkg{codehigh} 调用的 \pkg{l3regex} 模块有严重的性能问题。
 % 我们仅仅在需要时启用高亮。
 %    \begin{macrocode}
 \bool_if:NT \g_@@_codehigh_bool
-  { 
-    \cs_set:Npn \__ctxdoc_output_line: 
+  {
+    \cs_set:Npn \__ctxdoc_output_line:
       { \@@_output_line:N \l__ctxdoc_verbatim_line_tl }
   }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 %    \begin{macrocode}
 %</doc-cls>
 %    \end{macrocode}
