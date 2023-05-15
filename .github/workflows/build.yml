@@ -11,7 +11,7 @@ on:
 
 env:
   CTAN_URL: https://mirrors.rit.edu/CTAN
-  TL_PACKAGES: alphalph auxhook biber biblatex biblatex-gb7714-2015 bigfoot blindtext booktabs caption circledtext cleveref cm-unicode csquotes ctex dashundergaps emptypage enumitem fancyhdr fancyvrb fandol footmisc grfext hologo hycolor hypdoc hyperref l3experimental l3build latexmk libertinus-fonts listings lua-ul lualatex-math luatex85 makecell makeindex mathtools newcomputermodern ninecolors njuvisual ntheorem pict2e preview psnfss setspace siunitx standalone symbol tabularray tex-gyre tex-gyre-math threeparttable translator underscore unicode-math xits xstring zhlipsum zref
+  PACKAGES: latexmk cleveref enumitem footmisc tex-gyre xits biblatex-gb7714-2015 biber
 
 jobs:
   build-on-ubuntu:
@@ -30,13 +30,20 @@ jobs:
           wget ${{ env.CTAN_URL }}/systems/texlive/tlnet/install-tl-unx.tar.gz
           tar -xzf install-tl-unx.tar.gz
           cd install-tl-20* && ./install-tl --profile ../.github/workflows/texlive.profile
-          tlmgr install ${{ env.TL_PACKAGES }}
-          tlmgr update --self --all --no-auto-install --repository=${{ env.CTAN_URL }}/systems/texlive/tlnet/
 
       - name: Install latest njuthesis
         run: |
           ${{ env.SET_PATH }}
+          tlmgr option repository ${{ env.CTAN_URL }}/systems/texlive/tlnet/
+          tlmgr install xetex l3build
           l3build install
+          cd scripts
+          bash download.sh ${{ env.CTAN_URL }}
+          cd data
+          wget https://raw.githubusercontent.com/stone-zeng/tl-depend-analysis/data/data/tl-depend.json
+          cd ..
+          python3 main.py --pkg "${{ env.PACKAGES }}" --exclude "njuthesis-doc.cls"
+          tlmgr update --self --all --no-auto-install
 
       - name: Compile test file
         run: |

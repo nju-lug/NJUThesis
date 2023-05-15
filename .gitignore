@@ -42,9 +42,11 @@ test*.pdf
 build/
 release/
 support/
+scripts/data
 TDS/
 temp/
 mythesis/
+__pycache__/
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl

@@ -6,6 +6,23 @@
 
 ## [未发布]
 
+### 新增
+
+- 新增定理类环境共享计数器选项 `theorem/share-counter` - [#207]
+- 自动补全研究生专业型学位封面上的专业信息 - [#208]
+  - 增加 `info/major` 定义方式
+
+### 修复
+
+- 修复批量创建环境时缺少 `\crefname` 的问题 - [#206]
+
+### 杂项
+
+- 手册源码部分添加语法高亮
+- 手册样式设置拆分为单独的 `njuthesis-doc.cls`
+- 使用 [`tl-depend-analysis`] 重构 CI 脚本
+  - 感谢 [@stone-zeng]！
+
 ## [1.2.1] - 2023-05-03
 
 ### 修复
@@ -547,14 +564,19 @@
 [#200]: https://github.com/nju-lug/NJUThesis/discussions/200
 [#202]: https://github.com/nju-lug/NJUThesis/discussions/202
 [#204]: https://github.com/nju-lug/NJUThesis/issues/204
+[#206]: https://github.com/nju-lug/NJUThesis/issues/206
+[#207]: https://github.com/nju-lug/NJUThesis/issues/207
+[#208]: https://github.com/nju-lug/NJUThesis/issues/208
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
 [南大 TeX]: https://tex.nju.edu.cn/
 [NJU Thesis 2021]: https://github.com/FengChendian/NJUThesis2021
+[`tl-depend-analysis`]: https://github.com/stone-zeng/tl-depend-analysis/
 
 [@zepinglee]: https://github.com/zepinglee
 [@hushidong]: https://github.com/hushidong
 [@zhoujian9410]: https://github.com/zhoujian9410
 [@note286]: https://github.com/note286
 [@AlphaZTX]: https://github.com/AlphaZTX
+[@stone-zeng]: https://github.com/stone-zeng

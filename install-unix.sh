@@ -15,5 +15,6 @@ xetex "njuthesis.dtx" > /dev/null
 rm *.dtx
 rm *.ins
 rm *.log
+rm njuthesis-doc.cls
 
 cd ..
