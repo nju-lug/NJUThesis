@@ -69,7 +69,7 @@
     % 以下均为研究生项
     %
     % degree = {工程硕士},
-    % degree* = {Master of Engineering}
+    % degree* = {Master of Engineering},
     % 覆盖默认学位名称
     %
     field = {物理化学},
