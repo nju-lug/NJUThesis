@@ -20,6 +20,7 @@
 
 - 手册源码部分添加语法高亮
 - 手册样式设置拆分为单独的 `njuthesis-doc.cls`
+- 默认密级信息修改为“公开” - [#213]
 - 使用 [`tl-depend-analysis`] 重构 CI 脚本
   - 感谢 [@stone-zeng]！
 
@@ -567,6 +568,7 @@
 [#206]: https://github.com/nju-lug/NJUThesis/issues/206
 [#207]: https://github.com/nju-lug/NJUThesis/issues/207
 [#208]: https://github.com/nju-lug/NJUThesis/issues/208
+[#213]: https://github.com/nju-lug/NJUThesis/issues/213
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

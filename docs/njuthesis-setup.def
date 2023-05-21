@@ -94,7 +94,7 @@
     udc = {544.4},
     % 国际图书分类号
     %
-    secret-level = {不涉密},
+    secret-level = {公开},
     % 密级
     %
     defend-date = {2022-05-21},
