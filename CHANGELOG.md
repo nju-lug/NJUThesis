@@ -15,6 +15,7 @@
 ### 修复
 
 - 修复批量创建环境时缺少 `\crefname` 的问题 - [#206]
+- 修复禁用 `unicode-math` 时仍会配置数学字体的问题 - [#216]
 
 ### 杂项
 
@@ -569,6 +570,7 @@
 [#207]: https://github.com/nju-lug/NJUThesis/issues/207
 [#208]: https://github.com/nju-lug/NJUThesis/issues/208
 [#213]: https://github.com/nju-lug/NJUThesis/issues/213
+[#216]: https://github.com/nju-lug/NJUThesis/issues/216
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

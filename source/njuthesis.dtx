@@ -3716,6 +3716,13 @@ To produce the documentation run the original source files ending with
     requires~ loading~ the~ class~ with~ "ntheorem"~ option~
     set~ to~ "true".
   }
+\@@_msg:nn { missing-symbol }
+  {
+    \string\mdwhtsquare\ and~ \string\checkmark\ are~ not~
+    contained~ in~ the~ standard~ amsmath~ package.~ You~
+    should~ redefine~ them~ with~ other~ packages~ loaded~
+    to~ properly~ generate~ the~ declaration~ page.
+  }
 \@@_msg:nn { missing-title }
   {
     Thesis~ title~ should~ not~ be~ left~ blank.\\
@@ -4208,7 +4215,15 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \bool_if:NTF \g_@@_opt_load_um_bool
   { \RequirePackage { unicode-math } }
-  { \RequirePackage { amsmath      } }
+  {
+    \RequirePackage { amsmath }
+    \bool_if:NT \g_@@_opt_decl_bool
+      {
+        \msg_warning:nn { njuthesis } { missing-symbol }
+        \cs_new:Npn \mdwhtsquare { }
+        \cs_new:Npn \checkmark { }
+      }
+  }
 %    \end{macrocode}
 %
 % 载入各种宏包。
@@ -6293,26 +6308,30 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v1.3}{2023/05/22}{禁用 \pkg{unicode-math} 时不配置数学字体。}
 % 在 |\begin{document}| 处载入字体以兼容 \pkg{mathtools}，
 % 并设置小于等于号和实部符号等的样式。
 %    \begin{macrocode}
-\@@_at_begin_document:n
+\bool_if:NT \g_@@_opt_load_um_bool
   {
-    \use:c { @@_loadfont_math_ \g_@@_font_math_tl : }
-    \bool_if:NT \g_@@_opt_math_leq_bool
+    \@@_at_begin_document:n
       {
-        \cs_set_eq:NN \le  \leqslant
-        \cs_set_eq:NN \ge  \geqslant
-        \cs_set_eq:NN \leq \leqslant
-        \cs_set_eq:NN \geq \geqslant
+        \use:c { @@_loadfont_math_ \g_@@_font_math_tl : }
+        \bool_if:NT \g_@@_opt_math_leq_bool
+          {
+            \cs_set_eq:NN \le  \leqslant
+            \cs_set_eq:NN \ge  \geqslant
+            \cs_set_eq:NN \leq \leqslant
+            \cs_set_eq:NN \geq \geqslant
+          }
+        \bool_if:NT \g_@@_opt_math_re_bool
+          {
+            \cs_set:Npn \Re { \operatorname { Re } }
+            \cs_set:Npn \Im { \operatorname { Im } }
+          }
+        \bool_if:NT \g_@@_opt_math_vec_bool
+          { \cs_set_eq:NN \vec \symbf }
       }
-    \bool_if:NT \g_@@_opt_math_re_bool
-      {
-        \cs_set:Npn \Re { \operatorname { Re } }
-        \cs_set:Npn \Im { \operatorname { Im } }
-      }
-    \bool_if:NT \g_@@_opt_math_vec_bool
-      { \cs_set_eq:NN \vec \symbf }
   }
 %</class>
 %    \end{macrocode}
@@ -7004,7 +7023,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { g / decl / auth / date }
   {
-    content     = \@@_authdecl_secretlv_g:,
+    content     = \@@_g_decl_auth_secretlv:,
     format      = \zihao { 5 } ,
     align       = l
   }
@@ -7074,10 +7093,10 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_authdecl_secretlv_g:}
+% \begin{macro}{\@@_g_decl_auth_secretlv:}
 % 保密信息内容。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_authdecl_secretlv_g:
+\cs_new_protected:Npn \@@_g_decl_auth_secretlv:
   {
     \c_@@_name_secretstatus_tl \tex_par:D
     \ensuremath { \mdwhtsquare } \c_@@_name_secretfree_tl \tex_par:D
@@ -8535,8 +8554,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \hypersetup{
   pdftitle  = {
-    The njuthesis class -
-    LaTeX thesis template for Nanjing University},
+    The~ njuthesis~ class~ -~
+    LaTeX~ thesis~ template~ for~ Nanjing~ University},
   citecolor = njublue,
   linkcolor = njuviolet,
   urlcolor  = njumagenta}
