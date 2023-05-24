@@ -7433,24 +7433,28 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_make_cover:}
-% 生成本科生或研究生的普通封面。
+% \changes{v1.3}{2023/05/24}{修复非研究生类型时调用 \opt{nl-cover} 选项的错误。}
+% 调用实例生成封面。
 %    \begin{macrocode}
 %<*(def-u|def-g|def-p)>
 \cs_new_protected:Npn \@@_make_cover:
   {
 %<def-u>    \UseInstance { nju } { cover-u }
-%<def-g>    \clist_map_inline:nn { front, back, en }
-%<def-g>      { \UseInstance { nju } { cover-g- ##1  } }
 %<def-p>    \UseInstance { nju } { cover-p }
-  }
 %    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_make_cover_nl:}
-% 生成研究生的国家图书馆封面。
+% 如果在研究生模板中选择了 \opt{nlcover}，就生成用于申请学位的国家图书馆封面，
+% 反之生成普通封面。
 %    \begin{macrocode}
-%<def-g>\cs_new_protected:Npn \@@_make_cover_nl:
-%<def-g>  { \UseInstance { nju } { cover-nl } }
+%<*def-g>
+\bool_if:NTF \g_@@_opt_nlcover_bool
+  { \UseInstance { nju } { cover-nl } }
+  {
+    \UseInstance { nju } { cover-g-front }
+    \UseInstance { nju } { cover-g-back  }
+    \UseInstance { nju } { cover-g-en    }
+  }
+%</def-g>
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -7565,13 +7569,7 @@ To produce the documentation run the original source files ending with
     \bool_if:NF \g_@@_opt_draft_bool
       {
         \pagenumbering { gobble }
-%    \end{macrocode}
-% 如果在研究生模板中选择了 \opt{nlcover}，就生成用于申请学位的国家图书馆封面，
-% 反之生成普通封面。
-%    \begin{macrocode}
-        \bool_if:NTF \g_@@_opt_nlcover_bool
-          { \@@_make_cover_nl: }
-          { \@@_make_cover:    }
+        \@@_make_cover:
       }
 %    \end{macrocode}
 % 生成封面后清除标题中的换行控制符，便于在摘要中输出。
