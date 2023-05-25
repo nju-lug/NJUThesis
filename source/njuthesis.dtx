@@ -6384,12 +6384,13 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{u/cover/info}
+% \changes{v1.3}{2023/05/25}{将本科生封面信息恢复至 v1.1 的宋体格式。}
 % 本科生封面信息栏实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / info }
   {
     content = \@@_u_cover_info:,
-    format  = \zihao { 3 } \kaishu
+    format  = \zihao { 3 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6425,10 +6426,10 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_u_cover_info:}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_u_cover_info:
+\cs_new:Npn \@@_u_cover_info:
   {
     \@@_u_cover_info:NNNN \c_@@_clabelwd_dim \c_@@_crulewd_dim
-      \c_@@_hsep_dim \c_empty_tl
+      \c_@@_hsep_dim \kaishu
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7349,6 +7350,7 @@ To produce the documentation run the original source files ending with
   {
     element  = { title, top, middle, emblem-img, bottom },
     prefix   = g / cover-en /,
+    format   = \linespread { 1.3 },
     top-skip = 0 pt plus 1.2 fil
   }
 %    \end{macrocode}
@@ -8446,7 +8448,8 @@ To produce the documentation run the original source files ending with
 %<def-g|def-p>    { pagestyle     } { headings                          },
     { abslabel      } { \bfseries                         },
     { abslabel_en   } {                                   },
-    { cover title   } {                                   },
+%<def-u>    { cover title   } { \bfseries                         },
+%<def-g>    { cover title   } {                                   },
 %<def-u>    { cover label   } { \kaishu                           },
 %<def-g>    { cover label   } { \bfseries                         },
 %<def-p>    { cover label   } {                                   },
