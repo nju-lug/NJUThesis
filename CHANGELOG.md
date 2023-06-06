@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [1.3.0] - 2023-06-06
+
 ### 新增
 
 - 新增定理类环境共享计数器选项 `theorem/share-counter` - [#207]
@@ -18,6 +20,7 @@
 - 修复禁用 `unicode-math` 时仍会配置数学字体的问题 - [#216]
 - 修复非研究生类型时调用 `nl-cover` 选项的错误
 - 将本科生封面信息恢复至 v1.1 的宋体格式
+- 修复研究生出版授权书的打勾机制 - [#223]
 
 ### 杂项
 
@@ -494,11 +497,11 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.2.1...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.3.0...HEAD
 
+[1.3.0]: https://github.com/nju-lug/NJUThesis/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/nju-lug/NJUThesis/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/nju-lug/NJUThesis/compare/v1.1.2...v1.2.0
-
 [1.1.2]: https://github.com/nju-lug/NJUThesis/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/nju-lug/NJUThesis/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/nju-lug/NJUThesis/compare/v1.0.0...v1.1.0
@@ -573,6 +576,7 @@
 [#208]: https://github.com/nju-lug/NJUThesis/issues/208
 [#213]: https://github.com/nju-lug/NJUThesis/issues/213
 [#216]: https://github.com/nju-lug/NJUThesis/issues/216
+[#223]: https://github.com/nju-lug/NJUThesis/issues/223
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

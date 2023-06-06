@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.0 2023-05-07 19:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.0 2023-06-06 11:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -131,7 +131,7 @@ To produce the documentation run the original source files ending with
 %
 %<*driver>
 \ProvidesFile{njuthesis.dtx}
- \PassOptionsToClass{codehigh}{njuthesis-doc}
+\PassOptionsToClass{codehigh}{njuthesis-doc}
 \documentclass{njuthesis-doc}
 \begin{document}
   \DocInput{njuthesis.dtx}
@@ -148,7 +148,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.3.0 \quad 2023-05-07}
+% \date{v1.3.0 \quad 2023-06-06}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -7031,13 +7031,14 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_degree_checkbox:Nn}
+% \begin{macro}{\@@_degree_checkbox:nn}
+% \changes{v1.3}{2023/06/04}{修复研究生出版授权书的打勾机制。}
 % 信息栏的学位复选框。打勾符号对应 |U+2713|。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_degree_checkbox:Nn #1#2
+\cs_new_protected:Npn \@@_degree_checkbox:nn #1#2
   {
     \bool_lazy_and:nnTF
-      { \g_@@_opt_academic_bool && #1 }
+      { #1 \g_@@_opt_academic_bool }
       { \int_compare_p:n { \g_@@_info_type_int = #2 } }
       {
         \makebox [ 0   pt ] [l] { \ensuremath { \mdwhtsquare } }
@@ -7068,10 +7069,10 @@ To produce the documentation run the original source files ending with
         \tl_range:Nnn \g_@@_info_submitdate_tl {1} {4} \\
       \c_@@_name_degreea_tl &
         {
-          \@@_degree_checkbox:Nn \c_true_bool  { 2 } 学术学位硕士 \qquad
-          \@@_degree_checkbox:Nn \c_false_bool { 2 } 专业学位硕士 \\
-          \@@_degree_checkbox:Nn \c_true_bool  { 3 } 学术学位博士 \qquad
-          \@@_degree_checkbox:Nn \c_false_bool { 3 } 专业学位博士
+          \@@_degree_checkbox:nn {   } { 2 } 学术学位硕士 \qquad
+          \@@_degree_checkbox:nn { ! } { 2 } 专业学位硕士 \\
+          \@@_degree_checkbox:nn {   } { 3 } 学术学位博士 \qquad
+          \@@_degree_checkbox:nn { ! } { 3 } 专业学位博士
         } \\
       \c_@@_name_email_tl   & \g_@@_info_email_tl \\
       \c_@@_name_supvb_tl   &
@@ -8453,15 +8454,27 @@ To produce the documentation run the original source files ending with
 %<def-u>    { cover label   } { \kaishu                           },
 %<def-g>    { cover label   } { \bfseries                         },
 %<def-p>    { cover label   } {                                   },
+%    \end{macrocode}
+% 调用 \pkg{njuvisual} 时的校徽颜色。
+%    \begin{macrocode}
     { emblem color  } { black                             },
     { name   color  } { black                             },
+%    \end{macrocode}
+% 各级标题样式。
+%    \begin{macrocode}
     { section       } { \bigger \normalfont \sffamily     },
     { chapter       } { \c_@@_fmt_section_tl \centering },
-    { chapterintoc  } { \c_@@_fmt_section_tl            },
     { subsection    } { \c_@@_fmt_section_tl            },
     { subsubsection } { \c_@@_fmt_section_tl            },
     { paragraph     } { \c_@@_fmt_section_tl            },
     { subparagraph  } { \c_@@_fmt_section_tl            },
+%    \end{macrocode}
+% 目录中的章标题样式。
+%    \begin{macrocode}
+    { chapterintoc  } { \c_@@_fmt_section_tl            },
+%    \end{macrocode}
+% “目录”二字的样式。
+%    \begin{macrocode}
     { toc title     } { \centering \zihao { 3 } \bfseries },
     { header        } { \small \kaishu                    },
     { footer        } { \small \rmfamily                  }
