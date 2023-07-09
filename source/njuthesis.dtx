@@ -2234,13 +2234,19 @@ To produce the documentation run the original source files ending with
 %   \begin{syntax}
 %     \tn{njusetformat}\marg{名称}\marg{样式}
 %   \end{syntax}
-% 修改样式。默认样式可以参见 \ref{subsubsec:constant-format} 节。
+% 修改样式。所有可以修改的默认样式参见 \ref{subsubsec:constant-format} 节。
 % \end{function}
 %
 % 譬如，将章标题字号加大到小二号，示例如下：
 %
 % \begin{latexexample}[moretexcs={\njusetformat,\zihao}]
 %   \njusetformat{chapter}{\zihao{-2}\sffamily\centering}
+% \end{latexexample}
+%
+% 修改表格内容的字体：
+%
+% \begin{latexexample}[moretexcs={\njusetformat,\zihao,\bfseries}]
+%   \njusetformat{tabular}{\zihao{-4}\bfseries}
 % \end{latexexample}
 %
 %
@@ -3453,8 +3459,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_title:N #1
   {
-    \@@_get_width:NV \l_@@_tmpa_dim #1
-    \@@_uuline:N     \l_@@_tmpa_dim #1
+    \@@_get_width:NV       \l_@@_tmpa_dim #1
+    \hbox:n { \@@_uuline:N \l_@@_tmpa_dim #1 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5864,7 +5870,7 @@ To produce the documentation run the original source files ending with
 % \changes{v1.0}{2022/08/06}{兼容 \pkg{tabularray} 设置。}
 % 表格默认居中，字号设置为五号。^^A  https://www.zhihu.com/question/366803177/answer/977853129
 %    \begin{macrocode}
-\BeforeBeginEnvironment { tabular } { \centering \zihao {5} }
+\BeforeBeginEnvironment { tabular } { \centering \c_@@_fmt_tabular_tl }
 \ctex_at_end_package:nn { tabularray }
   {
 %    \end{macrocode}
@@ -5872,7 +5878,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     \__tblr_use_lib_booktabs:
     \tl_set:Nn \l_@@_tmpb_tl
-      { , abovesep = 4 pt, stretch  = 0.8, cells = { font = \small } }
+      { , abovesep = 4 pt, stretch  = 0.8, cells = { font = \c_@@_fmt_tabular_tl } }
     \tl_put_right:NV \l__tblr_default_tblr_inner_tl     \l_@@_tmpb_tl
     \tl_put_right:NV \l__tblr_default_talltblr_inner_tl \l_@@_tmpb_tl
     \tl_put_right:Nn \l__tblr_default_talltblr_outer_tl { , headsep = -4 pt }
@@ -8475,6 +8481,12 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % “目录”二字的样式。
 %    \begin{macrocode}
+%    \end{macrocode}
+% \changes{v1.4}{2023/07/08}{整合表格环境字体设置。}
+% \env{tabular} 环境内的字体样式。
+%    \begin{macrocode}
+    { tabular       } { \zihao { 5 }                      },
+%    \end{macrocode}
     { toc title     } { \centering \zihao { 3 } \bfseries },
     { header        } { \small \kaishu                    },
     { footer        } { \small \rmfamily                  }
@@ -8484,7 +8496,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 %
-% \subsection{手册文档类 \cls{njudoc}}
+% \subsection{手册文档类 \cls{njuthesis-doc}}
 % \changes{v1.3}{2023/05/12}{将手册样式设置拆分为单独的 \cls{njuthesis-doc} 文档类。}
 %
 %    \begin{macrocode}
@@ -8826,11 +8838,12 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 %
-% \begin{macro}{\@@_split_pm:n}
+% \begin{macro}{\@@_split_pm:n,\@@_split_pm:V}
 % 通过竖线分割 guard 标签。
 %    \begin{macrocode}
-\cs_new:Npn \@@_split_pm:n #1
+\cs_new:Npn \@@_split_pm:n
   { \seq_set_split:Nnn \l_tmpa_seq { | } }
+\cs_generate_variant:Nn \@@_split_pm:n { V }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -8842,7 +8855,7 @@ To produce the documentation run the original source files ending with
     \tl_set:Nn \l_tmpa_str {#1}
     \clist_map_inline:nn { *, /, (, ) }
       { \str_remove_all:Nn \l_tmpa_str {##1} }
-    \seq_set_split:NnV \l_tmpa_seq { | } \l_tmpa_str
+    \@@_split_pm:V \l_tmpa_str
   }
 %    \end{macrocode}
 % \end{macro}

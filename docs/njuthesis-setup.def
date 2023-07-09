@@ -194,7 +194,7 @@
 }
 
 % 为目录中的章标题添加引导线
-% \njusetup[tableofcontents/dotline]{chapter}
+\njusetup[tableofcontents/dotline]{chapter}
 
 % math 类用于设置数学符号样式，功能详见手册
 \njusetup[math]{
@@ -254,6 +254,8 @@
 % \njusetformat{footer}{}
 
 % 一些灵活调整
-% \njusetname{notation}{术语表} % 更改符号表名称
-% \njusetname{tableofcontents}{目\qquad{}次} % 更改目录名称
-% \njusetlength{crulewd}{330pt} % 加长封面页下划线
+% \njusetname{type}{本科毕业设计}                 % 我做的是毕业设计
+% \njusetname{notation}{术语表}                   % 更改符号表名称
+% \njusetlength{crulewd}{240pt}                   % 加长封面页下划线
+% \njusetformat{tabular}{\zihao{-4}\bfseries}     % 修改表格环境的字号
+% \EditInstance{nju}{u/cover/emblem-img}{align=l} % 左对齐的本科生封面校徽

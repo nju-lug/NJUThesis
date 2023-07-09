@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+### 新增
+
+- 整合表格环境字体设置 - [#94]
+
 ## [1.3.0] - 2023-06-06
 
 ### 新增
@@ -538,6 +542,7 @@
 [#85]:  https://github.com/nju-lug/NJUThesis/discussions/85
 [#89]:  https://github.com/nju-lug/NJUThesis/discussions/89
 [#92]:  https://github.com/nju-lug/NJUThesis/issues/92
+[#94]:  https://github.com/nju-lug/NJUThesis/discussions/94
 [#96]:  https://github.com/nju-lug/NJUThesis/issues/96
 [#98]:  https://github.com/nju-lug/NJUThesis/issues/98
 [#99]:  https://github.com/nju-lug/NJUThesis/discussions/99
