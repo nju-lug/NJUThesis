@@ -54,9 +54,10 @@ jobs:
           xelatex           -halt-on-error test-xetex-graduate-nlcover
           # latexmk -lualatex -halt-on-error test-luatex
 
-      - name: Upload PDF
+      - name: Upload CLS Files
         uses: actions/upload-artifact@v2
         with:
-          name: generated-pdf
-          path:
-            test/*.pdf
+          name: "njuthesis-cls-${{ github.sha }}"
+          path: |
+            build/unpacked/*.cls
+            build/unpacked/*.def
