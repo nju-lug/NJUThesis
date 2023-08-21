@@ -444,6 +444,7 @@ To produce the documentation run the original source files ending with
 %     \file{njuthesis.dtx}\TblrNote{a}   & 文档类源代码                     \\
 %     \file{njuthesis.ins}\TblrNote{a}   & 文档类安装脚本                   \\
 %     \file{njuthesis.pdf}               & 用户手册（本文档）               \\
+%     \file{njuthesis-doc.cls}           & 用户手册样式                     \\
 %     \file{njuthesis-sample.bib}        & 示例参考文献列表                 \\
 %     \file{njuthesis-sample.tex}        & 示例文档，不妨以此为基础撰写论文 \\
 %     \file{njuthesis-graduate.def}      & 研究生参数配置文件               \\
@@ -3459,8 +3460,8 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_title:N #1
   {
-    \@@_get_width:NV       \l_@@_tmpa_dim #1
-    \hbox:n { \@@_uuline:N \l_@@_tmpa_dim #1 }
+    \@@_get_width:NV \l_@@_tmpa_dim #1
+    \@@_uuline:N     \l_@@_tmpa_dim #1
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6708,6 +6709,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \subparagraph{英文封面} 包括标题、顶部、中部、校徽、底部。
+% \changes{v1.4}{2023/08/21}{修复英文标题超长引发的页面元素混乱。}
 %
 % \begin{macro}{g/cover-en/title}
 % 研究生英文封面标题实例。
@@ -6716,7 +6718,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \g_@@_info_title_en_tl,
     format      = \bf \sffamily \zihao { 2 },
-    bottom-skip = 2 cm
+    bottom-skip = 1 cm plus 1 fil minus .5 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6736,7 +6738,7 @@ To produce the documentation run the original source files ending with
       \textsf { \g_@@_info_supv_en_tl
         \tex_par:D \g_@@_info_supvii_en_tl },
     format      = \zihao { 4 },
-    bottom-skip = 0 pt plus 1.2 fil minus 1 cm
+    bottom-skip = 1 cm plus 1 fil minus .5 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6750,7 +6752,7 @@ To produce the documentation run the original source files ending with
       \c_@@_text_cover_en_tl \@@_vskip:
       \group_begin: \scshape \g_@@_info_degree_en_tl \group_end:
       \@@_vskip: { in } \@@_vskip: \g_@@_info_major_en_tl,
-    bottom-skip = 2 cm
+    bottom-skip = .5 cm plus 1 fil
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6761,7 +6763,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { g / cover-en / emblem-img }
   {
     content     = \@@_emblem:N \c_@@_emblemwdii_dim,
-    bottom-skip = 1.5 cm
+    bottom-skip = 1 cm minus .5 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7581,10 +7583,6 @@ To produce the documentation run the original source files ending with
         \@@_make_cover:
       }
 %    \end{macrocode}
-% 生成封面后清除标题中的换行控制符，便于在摘要中输出。
-%    \begin{macrocode}
-    \tl_remove_all:Nn \g_@@_info_title_tl { \\ }
-%    \end{macrocode}
 % 如果在选择了 \opt{decl-page}，就生成本科生的诚信承诺书，
 % 或研究生的原创性声明和出版授权书。
 %    \begin{macrocode}
@@ -7963,6 +7961,7 @@ To produce the documentation run the original source files ending with
     \cleardoublepage
     \thispagestyle { plain }
     \@@_abs_bookmark:Vn \c_@@_name_abstracta_tl { abstract }
+    \tl_gremove_all:Nn \g_@@_info_title_tl { \\ }
     \@@_make_abstract:
     \group_begin: \kaishu \zihao { -4 } #1
   }
@@ -7978,6 +7977,11 @@ To produce the documentation run the original source files ending with
     \cleardoublepage
     \thispagestyle { plain }
     \@@_abs_bookmark:Vn \c_@@_name_abstracta_en_tl { abstract-en }
+%    \end{macrocode}
+% \changes{v1.4}{2023/08/21}{修复英文标题手动换行与摘要页的冲突。}
+% 生成封面后清除标题中的换行控制符，便于在摘要中输出。
+%    \begin{macrocode}
+    \tl_gremove_all:Nn \g_@@_info_title_en_tl { \\ }
     \@@_make_abstract_en:
     \group_begin: \zihao { -4 } #1
   }
