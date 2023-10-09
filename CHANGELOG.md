@@ -9,6 +9,7 @@
 ### 新增
 
 - 整合表格环境字体设置 - [#94]
+- 可以手动指定华文中宋文件位置 - [#229]
 
 ### 修复
 
@@ -591,6 +592,7 @@
 [#213]: https://github.com/nju-lug/NJUThesis/issues/213
 [#216]: https://github.com/nju-lug/NJUThesis/issues/216
 [#223]: https://github.com/nju-lug/NJUThesis/issues/223
+[#229]: https://github.com/nju-lug/NJUThesis/discussions/229
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

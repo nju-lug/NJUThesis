@@ -916,12 +916,15 @@ To produce the documentation run the original source files ending with
 % 若要手动选择字体，则需将字体设置为 \opt{none}，再通过 \pkg{fontspec}
 % 宏包或 \pkg{ctex} 宏包中给出的命令来实现。
 %
-% ^^A \begin{function}[added=2022-07-02]{font-path}
-% ^^A   \begin{syntax}
-% ^^A     font-path = \Arg{文件夹}
-% ^^A   \end{syntax}
-% ^^A 字体文件目录。
-% ^^A \end{function}
+% \begin{function}[added=2022-07-02]{font-path}
+%   \begin{syntax}
+%     font-path = \Arg{文件夹}
+%   \end{syntax}
+% 字体文件目录。
+% \end{function}
+%
+% 模板用到的部分字体（例如华文中宋）可能尚未安装在操作系统，
+% 可以使用此选项手动指定搜索路径。
 %
 % ^^A 本模板默认使用操作系统安装的字体。可以使用本选项从任意目录载入字体。
 %
@@ -4929,6 +4932,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_loadfont_stzhongs:,\@@_stzhongs:}
 % \changes{v1.2}{2023/04/30}{在研究生模板载入华文中宋。}
+% \changes{v1.4}{2023/10/09}{可以手动指定华文中宋文件位置。}
 % 研究生封面额外需要的华文中宋。
 %    \begin{macrocode}
 \cs_new:Npn \@@_loadfont_stzhongs:
@@ -4939,8 +4943,15 @@ To produce the documentation run the original source files ending with
           [ \c_@@_name_fakebold_tl ]
       }
       {
-        \cs_set_eq:NN \@@_stzhongs: \rmfamily
-        \msg_warning:nn { njuthesis } { missing-stzhongs }
+        \bool_if:NTF \g_@@_font_path_bool
+          {
+            \newCJKfontfamily \@@_stzhongs: { \c_@@_name_stzhongsfile_tl }
+              [ Path = \g_@@_font_path_tl, \c_@@_name_fakebold_tl ]
+          }
+          {
+            \cs_set_eq:NN \@@_stzhongs: \rmfamily
+            \msg_warning:nn { njuthesis } { missing-stzhongs }
+          }
       }
   }
 %    \end{macrocode}
@@ -5140,7 +5151,7 @@ To produce the documentation run the original source files ending with
 %
 % 只有研究生模板需要华文中宋。我们把它放在文档类最后载入。
 %    \begin{macrocode}
-%<def-g>\ctex_at_end:n { \@@_loadfont_stzhongs: }
+%<def-g>\ctex_at_end_preamble:n { \@@_loadfont_stzhongs: }
 %    \end{macrocode}
 %
 %
@@ -8223,6 +8234,7 @@ To produce the documentation run the original source files ending with
 %<def-g>    { sign              } { （签字）                           },
 %<def-g>    { sign            a } { 研究生签名                         },
 %<def-g>    { sign            b } { 导师签名                           },
+%<def-g>    { stzhongs file     } { STZHONGS.TTF                       },
 %<def-u>    { submit date       } { 提交日期                           },
 %<def-g>    { submit date       } { 论文提交日期                       },
 %<def-p>    { submit date       } { 完成日期                           },
