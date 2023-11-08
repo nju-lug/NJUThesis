@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.0 2023-06-06 11:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.1 2023-11-08 18:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -148,7 +148,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.3.0 \quad 2023-06-06}
+% \date{v1.3.1 \quad 2023-11-08}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -3715,7 +3715,7 @@ To produce the documentation run the original source files ending with
     You~ have~ not~ selected~ local~ files~
     for~ emblem~ and~ name~ images.\\
     It~ seems~ that~ you~ haven't~ fill~ in~ both~
-    "image/nju-emblem"~ and~ "image/nju-name",~ therefore
+    "image/nju-emblem"~ and~ "image/nju-name",~ therefore~
     I~ am~ using~ the~ package~ "njuvisual"~ instead,~
     which~ may~ slow~ down~ the~ compilation.
   }
@@ -4932,7 +4932,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_loadfont_stzhongs:,\@@_stzhongs:}
 % \changes{v1.2}{2023/04/30}{在研究生模板载入华文中宋。}
-% \changes{v1.4}{2023/10/09}{可以手动指定华文中宋文件位置。}
+% \changes{v1.3}{2023/10/09}{可以手动指定华文中宋文件位置。}
 % 研究生封面额外需要的华文中宋。
 %    \begin{macrocode}
 \cs_new:Npn \@@_loadfont_stzhongs:
@@ -6720,7 +6720,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \subparagraph{英文封面} 包括标题、顶部、中部、校徽、底部。
-% \changes{v1.4}{2023/08/21}{修复英文标题超长引发的页面元素混乱。}
+% \changes{v1.3}{2023/08/21}{修复英文标题超长引发的页面元素混乱。}
 %
 % \begin{macro}{g/cover-en/title}
 % 研究生英文封面标题实例。
@@ -7989,7 +7989,7 @@ To produce the documentation run the original source files ending with
     \thispagestyle { plain }
     \@@_abs_bookmark:Vn \c_@@_name_abstracta_en_tl { abstract-en }
 %    \end{macrocode}
-% \changes{v1.4}{2023/08/21}{修复英文标题手动换行与摘要页的冲突。}
+% \changes{v1.3}{2023/08/21}{修复英文标题手动换行与摘要页的冲突。}
 % 生成封面后清除标题中的换行控制符，便于在摘要中输出。
 %    \begin{macrocode}
     \tl_gremove_all:Nn \g_@@_info_title_en_tl { \\ }
@@ -8498,7 +8498,7 @@ To produce the documentation run the original source files ending with
 % “目录”二字的样式。
 %    \begin{macrocode}
 %    \end{macrocode}
-% \changes{v1.4}{2023/07/08}{整合表格环境字体设置。}
+% \changes{v1.3}{2023/07/08}{整合表格环境字体设置。}
 % \env{tabular} 环境内的字体样式。
 %    \begin{macrocode}
     { tabular       } { \zihao { 5 }                      },

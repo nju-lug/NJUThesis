@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [1.3.1] - 2023-11-08
+
 ### 新增
 
 - 整合表格环境字体设置 - [#94]
@@ -511,8 +513,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.3.0...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.3.1...HEAD
 
+[1.3.1]: https://github.com/nju-lug/NJUThesis/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/nju-lug/NJUThesis/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/nju-lug/NJUThesis/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/nju-lug/NJUThesis/compare/v1.1.2...v1.2.0
@@ -591,7 +594,9 @@
 [#208]: https://github.com/nju-lug/NJUThesis/issues/208
 [#213]: https://github.com/nju-lug/NJUThesis/issues/213
 [#216]: https://github.com/nju-lug/NJUThesis/issues/216
+[#217]: https://github.com/nju-lug/NJUThesis/issues/217
 [#223]: https://github.com/nju-lug/NJUThesis/issues/223
+[#227]: https://github.com/nju-lug/NJUThesis/issues/227
 [#229]: https://github.com/nju-lug/NJUThesis/discussions/229
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
