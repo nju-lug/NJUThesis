@@ -6,12 +6,13 @@
 
 ## [未发布]
 
-## [1.3.1] - 2023-11-08
+## [1.3.1] - 2023-11-09
 
 ### 新增
 
 - 整合表格环境字体设置 - [#94]
 - 可以手动指定华文中宋文件位置 - [#229]
+- 匹配 LaTeX3 的 e 型展开修改 - [CTeX-org/ctex-kit#678]
 
 ### 修复
 
@@ -598,6 +599,8 @@
 [#223]: https://github.com/nju-lug/NJUThesis/issues/223
 [#227]: https://github.com/nju-lug/NJUThesis/issues/227
 [#229]: https://github.com/nju-lug/NJUThesis/discussions/229
+
+[CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

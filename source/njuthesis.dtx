@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.1 2023-11-08 18:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.1 2023-11-10 00:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -148,7 +148,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.3.1 \quad 2023-11-08}
+% \date{v1.3.1 \quad 2023-11-10}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -2645,7 +2645,7 @@ To produce the documentation run the original source files ending with
 \bool_lazy_or:nnF
   { \sys_if_engine_xetex_p:  }
   { \sys_if_engine_luatex_p: }
-  { \msg_fatal:nnx { njuthesis } { unsupported-engine } { \c_sys_engine_str } }
+  { \msg_fatal:nne { njuthesis } { unsupported-engine } { \c_sys_engine_str } }
 %    \end{macrocode}
 %
 %
@@ -2751,7 +2751,7 @@ To produce the documentation run the original source files ending with
 % \begin{variable}{\c_@@_name_today_tl}
 % 编译当天日期，格式为 |yyyy-mm-dd|。
 %    \begin{macrocode}
-\tl_const:Nx \c_@@_name_today_tl
+\tl_const:Ne \c_@@_name_today_tl
   {
     \int_to_arabic:n { \c_sys_year_int  } -
     \int_to_arabic:n { \c_sys_month_int } -
@@ -2987,11 +2987,11 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_box_spread:NNn,\@@_box_spread:NNv,\@@_box_spread:NNx}
+% \begin{macro}{\@@_box_spread:NNn,\@@_box_spread:NNv,\@@_box_spread:NNe}
 %    \begin{macrocode}
 \cs_new:Npn \@@_box_spread:NNn { \@@_box_spread:NNNn \l_@@_tmp_skip }
 \cs_generate_variant:Nn \@@_box_spread:NNn { NNv }
-\cs_generate_variant:Nn \@@_box_spread:NNn { NNx }
+\cs_generate_variant:Nn \@@_box_spread:NNn { NNe }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3126,7 +3126,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_get_width_print:Nn,\@@_get_width_print:Nv,
-%   \@@_get_width_print:Nx}
+%   \@@_get_width_print:Ne}
 % 横跨整页的下划线。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
@@ -3141,7 +3141,7 @@ To produce the documentation run the original source files ending with
     \dim_set:Nn #1 { \textwidth - #1 } #2
   }
 \cs_generate_variant:Nn \@@_get_width_print:Nn { Nv }
-\cs_generate_variant:Nn \@@_get_width_print:Nn { Nx }
+\cs_generate_variant:Nn \@@_get_width_print:Nn { Ne }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3469,7 +3469,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_uline_list:NNn,\@@_uline_list:NNx}
+% \begin{macro}{\@@_uline_list:NNn,\@@_uline_list:NNe}
 % \changes{v0.16}{2022/03/25}{使用原生断行算法处理摘要页标题。}
 % 用于研究生摘要页面的多行标题。
 % \begin{arguments}
@@ -3517,7 +3517,7 @@ To produce the documentation run the original source files ending with
           }
       }
   }
-\cs_generate_variant:Nn \@@_uline_list:NNn { NNx }
+\cs_generate_variant:Nn \@@_uline_list:NNn { NNe }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4154,7 +4154,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.12}{2021/12/07}{重新组织宏包载入顺序。}
 % 将选项传入 \cls{ctexbook} 文档类。
 %    \begin{macrocode}
-\exp_args:Nx \PassOptionsToClass
+\exp_args:Ne \PassOptionsToClass
   {
     a4paper,
     UTF8,
@@ -4361,7 +4361,7 @@ To produce the documentation run the original source files ending with
 % 入对应默认配置。注意，尽管在手册中封面、摘要、常量等的代码实现位于靠
 % 后部分，拆分后实际上是在此处载入运行的，务必要注意处理的逻辑顺序。
 %    \begin{macrocode}
-\exp_args:Nx \file_input:n
+\exp_args:Ne \file_input:n
   {
     njuthesis-
     \int_case:nn { \g_@@_info_type_int }
@@ -4579,18 +4579,18 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
-    \tl_set:Nx \g_@@_info_supvfull_tl
+    \tl_set:Ne \g_@@_info_supvfull_tl
       { \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: } }
     \clist_if_empty:NF \g_@@_info_supvii_clist
       {
         \bool_gset_true:N \g_@@_opt_supvii_bool
-        \tl_gput_right:Nx \g_@@_info_supvfull_tl
+        \tl_gput_right:Ne \g_@@_info_supvfull_tl
           { \@@_quad: \clist_use:Nn \g_@@_info_supvii_clist { \@@_hskip: } }
       }
     \tl_set_eq:NN \g_@@_info_supvfull_en_tl \g_@@_info_supv_en_tl
     \tl_if_empty:NF \g_@@_info_supvii_en_tl
       {
-        \tl_gput_right:Nx \g_@@_info_supvfull_en_tl
+        \tl_gput_right:Ne \g_@@_info_supvfull_en_tl
           { \@@_quad: \g_@@_info_supvii_en_tl }
       }
   }
@@ -4624,7 +4624,7 @@ To produce the documentation run the original source files ending with
 % 文档类型字样。
 %    \begin{macrocode}
 \tl_new:N  \g_@@_info_type_tl
-\tl_set:Nx \g_@@_info_type_tl
+\tl_set:Ne \g_@@_info_type_tl
   { \clist_item:Nn \c_@@_name_type_clist { \g_@@_info_type_int } }
 %    \end{macrocode}
 % \end{variable}
@@ -4643,7 +4643,7 @@ To produce the documentation run the original source files ending with
 % 英文的学位字样。
 %    \begin{macrocode}
 \tl_new:N  \g_@@_info_degree_en_tl
-\tl_set:Nx \g_@@_info_degree_en_tl
+\tl_set:Ne \g_@@_info_degree_en_tl
   { \clist_item:Nn \c_@@_name_type_en_clist { \g_@@_info_type_int } }
 %</def-g>
 %    \end{macrocode}
@@ -6908,7 +6908,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_info_nl:
   {
-    \tl_set:Nx \l_@@_tmpa_tl
+    \tl_set:Ne \l_@@_tmpa_tl
       {
         \clist_use:Nn \g_@@_info_supv_clist   { ~ }
         \clist_use:Nn \g_@@_info_supvii_clist { ~ }
@@ -7782,12 +7782,12 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_g:N #1
   {
-    \@@_uline_list:NNx \g_@@_info_title_tl \g_@@_abs_title_left_skip
+    \@@_uline_list:NNe \g_@@_info_title_tl \g_@@_abs_title_left_skip
       { \c_@@_name_titlea_tl #1 }
 %    \end{macrocode}
 % 专业、年级、姓名。
 %    \begin{macrocode}
-    \@@_get_width_print:Nx \l_@@_tmp_skip
+    \@@_get_width_print:Ne \l_@@_tmp_skip
       {
         \dim_set:Nn \l_@@_tmpa_dim { 11 em }
         \dim_set:Nn \l_@@_tmpb_dim { 4  em }
@@ -7800,7 +7800,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 导师姓名、职称。
 %    \begin{macrocode}
-    \@@_get_width_print:Nx \l_@@_tmpa_dim { \c_@@_name_supva_tl #1 }
+    \@@_get_width_print:Ne \l_@@_tmpa_dim { \c_@@_name_supva_tl #1 }
     \@@_box_ulined_info:Nn \l_@@_tmpa_dim { supvfull }
   }
 %    \end{macrocode}
@@ -7819,12 +7819,12 @@ To produce the documentation run the original source files ending with
   {
     \bool_if:NTF \g_@@_abs_underline_bool
       {
-        \@@_uline_list:NNx \g_@@_info_title_en_tl
+        \@@_uline_list:NNe \g_@@_info_title_en_tl
           \g_@@_abs_title_left_skip { \c_@@_name_title_en_tl #1 }
         \clist_map_inline:nn { major, author, supvfull }
           {
             \tex_par:D
-            \@@_get_width_print:Nx \l_@@_tmpa_dim
+            \@@_get_width_print:Ne \l_@@_tmpa_dim
               { \@@_name:n { ##1 _en } #1 }
             \@@_box_ulined_info:Nn \l_@@_tmpa_dim { ##1 _en }
           }
@@ -8502,7 +8502,6 @@ To produce the documentation run the original source files ending with
 % \env{tabular} 环境内的字体样式。
 %    \begin{macrocode}
     { tabular       } { \zihao { 5 }                      },
-%    \end{macrocode}
     { toc title     } { \centering \zihao { 3 } \bfseries },
     { header        } { \small \kaishu                    },
     { footer        } { \small \rmfamily                  }
@@ -8572,6 +8571,12 @@ To produce the documentation run the original source files ending with
     \NewDocumentCommand \CJKsout      { o m }
       { \textcolor { black!50 } {#1} }
   }
+%    \end{macrocode}
+%
+% 处理 \cls{l3doc} 新追加的 e 型展开。另见 \url{https://github.com/CTeX-org/ctex-kit/pull/678}。
+%    \begin{macrocode}
+\cs_if_exist:NF \__codedoc_get_hyper_target:xN
+  { \cs_new_eq:NN \__codedoc_get_hyper_target:xN \__codedoc_get_hyper_target:eN }
 %    \end{macrocode}
 %
 % \subsubsection{杂项}
