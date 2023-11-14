@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.1 2023-11-10 00:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.1 2023-11-14 11:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -148,7 +148,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.3.1 \quad 2023-11-10}
+% \date{v1.3.1 \quad 2023-11-14}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -2629,6 +2629,16 @@ To produce the documentation run the original source files ending with
   {
     \@ifpackagelater {#1} { 2020/10/01 }
       { } { \msg_error:nnn { njuthesis } { l3-too-old } {#1} }
+  }
+%    \end{macrocode}
+%
+% \changes{v1.3}{2023/11/14}{兼容新版 \LaTeX3 的 |e| 型展开变化。}
+% 兼容新版 L3 特性。另见 \url{https://github.com/CTeX-org/ctex-kit/pull/678}。
+%    \begin{macrocode}
+\@ifpackagelater { expl3 } { 2023/10/10 } { }
+  {
+    \cs_generate_variant:Nn \tl_set:Nn   { Ne }
+    \cs_generate_variant:Nn \tl_const:Nn { Ne }
   }
 %    \end{macrocode}
 %
@@ -8573,7 +8583,7 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% 处理 \cls{l3doc} 新追加的 e 型展开。另见 \url{https://github.com/CTeX-org/ctex-kit/pull/678}。
+% 处理 \cls{l3doc} 新追加的 |e| 型展开。
 %    \begin{macrocode}
 \cs_if_exist:NF \__codedoc_get_hyper_target:xN
   { \cs_new_eq:NN \__codedoc_get_hyper_target:xN \__codedoc_get_hyper_target:eN }
