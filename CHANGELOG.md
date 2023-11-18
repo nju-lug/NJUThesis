@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+### 修复
+
+- 修复双导师命令问题 - [#230]
+
 ## [1.3.1] - 2023-11-14
 
 ### 新增
@@ -599,6 +603,7 @@
 [#223]: https://github.com/nju-lug/NJUThesis/issues/223
 [#227]: https://github.com/nju-lug/NJUThesis/issues/227
 [#229]: https://github.com/nju-lug/NJUThesis/discussions/229
+[#230]: https://github.com/nju-lug/NJUThesis/issues/230
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 

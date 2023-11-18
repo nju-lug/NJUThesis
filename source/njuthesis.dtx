@@ -2637,8 +2637,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@ifpackagelater { expl3 } { 2023/10/10 } { }
   {
-    \cs_generate_variant:Nn \tl_set:Nn   { Ne }
-    \cs_generate_variant:Nn \tl_const:Nn { Ne }
+    \cs_generate_variant:Nn \tl_set:Nn        { Ne }
+    \cs_generate_variant:Nn \tl_const:Nn      { Ne }
+    \cs_generate_variant:Nn \tl_gput_right:Nn { Ne }
   }
 %    \end{macrocode}
 %
