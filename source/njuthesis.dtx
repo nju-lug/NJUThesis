@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.1 2023-11-14 11:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.3.2 2023-12-05 16:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -148,7 +148,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.3.1 \quad 2023-11-14}
+% \date{v1.3.2 \quad 2023-12-05}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -1192,15 +1192,14 @@ To produce the documentation run the original source files ending with
 % 院系。
 % \end{function}
 %
-% \begin{function}[updated=2023-05-11]{info/major,info/major*}
+% \begin{function}[updated=2023-12-05]{info/major,info/major*}
 %   \begin{syntax}
 %     \OPT{major}  = \Arg{专业}
-%     \OPT{major}  = \Arg{专业,专业全称}
+%     \OPT{major}  = \Arg{封面专业, 摘要专业}
 %     \OPT{major*} = \Arg{专业}
 %   \end{syntax}
-% 专业。研究生的专业型学位封面上，“专业学位类别(领域)”一栏默认会补全为
-% “专业硕/博士（\meta{专业}）”。如果希望覆盖模板的自动处理，
-% 可以填写 \opt{info/major} 第二种写法的“专业全称”字段。
+% 专业。研究生的专业型学位封面上，“专业学位类别(领域)”一栏的
+% 填写内容可能与摘要页不一致，可以使用半角逗号分隔两个值。
 % \end{function}
 %
 % \begin{function}[updated=2021-10-01]{info/field,info/field*}
@@ -4450,15 +4449,17 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{info/major}
 % \changes{v1.3}{2023/05/11}{专业型研究生封面可额外修改专业名称。}
-% 专业。
+% \changes{v1.3}{2023/12/05}{调整专业型学位的填写方式。}
+% 专业。研究生专业型学位可以取封面和摘要的两个值，此外都取第一个值。
 %    \begin{macrocode}
     major                 .code:n =
       {
-        \clist_pop:NN  \l_keys_value_tl \g_@@_info_major_tl
-        \clist_pop:NNF \l_keys_value_tl \g_@@_info_majorc_tl
+        \bool_if:NTF \g_@@_opt_academic_bool
+          { \clist_pop:NN  \l_keys_value_tl \g_@@_info_major_tl }
           {
-            \tl_set:Nn \g_@@_info_majorc_tl
-              { 工程 \g_@@_info_type_tl（ \g_@@_info_major_tl ） }
+            \clist_pop:NN  \l_keys_value_tl \g_@@_info_majorc_tl
+            \clist_pop:NNF \l_keys_value_tl \g_@@_info_major_tl
+              { \tl_set_eq:NN \g_@@_info_major_tl \g_@@_info_majorc_tl }
           }
       },
 %    \end{macrocode}
@@ -6648,7 +6649,7 @@ To produce the documentation run the original source files ending with
 \cs_new:Npn \@@_g_cover_info:
   {
     \tl_set:Nn \l_@@_tmpa_tl { \skip_horizontal:n { .7 cm } }
-    \@@_g_cover_info:NNNNN \l_@@_tmpa_clist \l_@@_tmpa_tl
+    \@@_g_cover_info:NNNNN \l_@@_tmp_clist \l_@@_tmpa_tl
       \c_@@_clabelwd_dim \c_@@_crulewd_dim \c_@@_fmt_coverlabel_tl
   }
 %    \end{macrocode}

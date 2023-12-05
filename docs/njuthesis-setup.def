@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.3.0 2023-06-06
+% njuthesis 参数设置文件 v1.3.2 2023-12-05
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -50,8 +50,8 @@
     major* = {Chemistry},
     % 专业
     %
-    % major = {软件工程，软件工程},
-    % 专业型学位可以用第二个值覆盖封面上的默认补全版本
+    % major = {封面专业,摘要专业},
+    % 研究生专业型学位可能遇到两处内容不一致的情况
     %
     supervisor = {导师姓名,教授},
     supervisor*= {Professor My Supervisor},

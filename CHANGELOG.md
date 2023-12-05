@@ -6,6 +6,13 @@
 
 ## [未发布]
 
+## [1.3.2] - 2023-12-05
+
+### 变动
+
+- 调整专业型学位封面的 `info/major` 项填写逻辑 - [#232]
+  - 感谢 [@liudongmiao]！
+
 ### 修复
 
 - 修复双导师命令问题 - [#230]
@@ -520,6 +527,7 @@
 
 [未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.3.1...HEAD
 
+[1.3.2]: https://github.com/nju-lug/NJUThesis/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/nju-lug/NJUThesis/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/nju-lug/NJUThesis/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/nju-lug/NJUThesis/compare/v1.2.0...v1.2.1
@@ -604,6 +612,7 @@
 [#227]: https://github.com/nju-lug/NJUThesis/issues/227
 [#229]: https://github.com/nju-lug/NJUThesis/discussions/229
 [#230]: https://github.com/nju-lug/NJUThesis/issues/230
+[#232]: https://github.com/nju-lug/NJUThesis/issues/232
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 
@@ -619,3 +628,4 @@
 [@note286]: https://github.com/note286
 [@AlphaZTX]: https://github.com/AlphaZTX
 [@stone-zeng]: https://github.com/stone-zeng
+[@liudongmiao]: https://github.com/liudongmiao
