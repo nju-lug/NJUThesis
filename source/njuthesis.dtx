@@ -2726,11 +2726,23 @@ To produce the documentation run the original source files ending with
 % \end{variable}
 %
 % \begin{variable}{
+%   \g_@@_info_major_tl,
+%   \g_@@_info_majorc_tl}
+% 用于存储专业名称的变量。
+%    \begin{macrocode}
+\tl_new:N \g_@@_info_major_tl
+\tl_new:N \g_@@_info_majorc_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{
+%   \g_@@_font_set_tl,
 %   \g_@@_font_latin_tl,
 %   \g_@@_font_cjk_tl,
 %   \g_@@_font_math_tl}
 % 存储所使用字体名称的全局变量。
 %    \begin{macrocode}
+\tl_new:N \g_@@_font_set_tl
 \tl_new:N \g_@@_font_latin_tl
 \tl_new:N \g_@@_font_cjk_tl
 \tl_new:N \g_@@_font_math_tl
@@ -3866,14 +3878,24 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{latin-font,cjk-font}
 % \changes{v0.14}{2021/12/12}{简化字体选项名称。}
-% 中英文字体选项。
+% 中英文字体选项。\opt{fandol} 和 \opt{gyre} 是等价的。
 %    \begin{macrocode}
     latin-font         .choices:nn =
-      { gyre, mac, win, none }
-      { \tl_set_eq:NN \g_@@_font_latin_tl \l_keys_choice_tl },
+      { fandol, gyre, mac, macoffice, win, none }
+      { \tl_set:Nn \g_@@_font_latin_tl {#1} },
     cjk-font           .choices:nn =
-      { fandol, founder, mac, noto, source, win, none }
-      { \tl_set_eq:NN \g_@@_font_cjk_tl   \l_keys_choice_tl },
+      { fandol, founder, mac, macoffice, noto, source, win, none }
+      { \tl_set:Nn \g_@@_font_cjk_tl   {#1} },
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{latin-font,cjk-font}
+% \changes{v1.4}{2023/12/15}{增加统一的字体选项名称。}
+% 中英文字体选项。\opt{fontset} 这个名称和 \pkg{ctex} 是一致的。
+%    \begin{macrocode}
+    fontset            .choices:nn =
+      { fandol, mac, macoffice, win, none }
+      { \keys_set:nn { nju } { latin-font = #1, cjk-font = #1 } },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4678,18 +4700,37 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{操作系统检测}
 %
-% 调用 \pkg{ctex} 提供的操作系统检测。
+% \begin{variable}{\c_@@_path_macoffice_tl}
+% mac Office 字体路径。
 %    \begin{macrocode}
-\ctex_detect_platform:
+\tl_const:Nn \c_@@_path_macoffice_tl
+  { /Applications/Microsoft~ Word.app/Contents/Resources/DFonts/ }
+%    \end{macrocode}
+% \end{variable}
+%
+% 操作系统检测。相较于 \pkg{ctex} 提供的 \cs{ctex_detect_platform:}，
+% 额外增加了对 macOS 上 MS Office 的检测。
+%    \begin{macrocode}
+\sys_if_platform_windows:TF
+  { \tl_gset:Nn \g_@@_font_set_tl { win } }
+  {
+    \ctex_if_platform_macos:TF
+      {
+        \file_if_exist:nTF { \c_@@_path_macoffice_tl times.ttf }
+          { \tl_gset:Nn \g_@@_font_set_tl { macoffice } }
+          { \tl_gset:Nn \g_@@_font_set_tl { mac       } }
+      }
+      { \tl_gset:Nn \g_@@_font_set_tl { fandol } }
+  }
 %    \end{macrocode}
 % 判断用户是否自定义了中英文字体。如果其中任意一种未被定义，
 % 则使用系统预装字体覆盖字体选项。
 % Windows 或 macOS 外的系统被判断为 Linux，一律使用自由字体。
 %    \begin{macrocode}
 \tl_if_empty:NT \g_@@_font_latin_tl
-  { \tl_gset_eq:NN \g_@@_font_latin_tl \g__ctex_fontset_tl }
+  { \tl_gset_eq:NN \g_@@_font_latin_tl \g_@@_font_set_tl }
 \tl_if_empty:NT \g_@@_font_cjk_tl
-  { \tl_gset_eq:NN \g_@@_font_cjk_tl   \g__ctex_fontset_tl }
+  { \tl_gset_eq:NN \g_@@_font_cjk_tl   \g_@@_font_set_tl }
 %    \end{macrocode}
 %
 %
@@ -4701,7 +4742,7 @@ To produce the documentation run the original source files ending with
 %   \@@_loadfont_latin_win:,\@@_loadfont_latin_mac:}
 % Windows 与 macOS 西文字体的区别主要在于默认等宽字体。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_loadfont_latin:n #1
+\cs_new:Npn \@@_loadfont_latin:n #1
   {
     \__fontspec_main_setmainfont:nn { } { Times~New~Roman }
     \__fontspec_main_setsansfont:nn { } { Arial           }
@@ -4727,6 +4768,36 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_loadfont_latin_macoffice:}
+% mac Office 西文字体。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_loadfont_latin_macoffice:
+  {
+    \__fontspec_main_setmainfont:nn
+      { \c_@@_name_macofficefeature_clist } { times }
+    \__fontspec_main_setsansfont:nn
+      { \c_@@_name_macofficefeature_clist } { arial }
+    \__fontspec_main_setmonofont:nn
+      { Scale     = MatchLowercase } { Menlo }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{variable}{\c_@@_name_macofficefeature_clist}
+% 用于 \pkg{fontspec} 的 mac Office 字体特性列表。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_name_macofficefeature_clist
+  {
+    Path           = \c_@@_path_macoffice_tl,
+    Extension      = .ttf,
+    UprightFont    = *,
+    BoldFont       = *bd,
+    ItalicFont     = *i,
+    BoldItalicFont = *bi
+  }
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{macro}{\@@_loadfont_latin_gyre:}
 % 开源的 \TeX Gyre 西文字体。
 %    \begin{macrocode}
@@ -4744,6 +4815,13 @@ To produce the documentation run the original source files ending with
       }
       { texgyrecursor }
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_loadfont_latin_fandol:}
+% 为兼容 \pkg{ctex} 做出的名称改变。
+%    \begin{macrocode}
+\cs_new_eq:NN \@@_loadfont_latin_fandol:  \@@_loadfont_latin_gyre:
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4814,8 +4892,29 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_loadfont_cjk_macoffice:n,\@@_loadfont_cjk_macoffice:}
+% mac Office 中文字体。
+%    \begin{macrocode}
+\cs_new:Npn \@@_loadfont_cjk_macoffice:n #1
+  {
+    \setCJKmainfont { Simsun.ttc  } [ ItalicFont = Kaiti.ttf, #1 ]
+    \setCJKsansfont { SimHei.ttf   } [#1]
+    \setCJKmonofont { Fangsong.ttf } [#1]
+    \setCJKfamilyfont { zhsong } { Simsun.ttc   } [#1]
+    \setCJKfamilyfont { zhhei  } { SimHei.ttf   } [#1]
+    \setCJKfamilyfont { zhfs   } { Fangsong.ttf } [#1]
+    \setCJKfamilyfont { zhkai  } { Kaiti.ttf    } [#1]
+  }
+\cs_new:Npn \@@_loadfont_cjk_macoffice:
+  {
+    \@@_loadfont_cjk_macoffice:n
+      { Path = \c_@@_path_macoffice_tl, \c_@@_name_fakebold_tl }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_loadfont_cjk_fandol:}
-% Fandol 字体
+% Fandol 字体。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_loadfont_cjk_fandol:
   {
@@ -5119,16 +5218,6 @@ To produce the documentation run the original source files ending with
 %
 % \subsubsection{载入指定字库}
 % \changes{v0.10}{2021/09/28}{修正了数学字体。}
-%
-% \begin{macro}{\@@_loadfont_latin_windows:
-%   \@@_loadfont_latin_fandol:,\@@_loadfont_cjk_windows:}
-% 为兼容 \pkg{ctex} 做出的名称改变。
-%    \begin{macrocode}
-\cs_new_eq:NN \@@_loadfont_latin_windows: \@@_loadfont_latin_win:
-\cs_new_eq:NN \@@_loadfont_latin_fandol:  \@@_loadfont_latin_gyre:
-\cs_new_eq:NN \@@_loadfont_cjk_windows:   \@@_loadfont_cjk_win:
-%    \end{macrocode}
-% \end{macro}
 %
 % \begin{macro}{\@@_loadfont:}
 % 载入字体命令。
