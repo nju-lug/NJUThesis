@@ -6,6 +6,9 @@
 
 ## [未发布]
 
+- 增加 `macoffice` 字体配置 - [#164],[#169]
+  - 感谢 [@liudongmiao]！
+
 ## [1.3.2] - 2023-12-05
 
 ### 变动
@@ -591,6 +594,7 @@
 [#148]: https://github.com/nju-lug/NJUThesis/issues/148
 [#150]: https://github.com/nju-lug/NJUThesis/discussions/150
 [#155]: https://github.com/nju-lug/NJUThesis/discussions/155
+[#164]: https://github.com/nju-lug/NJUThesis/issues/164
 [#165]: https://github.com/nju-lug/NJUThesis/discussions/165
 [#166]: https://github.com/nju-lug/NJUThesis/discussions/166
 [#169]: https://github.com/nju-lug/NJUThesis/issues/169

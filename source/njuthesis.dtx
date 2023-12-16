@@ -894,14 +894,23 @@ To produce the documentation run the original source files ending with
 %
 % 学校论文格式要求使用的字体一般已经预装在各个操作系统，
 % 本模板针对不同平台进行了自动检测适配，可以开箱即用。
-% 如果希望更改本模板使用的字体，请填写以下两个选项以覆盖默认设置。
+% 如果希望更改本模板使用的字体，请填写以下选项以覆盖默认设置。
+%
+% \begin{function}[added=2023-12-15]{fontset}
+%   \begin{syntax}
+%     \OPT{fontset} = <win|macoffice|mac|fandol|none>
+%   \end{syntax}
+% 手动指定字体库。
+% \end{function}
+%
+% \opt{fontset} 这个选项名继承自 \pkg{ctex}，相当于在本模板中分别填写以下两项。
 %
 % \begin{function}[added=2021-09-07,updated=2021-12-18]{cjk-font,latin-font}
 %   \begin{syntax}
 %     \OPT{cjk-font} = <win|mac|fandol|founder|noto|source|none>
 %     \OPT{latin-font} = <win|mac|gyre|none>
 %   \end{syntax}
-% 手动指定字体。
+% 更精细的字体库设定。
 % \end{function}
 %
 % 根据学校论文格式的要求，本模板使用的中文字体主要有{\songti 宋体}、
@@ -923,16 +932,17 @@ To produce the documentation run the original source files ending with
 % 字体文件目录。
 % \end{function}
 %
-% 模板用到的部分字体（例如华文中宋）可能尚未安装在操作系统，
-% 可以使用此选项手动指定搜索路径。
-%
-% ^^A 本模板默认使用操作系统安装的字体。可以使用本选项从任意目录载入字体。
+% 模板用到的部分字体可能尚未安装在操作系统，可以使用此选项手动指定搜索路径。
+% 例如，研究生模板封面上使用到了华文中宋，该字体默认只存在于
+% \opt{win} 和 \opt{macoffice} 对应的系统配置，
+% 在其他平台编译需使用此选项手动指向 \file{STZHONGS.TTF}。
 %
 % \paragraph{中文}
 %
 % 本模板提供的中文字体配置如表 \ref{tab:cjk-fontset} 所示。
 % 在不指定字体配置的情况下，本模板默认使用与操作系统相对应的字体配置
-% （见表中前三行，Windows 和 macOS 以外的系统采用
+% （见表中前四行，在装有 MS Office 的 macOS 上优先使用 Office 字体库。
+% Windows 和 macOS 以外的系统采用
 % \href{https://www.ctan.org/pkg/fandol}{Fandol} 配置）。
 % 此外，我们也单独提供了\href{https://www.foundertype.com}
 % {方正}和\href{https://github.com/adobe-fonts}{思源}两套中文字体配置。
@@ -955,13 +965,15 @@ To produce the documentation run the original source files ending with
 %       表示思源字体，请下载 Simplified Chinese（即后缀名为 SC）的版本},
 %     note{e} = {思源字体并不包含楷书和仿宋，而 Adobe
 %       楷体和仿宋难以直接下载，因此使用方正字体代替} ]
-%     { cell{2}{2,4} = {white!70!njuyellow},
-%       cell{4}{4}   = {white!70!njuyellow},
+%     { cell{2}{2-5} = {white!70!njuyellow},
+%       cell{3}{2-5} = {white!70!njuyellow},
+%       cell{5-8}{4} = {white!70!njuyellow},
 %       colspec = {ccccc} }
 %   \toprule
 %     配置名称         & 宋体             & 黑体               & 楷书          & 仿宋          \\
 %   \midrule
 %     \opt{win}        & 中易宋体         & 中易黑体           & 中易楷体      & 中易仿宋      \\
+%     \opt{macoffice}  & 中易宋体         & 中易黑体           & 中易楷体      & 中易仿宋      \\
 %     \opt{mac}        & 华文宋体         & 华文黑体           & 华文楷体      & 华文仿宋      \\
 %     \opt{fandol}     & Fandol 宋体      & Fandol 黑体        & Fandol 楷体   & Fandol 仿宋   \\
 %     \opt{founder}\TA & \FZ{51}{书宋}\TB & \FZ{61}{细黑一}\TC & \FZ{37}{楷体} & \FZ{28}{仿宋} \\
@@ -993,16 +1005,17 @@ To produce the documentation run the original source files ending with
 %       note{a} = {TG 表示 \href{http://www.gust.org.pl/projects/e-foundry/tex-gyre}{\TeX~Gyre}。} ]
 %     { colspec = {cccc} }
 %     \toprule
-%       配置名称   & 衬线体          & 无衬线体   & 等宽字体    \\
+%       配置名称         & 衬线体          & 无衬线体   & 等宽字体    \\
 %     \midrule
-%       \opt{win}  & Times~New~Roman & Arial      & Courier~New \\
-%       \opt{mac}  & Times~New~Roman & Arial      & Menlo       \\
-%       \opt{gyre} & \TG{Termes}     & \TG{Heros} & \TG{Cursor} \\
+%       \opt{win}        & Times~New~Roman & Arial      & Courier~New \\
+%       \opt{macoffice}  & Times~New~Roman & Arial      & Menlo       \\
+%       \opt{mac}        & Times~New~Roman & Arial      & Menlo       \\
+%       \opt{gyre}       & \TG{Termes}     & \TG{Heros} & \TG{Cursor} \\
 %     \bottomrule
 %   \end{talltblr}
 % \end{table}
 %
-% macOS 用户需要额外注意的是，此系统内置的 Times New Roman 并没有 smcp
+% macOS 用户需要额外注意的是，系统内置的 Times New Roman 并没有 smcp
 % 这一特性，所以 \tn{textsc} 命令无法产生正确的小型大写字母字型，导致
 % 研究生模板英文封面的部分内容不能正确显示。另外，macOS 中的 Times 字体
 % 也不包含 smcp 特性。
@@ -4862,6 +4875,7 @@ To produce the documentation run the original source files ending with
     \setCJKfamilyfont { zhhei  } { SimHei   } [#1]
     \setCJKfamilyfont { zhfs   } { FangSong } [#1]
     \setCJKfamilyfont { zhkai  } { KaiTi    } [#1]
+    \@@_stzhongs:n {#1}
   }
 \cs_new:Npn \@@_loadfont_cjk_win:
   { \@@_loadfont_cjk_win:N \c_@@_name_fakebold_tl }
@@ -4897,13 +4911,14 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new:Npn \@@_loadfont_cjk_macoffice:n #1
   {
-    \setCJKmainfont { Simsun.ttc  } [ ItalicFont = Kaiti.ttf, #1 ]
+    \setCJKmainfont { Simsun.ttc   } [ ItalicFont = Kaiti.ttf, #1 ]
     \setCJKsansfont { SimHei.ttf   } [#1]
     \setCJKmonofont { Fangsong.ttf } [#1]
     \setCJKfamilyfont { zhsong } { Simsun.ttc   } [#1]
     \setCJKfamilyfont { zhhei  } { SimHei.ttf   } [#1]
     \setCJKfamilyfont { zhfs   } { Fangsong.ttf } [#1]
     \setCJKfamilyfont { zhkai  } { Kaiti.ttf    } [#1]
+    \@@_stzhongs:nn { STZHONGS.ttf } {#1}
   }
 \cs_new:Npn \@@_loadfont_cjk_macoffice:
   {
@@ -5041,27 +5056,30 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{macro}{\@@_loadfont_stzhongs:,\@@_stzhongs:}
+% \begin{macro}{\@@_loadfont_stzhongs:,\@@_stzhongs:nn,\@@_stzhongs:n,\@@_stzhongs:}
 % \changes{v1.2}{2023/04/30}{在研究生模板载入华文中宋。}
 % \changes{v1.3}{2023/10/09}{可以手动指定华文中宋文件位置。}
 % 研究生封面额外需要的华文中宋。
 %    \begin{macrocode}
-\cs_new:Npn \@@_loadfont_stzhongs:
+\cs_new:Npn \@@_stzhongs:nn #1#2
+  { \newCJKfontfamily \@@_stzhongs: {#1} [#2] }
+\cs_new:Npn \@@_stzhongs:n { \@@_stzhongs:nn { 华文中宋 } }
+\cs_new_protected:Npn \@@_loadfont_stzhongs:
+  {
+    \cs_if_exist_use:NF \@@_stzhongs:
   {
     \fontspec_font_if_exist:nTF { 华文中宋 }
-      {
-        \newCJKfontfamily \@@_stzhongs: { 华文中宋 }
-          [ \c_@@_name_fakebold_tl ]
-      }
+          { \@@_stzhongs:n { \c_@@_name_fakebold_tl } }
       {
         \bool_if:NTF \g_@@_font_path_bool
           {
-            \newCJKfontfamily \@@_stzhongs: { \c_@@_name_stzhongsfile_tl }
-              [ Path = \g_@@_font_path_tl, \c_@@_name_fakebold_tl ]
+                \@@_stzhongs:nn { \c_@@_name_stzhongsfile_tl }
+                  { Path = \g_@@_font_path_tl, \c_@@_name_fakebold_tl }
           }
           {
             \cs_set_eq:NN \@@_stzhongs: \rmfamily
             \msg_warning:nn { njuthesis } { missing-stzhongs }
+              }
           }
       }
   }
