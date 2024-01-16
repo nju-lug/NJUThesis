@@ -6,8 +6,18 @@
 
 ## [未发布]
 
+### 新增
+
 - 增加 `macoffice` 字体配置 - [#164],[#169]
   - 感谢 [@liudongmiao]！
+
+### 修复
+
+- 修复定理类环境在共享计数器时的 `cleveref` 引用名问题 - [#234]
+
+### 杂项
+
+- 跟进 2024 届本科毕业论文规定
 
 ## [1.3.2] - 2023-12-05
 
@@ -101,7 +111,7 @@
 
 ### 杂项
 
-- 跟进 2023 年本科毕业论文规定
+- 跟进 2023 届本科毕业论文规定
 - 跟进新版南大 TeX 网站
 
 ## [1.1.1] - 2022-12-04
@@ -617,6 +627,7 @@
 [#229]: https://github.com/nju-lug/NJUThesis/discussions/229
 [#230]: https://github.com/nju-lug/NJUThesis/issues/230
 [#232]: https://github.com/nju-lug/NJUThesis/issues/232
+[#234]: https://github.com/nju-lug/NJUThesis/issues/234
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 

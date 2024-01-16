@@ -2,7 +2,7 @@
 % !TeX program  = XeLaTeX
 % !TeX encoding = UTF-8
 %
-% Copyright (C) 2021 - 2023
+% Copyright (C) 2021 - 2024
 % by Nanjing University Linux User Group
 % <git+nju-lug-email-3104-issue-@yaoge123.cn>
 %
@@ -49,7 +49,7 @@
 
 \preamble
 
-Copyright (C) 2021 - 2023
+Copyright (C) 2021 - 2024
 by Nanjing University Linux User Group
 <git+nju-lug-email-3104-issue-@yaoge123.cn>
 
@@ -232,7 +232,7 @@ To produce the documentation run the original source files ending with
 % 用户组维护的，用于处理本校学生毕业论文排版需求的 \LaTeX 模板。
 %
 % 本模板使用的本科生毕业论文模板格式依据
-% 《关于启动南京大学2023届本科毕业论文（设计）工作的通知》\cite{nju-bachelor-2023}，
+% 《关于启动南京大学2024届本科毕业论文（设计）工作的通知》\cite{nju-bachelor-2024}，
 % 研究生学位论文格式依据研究生院提供的材料包\cite{nju-graduate-2023}。
 % 博士后出站报告格式要求与博士学位论文一致\cite{nju-postdoc-2022}，
 % 封面、摘要的设计参考了部分既有报告。
@@ -2406,11 +2406,11 @@ To produce the documentation run the original source files ending with
 % \newblock \textit{信息与文献\quad 参考文献著录规则: GB/T 7714--2015} [S].
 % \newblock 北京: 中国标准出版社, 2015
 %
-% \bibitem{nju-bachelor-2023}
+% \bibitem{nju-bachelor-2024}
 % 南京大学本科生院.
-% \newblock \textit{关于启动南京大学2022届本科毕业论文（设计）工作的通知} [EB/OL].
-% \newblock (2022-12-19)
-% \urlprefix\url{https://jw.nju.edu.cn/29/d8/c26263a600536/page.htm}
+% \newblock \textit{关于启动南京大学2024届本科毕业论文（设计）工作的通知} [EB/OL].
+% \newblock (2023-12-19)
+% \urlprefix\url{https://jw.nju.edu.cn/db/23/c26263a645923/page.htm}
 %
 % \bibitem{nju-graduate-2023}
 % 南京大学研究生院.
@@ -4235,10 +4235,14 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 隐藏 |does not contain script "CJK"| 警告。
 %    \begin{macrocode}
-    { quiet   } { xeCJK    },
+%     { quiet   } { xeCJK    },
     { no-math } { fontspec },
     { perpage } { footmisc },
-    { capitalise, nameinlink, noabbrev } { cleveref }
+    { capitalise, nameinlink, noabbrev } { cleveref },
+%    \end{macrocode}
+% \pkg{ntheorem} 依赖 \pkg{amsthm} 和 \pkg{thmmarks} 实现 QED 符号等功能。
+%    \begin{macrocode}
+    { amsmath, thmmarks, noconfig      } { ntheorem }
   }
   { \PassOptionsToPackage #1 }
 %    \end{macrocode}
@@ -4296,23 +4300,18 @@ To produce the documentation run the original source files ending with
     booktabs,
     caption,
     graphicx,
-%    \end{macrocode}
-% 按以下顺序加载两个关于引用的包。
-% \pkg{hyperref} 覆写了大量命令，因此需要在其他包最后载入。
-% 仅有 \pkg{cleveref} 需要在 \pkg{hyperref} 后载入，否则会报错。
-%    \begin{macrocode}
-    hyperref
   }
-\@@_loadpkg_cref:
+\@@_loadpkg_nthm:
+%    \end{macrocode}
+% \pkg{hyperref} 覆写了大量命令，因此需要在其他包最后载入。
+%    \begin{macrocode}
+\RequirePackage { hyperref }
 %    \end{macrocode}
 %
-% \pkg{ntheorem} 依赖 \pkg{amsthm} 和 \pkg{thmmarks} 实现 QED 符号等功能。
+% \changes{v1.3}{2024/01/16}{调整 \pkg{cleveref} 到 \pkg{ntheorem} 后载入。}
+% \pkg{cleveref} 需要在 \pkg{ntheorem} 和 \pkg{hyperref} 后载入。
 %    \begin{macrocode}
-\bool_if:NT \g_@@_opt_load_nthm_bool
-  {
-    \PassOptionsToPackage { amsmath, thmmarks, noconfig } { ntheorem }
-    \RequirePackage { ntheorem }
-  }
+\@@_loadpkg_cref:
 %    \end{macrocode}
 %
 % 在双面模式下，使用 \pkg{emptypage} 清除空白页的页眉、页脚和页码。
@@ -5465,10 +5464,9 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_bookmark_pdf_nosec:nn,\@@_bookmark_pdf:nn}
 % 封装 \pkg{hyperref} 的 PDF 书签命令。
 %    \begin{macrocode}
-\cs_new:Npn \@@_bookmark_pdf_nosec:nn #1#2
-  { \pdfbookmark [0] {#1} {#2} }
-\cs_new:Npn \@@_bookmark_pdf:nn #1#2
-  { \phantomsection \@@_bookmark_pdf_nosec:nn {#1} {#2} }
+\cs_new:Npn \@@_bookmark_pdf_nosec:nn { \pdfbookmark [0] }
+\cs_new:Npn \@@_bookmark_pdf:nn
+  { \phantomsection \@@_bookmark_pdf_nosec:nn }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5833,7 +5831,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 修改 \pkg{cleveref} 的标签名称。
 %    \begin{macrocode}
-    \clist_map_inline:nn { figure, table, appendix, proof }
+    \clist_map_inline:nn { figure, table, appendix }
       { \@@_cref_name:n {#1} }
   }
 %    \end{macrocode}
