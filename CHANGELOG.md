@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [1.3.3] - 2024-03-06
+
 ### 新增
 
 - 增加 `macoffice` 字体配置 - [#164],[#169]
@@ -14,6 +16,8 @@
 ### 修复
 
 - 修复定理类环境在共享计数器时的 `cleveref` 引用名问题 - [#234]
+- 将部分 `hyperref` 默认设置项放在导言区前以便用户覆盖
+- 修正 `tabularray` 默认标题间距
 
 ### 杂项
 
@@ -538,8 +542,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.3.1...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.3.3...HEAD
 
+[1.3.3]: https://github.com/nju-lug/NJUThesis/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/nju-lug/NJUThesis/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/nju-lug/NJUThesis/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/nju-lug/NJUThesis/compare/v1.2.1...v1.3.0
