@@ -12,6 +12,7 @@
 
 - 增加 `macoffice` 字体配置 - [#164],[#169]
   - 感谢 [@liudongmiao]！
+- 匹配 LaTeX3 的展开类型修改 - [CTeX-org/ctex-kit#700]
 
 ### 修复
 
@@ -635,6 +636,7 @@
 [#234]: https://github.com/nju-lug/NJUThesis/issues/234
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
+[CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/

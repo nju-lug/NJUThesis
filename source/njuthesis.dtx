@@ -8699,10 +8699,12 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% 处理 \cls{l3doc} 新追加的 |e| 型展开。
+% 处理丢失的展开类型实现向后兼容。在2023年11月，\cls{l3doc} 进行了一系列展开类型修改。
+% 详见 \href{https://github.com/CTeX-org/ctex-kit/pull/678}{\texttt{CTeX-org/ctex-kit\#678}}
+% 以及 \href{https://github.com/CTeX-org/ctex-kit/pull/700}{\texttt{CTeX-org/ctex-kit\#700}}.
 %    \begin{macrocode}
-\cs_if_exist:NF \__codedoc_get_hyper_target:xN
-  { \cs_new_eq:NN \__codedoc_get_hyper_target:xN \__codedoc_get_hyper_target:eN }
+\cs_generate_variant:Nn \__codedoc_get_hyper_target:nN { x }
+\cs_generate_variant:Nn \tl_replace_all:Nnn  { No }
 %    \end{macrocode}
 %
 % \subsubsection{杂项}
