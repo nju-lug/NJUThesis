@@ -12,16 +12,16 @@ body:
     attributes:
       label: 先决条件
       options:
-        - label: |
+        - label: |-
             我已尝试更新[模板版本](https://github.com/nju-lug/NJUThesis/blob/master/CHANGELOG.md)
           required: true
-        - label: |
+        - label: |-
             我已检索[模板手册](http://mirrors.ctan.org/macros/unicodetex/latex/njuthesis/njuthesis.pdf)
           required: true
-        - label: |
+        - label: |-
             我已检索[项目 wiki](https://github.com/nju-lug/NJUThesis/wiki)
           required: true
-        - label: |
+        - label: |-
             我已确认这个问题没有在[其他 issues](https://github.com/nju-lug/NJUThesis/issues) 中提出过。
           required: true
   - type: textarea
