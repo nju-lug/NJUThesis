@@ -5071,18 +5071,18 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_stzhongs:
   {
     \cs_if_exist_use:NF \@@_stzhongs:
-  {
-    \fontspec_font_if_exist:nTF { 华文中宋 }
-          { \@@_stzhongs:n { \c_@@_name_fakebold_tl } }
       {
-        \bool_if:NTF \g_@@_font_path_bool
+        \fontspec_font_if_exist:nTF { 华文中宋 }
+          { \@@_stzhongs:n { \c_@@_name_fakebold_tl } }
           {
+            \bool_if:NTF \g_@@_font_path_bool
+              {
                 \@@_stzhongs:nn { \c_@@_name_stzhongsfile_tl }
                   { Path = \g_@@_font_path_tl, \c_@@_name_fakebold_tl }
-          }
-          {
-            \cs_set_eq:NN \@@_stzhongs: \rmfamily
-            \msg_warning:nn { njuthesis } { missing-stzhongs }
+              }
+              {
+                \cs_set_eq:NN \@@_stzhongs: \rmfamily
+                \msg_warning:nn { njuthesis } { missing-stzhongs }
               }
           }
       }
