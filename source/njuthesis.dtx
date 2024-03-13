@@ -2840,11 +2840,12 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_quad:,\@@_qquad:}
+% \begin{macro}{\@@_space:,\@@_quad:,\@@_qquad:}
 % 等价于 \LaTeXe{} 中的 \tn{quad} 和 \tn{qquad}。
 %    \begin{macrocode}
-\cs_new:Nn \@@_quad:  { \skip_horizontal:n { 1 em } }
-\cs_new:Nn \@@_qquad: { \skip_horizontal:n { 2 em } }
+\cs_new:Nn \@@_space: { \skip_horizontal:n { .5 em } }
+\cs_new:Nn \@@_quad:  { \skip_horizontal:n {  1 em } }
+% \cs_new:Nn \@@_qquad: { \skip_horizontal:n {  2 em } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4622,6 +4623,7 @@ To produce the documentation run the original source files ending with
 %
 % \changes{v0.15}{2022/01/22}{正确处理双导师信息。}
 % \changes{v1.1}{2022/11/04}{修复研究生模板封面的导师信息居中问题。}
+% \changes{v1.4}{2024/03/13}{修复导师名和职称之间没有空格的问题}
 % 在导言区录入用户信息后进行变量设置。此处使用到了 \pkg{ctex} 提供的命令，
 % 应当位于载入文档类之后。
 %    \begin{macrocode}
@@ -4631,12 +4633,12 @@ To produce the documentation run the original source files ending with
 % 拼合双导师的姓名和职称。
 %    \begin{macrocode}
     \tl_gset:Ne \g_@@_info_supvfull_tl
-      { \clist_use:Nn \g_@@_info_supv_clist { \@@_hskip: } }
+      { \clist_use:Nn \g_@@_info_supv_clist { \@@_space: } }
     \clist_if_empty:NF \g_@@_info_supvii_clist
       {
         \bool_gset_true:N \g_@@_opt_supvii_bool
         \tl_gput_right:Ne \g_@@_info_supvfull_tl
-          { \@@_quad: \clist_use:Nn \g_@@_info_supvii_clist { \@@_hskip: } }
+          { \@@_quad: \clist_use:Nn \g_@@_info_supvii_clist { \@@_space: } }
       }
     \tl_gset_eq:NN \g_@@_info_supvfull_en_tl \g_@@_info_supv_en_tl
     \tl_if_empty:NF \g_@@_info_supvii_en_tl

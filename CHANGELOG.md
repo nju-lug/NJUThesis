@@ -9,6 +9,7 @@
 ### 修复
 
 - 修复本科生诚信承诺书的换行问题
+- 修复导师名和职称之间没有空格的问题 - [#243]
 
 ## [1.3.3] - 2024-03-06
 
@@ -638,6 +639,7 @@
 [#230]: https://github.com/nju-lug/NJUThesis/issues/230
 [#232]: https://github.com/nju-lug/NJUThesis/issues/232
 [#234]: https://github.com/nju-lug/NJUThesis/issues/234
+[#243]: https://github.com/nju-lug/NJUThesis/issues/23
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
