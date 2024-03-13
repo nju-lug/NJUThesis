@@ -7714,6 +7714,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.12}{2021/12/01}{仅会生成国家图书馆封面或者普通封面之一。}
 % \changes{v0.13}{2021/12/12}{重新绘制封面。}
 % \changes{v0.13}{2021/12/15}{草稿模式下不绘制封面。}
+% \changes{v1.4}{2024/03/12}{在生成封面时删除标题换行符。}
 % 重定义 \tn{maketitle} 以生成封面。
 % 在草稿模式下，封面绘制将被禁用，有助于提升编译速度。
 %    \begin{macrocode}
@@ -7724,18 +7725,16 @@ To produce the documentation run the original source files ending with
         \pagenumbering { gobble }
         \@@_make_cover:
       }
+    \tl_gremove_all:Nn \g_@@_info_title_tl    { \\ }
+    \tl_gremove_all:Nn \g_@@_info_title_en_tl { \\ }
 %    \end{macrocode}
 % 如果在选择了 \opt{decl-page}，就生成本科生的诚信承诺书，
 % 或研究生的原创性声明和出版授权书。
 %    \begin{macrocode}
-    \bool_if:NF \g_@@_opt_draft_bool
-      {
-        \bool_if:NT \g_@@_opt_decl_bool
-          {
-            \@@_make_decl_i:
-            \@@_make_decl_ii:
-          }
-      }
+    \bool_lazy_and:nnT
+      { ! \g_@@_opt_draft_bool }
+      {   \g_@@_opt_decl_bool  }
+      { \@@_make_decl_i: \@@_make_decl_ii: }
 %    \end{macrocode}
 % 在标题页后使用大写罗马字母页码，恢复正常字体设置。
 %    \begin{macrocode}
