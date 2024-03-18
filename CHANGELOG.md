@@ -6,12 +6,7 @@
 
 ## [未发布]
 
-### 修复
-
-- 修复本科生诚信承诺书的换行问题
-- 修复导师名和职称之间没有空格的问题 - [#243]
-
-## [1.3.3] - 2024-03-06
+## [1.4.0] - 2024-03-18
 
 ### 新增
 
@@ -24,10 +19,16 @@
 - 修复定理类环境在共享计数器时的 `cleveref` 引用名问题 - [#234]
 - 将部分 `hyperref` 默认设置项放在导言区前以便用户覆盖
 - 修正 `tabularray` 默认标题间距
+- 修复本科生诚信承诺书的换行问题
+- 修复导师名和职称之间没有空格的问题 - [#243]
+- 使用正确的变量类型 - [#240],[#243]
+  - 感谢 [@muzimuzhi]！
 
 ### 杂项
 
 - 跟进 2024 届本科毕业论文规定
+- 美化 issue template 样式 - [#241]
+  - 感谢 [@muzimuzhi]！
 
 ## [1.3.2] - 2023-12-05
 
@@ -639,7 +640,7 @@
 [#230]: https://github.com/nju-lug/NJUThesis/issues/230
 [#232]: https://github.com/nju-lug/NJUThesis/issues/232
 [#234]: https://github.com/nju-lug/NJUThesis/issues/234
-[#243]: https://github.com/nju-lug/NJUThesis/issues/23
+[#243]: https://github.com/nju-lug/NJUThesis/issues/243
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
@@ -657,3 +658,4 @@
 [@AlphaZTX]: https://github.com/AlphaZTX
 [@stone-zeng]: https://github.com/stone-zeng
 [@liudongmiao]: https://github.com/liudongmiao
+[@muzimuzhi]: https://github.com/muzimuzhi
