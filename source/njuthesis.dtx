@@ -8730,10 +8730,25 @@ To produce the documentation run the original source files ending with
 %
 % 处理丢失的展开类型实现向后兼容。在2023年11月，\cls{l3doc} 进行了一系列展开类型修改。
 % 详见 \href{https://github.com/CTeX-org/ctex-kit/pull/678}{\texttt{CTeX-org/ctex-kit\#678}}
-% 以及 \href{https://github.com/CTeX-org/ctex-kit/pull/700}{\texttt{CTeX-org/ctex-kit\#700}}.
+% 以及 \href{https://github.com/CTeX-org/ctex-kit/pull/700}{\texttt{CTeX-org/ctex-kit\#700}}。
 %    \begin{macrocode}
 \cs_generate_variant:Nn \__codedoc_get_hyper_target:nN { x }
-\cs_generate_variant:Nn \tl_replace_all:Nnn  { No }
+\cs_generate_variant:Nn \tl_replace_all:Nnn { No }
+%    \end{macrocode}
+%
+% 处理向后兼容。见 \href{https://github.com/CTeX-org/ctex-kit/pull/703}{\texttt{CTeX-org/ctex-kit\#703}}。
+%    \begin{macrocode}
+\cs_if_exist:NF \__codedoc_macroname_prefix:o
+  {
+    \cs_new_protected:Npn \__codedoc_macroname_prefix:n #1
+      {
+        \__codedoc_if_macro_internal:nTF {#1}
+          { \__codedoc_typeset_aux:n {#1} } {#1}
+      }
+    \cs_generate_variant:Nn \__codedoc_macroname_prefix:n { o }
+    \cs_new_protected:Npn \__codedoc_macroname_suffix:N #1
+      { \bool_if:NTF #1 { \__codedoc_typeset_TF: } { } }
+  }
 %    \end{macrocode}
 %
 % \subsubsection{杂项}
