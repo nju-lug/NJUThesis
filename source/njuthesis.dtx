@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.4.0 2024-03-19 16:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.4.0 2024-03-19 20:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -801,7 +801,7 @@ To produce the documentation run the original source files ending with
 % 新的一章以及封面、摘要、参考文献表等特殊页面都会从奇数页开始，
 % 在奇数页结束的内容后会补上一页空页，更适合印刷输出。
 %
-% \begin{function}[added=2021-12-15]{draft}
+% \begin{function}[added=2021-12-15,updated=2024-03-19]{draft}
 %   \begin{syntax}
 %      <\OPT{draft}>
 %   \end{syntax}
@@ -2652,6 +2652,7 @@ To produce the documentation run the original source files ending with
 \@ifpackagelater { expl3 } { 2023/10/10 } { }
   {
     \cs_generate_variant:Nn \tl_set:Nn        { Ne }
+    \cs_generate_variant:Nn \tl_gset:Nn       { Ne }
     \cs_generate_variant:Nn \tl_const:Nn      { Ne }
     \cs_generate_variant:Nn \tl_gput_right:Nn { Ne }
   }
