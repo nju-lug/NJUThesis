@@ -6,13 +6,12 @@
 
 ## [未发布]
 
-## [1.4.0] - 2024-03-18
+## [1.4.0] - 2024-03-19
 
 ### 新增
 
 - 增加 `macoffice` 字体配置 - [#164],[#169]
   - 感谢 [@liudongmiao]！
-- 匹配 LaTeX3 的展开类型修改 - [CTeX-org/ctex-kit#700]
 
 ### 修复
 
@@ -23,6 +22,8 @@
 - 修复导师名和职称之间没有空格的问题 - [#243]
 - 使用正确的变量类型 - [#240],[#243]
   - 感谢 [@muzimuzhi]！
+- 匹配 l3doc 的修改 - [CTeX-org/ctex-kit#700], [CTeX-org/ctex-kit#703]
+- `draft` 选项不接受输入值
 
 ### 杂项
 
@@ -549,9 +550,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.3.3...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.4.0...HEAD
 
-[1.3.3]: https://github.com/nju-lug/NJUThesis/compare/v1.3.2...v1.3.3
+[1.4.0]: https://github.com/nju-lug/NJUThesis/compare/v1.3.2...v1.4.0
 [1.3.2]: https://github.com/nju-lug/NJUThesis/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/nju-lug/NJUThesis/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/nju-lug/NJUThesis/compare/v1.2.1...v1.3.0
@@ -644,6 +645,7 @@
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
+[CTeX-org/ctex-kit#703]: https://github.com/CTeX-org/ctex-kit/pull/703
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
