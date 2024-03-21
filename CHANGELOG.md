@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+### 修复
+
+- 修复成果列表中文姓名加粗的问题 - [#192]
+
 ## [1.4.0] - 2024-03-19
 
 ### 新增
@@ -626,6 +630,7 @@
 [#173]: https://github.com/nju-lug/NJUThesis/issues/173
 [#181]: https://github.com/nju-lug/NJUThesis/issues/181
 [#191]: https://github.com/nju-lug/NJUThesis/issues/191
+[#192]: https://github.com/nju-lug/NJUThesis/discussions/192
 [#200]: https://github.com/nju-lug/NJUThesis/discussions/200
 [#202]: https://github.com/nju-lug/NJUThesis/discussions/202
 [#204]: https://github.com/nju-lug/NJUThesis/issues/204

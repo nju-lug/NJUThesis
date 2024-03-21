@@ -4357,7 +4357,7 @@ To produce the documentation run the original source files ending with
 \sys_if_engine_xetex:T
   {
     \RequirePackage { xeCJKfntef }
-    \NewDocumentCommand \njuline { m } { \CJKunderline{#1} }
+    \cs_new_eq:NN \njuline \CJKunderline
   }
 %    \end{macrocode}
 % \pkg{lua-ul} 中需要在结尾使用 \tn{null} 保护尾部空白。
@@ -4365,7 +4365,7 @@ To produce the documentation run the original source files ending with
 \sys_if_engine_luatex:T
   {
     \RequirePackage { lua-ul }
-    \NewDocumentCommand \njuline { m } { \underLine{#1} \@@_null: }
+    \NewDocumentCommand \njuline { m } { \underLine {#1} \@@_null: }
   }
 %</class>
 %    \end{macrocode}
@@ -8191,6 +8191,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
 % \changes{v0.14}{2021/12/20}{成果列表中可突出指定作者姓名及年份。}
 % \changes{v1.2}{2023/04/07}{修复成果列表与章末参考文献表的冲突。}
+% \changes{v1.4}{2024/03/21}{修复成果列表中文姓名加粗的问题。}
 % 成果列表。
 %    \begin{macrocode}
 \NewDocumentCommand \njupaperlist
@@ -8199,13 +8200,17 @@ To produce the documentation run the original source files ending with
     \group_begin:
 %    \end{macrocode}
 % 修改姓名的显示方式，使被注解的姓名可被加粗下划线表示。
+% 由于 \pkg{biblatex} 提供的 \tn{MakeCapital} 是一个 robust 命令，
+% 在绘制下划线过程中无法被完全展开，我们将其替换为
+% 可被展开的 \cs{str_uppercase:f} 以避免造成错误。
 %    \begin{macrocode}
+      \cs_set_eq:NN \MakeCapital \str_uppercase:f
       \RenewDocumentCommand \mkbibnamegiven  { m }
         { \ifitemannotation { thesisauthor }
-            { \njuline { \bf ##1 } } {##1} }
+            { \bfseries \njuline {##1} } {##1} }
       \RenewDocumentCommand \mkbibnamefamily { m }
         { \ifitemannotation { thesisauthor }
-            { \njuline { \bf ##1 } } {##1} }
+            { \bfseries \njuline {##1} } {##1} }
 %    \end{macrocode}
 % 修改年份的显示方式，默认进行加粗。
 %    \begin{macrocode}
