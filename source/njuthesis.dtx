@@ -4910,7 +4910,7 @@ To produce the documentation run the original source files ending with
     \setCJKfamilyfont { zhhei  } { SimHei   } [#1]
     \setCJKfamilyfont { zhfs   } { FangSong } [#1]
     \setCJKfamilyfont { zhkai  } { KaiTi    } [#1]
-    \@@_stzhongs:n {#1}
+    \@@_define_stzhongs:nn { STZhongsong } {#1}
   }
 \cs_new:Npn \@@_loadfont_cjk_win:
   { \@@_loadfont_cjk_win:N \c_@@_name_fakebold_tl }
@@ -4953,7 +4953,7 @@ To produce the documentation run the original source files ending with
     \setCJKfamilyfont { zhhei  } { SimHei.ttf   } [#1]
     \setCJKfamilyfont { zhfs   } { Fangsong.ttf } [#1]
     \setCJKfamilyfont { zhkai  } { Kaiti.ttf    } [#1]
-    \@@_stzhongs:nn { STZHONGS.ttf } {#1}
+    \@@_define_stzhongs:nn { STZHONGS.ttf } {#1}
   }
 \cs_new:Npn \@@_loadfont_cjk_macoffice:
   {
@@ -5091,25 +5091,48 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{macro}{\@@_loadfont_stzhongs:,\@@_stzhongs:nn,\@@_stzhongs:n,\@@_stzhongs:}
+% \begin{variable}{\l_@@_name_stzhongsopts_tl}
+% 华文中宋的字体特性列表，默认为仅使用伪粗体。
+%    \begin{macrocode}
+\tl_new:N     \l_@@_name_stzhongsopts_tl
+\tl_set_eq:NN \l_@@_name_stzhongsopts_tl \c_@@_name_fakebold_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}{\@@_define_stzhongs:nn}
 % \changes{v1.2}{2023/04/30}{在研究生模板载入华文中宋。}
 % \changes{v1.3}{2023/10/09}{可以手动指定华文中宋文件位置。}
 % 研究生封面额外需要的华文中宋。
 %    \begin{macrocode}
-\cs_new:Npn \@@_stzhongs:nn #1#2
-  { \newCJKfontfamily \@@_stzhongs: {#1} [#2] }
-\cs_new:Npn \@@_stzhongs:n { \@@_stzhongs:nn { 华文中宋 } }
-\cs_new_protected:Npn \@@_loadfont_stzhongs:
+\cs_new:Npn \@@_define_stzhongs:nn #1#2
   {
-    \cs_if_exist_use:NF \@@_stzhongs:
+    \tl_set:Nn \l_@@_name_stzhongsfile_tl {#1}
+    \tl_set:Nn \l_@@_name_stzhongsopts_tl {#2}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_loadfont_stzhongs:n}
+% \changes{v1.2}{2023/04/30}{在研究生模板载入华文中宋。}
+% \changes{v1.3}{2023/10/09}{可以手动指定华文中宋文件位置。}
+% \changes{v1.4}{2024/04/03}{调整载入华文中宋文件的逻辑。}
+% \begin{macro}{\@@_loadfont_stzhongs:V,\@@_loadfont_stzhongs:,\@@_stzhongs:}
+% 研究生封面额外需要的华文中宋。
+%    \begin{macrocode}
+\cs_new:Npn \@@_loadfont_stzhongs:
+  { \@@_loadfont_stzhongs:V \l_@@_name_stzhongsfile_tl }
+\cs_new_protected:Npn \@@_loadfont_stzhongs:n #1
       {
-        \fontspec_font_if_exist:nTF { 华文中宋 }
-          { \@@_stzhongs:n { \c_@@_name_fakebold_tl } }
+    \fontspec_font_if_exist:nTF {#1}
+      {
+        \newCJKfontfamily \@@_stzhongs: {#1}
+          [ \l_@@_name_stzhongsopts_tl ]
+      }
           {
             \bool_if:NTF \g_@@_font_path_bool
               {
-                \@@_stzhongs:nn { \l_@@_name_stzhongsfile_tl }
-                  { Path = \g_@@_font_path_tl, \c_@@_name_fakebold_tl }
+            \newCJKfontfamily \@@_stzhongs: {#1}
+              [ Path = \g_@@_font_path_tl, \c_@@_name_fakebold_tl ]
               }
               {
                 \cs_set_eq:NN \@@_stzhongs: \rmfamily
@@ -5117,8 +5140,9 @@ To produce the documentation run the original source files ending with
               }
           }
       }
-  }
+\cs_generate_variant:Nn \@@_loadfont_stzhongs:n { V }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 %
