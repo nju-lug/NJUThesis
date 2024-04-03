@@ -8490,7 +8490,11 @@ To produce the documentation run the original source files ending with
     { blankdate     } { \qquad{}年 \quad{}月 \quad{}日   } {      },
     { blankdate   a } { \njuline{\qquad\qquad} 年
             \njuline{\qquad} 月 \njuline{\qquad} 日      } {      },
-    { colon         } { ：              } { : \c_space_tl         },
+%    \end{macrocode}
+% \changes{v1.4}{2024/04/03}{修复 \hologo{LuaLaTeX} 下的摘要页多余换行。}
+% 这里加入伸缩量，是因为 \hologo{LuaLaTeX} 下全角冒号的宽度并不能被正确识别。
+%    \begin{macrocode}
+    { colon         } { ：\hskip 0pt minus .4em } { : \c_space_tl },
 %<def-u|def-g>    { dept          } { 院系            } { DEPARTMENT            },
     { figure        } { 图              } { figure                },
     { keywords      } { 关键词          } { KEYWORDS              },

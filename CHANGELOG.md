@@ -10,6 +10,7 @@
 
 - 修复成果列表中文姓名加粗的问题 - [#192]
 - 修复 LuaLaTeX 下华文中宋的载入问题
+- 修复 LuaLaTeX 下的摘要页多余换行 - [#248]
 
 ## [1.4.0] - 2024-03-19
 
@@ -648,6 +649,7 @@
 [#232]: https://github.com/nju-lug/NJUThesis/issues/232
 [#234]: https://github.com/nju-lug/NJUThesis/issues/234
 [#243]: https://github.com/nju-lug/NJUThesis/issues/243
+[#248]: https://github.com/nju-lug/NJUThesis/issues/248
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
