@@ -185,6 +185,7 @@ To produce the documentation run the original source files ending with
 % \changes{v1.1}{2023/01/05}{适配新版南大 \LaTeX 在线编辑器。}
 % \changes{v1.4}{2024/03/11}{总是全局修改全局变量。}
 % \changes{v1.4}{2024/03/18}{将变量统一为 |l| 类型。}
+% \changes{v1.4}{2024/04/15}{盲审模式下仍然显示校名校徽。}
 %
 % \maketitle
 %
@@ -2825,7 +2826,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_anon_clist
   {
-    author, chairman, email, grade, student-id, reviewer,
+    author, chairman, email, student-id, reviewer,
     supervisor-contact, supervisor, supervisor-ii
   }
 \clist_const:Nn \c_@@_name_anon_en_clist
@@ -4731,13 +4732,23 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% 盲审模式下抹去学校名称。
+% \changes{v1.4}{2024/04/15}{盲审模式下姓名使用占位符。}
+% 盲审模式下作者和导师姓名用 $\times\times\times$ 代替。
 %    \begin{macrocode}
 %<*class>
 \bool_if:NT \g_@@_opt_anon_bool
   {
-    \tl_clear:N \l_@@_name_nju_tl
-    \tl_clear:N \l_@@_name_nju_en_tl
+    \keys_set:nn { nju / info }
+    {
+      author         = \@@_name:n { anonymous a },
+      author*        = \@@_name:n { anonymous a },
+      supervisor     =
+        { \@@_name:n { anonymous a },          \@@_name:n { anonymous b } },
+      supervisor*    =
+        { \@@_name:n { anonymous c } \@@_quad: \@@_name:n { anonymous a } },
+      supervisor-ii  = ,
+      supervisor-ii* =
+    }
   }
 %    \end{macrocode}
 %
@@ -7752,11 +7763,6 @@ To produce the documentation run the original source files ending with
         \msg_warning:nn { njuthesis } { missing-image }
         \RequirePackage { njuvisual }
       }
-    \bool_if:NT \g_@@_opt_anon_bool
-      {
-        \RenewDocumentCommand \njuemblem { o m m } { }
-        \RenewDocumentCommand \njuname   { o m m } { }
-      }
   }
 %    \end{macrocode}
 %
@@ -8216,40 +8222,68 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2021/12/20}{成果列表中可突出指定作者姓名及年份。}
 % \changes{v1.2}{2023/04/07}{修复成果列表与章末参考文献表的冲突。}
 % \changes{v1.4}{2024/03/21}{修复成果列表中文姓名加粗的问题。}
+% \changes{v1.4}{2024/04/15}{盲审模式下成果列表只显示期刊和年份。}
 % 成果列表。
 %    \begin{macrocode}
-\NewDocumentCommand \njupaperlist
-  { O { \l_@@_name_paperlist_tl } m }
+\bool_if:NTF \g_@@_opt_anon_bool
   {
-    \group_begin:
+    \ctex_at_end_package:nn { biblatex }
+      {
+        \DeclareBibliographyDriver { anonymous }
+          {
+            \usebibmacro { begentry }
+            \usebibmacro { journal  },~
+            \usebibmacro { date     }
+            \usebibmacro { finentry }
+          }
+      }
+    \NewDocumentCommand \njupaperlist
+      { O { \l_@@_name_paperlist_tl } m }
+      {
+        \group_begin:
+          \newrefsection
+          \nocite {#2}
+          \printbiblist
+            [ title = #1, driver = anonymous, env = bibliography,
+              heading = subbibliography ] { anonymous }
+          \endrefsection
+        \group_end:
+      }
+  }
+  {
+    \NewDocumentCommand \njupaperlist
+      { O { \l_@@_name_paperlist_tl } m }
+      {
+        \group_begin:
 %    \end{macrocode}
 % 修改姓名的显示方式，使被注解的姓名可被加粗下划线表示。
 % 由于 \pkg{biblatex} 提供的 \tn{MakeCapital} 是一个 robust 命令，
 % 在绘制下划线过程中无法被完全展开，我们将其替换为
 % 可被展开的 \cs{str_uppercase:f} 以避免造成错误。
 %    \begin{macrocode}
-      \cs_set_eq:NN \MakeCapital \str_uppercase:f
-      \RenewDocumentCommand \mkbibnamegiven  { m }
-        { \ifitemannotation { thesisauthor }
-            { \bfseries \njuline {##1} } {##1} }
-      \RenewDocumentCommand \mkbibnamefamily { m }
-        { \ifitemannotation { thesisauthor }
-            { \bfseries \njuline {##1} } {##1} }
+          \cs_set_eq:NN \MakeCapital \str_uppercase:f
+          \RenewDocumentCommand \mkbibnamegiven  { m }
+            { \ifitemannotation { thesisauthor }
+                { \bfseries \njuline {##1} } {##1} }
+          \RenewDocumentCommand \mkbibnamefamily { m }
+            { \ifitemannotation { thesisauthor }
+                { \bfseries \njuline {##1} } {##1} }
 %    \end{macrocode}
 % 修改年份的显示方式，默认进行加粗。
 %    \begin{macrocode}
-      \RenewDocumentCommand \mkbibdateshort { m m m }
-        { \textbf { \thefield {##1} } }
+          \RenewDocumentCommand \mkbibdateshort { m m m }
+            { \textbf { \thefield {##1} } }
 %    \end{macrocode}
 % \changes{v1.1}{2023/04/07}{修复章末参考文献表与成果列表的冲突问题。}
 % 相较于直接使用 \env{refsection} 环境，\tn{newrefsection} 命令可以
 % 自动结束上一个 \env{refsection}，与章末参考文献表格式兼容更好。
 %    \begin{macrocode}
-      \newrefsection
-      \nocite {#2}
-      \printbibliography [ heading = subbibliography, title = #1 ]
-      \endrefsection
-    \group_end:
+          \newrefsection
+          \nocite {#2}
+          \printbibliography [ heading = subbibliography, title = #1 ]
+          \endrefsection
+        \group_end:
+      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -8352,6 +8386,9 @@ To produce the documentation run the original source files ending with
   {
     { acknowledgement   } { 致 \qquad{} 谢                     },
     { acknowledgement a } { 致谢（盲审阶段，暂时隐去）         },
+    { anonymous a       } { \ensuremath { \times\times\times } },
+    { anonymous b       } { \ensuremath { \times\times\times } },
+    { anonymous c       } { \ensuremath { \times\times\times } },
 %<def-g>    { auth decl         } { 学位论文出版授权书                 },
 %<def-p>    { auth decl         } { 研究报告使用授权书                 },
 %<def-p>    { author            } { 作者                               },
