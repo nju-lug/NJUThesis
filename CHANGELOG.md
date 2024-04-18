@@ -10,9 +10,12 @@
 
 - 匹配新版盲审模板 - [#185]
   - 作者和导师姓名用占位符代替
-  - 恢复显示校名校徽
+  - 默认显示学校信息
   - 恢复显示摘要页的年级
   - 成果列表中仅显示期刊和年份
+  - `anonymous` 选项不接受输入值
+- 盲审模式可选择是否隐藏学校信息 - [#251]
+  - 新增 `anonymous-mode/no-nju` 选项
 
 ### 修复
 
@@ -658,6 +661,7 @@
 [#234]: https://github.com/nju-lug/NJUThesis/issues/234
 [#243]: https://github.com/nju-lug/NJUThesis/issues/243
 [#248]: https://github.com/nju-lug/NJUThesis/issues/248
+[#251]: https://github.com/nju-lug/NJUThesis/discussions/251
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700

@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.4.0 2024-03-19 20:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.4.1 2024-04-19 01:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -148,7 +148,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.4.0 \quad 2024-03-19}
+% \date{v1.4.1 \quad 2024-04-19}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -185,7 +185,6 @@ To produce the documentation run the original source files ending with
 % \changes{v1.1}{2023/01/05}{适配新版南大 \LaTeX 在线编辑器。}
 % \changes{v1.4}{2024/03/11}{总是全局修改全局变量。}
 % \changes{v1.4}{2024/03/18}{将变量统一为 |l| 类型。}
-% \changes{v1.4}{2024/04/15}{盲审模式下仍然显示校名校徽。}
 %
 % \maketitle
 %
@@ -824,20 +823,30 @@ To produce the documentation run the original source files ending with
 % 宏包的代码环境不会显示内容，具体效果需要参照各个宏包的说明文档。
 % 如需抵消草稿模式的影响，请使用 \opt{final} 选项载入相关宏包。
 %
-% \begin{function}[added=2022-04-19,updated=2022-09-26]{anonymous}
+% \begin{function}[added=2022-04-19,updated=2024-04-19]{anonymous}
 %   \begin{syntax}
-%     \OPT{anonymous} = <\TFF>
+%      <\OPT{anonymous}>
 %   \end{syntax}
 % 是否开启盲审模式。
 % \end{function}
 %
 % 盲审模式会抹除论文中的学校和个人信息，效果包括：
 % \begin{itemize}
-%   \item 不显示校名校徽图片
-%   \item 不显示“南京大学”字样
-%   \item 不显示作者、导师等基本信息
-%   \item 不显示声明页、致谢页
+%   \item 作者、导师姓名用 $\times\times\times$ 代替
+%   \item 不显示学号，但保留年级
+%   \item 不显示声明页
+%   \item 致谢页仅显示书签
+%   \item 成果列表仅显示刊名和年份
 % \end{itemize}
+%
+% 如果你想使用更严格的模式，可以参考 \ref{subsec:njusetup}~节的语法填写下面的选项。
+%
+% \begin{function}[added=2024-04-19]{anonymous-mode/no-nju}
+%   \begin{syntax}
+%      <\OPT{no-nju}> = <\TFF>
+%   \end{syntax}
+% 是否隐藏学校信息。默认关闭。开启后会隐藏校名、校徽和学校代码。
+% \end{function}
 %
 %
 % \subsubsection{可选宏包}
@@ -1083,6 +1092,7 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsection{设置接口}
+% \label{subsec:njusetup}
 %
 % \begin{function}[added=2021-09-10,updated=2022-08-01]{\njusetup}
 %   \begin{syntax}
@@ -3929,9 +3939,11 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{anonymous}
 % \changes{v0.18}{2022/04/19}{新增盲审模式选项。}
 % \changes{v1.0}{2022/07/05}{重命名盲审模式选项。}
+% \changes{v1.4}{2024/04/19}{盲审模式选项不接受传入值。}
 % \begin{macro}{\g_@@_opt_anon_bool}
 % 盲审模式。
 %    \begin{macrocode}
+    anonymous  .value_forbidden:n  = true,
     anonymous        .bool_gset:N  = \g_@@_opt_anon_bool,
     anonymous          .initial:n  = false,
 %    \end{macrocode}
@@ -4113,25 +4125,18 @@ To produce the documentation run the original source files ending with
 \ProcessKeysOptions { nju }
 %    \end{macrocode}
 %
-% \changes{v1.1}{2022/09/26}{盲审模式下不显示声明页。}
-% 盲审模式下不显示声明页。
-%    \begin{macrocode}
-\bool_if:NT \g_@@_opt_anon_bool
-  { \bool_gset_false:N \g_@@_opt_decl_bool }
-%    \end{macrocode}
-%
 %
 % \subsection{用户接口}
 %
-% \begin{macro}{abstract, bib, image, footer, footnote, header,
-%   info, label-sep, listoffigures, listoftables,
+% \begin{macro}{abstract, anonymous-mode, bib, image, footer,
+%   footnote, header, info, label-sep, listoffigures, listoftables,
 %   math, style, theorem, tableofcontents}
 % 定义模块名的元（meta）键值对。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    abstract, bib, image, footer, footnote, header,
-    info, label-sep, listoffigures, listoftables,
+    abstract, anonymous-mode, bib, image, footer, footnote,
+    header, info, label-sep, listoffigures, listoftables,
     math, style, theorem, tableofcontents
   }
   { \keys_define:nn { nju } { #1 .meta:nn = { nju / #1 } {##1} } }
@@ -4139,15 +4144,18 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_keys_set:nn}
+%
+%    \begin{macrocode}
+\cs_new_eq:NN \@@_keys_set:nn \keys_set:nn
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_keys_set_anon:nn}
 % \changes{v1.1}{2022/09/26}{使用 \cs{keys_set_filter:nnn} 重构盲审模式。}
 % 在开启盲审模式时，屏蔽被编入 \opt{anonymous} 分组的键值对输入。
 %    \begin{macrocode}
-\bool_if:NTF \g_@@_opt_anon_bool
-  {
-    \cs_new:Npn \@@_keys_set:nn #1#2
-      { \keys_set_filter:nnn {#1} { anonymous } {#2} }
-  }
-  { \cs_new_eq:NN \@@_keys_set:nn \keys_set:nn }
+\cs_new:Npn \@@_keys_set_anon:nn #1#2
+  { \keys_set_filter:nnn {#1} { anonymous } {#2} }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4732,26 +4740,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
-% \changes{v1.4}{2024/04/15}{盲审模式下姓名使用占位符。}
-% 盲审模式下作者和导师姓名用 $\times\times\times$ 代替。
-%    \begin{macrocode}
-%<*class>
-\bool_if:NT \g_@@_opt_anon_bool
-  {
-    \keys_set:nn { nju / info }
-    {
-      author         = \@@_name:n { anonymous a },
-      author*        = \@@_name:n { anonymous a },
-      supervisor     =
-        { \@@_name:n { anonymous a },          \@@_name:n { anonymous b } },
-      supervisor*    =
-        { \@@_name:n { anonymous c } \@@_quad: \@@_name:n { anonymous a } },
-      supervisor-ii  = ,
-      supervisor-ii* =
-    }
-  }
-%    \end{macrocode}
-%
 %
 % \subsection{字体设置}
 %
@@ -4762,6 +4750,7 @@ To produce the documentation run the original source files ending with
 % \begin{variable}{\c_@@_path_macoffice_tl}
 % mac Office 字体路径。
 %    \begin{macrocode}
+%<*class>
 \tl_const:Nn \c_@@_path_macoffice_tl
   { /Applications/Microsoft~ Word.app/Contents/Resources/DFonts/ }
 %    \end{macrocode}
@@ -8198,34 +8187,41 @@ To produce the documentation run the original source files ending with
 %
 % \begin{environment}{preface}
 % \begin{environment}{acknowledgement}
-% 单独制作的前言致谢页。
+% 单独制作的前言、致谢页。
 %    \begin{macrocode}
 \NewDocumentEnvironment { preface         } { +b }
   { \@@_chapter:V \l_@@_name_preface_tl #1 }
   { \cleardoublepage }
 \NewDocumentEnvironment { acknowledgement } { +b }
-  {
-    \bool_if:NTF \g_@@_opt_anon_bool
-      { \@@_bookmark_toc:V \l_@@_name_acknowledgementa_tl   }
-      { \@@_chapter:V      \l_@@_name_acknowledgement_tl #1 }
-  }
+  { \@@_acknowledgement:n {#1} }
   { \cleardoublepage }
 %    \end{macrocode}
 % \end{environment}
 % \end{environment}
 %
+% \begin{macro}{\@@_acknowledgement:n}
+% 正常模式的致谢标题。
+%    \begin{macrocode}
+\cs_new:Npn \@@_acknowledgement:n
+  { \@@_chapter:V \l_@@_name_acknowledgement_tl \use:n }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_acknowledgement_anon:n}
+% 盲审模式下仅显示致谢书签。
+%    \begin{macrocode}
+\cs_new:Npn \@@_acknowledgement_anon:n
+  { \@@_bookmark_toc:V \l_@@_name_acknowledgementa_tl \use_none:n }
+%    \end{macrocode}
+% \end{macro}
+%
 %
 % \subsection{成果列表}
 %
-% \begin{macro}{\njupaperlist}
-% \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
-% \changes{v0.14}{2021/12/20}{成果列表中可突出指定作者姓名及年份。}
-% \changes{v1.2}{2023/04/07}{修复成果列表与章末参考文献表的冲突。}
-% \changes{v1.4}{2024/03/21}{修复成果列表中文姓名加粗的问题。}
-% \changes{v1.4}{2024/04/15}{盲审模式下成果列表只显示期刊和年份。}
-% 成果列表。
+% \begin{macro}{\@@_anon_paperlist_setup:}
+% 创建一个仅包含刊名和年份的文献列表格式。
 %    \begin{macrocode}
-\bool_if:NTF \g_@@_opt_anon_bool
+\cs_new:Npn \@@_anon_paperlist_setup:
   {
     \ctex_at_end_package:nn { biblatex }
       {
@@ -8237,56 +8233,141 @@ To produce the documentation run the original source files ending with
             \usebibmacro { finentry }
           }
       }
-    \NewDocumentCommand \njupaperlist
-      { O { \l_@@_name_paperlist_tl } m }
-      {
-        \group_begin:
-          \newrefsection
-          \nocite {#2}
-          \printbiblist
-            [ title = #1, driver = anonymous, env = bibliography,
-              heading = subbibliography ] { anonymous }
-          \endrefsection
-        \group_end:
-      }
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_paperlist_anon:nn}
+% 生成盲审模式下的成果列表。
+%    \begin{macrocode}
+\cs_new:Npn \@@_paperlist_anon:nn #1#2
   {
-    \NewDocumentCommand \njupaperlist
-      { O { \l_@@_name_paperlist_tl } m }
-      {
-        \group_begin:
+    \group_begin:
+      \newrefsection
+      \nocite {#2}
+      \printbiblist
+        [ title = #1, driver = anonymous, env = bibliography,
+          heading = subbibliography ] { anonymous }
+      \endrefsection
+    \group_end:
+  }
+%    \end{macrocode}
+% \end{macro}
+
+% \begin{macro}{\@@_paperlist:nn}
+% 生成普通模式下的成果列表。
+%    \begin{macrocode}
+\cs_new:Npn \@@_paperlist:nn #1#2
+  {
+    \group_begin:
 %    \end{macrocode}
 % 修改姓名的显示方式，使被注解的姓名可被加粗下划线表示。
 % 由于 \pkg{biblatex} 提供的 \tn{MakeCapital} 是一个 robust 命令，
 % 在绘制下划线过程中无法被完全展开，我们将其替换为
 % 可被展开的 \cs{str_uppercase:f} 以避免造成错误。
 %    \begin{macrocode}
-          \cs_set_eq:NN \MakeCapital \str_uppercase:f
-          \RenewDocumentCommand \mkbibnamegiven  { m }
-            { \ifitemannotation { thesisauthor }
-                { \bfseries \njuline {##1} } {##1} }
-          \RenewDocumentCommand \mkbibnamefamily { m }
-            { \ifitemannotation { thesisauthor }
-                { \bfseries \njuline {##1} } {##1} }
+      \cs_set_eq:NN \MakeCapital \str_uppercase:f
+      \RenewDocumentCommand \mkbibnamegiven  { m }
+        { \ifitemannotation { thesisauthor }
+            { \bfseries \njuline {##1} } {##1} }
+      \RenewDocumentCommand \mkbibnamefamily { m }
+        { \ifitemannotation { thesisauthor }
+            { \bfseries \njuline {##1} } {##1} }
 %    \end{macrocode}
 % 修改年份的显示方式，默认进行加粗。
 %    \begin{macrocode}
-          \RenewDocumentCommand \mkbibdateshort { m m m }
-            { \textbf { \thefield {##1} } }
+      \RenewDocumentCommand \mkbibdateshort { m m m }
+        { \textbf { \thefield {##1} } }
 %    \end{macrocode}
 % \changes{v1.1}{2023/04/07}{修复章末参考文献表与成果列表的冲突问题。}
 % 相较于直接使用 \env{refsection} 环境，\tn{newrefsection} 命令可以
 % 自动结束上一个 \env{refsection}，与章末参考文献表格式兼容更好。
 %    \begin{macrocode}
-          \newrefsection
-          \nocite {#2}
-          \printbibliography [ heading = subbibliography, title = #1 ]
-          \endrefsection
-        \group_end:
-      }
+      \newrefsection
+      \nocite {#2}
+      \printbibliography [ heading = subbibliography, title = #1 ]
+      \endrefsection
+    \group_end:
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{macro}{\njupaperlist}
+% \changes{v0.10}{2021/09/29}{新增了成果列表页面。}
+% \changes{v0.14}{2021/12/20}{成果列表中可突出指定作者姓名及年份。}
+% \changes{v1.2}{2023/04/07}{修复成果列表与章末参考文献表的冲突。}
+% \changes{v1.4}{2024/03/21}{修复成果列表中文姓名加粗的问题。}
+% \changes{v1.4}{2024/04/15}{盲审模式下成果列表只显示期刊和年份。}
+% 成果列表。
+%    \begin{macrocode}
+\NewDocumentCommand \njupaperlist
+  { O { \l_@@_name_paperlist_tl } m } { \@@_paperlist:nn {#1} {#2} }
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \subsection{盲审模式}
+% \changes{v1.4}{2024/04/19}{合并盲审模式设置。}
+%
+% \begin{macro}{anonymous-mode/no-nju}
+% \changes{v1.4}{2024/04/19}{盲审模式下可选择是否隐藏学校信息。}
+%    \begin{macrocode}
+\keys_define:nn { nju / anonymous-mode }
+  {
+    no-nju .bool_gset:N = \g_@@_opt_nonju_bool,
+    no-nju   .initial:n = false
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\bool_if:NT \g_@@_opt_anon_bool
+  {
+%    \end{macrocode}
+% \changes{v1.1}{2022/09/26}{盲审模式下不显示声明页。}
+% 盲审模式下不显示声明页。
+%    \begin{macrocode}
+    \bool_gset_false:N \g_@@_opt_decl_bool
+%    \end{macrocode}
+% \changes{v1.4}{2024/04/15}{盲审模式下姓名使用占位符。}
+% 盲审模式下作者和导师姓名用 $\times\times\times$ 代替。
+%    \begin{macrocode}
+    \keys_set:nn { nju / info }
+      {
+        author         = \@@_name:n { anonymous a },
+        author*        = \@@_name:n { anonymous a },
+        supervisor     =
+          { \@@_name:n { anonymous a },          \@@_name:n { anonymous b } },
+        supervisor*    =
+          { \@@_name:n { anonymous c } \@@_quad: \@@_name:n { anonymous a } },
+        supervisor-ii  = ,
+        supervisor-ii* =
+      }
+%    \end{macrocode}
+% 替换为匿名版本的命令。
+%    \begin{macrocode}
+    \@@_anon_paperlist_setup:
+    \cs_gset_eq:NN \@@_paperlist:nn      \@@_paperlist_anon:nn
+    \cs_gset_eq:NN \@@_keys_set:nn       \@@_keys_set_anon:nn
+    \cs_gset_eq:NN \@@_acknowledgement:n \@@_acknowledgement_anon:n
+  }
+%    \end{macrocode}
+%
+% 开启 \opt{no-nju} 模式时，清除校名、校徽以及学校代码。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \bool_lazy_and:nnT
+      { \g_@@_opt_anon_bool } { \g_@@_opt_nonju_bool }
+      {
+        \tl_clear:N  \l_@@_name_nju_tl
+        \tl_clear:N  \l_@@_name_nju_en_tl
+        \tl_gclear:N \g_@@_info_code_tl
+        \RenewDocumentCommand \njuemblem { o m m } { }
+        \RenewDocumentCommand \njuname   { o m m } { }
+      }
+  }
+%    \end{macrocode}
 %
 %
 % \subsection{符号表}
