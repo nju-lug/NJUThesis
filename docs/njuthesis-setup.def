@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.4.0 2024-03-19
+% njuthesis 参数设置文件 v1.4.1 2024-04-19
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -252,6 +252,9 @@
 % 页眉页脚的字体样式
 % \njusetformat{header}{\small\kaishu}
 % \njusetformat{footer}{}
+
+% 在盲审模式下隐藏学校信息
+% \njusetup{anonymous-mode/no-nju}
 
 % 一些灵活调整
 % \njusetname{type}{本科毕业设计}                 % 我做的是毕业设计
