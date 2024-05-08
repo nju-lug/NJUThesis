@@ -8,6 +8,11 @@
 
 ### 新增
 
+- 图表标题区分单行多行设置
+- 软性规定标题和图表本身的位置关系 -[#253]
+
+### 新增
+
 - 匹配新版盲审模板 - [#185]
   - 作者和导师姓名用占位符代替
   - 默认显示学校信息
@@ -662,6 +667,7 @@
 [#243]: https://github.com/nju-lug/NJUThesis/issues/243
 [#248]: https://github.com/nju-lug/NJUThesis/issues/248
 [#251]: https://github.com/nju-lug/NJUThesis/discussions/251
+[#253]: https://github.com/nju-lug/NJUThesis/pull/253
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700

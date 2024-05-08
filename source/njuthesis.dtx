@@ -477,7 +477,7 @@ To produce the documentation run the original source files ending with
 % 题，不妨使用下一小节的\emph{即时安装方法}优先载入较新的格式文件。
 %
 % {\color{red}|[!]|} 如果您具备相关经验\footnote{譬如熟悉命令行操作、使用的是 \TL
-% 发行版等}，可以在下载仓库内全部文件后，于该目录下运行
+% 发行版等。}，可以在下载仓库内全部文件后，于该目录下运行
 % \begin{shellexample}[morekeywords={l3build},emph={install}]
 %   l3build install
 % \end{shellexample}
@@ -691,7 +691,7 @@ To produce the documentation run the original source files ending with
 % 对于已知问题的修复补丁。每个版本的更新内容记录于 Git 仓库中的
 % \file{CHANGELOG.md}。除非特别提到选项变化，升级时一般无需更改 \file{.tex}
 % 文件内容\footnote{在确实发生了接口变动，例如选项名称发生了更改，
-% 一种稳妥做法是将论文内容迁移至新版的 \file{njuthesis-sample.tex}}。
+% 一种稳妥做法是将论文内容迁移至新版的 \file{njuthesis-sample.tex}。}。
 % 基于安装和编译方式的差异，可以按照当前工作文件夹内是否有 \file{.cls}
 % 文件分别进行更新操作。
 %
@@ -1166,7 +1166,7 @@ To produce the documentation run the original source files ending with
 %   \end{syntax}
 % 题目。由于封面上提供给中文题目的横线长度有限\footnote{单行最长约为15
 % 个汉字，建议总长度不超过45字，当然你也可以对照 \ref{subsubsec:modify-length}
-% 节修改横线长度}，本模板默认会自动对标题进行换行。
+% 节修改横线长度。}，本模板默认会自动对标题进行换行。
 % 如果需要手动指定换行位点，请使用换行控制符（ |\\| ）。
 % \end{function}
 %
@@ -1482,7 +1482,7 @@ To produce the documentation run the original source files ending with
 %
 % 本模板继承 \pkg{ctex} 宏集提供的字形字号设置，以备不时之需。换句话说，
 % 除非你有十足的把握，认为某处字体产生了偏差\footnote{在此情况下也应当
-% 直接到 GitHub 仓库反馈}，否则无需动用这些命令处理样式问题。
+% 直接到模板的 GitHub 仓库反馈。}，否则无需动用这些命令处理样式问题。
 %
 % \begin{function}[added=2021-09-22]{\njuline}
 %   \begin{syntax}
@@ -1499,7 +1499,7 @@ To produce the documentation run the original source files ending with
 % 模板默认载入 \pkg{enumitem} 宏包，对三个常用列表环境内的条目间距进行压缩。
 % 可以通过第 \ref{subsubsec:optional-pkg} 节提供的选项禁用该宏包。
 %
-% \subsubsection{图片}
+% \subsubsection{图表}
 %
 % \begin{function}[added=2022-08-06]{image/path}
 %   \begin{syntax}
@@ -1507,6 +1507,37 @@ To produce the documentation run the original source files ending with
 %   \end{syntax}
 % 图片搜索路径，等效于 \tn{graphicspath}。这个选项仅能设置一次。
 % \end{function}
+%
+% 图表的标题依赖 \pkg{caption} 包进行定制。按照习惯，图片的标题在底部，
+% 表格的标题在顶部，这是通过 \tn{caption} 命令和生成图表命令的相对位置决定的。
+% \footnote{当然了，我们可以用 \pkg{float}  或者 \pkg{floatrow} 包来强制标题位置，
+% 但 \url{https://tex.stackexchange.com/q/130825} 表明如无必要勿增实体。}
+%
+% \begin{minipage}{.5\textwidth}
+% \begin{latexexample}[moretexcs={\centering,\includegraphics,\caption,\label},
+%   emph={[1]figure}]
+%   \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[
+%       width=.6\textwidth]{foo.pdf}
+%     \caption{Figure example}
+%     \label{fig:foo}
+%   \end{figure}
+% \end{latexexample}
+% \end{minipage}
+% \begin{minipage}{.5\textwidth}
+% \begin{latexexample}[moretexcs={\centering,\caption,\label},
+%   emph={[1]table,tabular}]
+%   \begin{table}[htbp]
+%     \centering
+%     \caption{Table example}
+%     \label{tab:foo}
+%     \begin{tabular}{cc}
+%       a & b \\
+%     \end{tabular}
+%   \end{table}
+% \end{latexexample}
+% \end{minipage}
 %
 % \subsubsection{脚注}
 %
@@ -2021,7 +2052,7 @@ To produce the documentation run the original source files ending with
 %
 % \DescribeEnv{abstract}
 % \DescribeEnv{abstract*}
-% 摘要。带星号的会生成英文摘要。
+% 摘要。带星号的环境会生成英文摘要。
 %
 % \begin{latexexample}[emph={[1]abstract,abstract*}]
 %   \begin{abstract}
@@ -4831,7 +4862,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{variable}{\l_@@_name_macofficefeature_clist}
+% \begin{variable}{\c_@@_name_macofficefeature_clist}
 % 用于 \pkg{fontspec} 的 mac Office 字体特性列表。
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_macofficefeature_clist
@@ -6098,19 +6129,28 @@ To produce the documentation run the original source files ending with
 %
 % \changes{v0.12}{2021/12/06}{删除了可能导致冲突的 \pkg{floatrow}。}
 % \changes{v0.18}{2022/05/08}{图表标题使用粗体。}
+% \changes{v1.4}{2024/05/07}{图表标题区分单行多行设置。}
 % 图表标题样式。文字设置为五号宋体，标签设置为粗体，间隔一个全角空格。
+% 我们在这里指定了长度不满一行的标题使用居中对齐，超过一行的按正常段落
+% 方式延伸至文字区域宽度。
 %    \begin{macrocode}
-\DeclareCaptionStyle{njucap}
+\DeclareCaptionStyle { njucap }
+  [ justification = centering ]
   {
+    justification = justified,
     font          = {small, bf},
-    labelsep      = quad,
-    justification = centering
+    labelsep      = quad
   }
-\captionsetup [ figure ] { style = njucap }
-\captionsetup [ table  ] { style = njucap }
+%    \end{macrocode}
+% \changes{v1.4}{2024/05/07}{软性规定标题和图表本身的位置关系。}
+% \pkg{caption} 提供的接口软性规定了标题和图表本身的\emph{位置关系}，
+% 而并不会强制改变标题位置。
+%    \begin{macrocode}
+\captionsetup [ figure ] { position = below, style = njucap }
+\captionsetup [ table  ] { position = above, style = njucap }
 %    \end{macrocode}
 %
-% \begin{macro}{\ctex_patch_cmd:Nnn}
+% \begin{macro}{\ctex_patch_cmd:cnv}
 %    \begin{macrocode}
 \cs_generate_variant:Nn \ctex_patch_cmd:Nnn { cnv }
 %    \end{macrocode}
