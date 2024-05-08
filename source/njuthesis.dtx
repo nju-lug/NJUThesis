@@ -4853,9 +4853,9 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_loadfont_latin_macoffice:
   {
     \__fontspec_main_setmainfont:nn
-      { \l_@@_name_macofficefeature_clist } { times }
+      { \c_@@_name_macofficefeature_clist } { times }
     \__fontspec_main_setsansfont:nn
-      { \l_@@_name_macofficefeature_clist } { arial }
+      { \c_@@_name_macofficefeature_clist } { arial }
     \__fontspec_main_setmonofont:nn
       { Scale     = MatchLowercase } { Menlo }
   }

@@ -11,6 +11,12 @@
 - 图表标题区分单行多行设置
 - 软性规定标题和图表本身的位置关系 -[#253]
 
+### 修复
+
+- 修复 `macoffice` 配置的变量命名问题
+
+## [1.4.1] - 2024-04-22
+
 ### 新增
 
 - 匹配新版盲审模板 - [#185]
@@ -572,8 +578,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.4.0...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.4.1...HEAD
 
+[1.4.1]: https://github.com/nju-lug/NJUThesis/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/nju-lug/NJUThesis/compare/v1.3.2...v1.4.0
 [1.3.2]: https://github.com/nju-lug/NJUThesis/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/nju-lug/NJUThesis/compare/v1.3.0...v1.3.1
