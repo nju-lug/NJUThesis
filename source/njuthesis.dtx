@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.4.1 2024-04-22 00:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.4.2 2024-11-08 15:30:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -148,7 +148,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.4.1 \quad 2024-04-22}
+% \date{v1.4.2 \quad 2024-11-08}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -1804,7 +1804,7 @@ To produce the documentation run the original source files ending with
 % 宋体，定义了 \env{exercise} 和 \env{solution} 两种定理环境，后者没有编号。
 %
 % \begin{latexexample}[moretexcs={\njusetup,\normalfont},
-%   emph={[2]theorem},emph={[3]define,body-font,type}]
+%   emph={[2]theorem},emph={[3]share-counter,define,body-font,type}]
 %   \njusetup[theorem]{
 %       share-counter = true ,
 %       define ,
@@ -5675,6 +5675,8 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v1.4}{2024/11/08}{目录选项不再会影响插图清单和表格清单。}
+%
 % \begin{macro}{
 %   \tableofcontents,\listoffigures,\listoftables,
 %   tableofcontents/toc-entry,
@@ -5693,18 +5695,6 @@ To produce the documentation run the original source files ending with
   { \@@_define_toc_cmd:nnn #1 }
 %    \end{macrocode}
 % \end{macro}
-%
-% 如果不显示主目录的条目，则插图目录和表格目录一并不显示。
-%    \begin{macrocode}
-\ctex_at_end_preamble:n
-  {
-    \bool_if:NF \g_@@_toc_showentry_bool
-      {
-        \bool_gset_false:N \g_@@_lof_showentry_bool
-        \bool_gset_false:N \g_@@_lot_showentry_bool
-      }
-  }
-%    \end{macrocode}
 %
 % \begin{macro}{tableofcontents/dotline}
 % \changes{v1.0}{2022/08/08}{可选择是否为目录中的章名添加引导线。}

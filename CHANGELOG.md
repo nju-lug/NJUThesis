@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [1.4.2] - 2024-11-08
+
 ### 新增
 
 - 图表标题区分单行多行设置
@@ -14,6 +16,10 @@
 ### 修复
 
 - 修复 `macoffice` 配置的变量命名问题
+
+### 变动
+
+- `tableofcontents/toc-entry` 不再会影响插图清单和表格清单 -[#245]
 
 ## [1.4.1] - 2024-04-22
 
@@ -578,8 +584,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.4.1...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.4.2...HEAD
 
+[1.4.2]: https://github.com/nju-lug/NJUThesis/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/nju-lug/NJUThesis/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/nju-lug/NJUThesis/compare/v1.3.2...v1.4.0
 [1.3.2]: https://github.com/nju-lug/NJUThesis/compare/v1.3.1...v1.3.2
@@ -672,6 +679,7 @@
 [#232]: https://github.com/nju-lug/NJUThesis/issues/232
 [#234]: https://github.com/nju-lug/NJUThesis/issues/234
 [#243]: https://github.com/nju-lug/NJUThesis/issues/243
+[#245]: https://github.com/nju-lug/NJUThesis/discussions/245
 [#248]: https://github.com/nju-lug/NJUThesis/issues/248
 [#251]: https://github.com/nju-lug/NJUThesis/discussions/251
 [#253]: https://github.com/nju-lug/NJUThesis/pull/253

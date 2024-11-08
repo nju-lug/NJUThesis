@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.4.1 2024-04-19
+% njuthesis 参数设置文件 v1.4.2 2024-11-08
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -186,9 +186,7 @@
 
 % 目录自身是否显示在目录条目中
 \njusetup{
-    tableofcontents/toc-entry = false,
-    % 关闭本项相当于同时关闭三个选项
-    %
+    % tableofcontents/toc-entry = false,
     % listoffigures/toc-entry   = false,
     % listoftables/toc-entry    = false
 }
