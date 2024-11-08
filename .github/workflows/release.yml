@@ -21,7 +21,7 @@ jobs:
         export PATH=/tmp/texlive/bin/x86_64-linux:$PATH
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set Version
         run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
