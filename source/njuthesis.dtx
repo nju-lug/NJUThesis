@@ -5159,6 +5159,12 @@ To produce the documentation run the original source files ending with
         \newCJKfontfamily \@@_stzhongs: {#1}
           [ \l_@@_name_stzhongsopts_tl ]
       }
+      {
+        \tl_if_eq:NnTF \g_@@_font_set_tl { macoffice }
+          {
+            \newCJKfontfamily \@@_stzhongs: {#1}
+              [ Path = \c_@@_path_macoffice_tl, \c_@@_name_fakebold_tl ]
+          }
           {
             \bool_if:NTF \g_@@_font_path_bool
               {
@@ -5170,6 +5176,7 @@ To produce the documentation run the original source files ending with
                 \msg_warning:nn { njuthesis } { missing-stzhongs }
               }
           }
+      }
       }
 \cs_generate_variant:Nn \@@_loadfont_stzhongs:n { V }
 %    \end{macrocode}
