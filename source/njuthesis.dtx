@@ -2,7 +2,7 @@
 % !TeX program  = XeLaTeX
 % !TeX encoding = UTF-8
 %
-% Copyright (C) 2021 - 2024
+% Copyright (C) 2021 - 2025
 % by Nanjing University Linux User Group
 % <git+nju-lug-email-3104-issue-@yaoge123.cn>
 %
@@ -49,7 +49,7 @@
 
 \preamble
 
-Copyright (C) 2021 - 2024
+Copyright (C) 2021 - 2025
 by Nanjing University Linux User Group
 <git+nju-lug-email-3104-issue-@yaoge123.cn>
 
@@ -4465,6 +4465,26 @@ To produce the documentation run the original source files ending with
         eufrak, mathrsfs, newtxmath, upgreek
       }
       { \@@_check_pkg_conflict:nn { unicode-math } {#1} }
+  }
+%    \end{macrocode}
+%
+% \changes{v1.4}{2025/02/24}{提供新版 \LaTeXe{} 下兼容 cleveref 的补丁。}
+% 新版 \LaTeXe{} 的补丁，详见 \url{https://github.com/CTeX-org/ctex-kit/issues/725}。
+%    \begin{macrocode}
+\bool_if:NT \g_@@_opt_load_cref_bool
+  {
+    \@ifl@t@r \fmtversion { 2024/11/01 }
+      {
+        \ctex_at_end_package:nn { cleveref }
+          {
+            \__ctex_cleveref_hook_aux:N \refstepcounter@noarg
+            \hook_gput_code:nnn { begindocument/end } { ctex }
+                {
+                  \cs_if_exist:NT \firstaid@cref@updatelabeldata
+                    { \__ctex_cleveref_hook_aux:N \firstaid@cref@updatelabeldata }
+                }
+          }
+      } { }
   }
 %    \end{macrocode}
 %

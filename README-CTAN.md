@@ -46,4 +46,4 @@ version.
 
 -----
 
-Copyright (C) 2021 - 2024 by NJU LUG.
+Copyright (C) 2021 - 2025 by NJU LUG.
