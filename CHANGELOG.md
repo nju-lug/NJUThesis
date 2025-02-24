@@ -6,6 +6,12 @@
 
 ## [未发布]
 
+### 修复
+
+- 修复 macoffice 选项下无法自动加载华文中宋问题 - [#269]
+  - 感谢 [@liudongmiao]！
+- 提供新版 LaTeX2e 下兼容 cleveref 的补丁 - [#263]
+
 ## [1.4.2] - 2024-11-08
 
 ### 新增
@@ -683,6 +689,8 @@
 [#248]: https://github.com/nju-lug/NJUThesis/issues/248
 [#251]: https://github.com/nju-lug/NJUThesis/discussions/251
 [#253]: https://github.com/nju-lug/NJUThesis/pull/253
+[#263]: https://github.com/nju-lug/NJUThesis/issues/263
+[#269]: https://github.com/nju-lug/NJUThesis/pull/269
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
@@ -702,3 +710,4 @@
 [@stone-zeng]: https://github.com/stone-zeng
 [@liudongmiao]: https://github.com/liudongmiao
 [@muzimuzhi]: https://github.com/muzimuzhi
+[@liudongmiao]: https://github.com/liudongmiao
