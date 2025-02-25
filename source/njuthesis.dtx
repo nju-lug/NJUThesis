@@ -4468,7 +4468,7 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% \changes{v1.4}{2025/02/24}{提供新版 \LaTeXe{} 下兼容 cleveref 的补丁。}
+% \changes{v1.4}{2025/02/24}{提供新版 \LaTeXe{} 下兼容 \pkg{cleveref} 的补丁。}
 % 新版 \LaTeXe{} 的补丁，详见 \url{https://github.com/CTeX-org/ctex-kit/issues/725}。
 %    \begin{macrocode}
 \bool_if:NT \g_@@_opt_load_cref_bool
@@ -5927,18 +5927,51 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % 修改 \pkg{cleveref} 的标签格式。默认在名称后面添加空格，删除公式编号的括号。
+% 我们在这里用回 \LaTeXe{} 的语法来处理断行和空格。
 %    \begin{macrocode}
 \bool_if:NT \g_@@_opt_load_cref_bool
   {
-    \crefdefaultlabelformat { #2#1#3\, }
-    \crefformat { equation      } { 公式~#2#1#3~   }
-    \crefformat { chapter       } { 第#2#1#3章     }
-    \crefformat { section       } { 第~#2#1#3~节   }
-    \crefformat { subsection    } { 第~#2#1#3~小节 }
-    \crefformat { subsubsection } { 第~#2#1#3~小节 }
 %    \end{macrocode}
-% 修改 \pkg{cleveref} 的标签名称。
+%
+% \changes{v1.4}{2025/02/25}{增加 \pkg{cleveref} 的复数引用名称。}
+% \begin{macro}{\nju@allowbreak}
+% 强行插入断行位点。
 %    \begin{macrocode}
+    \cs_new:Npn \nju@allowbreak { \skip_horizontal:n { 0pt plus 0.02em } }
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+    \ExplSyntaxOff
+    \crefformat{equation}{公式~#2#1#3}
+    \crefformat{chapter}{第\nju@allowbreak{}#2#1#3\nju@allowbreak{}章}
+    \crefformat{section}{第~#2#1#3 节}
+    \crefformat{subsection}{第~#2#1#3 小节}
+    \crefformat{subsubsection}{第~#2#1#3 小节}
+%    \end{macrocode}
+% 修改 \pkg{cleveref} 的复数引用标签名称。
+%    \begin{macrocode}
+    \crefrangeformat{equation}{公式~#3#1#4 到 #5#2#6}
+    \crefmultiformat{equation}{公式~#2#1#3}
+      { 和 #2#1#3}{、#2#1#3}{和 #2#1#3}
+    \crefrangeformat{chapter}{第\nju@allowbreak{}#3#1#4\nju@allowbreak
+      章到第\nju@allowbreak{}#5#2#6\nju@allowbreak{}章}
+    \crefmultiformat{chapter}{第\nju@allowbreak{}#2#1#3\nju@allowbreak{}章}
+      {和第\nju@allowbreak{}#2#1#3\nju@allowbreak{}章}
+      {、第\nju@allowbreak{}#2#1#3\nju@allowbreak{}章}
+      {和第\nju@allowbreak{}#2#1#3\nju@allowbreak{}章}
+    \crefrangeformat{section}{第~#3#1#4~节到第~#5#2#6~节}
+    \crefmultiformat{section}{第~#2#1#3~节 }
+      {和第~#2#1#3~节}{、第~#2#1#3~节}{和第~#2#1#3~节}
+    \crefrangeformat{subsection}{第~#3#1#4~小节到第~#5#2#6~小节}
+    \crefmultiformat{subsection}{第~#2#1#3~小节 }
+      {和第~#2#1#3~小节 }{、第~#2#1#3~小节 }{和第~#2#1#3~小节}
+    \crefrangeformat{subsubsection}{第~#3#1#4~小节到第~#5#2#6~小节}
+    \crefmultiformat{subsubsection}{第~#2#1#3~小节}
+      {和第~#2#1#3~小节 }{、第~#2#1#3~小节}{和第~#2#1#3~小节}
+%    \end{macrocode}
+% 修改 \pkg{cleveref} 的其他标签名称。
+%    \begin{macrocode}
+    \ExplSyntaxOn
     \clist_map_inline:nn { figure, table, appendix }
       { \@@_cref_name:n {#1} }
   }

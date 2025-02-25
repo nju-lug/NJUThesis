@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+### 新增
+
+- 增加 cleveref 的复数引用名称 - [#266]
+
 ### 修复
 
 - 修复 macoffice 选项下无法自动加载华文中宋问题 - [#269]
@@ -690,6 +694,7 @@
 [#251]: https://github.com/nju-lug/NJUThesis/discussions/251
 [#253]: https://github.com/nju-lug/NJUThesis/pull/253
 [#263]: https://github.com/nju-lug/NJUThesis/issues/263
+[#266]: https://github.com/nju-lug/NJUThesis/discussions/266
 [#269]: https://github.com/nju-lug/NJUThesis/pull/269
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
@@ -710,4 +715,3 @@
 [@stone-zeng]: https://github.com/stone-zeng
 [@liudongmiao]: https://github.com/liudongmiao
 [@muzimuzhi]: https://github.com/muzimuzhi
-[@liudongmiao]: https://github.com/liudongmiao
