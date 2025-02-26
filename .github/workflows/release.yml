@@ -47,6 +47,13 @@ jobs:
           python3 main.py --pkg "${{ env.PACKAGES }}" --exclude "njuthesis.cls"
           tlmgr update --self --all --no-auto-install
 
+      - name: Install latest ctex
+        run: |
+          ${{ env.SET_PATH }}
+          git clone https://github.com/CTeX-org/ctex-kit.git
+          cd ctex-kit/ctex
+          l3build install
+
       - name: Install fonts
         run: |
           mkdir fonts

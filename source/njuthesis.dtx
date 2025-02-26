@@ -1902,7 +1902,7 @@ To produce the documentation run the original source files ending with
 %   emph={[3]style,resource,option}]
 %   \njusetup[bib]{
 %       style    = author-year,
-%       resource = {njuthesis-sample.bib}，
+%       resource = {njuthesis-sample.bib},
 %       option   = {
 %           doi       = false,
 %           isbn      = false,
@@ -8963,6 +8963,10 @@ To produce the documentation run the original source files ending with
     unicode-math,
     zhlineskip
   }
+%    \end{macrocode}
+%
+% 下划线补丁。考虑到并不一定需要 LuaTeX 编译，也许以后会删掉。
+%    \begin{macrocode}
 \sys_if_engine_xetex:TF
   {
     \RequirePackage { xeCJKfntef }
@@ -8977,27 +8981,28 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
-% 处理丢失的展开类型实现向后兼容。在2023年11月，\cls{l3doc} 进行了一系列展开类型修改。
-% 详见 \href{https://github.com/CTeX-org/ctex-kit/pull/678}{\texttt{CTeX-org/ctex-kit\#678}}
-% 以及 \href{https://github.com/CTeX-org/ctex-kit/pull/700}{\texttt{CTeX-org/ctex-kit\#700}}。
+% 防止附录报错，见\href{https://tex.stackexchange.com/a/95893/251992}。
 %    \begin{macrocode}
-\cs_generate_variant:Nn \__codedoc_get_hyper_target:nN { x }
-\cs_generate_variant:Nn \tl_replace_all:Nnn { No }
+\setlength \IndexMin { 100pt }
 %    \end{macrocode}
 %
-% 处理向后兼容。见 \href{https://github.com/CTeX-org/ctex-kit/pull/703}{\texttt{CTeX-org/ctex-kit\#703}}。
+% 在2023年11月，\cls{l3doc} 进行了一系列展开类型修改，
+% 我们在这里仅仅检测上游是否已经更新。
+% 详见 \href{https://github.com/CTeX-org/ctex-kit/pull/678}{\texttt{CTeX-org/ctex-kit\#678}}、
+% \href{https://github.com/CTeX-org/ctex-kit/pull/700}{\texttt{CTeX-org/ctex-kit\#700}}
+% 以及 \href{https://github.com/CTeX-org/ctex-kit/pull/703}{\texttt{CTeX-org/ctex-kit\#703}}。
 %    \begin{macrocode}
-\cs_if_exist:NF \__codedoc_macroname_prefix:o
+\msg_new:nnn { njuthesis-doc } { ctxdoc-too-old }
   {
-    \cs_new_protected:Npn \__codedoc_macroname_prefix:n #1
-      {
-        \__codedoc_if_macro_internal:nTF {#1}
-          { \__codedoc_typeset_aux:n {#1} } {#1}
-      }
-    \cs_generate_variant:Nn \__codedoc_macroname_prefix:n { o }
-    \cs_new_protected:Npn \__codedoc_macroname_suffix:N #1
-      { \bool_if:NTF #1 { \__codedoc_typeset_TF: } { } }
+    Your~ ctxdoc~ is~ too~ old. \\
+    Please~ update~ to~ the~ latest~ deverlopment~ version~
+    of~ the~ ctex-kit~ from~ its~ GitHub~ repository.
   }
+\cs_if_exist:NF \__codedoc_get_hyper_target:eN
+  { \msg_fatal:nn { njuthesis-doc } { ctxdoc-too-old } }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %    \end{macrocode}
 %
 % \subsubsection{杂项}
@@ -9374,16 +9379,16 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_output_line:}
 % \cls{ctxdoc} 将 \file{.dtx} 文件中读取的代码行存储在
 % \cs{l__ctxdoc_verbatim_line_tl}，我们使用 \pkg{codehigh} 提供的内部函数
-% 将其转化为带有语法高亮的格式并输出。默认读取的代码行尾带有 |^^M|，
-% 直接输入高亮函数会导致代码快尾部有额外空行，需要手动删去。
+% 将其转化为带有语法高亮的格式并输出。我们这里做了一个向后兼容，详见
+% \href{https://github.com/lvjr/codehigh/issues/12}{\texttt{lvjr/codehigh\#12}}。
 %    \begin{macrocode}
-\cs_generate_variant:Nn \tl_remove_once:Nn { NV }
+\cs_if_exist:NT \__codehigh_parse_code:nN
+  { \cs_set_eq:NN \__cdhh_parse_code:nN \__codehigh_parse_code:nN }
 \cs_set_protected_nopar:Npn \@@_output_line:N #1
   {
     \tex_noindent:D
     \__ctxdoc_replace_at_at:N #1
-    \tl_remove_once:NV #1 \c__ctxdoc_active_cr_tl
-    \__codehigh_parse_code:nN { latex / latex3 } #1
+    \__cdhh_parse_code:nN { latex / latex3 } #1
     \tex_par:D
   }
 %    \end{macrocode}

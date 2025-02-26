@@ -16,6 +16,10 @@
   - 感谢 [@liudongmiao]！
 - 提供新版 LaTeX2e 下兼容 cleveref 的补丁 - [#263]
 
+### 杂项
+
+- 手册匹配 `codehigh` 更新 - [lvjr/codehigh#12]
+
 ## [1.4.2] - 2024-11-08
 
 ### 新增
@@ -700,6 +704,7 @@
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
 [CTeX-org/ctex-kit#703]: https://github.com/CTeX-org/ctex-kit/pull/703
+[lvjr/codehigh#12]: https://github.com/lvjr/codehigh/issues/12
 
 [更新日志]: https://keepachangelog.com/zh-CN/1.0.0/
 [语义化版本]: https://semver.org/lang/zh-CN/
