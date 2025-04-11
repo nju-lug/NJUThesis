@@ -59,7 +59,7 @@
     % 使用英文半角逗号(,)分隔中文姓名和职称
     %
     % supervisor-ii = {第二导师姓名,副教授},
-    % supervisor-ii* = {Associate professor My Second Supervisor},
+    % supervisor-ii* = {Associate Professor My Second Supervisor},
     % 第二导师全称
     % 如果确实没有第二导师，不填写即可
     %
@@ -221,7 +221,8 @@
     % qed-symbol    = \ensuremath { \male },
     % counter       = section,
     % share-counter = true,
-    % type          = {...}
+    % type          = {...},
+    % define,
     % 以上设置项在重新调用 theorem/define 后生效
 }
 
