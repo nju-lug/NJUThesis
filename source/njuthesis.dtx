@@ -6595,17 +6595,21 @@ To produce the documentation run the original source files ending with
           }
         \@@_um_setup:n { bold-style = ISO }
       },
-    style                        .initial:n  = GB
   }
+
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v1.4}{2025/05/04}{禁用 \pkg{unicode-math} 时不配置数学整体样式。}
+%    \begin{macrocode}
+\bool_if:NT \g_@@_opt_load_um_bool
+  {
+    \keys_define:nn { nju / math } { style .initial:n = GB }
+%    \end{macrocode}
 % \changes{v1.3}{2023/05/22}{禁用 \pkg{unicode-math} 时不配置数学字体。}
 % 在 |\begin{document}| 处载入字体以兼容 \pkg{mathtools}，
 % 并设置小于等于号和实部符号等的样式。
 %    \begin{macrocode}
-\bool_if:NT \g_@@_opt_load_um_bool
-  {
     \@@_at_begin_document:n
       {
         \use:c { @@_loadfont_math_ \g_@@_font_math_tl : }

@@ -8,14 +8,15 @@
 
 ### 新增
 
-- 增加 cleveref 的复数引用名称 - [#266]
+- 增加 `cleveref` 的复数引用名称 - [#266]
 
 ### 修复
 
-- 修复 macoffice 选项下无法自动加载华文中宋问题 - [#269]
+- 修复 `macoffice` 选项下无法自动加载华文中宋问题 - [#269]
   - 感谢 [@liudongmiao]！
-- 提供新版 LaTeX2e 下兼容 cleveref 的补丁 - [#263]
+- 提供新版 LaTeX2e 下兼容 `cleveref` 的补丁 - [#263]
 - 减少研究生中文摘要的论文标题两侧间距
+- 禁用 `unicode-math` 时不配置数学整体样式 - [#276]
 
 ### 杂项
 
@@ -701,6 +702,7 @@
 [#263]: https://github.com/nju-lug/NJUThesis/issues/263
 [#266]: https://github.com/nju-lug/NJUThesis/discussions/266
 [#269]: https://github.com/nju-lug/NJUThesis/pull/269
+[#276]: https://github.com/nju-lug/NJUThesis/discussions/276
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
