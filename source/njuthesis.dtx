@@ -6681,12 +6681,13 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{u/cover/info}
 % \changes{v1.3}{2023/05/25}{将本科生封面信息恢复至 v1.1 的宋体格式。}
+% \changes{v1.4}{2025/05/14}{本科生封面信息全部使用楷体格式。}
 % 本科生封面信息栏实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / info }
   {
     content = \@@_u_cover_info:,
-    format  = \zihao { 3 }
+    format  = \zihao { 3 } \kaishu
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6725,7 +6726,7 @@ To produce the documentation run the original source files ending with
 \cs_new:Npn \@@_u_cover_info:
   {
     \@@_u_cover_info:NNNN \l_@@_clabelwd_dim \l_@@_crulewd_dim
-      \l_@@_hsep_dim \kaishu
+      \l_@@_hsep_dim \l_@@_fmt_coverlabel_tl
   }
 %    \end{macrocode}
 % \end{macro}
@@ -8881,9 +8882,9 @@ To produce the documentation run the original source files ending with
 %<def-g|def-p>    { pagestyle     } { headings                          },
     { abslabel      } { \bfseries                         },
     { abslabel_en   } {                                   },
-%<def-u>    { cover title   } { \bfseries                         },
+%<def-u>    { cover title   } {                                   },
 %<def-g>    { cover title   } {                                   },
-%<def-u>    { cover label   } { \kaishu                           },
+%<def-u>    { cover label   } {                                   },
 %<def-g>    { cover label   } { \bfseries                         },
 %<def-p>    { cover label   } {                                   },
 %    \end{macrocode}
