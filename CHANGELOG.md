@@ -6,6 +6,8 @@
 
 ## [未发布]
 
+## [1.4.3] - 2025-05-21
+
 ### 新增
 
 - 增加 `cleveref` 的复数引用名称 - [#266]
@@ -604,8 +606,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.4.2...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.4.3...HEAD
 
+[1.4.3]: https://github.com/nju-lug/NJUThesis/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/nju-lug/NJUThesis/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/nju-lug/NJUThesis/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/nju-lug/NJUThesis/compare/v1.3.2...v1.4.0

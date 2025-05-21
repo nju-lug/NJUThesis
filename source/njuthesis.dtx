@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.4.2 2024-11-08 15:30:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.4.3 2025-05-21 23:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -148,7 +148,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.4.2 \quad 2024-11-08}
+% \date{v1.4.3 \quad 2025-05-21}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -8908,12 +8908,12 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % “目录”二字的样式。
 %    \begin{macrocode}
+    { toc title     } { \centering \zihao { 3 } \bfseries },
 %    \end{macrocode}
 % \changes{v1.3}{2023/07/08}{整合表格环境字体设置。}
 % \env{tabular} 环境内的字体样式。
 %    \begin{macrocode}
     { tabular       } { \zihao { 5 }                      },
-    { toc title     } { \centering \zihao { 3 } \bfseries },
     { header        } { \small \kaishu                    },
     { footer        } { \small \rmfamily                  }
   }

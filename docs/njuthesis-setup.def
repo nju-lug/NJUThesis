@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.4.2 2024-11-08
+% njuthesis 参数设置文件 v1.4.3 2025-05-21
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -259,5 +259,6 @@
 % \njusetname{type}{本科毕业设计}                 % 我做的是毕业设计
 % \njusetname{notation}{术语表}                   % 更改符号表名称
 % \njusetlength{crulewd}{240pt}                   % 加长封面页下划线
+% \njusetformat{subsection}{\normalfont\bfseries} % 修改 subsection 为小四号粗体宋体
 % \njusetformat{tabular}{\zihao{-4}\bfseries}     % 修改表格环境的字号
 % \EditInstance{nju}{u/cover/emblem-img}{align=l} % 左对齐的本科生封面校徽
