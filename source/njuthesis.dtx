@@ -5909,8 +5909,8 @@ To produce the documentation run the original source files ending with
     \hypersetup
       {
         pdftitle    = \g_@@_info_title_tl,
-        pdfauthor   = \g_@@_info_author_tl,
         pdfkeywords = \g_@@_info_keywords_clist,
+        pdfauthor   = \l_@@_name_pdfauthor_tl,
         pdfcreator  = \l_@@_name_pdfcreator_tl
       }
   }
@@ -8451,6 +8451,7 @@ To produce the documentation run the original source files ending with
     \cs_gset_eq:NN \@@_paperlist:nn      \@@_paperlist_anon:nn
     \cs_gset_eq:NN \@@_keys_set:nn       \@@_keys_set_anon:nn
     \cs_gset_eq:NN \@@_acknowledgement:n \@@_acknowledgement_anon:n
+    \tl_clear:N \l_@@_name_pdfauthor_tl
   }
 %    \end{macrocode}
 %
@@ -8632,6 +8633,7 @@ To produce the documentation run the original source files ending with
 %<def-g>    { orig sign         } { 研究生签名                         },
 %<def-p>    { orig sign         } { 研究报告作者签名                   },
     { paper list        } { 发表文章目录                       },
+    { pdf author        } { \g_@@_info_author_tl               },
     { pdf creator       } { LaTeX~ with~ njuthesis~ class      },
     { preface           } { 前 \qquad{} 言                     },
 %<def-p>    { report            } { 博士后研究工作报告                 },
