@@ -6887,6 +6887,7 @@ To produce the documentation run the original source files ending with
   {
     \dim_set:Nn \l_@@_tmpa_dim { 4 em }
     \@@_get_width:NV \l_@@_tmpb_dim \g_@@_info_id_tl
+    \dim_compare:nNnT \l_@@_tmpb_dim = { 0pt } { \dim_set:Nn \l_@@_tmpb_dim { 6em } }
     \clist_map_inline:nn { code, clc, secretlv, udc, id }
       {
         \@@_cover_entry:NNNNn \l_@@_name_colon_tl \l_@@_tmpa_dim
