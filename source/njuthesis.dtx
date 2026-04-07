@@ -2,7 +2,7 @@
 % !TeX program  = XeLaTeX
 % !TeX encoding = UTF-8
 %
-% Copyright (C) 2021 - 2025
+% Copyright (C) 2021 - 2026
 % by Nanjing University Linux User Group
 % <git+nju-lug-email-3104-issue-@yaoge123.cn>
 %
@@ -49,7 +49,7 @@
 
 \preamble
 
-Copyright (C) 2021 - 2025
+Copyright (C) 2021 - 2026
 by Nanjing University Linux User Group
 <git+nju-lug-email-3104-issue-@yaoge123.cn>
 
@@ -3021,8 +3021,54 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 % \end{macro}
 %
+% \begin{macro}{\@@_box_underline:Nnn}
+% \changes{v1.5}{2026/04/07}{提供 \cs{box_gunderline:Nnn} 的向前兼容。}
+% \pkg{l3box} 在 2023-03-16 提供了新的下划线接口，这里做一个简单的向前兼容。
+% 官方接口的实现方法是：保留原始盒子的基线，将其包装为 \tn{hbox} 并仅向下方追加深度。
+% \begin{arguments}
+%   \item 存放内容的盒子变量
+%   \item 下划线与盒子底边的距离，|dim| 型变量
+%   \item 下划线的粗细，|dim| 型变量
+% \end{arguments}
+%    \begin{macrocode}
+\cs_if_exist:NTF \box_gunderline:Nnn
+  { \cs_new_eq:NN \@@_box_underline:Nnn \box_gunderline:Nnn }
+  {
+    \cs_new_protected:Npn \@@_box_underline:Nnn #1#2#3
+      {
+        \hbox_gset:Nn #1
+          {
+            \vbox_top:n
+              {
+                \box_use_drop:N #1
+                \tex_kern:D \dim_eval:n {#2}
+                \tex_hrule:D height \dim_eval:n {#3} depth \c_zero_dim \scan_stop:
+              }
+          }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_box_underline:N}
+% 基于模板全局设定的下划线参数进行封装。
+%
+% \pkg{l3box} 提供的 \cs{box_gunderline:Nnn} 接口默认以盒子底边
+% 为基准点计算分离距离。为了与旧版 \cs{@@_box_ulined:NN} 保持一致的视觉效果，
+% 分离距离动态计算为：目标基线偏移量减去当前行的实际深度。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_box_underline:N #1
+  {
+    \@@_box_underline:Nnn #1
+      { - \l_@@_ruledpi_dim - \l_@@_rulehti_dim - \box_dp:N #1 }
+      { \l_@@_rulehti_dim }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_box_ulined:NN,\@@_box_ulined:Nc}
-% 带有下划线的水平盒子。
+% 生成指定宽度、内容居中且带有下划线的水平盒子。
+% 这里统一使用模板提供的下划线盒子接口。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 %   \item 内容，可带有格式
@@ -3031,9 +3077,10 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_box_ulined:NN #1#2
   {
     \mode_leave_vertical:
-    \rule [ \l_@@_ruledpi_dim ] {#1} { \l_@@_rulehti_dim }
-    \skip_horizontal:n { -#1 }
-    \hbox_to_wd:nn {#1} { \tex_hfil:D #2 \tex_hfil:D }
+    \hbox_set_to_wd:Nnn \l_@@_tmpa_box {#1}
+      { \tex_hfil:D #2 \tex_hfil:D }
+    \@@_box_underline:N \l_@@_tmpa_box
+    \box_use_drop:N \l_@@_tmpa_box
   }
 \cs_generate_variant:Nn \@@_box_ulined:NN { Nc }
 %    \end{macrocode}
@@ -3351,15 +3398,23 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_breakpar_loop:n}
 % \changes{v1.0}{2022/08/01}{使用 \LaTeX3 语法重构下划线断行算法。}
-% 带下划线的自然断行算法。
+% \changes{v1.5}{2026/04/07}{使用 \LaTeX3 原生接口重构下划线定位逻辑。}
+% 带下划线的自然断行算法核心循环，基于 \TeX{} 底层断行机制。
+% 通过 \tn{lastbox} 将预先排版好的段落从下往上逐行剥离，
+% 为单行添加下划线后，再反向拼接重组。算法主要依赖两个暂存盒子：
+% \begin{itemize}
+%   \item \cs{l_@@_tmpb_box}：存放从原段落底部抽出的当前行。
+%   \item \cs{l_@@_tmpc_box}：从后向前收集并拼接所有已处理好的行。
+% \end{itemize}
+%
+% 在将当前处理完毕的行与 \cs{l_@@_tmpc_box} 中累积的后续行进行拼接时，
+% 插入的 \tn{penalty} 0 代表一个中立的断行点。
 % \begin{arguments}
-%   \item 循环体2的额外语句
+%   \item 循环体2的额外语句（钩子）
 % \end{arguments}
 %    \begin{macrocode}
 \cs_new:Npn \@@_breakpar_loop:n #1
   {
-    \dim_set:Nn \l_@@_tmpa_dim
-      { - \tex_prevdepth:D - \l_@@_ruledpi_dim - \l_@@_rulehti_dim }
     \hbox_gset:Nn \l_@@_tmpc_box { }
     \@@_loop_until:nnn { \box_if_empty_p:N \l_@@_tmpb_box }
       {
@@ -3367,19 +3422,18 @@ To produce the documentation run the original source files ending with
         \tex_unskip:D \tex_unpenalty:D
       }
       {
-        \hbox_gset:Nn \l_@@_tmpc_box
+        \box_if_empty:NF \l_@@_tmpb_box
           {
-            \vbox_top:n
+            \tex_unskip:D \tex_unpenalty:D
+            \@@_box_underline:N \l_@@_tmpb_box
+            \hbox_gset:Nn \l_@@_tmpc_box
               {
+                \tex_penalty:D \c_zero_int
                 \box_use_drop:N \l_@@_tmpb_box
-                \__kernel_kern:n { \l_@@_tmpa_dim }
-                \tex_hrule:D
+                \hbox_unpack_drop:N \l_@@_tmpc_box
               }
-            \tex_penalty:D
-            \l_@@_tmpa_box
-            \hbox_unpack_drop:N \l_@@_tmpc_box
+            #1
           }
-        #1
       }
   }
 %    \end{macrocode}
@@ -3798,7 +3852,7 @@ To produce the documentation run the original source files ending with
     Empty~ theorem~ list~ to~ define.\\
     The~ key~ "theorem/type"~ should~ not~ be~ left~ empty.
   }
-\@@_msg:nn { load-config  }
+\@@_msg:nn { load-config }
   { I~ am~ loading~ config~ file~ "#1". }
 \@@_msg:nn { missing-image }
   {
@@ -3815,6 +3869,12 @@ To produce the documentation run the original source files ending with
     The~ functionality~ of~ built-in~ theorem~ settings~
     requires~ loading~ the~ class~ with~ "ntheorem"~ option~
     set~ to~ "true".
+  }
+\@@_msg:nn { missing-stzhongs }
+  {
+    "STZHONGS.TTF"~ is~ not~ found~ in~ your~ system.\\
+    The~ font~ is~ normally~ distributed~ with~ MS~ Windows.~
+    I~ have~ used~ songti~ for~ substitution.
   }
 \@@_msg:nn { missing-symbol }
   {
@@ -3851,12 +3911,6 @@ To produce the documentation run the original source files ending with
     The~ "#2"~ package~ is~ incompatible~ with~ "#1".\\
     I~ have~ loaded~ "#1"~ by~ default.~ Maybe~ You~ should~
     refer~ to~ section~ 4~ of~ the~ documentation.
-  }
-\@@_msg:nn { missing-stzhongs }
-  {
-    "STZHONGS.TTF"~ is~ not~ found~ in~ your~ system.\\
-    The~ font~ is~ normally~ distributed~ with~ MS~ Windows.~
-    I~ have~ used~ songti~ for~ substitution.
   }
 %    \end{macrocode}
 %

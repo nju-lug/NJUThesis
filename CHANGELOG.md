@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+### 修复
+
+- 兼容 TeX Live 2026 的新下划线接口 - [#305]
+
 ### 变动
 
 - 摘要页使用 chapter 对应的页面样式。
@@ -714,6 +718,7 @@
 [#266]: https://github.com/nju-lug/NJUThesis/discussions/266
 [#269]: https://github.com/nju-lug/NJUThesis/pull/269
 [#276]: https://github.com/nju-lug/NJUThesis/discussions/276
+[#305]: https://github.com/nju-lug/NJUThesis/discussions/305
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
