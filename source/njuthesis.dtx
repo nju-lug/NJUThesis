@@ -3942,23 +3942,19 @@ To produce the documentation run the original source files ending with
 % \subsection{模板选项}
 % \changes{v0.11}{2021/11/15}{进行了效率优化。}
 %
-% \begin{macro}{\@@_pass_option:nn}
+% \begin{macro}{\@@_pass_option_to_ctexbook:n,\@@_pass_option_to_ctexbook:V}
 % 封装 \LaTeXe{} 传参函数。注意参数顺序有变化。
 %    \begin{macrocode}
-\cs_new:Npn \@@_pass_option:nn #1#2 { \PassOptionsToClass {#2} {#1} }
+\cs_new_protected:Npn \@@_pass_option_to_ctexbook:n #1
+  { \PassOptionsToClass {#1} { ctexbook } }
+\cs_generate_variant:Nn \@@_pass_option_to_ctexbook:n { V }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_pass_option:n,\@@_pass_option:V,\@@_pass_option:e}
+% \begin{macro}{\@@_pass_option_to_ctexbook:}
 %    \begin{macrocode}
-\cs_new:Npn \@@_pass_option:n { \@@_pass_option:nn { ctexbook } }
-\cs_generate_variant:Nn \@@_pass_option:n { V }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_pass_option:}
-%    \begin{macrocode}
-\cs_new:Npn \@@_pass_option: { \@@_pass_option:V \l_keys_key_str }
+\cs_new_protected:Npn \@@_pass_option_to_ctexbook:
+  { \@@_pass_option_to_ctexbook:V \l_keys_key_str }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4020,29 +4016,19 @@ To produce the documentation run the original source files ending with
     draft                 .code:n  =
       {
         \bool_gset_true:N \g_@@_opt_draft_bool
-        \@@_pass_option:
+        \@@_pass_option_to_ctexbook:
       },
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{oneside,twoside}
 % \changes{v0.14}{2022/01/14}{新增单双面模式选项。}
-% 单双面模式（默认为双面）。
+% \changes{v1.5}{2026/04/11}{单双面模式选项沿用 \LaTeXe 的实现。}
 %    \begin{macrocode}
     oneside    .value_forbidden:n  = true,
     twoside    .value_forbidden:n  = true,
-    oneside               .code:n  =
-      {
-        \bool_gset_false:N \g_@@_opt_twoside_bool
-        \tl_gset:Nn \g_@@_name_pagemode_tl { oneside }
-        \@@_pass_option:
-      },
-    twoside               .code:n  =
-      {
-        \bool_gset_true:N  \g_@@_opt_twoside_bool
-        \tl_gset:Nn \g_@@_name_pagemode_tl { twoside }
-        \@@_pass_option:
-      },
+    oneside               .code:n  = { \@@_pass_option_to_ctexbook: },
+    twoside               .code:n  = { \@@_pass_option_to_ctexbook: },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4115,7 +4101,7 @@ To produce the documentation run the original source files ending with
 % 字号。默认为小四号。
 %    \begin{macrocode}
     zihao                 .code:n  =
-      { \@@_pass_option:n { zihao      = #1 } },
+      { \@@_pass_option_to_ctexbook:n { zihao      = #1 } },
     zihao              .initial:n  = -4,
 %    \end{macrocode}
 % \end{macro}
@@ -4129,7 +4115,7 @@ To produce the documentation run the original source files ending with
 % 更详细的说明请参考 \pkg{zhlineskip} 宏包文档。
 %    \begin{macrocode}
     linespread            .code:n  =
-      { \@@_pass_option:n { linespread = #1 } },
+      { \@@_pass_option_to_ctexbook:n { linespread = #1 } },
     linespread         .initial:n  = 1.625,
 %    \end{macrocode}
 % \end{macro}
@@ -4143,11 +4129,6 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{macro}
-%
-% 初始化为双页模式。
-%    \begin{macrocode}
-\keys_set:nn { nju } { twoside }
-%    \end{macrocode}
 %
 % \begin{macro}{\g_@@_name_optional_pkg_clist}
 %    \begin{macrocode}
@@ -4366,7 +4347,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.12}{2021/12/07}{重新组织宏包载入顺序。}
 % 将选项传入 \cls{ctexbook} 文档类。
 %    \begin{macrocode}
-\@@_pass_option:n
+\@@_pass_option_to_ctexbook:n
   {
     a4paper,
     UTF8,
@@ -4466,7 +4447,7 @@ To produce the documentation run the original source files ending with
 %
 % 在双面模式下，使用 \pkg{emptypage} 清除空白页的页眉、页脚和页码。
 %    \begin{macrocode}
-\bool_if:NT \g_@@_opt_twoside_bool { \RequirePackage { emptypage } }
+\legacy_if:nT { @twoside } { \RequirePackage { emptypage } }
 %    \end{macrocode}
 %
 % \changes{v0.13}{2021/12/13}{移除会与 \pkg{ntheorem} 冲突的 \pkg{microtype}。}
@@ -5549,10 +5530,13 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
-    \clist_gset_eq:Nc \g_@@_header_clist
-      { g_@@_header_ \g_@@_name_pagemode_tl _clist }
-    \clist_gset_eq:Nc \g_@@_footer_clist
-      { g_@@_footer_ \g_@@_name_pagemode_tl _clist }
+    \tl_set:Ne \l_@@_tmpa_tl
+      { \legacy_if:nTF { @twoside } { two } { one } }
+    \clist_map_inline:nn { header , footer }
+      {
+        \clist_gset_eq:cc { g_@@_ #1 _clist }
+          { g_@@_ #1 _ \l_@@_tmpa_tl side_clist }
+      }
   }
 %    \end{macrocode}
 %
@@ -5701,7 +5685,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_chapter_header:n #1
   {
-    \bool_if:NTF \g_@@_opt_twoside_bool
+    \legacy_if:nTF { @twoside }
       { \markboth {#1} {#1} }
       { \markboth { \hfill #1 \hfill } { } }
   }
