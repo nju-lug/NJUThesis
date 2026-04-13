@@ -3188,8 +3188,10 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_box_paragraph:nn}
+% \changes{v1.5}{2025/04/13}{提供 \tn{parbox} 的 \LaTeX3 替代方案。}
 % 替代 \tn{parbox} 的功能，生成指定宽度的顶对齐垂直盒子。
-% 这里需要通过全局变量存储 \tn{prevdepth} 的值，
+% \tn{@parboxrestore} 用于重置段落参数，保证 \tn{lastbox} 正确。
+% 这里还需要通过全局变量存储 \tn{prevdepth} 的值，
 % 保存盒子内部最后一行的真实深度，维持上下方的行距一致。
 % \footnote{\url{https://tex.stackexchange.com/q/34971/}}
 % \begin{arguments}
@@ -3201,9 +3203,9 @@ To produce the documentation run the original source files ending with
   {
     \vbox_top:n
       {
+        \@parboxrestore
         \dim_set:Nn \tex_hsize:D {#1}
         #2
-        \tex_par:D
         \dim_gset_eq:NN \g_@@_prevdepth_dim \tex_prevdepth:D
       }
     \tex_par:D
@@ -3438,14 +3440,16 @@ To produce the documentation run the original source files ending with
 % 在将当前处理完毕的行与 2 号盒子中累积的后续行进行拼接时，
 % 插入的 \tn{penalty} 0 代表一个中立的断行点。
 % \footnote{\url{https://tex.stackexchange.com/a/637863/251992}，
-% 原版算法基于 plain TeX{}，我在接口成熟后做了一点点 \LaTeX3 改编。}
+% 原版算法基于 plain TeX{}，对其语法的简要介绍可以参考
+% \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。
+% 我在接口成熟后做了一点点 \LaTeX3 改编。}
 % \begin{arguments}
 %   \item 1 号盒子存放从原段落底部抽出的当前行。
 %   \item 2 号盒子从后向前收集并拼接所有已处理好的行。
 %   \item 循环体2的额外语句（钩子）
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new:Npn \@@_underline_par_break:NNn #1#2#3
+\cs_new_protected:Npn \@@_underline_par_break:NNn #1#2#3
   {
     \hbox_gset:Nn #2 { }
     \@@_loop_until:nnn { \box_if_empty_p:N #1 }
@@ -3454,9 +3458,6 @@ To produce the documentation run the original source files ending with
         \tex_unskip:D \tex_unpenalty:D
       }
       {
-        \box_if_empty:NF #1
-          {
-            \tex_unskip:D \tex_unpenalty:D
             \@@_box_underline:N #1
             \hbox_gset:Nn #2
               {
@@ -3465,7 +3466,6 @@ To produce the documentation run the original source files ending with
                 \hbox_unpack_drop:N #2
               }
             #3
-          }
       }
   }
 %    \end{macrocode}
@@ -3479,7 +3479,7 @@ To produce the documentation run the original source files ending with
 %   \item 后部
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new:Npn \@@_underline_par_print:Nnn #1#2#3
+\cs_new_protected:Npn \@@_underline_par_print:Nnn #1#2#3
   {
     \group_begin:
       \tex_noindent:D #2
@@ -3644,9 +3644,6 @@ To produce the documentation run the original source files ending with
 %   \item 左边距
 %   \item 标签
 % \end{arguments}
-% 这里转化了使用 plain \TeX{} 语法实现的的断行算法。
-% \footnote{\url{https://tex.stackexchange.com/q/637861/}，对其语法的简要介绍可以参考
-% \href{http://petr.olsak.net/ftp/olsak/optex/tex-nutshell.pdf}{\file{tex-nutshell.pdf}}。}
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_uline_list:NNn #1#2#3
   {

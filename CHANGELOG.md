@@ -16,6 +16,8 @@
 - 使用 LaTeX2e 原生机制处理文档类选项
   - `oneside`, `twoside`
   - `zihao`, `linespread`
+- 使用 LaTeX3 接口统一处理下划线样式
+- 使用 LaTeX3 接口改写标题换行模块
 
 ## [1.4.3] - 2025-05-21
 
