@@ -4095,38 +4095,32 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{zihao}
-% \changes{v1.0}{2022/07/04}{新增字号选项。}
-% \begin{macro}{\g_@@_opt_zihao_tl}
-% 字号。默认为小四号。
-%    \begin{macrocode}
-    zihao                 .code:n  =
-      { \@@_pass_option_to_ctexbook:n { zihao      = #1 } },
-    zihao              .initial:n  = -4,
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{linespread}
-% \changes{v1.0}{2022/07/04}{新增行距选项。}
-% \begin{macro}{\g_@@_opt_linespread_tl}
-% 行距。\LaTeX 默认1.2行距，MS Word 默认行距是1.3，要求1.5倍
-% Word 行距，故默认值为 $1.5\times\frac{1.3}{1.2} = 1.625$。
-% 更详细的说明请参考 \pkg{zhlineskip} 宏包文档。
-%    \begin{macrocode}
-    linespread            .code:n  =
-      { \@@_pass_option_to_ctexbook:n { linespread = #1 } },
-    linespread         .initial:n  = 1.625,
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
 % \begin{macro}{config,\g_@@_config_clist}
 % \changes{v0.16}{2022/02/23}{新增 \opt{config} 选项。}
 % 配置文件路径。
 %    \begin{macrocode}
     config          .clist_gset:N  = \g_@@_config_clist
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{zihao}
+% \changes{v1.0}{2022/07/04}{新增字号选项。}
+% \changes{v1.5}{2026/04/12}{字号选项沿用 \cls{ctex} 的实现。}
+% 字号。默认为小四号。
+%    \begin{macrocode}
+\@@_pass_option_to_ctexbook:n { zihao = -4 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{linespread}
+% \changes{v1.0}{2022/07/04}{新增行距选项。}
+% \changes{v1.5}{2026/04/12}{行距选项沿用 \cls{ctex} 的实现。}
+% 行距。\LaTeX 默认1.2行距，MS Word 默认行距是1.3，要求1.5倍
+% Word 行距，故默认值为 $1.5\times\frac{1.3}{1.2} = 1.625$。
+% 更详细的说明请参考 \pkg{zhlineskip} 宏包文档。
+%    \begin{macrocode}
+\@@_pass_option_to_ctexbook:n { linespread = 1.625 }
 %    \end{macrocode}
 % \end{macro}
 %
