@@ -185,6 +185,8 @@ To produce the documentation run the original source files ending with
 % \changes{v1.1}{2023/01/05}{适配新版南大 \LaTeX 在线编辑器。}
 % \changes{v1.4}{2024/03/11}{总是全局修改全局变量。}
 % \changes{v1.4}{2024/03/18}{将变量统一为 |l| 类型。}
+% \changes{v1.5}{2025/04/13}{补全变量声明。}
+% \changes{v1.5}{2025/04/13}{为全局操作匹配全局变量。}
 %
 % \maketitle
 %
@@ -2726,14 +2728,14 @@ To produce the documentation run the original source files ending with
 % 量。最后一个下划线后的内容指示其类型，但引擎不会根据名称检查变量类型。
 %
 % \begin{variable}{
-%   \l_@@_tmpa_box,\l_@@_tmpb_box,\l_@@_tmpc_box,\l_@@_tmp_clist,
+%   \l_@@_tmpa_box,\l_@@_tmpb_box,\g_@@_tmpc_box,\l_@@_tmp_clist,
 %   \l_@@_tmpa_dim,\l_@@_tmpb_dim,\l_@@_tmpa_int,\l_@@_tmpb_int,
 %   \l_@@_tmp_skip,\l_@@_tmpa_tl,\l_@@_tmpb_tl}
 % 临时变量。
 %    \begin{macrocode}
 \box_new:N   \l_@@_tmpa_box
 \box_new:N   \l_@@_tmpb_box
-\box_new:N   \l_@@_tmpc_box
+\box_new:N   \g_@@_tmpc_box
 \clist_new:N \l_@@_tmp_clist
 \dim_new:N   \l_@@_tmpa_dim
 \dim_new:N   \l_@@_tmpb_dim
@@ -2826,6 +2828,13 @@ To produce the documentation run the original source files ending with
 % 保存配置文件名称。默认为空。
 %    \begin{macrocode}
 \tl_new:N \g_@@_config_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_uline_count_int}
+% 保存下划线计数。
+%    \begin{macrocode}
+\int_new:N \g_@@_uline_count_int
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2944,7 +2953,11 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_define_fmt:nn}
 % 用来定义默认样式的辅助函数。
 %    \begin{macrocode}
-\cs_new:Npn \@@_define_fmt:nn #1 { \tl_set:cn { l_@@_fmt_ #1 _tl } }
+\cs_new:Npn \@@_define_fmt:nn #1
+  {
+    \tl_new:c  { l_@@_fmt_ #1 _tl }
+    \tl_set:cn { l_@@_fmt_ #1 _tl }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3029,7 +3042,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_box_underline:Nnn}
-% \changes{v1.5}{2026/04/07}{提供 \cs{box_gunderline:Nnn} 的向前兼容。}
+% \changes{v1.5}{2026/04/07}{提供 \cs{box_underline:Nnn} 的向前兼容。}
 % \pkg{l3box} 在 2023-03-16 提供了新的下划线接口，这里做一个简单的向前兼容。
 % 官方接口的实现方法是：保留原始盒子的基线，将其包装为 \tn{hbox} 并仅向下方追加深度。
 % \begin{arguments}
@@ -3038,12 +3051,12 @@ To produce the documentation run the original source files ending with
 %   \item 下划线的粗细，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_if_exist:NTF \box_gunderline:Nnn
-  { \cs_new_eq:NN \@@_box_underline:Nnn \box_gunderline:Nnn }
+\cs_if_exist:NTF \box_underline:Nnn
+  { \cs_new_eq:NN \@@_box_underline:Nnn \box_underline:Nnn }
   {
     \cs_new_protected:Npn \@@_box_underline:Nnn #1#2#3
       {
-        \hbox_gset:Nn #1
+        \hbox_set:Nn #1
           {
             \vbox_top:n
               {
@@ -3060,7 +3073,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_box_underline:N}
 % 基于模板全局设定的下划线参数进行封装。
 %
-% \pkg{l3box} 提供的 \cs{box_gunderline:Nnn} 接口默认以盒子底边
+% \pkg{l3box} 提供的 \cs{box_underline:Nnn} 接口默认以盒子底边
 % 为基准点计算分离距离。为了与旧版 \cs{@@_box_ulined:NN} 保持一致的视觉效果，
 % 分离距离动态计算为：目标基线偏移量减去当前行的实际深度。
 %    \begin{macrocode}
@@ -3380,6 +3393,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new:Npn \@@_date:nnn #1#2#3
   {
+    \tl_new:c   { g_@@_info_ #2 date #1 _tl }
     \tl_gset:cx { g_@@_info_ #2 date #1 _tl }
       {
         \tl_if_empty:nTF {#3}
@@ -3454,18 +3468,18 @@ To produce the documentation run the original source files ending with
     \hbox_gset:Nn #2 { }
     \@@_loop_until:nnn { \box_if_empty_p:N #1 }
       {
-        \box_gset_to_last:N #1
+        \box_set_to_last:N #1
         \tex_unskip:D \tex_unpenalty:D
       }
       {
-            \@@_box_underline:N #1
-            \hbox_gset:Nn #2
-              {
-                \box_use_drop:N #1
-                \tex_penalty:D \c_zero_int
-                \hbox_unpack_drop:N #2
-              }
-            #3
+        \@@_box_underline:N #1
+        \hbox_gset:Nn #2
+          {
+            \box_use_drop:N #1
+            \tex_penalty:D \c_zero_int
+            \hbox_unpack_drop:N #2
+          }
+        #3
       }
   }
 %    \end{macrocode}
@@ -3502,9 +3516,9 @@ To produce the documentation run the original source files ending with
         \skip_set:Nn \tex_leftskip:D { .5 em plus 1 fill }
         \skip_set_eq:NN \tex_rightskip:D \tex_leftskip:D
         \g_@@_info_title_tl \tex_par:D
-        \@@_underline_par_break:NNn \l_@@_tmpb_box \l_@@_tmpc_box { }
+        \@@_underline_par_break:NNn \l_@@_tmpb_box \g_@@_tmpc_box { }
       }
-    \@@_underline_par_print:Nnn \l_@@_tmpc_box { } { }
+    \@@_underline_par_print:Nnn \g_@@_tmpc_box { } { }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3622,13 +3636,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_abs_title:N}
-% 摘要标题双层下划线格式。
+% \begin{macro}{\@@_abs_headline:N}
+% 摘要顶端标题双层下划线格式。
 % \begin{arguments}
 %   \item 宽度，|dim| 型变量
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_abs_title:N #1
+\cs_new_protected:Npn \@@_abs_headline:N #1
   {
     \@@_get_width:NV \l_@@_tmpa_dim   #1
     \@@_uuline:n   { \l_@@_tmpa_dim } #1
@@ -3636,16 +3650,17 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_uline_list:NNn,\@@_uline_list:NNe}
+% \begin{macro}{\@@_print_labeled_title:NNn,\@@_print_labeled_title:NNe}
 % \changes{v0.16}{2022/03/25}{使用原生断行算法处理摘要页标题。}
-% 用于研究生摘要页面的多行标题。
+% 用于研究生摘要页面的多行论文标题。
+% 这里转化了使用 plain \TeX{} 语法实现的的断行算法。
 % \begin{arguments}
 %   \item 内容
 %   \item 左边距
 %   \item 标签
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_uline_list:NNn #1#2#3
+\cs_new_protected:Npn \@@_print_labeled_title:NNn #1#2#3
   {
     \vbox_set:Nn \l_@@_tmpa_box
       {
@@ -3657,21 +3672,21 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 使用循环寻找断行点，存入已被清空的 3 号盒子，同时统计行数。
 %    \begin{macrocode}
-        \int_gzero:N \l_@@_tmpa_int
-        \@@_underline_par_break:NNn \l_@@_tmpb_box \l_@@_tmpc_box
-          { \int_gincr:N \l_@@_tmpa_int }
+        \int_gzero:N \g_@@_uline_count_int
+        \@@_underline_par_break:NNn \l_@@_tmpb_box \g_@@_tmpc_box
+          { \int_gincr:N \g_@@_uline_count_int }
       }
-      \@@_underline_par_print:Nnn \l_@@_tmpc_box {#3}
-        {
 %    \end{macrocode}
 % 在使用自然断行算法后，研究生的摘要标题可选择 \opt{strict}
 % 或者 \opt{natural} 模式。前者会为少于两行的标题补齐下划线，
 % 并对多于三行的标题生成警告信息。这里通过行数处理边界条件，
 % 包括标题未填写、标题只有一行，以及标题过长的情况。
 %    \begin{macrocode}
+    \@@_underline_par_print:Nnn \g_@@_tmpc_box {#3}
+      {
         \bool_if:NT \g_@@_abs_title_strict_bool
           {
-            \int_case:nnF { \l_@@_tmpa_int }
+            \int_case:nnF { \g_@@_uline_count_int }
               {
                 { 0 } { \msg_error:nn { njuthesis } { missing-title } }
                 { 1 } { \@@_uline:n { \textwidth }                  }
@@ -3682,7 +3697,7 @@ To produce the documentation run the original source files ending with
           }
       }
   }
-\cs_generate_variant:Nn \@@_uline_list:NNn { NNe }
+\cs_generate_variant:Nn \@@_print_labeled_title:NNn { NNe }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4280,7 +4295,7 @@ To produce the documentation run the original source files ending with
 % 定义修改默认样式的接口。
 %    \begin{macrocode}
 \NewDocumentCommand \njusetformat { m m }
-  { \@@_define_fmt:nn {#1} {#2} }
+  { \tl_set:cn { l_@@_fmt_ #1 _tl } {#2} }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6487,6 +6502,7 @@ To produce the documentation run the original source files ending with
 % \begin{variable}{\l_@@_name_integral_tl}
 % 保存 \pkg{unicode-math} 内置的所有积分号命令。
 %    \begin{macrocode}
+\tl_new:N \l_@@_name_integral_tl
 \bool_if:NTF \g_@@_opt_load_um_bool
   { \tl_set_eq:NN \l_@@_name_integral_tl \l__um_nolimits_tl }
   { \tl_set_eq:NN \l_@@_name_integral_tl \c_empty_tl        }
@@ -6571,9 +6587,9 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     real-part                     .choice:,
     real-part / roman               .code:n  =
-      { \bool_set_true:N  \g_@@_opt_math_re_bool },
+      { \bool_gset_true:N  \g_@@_opt_math_re_bool },
     real-part / fraktur             .code:n  =
-      { \bool_set_false:N \g_@@_opt_math_re_bool },
+      { \bool_gset_false:N \g_@@_opt_math_re_bool },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -7256,7 +7272,7 @@ To produce the documentation run the original source files ending with
         \@@_hskip: \g_@@_info_supvcont_tl
       }
     \skip_set:Nn \l_@@_tmp_skip { .5 em plus 1 fill }
-    \@@_uline_list:NNn \l_@@_tmpa_tl \l_@@_tmp_skip
+    \@@_print_labeled_title:NNn \l_@@_tmpa_tl \l_@@_tmp_skip
       { \l_@@_name_supvinfo_tl }
 %    \end{macrocode}
 % 临时替换显示的名称字样。
@@ -7960,7 +7976,7 @@ To produce the documentation run the original source files ending with
 %<*(def-u|def-g|def-p)>
 \@@_declare_element:nn { abstract / title }
   {
-%<def-u|def-g>    content     = \@@_abs_title:N \l_@@_name_abstracttitle_tl,
+%<def-u|def-g>    content     = \@@_abs_headline:N \l_@@_name_abstracttitle_tl,
 %<def-p>    content     = \g_@@_info_title_tl,
 %<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
 %<def-p>    format      = \bfseries,
@@ -7974,7 +7990,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { abstract / en / title }
   {
-%<def-u|def-g>    content     = \@@_abs_title:N \l_@@_name_abstracttitle_en_tl,
+%<def-u|def-g>    content     = \@@_abs_headline:N \l_@@_name_abstracttitle_en_tl,
 %<def-p>    content     = \g_@@_info_title_en_tl,
 %<def-u|def-g>    format      = \bfseries \kaishu \zihao { -2 },
 %<def-p>    format      = \bfseries,
@@ -8113,7 +8129,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_abs_info_g:N #1
   {
-    \@@_uline_list:NNe \g_@@_info_title_tl \g_@@_abs_title_left_skip
+    \@@_print_labeled_title:NNe \g_@@_info_title_tl \g_@@_abs_title_left_skip
       { \l_@@_name_titlea_tl #1 }
 %    \end{macrocode}
 % 专业、年级、姓名。
@@ -8150,7 +8166,7 @@ To produce the documentation run the original source files ending with
   {
     \bool_if:NTF \g_@@_abs_underline_bool
       {
-        \@@_uline_list:NNe \g_@@_info_title_en_tl
+        \@@_print_labeled_title:NNe \g_@@_info_title_en_tl
           \g_@@_abs_title_left_skip { \l_@@_name_title_en_tl #1 }
         \clist_map_inline:nn { major, author, supvfull }
           {
@@ -8801,6 +8817,7 @@ To produce the documentation run the original source files ending with
 % \begin{variable}{\l_@@_text_origdecl_tl}
 % 本科生的学位论文诚信承诺书，或研究生的学位论文原创性声明。
 %    \begin{macrocode}
+\tl_new:N  \l_@@_text_origdecl_tl
 \tl_set:Nn \l_@@_text_origdecl_tl
   {
 %<*def-u>
@@ -8831,6 +8848,7 @@ To produce the documentation run the original source files ending with
 % 研究生的学位论文出版授权书。
 %    \begin{macrocode}
 %<*(def-g|def-p)>
+\tl_new:N  \l_@@_text_authdecl_tl
 \tl_set:Nn \l_@@_text_authdecl_tl
   {
 %<*def-g>
@@ -8858,6 +8876,7 @@ To produce the documentation run the original source files ending with
 % 研究生的英文封面字样。
 %    \begin{macrocode}
 %<*def-g>
+\tl_new:N  \l_@@_text_cover_en_tl
 \tl_set:Nn \l_@@_text_cover_en_tl
   {
     A~ dissertation~ submitted~ to \\
