@@ -3381,19 +3381,12 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_date:nn}
-%    \begin{macrocode}
-\cs_new:Npn \@@_date:nn { \@@_date:nnn { } }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_date:nnn}
 % \changes{v0.20}{2022/05/24}{可在日期项留空以使用空白的年月日字样。}
 % 用于日期格式转化的辅助命令。在传入的字符串为空时生成空白字样。
 %    \begin{macrocode}
 \cs_new:Npn \@@_date:nnn #1#2#3
   {
-    \tl_new:c   { g_@@_info_ #2 date #1 _tl }
     \tl_gset:cx { g_@@_info_ #2 date #1 _tl }
       {
         \tl_if_empty:nTF {#3}
@@ -3401,6 +3394,14 @@ To produce the documentation run the original source files ending with
           { \use:c { @@_date #1 :www } #3 \q_stop }
       }
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_date:nn}
+% 同时生成中英文日期字样。
+%    \begin{macrocode}
+\cs_new:Npn \@@_date:nn #1#2
+  { \@@_date:nnn { } {#1} {#2} \@@_date:nnn { _en } {#1} {#2} }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4741,6 +4742,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \changes{v1.3}{2023/05/18}{日期字段直接在输入键值时处理。}
+% \changes{v1.5}{2025/04/15}{总是同时存储中英文日期字样。}
 %
 % \begin{macro}{info/submit-date}
 % \changes{v0.14}{2022/01/14}{精简提交日期选项。}
@@ -4750,12 +4752,16 @@ To produce the documentation run the original source files ending with
 % \changes{v0.19}{2022/05/23}{新增国家图书馆封面的学位授予日期设置项。}
 % \begin{macro}{info/bottom-date}
 % \changes{v0.19}{2022/05/23}{新增国家图书馆封面的底部日期设置项。}
-% \begin{variable}{\g_@@_info_submitdate_tl,\g_@@_info_defenddate_tl,
-%   \g_@@_info_bottomdate_tl,\g_@@_info_conferdate_tl}
-% 日期。
+% \begin{variable}{\g_@@_info_submitdate_tl,\g_@@_info_submitdate_en_tl,
+%   \g_@@_info_defenddate_tl,\g_@@_info_defenddate_en_tl,
+%   \g_@@_info_bottomdate_tl,\g_@@_info_bottomdate_en_tl,
+%   \g_@@_info_conferdate_tl,\g_@@_info_conferdate_en_tl}
+% 日期。为了代码简洁，总是同时生成中英文字样。
 %    \begin{macrocode}
 \clist_map_inline:nn { submit, defend, confer, bottom }
   {
+    \tl_new:c { g_@@_info_ #1 date    _tl }
+    \tl_new:c { g_@@_info_ #1 date _en_tl }
     \keys_define:nn { nju / info }
       {
         #1-date    .code:n = \@@_date:nn {#1} {##1},
@@ -4805,18 +4811,10 @@ To produce the documentation run the original source files ending with
 %</class>
 %    \end{macrocode}
 %
-% \begin{variable}{\g_@@_info_submitdate_en_tl}
-% 研究生封面额外需要英文日期。
-%    \begin{macrocode}
-%<*def-g>
-\cs_set:Npn \@@_date:nn #1#2
-  { \@@_date:nnn { } {#1} {#2} \@@_date:nnn { _en } {#1} {#2} }
-%    \end{macrocode}
-% \end{variable}
-%
 % \begin{variable}{\g_@@_info_confer_tl}
 %    \begin{macrocode}
-\tl_new:N  \g_@@_info_confer_tl
+%<*def-g>
+\tl_new:N   \g_@@_info_confer_tl
 \tl_gset:Nn \g_@@_info_confer_tl
   {
     \textbf { \l_@@_name_nju_tl } \hfil
