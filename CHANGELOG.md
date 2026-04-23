@@ -14,6 +14,8 @@
 
 ### 变动
 
+- 本科生模板“院系”字样改为“学院” - [#302]
+  - 感谢 [@rijuyuezhu]!
 - 摘要页使用 chapter 对应的页面样式。
 - 使用 LaTeX2e 原生机制处理文档类选项
   - `oneside`, `twoside`
@@ -725,6 +727,7 @@
 [#266]: https://github.com/nju-lug/NJUThesis/discussions/266
 [#269]: https://github.com/nju-lug/NJUThesis/pull/269
 [#276]: https://github.com/nju-lug/NJUThesis/discussions/276
+[#302]: https://github.com/nju-lug/NJUThesis/pull/302
 [#305]: https://github.com/nju-lug/NJUThesis/discussions/305
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
@@ -746,3 +749,4 @@
 [@stone-zeng]: https://github.com/stone-zeng
 [@liudongmiao]: https://github.com/liudongmiao
 [@muzimuzhi]: https://github.com/muzimuzhi
+[@rijuyuezhu]: https://github.com/rijuyuezhu
