@@ -8430,7 +8430,6 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 
 % \begin{macro}{\@@_paperlist:nn}
-% 生成普通模式下的成果列表。
 %    \begin{macrocode}
 \cs_new:Npn \@@_paperlist:nn #1#2
   {
@@ -8454,11 +8453,12 @@ To produce the documentation run the original source files ending with
       \RenewDocumentCommand \mkbibdateshort { m m m }
         { \textbf { \thefield {##1} } }
 %    \end{macrocode}
-% \changes{v1.1}{2023/04/07}{修复章末参考文献表与成果列表的冲突问题。}
 % 相较于直接使用 \env{refsection} 环境，\tn{newrefsection} 命令可以
 % 自动结束上一个 \env{refsection}，与章末参考文献表格式兼容更好。
+% 这里手动覆盖 \pkg{biblatex} 参数，显示全部作者名。
 %    \begin{macrocode}
       \newrefsection
+      \numdef \blx@maxbibnames { 99 }
       \nocite {#2}
       \printbibliography [ heading = subbibliography, title = #1 ]
       \endrefsection
@@ -8473,6 +8473,7 @@ To produce the documentation run the original source files ending with
 % \changes{v1.2}{2023/04/07}{修复成果列表与章末参考文献表的冲突。}
 % \changes{v1.4}{2024/03/21}{修复成果列表中文姓名加粗的问题。}
 % \changes{v1.4}{2024/04/15}{盲审模式下成果列表只显示期刊和年份。}
+% \changes{v1.5}{2026/04/23}{成果列列表默认显示全部作者名。}
 % 成果列表。
 %    \begin{macrocode}
 \NewDocumentCommand \njupaperlist

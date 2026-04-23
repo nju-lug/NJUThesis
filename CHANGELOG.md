@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+### 新增
+
+- 成果列表显示全部作者名 - [#306]
+
 ### 修复
 
 - 兼容 TeX Live 2026 的新下划线接口 - [#305]
@@ -729,6 +733,7 @@
 [#276]: https://github.com/nju-lug/NJUThesis/discussions/276
 [#302]: https://github.com/nju-lug/NJUThesis/pull/302
 [#305]: https://github.com/nju-lug/NJUThesis/discussions/305
+[#306]: https://github.com/nju-lug/NJUThesis/issues/306
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
