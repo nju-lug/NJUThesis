@@ -9,6 +9,7 @@
 ### 新增
 
 - 成果列表显示全部作者名 - [#306]
+- 使用 LaTeX Hook 机制改写封面绘制逻辑 - [#308]
 
 ### 修复
 
@@ -734,6 +735,7 @@
 [#302]: https://github.com/nju-lug/NJUThesis/pull/302
 [#305]: https://github.com/nju-lug/NJUThesis/discussions/305
 [#306]: https://github.com/nju-lug/NJUThesis/issues/306
+[#308]: https://github.com/nju-lug/NJUThesis/issues/308
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700

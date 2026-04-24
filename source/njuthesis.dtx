@@ -4555,6 +4555,28 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 %
+%
+% \subsection{钩子机制}
+% \changes{v1.5}{2026/04/24}{将封面执行逻辑拆解为三个钩子。}
+%
+% \begin{macro}{njuthesis/cover/begin,njuthesis/cover/body,njuthesis/cover/end}
+% 封面流程钩子。由于默认配置文件会向这些钩子添加代码，
+% 需要在载入配置文件前先行声明。
+% 名称中的 |.| 代表本模板名 \cls{njuthesis}。
+% 命名逻辑为，钩子名代表模块下的逻辑位置，而标签概括实际执行的功能。
+%    \begin{macrocode}
+\hook_new:n { . / cover / begin }
+\hook_new:n { . / cover / body  }
+\hook_new:n { . / cover / end   }
+%    \end{macrocode}
+%
+% 设置标签的默认规则，规定主封面代码始终在承诺书前执行。
+%    \begin{macrocode}
+\hook_gset_rule:nnnn { . / cover / body } { main } < { decl-i }
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \subsection{配置文件}
 %
 % \cls{njuthesis} 包含三套区别较大的模板配置，分别适用于\emph{本科生}、
@@ -7805,67 +7827,95 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_make_cover:}
 % \changes{v1.3}{2023/05/24}{修复非研究生类型时调用 \opt{nl-cover} 选项的错误。}
-% 调用实例生成封面。
+% 在草稿模式下，封面绘制将被禁用，有助于提升编译速度。
+% 通过不同选项进行分流，使得钩子内部最终不包含逻辑判断，
+% 仅需调用恰当的实例生成封面。
 %    \begin{macrocode}
 %<*(def-u|def-g|def-p)>
-\cs_new_protected:Npn \@@_make_cover:
+\bool_if:NF \g_@@_opt_draft_bool
   {
-%<def-u>    \UseInstance { nju } { cover-u }
-%<def-p>    \UseInstance { nju } { cover-p }
+%<def-u|def-p>    \hook_gput_code:nnn { . / cover / body } { main }
+%<def-u>        { \UseInstance { nju } { cover-u } }
+%<def-p>        { \UseInstance { nju } { cover-p } }
 %    \end{macrocode}
 % 如果在研究生模板中选择了 \opt{nlcover}，就生成用于申请学位的国家图书馆封面，
 % 反之生成普通封面。
 %    \begin{macrocode}
 %<*def-g>
-\bool_if:NTF \g_@@_opt_nlcover_bool
-  { \UseInstance { nju } { cover-nl } }
-  {
-    \UseInstance { nju } { cover-g-front }
-    \UseInstance { nju } { cover-g-back  }
-    \UseInstance { nju } { cover-g-en    }
-  }
-%</def-g>
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_make_decl_i:}
-% \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
-% \changes{v0.19}{2022/05/22}{跟进新版本科生诚信承诺书样式。}
-% 位于封面后的承诺书页面。
-% 生成本科生的诚信承诺书或研究生的学位论文原创性声明。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_decl_i:
-  {
-    \cleardoublepage
-%<def-u>    \UseInstance { nju } { origdecl-u }
-%<def-g>    \UseInstance { nju } { origdecl-g }
-%<def-p>    \UseInstance { nju } { authdecl-p }
-    \cleardoublepage
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_make_decl_ii:}
-% \changes{v0.17}{2022/04/04}{加入研究生的学位论文出版授权书。}
-% 位于封底的承诺书页面。生成研究生的学位论文出版授权书。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_make_decl_ii:
-  {
-%<*def-g>
-    \AtEndEnvironment { document }
+    \bool_if:NTF \g_@@_opt_nlcover_bool
       {
-        \cleardoublepage
-        \UseInstance { nju } { authdecl-g }
-        \cleardoublepage
+        \hook_gput_code:nnn { . / cover / body } { main }
+          { \UseInstance { nju } { cover-nl } }
+      }
+      {
+        \hook_gput_code:nnn { . / cover / body } { main }
+          {
+            \UseInstance { nju } { cover-g-front }
+            \UseInstance { nju } { cover-g-back  }
+            \UseInstance { nju } { cover-g-en    }
+          }
       }
 %</def-g>
+%    \end{macrocode}
+%
+% \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
+% \changes{v0.17}{2022/04/04}{加入研究生的学位论文出版授权书。}
+% \changes{v0.19}{2022/05/22}{跟进新版本科生诚信承诺书样式。}
+% 根据选项设置声明页钩子。
+% 位于封面后的承诺书页面，
+% 用于生成本科生的诚信承诺书或研究生的学位论文原创性声明。
+%    \begin{macrocode}
+    \bool_if:NT \g_@@_opt_decl_bool
+      {
+        \hook_gput_code:nnn { . / cover / body } { decl-i }
+          {
+            \cleardoublepage
+%<def-u>            \UseInstance { nju } { origdecl-u }
+%<def-g>            \UseInstance { nju } { origdecl-g }
+%<def-p>            \UseInstance { nju } { authdecl-p }
+            \cleardoublepage
+          }
+%    \end{macrocode}
+% 位于封底的承诺书页面。生成研究生的学位论文出版授权书。
+%    \begin{macrocode}
+%<*def-g>
+        \hook_gput_code:nnn { env / document / end } { decl-ii }
+          {
+            \cleardoublepage
+            \UseInstance { nju } { authdecl-g }
+            \cleardoublepage
+          }
+%</def-g>
+      }
   }
 %</(def-u|def-g|def-p)>
 %    \end{macrocode}
-% \end{macro}
+%
+% 封面前处理。封面本身不占用页码编号。
+%    \begin{macrocode}
+%<*class>
+\hook_gput_code:nnn { . / cover / begin } { presetup  }
+  { \pagenumbering { gobble } }
+%    \end{macrocode}
+%
+% 封面后处理。在标题页后清空标题中的换行符，
+% 使用大写罗马字母页码，恢复正常字体设置。
+%    \begin{macrocode}
+\hook_gput_code:nnn { . / cover / end } { postsetup }
+  {
+    \tl_gremove_all:Nn \g_@@_info_title_tl    { \\ }
+    \tl_gremove_all:Nn \g_@@_info_title_en_tl { \\ }
+    \cleardoublepage
+    \exp_args:NV \pagestyle \l_@@_fmt_pagestyle_tl
+    \pagenumbering { Roman }
+  }
+%    \end{macrocode}
+%
+% 保证文档在 \opt{twoside} 模式下总是在偶数页结束。
+%    \begin{macrocode}
+\hook_gput_next_code:nn { env / document / end } { \cleardoublepage }
+%    \end{macrocode}
 %
 %
 % \subsubsection{用户接口}
@@ -7873,7 +7923,6 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\@@_new_img_cmd:nn}
 % 用于定义插入图片命令的辅助函数。
 %    \begin{macrocode}
-%<*class>
 \cs_new_protected:Npn \@@_new_img_cmd:nn #1#2
   {
     \exp_args:Nc \NewDocumentCommand { nju #1 } { o m m }
@@ -7930,32 +7979,17 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/12}{重新绘制封面。}
 % \changes{v0.13}{2021/12/15}{草稿模式下不绘制封面。}
 % \changes{v1.4}{2024/03/12}{在生成封面时删除标题换行符。}
+% \changes{v1.5}{2026/04/24}{使用 \LaTeX 钩子机制处理封面绘制。}
 % 重定义 \tn{maketitle} 以生成封面。
-% 在草稿模式下，封面绘制将被禁用，有助于提升编译速度。
+% 在钩子机制下，这里只需要作为钩子的锚点，
+% 具体需要执行的代码已被预先分发到钩子内。
+% \cs{hook_use:n} 不能用 |.| 来简化钩子路径。
 %    \begin{macrocode}
 \RenewDocumentCommand \maketitle { }
   {
-    \bool_if:NF \g_@@_opt_draft_bool
-      {
-        \pagenumbering { gobble }
-        \@@_make_cover:
-      }
-    \tl_gremove_all:Nn \g_@@_info_title_tl    { \\ }
-    \tl_gremove_all:Nn \g_@@_info_title_en_tl { \\ }
-%    \end{macrocode}
-% 如果在选择了 \opt{decl-page}，就生成本科生的诚信承诺书，
-% 或研究生的原创性声明和出版授权书。
-%    \begin{macrocode}
-    \bool_lazy_and:nnT
-      { ! \g_@@_opt_draft_bool }
-      {   \g_@@_opt_decl_bool  }
-      { \@@_make_decl_i: \@@_make_decl_ii: }
-%    \end{macrocode}
-% 在标题页后使用大写罗马字母页码，恢复正常字体设置。
-%    \begin{macrocode}
-    \cleardoublepage
-    \exp_args:NV \pagestyle \l_@@_fmt_pagestyle_tl
-    \pagenumbering { Roman }
+    \hook_use:n { njuthesis / cover / begin }
+    \hook_use:n { njuthesis / cover / body  }
+    \hook_use:n { njuthesis / cover / end   }
   }
 %</class>
 %    \end{macrocode}
