@@ -298,3 +298,8 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+# LLm
+.codex
+.claude
+.llmdoc-tmp

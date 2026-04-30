@@ -1,0 +1,75 @@
+# User Interface Reference
+
+Class:
+
+```tex
+\documentclass{njuthesis}
+```
+
+Supported engines:
+
+- XeLaTeX.
+- LuaLaTeX.
+
+Common class options:
+
+- `type = bachelor|master|doctor|postdoc`
+- `degree = academic|professional`
+- `nl-cover`
+- `decl-page`
+- `draft`
+- `anonymous`
+- `minimal`
+- `oneside`
+- `twoside`
+- `latin-font = fandol|gyre|mac|macoffice|win|none`
+- `cjk-font = fandol|founder|mac|macoffice|noto|source|win|none`
+- `fontset = fandol|mac|macoffice|win|none`
+- `math-font = asana|cambria|fira|garamond|lm|libertinus|newcm|stix|bonum|dejavu|pagella|schola|termes|xits|none`
+- `font-path = <path>`
+- `config = <file list>`
+
+Main setup command:
+
+```tex
+\njusetup{...}
+\njusetup[info]{...}
+\njusetup[bib/resource]{refs.bib}
+```
+
+Important setup modules:
+
+- `info` - title, author, department, major, supervisor, dates, classification,
+  committee, degree names, email, and related metadata.
+- `bib` - bibliography style, resource files, and biblatex options.
+- `image` - graphics path plus external NJU emblem/name assets.
+- `abstract` - abstract TOC entry, underline behavior, and title style.
+- `tableofcontents`, `listoffigures`, `listoftables` - TOC entry behavior.
+- `math` - TeX/ISO/GB math style and detailed symbol choices.
+- `theorem` - theorem style, fonts, QED symbol, counters, type list, and
+  built-in environment generation.
+- `footnote` - footnote marker style, circled text options, and hanging indent.
+- `header`, `footer` - page style content positions.
+- `anonymous-mode` - blind-review behavior such as hiding school information.
+
+Major document commands and environments:
+
+- `\maketitle` - generates configured cover and declaration pages.
+- `abstract` - Chinese abstract.
+- `abstract*` - English abstract.
+- `\tableofcontents`, `\listoffigures`, `\listoftables`.
+- `\mainmatter`, `\frontmatter` - redefined page style/page numbering
+  transitions.
+- `notation`, `notation*` - symbol table pages.
+- `preface` - preface page.
+- `acknowledgement` - acknowledgement page, with anonymous-mode behavior.
+- `\njuchapter{...}` - unnumbered chapter with TOC/bookmark handling.
+- `\njupaperlist[<title>]{<bib keys>}` - academic achievements list.
+
+Customization commands:
+
+- `\njusetformat{<name>}{<format>}`
+- `\njusetlength{<name>}{<length>}`
+- `\njusetlength*{<name>}{<skip>}`
+- `\njusetname{...}`
+- `\njusettext{...}`
