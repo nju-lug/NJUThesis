@@ -4226,10 +4226,41 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{用户接口}
 %
+% \begin{macro}{\@@_keys_set_exclude_groups:nnn}
+% \changes{v1.5}{2026/05/01}
+%   {改用 \cs{keys_set_exclude_groups:nnn} 处理盲审模式键过滤。}
+% 兼容旧版 \pkg{l3kernel} 的键分组过滤接口。
+%    \begin{macrocode}
+\cs_if_exist:NTF \keys_set_exclude_groups:nnn
+  {
+    \cs_new_eq:NN \@@_keys_set_exclude_groups:nnn
+      \keys_set_exclude_groups:nnn
+  }
+  {
+    \cs_new_protected:Npn \@@_keys_set_exclude_groups:nnn #1#2#3
+      { \use:c { keys_set_filter:nnn } {#1} {#2} {#3} }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_keys_set:nn}
+% \changes{v1.1}{2022/09/26}{使用键分组过滤重构盲审模式。}
+% 在开启盲审模式时，屏蔽被编入 \opt{anonymous} 分组的键值对输入。
+%    \begin{macrocode}
+\bool_if:NTF \g_@@_opt_anon_bool
+  {
+    \cs_new_protected:Npn \@@_keys_set:nn #1#2
+      { \@@_keys_set_exclude_groups:nnn {#1} { anonymous } {#2} }
+  }
+  { \cs_new_eq:NN \@@_keys_set:nn \keys_set:nn }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{abstract, anonymous-mode, bib, image, footer,
 %   footnote, header, info, label-sep, listoffigures, listoftables,
 %   math, style, theorem, tableofcontents}
-% 定义模块名的元（meta）键值对。
+% 定义模块名的键值对。模块键调用 \cs{@@_keys_set:nn} 以保留盲审模式
+% 下的分组过滤。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
@@ -4237,29 +4268,17 @@ To produce the documentation run the original source files ending with
     header, info, label-sep, listoffigures, listoftables,
     math, style, theorem, tableofcontents
   }
-  { \keys_define:nn { nju } { #1 .meta:nn = { nju / #1 } {##1} } }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_keys_set:nn}
-%
-%    \begin{macrocode}
-\cs_new_eq:NN \@@_keys_set:nn \keys_set:nn
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_keys_set_anon:nn}
-% \changes{v1.1}{2022/09/26}{使用 \cs{keys_set_filter:nnn} 重构盲审模式。}
-% 在开启盲审模式时，屏蔽被编入 \opt{anonymous} 分组的键值对输入。
-%    \begin{macrocode}
-\cs_new:Npn \@@_keys_set_anon:nn #1#2
-  { \keys_set_filter:nnn {#1} { anonymous } {#2} }
+  {
+    \keys_define:nn { nju }
+      { #1 .code:n = { \@@_keys_set:nn { nju / #1 } {##1} } }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\njusetup}
 % \changes{v0.6}{2021/09/10}{改用键值对输入信息。}
 % \changes{v1.0}{2022/08/01}{增加输入键路径的可选参数。}
+% \changes{v1.5}{2026/05/01}{统一 \tn{njusetup} 可选参数的键路径处理。}
 % 定义设置接口。
 % \begin{arguments}
 %   \item 可选的键路径
@@ -4275,11 +4294,7 @@ To produce the documentation run the original source files ending with
   {
     \tl_if_novalue:nTF {#1}
       { \@@_keys_set:nn { nju } {#2} }
-      {
-        \tl_if_in:nnTF {#1} { / }
-          { \@@_keys_set:nn { nju } { #1 = {#2} } }
-          { \@@_keys_set:nn { nju  /  #1 } {#2}   }
-      }
+      { \@@_keys_set:nn { nju } { #1 = {#2} } }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -8558,7 +8573,6 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     \@@_anon_paperlist_setup:
     \cs_gset_eq:NN \@@_paperlist:nn      \@@_paperlist_anon:nn
-    \cs_gset_eq:NN \@@_keys_set:nn       \@@_keys_set_anon:nn
     \cs_gset_eq:NN \@@_acknowledgement:n \@@_acknowledgement_anon:n
     \tl_clear:N \l_@@_name_pdfauthor_tl
   }

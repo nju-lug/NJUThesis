@@ -16,6 +16,20 @@ Edit class behavior:
 3. Regenerate/install with `l3build install` before compiling tests.
 4. Compile the closest `test/test-*.tex` variant.
 
+Edit `\njusetup` or module keys:
+
+1. Keep `source/njuthesis.dtx` as the source of truth.
+2. Preserve anonymous-mode key filtering when changing module forwarding. Module
+   keys under top-level `nju` should route nested values through the internal
+   filtered setter, not directly through raw l3keys meta expansion.
+3. Prefer defining the internal setter according to the class option state once:
+   in anonymous mode it should call `\keys_set_exclude_groups:nnn` with the
+   `anonymous` group, and otherwise it can alias `\keys_set:nn`. Avoid putting
+   option-condition logic inside the setter body unless a later behavior change
+   requires runtime switching.
+4. Exercise both compact module syntax, such as `\njusetup[info]{...}`, and
+   full-path syntax, such as `\njusetup[abstract/title-style]{...}`.
+
 Edit public samples:
 
 1. Update `docs/njuthesis-sample.tex` for document structure examples.

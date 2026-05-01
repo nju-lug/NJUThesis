@@ -37,6 +37,11 @@ Main setup command:
 \njusetup[bib/resource]{refs.bib}
 ```
 
+The optional argument is normalized as a top-level `nju` key assignment. Module
+forms such as `\njusetup[info]{...}` rely on the corresponding top-level module
+key to forward into `nju / info`; full paths such as
+`\njusetup[info/title]{...}` are passed as top-level nested keys.
+
 Important setup modules:
 
 - `info` - title, author, department, major, supervisor, dates, classification,
