@@ -1,0 +1,45 @@
+\input regression-test.tex
+\documentclass[minimal]{njuthesis}
+
+\ExplSyntaxOn
+\cs_new_protected:Npn \__nju_test_assert_tl_eq:Nn #1#2
+  {
+    \tl_if_eq:NnTF #1 {#2}
+      { \TYPE { PASSED } }
+      { \TYPE { FAILED } }
+  }
+
+\START
+
+\TEST { njusetup~sets~top-level~keys }
+  {
+    \njusetup { info / author = { TopLevelAuthor } }
+    \__nju_test_assert_tl_eq:Nn \g__nju_info_author_tl
+      { TopLevelAuthor }
+  }
+
+\TEST { njusetup~sets~module-form~keys }
+  {
+    \njusetup[info]
+      {
+        author  = { ModuleAuthor },
+        author* = { ModuleAuthorEn }
+      }
+    \__nju_test_assert_tl_eq:Nn \g__nju_info_author_tl
+      { ModuleAuthor }
+    \__nju_test_assert_tl_eq:Nn \g__nju_info_author_en_tl
+      { ModuleAuthorEn }
+  }
+
+\TEST { njusetup~sets~full-path~keys }
+  {
+    \njusetup[info/author] { FullPathAuthor }
+    \njusetup[info/author*] { FullPathAuthorEn }
+    \__nju_test_assert_tl_eq:Nn \g__nju_info_author_tl
+      { FullPathAuthor }
+    \__nju_test_assert_tl_eq:Nn \g__nju_info_author_en_tl
+      { FullPathAuthorEn }
+  }
+\ExplSyntaxOff
+
+\END

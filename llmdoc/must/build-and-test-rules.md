@@ -19,6 +19,9 @@ Important local checks:
 
 - For class or interface edits, run an l3build unpack/install step before
   testing generated class behavior.
+- For l3keys, option parsing, or other log-checkable behavior, add focused
+  l3build regression tests as `.lvt`/`.tlg` pairs under `test/` and run
+  `l3build check -e xetex <test-name>`.
 - Compile at least one relevant file from `test/` when touching layout,
   bibliography, class options, fonts, covers, abstracts, or declaration pages.
 - For release/package changes, inspect `.github/workflows/release.yml` and

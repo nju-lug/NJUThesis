@@ -28,3 +28,9 @@ Coding conventions:
   and `nju / math`.
 - Use existing hooks, `xtemplate` page/element instances, and helper functions
   before adding a new mechanism.
+
+Documentation language conventions:
+
+- Write `CHANGELOG.md`, documented-source prose in `source/njuthesis.dtx`, and
+  commit messages in Simplified Chinese unless the surrounding context requires otherwise.
+- Write llmdoc knowledge files in English.

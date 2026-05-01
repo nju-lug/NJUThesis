@@ -19,6 +19,9 @@ CI build model:
 - It installs `xetex` and `l3build`, then runs `l3build install`.
 - It computes and installs dependency closure through `scripts/download.sh` and
   `scripts/main.py`.
+- It runs `l3build check -e xetex` for log-based regression tests before the
+  document compile fixtures. The CI intentionally uses XeTeX only for this
+  regression step for now.
 - It compiles undergraduate, graduate, and national-library cover test files in
   `test/`.
 - It uploads generated class and definition files from `build/unpacked/`.

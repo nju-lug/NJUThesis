@@ -1,0 +1,23 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: anonymous mode sets global switches
+============================================================
+PASSED
+PASSED
+PASSED
+============================================================
+============================================================
+TEST 2: anonymous mode uses anonymous implementations
+============================================================
+PASSED
+PASSED
+============================================================
+============================================================
+TEST 3: anonymous mode filters sample identity setup
+============================================================
+PASSED
+PASSED
+PASSED
+PASSED
+============================================================

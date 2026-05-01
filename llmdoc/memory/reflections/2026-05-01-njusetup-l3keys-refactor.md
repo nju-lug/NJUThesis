@@ -30,3 +30,11 @@ Promotion:
   `\njusetup` or module-key edits.
 - `llmdoc/reference/user-interface.md` now documents the normalized
   optional-argument model.
+- `llmdoc/must/build-and-test-rules.md` now records that log-checkable class
+  behavior should use focused l3build `.lvt`/`.tlg` regression tests under
+  `test/`.
+- `llmdoc/architecture/build-release-architecture.md` now records that CI runs
+  `l3build check -e xetex` before document compile fixtures.
+- `llmdoc/must/repository-rules.md` now records the language convention:
+  changelog, documented dtx prose, and commit messages use Chinese; llmdoc uses
+  English.

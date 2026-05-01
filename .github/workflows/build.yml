@@ -45,6 +45,11 @@ jobs:
           python3 main.py --pkg "${{ env.PACKAGES }}" --exclude "njuthesis-doc.cls"
           tlmgr update --self --all --no-auto-install
 
+      - name: Run regression tests
+        run: |
+          ${{ env.SET_PATH }}
+          l3build check -e xetex
+
       - name: Compile test file
         run: |
           ${{ env.SET_PATH }}

@@ -1,0 +1,58 @@
+\input regression-test.tex
+\documentclass[anonymous,minimal]{njuthesis}
+
+\ExplSyntaxOn
+\cs_new_protected:Npn \__nju_test_bool_false:N #1
+  { \bool_if:NTF #1 { \TYPE { FAILED } } { \TYPE { PASSED } } }
+\cs_new_protected:Npn \__nju_test_bool_true:N #1
+  { \bool_if:NTF #1 { \TYPE { PASSED } } { \TYPE { FAILED } } }
+\cs_new_protected:Npn \__nju_test_tl_empty:N #1
+  { \tl_if_empty:NTF #1 { \TYPE { PASSED } } { \TYPE { FAILED } } }
+\cs_new_protected:Npn \__nju_test_assert_not_in:Nn #1#2
+  {
+    \tl_if_in:NnTF #1 {#2}
+      { \TYPE { FAILED } }
+      { \TYPE { PASSED } }
+  }
+\cs_new_protected:Npn \__nju_test_cs_eq:NN #1#2
+  { \cs_if_eq:NNTF #1 #2 { \TYPE { PASSED } } { \TYPE { FAILED } } }
+
+\START
+
+\TEST { anonymous~mode~sets~global~switches }
+  {
+    \__nju_test_bool_true:N \g__nju_opt_anon_bool
+    \__nju_test_bool_false:N \g__nju_opt_decl_bool
+    \__nju_test_tl_empty:N \l__nju_name_pdfauthor_tl
+  }
+
+\TEST { anonymous~mode~uses~anonymous~implementations }
+  {
+    \__nju_test_cs_eq:NN \__nju_paperlist:nn \__nju_paperlist_anon:nn
+    \__nju_test_cs_eq:NN \__nju_acknowledgement:n
+      \__nju_acknowledgement_anon:n
+  }
+
+\TEST { anonymous~mode~filters~sample~identity~setup }
+  {
+    \njusetup[info]
+      {
+        title       = { Anonymous~Mode~Regression },
+        title*      = { Anonymous~Mode~Regression },
+        author      = { AnonymousFilterLeak },
+        author*     = { AnonymousFilterLeak },
+        supervisor  = { AnonymousFilterLeak },
+        supervisor* = { AnonymousFilterLeak }
+      }
+    \__nju_test_assert_not_in:Nn \g__nju_info_author_tl
+      { AnonymousFilterLeak }
+    \__nju_test_assert_not_in:Nn \g__nju_info_author_en_tl
+      { AnonymousFilterLeak }
+    \__nju_test_assert_not_in:Nn \g__nju_info_supv_clist
+      { AnonymousFilterLeak }
+    \__nju_test_assert_not_in:Nn \g__nju_info_supv_en_tl
+      { AnonymousFilterLeak }
+  }
+\ExplSyntaxOff
+
+\END
