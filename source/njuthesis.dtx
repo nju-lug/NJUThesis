@@ -185,8 +185,8 @@ To produce the documentation run the original source files ending with
 % \changes{v1.1}{2023/01/05}{适配新版南大 \LaTeX 在线编辑器。}
 % \changes{v1.4}{2024/03/11}{总是全局修改全局变量。}
 % \changes{v1.4}{2024/03/18}{将变量统一为 |l| 类型。}
-% \changes{v1.5}{2025/04/13}{补全变量声明。}
-% \changes{v1.5}{2025/04/13}{为全局操作匹配全局变量。}
+% \changes{v1.5.0}{2025/04/13}{补全变量声明。}
+% \changes{v1.5.0}{2025/04/13}{为全局操作匹配全局变量。}
 %
 % \maketitle
 %
@@ -236,7 +236,7 @@ To produce the documentation run the original source files ending with
 % 用户组维护的，用于处理本校学生毕业论文排版需求的 \LaTeX 模板。
 %
 % 本模板使用的本科生毕业论文模板格式依据
-% 《关于启动南京大学2024届本科毕业论文（设计）工作的通知》\cite{nju-bachelor-2024}，
+% 《关于启动南京大学2026届本科毕业论文（设计）工作的通知》\cite{nju-bachelor-2026}，
 % 研究生学位论文格式依据研究生院提供的材料包\cite{nju-graduate-2023}。
 % 博士后出站报告格式要求与博士学位论文一致\cite{nju-postdoc-2022}，
 % 封面、摘要的设计参考了部分既有报告。
@@ -1869,7 +1869,7 @@ To produce the documentation run the original source files ending with
 % \end{description}
 %
 % 对于本科生而言，学校规定文件表明参考文献表应当“用数字加方括号
-% 表示”\cite{nju-bachelor-2023}，符合顺序编码制的格式，保持默认设置即可。
+% 表示”\cite{nju-bachelor-2026}，符合顺序编码制的格式，保持默认设置即可。
 %
 % \begin{function}[added=2022-02-15]{bib/option}
 %   \begin{syntax}
@@ -2453,11 +2453,11 @@ To produce the documentation run the original source files ending with
 % \newblock \textit{信息与文献\quad 参考文献著录规则: GB/T 7714--2015} [S].
 % \newblock 北京: 中国标准出版社, 2015
 %
-% \bibitem{nju-bachelor-2024}
+% \bibitem{nju-bachelor-2026}
 % 南京大学本科生院.
 % \newblock \textit{关于启动南京大学2024届本科毕业论文（设计）工作的通知} [EB/OL].
-% \newblock (2023-12-19)
-% \urlprefix\url{https://jw.nju.edu.cn/db/23/c26263a645923/page.htm}
+% \newblock (2025-12-26)
+% \urlprefix\url{https://jw.nju.edu.cn/3f/59/c26263a802649/page.htm}
 %
 % \bibitem{nju-graduate-2023}
 % 南京大学研究生院.
@@ -3049,7 +3049,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_box_underline:Nnn}
-% \changes{v1.5}{2026/04/07}{提供 \cs{box_underline:Nnn} 的向前兼容。}
+% \changes{v1.5.0}{2026/04/07}{提供 \cs{box_underline:Nnn} 的向前兼容。}
 % \pkg{l3box} 在 2023-03-16 提供了新的下划线接口，这里做一个简单的向前兼容。
 % 官方接口的实现方法是：保留原始盒子的基线，将其包装为 \tn{hbox} 并仅向下方追加深度。
 % \begin{arguments}
@@ -3208,7 +3208,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_box_paragraph:nn}
-% \changes{v1.5}{2025/04/13}{提供 \tn{parbox} 的 \LaTeX3 替代方案。}
+% \changes{v1.5.0}{2025/04/13}{提供 \tn{parbox} 的 \LaTeX3 替代方案。}
 % 替代 \tn{parbox} 的功能，生成指定宽度的顶对齐垂直盒子。
 % \tn{@parboxrestore} 用于重置段落参数，保证 \tn{lastbox} 正确。
 % 这里还需要通过全局变量存储 \tn{prevdepth} 的值，
@@ -3454,7 +3454,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{\@@_underline_par_break:NNn}
 % \changes{v1.0}{2022/08/01}{使用 \LaTeX3 语法重构下划线断行算法。}
-% \changes{v1.5}{2026/04/07}{使用 \LaTeX3 原生接口重构下划线定位逻辑。}
+% \changes{v1.5.0}{2026/04/07}{使用 \LaTeX3 原生接口重构下划线定位逻辑。}
 % 带下划线的自然断行算法核心递归部分，基于 \TeX{} 底层断行机制。
 % 算法主要依赖两个暂存盒子，通过 1 号盒子将预先排版好的段落
 % 从下往上逐行剥离，为单行添加下划线后，再反向拼接重组。
@@ -4043,7 +4043,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{oneside,twoside}
 % \changes{v0.14}{2022/01/14}{新增单双面模式选项。}
-% \changes{v1.5}{2026/04/11}{单双面模式选项沿用 \LaTeXe 的实现。}
+% \changes{v1.5.0}{2026/04/11}{单双面模式选项沿用 \LaTeXe 的实现。}
 %    \begin{macrocode}
     oneside    .value_forbidden:n  = true,
     twoside    .value_forbidden:n  = true,
@@ -4126,7 +4126,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{zihao}
 % \changes{v1.0}{2022/07/04}{新增字号选项。}
-% \changes{v1.5}{2026/04/12}{字号选项沿用 \cls{ctex} 的实现。}
+% \changes{v1.5.0}{2026/04/12}{字号选项沿用 \cls{ctex} 的实现。}
 % 字号。默认为小四号。
 %    \begin{macrocode}
 \@@_pass_option_to_ctexbook:n { zihao = -4 }
@@ -4135,7 +4135,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{linespread}
 % \changes{v1.0}{2022/07/04}{新增行距选项。}
-% \changes{v1.5}{2026/04/12}{行距选项沿用 \cls{ctex} 的实现。}
+% \changes{v1.5.0}{2026/04/12}{行距选项沿用 \cls{ctex} 的实现。}
 % 行距。\LaTeX 默认1.2行距，MS Word 默认行距是1.3，要求1.5倍
 % Word 行距，故默认值为 $1.5\times\frac{1.3}{1.2} = 1.625$。
 % 更详细的说明请参考 \pkg{zhlineskip} 宏包文档。
@@ -4234,8 +4234,7 @@ To produce the documentation run the original source files ending with
 % \subsection{用户接口}
 %
 % \begin{macro}{\@@_keys_set_exclude_groups:nnn}
-% \changes{v1.5}{2026/05/01}
-%   {改用 \cs{keys_set_exclude_groups:nnn} 处理盲审模式键过滤。}
+% \changes{v1.5.0}{2026/05/01}{替换被弃用的 \cs{keys_set_filter:nnn}。}
 % 兼容旧版 \pkg{l3kernel} 的键分组过滤接口。
 %    \begin{macrocode}
 \cs_if_exist:NTF \keys_set_exclude_groups:nnn
@@ -4290,7 +4289,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{\njusetup}
 % \changes{v0.6}{2021/09/10}{改用键值对输入信息。}
 % \changes{v1.0}{2022/08/01}{增加输入键路径的可选参数。}
-% \changes{v1.5}{2026/05/01}{统一 \tn{njusetup} 可选参数的键路径处理。}
+% \changes{v1.5.0}{2026/05/01}{统一 \tn{njusetup} 可选参数的键路径处理。}
 % 定义设置接口。
 % \begin{arguments}
 %   \item 可选的键路径
@@ -4584,7 +4583,7 @@ To produce the documentation run the original source files ending with
 %
 %
 % \subsection{钩子机制}
-% \changes{v1.5}{2026/04/24}{将封面执行逻辑拆解为三个钩子。}
+% \changes{v1.5.0}{2026/04/24}{将封面执行逻辑拆解为三个钩子。}
 %
 % \begin{macro}{njuthesis/cover/begin,njuthesis/cover/body,njuthesis/cover/end}
 % 封面流程钩子。由于默认配置文件会向这些钩子添加代码，
@@ -4791,7 +4790,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 % \changes{v1.3}{2023/05/18}{日期字段直接在输入键值时处理。}
-% \changes{v1.5}{2025/04/15}{总是同时存储中英文日期字样。}
+% \changes{v1.5.0}{2025/04/15}{总是同时存储中英文日期字样。}
 %
 % \begin{macro}{info/submit-date}
 % \changes{v0.14}{2022/01/14}{精简提交日期选项。}
@@ -6531,7 +6530,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{公式样式}
 % \changes{v1.0}{2022/07/31}{新增若干公式样式设置。}
-% \changes{v1.5}{2026/05/02}{禁用 \pkg{unicode-math} 时忽略 \opt{nju/math} 设置。}
+% \changes{v1.5.0}{2026/05/02}{禁用 \pkg{unicode-math} 时忽略 \opt{nju/math} 设置。}
 %
 % \begin{variable}{
 %   \g_@@_opt_math_re_bool,
@@ -8013,7 +8012,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/12}{重新绘制封面。}
 % \changes{v0.13}{2021/12/15}{草稿模式下不绘制封面。}
 % \changes{v1.4}{2024/03/12}{在生成封面时删除标题换行符。}
-% \changes{v1.5}{2026/04/24}{使用 \LaTeX 钩子机制处理封面绘制。}
+% \changes{v1.5.0}{2026/04/24}{使用 \LaTeX 钩子机制处理封面绘制。}
 % 重定义 \tn{maketitle} 以生成封面。
 % 在钩子机制下，这里只需要作为钩子的锚点，
 % 具体需要执行的代码已被预先分发到钩子内。
@@ -8541,7 +8540,7 @@ To produce the documentation run the original source files ending with
 % \changes{v1.2}{2023/04/07}{修复成果列表与章末参考文献表的冲突。}
 % \changes{v1.4}{2024/03/21}{修复成果列表中文姓名加粗的问题。}
 % \changes{v1.4}{2024/04/15}{盲审模式下成果列表只显示期刊和年份。}
-% \changes{v1.5}{2026/04/23}{成果列列表默认显示全部作者名。}
+% \changes{v1.5.0}{2026/04/23}{成果列列表默认显示全部作者名。}
 % 成果列表。
 %    \begin{macrocode}
 \NewDocumentCommand \njupaperlist

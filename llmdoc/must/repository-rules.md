@@ -18,6 +18,10 @@ Project-specific guardrails:
   specifically about packaging or compile output.
 - Update `CHANGELOG.md` for user-visible changes when doing normal feature or
   bug work.
+- For each meaningful source or manual change, add a nearby
+  `\changes{vX.Y.Z}{YYYY/MM/DD}{...}` entry in `source/njuthesis.dtx` using the
+  full actual Semantic Versioning number from `CHANGELOG.md`, such as
+  `v1.5.0` rather than `v1.5`.
 
 Coding conventions:
 
