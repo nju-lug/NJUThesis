@@ -42,5 +42,6 @@ Memory:
 
 - `memory/reflections/` - working reflections and update notes.
 - `memory/decisions/` - durable decisions that should not be buried in guides.
+  - [Filtered Key Groups for `\njusetup`](memory/decisions/2026-05-02-filtered-key-groups.md)
 
 Scratch investigations are kept outside stable llmdoc at `.llmdoc-tmp/`.

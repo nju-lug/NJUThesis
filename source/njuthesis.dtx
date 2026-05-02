@@ -2831,6 +2831,13 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\g_@@_keys_excl_clist}
+% 保存需要屏蔽的键分组名称。
+%    \begin{macrocode}
+\clist_new:N \g_@@_keys_excl_clist
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}{\g_@@_uline_count_int}
 % 保存下划线计数。
 %    \begin{macrocode}
@@ -4240,19 +4247,24 @@ To produce the documentation run the original source files ending with
     \cs_new_protected:Npn \@@_keys_set_exclude_groups:nnn #1#2#3
       { \use:c { keys_set_filter:nnn } {#1} {#2} {#3} }
   }
+\cs_generate_variant:Nn \@@_keys_set_exclude_groups:nnn { nVn }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@@_keys_set:nn}
 % \changes{v1.1}{2022/09/26}{使用键分组过滤重构盲审模式。}
-% 在开启盲审模式时，屏蔽被编入 \opt{anonymous} 分组的键值对输入。
+% 根据文档类选项收集需要屏蔽的键分组，再定义设置命令。
 %    \begin{macrocode}
-\bool_if:NTF \g_@@_opt_anon_bool
+\bool_if:NT \g_@@_opt_anon_bool
+  { \clist_gput_right:Nn \g_@@_keys_excl_clist { anonymous } }
+\bool_if:NF \g_@@_opt_load_um_bool
+  { \clist_gput_right:Nn \g_@@_keys_excl_clist { unicode-math } }
+\clist_if_empty:NTF \g_@@_keys_excl_clist
+  { \cs_new_eq:NN \@@_keys_set:nn \keys_set:nn }
   {
     \cs_new_protected:Npn \@@_keys_set:nn #1#2
-      { \@@_keys_set_exclude_groups:nnn {#1} { anonymous } {#2} }
+      { \@@_keys_set_exclude_groups:nVn {#1} \g_@@_keys_excl_clist {#2} }
   }
-  { \cs_new_eq:NN \@@_keys_set:nn \keys_set:nn }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6519,6 +6531,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{公式样式}
 % \changes{v1.0}{2022/07/31}{新增若干公式样式设置。}
+% \changes{v1.5}{2026/05/02}{禁用 \pkg{unicode-math} 时忽略 \opt{nju/math} 设置。}
 %
 % \begin{variable}{
 %   \g_@@_opt_math_re_bool,
@@ -6538,18 +6551,15 @@ To produce the documentation run the original source files ending with
 % 保存 \pkg{unicode-math} 内置的所有积分号命令。
 %    \begin{macrocode}
 \tl_new:N \l_@@_name_integral_tl
-\bool_if:NTF \g_@@_opt_load_um_bool
+\bool_if:NT \g_@@_opt_load_um_bool
   { \tl_set_eq:NN \l_@@_name_integral_tl \l__um_nolimits_tl }
-  { \tl_set_eq:NN \l_@@_name_integral_tl \c_empty_tl        }
 %    \end{macrocode}
 % \end{variable}
 %
 % \begin{macro}{\@@_um_setup:n}
 % 封装 \tn{unimathsetup}。
 %    \begin{macrocode}
-\bool_if:NTF \g_@@_opt_load_um_bool
-  { \cs_new:Npn   \@@_um_setup:n #1 { \keys_set:nn { unicode-math } {#1} } }
-  { \cs_new_eq:NN \@@_um_setup:n \use_none:n }
+\cs_new:Npn \@@_um_setup:n #1 { \keys_set:nn { unicode-math } {#1} }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6561,6 +6571,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math/integral}
 % 积分号样式，直立或倾斜。
 %    \begin{macrocode}
+    integral                      .groups:n  = { unicode-math },
     integral                      .choice:,
     integral / upright              .code:n  =
       { \bool_gset_true:N  \g_@@_opt_math_int_bool },
@@ -6573,6 +6584,7 @@ To produce the documentation run the original source files ending with
 % 积分号上下限的位置，在上下或在右侧。
 % 两个选项分别相当于 \tn{removenolimits} 和 \tn{addnolimits}。
 %    \begin{macrocode}
+    integral-limits               .groups:n  = { unicode-math },
     integral-limits               .choice:,
     integral-limits / true          .code:n  =
       { \tl_clear:N   \l__um_nolimits_tl },
@@ -6584,6 +6596,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math/less-than-or-equal}
 % 小于等于号和大于等于号的横线样式，倾斜或水平。
 %    \begin{macrocode}
+    less-than-or-equal            .groups:n  = { unicode-math },
     less-than-or-equal            .choice:,
     less-than-or-equal / slanted    .code:n  =
       { \bool_gset_true:N  \g_@@_opt_math_leq_bool },
@@ -6595,6 +6608,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math/math-ellipsis}
 % 省略号的样式，居中或底部。
 %    \begin{macrocode}
+    math-ellipsis                 .groups:n  = { unicode-math },
     math-ellipsis                 .choice:,
     math-ellipsis / centered        .code:n  =
       {
@@ -6612,6 +6626,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math/partial}
 % 偏微分号样式，正体或斜体。
 %    \begin{macrocode}
+    partial                       .groups:n  = { unicode-math },
     partial                      .choices:nn =
       { upright, italic } { \@@_um_setup:n { partial = #1 } },
 %    \end{macrocode}
@@ -6620,6 +6635,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math/real-part}
 % 实部和虚部符号的样式，罗马体或花体。
 %    \begin{macrocode}
+    real-part                     .groups:n  = { unicode-math },
     real-part                     .choice:,
     real-part / roman               .code:n  =
       { \bool_gset_true:N  \g_@@_opt_math_re_bool },
@@ -6631,6 +6647,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math/vector}
 % 向量符号样式，粗斜体或箭头。
 %    \begin{macrocode}
+    vector                        .groups:n  = { unicode-math },
     vector                        .choice:,
     vector / boldfont               .code:n  =
       { \bool_gset_true:N  \g_@@_opt_math_vec_bool },
@@ -6642,6 +6659,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math/uppercase-greek}
 % 大写希腊字母的样式，正体或斜体。
 %    \begin{macrocode}
+    uppercase-greek               .groups:n  = { unicode-math },
     uppercase-greek               .choice:,
     uppercase-greek / upright       .code:n  =
       { \@@_um_setup:n { math-style = ISO } },
@@ -6653,6 +6671,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{math/style}
 % 整体样式。
 %    \begin{macrocode}
+    style                         .groups:n  = { unicode-math },
     style                         .choice:,
     style / TeX                     .code:n  =
       {

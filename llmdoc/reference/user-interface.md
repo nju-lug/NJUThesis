@@ -57,6 +57,13 @@ Important setup modules:
 - `header`, `footer` - page style content positions.
 - `anonymous-mode` - blind-review behavior such as hiding school information.
 
+Feature toggles:
+
+- `unicode-math = false` means njuthesis does not perform its automatic math
+  configuration. The `nju / math` setup keys should still exist so shared setup
+  files can be parsed, but keys that require njuthesis-managed `unicode-math`
+  behavior are filtered and inert under this option.
+
 Major document commands and environments:
 
 - `\maketitle` - generates configured cover and declaration pages.

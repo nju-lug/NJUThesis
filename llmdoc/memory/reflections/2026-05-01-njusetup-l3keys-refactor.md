@@ -38,3 +38,7 @@ Promotion:
 - `llmdoc/must/repository-rules.md` now records the language convention:
   changelog, documented dtx prose, and commit messages use Chinese; llmdoc uses
   English.
+- `llmdoc/memory/decisions/2026-05-02-filtered-key-groups.md` records the
+  follow-up decision to collect excluded l3keys groups in a global clist and
+  define `\@@_keys_set:nn` once from that clist. The implemented concise clist
+  name is `\g_@@_keys_excl_clist`.

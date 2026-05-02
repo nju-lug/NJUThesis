@@ -1,0 +1,46 @@
+\input regression-test.tex
+\documentclass[unicode-math=false,minimal]{njuthesis}
+
+\ExplSyntaxOn
+\cs_new_protected:Npn \__nju_test_cs_eq:NN #1#2
+  { \cs_if_eq:NNTF #1#2 { \TYPE { PASSED } } { \TYPE { FAILED } } }
+\cs_new_protected:Npn \__nju_test_cs_ne:NN #1#2
+  { \cs_if_eq:NNTF #1#2 { \TYPE { FAILED } } { \TYPE { PASSED } } }
+\cs_new_protected:Npn \__nju_test_meaning:N #1
+  { \TYPE { \token_to_str:N #1 = \meaning #1 } }
+
+\njusetup[math]
+  {
+    integral           = upright,
+    less-than-or-equal = slanted,
+    real-part          = roman,
+    vector             = boldfont
+  }
+\njusetup { math / style = ISO }
+
+\begin{document}
+\START
+
+\TEST { unicode-math=false~keeps~math~symbol~behavior~unchanged }
+  {
+    \__nju_test_cs_eq:NN \le \leq
+    \__nju_test_cs_eq:NN \ge \geq
+    \__nju_test_cs_ne:NN \le \leqslant
+    \__nju_test_cs_ne:NN \ge \geqslant
+    \__nju_test_meaning:N \Re
+    \__nju_test_meaning:N \Im
+    \__nju_test_meaning:N \vec
+    \__nju_test_meaning:N \mathellipsis
+  }
+
+\TEST { unicode-math=false~uses~default~math~font~families }
+  {
+    \hbox_set:Nn \l_tmpa_box { $ x + y \leq z $ }
+    \TYPE { textfont0 = \fontname \textfont 0 }
+    \TYPE { textfont1 = \fontname \textfont 1 }
+    \TYPE { textfont2 = \fontname \textfont 2 }
+    \TYPE { textfont3 = \fontname \textfont 3 }
+  }
+\ExplSyntaxOff
+
+\END

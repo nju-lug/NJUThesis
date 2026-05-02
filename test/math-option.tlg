@@ -1,0 +1,22 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: unicode-math=false keeps math symbol behavior unchanged
+============================================================
+PASSED
+PASSED
+PASSED
+PASSED
+\Re=\mathchar"23C
+\Im=\mathchar"23D
+\vec=macro:->\protect \vec  
+\mathellipsis=macro:->\protect \mathellipsis  
+============================================================
+============================================================
+TEST 2: unicode-math=false uses default math font families
+============================================================
+textfont0=cmr12 at 12.045pt
+textfont1=cmmi12 at 12.045pt
+textfont2=cmsy10 at 12.045pt
+textfont3=cmex10 at 12.0pt
+============================================================
