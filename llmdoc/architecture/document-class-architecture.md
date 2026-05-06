@@ -11,7 +11,11 @@ Core structure:
 - It defines class options and user settings through `l3keys`.
 - It uses `xtemplate` for reusable page and element instances, especially cover
   and abstract pages.
-- It uses LaTeX hooks for cover generation in recent unreleased code.
+- It uses LaTeX hooks for cover generation in recent unreleased code:
+  `cover/begin`, `cover/body`, `cover/end`, and `cover/back`.
+- Back-cover authorization material is registered under `cover/back`; `\maketitle`
+  schedules that semantic hook on `enddocument` with `\hook_use_once:n`, so the
+  authorization page is not generated unless the title-page flow is used.
 
 Generated targets:
 

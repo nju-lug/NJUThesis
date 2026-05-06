@@ -4334,8 +4334,8 @@ To produce the documentation run the original source files ending with
 \NewDocumentCommand \njusetlength { s m m }
   {
     \bool_if:nTF {#1}
-      { \skip_gset:cn { l_@@_ #2 _skip } {#3} }
-      { \dim_gset:cn  { l_@@_ #2 _dim  } {#3} }
+      { \skip_set:cn { l_@@_ #2 _skip } {#3} }
+      { \dim_set:cn  { l_@@_ #2 _dim  } {#3} }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4584,8 +4584,13 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{钩子机制}
 % \changes{v1.5.0}{2026/04/24}{将封面执行逻辑拆解为三个钩子。}
+% \changes{v1.5.0}{2026/05/06}{新增封底钩子。}
 %
-% \begin{macro}{njuthesis/cover/begin,njuthesis/cover/body,njuthesis/cover/end}
+% \begin{macro}{
+%   njuthesis/cover/begin,
+%   njuthesis/cover/body,
+%   njuthesis/cover/end,
+%   njuthesis/cover/back}
 % 封面流程钩子。由于默认配置文件会向这些钩子添加代码，
 % 需要在载入配置文件前先行声明。
 % 名称中的 |.| 代表本模板名 \cls{njuthesis}。
@@ -4594,6 +4599,7 @@ To produce the documentation run the original source files ending with
 \hook_new:n { . / cover / begin }
 \hook_new:n { . / cover / body  }
 \hook_new:n { . / cover / end   }
+\hook_new:n { . / cover / back  }
 %    \end{macrocode}
 %
 % 设置标签的默认规则，规定主封面代码始终在承诺书前执行。
@@ -7913,7 +7919,7 @@ To produce the documentation run the original source files ending with
 % 位于封底的承诺书页面。生成研究生的学位论文出版授权书。
 %    \begin{macrocode}
 %<*def-g>
-        \hook_gput_code:nnn { env / document / end } { decl-ii }
+        \hook_gput_code:nnn { . / cover / back } { decl-ii }
           {
             \cleardoublepage
             \UseInstance { nju } { authdecl-g }
@@ -8016,6 +8022,9 @@ To produce the documentation run the original source files ending with
 % 重定义 \tn{maketitle} 以生成封面。
 % 在钩子机制下，这里只需要作为钩子的锚点，
 % 具体需要执行的代码已被预先分发到钩子内。
+% 为避免未调用 \tn{maketitle} 时生成封底，
+% 封底钩子只在标题页生成时挂接到文档结束钩子，
+% 并作为一次性钩子执行，避免重复调用 \tn{maketitle} 时重复生成。
 % \cs{hook_use:n} 不能用 |.| 来简化钩子路径。
 %    \begin{macrocode}
 \RenewDocumentCommand \maketitle { }
@@ -8023,6 +8032,8 @@ To produce the documentation run the original source files ending with
     \hook_use:n { njuthesis / cover / begin }
     \hook_use:n { njuthesis / cover / body  }
     \hook_use:n { njuthesis / cover / end   }
+    \hook_gput_next_code:nn { enddocument }
+      { \hook_use_once:n { njuthesis / cover / back } }
   }
 %</class>
 %    \end{macrocode}
