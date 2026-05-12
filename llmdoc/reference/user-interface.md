@@ -47,9 +47,9 @@ Important setup modules:
 - `info` - title, author, department, major, supervisor, dates, classification,
   committee, degree names, email, and related metadata.
 - `bib` - bibliography style, resource files, and biblatex options.
-- `image` - graphics path and NJU emblem/name color selection
-  (`black|purple|custom-path`). Also includes `nju-logo-color` for setting
-  both emblem and name at once.
+- `image` - graphics path and NJU emblem/name selection. `nju-logo-color`
+  accepts built-in colors `black|purple` and sets both emblem and name at once;
+  `nju-emblem` and `nju-name` also accept custom file paths.
 - `abstract` - abstract TOC entry, underline behavior, and title style.
 - `tableofcontents`, `listoffigures`, `listoftables` - TOC entry behavior.
 - `math` - TeX/ISO/GB math style and detailed symbol choices.

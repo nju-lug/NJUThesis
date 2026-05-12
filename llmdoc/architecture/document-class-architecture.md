@@ -13,9 +13,12 @@ Core structure:
   and abstract pages.
 - It uses LaTeX hooks for cover generation: `cover/begin`, `cover/body`,
   `cover/end`, and `cover/back`.
-- Cover logo images are bundled PDFs resolved through a prop→tl→command
+- Cover logo images are bundled PDFs resolved through a prop-to-tl-to-command
   pipeline wired into the `cover/begin` hook. See
   `llmdoc/architecture/cover-logo-mechanism.md`.
+- Anonymous mode centralizes metadata filtering, declaration-page suppression,
+  and optional school-information hiding. See
+  `llmdoc/architecture/anonymous-mode-mechanism.md`.
 - Back-cover authorization material is registered under `cover/back`; `\maketitle`
   schedules that semantic hook on `enddocument` with `\hook_use_once:n`, so the
   authorization page is not generated unless the title-page flow is used.
@@ -45,6 +48,8 @@ Layout-sensitive subsystems:
 
 - Cover pages for undergraduate, graduate, postdoctoral, and national-library
   variants.
+- Undergraduate cover info layout has a local second-column spacing adjustment;
+  see `llmdoc/architecture/undergraduate-cover-second-column-spacing.md`.
 - Declaration and authorization pages.
 - Abstract pages and keyword lists.
 - Page geometry, headers, footers, front matter, and main matter transitions.

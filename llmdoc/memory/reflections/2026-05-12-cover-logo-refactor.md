@@ -21,16 +21,16 @@ What changed:
   `\@@_logo_file_update:nn` (populates a prop list) and
   `\@@_new_logo_cs:nn`-style internal commands generated at class-load time.
 - Blind-review clearing: `\cs_gset_eq:NN \@@_logo_emblem:n \use_none:n` replaces
-  `\RenewDocumentCommand \njuemblem { o m m } {}`. One redefinition covers all
-  call sites.
+  `\RenewDocumentCommand \njuemblem { o m m } {}` for normal cover call sites.
+  Direct base-helper calls such as the fixed undergraduate declaration emblem
+  must be checked separately; anonymous mode disables declaration pages.
 - `emblem color` / `name color` format defaults removed (dead with njuvisual
   gone).
 - `missing-image` message removed (dead code — no fallback trigger remains).
 
 Org lesson:
 
-- The `\clist_map_inline:nn { emblem, name }` loop spans two subsubsections
-  (`校名校徽` for command definitions, `用户接口` for key definitions). This
-  works because TeX macros don't care about doc structure, but it's fragile for
-  readers. The comment "注意这里还在使用前面的 clist_map_inline:nn" is a
-  minimum guardrail. If this code is ever revisited, consider unrolling the loop.
+- Keep the command-generation and key-definition loops visually separate. The
+  current code closes the command loop before the user-interface subsection and
+  opens a new loop for the keys, which is easier to read than relying on one
+  long loop across doc sections.

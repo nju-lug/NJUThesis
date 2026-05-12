@@ -2038,10 +2038,12 @@ To produce the documentation run the original source files ending with
 %
 % \begin{function}[added=2026-05-12]{image/nju-logo-color}
 %   \begin{syntax}
-%     \OPT{nju-logo-color} = <\OPT{black}|(\OPT{purple})|\Arg{文件}>
+%     \OPT{nju-logo-color} = <\OPT{black}|\OPT{purple}>
 %   \end{syntax}
 % 校名、校徽图片的统一颜色设置。相当于同时设置下方的两个选项。
+% 本科生和博士后默认为黑色，研究生默认为紫色。
 % 新版本的模板默认附带有黑色和紫色两种图片文件。
+% 目前这个选项不会影响本科生诚信承诺书用到的紫色校徽。
 % \end{function}
 %
 %
@@ -3581,47 +3583,49 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry:NNNnn}
+% \begin{macro}{\@@_cover_entry:NNNNnn}
 % 生成两项信息条目，仅用于本科生封面。
 % \begin{arguments}
-%   \item 名称盒子宽度，|dim| 型变量
+%   \item 第一个名称盒子宽度，|dim| 型变量
+%   \item 第二个名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
 %   \item 标签格式
 %   \item 左侧条目名称
 %   \item 右侧条目名称
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry:NNNnn #1#2#3#4#5
+\cs_new_protected:Npn \@@_cover_entry:NNNNnn #1#2#3#4#5#6
   {
-    \@@_box_spread_name:NNn #1 #3 {#4} \@@_hskip:
-    \@@_box_ulined_info:Nn  #2    {#4} \@@_hskip:
-    \@@_box_spread_name:NNn #1 #3 {#5} \@@_hskip:
-    \@@_box_ulined_info:Nn  #2    {#5} \tex_par:D
+    \@@_box_spread_name:NNn #1 #4 {#5} \@@_hskip:
+    \@@_box_ulined_info:Nn  #3    {#5} \@@_hskip:
+    \@@_box_spread_name:NNn #2 #4 {#6} \@@_hskip:
+    \@@_box_ulined_info:Nn  #3    {#6} \tex_par:D
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_entry_supv:NNNn}
+% \begin{macro}{\@@_cover_entry_supv:NNNNn}
 % 生成两项导师信息条目，仅用于本科生封面。
 % \begin{arguments}
-%   \item 长内容盒子宽度，|dim| 型变量
-%   \item 短内容盒子宽度，|dim| 型变量
+%   \item 第一个名称盒子宽度，|dim| 型变量
+%   \item 第二个名称盒子宽度，|dim| 型变量
+%   \item 内容盒子宽度，|dim| 型变量
 %   \item 标签格式
 %   \item 条目名称
 % \end{arguments}
 % |clist| 最后一个元素为空时弹出的是无法展开的 \cs{q_novalue_tl}，
 % 需要简单处理以使用分散对齐的盒子。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_cover_entry_supv:NNNn #1#2#3#4
+\cs_new_protected:Npn \@@_cover_entry_supv:NNNNn #1#2#3#4#5
   {
     \tl_set:Nn \l_@@_tmpa_tl
-      { \clist_item:cn { g_@@_info_ #4 _clist } { 1 } }
+      { \clist_item:cn { g_@@_info_ #5 _clist } { 1 } }
     \tl_set:Nn \l_@@_tmpb_tl
-      { \clist_item:cn { g_@@_info_ #4 _clist } { 2 } }
-    \@@_box_spread_name:NNn #1 #3 {#4}        \@@_hskip:
-    \@@_box_ulined:NN #2 \l_@@_tmpa_tl        \@@_hskip:
-    \@@_box_spread_name:NNn #1 #3 { supvtitle } \@@_hskip:
-    \@@_box_ulined:NN #2 \l_@@_tmpb_tl        \tex_par:D
+      { \clist_item:cn { g_@@_info_ #5 _clist } { 2 } }
+    \@@_box_spread_name:NNn #1 #4 {#5}        \@@_hskip:
+    \@@_box_ulined:NN #3 \l_@@_tmpa_tl        \@@_hskip:
+    \@@_box_spread_name:NNn #2 #4 { supvtitle } \@@_hskip:
+    \@@_box_ulined:NN #3 \l_@@_tmpb_tl        \tex_par:D
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6780,7 +6784,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { u / cover / name-img }
   {
     content     = \@@_logo_name:,
-    bottom-skip = 1 cm,
+    bottom-skip = 31.5 pt,
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6792,7 +6796,7 @@ To produce the documentation run the original source files ending with
   {
     content     = \@@_name:n { type },
     format      = \zihao { 1 } \bfseries \@@_set_ccglue:n { .5 em },
-    bottom-skip = 0 cm plus 1 fill
+    bottom-skip = 4 pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6800,6 +6804,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{u/cover/info}
 % \changes{v1.3}{2023/05/25}{将本科生封面信息恢复至 v1.1 的宋体格式。}
 % \changes{v1.4}{2025/05/14}{本科生封面信息全部使用楷体格式。}
+% \changes{v1.5}{2027/05/12}{匹配本科生 Word 模板第二栏间距。}
 % 本科生封面信息栏实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / info }
@@ -6810,41 +6815,49 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_u_cover_info:NNNN}
+% \begin{macro}{\@@_u_cover_info:NNNNN}
 % 本科生封面信息栏。
 % \begin{arguments}
-%   \item 名称盒子宽度，|dim| 型变量
+%   \item 第一个名称盒子宽度，|dim| 型变量
+%   \item 第二个名称盒子宽度，|dim| 型变量
 %   \item 长内容盒子宽度，|dim| 型变量
 %   \item 间隔宽度，|dim| 型变量
 %   \item 标签格式
 % \end{arguments}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_u_cover_info:NNNN #1#2#3#4
+\cs_new_protected:Npn \@@_u_cover_info:NNNNN #1#2#3#4#5
   {
-    \@@_cover_entry:NNNn #1 #2 #4 { dept  }
-    \@@_cover_entry:NNNn #1 #2 #4 { major }
-    \@@_cover_entry_title:NNN #1 #2 #4
+    \@@_cover_entry:NNNn #1 #3 #5 { dept  }
+    \@@_cover_entry:NNNn #1 #3 #5 { major }
+    \@@_cover_entry_title:NNN #1 #3 #5
 %    \end{macrocode}
-% 短内容盒子的长度值是通过计算得到的。|dim| 型变量的乘除需要采取
-% \cs{dim_ratio:nn} 提供的形式。
+% 短内容盒子的长度值是通过计算长下划线减去短标签
+% 减去分隔长度再除以二得到的。
+% |dim| 型变量的乘除需要采取 \cs{dim_ratio:nn} 提供的形式。
 %    \begin{macrocode}
-    \dim_set:Nn \l_@@_tmpb_dim { #2 * 1/2 - #1 * 1/2 - #3 }
-    \@@_cover_entry:NNNnn #1 \l_@@_tmpb_dim #4 { grade } { id }
-    \@@_cover_entry:NNNn #1 #2 #4 { author }
-    \@@_cover_entry_supv:NNNn #1 \l_@@_tmpb_dim #4 { supv }
+    \dim_set:Nn \l_@@_tmpb_dim { #3 * 1/2 - #2 * 1/2 - #4 }
+    \@@_cover_entry:NNNNnn #1 #2 \l_@@_tmpb_dim #5 { grade } { id }
+    \@@_cover_entry:NNNn #1 #3 #5 { author }
+    \@@_cover_entry_supv:NNNNn #1 #2 \l_@@_tmpb_dim #5 { supv }
     \bool_if:NT \g_@@_opt_supvii_bool
-      { \@@_cover_entry_supv:NNNn #1 \l_@@_tmpb_dim #4 { supvii } }
-    \@@_cover_entry:NNNn #1 #2 #4 { submitdate }
+      { \@@_cover_entry_supv:NNNNn #1 #2 \l_@@_tmpb_dim #5 { supvii } }
+    \@@_cover_entry:NNNn #1 #3 #5 { submitdate }
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@@_u_cover_info:}
+% 为了和 Word 版本对齐，手动向左移动了 16 pt。
 %    \begin{macrocode}
 \cs_new:Npn \@@_u_cover_info:
   {
-    \@@_u_cover_info:NNNN \l_@@_clabelwd_dim \l_@@_crulewd_dim
-      \l_@@_hsep_dim \l_@@_fmt_coverlabel_tl
+    \mode_leave_vertical:
+    \skip_horizontal:n { -16 pt }
+    \vbox_center:n
+      {
+        \@@_u_cover_info:NNNNN \l_@@_clabelwd_dim \l_@@_clabelwdi_dim
+          \l_@@_crulewd_dim \l_@@_hsep_dim \l_@@_fmt_coverlabel_tl
+      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6854,10 +6867,12 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{u/decl/orig/emblem}
 % 本科生诚信承诺书校徽实例。
+% 这里固定使用紫色版本校徽。
 %    \begin{macrocode}
 \@@_declare_element:nn { u / decl / orig / emblem }
   {
-    content     = \@@_logo_emblem:n { i },
+    content     =
+      \@@_logo_emblem:Nn \l_@@_emblemwdi_dim { nju-emblem-purple.pdf },
     bottom-skip = 30 pt
   }
 %    \end{macrocode}
@@ -7974,14 +7989,11 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-%    \begin{macrocode}
-\clist_map_inline:nn { emblem, name }
-  {
-%    \end{macrocode}
-%
 % \begin{variable}{\l_@@_logo_file_emblem_tl,\l_@@_logo_file_name_tl}
 % 存储图标文件名。
 %    \begin{macrocode}
+\clist_map_inline:nn { emblem, name }
+  {
     \tl_new:c { l_@@_logo_file_ #1 _tl }
 %    \end{macrocode}
 % \end{variable}
@@ -8012,6 +8024,7 @@ To produce the documentation run the original source files ending with
           { l_@@_logo_file_ #1 _tl }
       }
     \cs_new:cpn { @@_logo_ #1 : } { \use:c { @@_logo_ #1 :n } { } }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -8019,7 +8032,6 @@ To produce the documentation run the original source files ending with
 % \subsubsection{用户接口}
 %
 % 我们顺势处理校名校徽相关的接口。
-% 注意这里还在使用前面的 \cs{clist_map_inline:nn}。
 %
 % \changes{v1.0}{2022/08/01}{外置图片接口更名为 \opt{image} 类。}
 % \begin{macro}{image/nju-emblem}
@@ -8029,6 +8041,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.14}{2021/12/23}{提供选择外置校名图片的接口。}
 % \changes{v1.5.0}{2026/05/12}{校徽图片提供颜色选项。}
 %    \begin{macrocode}
+\clist_map_inline:nn { emblem, name }
+  {
     \keys_define:nn { nju / image }
       {
         nju-#1         .choice:,
@@ -8046,12 +8060,14 @@ To produce the documentation run the original source files ending with
 %
 % \begin{macro}{image/nju-logo-color}
 % \changes{v1.5.0}{2026/05/12}{提供统一设置校名校徽颜色的接口。}
+% 研究生和本科生诚信承诺书用紫色校名校徽。
+% 其他都是黑色。
 %    \begin{macrocode}
 \keys_define:nn { nju / image }
   {
     nju-logo-color .choices:nn = { black, purple }
       { \keys_set:nn { nju / image } { nju-emblem = #1, nju-name = #1 }},
-    nju-logo-color .initial:n = purple,
+    nju-logo-color .initial:V  = \c_@@_logo_color_tl,
   }
 %    \end{macrocode}
 % \end{macro}
@@ -9018,8 +9034,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 封面信息栏标签的宽度。
 %    \begin{macrocode}
-%<def-u>    { c label wd     } { 68   pt },
+%<def-u>    { c label wd     } { 64   bp },
 %<def-g>    { c label wd     } { 2.97 cm },
+%<def-u>    { c label wd i   } { 40   bp },
 %<def-g>    { c label wd i   } { 3.90 cm },
 %<def-g>    { c label wd ii  } { 2.62 cm },
 %<def-p>    { c label wd     } { 50   pt },
@@ -9046,12 +9063,14 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % 下划线高度（厚度）。下划线绘制命令是通用的，因此没有作文件区分。
 %    \begin{macrocode}
-    { rule    ht i   } { .4   pt },
+%<def-u>    { rule    ht i   } { .7   pt },
+%<def-g>    { rule    ht i   } { .4   pt },
     { rule    ht ii  } { .8   pt },
 %    \end{macrocode}
 % 下划线深度（偏移量）。
 %    \begin{macrocode}
-    { rule    dp i   } { -.7  ex },
+%<def-u>    { rule    dp i   } { -.6  ex },
+%<def-g>    { rule    dp i   } { -.7  ex },
     { rule    dp ii  } { -.9  ex },
     { rule    dp iii } { -1.2 ex },
 %    \end{macrocode}
@@ -9117,8 +9136,16 @@ To produce the documentation run the original source files ending with
     { footer        } { \small \rmfamily                  }
   }
   { \@@_define_fmt:nn #1 }
+%    \end{macrocode}
+%
+% \begin{variable}{\c_@@_logo_color_tl}
+% 校名校徽图片默认颜色定义为常量。
+%    \begin{macrocode}
+%<def-u|def-p>\tl_const:Nn \c_@@_logo_color_tl { black  }
+%<def-g>\tl_const:Nn \c_@@_logo_color_tl { purple }
 %</(def-u|def-g|def-p)>
 %    \end{macrocode}
+% \end{variable}
 %
 %
 % \subsection{手册文档类 \cls{njuthesis-doc}}

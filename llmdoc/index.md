@@ -24,8 +24,13 @@ Architecture:
 
 - [Document Class Architecture](architecture/document-class-architecture.md) -
   how `njuthesis.dtx` is structured and how the class is configured.
-- [Cover Logo Mechanism](architecture/cover-logo-mechanism.md) - how bundled
-  logo PDFs flow from user keys through hooks to cover pages.
+- [Logo Color Mechanism](architecture/cover-logo-mechanism.md) - how bundled
+  logo color defaults and user keys select emblem/name PDFs.
+- [Anonymous Mode Mechanism](architecture/anonymous-mode-mechanism.md) - how
+  blind-review mode filters metadata, disables declaration pages, and hides
+  school information.
+- [Undergraduate Cover Second-Column Spacing](architecture/undergraduate-cover-second-column-spacing.md) -
+  why the undergraduate cover uses separate label widths and local offsets.
 - [Build and Release Architecture](architecture/build-release-architecture.md) -
   how l3build, tests, CI, and release packages connect.
 

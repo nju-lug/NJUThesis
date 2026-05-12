@@ -11,7 +11,7 @@
 - 成果列表显示全部作者名 - [#306]
 - 使用 LaTeX Hook 机制改写封面绘制逻辑 - [#308]
 - 新增 `l3build check` 回归测试，并在 CI 中使用 XeTeX 运行
-- 校名校徽图片改为内置 PDF 资源，不再依赖 `·`njuvisual` 宏包绘制
+- 校名校徽图片改为内置 PDF 资源，不再依赖 `njuvisual` 宏包绘制
 - 新增 `image/nju-logo-color` 统一设置校名校徽颜色
 
 ### 修复
@@ -32,7 +32,8 @@
 - 使用 LaTeX3 接口统一处理下划线样式
 - 使用 LaTeX3 接口改写标题换行模块
 - 使用新版 LaTeX3 键分组过滤接口，并简化 `\njusetup` 键路径处理 - [#281]
-- 移除了 `njuvisual` 宏包的依赖。 - [#144]
+- 移除了 `njuvisual` 宏包的依赖 - [#144]
+- 本科生封面信息表严格匹配 Word 版本 - [#310]
 
 ## [1.4.3] - 2025-05-21
 
@@ -742,6 +743,7 @@
 [#305]: https://github.com/nju-lug/NJUThesis/discussions/305
 [#306]: https://github.com/nju-lug/NJUThesis/issues/306
 [#308]: https://github.com/nju-lug/NJUThesis/issues/308
+[#310]: https://github.com/nju-lug/NJUThesis/issues/310
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
