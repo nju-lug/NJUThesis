@@ -237,7 +237,7 @@ To produce the documentation run the original source files ending with
 %
 % 本模板使用的本科生毕业论文模板格式依据
 % 《关于启动南京大学2026届本科毕业论文（设计）工作的通知》\cite{nju-bachelor-2026}，
-% 研究生学位论文格式依据研究生院提供的材料包\cite{nju-graduate-2023}。
+% 研究生学位论文格式依据研究生院提供的材料包\cite{nju-graduate-2026}。
 % 博士后出站报告格式要求与博士学位论文一致\cite{nju-postdoc-2022}，
 % 封面、摘要的设计参考了部分既有报告。
 %
@@ -2036,18 +2036,25 @@ To produce the documentation run the original source files ending with
 %
 % \paragraph{封面图片}
 %
-% \begin{function}[added=2021-12-23,updated=2022-08-06]{
-%   image/nju-emblem,image/nju-name}
+% \begin{function}[added=2026-05-12]{image/nju-logo-color}
 %   \begin{syntax}
-%     \OPT{nju-emblem} = \Arg{文件}
-%     \OPT{nju-name}   = \Arg{文件}
+%     \OPT{nju-logo-color} = <\OPT{black}|(\OPT{purple})|\Arg{文件}>
 %   \end{syntax}
-% 校名、校徽图片文件路径。
+% 校名、校徽图片的统一颜色设置。相当于同时设置下方的两个选项。
+% 新版本的模板默认附带有黑色和紫色两种图片文件。
 % \end{function}
 %
-% 通过以上选项可以使用外置的校徽和校名图片，两个选项\emph{任一留空}则不会生效。
-% 本模板封面中校徽及校名的绘制默认依赖 \pkg{njuvisual} 宏包提供的 \tikzlogo
-% 矢量曲线，耗时较长，在替换为外置图片后可节省约1秒的编译时长。
+%
+% \begin{function}[added=2021-12-23,updated=2026-05-12]{
+%   image/nju-emblem,image/nju-name}
+%   \begin{syntax}
+%     \OPT{nju-emblem} = <\OPT{black}|(\OPT{purple})|\Arg{文件}>
+%     \OPT{nju-name}   = <\OPT{black}|(\OPT{purple})|\Arg{文件}>
+%   \end{syntax}
+% 校名、校徽图片单独的颜色设置。在填入 \OPT{black} 或 (\OPT{purple} 以外的值时，
+% 会将选项处理为外部图片的文件路径，可以任意使用外置的校徽和校名图片。
+% 新版本中移除了 \pkg{njuvisual} 宏包的相关依赖。
+% \end{function}
 %
 %
 % \subsubsection{摘要页}
@@ -2316,6 +2323,8 @@ To produce the documentation run the original source files ending with
 % \subsection{视觉识别系统}
 %
 % 视觉识别系统 \pkg{njuvisual} 现已被分离为独立宏包\cite{njuvisual}，
+% 本模板并不会默认载入该宏包。
+%
 % 基本使用方法举例如下：
 % \begin{latexexample}[moretexcs={\njuemblem,\njuname,\njuname*}]
 %   \njuemblem{!}{3cm}                           % 生成高 3cm 的紫色校徽
@@ -2459,11 +2468,11 @@ To produce the documentation run the original source files ending with
 % \newblock (2025-12-26)
 % \urlprefix\url{https://jw.nju.edu.cn/3f/59/c26263a802649/page.htm}
 %
-% \bibitem{nju-graduate-2023}
+% \bibitem{nju-graduate-2026}
 % 南京大学研究生院.
-% \newblock \textit{关于开展六月份学位申请、审核工作的通知} [EB/OL].
-% \newblock (2023-04-26)
-% \urlprefix\url{https://grawww.nju.edu.cn/63/a9/c905a615337/page.htm}
+% \newblock \textit{关于开展2026年6月学位申请与审核工作的通知} [EB/OL].
+% \newblock (2026-04-29)
+% \urlprefix\url{https://grawww.nju.edu.cn/af/bb/c905a831419/page.htm}
 %
 % \bibitem{nju-postdoc-2022}
 % 南京大学人力资源处.
@@ -3617,16 +3626,6 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_emblem:N,\@@_name:N}
-% 封装图片绘制命令，参数为图片宽度。
-% 此时 \tn{njuemblem}、\tn{njuname} 和相关长度都是没有定义的。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_emblem:N #1
-  { \njuemblem [ \l_@@_fmt_emblemcolor_tl ] {#1} { ! } }
-\cs_new_protected:Npn \@@_name:N   #1
-  { \njuname   [ \l_@@_fmt_namecolor_tl   ] {#1} { ! } }
-%    \end{macrocode}
-% \end{macro}
 %
 % \subsubsection{摘要相关}
 %
@@ -3898,15 +3897,6 @@ To produce the documentation run the original source files ending with
   }
 \@@_msg:nn { load-config }
   { I~ am~ loading~ config~ file~ "#1". }
-\@@_msg:nn { missing-image }
-  {
-    You~ have~ not~ selected~ local~ files~
-    for~ emblem~ and~ name~ images.\\
-    It~ seems~ that~ you~ haven't~ fill~ in~ both~
-    "image/nju-emblem"~ and~ "image/nju-name",~ therefore~
-    I~ am~ using~ the~ package~ "njuvisual"~ instead,~
-    which~ may~ slow~ down~ the~ compilation.
-  }
 \@@_msg:nn { missing-ntheorem }
   {
     "ntheorem"~ package~ not~ detected.\\
@@ -6778,7 +6768,7 @@ To produce the documentation run the original source files ending with
 %<*def-u>
 \@@_declare_element:nn { u / cover / emblem-img }
   {
-    content     = \@@_emblem:N \l_@@_emblemwd_dim,
+    content     = \@@_logo_emblem:,
     bottom-skip = 1.2 cm
   }
 %    \end{macrocode}
@@ -6789,7 +6779,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / name-img }
   {
-    content     = \@@_name:N \l_@@_namewd_dim,
+    content     = \@@_logo_name:,
     bottom-skip = 1 cm,
   }
 %    \end{macrocode}
@@ -6867,7 +6857,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { u / decl / orig / emblem }
   {
-    content     = \@@_emblem:N \l_@@_emblemwdi_dim,
+    content     = \@@_logo_emblem:n { i },
     bottom-skip = 30 pt
   }
 %    \end{macrocode}
@@ -6954,7 +6944,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-front / emblem-img }
   {
-    content     = \@@_emblem:N \l_@@_emblemwd_dim,
+    content     = \@@_logo_emblem:,
     bottom-skip = .47 cm
   }
 %    \end{macrocode}
@@ -6965,7 +6955,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-front / name-img }
   {
-    content     = \@@_name:N \l_@@_namewd_dim,
+    content     = \@@_logo_name:,
     bottom-skip = 2.25 cm
   }
 %    \end{macrocode}
@@ -7177,7 +7167,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-en / emblem-img }
   {
-    content     = \@@_emblem:N \l_@@_emblemwdii_dim,
+    content     = \@@_logo_emblem:n { ii },
     bottom-skip = 1 cm minus .5 cm
   }
 %    \end{macrocode}
@@ -7866,6 +7856,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+%
+% \subsubsection{钩子处理}
+%
 % \changes{v1.3}{2023/05/24}{修复非研究生类型时调用 \opt{nl-cover} 选项的错误。}
 % 在草稿模式下，封面绘制将被禁用，有助于提升编译速度。
 % 通过不同选项进行分流，使得钩子内部最终不包含逻辑判断，
@@ -7931,11 +7924,18 @@ To produce the documentation run the original source files ending with
 %</(def-u|def-g|def-p)>
 %    \end{macrocode}
 %
+% \changes{v0.16}{2022/02/22}{不再默认载入 \pkg{njuvisual}。}
+% \changes{v1.5.0}{2026/05/11}{默认提供 \file{pdf} 校名校徽图片，不再使用 \pkg{njuvisual}。}
 % 封面前处理。封面本身不占用页码编号。
+% 新版本将绘制校名校徽的命令预处理移到了封面前钩子里。
 %    \begin{macrocode}
 %<*class>
-\hook_gput_code:nnn { . / cover / begin } { presetup  }
-  { \pagenumbering { gobble } }
+\hook_gput_code:nnn { . / cover / begin } { presetup }
+  {
+    \pagenumbering { gobble }
+    \prop_map_inline:Nn \l_@@_logo_file_prop
+      { \tl_set:cn { l_@@_logo_file_ #1 _tl } {#2} }
+  }
 %    \end{macrocode}
 %
 % 封面后处理。在标题页后清空标题中的换行符，
@@ -7957,61 +7957,104 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 %
 %
+% \subsubsection{校名校徽}
+%
+% \begin{variable}{\l_@@_logo_file_prop}
+% 存储校名校徽图标文件名。
+%    \begin{macrocode}
+\prop_new:N \l_@@_logo_file_prop
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}{\@@_logo_file_update:nn}
+% 更新图标文件名的辅助函数。
+%    \begin{macrocode}
+\cs_new:Npn \@@_logo_file_update:nn
+  { \prop_put:Nnn \l_@@_logo_file_prop }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\clist_map_inline:nn { emblem, name }
+  {
+%    \end{macrocode}
+%
+% \begin{variable}{\l_@@_logo_file_emblem_tl,\l_@@_logo_file_name_tl}
+% 存储图标文件名。
+%    \begin{macrocode}
+    \tl_new:c { l_@@_logo_file_ #1 _tl }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}{
+%   \@@_logo_emblem:Nn,
+%   \@@_logo_emblem:cv,
+%   \@@_logo_name:Nn,
+%   \@@_logo_name:cv}
+% 包装载入图片命令。
+%    \begin{macrocode}
+    \cs_new_protected:cpn { @@_logo_ #1 :Nn } ##1
+      { \includegraphics [ width = ##1 ] }
+    \cs_generate_variant:cn { @@_logo_ #1 :Nn } { cv }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{
+%   \@@_logo_emblem:n,
+%   \@@_logo_emblem:,
+%   \@@_logo_name:n,
+%   \@@_logo_name:}
+% 进一步包装载入图片命令。
+%    \begin{macrocode}
+    \cs_new_protected:cpn { @@_logo_ #1 :n } ##1
+      {
+        \use:c { @@_logo_ #1 :cv } { l_@@_ #1 wd ##1 _dim }
+          { l_@@_logo_file_ #1 _tl }
+      }
+    \cs_new:cpn { @@_logo_ #1 : } { \use:c { @@_logo_ #1 :n } { } }
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \subsubsection{用户接口}
 %
-% \begin{macro}{\@@_new_img_cmd:nn}
-% 用于定义插入图片命令的辅助函数。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_new_img_cmd:nn #1#2
-  {
-    \exp_args:Nc \NewDocumentCommand { nju #1 } { o m m }
-      { \includegraphics [ width = ##2, height = ##3 ] {#2} }
-  }
-%    \end{macrocode}
-% \end{macro}
+% 我们顺势处理校名校徽相关的接口。
+% 注意这里还在使用前面的 \cs{clist_map_inline:nn}。
 %
 % \changes{v1.0}{2022/08/01}{外置图片接口更名为 \opt{image} 类。}
-%    \begin{macrocode}
-\keys_define:nn { nju / image }
-  {
-%    \end{macrocode}
-% \begin{macro}{image/nju-emblem,\njuemblem}
+% \begin{macro}{image/nju-emblem}
 % \changes{v0.14}{2021/12/23}{提供选择外置校徽图片的接口。}
-% 校徽图片路径。
-%    \begin{macrocode}
-    nju-emblem .code:n = { \@@_new_img_cmd:nn { emblem } {#1} },
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{image/nju-name,\njuname}
+% \changes{v1.5.0}{2026/05/12}{校徽图片提供颜色选项。}
+% \begin{macro}{image/nju-name}
 % \changes{v0.14}{2021/12/23}{提供选择外置校名图片的接口。}
-% 校名图片路径。
+% \changes{v1.5.0}{2026/05/12}{校徽图片提供颜色选项。}
 %    \begin{macrocode}
-    nju-name   .code:n = { \@@_new_img_cmd:nn { name   } {#1} }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \changes{v0.16}{2022/02/22}{不再默认载入 \pkg{njuvisual}。}
-% 检查 \tn{njuemblem} 和 \tn{njuname} 命令是否有定义。
-%    \begin{macrocode}
-\ctex_at_end_preamble:n
-  {
-%    \end{macrocode}
-% 如果校名、校徽图片其中之一的路径未被定义，
-% 则全盘使用 \pkg{njuvisual} 提供的绘制命令。
-%    \begin{macrocode}
-    \bool_lazy_and:nnF
-      { \cs_if_exist_p:N \njuemblem }
-      { \cs_if_exist_p:N \njuname   }
+    \keys_define:nn { nju / image }
       {
-        \cs_undefine:N \njuemblem
-        \cs_undefine:N \njuname
-        \msg_warning:nn { njuthesis } { missing-image }
-        \RequirePackage { njuvisual }
+        nju-#1         .choice:,
+        nju-#1 / black   .code:n =
+          { \@@_logo_file_update:nn {#1} { nju- #1 -black .pdf } },
+        nju-#1 / purple  .code:n =
+          { \@@_logo_file_update:nn {#1} { nju- #1 -purple.pdf } },
+        nju-#1 / unknown .code:n =
+          { \@@_logo_file_update:nn {#1} {##1}                   }
       }
   }
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{image/nju-logo-color}
+% \changes{v1.5.0}{2026/05/12}{提供统一设置校名校徽颜色的接口。}
+%    \begin{macrocode}
+\keys_define:nn { nju / image }
+  {
+    nju-logo-color .choices:nn = { black, purple }
+      { \keys_set:nn { nju / image } { nju-emblem = #1, nju-name = #1 }},
+    nju-logo-color .initial:n = purple,
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\maketitle}
 % \changes{v0.12}{2021/12/01}{仅会生成国家图书馆封面或者普通封面之一。}
@@ -8617,8 +8660,8 @@ To produce the documentation run the original source files ending with
         \tl_clear:N  \l_@@_name_nju_tl
         \tl_clear:N  \l_@@_name_nju_en_tl
         \tl_gclear:N \g_@@_info_code_tl
-        \RenewDocumentCommand \njuemblem { o m m } { }
-        \RenewDocumentCommand \njuname   { o m m } { }
+        \cs_gset_eq:NN \@@_logo_emblem:n \use_none:n
+        \cs_gset_eq:NN \@@_logo_name:n   \use_none:n
       }
   }
 %    \end{macrocode}
@@ -9048,11 +9091,6 @@ To produce the documentation run the original source files ending with
 %<def-u>    { cover label   } {                                   },
 %<def-g>    { cover label   } { \bfseries                         },
 %<def-p>    { cover label   } {                                   },
-%    \end{macrocode}
-% 调用 \pkg{njuvisual} 时的校徽颜色。
-%    \begin{macrocode}
-    { emblem color  } { black                             },
-    { name   color  } { black                             },
 %    \end{macrocode}
 % 各级标题样式。
 %    \begin{macrocode}

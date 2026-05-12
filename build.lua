@@ -13,9 +13,18 @@ checkfiles    = {"*.lvt"}
 textfiles     = {"LICENSE", "README*.md", "*.ins"}
 ctanreadme    = "README-CTAN.md"
 
+njulogofiles  = {
+    "nju-emblem-black.pdf",
+    "nju-emblem-purple.pdf",
+    "nju-name-black.pdf",
+    "nju-name-purple.pdf",
+}
+
 sourcefiledir = "source"
-sourcefiles   = {"*.dtx"}
-installfiles  = {"*.cls", "*.def"}
+sourcefiles   = {"*.dtx", table.unpack(njulogofiles)}
+installfiles  = {"*.cls", "*.def", table.unpack(njulogofiles)}
+
+binaryfiles   = {table.unpack(njulogofiles)}
 
 typesetexe    = "xelatex"
 typesetfiles  = {"njuthesis.dtx"}

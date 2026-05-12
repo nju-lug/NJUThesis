@@ -24,6 +24,8 @@ Architecture:
 
 - [Document Class Architecture](architecture/document-class-architecture.md) -
   how `njuthesis.dtx` is structured and how the class is configured.
+- [Cover Logo Mechanism](architecture/cover-logo-mechanism.md) - how bundled
+  logo PDFs flow from user keys through hooks to cover pages.
 - [Build and Release Architecture](architecture/build-release-architecture.md) -
   how l3build, tests, CI, and release packages connect.
 
@@ -41,6 +43,8 @@ Reference:
 Memory:
 
 - `memory/reflections/` - working reflections and update notes.
+  - [Cover Logo Refactor (2026-05-12)](memory/reflections/2026-05-12-cover-logo-refactor.md)
+  - [\njusetup l3keys Refactor (2026-05-01)](memory/reflections/2026-05-01-njusetup-l3keys-refactor.md)
 - `memory/decisions/` - durable decisions that should not be buried in guides.
   - [Filtered Key Groups for `\njusetup`](memory/decisions/2026-05-02-filtered-key-groups.md)
 

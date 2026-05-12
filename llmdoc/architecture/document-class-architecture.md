@@ -11,8 +11,11 @@ Core structure:
 - It defines class options and user settings through `l3keys`.
 - It uses `xtemplate` for reusable page and element instances, especially cover
   and abstract pages.
-- It uses LaTeX hooks for cover generation in recent unreleased code:
-  `cover/begin`, `cover/body`, `cover/end`, and `cover/back`.
+- It uses LaTeX hooks for cover generation: `cover/begin`, `cover/body`,
+  `cover/end`, and `cover/back`.
+- Cover logo images are bundled PDFs resolved through a prop→tl→command
+  pipeline wired into the `cover/begin` hook. See
+  `llmdoc/architecture/cover-logo-mechanism.md`.
 - Back-cover authorization material is registered under `cover/back`; `\maketitle`
   schedules that semantic hook on `enddocument` with `\hook_use_once:n`, so the
   authorization page is not generated unless the title-page flow is used.
@@ -33,7 +36,8 @@ Configuration flow:
 3. `\njusetup` applies preamble configuration under modules such as `info`,
    `bib`, `image`, `abstract`, `theorem`, `math`, `header`, and `footer`.
 4. Late setup hooks load bibliography options/resources, configure PDF metadata,
-   resolve images, and prepare page styles.
+   copy logo filenames from prop list to tl variables during `cover/begin`, and
+   prepare page styles.
 5. User commands/environments generate covers, abstracts, special pages,
    theorem environments, paper lists, and notation pages.
 

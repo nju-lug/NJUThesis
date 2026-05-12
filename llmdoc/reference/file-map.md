@@ -14,13 +14,14 @@ Source:
 
 - `source/njuthesis.dtx` - canonical source and manual.
 - `source/latexmkrc` - documentation build settings.
+- `source/nju-emblem-*.pdf` - NJU emblem logo assets (black and purple).
+- `source/nju-name-*.pdf` - NJU name logo assets (black and purple).
 
 Samples and assets:
 
 - `docs/njuthesis-sample.tex` - public sample thesis.
 - `docs/njuthesis-setup.def` - public sample configuration.
 - `docs/njuthesis-sample.bib` - sample bibliography.
-- `docs/nju-*.pdf` - NJU visual assets.
 
 Tests:
 

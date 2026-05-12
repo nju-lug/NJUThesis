@@ -6,8 +6,11 @@ Local build model:
 
 - `build.lua` sets `module = "njuthesis"`.
 - Source files live in `source/`.
-- The source file is `njuthesis.dtx`.
-- Install files are generated `.cls` and `.def` files.
+- The primary source is `njuthesis.dtx`.
+- Logo PDFs (`nju-emblem-*.pdf`, `nju-name-*.pdf`) are also source files and
+  are declared as `binaryfiles` in `build.lua` so CTAN packaging treats them
+  correctly.
+- Install files are generated `.cls`, `.def`, and the logo PDFs.
 - Typesetting the manual uses XeLaTeX.
 - Unpacking uses XeTeX.
 - Check engines are XeTeX and LuaTeX.
