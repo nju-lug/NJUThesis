@@ -14,16 +14,25 @@ hidden in blind review.
 
 ## Declaration Pages
 
-Anonymous mode always disables declaration pages:
+Anonymous mode always disables declaration pages, but the timing matters. The
+cover hook refactor means declaration pages are registered into hooks while the
+thesis-type `.def` file is loaded. A late boolean change would not remove hook
+code that had already been registered.
+
+Therefore anonymous mode clears `decl-page` immediately after class options are
+processed and before the selected `.def` file is input:
 
 ```tex
+\ProcessKeysOptions { nju / option }
+
 \bool_if:NT \g_@@_opt_anon_bool
-  { \bool_gset_false:N \g_@@_opt_decl_bool ... }
+  { \keys_set:nn { nju / option } { decl-page = false } }
 ```
 
 This means the undergraduate declaration page's direct purple emblem is not a
 blind-review leak. The page is never registered into the cover body when
-anonymous mode has cleared `decl-page`.
+anonymous mode has cleared `decl-page`. See
+`cover-hook-option-timing.md` for the general ordering rule.
 
 ## Personal Information
 

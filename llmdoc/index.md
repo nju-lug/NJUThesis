@@ -29,6 +29,9 @@ Architecture:
 - [Anonymous Mode Mechanism](architecture/anonymous-mode-mechanism.md) - how
   blind-review mode filters metadata, disables declaration pages, and hides
   school information.
+- [Cover Hook Option Timing](architecture/cover-hook-option-timing.md) - why
+  declaration-related class options must be normalized before thesis-type
+  `.def` files register hook code.
 - [Undergraduate Cover Second-Column Spacing](architecture/undergraduate-cover-second-column-spacing.md) -
   why the undergraduate cover uses separate label widths and local offsets.
 - [Build and Release Architecture](architecture/build-release-architecture.md) -
@@ -51,6 +54,7 @@ Memory:
   - [Cover Logo Refactor (2026-05-12)](memory/reflections/2026-05-12-cover-logo-refactor.md)
   - [\njusetup l3keys Refactor (2026-05-01)](memory/reflections/2026-05-01-njusetup-l3keys-refactor.md)
 - `memory/decisions/` - durable decisions that should not be buried in guides.
+  - [Class Options Under `nju / option`](memory/decisions/2026-05-12-class-option-namespace.md)
   - [Filtered Key Groups for `\njusetup`](memory/decisions/2026-05-02-filtered-key-groups.md)
 
 Scratch investigations are kept outside stable llmdoc at `.llmdoc-tmp/`.

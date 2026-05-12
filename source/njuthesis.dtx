@@ -3972,8 +3972,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
+%% \changes{v1.5.0}{2026/05/12}{文档类选项的名空间重命名为 \opt{thu/option}。}
 %    \begin{macrocode}
-\keys_define:nn { nju }
+\keys_define:nn { nju / option }
   {
 %    \end{macrocode}
 %
@@ -4079,7 +4080,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     fontset            .choices:nn =
       { fandol, mac, macoffice, win, none }
-      { \keys_set:nn { nju } { latin-font = #1, cjk-font = #1 } },
+      { \keys_set:nn { nju / option } { latin-font = #1, cjk-font = #1 } },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4154,7 +4155,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_define_pkg_keys:nnn #1#2#3
   {
-    \keys_define:nn { nju }
+    \keys_define:nn { nju / option }
       {
         #1 .bool_gset:c = { g_@@_opt_load_ #2 _bool },
         #1   .initial:n = #3
@@ -4206,14 +4207,14 @@ To produce the documentation run the original source files ending with
 % \changes{v1.0}{2022/08/03}{新增最小化载入宏包选项。}
 % 最小化模式，不载入进行功能拓展的额外宏包。
 %    \begin{macrocode}
-\keys_define:nn { nju }
+\keys_define:nn { nju / option }
   {
     minimal .value_forbidden:n = true,
     minimal            .code:n =
       {
         \clist_map_inline:Nn \g_@@_name_optional_pkg_clist
-          { \keys_set:nn { nju } { ##1 = false } }
-        \keys_set:nn { nju } { math-font = none }
+          { \keys_set:nn { nju / option } { ##1 = false } }
+        \keys_set:nn { nju / option } { math-font = none }
       }
   }
 %    \end{macrocode}
@@ -4221,7 +4222,16 @@ To produce the documentation run the original source files ending with
 %
 % 获取输入的文档类选项。
 %    \begin{macrocode}
-\ProcessKeysOptions { nju }
+\ProcessKeysOptions { nju / option }
+%    \end{macrocode}
+%
+% \changes{v1.1}{2022/09/26}{盲审模式下不显示声明页。}
+% \changes{v1.5.0}{2026/05/12}{在吸收文档类选项后立即处理盲审模式声明页选项。}
+% 盲审模式下不显示声明页。
+% 需要在处理文档类选项后立即操作，使得传递给封面钩子的代码正确。
+%    \begin{macrocode}
+\bool_if:NT \g_@@_opt_anon_bool
+  { \keys_set:nn { nju / option } { decl-page = false } }
 %    \end{macrocode}
 %
 %
@@ -6804,7 +6814,7 @@ To produce the documentation run the original source files ending with
 % \begin{macro}{u/cover/info}
 % \changes{v1.3}{2023/05/25}{将本科生封面信息恢复至 v1.1 的宋体格式。}
 % \changes{v1.4}{2025/05/14}{本科生封面信息全部使用楷体格式。}
-% \changes{v1.5}{2027/05/12}{匹配本科生 Word 模板第二栏间距。}
+% \changes{v1.5.0}{2026/05/12}{匹配本科生 Word 模板第二栏间距。}
 % 本科生封面信息栏实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { u / cover / info }
@@ -8633,18 +8643,11 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-%    \begin{macrocode}
-\bool_if:NT \g_@@_opt_anon_bool
-  {
-%    \end{macrocode}
-% \changes{v1.1}{2022/09/26}{盲审模式下不显示声明页。}
-% 盲审模式下不显示声明页。
-%    \begin{macrocode}
-    \bool_gset_false:N \g_@@_opt_decl_bool
-%    \end{macrocode}
 % \changes{v1.4}{2024/04/15}{盲审模式下姓名使用占位符。}
 % 盲审模式下作者和导师姓名用 $\times\times\times$ 代替。
 %    \begin{macrocode}
+\bool_if:NT \g_@@_opt_anon_bool
+  {
     \keys_set:nn { nju / info }
       {
         author         = \@@_name:n { anonymous a },

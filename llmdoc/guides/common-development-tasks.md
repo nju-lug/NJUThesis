@@ -13,8 +13,11 @@ Edit class behavior:
    `source/njuthesis.dtx`.
 2. Update both user-facing documentation and implementation when changing a
    public option, command, or environment.
-3. Regenerate/install with `l3build install` before compiling tests.
-4. Compile the closest `test/test-*.tex` variant.
+3. Keep document-class options under `nju / option`. Internal forwarding among
+   class options, such as `fontset` or `minimal`, should also target
+   `nju / option`, not the public `nju` setup namespace.
+4. Regenerate/install with `l3build install` before compiling tests.
+5. Compile the closest `test/test-*.tex` variant.
 
 Edit `\njusetup` or module keys:
 

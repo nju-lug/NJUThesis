@@ -22,6 +22,11 @@ Core structure:
 - Back-cover authorization material is registered under `cover/back`; `\maketitle`
   schedules that semantic hook on `enddocument` with `\hook_use_once:n`, so the
   authorization page is not generated unless the title-page flow is used.
+- Class options are isolated under `nju / option`; see
+  `llmdoc/memory/decisions/2026-05-12-class-option-namespace.md`.
+- Some class-option effects must be normalized before thesis-type `.def` files
+  are loaded, because those files register cover/declaration hook code during
+  class loading. See `llmdoc/architecture/cover-hook-option-timing.md`.
 
 Generated targets:
 
@@ -33,15 +38,19 @@ Generated targets:
 
 Configuration flow:
 
-1. Class options are parsed under the `nju` key namespace.
+1. Class options are parsed under the `nju / option` key namespace.
 2. Optional packages are enabled or disabled, with `minimal` disabling feature
    packages and math font loading.
-3. `\njusetup` applies preamble configuration under modules such as `info`,
+3. Derived class-option effects that influence early hook registration are
+   normalized before the thesis-type `.def` file is loaded.
+4. The selected thesis-type `.def` file registers cover/declaration hook code
+   using the already-normalized class-option booleans.
+5. `\njusetup` applies preamble configuration under modules such as `info`,
    `bib`, `image`, `abstract`, `theorem`, `math`, `header`, and `footer`.
-4. Late setup hooks load bibliography options/resources, configure PDF metadata,
+6. Late setup hooks load bibliography options/resources, configure PDF metadata,
    copy logo filenames from prop list to tl variables during `cover/begin`, and
    prepare page styles.
-5. User commands/environments generate covers, abstracts, special pages,
+7. User commands/environments generate covers, abstracts, special pages,
    theorem environments, paper lists, and notation pages.
 
 Layout-sensitive subsystems:

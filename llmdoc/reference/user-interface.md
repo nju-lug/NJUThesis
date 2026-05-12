@@ -29,6 +29,12 @@ Common class options:
 - `font-path = <path>`
 - `config = <file list>`
 
+Class options are parsed under the internal `nju / option` key namespace before
+the selected thesis-type `.def` file is loaded. Options that affect cover hook
+registration, such as `anonymous` disabling `decl-page`, must take effect at
+that stage; later `\njusetup` or config-file changes cannot unregister cover
+hook code that has already been added.
+
 Main setup command:
 
 ```tex
