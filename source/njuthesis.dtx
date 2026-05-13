@@ -6948,17 +6948,18 @@ To produce the documentation run the original source files ending with
 % \subparagraph{正面} 包括校名、校徽、标题、信息栏。
 %
 % \begin{macro}{g/cover-front/top}
+% \changes{v1.5.0}{2026/05/13}{调整研究生封面顶部信息字号和间距。}
 % 研究生封面顶部信息实例。
-% 因为我们设置了全局的 |linespread=1.625|，此处单倍行距对应的倍数为 $1.3/1.2$。
+% 因为我们设置了全局的 |linespread=1.625|，此处单倍行距对应的倍数为 $1.2/1.3$。
 %    \begin{macrocode}
 %<*def-g>
 \@@_declare_element:nn { g / cover-front / top }
   {
     content     =
-      \skip_vertical:n { -9 bp } \skip_horizontal:n { -.5 cm }
+      \skip_vertical:n { -9 bp } \skip_horizontal:n { -18 pt }
       \vbox:n { \@@_g_cover_top: },
-    format      = \normalfont \@@_zihao:nn { 1.083 } { -5 },
-    bottom-skip = 20 pt,
+    format      = \normalfont \@@_zihao:nn { 0.923  } { -5 },
+    bottom-skip = 20.5 pt,
     align       = l
   }
 %    \end{macrocode}
@@ -6970,7 +6971,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { g / cover-front / emblem-img }
   {
     content     = \@@_logo_emblem:,
-    bottom-skip = .47 cm
+    bottom-skip = 14.5 pt,
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6995,18 +6996,20 @@ To produce the documentation run the original source files ending with
     format      =
       \@@_fontsize:nn { 28 bp } { 28 bp } \@@_stzhongs: \bfseries
       \@@_set_ccglue:n { .5 em },
-    bottom-skip = 20 pt plus 1 fill
+    bottom-skip = 0 pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{g/cover-front/info}
+% \changes{v1.5.0}{2026/05/13}{调整研究生封面信息表间距。}
 % 研究封面信息栏实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { g / cover-front / info }
   {
     content     = \@@_g_cover_info:,
-    bottom-skip = 20 pt plus 1 fill
+    format      = \@@_zihao:nn { 1.02 } { 3 },
+    bottom-skip = 23 pt plus 1 fill
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7017,7 +7020,8 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { g / cover-front / date }
   {
     content     = \g_@@_info_submitdate_tl,
-    bottom-skip = 2.2 cm
+    format      = \zihao { 4 },
+    bottom-skip = 102 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7028,13 +7032,13 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_g_cover_top:
   {
-    \dim_set:Nn \l_@@_tmpa_dim { 4 em }
-    \@@_get_width:NV \l_@@_tmpb_dim \g_@@_info_id_tl
-    \dim_compare:nNnT \l_@@_tmpb_dim = { 0 pt }
-      { \dim_set:Nn \l_@@_tmpb_dim { 6 em } }
+    \dim_set:Nn \l_@@_tmpa_dim  { 4  em }
+    \dim_set:Nn \l_@@_tmpb_dim  { 60 pt }
+    \tl_set:Nn \l_@@_tmpa_tl
+      { \hbox_to_wd:nn { 14.4 pt } { \l_@@_name_colon_tl \tex_hfill:D } }
     \clist_map_inline:nn { code, clc, secretlv, udc, id }
       {
-        \@@_cover_entry:NNNNn \l_@@_name_colon_tl \l_@@_tmpa_dim
+        \@@_cover_entry:NNNNn \l_@@_tmpa_tl \l_@@_tmpa_dim
           \l_@@_tmpb_dim \scan_stop: {##1}
       }
   }
@@ -7060,7 +7064,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new:Npn \@@_g_cover_info:
   {
-    \tl_set:Nn \l_@@_tmpa_tl { \skip_horizontal:n { .7 cm } }
+    \tl_set:Nn \l_@@_tmpa_tl { \skip_horizontal:n { 25 pt } }
     \@@_g_cover_info:NNNNN \l_@@_tmp_clist \l_@@_tmpa_tl
       \l_@@_clabelwd_dim \l_@@_crulewd_dim \l_@@_fmt_coverlabel_tl
   }
@@ -7075,7 +7079,7 @@ To produce the documentation run the original source files ending with
 \@@_declare_element:nn { g / cover-back / info }
   {
     content     = \@@_g_cover_back:,
-    bottom-skip = 8.1 cm
+    bottom-skip = 8.07 cm
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7091,8 +7095,9 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_cover_back_g:NNN,\@@_cover_back_g:}
+% \begin{macro}{\@@_g_cover_back:NNN,\@@_g_cover_back:}
 % 研究生封面背面信息。
+% 微调了水平和垂直位置，以和 Word 版本重合。别问我这些数字怎么来的。
 % \begin{arguments}
 %   \item 名称盒子宽度，|dim| 型变量
 %   \item 内容盒子宽度，|dim| 型变量
@@ -7101,18 +7106,27 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_g_cover_back:NNN #1#2#3
   {
-    \@@_cover_entry:NNNNn \c_empty_tl #1 #2 #3 { chairman }
+    \tl_set:Nn \l_@@_tmpa_tl { \skip_horizontal:n { 11 pt } }
+    \@@_cover_entry:NNNNn \l_@@_tmpa_tl #1 #2 #3 { chairman }
     \tex_par:D
     \@@_box_spread_name:NNn #1 #3 { reviewer }
+    \skip_horizontal:n { 11 pt }
     \@@_box_paragraph:nn {#2}
       { \@@_box_multiline:NNn \g_@@_info_reviewer_clist {#2} { 5 } }
+    \skip_vertical:n { -4 pt }
     \@@_box_spread_name:NNn #1 #3 { defend date }
-    \@@_box_center:Nn #2 { \@@_info:n { defend date } }
+    \skip_horizontal:n { 11 pt }
+    \@@_info:n { defend date }
   }
 \cs_new:Npn \@@_g_cover_back:
   {
-    \@@_g_cover_back:NNN \l_@@_clabelwdi_dim
-      \l_@@_crulewdi_dim \l_@@_fmt_coverlabel_tl
+    \mode_leave_vertical:
+    \skip_horizontal:n { -22 pt }
+    \vbox_center:n
+      {
+        \@@_g_cover_back:NNN \l_@@_clabelwdi_dim
+          \l_@@_crulewdi_dim \l_@@_fmt_coverlabel_tl
+      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7137,6 +7151,7 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{macro}
+%
 %
 % \subparagraph{英文封面} 包括标题、顶部、中部、校徽、底部。
 % \changes{v1.3}{2023/08/21}{修复英文标题超长引发的页面元素混乱。}
@@ -7771,7 +7786,7 @@ To produce the documentation run the original source files ending with
   {
     element  = { top, emblem-img, name-img, type, info, date },
     prefix   = g / cover-front /,
-    format   = \zihao { 3 } \kaishu,
+    format   = \kaishu,
     top-skip = 0 pt
   }
 %    \end{macrocode}
@@ -7785,7 +7800,7 @@ To produce the documentation run the original source files ending with
     element  = { info, sign },
     prefix   = g / cover-back /,
     format   = \zihao { 3 } \kaishu,
-    top-skip = 5.3 cm
+    top-skip = 173 pt
   }
 %    \end{macrocode}
 % \end{macro}
@@ -9047,21 +9062,21 @@ To produce the documentation run the original source files ending with
 % 封面信息栏横线的宽度。
 %    \begin{macrocode}
 %<def-u>    { c rule  wd     } { 8    cm },
-%<def-g>    { c rule  wd     } { 6.7  cm },
-%<def-g>    { c rule  wd i   } { 6.2  cm },
+%<def-g>    { c rule  wd     } { 7    cm },
+%<def-g>    { c rule  wd i   } { 246  pt },
 %<def-g>    { c type  wd     } { 239  pt },
 %    \end{macrocode}
 % 校徽图片的宽度。
 %    \begin{macrocode}
 %<def-u>    { emblem  wd     } { 68   pt },
-%<def-g>    { emblem  wd     } { 40   pt },
+%<def-g>    { emblem  wd     } { 39.8 pt },
 %<def-u>    { emblem  wd i   } { 68   pt },
 %<def-g>    { emblem  wd ii  } { 61   pt },
 %    \end{macrocode}
 % 校名图片的宽度。
 %    \begin{macrocode}
 %<def-u>    { name    wd     } { 300  pt },
-%<def-g>    { name    wd     } { 111  pt },
+%<def-g>    { name    wd     } { 109  pt },
 %<def-p>    { name    wd     } { 220  pt },
 %    \end{macrocode}
 % 下划线高度（厚度）。下划线绘制命令是通用的，因此没有作文件区分。
@@ -9073,7 +9088,7 @@ To produce the documentation run the original source files ending with
 % 下划线深度（偏移量）。
 %    \begin{macrocode}
 %<def-u>    { rule    dp i   } { -.6  ex },
-%<def-g>    { rule    dp i   } { -.7  ex },
+%<def-g>    { rule    dp i   } { -.75 ex },
     { rule    dp ii  } { -.9  ex },
     { rule    dp iii } { -1.2 ex },
 %    \end{macrocode}

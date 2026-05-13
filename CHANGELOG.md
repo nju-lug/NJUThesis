@@ -34,6 +34,7 @@
 - 使用新版 LaTeX3 键分组过滤接口，并简化 `\njusetup` 键路径处理 - [#281]
 - 移除了 `njuvisual` 宏包的依赖 - [#144]
 - 本科生封面信息表严格匹配 Word 版本 - [#310]
+- 研究生封面间距匹配 Word 版本 - [#311]
 
 ## [1.4.3] - 2025-05-21
 
@@ -744,6 +745,7 @@
 [#306]: https://github.com/nju-lug/NJUThesis/issues/306
 [#308]: https://github.com/nju-lug/NJUThesis/issues/308
 [#310]: https://github.com/nju-lug/NJUThesis/issues/310
+[#311]: https://github.com/nju-lug/NJUThesis/issues/311
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700

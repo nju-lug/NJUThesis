@@ -34,6 +34,8 @@ Architecture:
   `.def` files register hook code.
 - [Undergraduate Cover Second-Column Spacing](architecture/undergraduate-cover-second-column-spacing.md) -
   why the undergraduate cover uses separate label widths and local offsets.
+- [Graduate Cover Word Template Spacing](architecture/graduate-cover-word-template-spacing.md) -
+  why the graduate ordinary cover has local Word-template spacing constants.
 - [Build and Release Architecture](architecture/build-release-architecture.md) -
   how l3build, tests, CI, and release packages connect.
 
