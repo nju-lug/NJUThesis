@@ -5,7 +5,12 @@ The canonical source is `source/njuthesis.dtx`.
 Treat these as primary:
 
 - `source/njuthesis.dtx` - implementation, manual text, docstrip guards, class
-  code, generated definition-file sections, and documentation class.
+  code, generated definition-file sections, and documentation class. The dtx
+  preamble also includes a file-list metadata block and an install-time
+  `\Msg` block; both must list every source file (including logo PDFs:
+  `njuthesis-emblem-black.pdf`, `njuthesis-emblem-purple.pdf`,
+  `njuthesis-name-black.pdf`, `njuthesis-name-purple.pdf`). When adding or
+  renaming source files, update both blocks.
 - `build.lua` - l3build configuration for unpacking, installing, checking, and
   CTAN packaging.
 - `docs/` - public sample files and visual assets used in the user package.

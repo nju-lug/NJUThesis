@@ -54,6 +54,7 @@ Memory:
 
 - `memory/reflections/` - working reflections and update notes.
   - [Cover Logo Refactor (2026-05-12)](memory/reflections/2026-05-12-cover-logo-refactor.md)
+  - [CI Dependency Analysis and Debugging Artifacts (2026-05-14)](memory/reflections/2026-05-14-ci-deps-and-debugging.md)
   - [\njusetup l3keys Refactor (2026-05-01)](memory/reflections/2026-05-01-njusetup-l3keys-refactor.md)
 - `memory/decisions/` - durable decisions that should not be buried in guides.
   - [Class Options Under `nju / option`](memory/decisions/2026-05-12-class-option-namespace.md)

@@ -21,7 +21,7 @@ jobs:
         export PATH=/tmp/texlive/bin/x86_64-linux:$PATH
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set Version
         run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
@@ -44,7 +44,7 @@ jobs:
           cd data
           wget https://raw.githubusercontent.com/stone-zeng/tl-depend-analysis/data/data/tl-depend.json
           cd ..
-          python3 main.py --pkg "${{ env.PACKAGES }}" --exclude "njuthesis.cls"
+          python3 main.py --pkg "${{ env.PACKAGES }}"
           tlmgr update --self --all --no-auto-install
 
       - name: Install latest ctex
@@ -92,3 +92,12 @@ jobs:
             njuthesis-v*.pdf
             njuthesis-user-v*.zip
             njuthesis-ctan-v*.zip
+
+      - name: Upload test results if failed
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: test-result
+          path: |
+            build/test
+            test

@@ -34,6 +34,12 @@ Release model:
 - Release CI runs on `v*` tags.
 - It installs extra fonts and a current `ctex` from source.
 - It runs `l3build ctan` for the CTAN zip and manual PDF.
+- **Important**: `l3build ctan` internally invokes `l3build check` to run
+  regression tests before packaging. This means the release workflow's
+  dependency closure must include the full `njuthesis.cls` compile-time
+  dependencies, even though the release itself only ships unpacked and PDF
+  artifacts. The release workflow therefore shares the same dependency
+  installation as the build workflow (without excluding `njuthesis.cls`).
 - It moves `docs/` and `build/unpacked/` contents into the release staging area
   to create a user zip.
 
@@ -44,3 +50,17 @@ Dependency analysis:
 - `scripts/main.py` maps files to TeX Live packages using downloaded tlpdb data
   and a recursive dependency JSON.
 - CI passes additional package seeds for known requirements.
+- The `--exclude` flag on `scripts/main.py` omits files from the dependency
+  closure computation. The build workflow excludes `njuthesis-doc.cls` (a
+  documentation-only file); the release workflow must NOT exclude
+  `njuthesis.cls` because `l3build check` (invoked internally by `l3build
+  ctan`) needs it to compile and run regression tests. Excluding it causes a
+  hard failure with unhelpful error output.
+
+Failure diagnostics:
+
+- Both build and release workflows upload `build/test` (and
+  `build/test-testfiles` for release) as a CI artifact via
+  `actions/upload-artifact@v7` when the workflow fails (`if: failure()`).
+  This preserves compiled test logs and PDFs for debugging CI regressions
+  without requiring local reproduction.
