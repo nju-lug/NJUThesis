@@ -5,7 +5,7 @@
 
 module        = "njuthesis"
 
-checkengines  = {"xetex", "luatex"}
+checkengines  = {"xetex"}
 checkopts     = "-interaction=batchmode"
 testfiledir   = "test"
 checkfiles    = {"*.lvt"}

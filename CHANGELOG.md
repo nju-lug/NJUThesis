@@ -6,11 +6,12 @@
 
 ## [未发布]
 
+## [1.5.0] - 2026-05-14
+
 ### 新增
 
 - 成果列表显示全部作者名 - [#306]
 - 使用 LaTeX Hook 机制改写封面绘制逻辑 - [#308]
-- 新增 `l3build check` 回归测试，并在 CI 中使用 XeTeX 运行
 - 校名校徽图片改为内置 PDF 资源，不再依赖 `njuvisual` 宏包绘制
 - 新增 `image/nju-logo-color` 统一设置校名校徽颜色
 
@@ -35,6 +36,10 @@
 - 移除了 `njuvisual` 宏包的依赖 - [#144]
 - 本科生封面信息表严格匹配 Word 版本 - [#310]
 - 研究生封面间距匹配 Word 版本 - [#311]
+- 默认不生成研究生的英文封面
+
+### 杂项
+- 新增 `l3build check` 回归测试，并在 CI 中使用 XeTeX 运行
 
 ## [1.4.3] - 2025-05-21
 
@@ -415,6 +420,7 @@
 
 ### 新增
 
+- 使用 `xtemplate` 重新绘制封面 - [#46]
 - 新增符号表页面 `notation` - [#61]
 - 可选择是否隐藏特定目录条目
   - 新增选项 `style/abstract-in-toc` - [#66]
@@ -438,12 +444,7 @@
   - 使用小号楷体
   - 双面模式下奇数页右侧为节名，偶数页左侧为章名
   - 单面模式下页眉同时显示章节名，特殊页面居中显示其名称
-- 移除内部调用的宏包
-  - `url`
-
-### 优化
-
-- 使用 `xtemplate` 重新绘制封面 - [#46]
+- 移除内部调用的 `url` 宏包
 
 ### 杂项
 
@@ -636,8 +637,9 @@
 - 模板上传至 CTAN
 
 
-[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.4.3...HEAD
+[未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.5.0...HEAD
 
+[1.5.0]: https://github.com/nju-lug/NJUThesis/compare/v1.4.3...v1.5.0
 [1.4.3]: https://github.com/nju-lug/NJUThesis/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/nju-lug/NJUThesis/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/nju-lug/NJUThesis/compare/v1.4.0...v1.4.1

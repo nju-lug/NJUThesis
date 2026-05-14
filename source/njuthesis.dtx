@@ -112,7 +112,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.4.3 2025-05-21 23:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.5.0 2026-05-14 22:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -148,7 +148,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.4.3 \quad 2025-05-21}
+% \date{v1.5.0 \quad 2026-05-14}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -2029,10 +2029,18 @@ To produce the documentation run the original source files ending with
 % 生成封面。
 % \end{function}
 %
-% 本科生模板仅会生成中文封面；研究生模板会生成中英文封面。
+% 本科生模板仅会生成中文封面；研究生模板会生成中文封面。
 % 如果选择了 \opt{nl-cover}，\emph{仅仅}会生成研究生的国家图书馆封面。
 % 如果选择了 \opt{decl-page}，会在封面后生成本科生的诚信承诺书或研究生的
 % 原创性声明。在启用草稿模式后封面绘制将被禁用。
+%
+% 新版本研究生学位材料包中并不包含英文封面，我们这里默认也不生成英文封面，
+% 但可以通过以下命令调出：
+%
+% \begin{latexexample}[moretexcs={\AddToHook,\UseInstance}]
+%   \AddToHook{njuthesis/cover/body}[main]{\UseInstance{nju}{cover-g-en}}
+% \end{latexexample}
+%
 %
 % \paragraph{封面图片}
 %
@@ -7911,6 +7919,7 @@ To produce the documentation run the original source files ending with
 %<def-u>        { \UseInstance { nju } { cover-u } }
 %<def-p>        { \UseInstance { nju } { cover-p } }
 %    \end{macrocode}
+% \changes{v1.5.0}{2026/05/13}{研究生类型默认不生成英文封面。}
 % 如果在研究生模板中选择了 \opt{nlcover}，就生成用于申请学位的国家图书馆封面，
 % 反之生成普通封面。
 %    \begin{macrocode}
@@ -7925,7 +7934,6 @@ To produce the documentation run the original source files ending with
           {
             \UseInstance { nju } { cover-g-front }
             \UseInstance { nju } { cover-g-back  }
-            \UseInstance { nju } { cover-g-en    }
           }
       }
 %</def-g>

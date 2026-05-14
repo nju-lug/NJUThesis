@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.5.0 2026-05-12
+% njuthesis 参数设置文件 v1.5.0 2026-05-14
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -251,6 +251,12 @@
 
 % 在盲审模式下隐藏学校信息
 % \njusetup{anonymous-mode/no-nju}
+
+% 补上研究生的英文封面
+% \AddToHook{njuthesis/cover/body}[main]{\UseInstance{nju}{cover-g-en}}
+
+% 移除研究生封底声明页
+% \RemoveFromHook{njuthesis/cover/body}[decl-ii]
 
 % 一些灵活调整
 % \njusetname{type}{本科毕业设计}                 % 我做的是毕业设计
