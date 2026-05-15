@@ -24,6 +24,10 @@ Core structure:
   authorization page is not generated unless the title-page flow is used.
 - Class options are isolated under `nju / option`; see
   `llmdoc/memory/decisions/2026-05-12-class-option-namespace.md`.
+- New l3kernel interfaces used by the class should be wrapped for older TeX
+  Live compatibility unless the global expl3 requirement is intentionally
+  raised; see
+  `llmdoc/memory/decisions/2026-05-15-l3kernel-compatibility-wrappers.md`.
 - Some class-option effects must be normalized before thesis-type `.def` files
   are loaded, because those files register cover/declaration hook code during
   class loading. See `llmdoc/architecture/cover-hook-option-timing.md`.

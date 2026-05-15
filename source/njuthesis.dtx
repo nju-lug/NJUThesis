@@ -120,7 +120,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.5.0 2026-05-14 22:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.5.0 2026-05-15 17:00:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -156,7 +156,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.5.0 \quad 2026-05-14}
+% \date{v1.5.0 \quad 2026-05-15}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -3073,6 +3073,47 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\@@_vbox_center:n}
+% \changes{v1.5.0}{2026/05/15}{提供 \cs{vbox_center:n} 的向前兼容。}
+% \pkg{l3box} 在 2026-02-17 提供了垂直居中盒子接口。为了兼容
+% \TeX Live 2026 之前的版本，这里提供一个内部封装。
+% \begin{arguments}
+%   \item 盒子内容
+% \end{arguments}
+%    \begin{macrocode}
+\cs_if_exist:NTF \vbox_center:n
+  { \cs_new_eq:NN \@@_vbox_center:n \vbox_center:n }
+  {
+    \box_new:N \l_@@_vbox_center_box
+    \dim_new:N \l_@@_vbox_center_delta_dim
+    \cs_new_protected:Npn \@@_vbox_center:n #1
+      {
+        \vbox_set:Nn \l_@@_vbox_center_box {#1}
+        \dim_set:Nn \l_@@_vbox_center_delta_dim
+          {
+            \box_ht:N \l_@@_vbox_center_box
+            + \box_dp:N \l_@@_vbox_center_box
+          }
+        \box_set_ht:Nn \l_@@_vbox_center_box
+          {
+            (
+              \tex_ifodd:D \l_@@_vbox_center_delta_dim
+                1 sp +
+              \tex_fi:D
+              \l_@@_vbox_center_delta_dim
+            ) / 2
+          }
+        \box_set_dp:Nn \l_@@_vbox_center_box
+          {
+            \l_@@_vbox_center_delta_dim
+            - \box_ht:N \l_@@_vbox_center_box
+          }
+        \box_use_drop:N \l_@@_vbox_center_box
+      }
+  }
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\@@_box_underline:Nnn}
@@ -6879,7 +6920,7 @@ To produce the documentation run the original source files ending with
   {
     \mode_leave_vertical:
     \skip_horizontal:n { -16 pt }
-    \vbox_center:n
+    \@@_vbox_center:n
       {
         \@@_u_cover_info:NNNNN \l_@@_clabelwd_dim \l_@@_clabelwdi_dim
           \l_@@_crulewd_dim \l_@@_hsep_dim \l_@@_fmt_coverlabel_tl
@@ -7138,7 +7179,7 @@ To produce the documentation run the original source files ending with
   {
     \mode_leave_vertical:
     \skip_horizontal:n { -22 pt }
-    \vbox_center:n
+    \@@_vbox_center:n
       {
         \@@_g_cover_back:NNN \l_@@_clabelwdi_dim
           \l_@@_crulewdi_dim \l_@@_fmt_coverlabel_tl

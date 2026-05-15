@@ -57,6 +57,7 @@ Memory:
   - [CI Dependency Analysis and Debugging Artifacts (2026-05-14)](memory/reflections/2026-05-14-ci-deps-and-debugging.md)
   - [\njusetup l3keys Refactor (2026-05-01)](memory/reflections/2026-05-01-njusetup-l3keys-refactor.md)
 - `memory/decisions/` - durable decisions that should not be buried in guides.
+  - [l3kernel Compatibility Wrappers](memory/decisions/2026-05-15-l3kernel-compatibility-wrappers.md)
   - [Class Options Under `nju / option`](memory/decisions/2026-05-12-class-option-namespace.md)
   - [Filtered Key Groups for `\njusetup`](memory/decisions/2026-05-02-filtered-key-groups.md)
 
