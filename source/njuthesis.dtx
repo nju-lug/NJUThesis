@@ -473,13 +473,13 @@ To produce the documentation run the original source files ending with
 % \subsubsection{标准安装}
 % \label{subsubsec:standard-installation}
 %
-% 我们\emph{始终建议}使用宏包管理器将 \cls{njuthesis} 安装到您的 \TeX 系
-% 统。您可以通过 \TL~Manager 或者 \MiKTeX~Console 等图形化包管理器直接搜
-% 索并安装 \cls{njuthesis} （及其依赖的 \pkg{njuvisual}）最新的
-% 稳定版。同时，您也可以使用终端命令。例如，假设您使用的是 \TL，
+% 我们\emph{始终建议}使用宏包管理器将 \cls{njuthesis} 安装到您的
+% \TeX 系统。您可以通过 \TL~Manager 或者 \MiKTeX~Console
+% 等图形化包管理器直接搜索并安装 \cls{njuthesis} 最新的稳定版。
+% 同时，您也可以使用终端命令。例如，假设您使用的是 \TL，
 % 键入下述 \pkg{tlmgr} 的命令（很可能需要管理员权限）：
 % \begin{shellexample}[morekeywords={tlmgr},emph={install}]
-%   tlmgr install njuthesis njuvisual
+%   tlmgr install njuthesis
 % \end{shellexample}
 % 即可完成安装，无需额外准备 \file{.cls} 文件。
 %
@@ -2393,7 +2393,6 @@ To produce the documentation run the original source files ending with
 %   \item \pkg{circledtext} 和 \pkg{l3experimental}，用于在 \opt{footnote/circled}
 %         和 \opt{footnote/circled*} 选项下生成脚注圈码。
 %   \item \pkg{pifont}，用于在 \opt{footnote/pifont} 选项下生成脚注圈码。
-%   \item \pkg{tikz} 和 \pkg{njuvisual}，用于绘制封面的校名校徽。
 %   \item \pkg{tabularray}，用于绘制研究生的出版授权书信息表格。
 %   \item \pkg{xeCJKfntef} 或 \pkg{lua-ul}，用于在对应引擎下绘制下划线。
 % \end{itemize}
@@ -8647,7 +8646,7 @@ To produce the documentation run the original source files ending with
   }
 %    \end{macrocode}
 % \end{macro}
-
+%
 % \begin{macro}{\@@_paperlist:nn}
 %    \begin{macrocode}
 \cs_new:Npn \@@_paperlist:nn #1#2

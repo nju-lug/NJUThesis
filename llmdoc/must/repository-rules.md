@@ -7,8 +7,8 @@ Project-specific guardrails:
 - Do not edit generated class or definition files as the primary fix. Change
   `source/njuthesis.dtx` first.
 - Keep public interface changes documented in the dtx manual sections and, when
-  relevant, reflected in `docs/njuthesis-sample.tex` or
-  `docs/njuthesis-setup.def`.
+  relevant, reflected in `template/njuthesis-sample.tex` or
+  `template/njuthesis-setup.def`.
 - Preserve XeLaTeX and LuaLaTeX support unless a task explicitly narrows scope.
 - Avoid introducing pdfLaTeX assumptions; the class requires Unicode TeX
   engines.

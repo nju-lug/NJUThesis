@@ -14,7 +14,8 @@ Major directories and files:
 - `source/njuthesis.dtx` - canonical documented source and manual.
 - `source/latexmkrc` - latexmk settings for building the documentation.
 - `build.lua` - l3build configuration.
-- `docs/` - sample thesis, setup file, bibliography, and NJU visual assets.
+- `template/` - official starter thesis sample, setup file, and bibliography.
+- `examples/` - typical non-core usage examples and local-requirement recipes.
 - `test/` - smoke-test documents for engine and document-type variants.
 - `scripts/` - dependency discovery helpers used by CI.
 - `.github/workflows/build.yml` - PR and branch build workflow.

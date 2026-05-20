@@ -8,8 +8,8 @@ Task context:
 - Add `nju-logo-color` convenience key for setting both colors at once.
 - Wire internal logo command generation through the `cover / begin` hook instead
   of `\ctex_at_end_preamble:n`.
-- Move logo PDF files from `docs/` to `source/` and declare them as `binaryfiles`
-  in `build.lua`.
+- Move logo PDF files from the former sample-assets location to `source/` and
+  declare them as `binaryfiles` in `build.lua`.
 
 What changed:
 

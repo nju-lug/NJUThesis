@@ -17,7 +17,7 @@
 *.def
 *.ins
 *.sty
-!docs/njuthesis-setup.def
+!template/njuthesis-setup.def
 
 ## Zip file
 *.zip

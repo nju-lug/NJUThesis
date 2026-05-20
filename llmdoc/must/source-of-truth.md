@@ -13,7 +13,9 @@ Treat these as primary:
   renaming source files, update both blocks.
 - `build.lua` - l3build configuration for unpacking, installing, checking, and
   CTAN packaging.
-- `docs/` - public sample files and visual assets used in the user package.
+- `template/` - public starter sample files used in the user package.
+- `examples/` - typical non-core usage examples; these are references, not
+  guaranteed common template interfaces.
 - `test/` - compile fixtures for supported engines and document variants.
 - `.github/workflows/` - build and release behavior.
 - `CHANGELOG.md` - user-visible change history and unreleased notes.

@@ -15,7 +15,8 @@ Fast orientation:
 
 - Canonical implementation and manual source: `source/njuthesis.dtx`.
 - Build config: `build.lua`, run through `l3build`.
-- User sample package inputs: `docs/`.
+- User sample package inputs: `template/`.
+- Non-core usage examples: `examples/`.
 - Compile tests: `test/`.
 - CI and release automation: `.github/workflows/`.
 - Generated or secondary outputs: `build/` and most of `mythesis/`.

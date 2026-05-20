@@ -52,8 +52,9 @@ Edit feature-dependent setup keys:
 
 Edit public samples:
 
-1. Update `docs/njuthesis-sample.tex` for document structure examples.
-2. Update `docs/njuthesis-setup.def` for `\njusetup` configuration examples.
+1. Update `template/njuthesis-sample.tex` for document structure examples.
+2. Update `template/njuthesis-setup.def` for `\njusetup` configuration
+   examples.
 3. Keep sample comments aligned with current supported options and README
    guidance.
 

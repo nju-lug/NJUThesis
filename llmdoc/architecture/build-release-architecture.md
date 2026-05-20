@@ -40,8 +40,8 @@ Release model:
   dependencies, even though the release itself only ships unpacked and PDF
   artifacts. The release workflow therefore shares the same dependency
   installation as the build workflow (without excluding `njuthesis.cls`).
-- It moves `docs/` and `build/unpacked/` contents into the release staging area
-  to create a user zip.
+- It moves `template/` and `build/unpacked/` contents into the release staging
+  area to create a user zip.
 
 Dependency analysis:
 

@@ -17,11 +17,12 @@ Source:
 - `source/nju-emblem-*.pdf` - NJU emblem logo assets (black and purple).
 - `source/nju-name-*.pdf` - NJU name logo assets (black and purple).
 
-Samples and assets:
+Template and examples:
 
-- `docs/njuthesis-sample.tex` - public sample thesis.
-- `docs/njuthesis-setup.def` - public sample configuration.
-- `docs/njuthesis-sample.bib` - sample bibliography.
+- `template/njuthesis-sample.tex` - official starter thesis sample.
+- `template/njuthesis-setup.def` - official starter configuration.
+- `template/njuthesis-sample.bib` - sample bibliography.
+- `examples/` - typical non-core usage examples and local-requirement recipes.
 
 Tests:
 

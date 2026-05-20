@@ -80,7 +80,7 @@ jobs:
       - name: Zip USER package
         run: |
           ${{ env.SET_PATH }}
-          mv docs/* .
+          mv template/* .
           mv build/unpacked/* .
           zip -r njuthesis-user-$VERSION.zip *.def njuthesis-sample* njuthesis.cls nju-*.pdf LICENSE CHANGELOG.md README.md
 

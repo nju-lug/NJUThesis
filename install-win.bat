@@ -3,11 +3,11 @@
 MKDIR "mythesis"
 CD    "mythesis"
 
-COPY /Y "..\docs\njuthesis-sample.tex"            .
-COPY /Y "..\docs\njuthesis-sample.bib"            .
-COPY /Y "..\docs\njuthesis-setup.def"             .
-COPY /Y "..\docs\nju-emblem*.pdf"                 .
-COPY /Y "..\docs\nju-name*.pdf"                   .
+COPY /Y "..\template\njuthesis-sample.tex"        .
+COPY /Y "..\template\njuthesis-sample.bib"        .
+COPY /Y "..\template\njuthesis-setup.def"         .
+COPY /Y "..\source\nju-emblem*.pdf"               .
+COPY /Y "..\source\nju-name*.pdf"                 .
 COPY /Y "..\source\njuthesis.dtx"                 .
 
 xetex "njuthesis.dtx"                      > NUL
