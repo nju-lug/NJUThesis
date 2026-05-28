@@ -1,4 +1,4 @@
-% njuthesis 参数设置文件 v1.5.0 2026-05-15
+% njuthesis 参数设置文件 v1.5.1 2026-05-28
 
 % 一些提醒：
 %   1. \njusetup 内部千万不要有空行
@@ -97,17 +97,10 @@
     udc = {544.4},
     % 国际图书分类号
     %
-    secret-level = {公开},
-    % 密级
-    %
     defend-date = {2022-05-21},
     % 答辩日期
     % 格式为 yyyy-mm-dd
     % 不填就是编译当天日期
-    %
-    email = {xyz@smail.nju.edu.cn},
-    % 电子邮箱地址
-    % 只用于出版授权书
     %
     %
     % 以下用于国家图书馆封面
@@ -254,9 +247,6 @@
 
 % 补上研究生的英文封面
 % \AddToHook{njuthesis/cover/body}[main]{\UseInstance{nju}{cover-g-en}}
-
-% 移除研究生封底声明页
-% \RemoveFromHook{njuthesis/cover/body}[decl-ii]
 
 % 一些灵活调整
 % \njusetname{type}{本科毕业设计}                 % 我做的是毕业设计

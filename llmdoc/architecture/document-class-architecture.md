@@ -20,7 +20,7 @@
 - 使用 `xtemplate` 定义可复用的页面和元素实例，特别是封面和摘要页。
 - 使用 LaTeX hooks 生成封面：`cover/begin`、`cover/body`、`cover/end`、`cover/back`。
 - 校徽 logo 通过 prop→tl→`\includegraphics` 流水线在 `cover/begin` hook 中注入（参见 `cover-logo-mechanism.md`）。
-- 背面授权材料注册在 `cover/back` 下；`\maketitle` 通过 `\hook_use_once:n` 将该 hook 调度到 `enddocument`，确保只有走封面流程时才生成授权页。
+- 背面授权材料注册在 `cover/back` 下。`\maketitle` 通过 `\hook_use_once:n` 将该 hook 调度到 `enddocument`，确保只有走封面流程时才生成授权页。目前这个钩子下没有任何内容。
 
 ## 配置流时序
 
@@ -47,7 +47,7 @@
 - 本科、研究生、博士后、国家图书馆四种封面变体。
 - 本科封面信息块有局部第二列间距调整（参见 `undergraduate-cover-second-column-spacing.md`）。
 - 研究生普通封面有 Word 模板视觉匹配常量（参见 `graduate-cover-word-template-spacing.md`）。
-- 声明页与授权页。
+- 声明页：本科生诚信承诺书、研究生原创性声明（出版授权书已于 v1.5.1 移除）、博士后原创性声明与研究使用授权书。
 - 摘要页与关键词列表。
 - 页面几何、页眉页脚、front matter 与 main matter 过渡。
 - 目录/图目录/表目录格式。

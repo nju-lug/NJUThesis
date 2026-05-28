@@ -10,7 +10,7 @@
 
 - `cover/body` 接收主封面代码。
 - 当 `decl-page` 为 true 时，`cover/body` 可能同时接收 `decl-i`。
-- `cover/back` 可能接收 `decl-ii`（研究生授权页）。
+- `cover/back` 曾接收 `decl-ii`（研究生出版授权书），该页面已于 v1.5.1 移除。
 
 代码一旦添加到 hook 中，之后修改决定注册与否的布尔值不会移除该 hook 代码。因此任何影响封面/声明 hook 代码是否注册的选项，必须在 `.def` 文件加载前确定。
 

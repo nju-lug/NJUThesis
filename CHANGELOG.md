@@ -6,7 +6,16 @@
 
 ## [未发布]
 
+## [1.5.1] - 2026-05-28
+
+### 修复
+
 - 修复国家图书馆封面断行问题 - [#314]
+
+### 变动
+
+- 移除研究生的学位论文出版授权书 - [#313]
+- 移除 `email` 设置项
 
 ### 杂项
 
@@ -646,6 +655,7 @@
 
 [未发布]: https://github.com/nju-lug/NJUThesis/compare/v1.5.0...HEAD
 
+[1.5.1]: https://github.com/nju-lug/NJUThesis/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/nju-lug/NJUThesis/compare/v1.4.3...v1.5.0
 [1.4.3]: https://github.com/nju-lug/NJUThesis/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/nju-lug/NJUThesis/compare/v1.4.1...v1.4.2
@@ -755,6 +765,7 @@
 [#308]: https://github.com/nju-lug/NJUThesis/issues/308
 [#310]: https://github.com/nju-lug/NJUThesis/issues/310
 [#311]: https://github.com/nju-lug/NJUThesis/issues/311
+[#313]: https://github.com/nju-lug/NJUThesis/issues/313
 [#314]: https://github.com/nju-lug/NJUThesis/issues/314
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678

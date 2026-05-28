@@ -116,17 +116,17 @@ To produce the documentation run the original source files ending with
 %
 %<*internal>
 \fi
+% ^^A 诚耀百廿，雄创一流
+% ^^A 南京大学一百二十周年华诞邀您共襄盛举！
 %</internal>
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.5.0 2026-05-15 17:00:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.5.1 2026-05-28 21:20:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
 %<def-u>  {Undergraduate definition file for njuthesis}
-% ^^A 诚耀百廿，雄创一流
-% ^^A 南京大学一百二十周年华诞邀您共襄盛举！
 %<def-u>\ProvidesExplFile{njuthesis-undergraduate.def}
 %<def-g>  {Graduate definition file for njuthesis}
 %<def-g>\ProvidesExplFile{njuthesis-graduate.def}
@@ -156,7 +156,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.5.0 \quad 2026-05-15}
+% \date{v1.5.1 \quad 2026-05-28}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -776,16 +776,16 @@ To produce the documentation run the original source files ending with
 % 通过此项可用国家图书馆封面\emph{替换}普通封面。
 % 由于本科生院文件中并未提及相关规定，故本选项仅对于研究生有效。
 %
-% \begin{function}[updated=2022-01-06]{decl-page}
+% \begin{function}[updated=2026-05-28]{decl-page}
 %   \begin{syntax}
 %     \OPT{decl-page} = <\TFF>
 %   \end{syntax}
 % 是否需要自动生成声明页面，默认关闭。
 % \end{function}
 %
-% 通过此项，对于本科生模板可在封面后添加的诚信承诺书，对于研究生模板可在
-% 封面后添加原创性声明\footnote{其中的打勾符号依赖 \pkg{unicode-math}。}，
-% 并且在最后一页添加学位论文出版授权书。
+% 通过此项，对于本科生模板可在封面后添加诚信承诺书，
+% 对于研究生模板可在封面后添加原创性声明。
+% 因为新要求下学位论文并不会上传到知网，所以不再生成出版授权书。
 %
 % 对于需要手动插入承诺书扫描页的情况，可以在导言区载入 \pkg{pdfpages} 宏包
 % \cite{pdfpages}，并在所需位置使用该宏包提供的 \tn{includepdf} 命令。
@@ -1372,7 +1372,7 @@ To produce the documentation run the original source files ending with
 %
 % \begin{latexexample}[moretexcs={\njusetup},emph={[2]info},emph={[3]title,title*,
 %   keywords,keywords*,grade,student-id,author,author*,department,department*,
-%   major,major*,field,field*,supervisor,supervisor*,submit-date,defend-date,email}]
+%   major,major*,field,field*,supervisor,supervisor*,submit-date,defend-date}]
 %   \njusetup[info]{
 %       title        = {第一行标题\\第二行标题\\第三行标题},
 %       title*       = {My Awesome Work},
@@ -1396,8 +1396,7 @@ To produce the documentation run the original source files ending with
 %       udc          = {004.72},
 %       secret-level = {公开},
 %       chairman     = {张~教授},
-%       reviewer     = {王~教授,赵~副教授,李~助理研究员},
-%       email        = {git+nju-lug-email-3104-issue-@yaoge123.cn}
+%       reviewer     = {王~教授,赵~副教授,李~助理研究员}
 %   }
 % \end{latexexample}
 %
@@ -2393,7 +2392,6 @@ To produce the documentation run the original source files ending with
 %   \item \pkg{circledtext} 和 \pkg{l3experimental}，用于在 \opt{footnote/circled}
 %         和 \opt{footnote/circled*} 选项下生成脚注圈码。
 %   \item \pkg{pifont}，用于在 \opt{footnote/pifont} 选项下生成脚注圈码。
-%   \item \pkg{tabularray}，用于绘制研究生的出版授权书信息表格。
 %   \item \pkg{xeCJKfntef} 或 \pkg{lua-ul}，用于在对应引擎下绘制下划线。
 % \end{itemize}
 %
@@ -4560,21 +4558,14 @@ To produce the documentation run the original source files ending with
     \RequirePackage { lua-ul }
     \NewDocumentCommand \njuline { m } { \underLine {#1} \@@_null: }
   }
-%</class>
 %    \end{macrocode}
 % \end{macro}
-%
-% 使用 \pkg{tabularray} 绘制研究生的出版授权书。
-%    \begin{macrocode}
-%<def-g>\bool_if:NT \g_@@_opt_decl_bool { \RequirePackage { tabularray } }
-%    \end{macrocode}
 %
 % \subsubsection{检查宏包}
 %
 % \begin{macro}{\@@_check_pkg_version:nnn}
 % 检查宏包版本是否过时。
 %    \begin{macrocode}
-%<*class>
 \cs_new:Npn \@@_check_pkg_version:nnn #1#2#3
   {
     \@ifpackagelater {#1} {#2}
@@ -4821,14 +4812,6 @@ To produce the documentation run the original source files ending with
 % 导师联系方式。
 %    \begin{macrocode}
     supervisor-contact .tl_gset:N = \g_@@_info_supvcont_tl          ,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{info/email}
-% \changes{v0.14}{2022/01/12}{新增电邮地址设置项。}
-% 用于学位论文出版授权书的电子邮件地址。
-%    \begin{macrocode}
-    email              .tl_gset:N = \g_@@_info_email_tl             ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -7483,142 +7466,6 @@ To produce the documentation run the original source files ending with
     content  = \@@_decl_sign:,
     align    = r
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% \subparagraph{出版授权书}
-%
-% \begin{macro}{g/decl/auth/title}
-% 研究生出版授权书标题实例。
-%    \begin{macrocode}
-\@@_declare_element:nn { g / decl / auth / title }
-  {
-    content     = \l_@@_name_authdecl_tl,
-    format      = \l_@@_fmt_chapter_tl,
-    bottom-skip = \l_@@_chapterafter_dim
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{g/decl/auth/text}
-% 研究生出版授权书文本实例。
-%    \begin{macrocode}
-\@@_declare_element:nn { g / decl / auth / text }
-  {
-    content     = \l_@@_text_authdecl_tl,
-    align       = n,
-    bottom-skip = 2 cm
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{g/decl/auth/sign}
-% 研究生出版授权书签名区实例。
-%    \begin{macrocode}
-\@@_declare_element:nn { g / decl / auth / sign }
-  {
-    content     = \@@_g_decl_auth_sign:,
-    align       = r,
-    bottom-skip = 0 pt plus 1 fill
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{g/decl/auth/info}
-% 研究生出版授权书信息表格实例。
-%    \begin{macrocode}
-\@@_declare_element:nn { g / decl / auth / info }
-  {
-    content     = \@@_g_decl_auth_info:,
-    format      = \zihao { 5 } ,
-    align       = l,
-    bottom-skip = 2 cm
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{g/decl/auth/date}
-% 研究生出版授权书保密信息实例。
-%    \begin{macrocode}
-\@@_declare_element:nn { g / decl / auth / date }
-  {
-    content     = \@@_g_decl_auth_secretlv:,
-    format      = \zihao { 5 } ,
-    align       = l
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_degree_checkbox:nn}
-% \changes{v1.3}{2023/06/04}{修复研究生出版授权书的打勾机制。}
-% 信息栏的学位复选框。打勾符号对应 |U+2713|。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_degree_checkbox:nn #1#2
-  {
-    \bool_lazy_and:nnTF
-      { #1 \g_@@_opt_academic_bool }
-      { \int_compare_p:n { \g_@@_info_type_int = #2 } }
-      {
-        \makebox [ 0   pt ] [l] { \ensuremath { \mdwhtsquare } }
-        \hspace  { 0.1 em }       \ensuremath { \checkmark   }
-      }
-      { \ensuremath { \mdwhtsquare } }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_g_decl_auth_info:}
-% 信息栏内容。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_g_decl_auth_info:
-  {
-    \begin{tblr}
-      {
-        hlines, vlines, hspan=minimal,
-        cells      = { font = \normalsize },
-        colspec    = { c X[c] c X[c] c X[c] },
-        cell{1}{2} = {c=5}{m}, cell{3}{2} = {c=5}{m},
-        cell{4}{2} = {c=5}{m}, cell{5}{2} = {c=5}{m}
-      }
-      \l_@@_name_titlec_tl  & \g_@@_info_title_tl \\
-      \l_@@_name_ida_tl     & \g_@@_info_id_tl    &
-      \l_@@_name_depta_tl   & \g_@@_info_dept_tl  &
-      \l_@@_name_year_tl    &
-        \tl_range:Nnn \g_@@_info_submitdate_tl {1} {4} \\
-      \l_@@_name_degreea_tl &
-        {
-          \@@_degree_checkbox:nn {   } { 2 } 学术学位硕士 \qquad
-          \@@_degree_checkbox:nn { ! } { 2 } 专业学位硕士 \\
-          \@@_degree_checkbox:nn {   } { 3 } 学术学位博士 \qquad
-          \@@_degree_checkbox:nn { ! } { 3 } 专业学位博士
-        } \\
-      \l_@@_name_email_tl   & \g_@@_info_email_tl \\
-      \l_@@_name_supvb_tl   &
-        \clist_item:Nn \g_@@_info_supv_clist { 1 }
-        \bool_if:NT \g_@@_opt_supvii_bool
-          { \@@_quad: \clist_item:Nn \g_@@_info_supvii_clist { 1 } } \\
-    \end{tblr}
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_g_decl_auth_sign:}
-% 签名区内容。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_g_decl_auth_sign:
-  { \l_@@_name_authsign_tl \tex_par:D \l_@@_name_blankdatea_tl }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_g_decl_auth_secretlv:}
-% 保密信息内容。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_g_decl_auth_secretlv:
-  {
-    \l_@@_name_secretstatus_tl \tex_par:D
-    \ensuremath { \mdwhtsquare } \l_@@_name_secretfree_tl \tex_par:D
-    \ensuremath { \mdwhtsquare } \l_@@_name_secretdate_tl
-  }
 %</def-g>
 %    \end{macrocode}
 % \end{macro}
@@ -7631,7 +7478,7 @@ To produce the documentation run the original source files ending with
 %<*def-p>
 \@@_declare_element:nn { p / cover / name-img }
   {
-    content     = \@@_name:N \l_@@_namewd_dim,
+    content     = \@@_logo_name:,
     bottom-skip = 40 pt
   }
 %    \end{macrocode}
@@ -7711,7 +7558,7 @@ To produce the documentation run the original source files ending with
 % \subparagraph{原创性声明和出版授权书}
 %
 % \begin{macro}{p/decl/orig/title}
-% 原创性声明标题实例。^^A 这个实例与研究生的完全一样
+% 原创性声明标题实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { p / decl / orig / title }
   {
@@ -7746,7 +7593,7 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{p/decl/auth/title}
-% 出版授权书标题实例。^^A 这个实例与研究生的完全一样
+% 出版授权书标题实例。
 %    \begin{macrocode}
 \@@_declare_element:nn { p / decl / auth / title }
   {
@@ -7895,22 +7742,6 @@ To produce the documentation run the original source files ending with
     bm-text     = \l_@@_name_origdecl_tl,
     bm-name     = origdecl
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{authdecl-g}
-% 默认出版授权书实例。
-%    \begin{macrocode}
-\@@_declare_page:nn { authdecl-g }
-  {
-    element     = { title, text, sign, info, date },
-    prefix      = g / decl / auth /,
-    top-skip    = \l_@@_chapterbefore_dim,
-    bottom-skip = 0.5 cm plus 1.5 fill,
-    bm-text     = \l_@@_name_authdecl_tl,
-    bm-name     = authdecl,
-    bookmark    = toc
-  }
 %</def-g>
 %    \end{macrocode}
 % \end{macro}
@@ -7987,6 +7818,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.13}{2021/12/15}{加入本科生的诚信承诺书。}
 % \changes{v0.17}{2022/04/04}{加入研究生的学位论文出版授权书。}
 % \changes{v0.19}{2022/05/22}{跟进新版本科生诚信承诺书样式。}
+% \changes{v1.5.1}{2026/05/28}{移除研究生的学位论文出版授权书。}
 % 根据选项设置声明页钩子。
 % 位于封面后的承诺书页面，
 % 用于生成本科生的诚信承诺书或研究生的学位论文原创性声明。
@@ -8001,24 +7833,13 @@ To produce the documentation run the original source files ending with
 %<def-p>            \UseInstance { nju } { authdecl-p }
             \cleardoublepage
           }
-%    \end{macrocode}
-% 位于封底的承诺书页面。生成研究生的学位论文出版授权书。
-%    \begin{macrocode}
-%<*def-g>
-        \hook_gput_code:nnn { . / cover / back } { decl-ii }
-          {
-            \cleardoublepage
-            \UseInstance { nju } { authdecl-g }
-            \cleardoublepage
-          }
-%</def-g>
       }
   }
 %</(def-u|def-g|def-p)>
 %    \end{macrocode}
 %
 % \changes{v0.16}{2022/02/22}{不再默认载入 \pkg{njuvisual}。}
-% \changes{v1.5.0}{2026/05/11}{默认提供 \file{pdf} 校名校徽图片，不再使用 \pkg{njuvisual}。}
+% \changes{v1.5.0}{2026/05/11}{默认提供 PDF 格式的校名校徽图片，不再使用 \pkg{njuvisual}。}
 % 封面前处理。封面本身不占用页码编号。
 % 新版本将绘制校名校徽的命令预处理移到了封面前钩子里。
 %    \begin{macrocode}
@@ -8854,7 +8675,6 @@ To produce the documentation run the original source files ending with
     { anonymous a       } { \ensuremath { \times\times\times } },
     { anonymous b       } { \ensuremath { \times\times\times } },
     { anonymous c       } { \ensuremath { \times\times\times } },
-%<def-g>    { auth decl         } { 学位论文出版授权书                 },
 %<def-p>    { auth decl         } { 研究报告使用授权书                 },
 %<def-p>    { author            } { 作者                               },
 %    \end{macrocode}
@@ -8862,7 +8682,6 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 %<def-u>    { author          a } { 本科生姓名                         },
 %<def-g>    { author          a } { \g_@@_info_type_tl 生姓名        },
-%<def-g>    { auth sign         } { 作者签名：\njuline{\hspace{6em}}   },
 %<def-p>    { auth sign         } { 本人签名                           },
 %<def-p>    { auth sign       a } { 导师签名                           },
 %<def-g>    { chairman          } { 答辩委员会主席                     },
@@ -8872,25 +8691,12 @@ To produce the documentation run the original source files ending with
     { date              } { 日期                               },
 %<def-g>    { defend date       } { 论文答辩日期                       },
 %<def-g>    { degree            } { 申请学位级别                       },
-%    \end{macrocode}
-% 用于出版授权书的学位名称字样
-%    \begin{macrocode}
-%<def-g>    { degree          a } { 论文级别                           },
 %<def-p>    { dept              } { 系别                               },
-%    \end{macrocode}
-% 用于出版授权书的院系名称字样
-%    \begin{macrocode}
-%<def-g>    { dept            a } { 所在院系                           },
-%<def-g>    { email             } { 作者 Email                         },
 %<def-g>    { field             } { 研究方向                           },
 %<def-u>    { grade             } { 年级                               },
 %<def-g>    { grade             } { 级                                 },
 %<def-u|def-g>    { id                } { 学号                               },
 %<def-p>    { id                } { 工号                               },
-%    \end{macrocode}
-% 用于出版授权书的学号名称字样
-%    \begin{macrocode}
-%<def-g>    { id              a } { 研究生学号                         },
     { listoffigures     } { 插图目录                           },
     { listoftables      } { 表格目录                           },
 %<def-p>    { major             } { 学科专业                           },
@@ -8921,11 +8727,6 @@ To produce the documentation run the original source files ending with
 %<def-p>    { report            } { 博士后研究工作报告                 },
 %<def-g>    { reviewer          } { 评阅人                             },
 %<def-g>    { secret lv         } { 密级                               },
-%<def-g>    { secret status     } { 论文涉密情况：                     },
-%<def-g>    { secret free       } { 不保密                             },
-%<def-g>    { secret date       }
-%<def-g>      { 保密，保密期（ \l_@@_name_blankdatea_tl 至
-%<def-g>                       \l_@@_name_blankdatea_tl ）           },
 %<def-g>    { sign              } { （签字）                           },
 %<def-g>    { sign            a } { 研究生签名                         },
 %<def-g>    { sign            b } { 导师签名                           },
@@ -8941,10 +8742,6 @@ To produce the documentation run the original source files ending with
 % 用于摘要的导师名称字样
 %    \begin{macrocode}
 %<def-g>    { supv            a } { 指导教师（姓名、职称）             },
-%    \end{macrocode}
-% 用于出版授权书的导师名称字样
-%    \begin{macrocode}
-%<def-g>    { supv            b } { 导师姓名                           },
 %<def-g>    { supv info         }
 %<def-g>      { 指导教师姓名、职务、职称、学位、单位名称及地址         },
     { supv ii           } { 第二导师                           },
@@ -8959,12 +8756,7 @@ To produce the documentation run the original source files ending with
 % 用于国家图书馆封面的标题名称字样
 %    \begin{macrocode}
 %<def-g>    { title           b } { 学位论文                           },
-%    \end{macrocode}
-% 用于出版授权书的标题名称字样
-%    \begin{macrocode}
-%<def-g>    { title           c } { 论文题名                           },
-%<def-g>    { udc               } { U D C                              },
-%<def-g>    { year              } { 学位年度                           }
+%<def-g>    { udc               } { U D C                              }
   }
   { \@@_define_name:nn #1 }
 %    \end{macrocode}
@@ -9051,30 +8843,19 @@ To produce the documentation run the original source files ending with
 % \end{variable}
 %
 % \begin{variable}{\l_@@_text_authdecl_tl}
-% 研究生的学位论文出版授权书。
+% 博士后的研究报告使用授权书。
 %    \begin{macrocode}
-%<*(def-g|def-p)>
+%<*def-p>
 \tl_new:N  \l_@@_text_authdecl_tl
 \tl_set:Nn \l_@@_text_authdecl_tl
   {
-%<*def-g>
-    本人完全同意《中国优秀博硕士学位论文全文数据库出版章程》（以下简称“章
-    程”），愿意将本人的学位论文提交“中国学术期刊（光盘版）电子杂志社”在《
-    中国博士学位论文全文数据库》、《中国优秀硕士学位论文全文数据库》中全文
-    发表。《中国博士学位论文全文数据库》、《中国优秀硕士学位论文全文数据库
-    》可以以电子、网络及其他数字媒体形式公开出版，并同意编入《中国知识资源
-    总库》，在《中国博硕士学位论文评价数据库》中使用和在互联网上传播，同意
-    按“章程”规定享受相关权益。
-%</def-g>
-%<*def-p>
     本研究报告作者完全了解南京大学有关保留和使用该报告的规定，即：博士后在
     职期间的知识产权单位属南京大学。学校有权保留并向国家有关部门或机构送交
     研究报告的复印件和电子版，允许研究报告被查阅和借阅；学校可以公布研究报
     告的全部或部分内容，可以允许采用影印、缩印或其它复制手段保存、汇编研究
     报告。保密的研究报告在解密后适用于本授权书。
-%</def-p>
   }
-%</(def-g|def-p)>
+%</def-p>
 %    \end{macrocode}
 % \end{variable}
 %
