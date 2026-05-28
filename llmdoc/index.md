@@ -55,6 +55,7 @@ Memory:
 - `memory/reflections/` - working reflections and update notes.
   - [Cover Logo Refactor (2026-05-12)](memory/reflections/2026-05-12-cover-logo-refactor.md)
   - [CI Dependency Analysis and Debugging Artifacts (2026-05-14)](memory/reflections/2026-05-14-ci-deps-and-debugging.md)
+  - [NL Cover Title Line-Breaking Fix (2026-05-28)](memory/reflections/2026-05-28-nl-cover-linebreak-fix.md)
   - [\njusetup l3keys Refactor (2026-05-01)](memory/reflections/2026-05-01-njusetup-l3keys-refactor.md)
 - `memory/decisions/` - durable decisions that should not be buried in guides.
   - [l3kernel Compatibility Wrappers](memory/decisions/2026-05-15-l3kernel-compatibility-wrappers.md)

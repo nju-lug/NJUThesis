@@ -7377,16 +7377,13 @@ To produce the documentation run the original source files ending with
 % \end{macro}
 %
 % \begin{macro}{\@@_cover_title_nl:}
+%% \changes{v1.5.1}{2026/05/28}{修复国家图书馆封面断行问题。}
 % 国家图书馆封面标题。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_title_nl:
   {
-    \mode_leave_vertical:
-    \vbox:n
-      {
-        \dim_set:Nn \tex_hsize:D { 15 em }
-        \@@_print_ulined_title:
-      }
+    \@@_box_paragraph:nn { 15 em }
+      { \l_@@_fmt_covertitle_tl \@@_print_ulined_title: }
     \tex_par:D
     \skip_vertical:n { - 0.5 cm }
     \group_begin:

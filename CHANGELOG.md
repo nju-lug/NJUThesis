@@ -6,7 +6,13 @@
 
 ## [未发布]
 
-## [1.5.0] - 2026-05-14
+- 修复国家图书馆封面断行问题 - [#314]
+
+### 杂项
+
+- 代码仓库新增收纳定制页面的 `examples` 目录
+
+## [1.5.0] - 2026-05-15
 
 ### 新增
 
@@ -39,6 +45,7 @@
 - 默认不生成研究生的英文封面
 
 ### 杂项
+
 - 新增 `l3build check` 回归测试，并在 CI 中使用 XeTeX 运行
 
 ## [1.4.3] - 2025-05-21
@@ -748,6 +755,7 @@
 [#308]: https://github.com/nju-lug/NJUThesis/issues/308
 [#310]: https://github.com/nju-lug/NJUThesis/issues/310
 [#311]: https://github.com/nju-lug/NJUThesis/issues/311
+[#314]: https://github.com/nju-lug/NJUThesis/issues/314
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
