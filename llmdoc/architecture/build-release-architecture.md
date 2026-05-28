@@ -1,66 +1,34 @@
-# Build and Release Architecture
+# 构建与发布架构
 
-The build and release flow is centered on `l3build`.
+构建和发布流程以 `l3build` 为中心。本地通过 `build.lua` 配置解包、安装、检查和 CTAN 打包；CI 在两阶段（回归测试→文档编译）中运行，依赖闭包由 `scripts/file_parser.py` 和 `scripts/main.py` 通过 tlpdb 计算。
 
-Local build model:
+具体命令、本地检查清单和测试文件列表参见 `reference/build-and-test.md`，文件清单参见 `reference/file-map.md`。
 
-- `build.lua` sets `module = "njuthesis"`.
-- Source files live in `source/`.
-- The primary source is `njuthesis.dtx`.
-- Logo PDFs (`nju-emblem-*.pdf`, `nju-name-*.pdf`) are also source files and
-  are declared as `binaryfiles` in `build.lua` so CTAN packaging treats them
-  correctly.
-- Install files are generated `.cls`, `.def`, and the logo PDFs.
-- Typesetting the manual uses XeLaTeX.
-- Unpacking uses XeTeX.
-- Check engines are XeTeX and LuaTeX.
+## CI 流水线
 
-CI build model:
+```
+push/PR → TeX Live 安装 → l3build install → 依赖闭包安装
+       → l3build check (XeTeX 回归测试)
+       → 编译文档测试文件 (test/)
+       → 上传 build/unpacked/ 产物
+```
 
-- Build CI runs for pushes and PRs to `master`.
-- It installs TeX Live from a CTAN mirror.
-- It installs `xetex` and `l3build`, then runs `l3build install`.
-- It computes and installs dependency closure through `scripts/download.sh` and
-  `scripts/main.py`.
-- It runs `l3build check -e xetex` for log-based regression tests before the
-  document compile fixtures. The CI intentionally uses XeTeX only for this
-  regression step for now.
-- It compiles undergraduate, graduate, and national-library cover test files in
-  `test/`.
-- It uploads generated class and definition files from `build/unpacked/`.
+发布流水线（`v*` tag）额外安装字体和最新 ctex，运行 `l3build ctan` 生成 CTAN zip 和手册 PDF，并从 `template/` + `build/unpacked/` 组装用户 zip。
 
-Release model:
+## `l3build ctan` 隐藏耦合
 
-- Release CI runs on `v*` tags.
-- It installs extra fonts and a current `ctex` from source.
-- It runs `l3build ctan` for the CTAN zip and manual PDF.
-- **Important**: `l3build ctan` internally invokes `l3build check` to run
-  regression tests before packaging. This means the release workflow's
-  dependency closure must include the full `njuthesis.cls` compile-time
-  dependencies, even though the release itself only ships unpacked and PDF
-  artifacts. The release workflow therefore shares the same dependency
-  installation as the build workflow (without excluding `njuthesis.cls`).
-- It moves `template/` and `build/unpacked/` contents into the release staging
-  area to create a user zip.
+`l3build ctan` 文档记载为打包命令，但其内部会先调用 `l3build check` 运行回归测试。这意味着发布流程的依赖闭包必须包含完整的 `njuthesis.cls` 编译期依赖，即使发布本身只输出解包产物和 PDF。
 
-Dependency analysis:
+因此发布流程的 `scripts/main.py` **不得**排除 `njuthesis.cls`。（构建流程排除 `njuthesis-doc.cls` 是安全的——该文件仅用于手册排版。）
 
-- `scripts/file_parser.py` extracts class, package, font, and Lua module
-  dependencies from TeX/Lua files.
-- `scripts/main.py` maps files to TeX Live packages using downloaded tlpdb data
-  and a recursive dependency JSON.
-- CI passes additional package seeds for known requirements.
-- The `--exclude` flag on `scripts/main.py` omits files from the dependency
-  closure computation. The build workflow excludes `njuthesis-doc.cls` (a
-  documentation-only file); the release workflow must NOT exclude
-  `njuthesis.cls` because `l3build check` (invoked internally by `l3build
-  ctan`) needs it to compile and run regression tests. Excluding it causes a
-  hard failure with unhelpful error output.
+历史上曾因发布流程排除了 `njuthesis.cls`，导致 `l3build check` 因缺失依赖而静默失败，且无可检查的诊断产物。此约束是在该事故后确立的（参见 `memory/reflections/2026-05-14-ci-deps-and-debugging.md`）。
 
-Failure diagnostics:
+## 依赖分析
 
-- Both build and release workflows upload `build/test` (and
-  `build/test-testfiles` for release) as a CI artifact via
-  `actions/upload-artifact@v7` when the workflow fails (`if: failure()`).
-  This preserves compiled test logs and PDFs for debugging CI regressions
-  without requiring local reproduction.
+`scripts/file_parser.py` 从 TeX/Lua 文件中提取文档类、宏包、字体和 Lua 模块依赖。`scripts/main.py` 使用下载的 tlpdb 数据和递归依赖 JSON 将文件映射到 TeX Live 包。CI 通过 `PACKAGES` 种子变量传递额外的已知需求。
+
+`--exclude` 标志从依赖闭包计算中排除文件：构建流程排除 `njuthesis-doc.cls`，发布流程不得排除 `njuthesis.cls`。
+
+## 失败诊断
+
+构建和发布流程在 `if: failure()` 时通过 `actions/upload-artifact@v7` 上传 `build/test`（发布流程额外上传 `build/test-testfiles`），保存编译日志和 PDF 供调试 CI 回归，无需本地复现。

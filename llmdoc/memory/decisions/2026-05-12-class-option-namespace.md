@@ -1,48 +1,31 @@
-# Decision: Class Options Live Under `nju / option`
+# 决策：类选项放在 `nju / option` 下
 
-Context:
+## 背景
 
-- `\njusetup` uses the public top-level `nju` namespace for user configuration
-  modules such as `info`, `image`, `bib`, `math`, and `anonymous-mode`.
-- Document-class options are processed earlier than normal user setup and can
-  affect package loading, selected thesis-type `.def` files, and cover hook
-  registration.
-- The cover hook refactor made some option-derived decisions, especially
-  `anonymous` forcing `decl-page = false`, order-sensitive before `.def`
-  loading.
+- `\njusetup` 使用公开顶层 `nju` 命名空间，承载 `info`、`image`、`bib`、`math`、`anonymous-mode` 等用户配置模块。
+- 文档类选项处理早于普通用户设置，可能影响宏包加载、选定的论文类型 `.def` 文件和封面 hook 注册。
+- 封面 hook 重构使部分选项派生决策变为加载顺序敏感——特别是 `anonymous` 强制 `decl-page = false` 必须在 `.def` 加载前执行。
 
-Decision:
+## 决策
 
-- Define document-class option keys under the internal namespace `nju / option`.
-- Process class options with:
+- 将文档类选项键值定义在内部命名空间 `nju / option` 下。
+- 通过以下命令处理类选项：
 
 ```tex
 \ProcessKeysOptions { nju / option }
 ```
 
-- Keep the public `nju` namespace for `\njusetup` module forwarding and user
-  setup keys.
+- 保持公开 `nju` 命名空间用于 `\njusetup` 模块转发和用户设置键值。
 
-Rationale:
+## 理由
 
-- Separating class options from setup modules avoids collisions between names
-  like class option `type` and module keys such as `theorem/type`.
-- It makes the class-option phase explicit: options are parsed, derived effects
-  are normalized, then the thesis-type `.def` file is loaded.
-- It prevents later `\njusetup`-style filtering or module forwarding from being
-  confused with package-loading and hook-registration decisions that must happen
-  during class loading.
+- 分离类选项和设置模块避免了类选项 `type` 与模块键值 `theorem/type` 等命名冲突。
+- 使类选项阶段显式化：选项解析 → 派生效果归一化 → 加载论文类型 `.def` 文件。
+- 防止后续 `\njusetup` 式过滤或模块转发与必须在类加载期完成的宏包加载和 hook 注册决策混淆。
 
-Implementation notes:
+## 实现注意事项
 
-- Internal class-option forwarding must stay inside `nju / option`. For
-  example, `minimal` and `fontset` should call `\keys_set:nn { nju / option }`
-  when forwarding to other class options.
-- Do not use `\@@_keys_set:nn` for class-option normalization. That helper is
-  for the public `\njusetup` path and may filter grouped setup keys.
-- If a class option determines whether hook code is registered, normalize it
-  immediately after `\ProcessKeysOptions { nju / option }` and before loading
-  the generated thesis-type `.def` file.
-- User config files named by the `config` class option load after the selected
-  `.def` file. They should not be relied on to change class-option decisions
-  that have already controlled package loading or cover hook registration.
+- 类选项内部转发必须保持在 `nju / option` 内。例如 `minimal` 和 `fontset` 在转发到其他类选项时应调用 `\keys_set:nn { nju / option }`。
+- 类选项归一化不要使用 `\@@_keys_set:nn`。该辅助函数面向公开 `\njusetup` 路径，可能过滤分组设置键值。
+- 若类选项决定是否注册 hook 代码，在 `\ProcessKeysOptions { nju / option }` 之后且加载生成论文类型 `.def` 文件之前立即归一化。
+- `config` 类选项指定的用户配置文件在选定 `.def` 文件之后加载，不应依赖它们来更改已控制宏包加载或封面 hook 注册的类选项决策。

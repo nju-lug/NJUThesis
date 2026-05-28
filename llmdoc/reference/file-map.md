@@ -1,56 +1,61 @@
-# File Map
+# 文件地图
 
-Root files:
+## 源文件（规范来源）
 
-- `README.md` - Chinese project README and user quick start.
-- `README-CTAN.md` - CTAN-oriented English README.
-- `CHANGELOG.md` - release history and unreleased notes.
-- `LICENSE` - LPPL license.
-- `build.lua` - l3build config.
-- `install-unix.sh`, `install-win.bat` - create a local example workspace.
-- `.editorconfig`, `.gitignore`, `.vscode/settings.json` - editor/repo config.
+- `source/njuthesis.dtx` — 规范源文件和用户手册。实现代码、手册正文、docstrip guard、文档类代码、生成的 def 文件区段和文档类均在此文件。
+- `source/latexmkrc` — 文档编译的 latexmk 配置。
+- `source/nju-emblem-black.pdf`、`source/nju-emblem-purple.pdf` — NJU 校徽 logo（黑/紫）。
+- `source/nju-name-black.pdf`、`source/nju-name-purple.pdf` — NJU 校名 logo（黑/紫）。
 
-Source:
+## 构建配置
 
-- `source/njuthesis.dtx` - canonical source and manual.
-- `source/latexmkrc` - documentation build settings.
-- `source/nju-emblem-*.pdf` - NJU emblem logo assets (black and purple).
-- `source/nju-name-*.pdf` - NJU name logo assets (black and purple).
+- `build.lua` — l3build 配置：解包、安装、检查、CTAN 打包。
 
-Template and examples:
+## 模板与示例
 
-- `template/njuthesis-sample.tex` - official starter thesis sample.
-- `template/njuthesis-setup.def` - official starter configuration.
-- `template/njuthesis-sample.bib` - sample bibliography.
-- `examples/` - typical non-core usage examples and local-requirement recipes.
+- `template/njuthesis-sample.tex` — 官方空白模板。
+- `template/njuthesis-setup.def` — 官方空白配置文件。
+- `template/njuthesis-sample.bib` — 示例参考文献。
+- `examples/` — 非核心典型用法示例（定制附加页面、声明页处理等），属参考性质，非通用模板接口。
 
-Tests:
+## 测试
 
-- `test/test-xetex-undergraduate.tex` - undergraduate XeLaTeX variant.
-- `test/test-xetex-graduate.tex` - graduate XeLaTeX variant.
-- `test/test-xetex-graduate-nlcover.tex` - graduate national-library cover.
-- `test/test-luatex.tex` - LuaLaTeX variant.
-- `test/test.tex` - shared test body.
-- `test/chapters/` - test chapter content.
-- `test/*.png`, `test/test.bib` - test assets and bibliography.
+- `test/test-xetex-undergraduate.tex` — 本科 XeLaTeX 变体。
+- `test/test-xetex-graduate.tex` — 研究生 XeLaTeX 变体。
+- `test/test-xetex-graduate-nlcover.tex` — 研究生国家图书馆封面。
+- `test/test-luatex.tex` — LuaLaTeX 变体。
+- `test/test.tex` — 共享测试正文。
+- `test/chapters/` — 测试章节内容。
+- `test/*.png`、`test/test.bib` — 测试素材和参考文献。
 
-Scripts:
+## 脚本
 
-- `scripts/download.sh` - fetch and verify TeX Live package database.
-- `scripts/main.py` - compute and install dependency closure.
-- `scripts/file_parser.py` - parse TeX/Lua dependency declarations.
-- `scripts/generate-img.*`, `scripts/generate-img.tex` - image generation
-  helper assets.
+- `scripts/download.sh` — 下载并校验 TeX Live 包数据库。
+- `scripts/main.py` — 计算并安装依赖闭包。
+- `scripts/file_parser.py` — 解析 TeX/Lua 依赖声明。
+- `scripts/generate-img.*`、`scripts/generate-img.tex` — 图片生成辅助素材。
 
-GitHub:
+## CI/CD
 
-- `.github/workflows/build.yml` - build/test workflow.
-- `.github/workflows/release.yml` - tag release workflow.
-- `.github/workflows/texlive.profile` - TeX Live install profile.
-- `.github/ISSUE_TEMPLATE/` - issue forms.
-- `.github/CODE_OF_CONDUCT.md` - code of conduct.
+- `.github/workflows/build.yml` — 构建/测试流程。
+- `.github/workflows/release.yml` — tag 发布流程。
+- `.github/workflows/texlive.profile` — TeX Live 安装 profile。
+- `.github/ISSUE_TEMPLATE/` — issue 表单。
+- `.github/CODE_OF_CONDUCT.md` — 行为准则。
 
-Generated/secondary:
+## 根目录文件
 
-- `build/` - l3build output.
-- `mythesis/` - example/generated workspace and compile artifacts.
+- `README.md` — 中文项目说明和用户快速入门。
+- `README-CTAN.md` — CTAN 英文说明。
+- `CHANGELOG.md` — 发布历史和未发布变更。
+- `LICENSE` — LPPL 许可证。
+- `install-unix.sh`、`install-win.bat` — 创建本地示例工作区。
+- `.editorconfig`、`.gitignore`、`.vscode/settings.json` — 编辑器/仓库配置。
+
+## 生成/二次文件（非规范来源）
+
+以下文件由 dtx 生成或在编译过程中产生，不应作为主要编辑目标：
+
+- `build/` — l3build 输出。
+- `mythesis/njuthesis.cls`、`mythesis/*.def` — 从 dtx 生成。
+- `mythesis/*.aux`、`*.bbl`、`*.bcf`、`*.blg`、`*.fdb_latexmk`、`*.fls`、`*.log`、`*.out`、`*.run.xml`、`*.thm`、`*.toc`、`*.xdv`、`*.pdf` — 编译输出或示例工作区产物。

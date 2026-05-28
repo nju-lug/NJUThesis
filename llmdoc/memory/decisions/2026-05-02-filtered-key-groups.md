@@ -1,51 +1,30 @@
-# Decision: Filtered Key Groups for `\njusetup`
+# 决策：`\njusetup` 使用分组键值过滤
 
-Context:
+## 背景
 
-- `\njusetup` should remain a stable interface even when a feature package is
-  disabled by class option.
-- `anonymous` mode already needs grouped-key filtering.
-- `unicode-math = false` should mean njuthesis does not perform math
-  configuration, but `nju / math` keys should still exist so default setup files
-  continue to parse.
+- `\njusetup` 应在特性宏包被类选项禁用时仍保持为稳定接口。
+- `anonymous` 模式已需要分组键值过滤。
+- `unicode-math = false` 应表示 njuthesis 不执行数学配置，但 `nju / math` 键值仍应存在以便默认设置文件可继续解析。
 
-Decision:
+## 决策
 
-- Keep feature-dependent keys defined.
-- Assign l3keys groups to keys that should be ignored under a mode or feature
-  switch.
-- Maintain one global clist of group names that `\@@_keys_set:nn` should
-  exclude. The current variable name is `\g_@@_keys_excl_clist`.
-- Build that clist once after class options are processed, then define
-  `\@@_keys_set:nn` once:
-  - if the clist is empty, alias `\@@_keys_set:nn` to `\keys_set:nn`;
-  - if the clist is non-empty, define `\@@_keys_set:nn` to call
-    `\@@_keys_set_exclude_groups:nnn` with the stored clist.
+- 保留特性依赖键值的定义。
+- 为应在模式或特性开关下被忽略的键值分配 l3keys 组。
+- 维护一个全局 clist（当前变量名为 `\g_@@_keys_excl_clist`），记录 `\@@_keys_set:nn` 应排除的组名。
+- 在类选项处理后一次性构建该 clist，然后一次性定义 `\@@_keys_set:nn`：
+  - 若 clist 为空，将 `\@@_keys_set:nn` 别名为 `\keys_set:nn`；
+  - 若 clist 非空，将 `\@@_keys_set:nn` 定义为调用 `\@@_keys_set_exclude_groups:nnn` 并传入已存储的 clist。
 
-Rationale:
+## 理由
 
-- Per-call boolean checks in `\@@_keys_set:nn` are unnecessary because the
-  relevant class options are fixed before the user setup interface is defined.
-- A single clist scales better than separate nested conditionals as more
-  filtered groups are added.
-- Keeping the keys defined preserves setup-file compatibility while disabling
-  feature-specific behavior.
+- 在 `\@@_keys_set:nn` 中逐次调用做布尔检查是不必要的，因为相关类选项在用户设置接口定义之前已固定。
+- 随着更多过滤组的加入，单个 clist 比分散的嵌套条件分支更易扩展。
+- 保留键值定义在禁用特性行为的同时保持了设置文件的兼容性。
 
-Implementation notes:
+## 实现注意事项
 
-- Declare `\g_@@_keys_excl_clist` with the other early variables, but populate
-  it near `\@@_keys_set:nn` so the filtering behavior is easy to read in one
-  place.
-- Add group names with direct option-state checks:
-  `\bool_if:NT \g_@@_opt_anon_bool { \clist_gput_right:Nn ... { anonymous } }`.
-- For `unicode-math = false`, add a group such as `unicode-math`.
-- Mark affected math keys with `.groups:n = { unicode-math }`.
-- Avoid changing the clist after `\@@_keys_set:nn` has been defined. If a future
-  feature needs runtime switching, this decision should be revisited.
-- Regression tests for math option effects should assert observable TeX-level
-  behavior after `\begin{document}`, because math font loading and delayed
-  command rewrites run at the begin-document hook.
-- The current math option regression checks the `unicode-math = false` absence
-  case by recording actual symbol command meanings and the active math font
-  families. A full matrix over all supported math fonts should be a separate
-  dedicated font test.
+- `\g_@@_keys_excl_clist` 与其他早期变量一起声明，但在 `\@@_keys_set:nn` 附近填充，使过滤行为在一处即可阅读。
+- 用直接的选项状态检查添加组名：`\bool_if:NT \g_@@_opt_anon_bool { \clist_gput_right:Nn ... { anonymous } }`。
+- 对 `unicode-math = false`，添加 `unicode-math` 组，并在相关数学键值上标记 `.groups:n = { unicode-math }`。
+- 在 `\@@_keys_set:nn` 定义后不要修改 clist。若未来特性需要运行时切换，应重新审视此决策。
+- 数学选项效果的回归测试应在 `\begin{document}` 之后断言可观测的 TeX 层行为，因为数学字体加载和延迟命令重写在 begin-document hook 中执行。

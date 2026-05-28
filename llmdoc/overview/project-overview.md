@@ -1,38 +1,31 @@
-# Project Overview
+# 项目概览
 
-`njuthesis` provides a LaTeX document class for Nanjing University
-undergraduate theses, graduate dissertations, doctoral dissertations, and
-postdoctoral reports.
+`njuthesis` 是南京大学本科、硕士、博士和博士后论文的 LaTeX 文档类。
 
-The class aims to encode university formatting requirements and related
-national standards while providing a user-facing key-value interface. The
-implementation is written mostly in LaTeX3 and documented in the same dtx file
-that generates the distributable files.
+文档类以编码学校排版要求和相关国标为目标，同时提供用户层键值接口。主体实现用 LaTeX3 编写，与用户手册共存于同一个 dtx 文件中。
 
-Major directories and files:
+完整的目录和文件清单参见 `reference/file-map.md`。
 
-- `source/njuthesis.dtx` - canonical documented source and manual.
-- `source/latexmkrc` - latexmk settings for building the documentation.
-- `build.lua` - l3build configuration.
-- `template/` - official starter thesis sample, setup file, and bibliography.
-- `examples/` - typical non-core usage examples and local-requirement recipes.
-- `test/` - smoke-test documents for engine and document-type variants.
-- `scripts/` - dependency discovery helpers used by CI.
-- `.github/workflows/build.yml` - PR and branch build workflow.
-- `.github/workflows/release.yml` - tag release workflow and packaging.
-- `install-unix.sh` and `install-win.bat` - scripts to create a local example
-  workspace.
+## 用户路径
 
-Primary user path:
+1. 安装当前 TeX 发行版。
+2. 使用发布版用户 zip 或 NJU 在线 TeX 平台。
+3. 编辑 `njuthesis-sample.tex` 和 `njuthesis-setup.def`。
+4. 用 XeLaTeX 或 LuaLaTeX 编译，通常通过 `latexmk -xelatex`。
 
-1. Install a current TeX distribution.
-2. Use the release user zip or the NJU online TeX platform.
-3. Edit `njuthesis-sample.tex` and `njuthesis-setup.def`.
-4. Compile with XeLaTeX or LuaLaTeX, commonly through `latexmk -xelatex`.
+## 维护者路径
 
-Primary maintainer path:
+1. 编辑 `source/njuthesis.dtx`。
+2. 用 `l3build` 解包/安装/检查。
+3. 保持示例和测试与用户层变更对齐。
+4. 由 CI 从规范源打包生成产物。
 
-1. Edit `source/njuthesis.dtx`.
-2. Use `l3build` to unpack/install/check.
-3. Keep samples and tests aligned with user-facing changes.
-4. Let CI package generated artifacts from the canonical source.
+## 技术栈
+
+- LaTeX3（expl3）编程层
+- `ctexbook` 文档类基类
+- `l3keys` 键值接口
+- `xtemplate` 页面/元素原型系统
+- LaTeX hooks 机制
+- docstrip 文档/代码分离
+- l3build 构建/测试/发布

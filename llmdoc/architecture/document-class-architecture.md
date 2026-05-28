@@ -1,71 +1,55 @@
-# Document Class Architecture
+# 文档类架构
 
-`source/njuthesis.dtx` combines manual prose, implementation, and docstrip
-guards. Guarded regions generate the class, thesis-type definition files, and
-the documentation class.
+`source/njuthesis.dtx` 是唯一的规范源文件，包含手册正文、实现代码和 docstrip guard。Guarded 区段生成文档类（`.cls`）、论文类型定义文件（`.def`）和手册文档类（`.cls`）。
 
-Core structure:
+## 类声明与基类
 
-- The class is an expl3 class declared as `njuthesis`.
-- It loads `ctexbook` as the base class.
-- It defines class options and user settings through `l3keys`.
-- It uses `xtemplate` for reusable page and element instances, especially cover
-  and abstract pages.
-- It uses LaTeX hooks for cover generation: `cover/begin`, `cover/body`,
-  `cover/end`, and `cover/back`.
-- Cover logo images are bundled PDFs resolved through a prop-to-tl-to-command
-  pipeline wired into the `cover/begin` hook. See
-  `llmdoc/architecture/cover-logo-mechanism.md`.
-- Anonymous mode centralizes metadata filtering, declaration-page suppression,
-  and optional school-information hiding. See
-  `llmdoc/architecture/anonymous-mode-mechanism.md`.
-- Back-cover authorization material is registered under `cover/back`; `\maketitle`
-  schedules that semantic hook on `enddocument` with `\hook_use_once:n`, so the
-  authorization page is not generated unless the title-page flow is used.
-- Class options are isolated under `nju / option`; see
-  `llmdoc/memory/decisions/2026-05-12-class-option-namespace.md`.
-- New l3kernel interfaces used by the class should be wrapped for older TeX
-  Live compatibility unless the global expl3 requirement is intentionally
-  raised; see
-  `llmdoc/memory/decisions/2026-05-15-l3kernel-compatibility-wrappers.md`.
-- Some class-option effects must be normalized before thesis-type `.def` files
-  are loaded, because those files register cover/declaration hook code during
-  class loading. See `llmdoc/architecture/cover-hook-option-timing.md`.
+- 类名为 `njuthesis`，使用 expl3 语法声明。
+- 基类为 `ctexbook`，提供中文排版基础。
+- 要求 Unicode TeX 引擎（XeTeX 或 LuaTeX）。
 
-Generated targets:
+## 选项与配置系统
 
-- `njuthesis.cls` - main document class.
-- `njuthesis-undergraduate.def` - undergraduate-specific page/text constants.
-- `njuthesis-graduate.def` - graduate-specific page/text constants.
-- `njuthesis-postdoctoral.def` - postdoctoral-specific page/text constants.
-- `njuthesis-doc.cls` - documentation class for the manual.
+- 类选项通过 `l3keys` 定义在 `nju / option` 子路径下（参见 `memory/decisions/2026-05-12-class-option-namespace.md`）。
+- 用户层设置通过 `\njusetup` 命令，模块子路径如 `nju / info`、`nju / bib`、`nju / image`、`nju / abstract`、`nju / theorem`、`nju / math`。
+- 盲审模式下通过 `\g_@@_keys_excl_clist` 过滤敏感键值组（参见 `memory/decisions/2026-05-02-filtered-key-groups.md` 和 `anonymous-mode-mechanism.md`）。
+- 新 l3kernel 接口有兼容包装以支持旧 TeX Live（参见 `memory/decisions/2026-05-15-l3kernel-compatibility-wrappers.md`）。
 
-Configuration flow:
+## 页面与元素系统
 
-1. Class options are parsed under the `nju / option` key namespace.
-2. Optional packages are enabled or disabled, with `minimal` disabling feature
-   packages and math font loading.
-3. Derived class-option effects that influence early hook registration are
-   normalized before the thesis-type `.def` file is loaded.
-4. The selected thesis-type `.def` file registers cover/declaration hook code
-   using the already-normalized class-option booleans.
-5. `\njusetup` applies preamble configuration under modules such as `info`,
-   `bib`, `image`, `abstract`, `theorem`, `math`, `header`, and `footer`.
-6. Late setup hooks load bibliography options/resources, configure PDF metadata,
-   copy logo filenames from prop list to tl variables during `cover/begin`, and
-   prepare page styles.
-7. User commands/environments generate covers, abstracts, special pages,
-   theorem environments, paper lists, and notation pages.
+- 使用 `xtemplate` 定义可复用的页面和元素实例，特别是封面和摘要页。
+- 使用 LaTeX hooks 生成封面：`cover/begin`、`cover/body`、`cover/end`、`cover/back`。
+- 校徽 logo 通过 prop→tl→`\includegraphics` 流水线在 `cover/begin` hook 中注入（参见 `cover-logo-mechanism.md`）。
+- 背面授权材料注册在 `cover/back` 下；`\maketitle` 通过 `\hook_use_once:n` 将该 hook 调度到 `enddocument`，确保只有走封面流程时才生成授权页。
 
-Layout-sensitive subsystems:
+## 配置流时序
 
-- Cover pages for undergraduate, graduate, postdoctoral, and national-library
-  variants.
-- Undergraduate cover info layout has a local second-column spacing adjustment;
-  see `llmdoc/architecture/undergraduate-cover-second-column-spacing.md`.
-- Declaration and authorization pages.
-- Abstract pages and keyword lists.
-- Page geometry, headers, footers, front matter, and main matter transitions.
-- TOC/list-of-figures/list-of-tables formatting.
-- Bibliography loading and heading behavior.
-- Font selection for Latin, CJK, and math fonts.
+1. 类选项在 `nju / option` 键值命名空间下解析。
+2. 可选宏包启用或禁用（`minimal` 禁用特性包和数学字体加载）。
+3. 影响早期 hook 注册的类选项副作用在论文类型 `.def` 文件加载前归一化（参见 `cover-hook-option-timing.md`）。
+4. 选定的论文类型 `.def` 文件使用已归一化的类选项布尔值注册封面/声明 hook 代码。
+5. `\njusetup` 在导言区应用 `info`、`bib`、`image`、`abstract`、`theorem`、`math`、`header`、`footer` 等模块的配置。
+6. 延迟设置 hooks 加载参考文献选项/资源、配置 PDF 元数据、在 `cover/begin` 期间将 logo 文件名从 prop 复制到 tl 变量、准备页面样式。
+7. 用户命令/环境生成封面、摘要、特殊页面、定理环境、论文列表和符号页。
+
+## 生成目标
+
+| 文件 | 用途 |
+|------|------|
+| `njuthesis.cls` | 主文档类 |
+| `njuthesis-undergraduate.def` | 本科特定页面/文本常量 |
+| `njuthesis-graduate.def` | 研究生特定页面/文本常量 |
+| `njuthesis-postdoctoral.def` | 博士后特定页面/文本常量 |
+| `njuthesis-doc.cls` | 手册文档类 |
+
+## 版式敏感子系统
+
+- 本科、研究生、博士后、国家图书馆四种封面变体。
+- 本科封面信息块有局部第二列间距调整（参见 `undergraduate-cover-second-column-spacing.md`）。
+- 研究生普通封面有 Word 模板视觉匹配常量（参见 `graduate-cover-word-template-spacing.md`）。
+- 声明页与授权页。
+- 摘要页与关键词列表。
+- 页面几何、页眉页脚、front matter 与 main matter 过渡。
+- 目录/图目录/表目录格式。
+- 参考文献加载与标题行为。
+- 拉丁、CJK、数学字体选择。

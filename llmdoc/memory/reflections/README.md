@@ -1,7 +1,5 @@
-# Reflections
+# 反思
 
-Use this directory for llmdoc update reflections and working memory that may
-inform future documentation updates.
+此目录存放 llmdoc 更新反思和工作记忆，可供后续文档更新参考。
 
-Do not treat reflections as stable project documentation; promote durable
-content into `llmdoc/` pages when it becomes generally useful.
+反思不是稳定项目文档；当内容具有普遍参考价值时，将其提升到稳定的 `llmdoc/` 页面。

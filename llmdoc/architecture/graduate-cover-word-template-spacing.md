@@ -1,88 +1,65 @@
-# Graduate Cover Word Template Spacing
+# 研究生封面 Word 模板间距
 
-Why the graduate ordinary cover has several small spacing and offset constants
-that look arbitrary.
+为何研究生普通封面存在大量看似任意的局部间距和偏移常量。
 
-## Context
+## 背景
 
-The graduate Word template uses visually tuned line breaks and spacing rather
-than a clean, reusable layout model. The current LaTeX implementation follows
-the Word template where the visible result matters, even when the constants do
-not form an elegant typographic system.
+研究生 Word 模板使用视觉调整的换行和间距，而非清晰的、可复用的布局模型。当前 LaTeX 实现在可见结果重要的地方跟随 Word 模板，即使常量不构成优雅的排版系统。
 
-Treat these values as compatibility adjustments. They are intended to match the
-school-provided Word version, not to establish a general cover-layout API.
+将这些值视为兼容性调整。它们旨在匹配学校提供的 Word 版本，而非建立通用封面布局 API。
 
-## Scope
+## 范围
 
-The current source changes are limited to the graduate ordinary cover path in
-`source/njuthesis.dtx`:
+当前源码变更限定在 `source/njuthesis.dtx` 的研究生普通封面路径：
 
-- `g / cover-front / top`
-- `g / cover-front / emblem-img`
-- `g / cover-front / type`
-- `g / cover-front / info`
-- `g / cover-front / date`
-- `\@@_g_cover_top:`
-- `\@@_g_cover_info:`
-- `g / cover-back / info`
-- `\@@_g_cover_back:`
-- the `cover-g-front` and `cover-g-back` page instances
-- graduate cover constants such as rule widths, logo widths, and underline
-  depth
+- `g / cover-front / top`、`emblem-img`、`type`、`info`、`date`
+- `\@@_g_cover_top:`、`\@@_g_cover_info:`
+- `g / cover-back / info`、`\@@_g_cover_back:`
+- `cover-g-front` 和 `cover-g-back` 页面实例
+- 研究生封面常量：下划线宽度、logo 宽度、下划线深度
 
-Do not generalize these adjustments to undergraduate, postdoctoral, abstract,
-or national-library cover layouts without a separate visual comparison.
+不要在没有单独视觉对比的情况下将这些调整泛化到本科、博士后、摘要或国家图书馆封面布局。
 
-## Front Cover Changes
+## 前封面变更
 
-The top metadata block was moved and resized to align with the Word cover:
+顶部元数据块被移动和调整大小以对齐 Word 封面：
 
-- horizontal offset changed from `-.5 cm` to `-18 pt`
-- local line spacing for small top text changed from `1.083` to `0.923`
-- bottom skip changed from `20 pt` to `20.5 pt`
-- top-field underline width is now fixed at `60 pt`
-- the colon separator is placed in a fixed `14.4 pt` box
+- 水平偏移从 `-.5 cm` 改为 `-18 pt`
+- 顶部小字局部行距从 `1.083` 改为 `0.923`
+- 底部间距从 `20 pt` 改为 `20.5 pt`
+- 顶部字段下划线宽度固定为 `60 pt`
+- 冒号分隔符放置于固定的 `14.4 pt` 盒子中
 
-This removes the old dynamic underline width based on student-id width. The
-Word layout appears to use fixed-width fields, so the LaTeX path now follows
-that visual behavior.
+这移除了旧有的基于学号宽度的动态下划线宽度。Word 布局使用固定宽度字段，LaTeX 路径现遵循该视觉行为。
 
-Nearby front-cover elements were also tuned:
+邻近前封面元素也进行了调整：
 
-- emblem bottom skip: `.47 cm` to `14.5 pt`
-- type/title block bottom skip: `20 pt plus 1 fill` to `0 pt plus 1 fill`
-- info block local format: `\@@_zihao:nn { 1.02 } { 3 }`
-- info block bottom skip: `23 pt plus 1 fill`
-- info block left separator: `.7 cm` to `25 pt`
-- date format explicitly set to `\zihao { 4 }`
-- date bottom skip: `102 pt`
+- 校徽底部间距：`.47 cm` → `14.5 pt`
+- 类型/标题块底部间距：`20 pt plus 1 fill` → `0 pt plus 1 fill`
+- 信息块局部格式：`\@@_zihao:nn { 1.02 } { 3 }`
+- 信息块底部间距：`23 pt plus 1 fill`
+- 信息块左侧分隔符：`.7 cm` → `25 pt`
+- 日期格式显式设为 `\zihao { 4 }`
+- 日期底部间距：`102 pt`
 
-The `cover-g-front` page instance now leaves the page-level format as
-`\kaishu`. Individual elements set the sizes they need locally. This avoids one
-page-level `\zihao { 3 }` leaking into elements whose Word-matching size is
-different.
+`cover-g-front` 页面实例将页面级格式设为 `\kaishu`，各元素局部设置所需字号。这避免了页面级 `\zihao { 3 }` 泄漏到 Word 匹配字号不同的元素中。
 
-## Back Cover Changes
+## 背面变更
 
-The back-cover info block received small horizontal and vertical offsets:
+背面信息块接受了小幅水平和垂直偏移：
 
-- page top skip changed from `5.3 cm` to `173 pt`
-- info element bottom skip changed from `8.1 cm` to `8.07 cm`
-- the whole info vbox is shifted left by `22 pt`
-- entries inside the block are shifted right by `11 pt`
-- a `-4 pt` vertical skip tightens the reviewer/date transition
-- defend date content is printed directly instead of centered in the rule-width
-  box
+- 页面顶部间距从 `5.3 cm` 改为 `173 pt`
+- 信息元素底部间距从 `8.1 cm` 改为 `8.07 cm`
+- 整个信息 vbox 向左偏移 `22 pt`
+- 块内条目标签向右偏移 `11 pt`
+- `-4 pt` 垂直间距收紧评审人/日期过渡
+- 答辩日期内容直接打印，而非在下划线宽度盒中居中
 
-These are visual alignment constants. They should stay local to
-`\@@_g_cover_back:` rather than being lifted into the common cover-entry
-helpers.
+这些是视觉对齐常量，应保持在 `\@@_g_cover_back:` 内部，而非提升到通用封面条目辅助函数。
 
-## Constant Changes
+## 常量变更
 
-Graduate-specific generated `.def` constants were tuned as part of the same
-visual pass:
+同一视觉遍次调整了研究生特定的生成 `.def` 常量：
 
 ```tex
 %<def-g> { c rule wd   } { 7 cm },
@@ -92,15 +69,10 @@ visual pass:
 %<def-g> { rule dp i   } { -.75 ex },
 ```
 
-These constants are deliberately narrow. They encode the current Word-template
-match and should not be treated as canonical typographic measurements.
+这些常量有意保持狭小范围。它们编码当前的 Word 模板匹配，不应被视为规范排版度量。
 
-## Maintenance Notes
+## 维护注意事项
 
-When changing this area, compare the rendered graduate ordinary cover against
-the Word-derived target before "cleaning up" the numbers. The implementation is
-not messy because the TeX layout needs to be; it is messy because the external
-template being matched is not internally systematic.
+修改此区域时，在"清理"数字之前将渲染的研究生普通封面与 Word 目标对比。实现不是因为 TeX 排版本身需要才显得 messy，而是因为被匹配的外部模板不内部系统化。
 
-If a future official template becomes more rigorous, prefer replacing these
-local offsets with a simpler layout model at that time.
+如果未来官方模板变得更加规范，优先用更简单的布局模型替换这些局部偏移。

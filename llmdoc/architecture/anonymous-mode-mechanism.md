@@ -1,43 +1,22 @@
-# Anonymous Mode Mechanism
+# 盲审模式机制
 
-How `anonymous` and `anonymous-mode/no-nju` remove review-sensitive content.
+`anonymous` 类选项和 `anonymous-mode/no-nju` 设置键如何去除盲审敏感内容。
 
-## Class Option
+## anonymous 类选项
 
-`anonymous` is a class option. During option parsing it sets
-`\g_@@_opt_anon_bool`. If the option is active, the class adds the literal group
-name `anonymous` to `\g_@@_keys_excl_clist`; `\njusetup` then routes through the
-project wrapper around `l3keys` so grouped keys can be filtered.
+`anonymous` 是类选项。选项解析期间设置 `\g_@@_opt_anon_bool`。若选项激活，类将字面组名 `anonymous` 添加到 `\g_@@_keys_excl_clist`；`\njusetup` 通过项目包装器路由到 `l3keys`，使分组键值可被过滤。
 
-This keeps later user setup files from reintroducing fields that should remain
-hidden in blind review.
+这防止后续用户设置文件重新引入盲审中应隐藏的字段。
 
-## Declaration Pages
+## 声明页
 
-Anonymous mode always disables declaration pages, but the timing matters. The
-cover hook refactor means declaration pages are registered into hooks while the
-thesis-type `.def` file is loaded. A late boolean change would not remove hook
-code that had already been registered.
+盲审模式始终禁用声明页。由于封面 hook 重构后声明页在论文类型 `.def` 文件加载时注册到 hooks 中，必须在 `.def` 加载前清除 `decl-page`——具体时序约束和代码参见 `cover-hook-option-timing.md`。
 
-Therefore anonymous mode clears `decl-page` immediately after class options are
-processed and before the selected `.def` file is input:
+本科声明页的直接紫色校徽不会造成盲审泄露：当盲审模式清除 `decl-page` 后，声明页根本不会注册到封面 body 中。
 
-```tex
-\ProcessKeysOptions { nju / option }
+## 个人信息
 
-\bool_if:NT \g_@@_opt_anon_bool
-  { \keys_set:nn { nju / option } { decl-page = false } }
-```
-
-This means the undergraduate declaration page's direct purple emblem is not a
-blind-review leak. The page is never registered into the cover body when
-anonymous mode has cleared `decl-page`. See
-`cover-hook-option-timing.md` for the general ordering rule.
-
-## Personal Information
-
-When `anonymous` is active, the class replaces selected author and supervisor
-fields with anonymous placeholders:
+`anonymous` 激活时，类用匿名占位符替换选定的作者和导师字段：
 
 ```tex
 author        = \@@_name:n { anonymous a },
@@ -48,24 +27,21 @@ supervisor-ii = ,
 supervisor-ii* =
 ```
 
-Other metadata keys are protected through the grouped-key filtering mechanism
-described in `memory/decisions/2026-05-02-filtered-key-groups.md`.
+其他元数据键值通过 `memory/decisions/2026-05-02-filtered-key-groups.md` 中描述的分组键值过滤机制保护。
 
-## Paper List And Acknowledgement
+## 论文列表与致谢
 
-Anonymous mode redirects output commands rather than asking each call site to
-branch manually:
+盲审模式重定向输出命令，而非要求每个调用点手动分支：
 
-- `\@@_paperlist:nn` becomes `\@@_paperlist_anon:nn`.
-- `\@@_acknowledgement:n` becomes `\@@_acknowledgement_anon:n`.
-- PDF author metadata is cleared.
+- `\@@_paperlist:nn` 变为 `\@@_paperlist_anon:nn`
+- `\@@_acknowledgement:n` 变为 `\@@_acknowledgement_anon:n`
+- PDF 作者元数据被清除
 
-This keeps blind-review behavior centralized.
+这使盲审行为集中管理。
 
-## Hiding School Information
+## anonymous-mode/no-nju 隐藏学校信息
 
-`anonymous-mode/no-nju` is a setup key, not a class option. It only has an
-effect when both booleans are true:
+`anonymous-mode/no-nju` 是设置键而非类选项。仅当两个布尔值同时为 true 时生效：
 
 ```tex
 \bool_lazy_and:nnT
@@ -73,8 +49,7 @@ effect when both booleans are true:
   { ... }
 ```
 
-At end preamble, the class clears school names and school code, and suppresses
-logo helpers:
+在导言区结束时，类清除学校名称和代码，并抑制 logo 辅助命令：
 
 ```tex
 \tl_clear:N  \l_@@_name_nju_tl
@@ -84,15 +59,9 @@ logo helpers:
 \cs_gset_eq:NN \@@_logo_name:n   \use_none:n
 ```
 
-Redefining the `:n` convenience layer is enough for normal cover logo call
-sites, because `\@@_logo_emblem:` and `\@@_logo_name:` both dispatch through
-`:n`.
+重定义 `:n` 便利层足以覆盖普通封面 logo 调用点，因为 `\@@_logo_emblem:` 和 `\@@_logo_name:` 都通过 `:n` 分发。
 
-## Maintenance Notes
+## 维护注意事项
 
-- Keep anonymous filtering in the `\njusetup` wrapper path. Raw `\keys_set:nn`
-  calls bypass the group filter and should only be used where that is intended.
-- If a future page uses `\@@_logo_emblem:Nn` directly, check whether that page
-  can exist in anonymous mode. The direct base helper is not affected by
-  `anonymous-mode/no-nju`; current undergraduate declaration usage is safe
-  because anonymous mode disables declaration pages.
+- 在 `\njusetup` 包装路径中保持盲审过滤。原始 `\keys_set:nn` 调用绕过分组过滤，仅应在有意如此时使用。
+- 若未来页面直接使用 `\@@_logo_emblem:Nn`，需检查该页面是否可能在盲审模式下存在。直接基础辅助命令不受 `anonymous-mode/no-nju` 影响；当前本科声明页用法安全，因为盲审模式禁用声明页。

@@ -1,75 +1,64 @@
-# Undergraduate Cover Second-Column Spacing
+# 本科封面第二列间距
 
-Why the undergraduate cover info block has separate label widths for the first
-and second columns.
+为何本科封面信息块的第一列和第二列需要不同的标签宽度。
 
-## Context
+## 背景
 
-The undergraduate Word template does not use equal label widths for the two
-short fields on the same row. The LaTeX cover previously used one shared label
-width, which made the second-column entries visually drift from the Word
-template.
+本科 Word 模板中同行两个短字段不使用相同的标签宽度。LaTeX 封面此前对两个字段使用一个共享标签宽度，导致第二列条目与 Word 模板视觉偏移。
 
-The current implementation keeps the visual adjustment in the undergraduate
-cover path only. It is not a general cover-entry API change for graduate or
-postdoctoral covers.
+当前实现将视觉调整限制在本科封面路径内，不是面向研究生或博士后封面的通用封面条目 API 变更。
 
-## Width Constants
+## 宽度常量
 
-The generated undergraduate `.def` now has two label widths:
+生成的本科 `.def` 现包含两个标签宽度：
 
 ```tex
 %<def-u> { c label wd   } { 64 bp },
 %<def-u> { c label wd i } { 40 bp },
 ```
 
-They become:
+它们分别对应：
 
-- `\l_@@_clabelwd_dim` for the first-column label width.
-- `\l_@@_clabelwdi_dim` for the second-column label width.
+- `\l_@@_clabelwd_dim` — 第一列标签宽度。
+- `\l_@@_clabelwdi_dim` — 第二列标签宽度。
 
-Graduate already has additional label widths for its own cover/back-cover
-layout, so the naming follows the existing suffix pattern.
+研究生已有额外标签宽度用于自身的封面/背面布局，命名遵循既有后缀模式。
 
-## Entry Helpers
+## 条目辅助函数
 
-Single-field rows still use the generic cover entry helper:
+单字段行仍使用通用封面条目辅助函数：
 
 ```tex
 \@@_cover_entry:NNNn #1 #3 #5 { dept }
 ```
 
-Two-field undergraduate rows now call helpers that accept both label widths:
+本科双字段行现在调用接受两个标签宽度的辅助函数：
 
 ```tex
 \@@_cover_entry:NNNNnn #1 #2 \l_@@_tmpb_dim #5 { grade } { id }
 \@@_cover_entry_supv:NNNNn #1 #2 \l_@@_tmpb_dim #5 { supv }
 ```
 
-The signatures are:
+函数签名：
 
-- `\@@_cover_entry:NNNNnn <label-a> <label-b> <content> <format> <left> <right>`
-- `\@@_cover_entry_supv:NNNNn <label-a> <label-b> <content> <format> <field>`
+- `\@@_cover_entry:NNNNnn <标签-a> <标签-b> <内容> <格式> <左字段> <右字段>`
+- `\@@_cover_entry_supv:NNNNn <标签-a> <标签-b> <内容> <格式> <字段>`
 
-The first label width is used for the left label. The second label width is
-used for the right label (`id` and `supvtitle`).
+第一个标签宽度用于左侧标签，第二个用于右侧标签（`id` 和 `supvtitle`）。
 
-## Short Content Width
+## 短内容宽度计算
 
-The short underline width is computed from the long underline width, the
-second-column label width, and the horizontal separator:
+短下划线宽度由长下划线宽度、第二列标签宽度和水平分隔符计算：
 
 ```tex
 \dim_set:Nn \l_@@_tmpb_dim { #3 * 1/2 - #2 * 1/2 - #4 }
 ```
 
-This deliberately uses the second-column label width. The formula keeps the
-right-hand pair aligned to the Word layout while preserving the shared content
-width for both short fields in the row.
+这里有意使用第二列标签宽度。该公式保持右侧对与 Word 布局对齐，同时保留行内两个短字段的共享内容宽度。
 
-## Block Offset
+## 整块水平偏移
 
-The undergraduate cover info block also applies a small left shift:
+本科封面信息块额外施加小幅左移：
 
 ```tex
 \mode_leave_vertical:
@@ -77,18 +66,15 @@ The undergraduate cover info block also applies a small left shift:
 \vbox_center:n { ... }
 ```
 
-The `\vbox_center:n` wrapper keeps the shifted multi-line block as one vertical
-object after the horizontal offset. This adjustment belongs to the undergraduate
-cover info element and should not be lifted into common cover-entry helpers.
+`\vbox_center:n` 包装使移位后的多行整块保持为单个垂直对象。此调整属于本科封面信息元素，不应提升到通用封面条目辅助函数中。
 
-## Related Spacing Constants
+## 相关间距常量
 
-The same visual alignment pass also tuned undergraduate-specific nearby values:
+同一视觉对齐遍次还调整了本科特定的邻近值：
 
-- `u / cover / name-img` bottom skip: `31.5 pt`.
-- `u / cover / title` bottom skip: `4 pt plus 1 fill`.
-- undergraduate `rule ht i`: `.7 pt`.
-- undergraduate `rule dp i`: `-.6 ex`.
+- `u / cover / name-img` 底部间距：`31.5 pt`
+- `u / cover / title` 底部间距：`4 pt plus 1 fill`
+- 本科 `rule ht i`：`.7 pt`
+- 本科 `rule dp i`：`-.6 ex`
 
-These values are format-matching constants. Do not generalize them to graduate
-or postdoctoral cover layouts without a separate visual comparison.
+这些值是格式匹配常量。不要在没有单独视觉对比的情况下泛化到研究生或博士后封面布局。

@@ -1,50 +1,36 @@
-# Cover Hook Option Timing
+# 封面 Hook 选项时序
 
-Why some class-option effects must be resolved before the thesis-type `.def`
-file is loaded.
+为何某些类选项副作用必须在论文类型 `.def` 文件加载前完成归一化。
 
-## Background
+## 背景
 
-Before the cover hook refactor, declaration pages were effectively decided when
-the cover-generation command executed. Code later in the class could still
-change `\g_@@_opt_decl_bool` before rendering, and the old flow would observe
-that final value.
+封面 hook 重构之前，声明页实际在封面生成命令执行时才决定。类中后续代码仍可在渲染前修改 `\g_@@_opt_decl_bool`，旧流程会观察到最终值。
 
-After the hook refactor, the generated thesis-type `.def` file registers cover
-code into hooks during class loading:
+重构后，生成的论文类型 `.def` 文件在类加载期将封面代码注册到 hooks 中：
 
-- `cover/body` receives the main cover code.
-- `cover/body` may also receive `decl-i` when `decl-page` is true.
-- `cover/back` may receive `decl-ii` for the graduate authorization page.
+- `cover/body` 接收主封面代码。
+- 当 `decl-page` 为 true 时，`cover/body` 可能同时接收 `decl-i`。
+- `cover/back` 可能接收 `decl-ii`（研究生授权页）。
 
-Once code has been added to a hook, later changes to the boolean that decided
-the registration do not remove that hook code. Therefore any option that affects
-whether cover/declaration hook code is registered must be settled before the
-`.def` file is loaded.
+代码一旦添加到 hook 中，之后修改决定注册与否的布尔值不会移除该 hook 代码。因此任何影响封面/声明 hook 代码是否注册的选项，必须在 `.def` 文件加载前确定。
 
-## Current Load Order
+## 当前加载顺序
 
-The important execution order is:
+关键执行顺序为：
 
-1. Define class-option keys under `nju / option`.
-2. Run `\ProcessKeysOptions { nju / option }`.
-3. Apply derived class-option normalization that affects early decisions. The
-   current example is anonymous mode forcing `decl-page = false`.
-4. Declare the semantic cover hooks.
-5. Load the thesis-type `.def` file selected by `type`.
-6. The `.def` file performs thesis-type setup, including declaration-package
-   loading and cover hook registration based on the already-final option
-   booleans.
-7. Load user config files from the `config` class option.
+1. 在 `nju / option` 下定义类选项键值。
+2. 执行 `\ProcessKeysOptions { nju / option }`。
+3. 应用影响早期决策的派生类选项归一化。当前示例为盲审模式强制 `decl-page = false`。
+4. 声明语义封面 hooks。
+5. 加载 `type` 选定的论文类型 `.def` 文件。
+6. `.def` 文件执行论文类型设置，包括声明宏包加载和基于已最终确定的选项布尔值注册封面 hook。
+7. 从 `config` 类选项加载用户配置文件。
 
-The documented-source order in `source/njuthesis.dtx` can be misleading because
-guarded `.def` code appears near related class code, but it only executes when
-the generated `.def` file is input.
+**注意**：`source/njuthesis.dtx` 中的文档源码顺序可能误导——guarded `.def` 代码出现在相关类代码附近，但仅在生成的 `.def` 文件被加载时才执行。
 
-## Anonymous Mode And Declaration Pages
+## 盲审模式与声明页
 
-Anonymous mode disables declaration pages immediately after class options are
-processed:
+盲审模式在类选项处理完毕后立即禁用声明页：
 
 ```tex
 \ProcessKeysOptions { nju / option }
@@ -53,22 +39,12 @@ processed:
   { \keys_set:nn { nju / option } { decl-page = false } }
 ```
 
-This must happen before loading `njuthesis-undergraduate.def`,
-`njuthesis-graduate.def`, or `njuthesis-postdoctoral.def`; otherwise those
-files may already have registered declaration-page hook code.
+这必须在加载 `njuthesis-undergraduate.def`、`njuthesis-graduate.def` 或 `njuthesis-postdoctoral.def` 之前执行；否则这些文件可能已经注册了声明页 hook 代码。
 
-## Maintenance Rules
+## 维护守则
 
-- Keep hook-registration decisions out of late document-generation code unless
-  the hook body itself is intentionally meant to branch at render time.
-- Class options live under `nju / option`; see
-  `memory/decisions/2026-05-12-class-option-namespace.md` for the namespace
-  decision.
-- If a class option changes whether a hook should be registered, normalize it
-  immediately after `\ProcessKeysOptions` and before `.def` loading.
-- If a class option internally forwards to other class options, forward within
-  `nju / option`. Forwarding to the public `nju` setup namespace will miss
-  class-option keys.
-- User config files are loaded after the thesis-type `.def` file. They should
-  not be used to change class options that have already controlled package
-  loading or cover hook registration.
+- 将 hook 注册决策放在文档生成代码之外，除非 hook body 本身旨在渲染时分支。
+- 类选项放在 `nju / option` 下；命名空间决策参见 `memory/decisions/2026-05-12-class-option-namespace.md`。
+- 若类选项改变是否应注册 hook，在 `\ProcessKeysOptions` 之后且 `.def` 加载之前立即归一化。
+- 若类选项内部转发到其他类选项，在 `nju / option` 内转发。转发到公开的 `nju` 设置命名空间将无法命中类选项键值。
+- 用户配置文件在论文类型 `.def` 文件之后加载。不应使用它们来更改已控制宏包加载或封面 hook 注册的类选项。

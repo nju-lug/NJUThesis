@@ -1,7 +1,5 @@
-# Decisions
+# 决策
 
-Use this directory for durable llmdoc decisions that should be retained across
-future documentation updates.
+此目录存放应在后续文档更新中保留的持久性 llmdoc 决策。
 
-Keep entries focused on decisions and rationale, not transient investigation
-notes.
+条目聚焦于决策和理由，而非临时调查笔记。

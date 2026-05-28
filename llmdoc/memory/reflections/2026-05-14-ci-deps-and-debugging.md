@@ -1,37 +1,38 @@
-# Reflection: CI Dependency Analysis Fix and Test Debugging Upload
+# 反思：CI 依赖分析修复与测试调试产物上传
 
 ## Task
-- Remove `--exclude "njuthesis.cls"` from the release workflow dependency analysis step.
-- Add "Upload test results if failed" steps to both build and release workflows.
-- Bump `actions/checkout` (v4 to v6) and `actions/upload-artifact` (v4 to v7) in both workflows.
-- Update `njuthesis.dtx` file-list comments and install-time terminal message to include the four new logo PDFs.
+
+- 从发布流程的依赖分析步骤中移除 `--exclude "njuthesis.cls"`。
+- 在构建和发布流程中添加"测试失败时上传结果"步骤。
+- 升级 `actions/checkout`（v4→v6）和 `actions/upload-artifact`（v4→v7）。
+- 更新 `njuthesis.dtx` 文件列表注释和安装期终端消息，纳入四个新 logo PDF。
 
 ## Expected vs Actual
-- Expected: release CI would install a minimal TeX Live dependency closure (excluding njuthesis.cls dependencies), then run `l3build ctan` successfully.
-- Actual: `l3build ctan` failed because it internally runs `l3build check`, which needs to compile and execute `njuthesis.cls`. The excluded packages were not installed, so compilation failed.
-- Expected: when CI failed, there was no easy way to inspect test output.
-- Actual: the new `upload-artifact` step on `failure()` now exports `build/test` (and release's `build/test-testfiles`) as a downloadable artifact, making CI regressions debuggable without re-running locally.
+
+- Expected：发布 CI 安装最小 TeX Live 依赖闭包（排除 njuthesis.cls 的依赖），然后成功运行 `l3build ctan`。
+- Actual：`l3build ctan` 失败，因为它内部运行 `l3build check`，后者需要编译和执行 `njuthesis.cls`。被排除的包未安装，导致编译失败。
+- Expected：CI 失败时无法方便地检查测试输出。
+- Actual：新增的 `failure()` 时 `upload-artifact` 步骤现在将 `build/test`（发布流程额外上传 `build/test-testfiles`）导出为可下载产物，使 CI 回归无需本地复现即可调试。
 
 ## What Went Wrong
-- The `--exclude "njuthesis.cls"` was designed to keep the TeX Live installation lean by skipping packages only needed by `njuthesis.cls` itself (since the release only needed to unpack and package, not run the class). This assumption was valid until `l3build ctan` changed its internals to include `l3build check` as a prerequisite step. Once check ran, the missing dependencies caused a hard failure with no diagnostic artifact to inspect.
-- The build workflow already had `--exclude "njuthesis-doc.cls"` (a different file) and this was not affected; only the release workflow's `--exclude "njuthesis.cls"` was the problem.
-- The dtx file-list and install message were stale after the earlier logo refactor (2026-05-12) added four new logo PDF files to the source tree; the dtx comments still referenced the old two-file naming scheme.
+
+- `--exclude "njuthesis.cls"` 旨在通过跳过仅 `njuthesis.cls` 自身需要的包来精简 TeX Live 安装（因为发布只需解包和打包，无需运行类）。该假设在 `l3build ctan` 内部变更为将 `l3build check` 作为前置步骤之前是成立的。一旦 check 运行，缺失的依赖导致静默失败且无可检查的诊断产物。
+- 构建流程已有 `--exclude "njuthesis-doc.cls"`（不同的文件），此排除不受影响；仅发布流程的 `--exclude "njuthesis.cls"` 是问题所在。
+- dtx 文件列表和安装消息在早先的 logo 重构（2026-05-12）添加四个新 logo PDF 后已过时；dtx 注释仍引用旧的两文件命名方案。
 
 ## Root Cause
-- **Hidden coupling**: `l3build ctan` is documented as a packaging command, but its internal behavior changed to run `l3build check` (and thus compile `njuthesis.cls`) as part of the CTAN packaging process. The release workflow was treating ctan as a pure packaging step, so the dependency closure was computed without considering the check prerequisite.
-- **Lack of failure diagnostics**: No `upload-artifact` on failure was configured, so CI failures produced no downloadable test output. This made debugging entirely dependent on reproducing the failure locally.
+
+- **隐藏耦合**：`l3build ctan` 文档记载为打包命令，但其内部行为变更为将 `l3build check`（进而编译 `njuthesis.cls`）作为 CTAN 打包过程的一部分。发布流程将 ctan 视为纯打包步骤，因此依赖闭包在计算时未考虑 check 前置条件。
+- **缺少失败诊断**：未配置 `failure()` 时 `upload-artifact`，因此 CI 失败不产生可下载的测试输出。调试完全依赖本地复现。
 
 ## Missing Docs or Signals
-- `build-release-architecture.md` does not mention the `--exclude` flag that was used (and removed) in the dependency analysis call. It describes the dependency analysis mechanism at a high level but omits the CLI invocation details, so a future contributor would not know that excludes were ever in play.
-- `build-release-architecture.md` does not document the test-results upload artifact step. The artifact upload is a CI-specific debugging aid and its existence is invisible from the architecture doc.
-- The dtx file-list and install message were not listed in any checklist or signal for the logo refactor; updating the dtx metadata must be part of any task that adds or renames source files.
+
+- 当时 `build-release-architecture.md` 未提及依赖分析调用中曾使用（并已移除）的 `--exclude` 标志，也未记录测试结果上传产物步骤。
+- dtx 文件列表和安装消息未在任何清单或信号中列出；更新 dtx 元数据必须是任何添加或重命名源文件的任务的一部分。
 
 ## Promotion Candidates
-- **Stable doc**: `build-release-architecture.md` should be updated to:
-  - Explicitly state that `l3build ctan` internally runs `l3build check`, so the full `njuthesis.cls` dependency closure is required for the release workflow (not just the build workflow).
-  - Document the `--exclude` flag on `main.py` (both that the build workflow excludes `njuthesis-doc.cls` and that the release workflow must NOT exclude `njuthesis.cls`).
-  - Document the "Upload test results if failed" artifact step as a debugging aid.
-- **Stable doc**: `source-of-truth.md` or `common-development-tasks.md` should include a checklist item: when adding or renaming source files, update the file list in the dtx preamble comments and the install-time `\Msg` block.
 
-## Follow-up
-- Update `build-release-architecture.md` with the lessons above (promotion candidates). This is a separate task for the next `/llmdoc:update` cycle.
+以下内容已提升到 `reference/build-and-test.md`：
+- `l3build ctan` 内部运行 `l3build check`，因此发布流程需要完整的 `njuthesis.cls` 依赖闭包。
+- `--exclude` 标志的用法：构建流程排除 `njuthesis-doc.cls`，发布流程不得排除 `njuthesis.cls`。
+- "测试失败时上传结果"产物步骤作为调试辅助的记录。

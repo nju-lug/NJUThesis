@@ -1,44 +1,24 @@
-# Reflection: `\njusetup` l3keys Refactor
+# 反思：`\njusetup` l3keys 重构
 
-Task context:
+## Task
 
-- Replace deprecated `\keys_set_filter:nnn` usage with
-  `\keys_set_exclude_groups:nnn`, while keeping a fallback for older kernels.
-- Simplify `\njusetup` optional-argument handling so both module names and full
-  nested key paths are passed as top-level `nju` assignments.
-- Track this as related to GitHub issue `nju-lug/NJUThesis#281`.
+- 将已弃用的 `\keys_set_filter:nnn` 替换为 `\keys_set_exclude_groups:nnn`，同时保留对旧内核的回退。
+- 简化 `\njusetup` 可选参数处理，使模块名和完整嵌套键值路径都作为顶层 `nju` 赋值传递。
+- 关联 Issue #281。
 
-Important lesson:
+## Expected vs Actual
 
-- Normalizing `\njusetup[info]{...}` to `\keys_set:nn { nju } { info = {...} }`
-  is only safe if the top-level `info` module key forwards through the same
-  anonymous-aware setter. The l3keys `.meta:nn` helper expands through an
-  internal setter and would not reapply group filtering to nested keys.
-- The group-list argument to `\keys_set_exclude_groups:nnn` should receive a
-  literal group list. Passing a conditional expression as that argument does not
-  produce the intended `anonymous` group name for l3keys filtering; branch before
-  the call instead.
-- Current style preference: do not put option-state logic inside the
-  `\@@_keys_set:nn` command body. Define `\@@_keys_set:nn` once from the
-  anonymous option state: anonymous mode uses
-  `\keys_set_exclude_groups:nnn` with the literal `anonymous` group, and normal
-  mode aliases `\keys_set:nn`.
+- Expected：`\njusetup[info]{...}` 应正确归一化，盲审过滤对嵌套模块同样生效。
+- Actual：使用 `.meta:nn` 辅助函数展开会绕过分组过滤——它通过内部 setter 展开，不会对嵌套键值重新应用分组过滤。
 
-Promotion:
+## Root Cause
 
-- `llmdoc/guides/common-development-tasks.md` now calls this out for future
-  `\njusetup` or module-key edits.
-- `llmdoc/reference/user-interface.md` now documents the normalized
-  optional-argument model.
-- `llmdoc/must/build-and-test-rules.md` now records that log-checkable class
-  behavior should use focused l3build `.lvt`/`.tlg` regression tests under
-  `test/`.
-- `llmdoc/architecture/build-release-architecture.md` now records that CI runs
-  `l3build check -e xetex` before document compile fixtures.
-- `llmdoc/must/repository-rules.md` now records the language convention:
-  changelog, documented dtx prose, and commit messages use Chinese; llmdoc uses
-  English.
-- `llmdoc/memory/decisions/2026-05-02-filtered-key-groups.md` records the
-  follow-up decision to collect excluded l3keys groups in a global clist and
-  define `\@@_keys_set:nn` once from that clist. The implemented concise clist
-  name is `\g_@@_keys_excl_clist`.
+- 将 `\njusetup[info]{...}` 归一化为 `\keys_set:nn { nju } { info = {...} }` 仅当顶层 `info` 模块键值通过相同的匿名感知 setter 转发时才安全。
+- `\keys_set_exclude_groups:nnn` 的组列表参数应接收字面组名。传递条件表达式作为该参数不会为 l3keys 过滤产生预期的 `anonymous` 组名——应在调用之前完成分支。
+- 风格偏好：不将选项状态逻辑放在 `\@@_keys_set:nn` 命令体内。根据匿名选项状态一次性定义：匿名模式使用带字面 `anonymous` 组的 `\keys_set_exclude_groups:nnn`，正常模式别名为 `\keys_set:nn`。
+
+## Promotion
+
+- `guides/common-development-tasks.md` 现已记录此事，供后续 `\njusetup` 或模块键值编辑参考。
+- `reference/user-interface.md` 现已记录归一化可选参数模型。
+- `memory/decisions/2026-05-02-filtered-key-groups.md` 记录了将排除 l3keys 组收集到全局 clist 中并从该 clist 一次性定义 `\@@_keys_set:nn` 的后续决策。实现的简洁 clist 名为 `\g_@@_keys_excl_clist`。
