@@ -30,6 +30,7 @@
 - `llmdoc/memory/decisions/2026-05-02-filtered-key-groups.md` — 决策：`\njusetup` 使用 `\keys_set_exclude_groups:nnn` 过滤盲审敏感键值组，而非每个键值单独判断。
 - `llmdoc/memory/decisions/2026-05-12-class-option-namespace.md` — 决策：类选项统一放在 `nju / option` 子路径下，与用户层 `\njusetup` 的 `nju` 命名空间分离。
 - `llmdoc/memory/decisions/2026-05-15-l3kernel-compatibility-wrappers.md` — 决策：新 l3kernel 接口使用条件兼容包装，保持对旧 TeX Live 的支持（如 `\vbox_center:n`）。
+- `llmdoc/memory/decisions/2026-05-30-fontset-win-default.md` — 决策：示例模板默认 `fontset=win`，因学校提交要求对齐 Word 版本。
 - `llmdoc/memory/reflections/2026-05-01-njusetup-l3keys-refactor.md` — 反思：`\njusetup` 从 `\keys_set_known:nnN` 迁移到过滤分组机制的过程与根因。
 - `llmdoc/memory/reflections/2026-05-12-cover-logo-refactor.md` — 反思：从 `njuvisual` 过程式绘图迁移到捆绑 PDF 校徽资产、重构内部命令族、`cover/begin` hook 替代 `\ctex_at_end_preamble:n` 的过程。
 - `llmdoc/memory/reflections/2026-05-14-ci-deps-and-debugging.md` — 反思：CI 依赖分析脚本中 `--exclude` 标志导致 `l3build ctan` 静默失败的根因、失败产物上传机制的建立。

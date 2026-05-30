@@ -21,6 +21,7 @@
 ### 杂项
 
 - 代码仓库新增收纳定制页面的 `examples` 目录
+- 示例模板默认使用 Windows 字库 - [#315]
 
 ## [1.5.0] - 2026-05-15
 
@@ -768,6 +769,7 @@
 [#311]: https://github.com/nju-lug/NJUThesis/issues/311
 [#313]: https://github.com/nju-lug/NJUThesis/issues/313
 [#314]: https://github.com/nju-lug/NJUThesis/issues/314
+[#315]: https://github.com/nju-lug/NJUThesis/issues/315
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700
