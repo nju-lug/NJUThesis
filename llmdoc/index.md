@@ -35,3 +35,4 @@
 - `llmdoc/memory/reflections/2026-05-14-ci-deps-and-debugging.md` — 反思：CI 依赖分析脚本中 `--exclude` 标志导致 `l3build ctan` 静默失败的根因、失败产物上传机制的建立。
 - `llmdoc/memory/reflections/2026-05-28-nl-cover-linebreak-fix.md` — 反思：#314 国家图书馆封面标题断行修复——`\@@_cover_title_nl:` 中使用原始 `\vbox:n` 缺少 `\@parboxrestore` 导致断行错误；修复为改用已有 `\@@_box_paragraph:nn` 辅助函数，与其他封面标题路径保持一致。教训：引入共享辅助函数后应审计所有已有调用点。
 - `llmdoc/memory/reflections/2026-05-28-authdecl-removal-guards.md` — 反思：v1.5.1 删除研究生出版授权书时，多次小编辑未精确对齐 `%</def-g>` guard 边界，导致重复的 macrocode 块标记。教训：删除 guarded 代码前应先画出 guard 范围地图，优先大片替换，每次编辑后验证相邻块边界。
+- `llmdoc/memory/reflections/2026-05-30-option-usage-load.md` — 反思：为 `nju / option` 类选项标记 `.usage:n = load`，再通过 `\l_keys_usage_load_prop` 批量 undefine 用户层 `option / ...` 路径，以阻止 `\njusetup` 误设；附带修复内部 `\keys_set:nn` 转发点被阻断的问题。

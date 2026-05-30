@@ -122,7 +122,7 @@ To produce the documentation run the original source files ending with
 %
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.5.1 2026-05-28 21:20:00
+%<+!driver>\GetIdInfo $Id: njuthesis.dtx 1.5.1 2026-05-30 18:20:00
 %<+!driver>  +0800 NJU LUG <git+nju-lug-email-3104-issue-@yaoge123.cn>$
 %<class>  {Thesis template for Nanjing University}
 %<class>\ProvidesExplClass{njuthesis}
@@ -156,7 +156,7 @@ To produce the documentation run the original source files ending with
 %   \thanks{E-mail: \href{mailto:git+nju-lug-email-3104-issue-@yaoge123.cn}
 %     {git+nju-lug-email-3104-issue-@yaoge123.cn}}}
 %
-% \date{v1.5.1 \quad 2026-05-28}
+% \date{v1.5.1 \quad 2026-05-30}
 %
 % \changes{v0.1}{2021/09/04}{开始开发。}
 % \changes{v0.2}{2021/09/07}{初步搭建了可用的模板。}
@@ -2915,7 +2915,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_name_anon_clist
   {
-    author, chairman, email, student-id, reviewer,
+    author, chairman, student-id, reviewer,
     supervisor-contact, supervisor, supervisor-ii
   }
 \clist_const:Nn \c_@@_name_anon_en_clist
@@ -4009,6 +4009,7 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{模板选项}
 % \changes{v0.11}{2021/11/15}{进行了效率优化。}
+%% \changes{v1.5.1}{2026/05/30}{在 \tn{njusetup} 中禁用文档类选项。}
 %
 % \begin{macro}{\@@_pass_option_to_ctexbook:n,\@@_pass_option_to_ctexbook:V}
 % 封装 \LaTeXe{} 传参函数。注意参数顺序有变化。
@@ -4026,7 +4027,7 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-%% \changes{v1.5.0}{2026/05/12}{文档类选项的名空间重命名为 \opt{thu/option}。}
+%% \changes{v1.5.0}{2026/05/12}{文档类选项的名空间重命名为 \opt{nju/option}。}
 %    \begin{macrocode}
 \keys_define:nn { nju / option }
   {
@@ -4039,6 +4040,7 @@ To produce the documentation run the original source files ending with
     type               .choices:nn = { bachelor, master, doctor, postdoc }
       { \int_gset_eq:NN \g_@@_info_type_int \l_keys_choice_int },
     type               .initial:n  = bachelor,
+    type                 .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4052,6 +4054,7 @@ To produce the documentation run the original source files ending with
     degree / professional .code:n  =
       { \bool_gset_false:N \g_@@_opt_academic_bool },
     degree             .initial:n  = academic,
+    degree               .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4061,6 +4064,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     nl-cover         .bool_gset:N  = \g_@@_opt_nlcover_bool,
     nl-cover           .initial:n  = false,
+    nl-cover             .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4073,6 +4077,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
     decl-page        .bool_gset:N  = \g_@@_opt_decl_bool,
     decl-page          .initial:n  = false,
+    decl-page            .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4087,6 +4092,7 @@ To produce the documentation run the original source files ending with
         \bool_gset_true:N \g_@@_opt_draft_bool
         \@@_pass_option_to_ctexbook:
       },
+    draft                 .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4098,6 +4104,8 @@ To produce the documentation run the original source files ending with
     twoside    .value_forbidden:n  = true,
     oneside               .code:n  = { \@@_pass_option_to_ctexbook: },
     twoside               .code:n  = { \@@_pass_option_to_ctexbook: },
+    oneside              .usage:n  = load,
+    twoside              .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4111,6 +4119,7 @@ To produce the documentation run the original source files ending with
     anonymous  .value_forbidden:n  = true,
     anonymous        .bool_gset:N  = \g_@@_opt_anon_bool,
     anonymous          .initial:n  = false,
+    anonymous            .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -4122,9 +4131,11 @@ To produce the documentation run the original source files ending with
     latin-font         .choices:nn =
       { fandol, gyre, mac, macoffice, win, none }
       { \tl_gset:Nn \g_@@_font_latin_tl {#1} },
+    latin-font           .usage:n  = load,
     cjk-font           .choices:nn =
       { fandol, founder, mac, macoffice, noto, source, win, none }
       { \tl_gset:Nn \g_@@_font_cjk_tl   {#1} },
+    cjk-font             .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4135,6 +4146,7 @@ To produce the documentation run the original source files ending with
     fontset            .choices:nn =
       { fandol, mac, macoffice, win, none }
       { \keys_set:nn { nju / option } { latin-font = #1, cjk-font = #1 } },
+    fontset              .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4148,8 +4160,9 @@ To produce the documentation run the original source files ending with
         asana, cambria, fira, garamond, lm, libertinus, newcm,
         stix, bonum, dejavu, pagella, schola, termes, xits, none
       }
-      { \tl_gset_eq:NN \g_@@_font_math_tl  \l_keys_choice_tl },
+      { \tl_gset:Nn \g_@@_font_math_tl {#1} },
     math-font          .initial:n  = xits,
+    math-font            .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4161,6 +4174,7 @@ To produce the documentation run the original source files ending with
         \bool_gset_true:N \g_@@_font_path_bool
         \tl_gset_eq:NN \g_@@_font_path_tl \l_keys_value_tl
       },
+    font-path            .usage:n  = load,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4168,7 +4182,8 @@ To produce the documentation run the original source files ending with
 % \changes{v0.16}{2022/02/23}{新增 \opt{config} 选项。}
 % 配置文件路径。
 %    \begin{macrocode}
-    config          .clist_gset:N  = \g_@@_config_clist
+    config          .clist_gset:N  = \g_@@_config_clist,
+    config               .usage:n  = load
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4212,7 +4227,8 @@ To produce the documentation run the original source files ending with
     \keys_define:nn { nju / option }
       {
         #1 .bool_gset:c = { g_@@_opt_load_ #2 _bool },
-        #1   .initial:n = #3
+        #1   .initial:n = #3,
+        #1     .usage:n = load
       }
     \cs_new_protected:cpn { @@_loadpkg_ #2 : }
       {
@@ -4288,6 +4304,19 @@ To produce the documentation run the original source files ending with
   { \keys_set:nn { nju / option } { decl-page = false } }
 %    \end{macrocode}
 %
+% \begin{macro}{\@@_disable_load_options:}
+% 文档类选项在载入阶段吸收后，从用户层键路径移除，避免在 \tn{njusetup} 中误用。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_disable_load_options:
+  {
+    \prop_get:NnN \l_keys_usage_load_prop { nju / option } \l_@@_tmp_clist
+    \clist_map_inline:Nn \l_@@_tmp_clist
+      { \keys_define:nn { nju } { ##1 .undefine: } }
+  }
+\@@_disable_load_options:
+%    \end{macrocode}
+% \end{macro}
+%
 %
 % \subsection{用户接口}
 %
@@ -4348,6 +4377,7 @@ To produce the documentation run the original source files ending with
 % \changes{v0.6}{2021/09/10}{改用键值对输入信息。}
 % \changes{v1.0}{2022/08/01}{增加输入键路径的可选参数。}
 % \changes{v1.5.0}{2026/05/01}{统一 \tn{njusetup} 可选参数的键路径处理。}
+% \changes{v1.5.1}{2026/05/30}{阻止通过 \tn{njusetup} 设置文档类选项。}
 % 定义设置接口。
 % \begin{arguments}
 %   \item 可选的键路径

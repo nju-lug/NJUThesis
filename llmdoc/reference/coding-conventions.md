@@ -34,7 +34,7 @@
 
 - 用户层键值放在 `nju` 命名空间下，模块子路径如 `nju / info`、`nju / bib`、`nju / image`、`nju / abstract`、`nju / theorem`、`nju / math`。
 - 文档类选项放在 `nju / option` 子路径下（参见 `memory/decisions/2026-05-12-class-option-namespace.md`）。
-- 类选项之间的内部转发（如 `fontset`、`minimal`）也应在 `nju / option` 内进行，而非转发到公开的 `nju` 设置命名空间。
+- 类选项 handler 内部跨选项设置（如 `fontset`、`minimal`）优先直接操作内部变量；类选项吸收完成后的派生归一化仍可在批量 undefine 用户层路径之前使用 `\keys_set:nn { nju / option }`。
 
 ## 引擎兼容
 

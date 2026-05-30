@@ -1,0 +1,60 @@
+\input regression-test.tex
+\documentclass[type=master, math-font=none]{njuthesis}
+
+\ExplSyntaxOn
+\cs_new_protected:Npn \__nju_test_int_eq:Nn #1#2
+  {
+    \int_compare:nNnTF {#1} = {#2}
+      { \TYPE { PASSED } }
+      { \TYPE { FAILED } }
+  }
+\cs_new_protected:Npn \__nju_test_tl_eq:Nn #1#2
+  {
+    \tl_if_eq:NnTF #1 {#2}
+      { \TYPE { PASSED } }
+      { \TYPE { FAILED } }
+  }
+\cs_new_protected:Npn \__nju_test_bool_true:N #1
+  { \bool_if:NTF #1 { \TYPE { PASSED } } { \TYPE { FAILED } } }
+
+\START
+
+\TEST { class~option~sets~type~correctly }
+  {
+    \__nju_test_int_eq:Nn \g__nju_info_type_int { 2 }
+  }
+
+\TEST { class~option~sets~math-font~correctly }
+  {
+    \__nju_test_tl_eq:Nn \g__nju_font_math_tl { none }
+  }
+
+\TEST { njusetup~cannot~change~static~class~options }
+  {
+    \msg_redirect_name:nnn { keys } { unknown } { none }
+    \njusetup { option / type = bachelor }
+    \__nju_test_int_eq:Nn \g__nju_info_type_int { 2 }
+  }
+
+\TEST { njusetup~cannot~change~generated~class~options }
+  {
+    \msg_redirect_name:nnn { keys } { unknown } { none }
+    \njusetup { option / biblatex = false }
+    \__nju_test_bool_true:N \g__nju_opt_load_blx_bool
+  }
+
+\TEST { njusetup~optional~path~cannot~change~class~options }
+  {
+    \msg_redirect_name:nnn { keys } { unknown } { none }
+    \njusetup[option/type] { bachelor }
+    \__nju_test_int_eq:Nn \g__nju_info_type_int { 2 }
+  }
+
+\TEST { njusetup~optional~module~cannot~change~class~options }
+  {
+    \msg_redirect_name:nnn { keys } { unknown } { none }
+    \njusetup[option] { biblatex = false }
+    \__nju_test_bool_true:N \g__nju_opt_load_blx_bool
+  }
+
+\END

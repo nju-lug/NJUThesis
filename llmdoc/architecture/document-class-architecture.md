@@ -10,7 +10,7 @@
 
 ## 选项与配置系统
 
-- 类选项通过 `l3keys` 定义在 `nju / option` 子路径下（参见 `memory/decisions/2026-05-12-class-option-namespace.md`）。
+- 类选项通过 `l3keys` 定义在 `nju / option` 子路径下，并统一标记 `.usage:n = load` 以记录 load-only usage 元数据；类选项吸收后，通过 `\l_keys_usage_load_prop` 批量 undefine 用户层 `nju` 路径下的 load-only key，避免 `\njusetup` 误设类选项（参见 `memory/decisions/2026-05-12-class-option-namespace.md`）。
 - 用户层设置通过 `\njusetup` 命令，模块子路径如 `nju / info`、`nju / bib`、`nju / image`、`nju / abstract`、`nju / theorem`、`nju / math`。
 - 盲审模式下通过 `\g_@@_keys_excl_clist` 过滤敏感键值组（参见 `memory/decisions/2026-05-02-filtered-key-groups.md` 和 `anonymous-mode-mechanism.md`）。
 - 新 l3kernel 接口有兼容包装以支持旧 TeX Live（参见 `memory/decisions/2026-05-15-l3kernel-compatibility-wrappers.md`）。
@@ -24,7 +24,7 @@
 
 ## 配置流时序
 
-1. 类选项在 `nju / option` 键值命名空间下解析。
+1. 类选项在 `nju / option` 键值命名空间下解析。所有选项键标记 `.usage:n = load`；随后从 `\l_keys_usage_load_prop` 读取 load-only key 列表，批量 undefine 用户层 `nju` 路径下对应的 `option / ...` key，阻止 `\njusetup` 误设类选项。
 2. 可选宏包启用或禁用（`minimal` 禁用特性包和数学字体加载）。
 3. 影响早期 hook 注册的类选项副作用在论文类型 `.def` 文件加载前归一化（参见 `cover-hook-option-timing.md`）。
 4. 选定的论文类型 `.def` 文件使用已归一化的类选项布尔值注册封面/声明 hook 代码。

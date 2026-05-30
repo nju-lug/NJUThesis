@@ -27,6 +27,8 @@
 
 类选项在内部 `nju / option` 键值命名空间下解析，早于选定论文类型 `.def` 文件的加载。影响封面 hook 注册的选项（如 `anonymous` 禁用 `decl-page`）必须在此阶段生效；之后通过 `\njusetup` 或配置文件无法移除已添加的封面 hook 代码。
 
+所有类选项均标记 `.usage:n = load`，只能通过 `\documentclass` 的选项列表设置。在 `\njusetup` 中使用（如 `\njusetup { option / math-font = ... }`）会被用户层 `nju` 路径中 undefine 后的 unknown-key 机制拒绝。
+
 ## 主设置命令
 
 ```tex

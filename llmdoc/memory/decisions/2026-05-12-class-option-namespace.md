@@ -25,7 +25,9 @@
 
 ## 实现注意事项
 
-- 类选项内部转发必须保持在 `nju / option` 内。例如 `minimal` 和 `fontset` 在转发到其他类选项时应调用 `\keys_set:nn { nju / option }`。
+- 所有 `nju / option` 下的键均标记 `.usage:n = load`，用于记录 load-only usage 元数据；注意：l3keys 本身只记录 usage 信息，不会自动拒绝 `\keys_set:nn`。
+- 类选项吸收完成后，使用 `\prop_map_inline:Nn \l_keys_usage_load_prop` 读取 load-only key 列表，并在用户层 `nju` 路径下批量 `.undefine:` 对应的 `option / ...` key，防止通过 `\njusetup` 误设。
+- 若类选项 handler 内部需要在同一次 `\ProcessKeysOptions` 流程中转发到其他类选项（如 `fontset`、`minimal`），应直接操作内部变量，避免依赖再次解析同一 option namespace。类选项吸收完成后的派生归一化（如 `anonymous` 强制 `decl-page = false`）仍可在批量 undefine 用户层路径之前调用 `\keys_set:nn { nju / option }`。
 - 类选项归一化不要使用 `\@@_keys_set:nn`。该辅助函数面向公开 `\njusetup` 路径，可能过滤分组设置键值。
 - 若类选项决定是否注册 hook 代码，在 `\ProcessKeysOptions { nju / option }` 之后且加载生成论文类型 `.def` 文件之前立即归一化。
 - `config` 类选项指定的用户配置文件在选定 `.def` 文件之后加载，不应依赖它们来更改已控制宏包加载或封面 hook 注册的类选项决策。
