@@ -27,6 +27,7 @@
 
 ## memory
 
+- `llmdoc/memory/lessons-learned.md` — 从反思中提炼的跨任务行为规则。
 - `llmdoc/memory/decisions/2026-05-02-filtered-key-groups.md` — 决策：`\njusetup` 使用 `\keys_set_exclude_groups:nnn` 过滤盲审敏感键值组，而非每个键值单独判断。
 - `llmdoc/memory/decisions/2026-05-12-class-option-namespace.md` — 决策：类选项统一放在 `nju / option` 子路径下，与用户层 `\njusetup` 的 `nju` 命名空间分离。
 - `llmdoc/memory/decisions/2026-05-15-l3kernel-compatibility-wrappers.md` — 决策：新 l3kernel 接口使用条件兼容包装，保持对旧 TeX Live 的支持（如 `\vbox_center:n`）。
@@ -37,3 +38,4 @@
 - `llmdoc/memory/reflections/2026-05-28-nl-cover-linebreak-fix.md` — 反思：#314 国家图书馆封面标题断行修复——`\@@_cover_title_nl:` 中使用原始 `\vbox:n` 缺少 `\@parboxrestore` 导致断行错误；修复为改用已有 `\@@_box_paragraph:nn` 辅助函数，与其他封面标题路径保持一致。教训：引入共享辅助函数后应审计所有已有调用点。
 - `llmdoc/memory/reflections/2026-05-28-authdecl-removal-guards.md` — 反思：v1.5.1 删除研究生出版授权书时，多次小编辑未精确对齐 `%</def-g>` guard 边界，导致重复的 macrocode 块标记。教训：删除 guarded 代码前应先画出 guard 范围地图，优先大片替换，每次编辑后验证相邻块边界。
 - `llmdoc/memory/reflections/2026-05-30-option-usage-load.md` — 反思：为 `nju / option` 类选项标记 `.usage:n = load`，再通过 `\l_keys_usage_load_prop` 批量 undefine 用户层 `option / ...` 路径，以阻止 `\njusetup` 误设；附带修复内部 `\keys_set:nn` 转发点被阻断的问题。
+- `llmdoc/memory/reflections/2026-05-30-release-ci-packages-sync.md` — 反思：`release.yml` 的 `PACKAGES` 种子未与 `build.yml` 同步，新增测试文件间接依赖 `cleveref` 后 release CI 缺包失败。

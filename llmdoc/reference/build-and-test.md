@@ -65,3 +65,4 @@
 ## 注意事项
 
 - 不要依赖 `build/` 或 `mythesis/` 为最新状态，除非刚在当前流程中重新生成。
+- **`PACKAGES` 种子必须同步**：`build.yml` 和 `release.yml` 各自维护独立的 `PACKAGES` 环境变量，作为 `scripts/main.py` 依赖分析的种子。两者不共享来源，新增测试依赖时必须同时更新两处。遗漏会导致 `l3build ctan`（内部调用 `l3build check`）在 release CI 中因缺包而失败。
