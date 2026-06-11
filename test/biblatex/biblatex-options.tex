@@ -1,0 +1,24 @@
+\input regression-test.tex
+\documentclass[type=master, math-font=none]{njuthesis}
+
+\njusetup[bib]{
+  style = author-year,
+  option = { doi = false },
+  resource = { biblatex-options.bib }
+}
+
+\usepackage{biblatex}
+
+\begin{document}
+\START
+\showoutput
+
+\cite{Hohenadler.M.2005}
+\cite{Hohenadler.M.2007}
+\nocite{*}
+
+\printbibliography
+
+\clearpage
+\OMIT
+\end{document}

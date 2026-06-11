@@ -12,6 +12,7 @@
 - `llmdoc/architecture/anonymous-mode-mechanism.md` — 盲审模式机制：`anonymous` 类选项、`\g_@@_opt_anon_bool` 布尔门控、`\g_@@_keys_excl_clist` 分组键值过滤阻止 `\njusetup` 重入敏感字段、声明页清除时序（必须在 `.def` 加载前）、个人信息匿名化占位替换、论文列表/致谢输出命令重定向、`anonymous-mode/no-nju` 隐藏学校信息。
 - `llmdoc/architecture/undergraduate-cover-second-column-spacing.md` — 本科封面第二列间距：为何本科封面信息块需要 `\l_@@_clabelwd_dim` 和 `\l_@@_clabelwdi_dim` 两套标签宽度（而非共享单一宽度）、双字段行辅助函数签名（`\@@_cover_entry:NNNNnn` 和 `\@@_cover_entry_supv:NNNNn`）、短下划线宽度计算公式、`-16 pt` 水平偏移与 `\vbox_center:n` 配合。
 - `llmdoc/architecture/graduate-cover-word-template-spacing.md` — 研究生封面 Word 模板间距：为何研究生普通封面存在大量看似任意的局部间距常量（`-18 pt`、`0.923` 行距、`14.4 pt` 冒号盒等）、这些值是 Word 模板视觉匹配值而非通用排版系统、修改时必须以 Word 版本为对照而非"清理"数字、常量范围限定在研究生封面路径内不得泛化。
+- `llmdoc/architecture/biblatex-hook-loading.md` — biblatex 载入与补丁时序：`biblatex=false` 完全退出集成、`bib/style`/`bib/option`/`bib/resource` 的内部数据流、`package/biblatex/before|after` 与 `env/document/before` hook 分工、用户手动载入 `biblatex` 时的补丁边界。
 - `llmdoc/architecture/build-release-architecture.md` — 构建与发布架构的设计约束：CI 两阶段流水线（回归测试→文档编译）、`l3build ctan` 内部调用 `l3build check` 的隐藏耦合及由此产生的依赖闭包要求、`--exclude` 标志的发布/构建差异、失败产物上传策略。具体命令和操作清单见 `reference/build-and-test.md`。
 
 ## reference
@@ -39,3 +40,4 @@
 - `llmdoc/memory/reflections/2026-05-28-authdecl-removal-guards.md` — 反思：v1.5.1 删除研究生出版授权书时，多次小编辑未精确对齐 `%</def-g>` guard 边界，导致重复的 macrocode 块标记。教训：删除 guarded 代码前应先画出 guard 范围地图，优先大片替换，每次编辑后验证相邻块边界。
 - `llmdoc/memory/reflections/2026-05-30-option-usage-load.md` — 反思：为 `nju / option` 类选项标记 `.usage:n = load`，再通过 `\l_keys_usage_load_prop` 批量 undefine 用户层 `option / ...` 路径，以阻止 `\njusetup` 误设；附带修复内部 `\keys_set:nn` 转发点被阻断的问题。
 - `llmdoc/memory/reflections/2026-05-30-release-ci-packages-sync.md` — 反思：`release.yml` 的 `PACKAGES` 种子未与 `build.yml` 同步，新增测试文件间接依赖 `cleveref` 后 release CI 缺包失败。
+- `llmdoc/memory/reflections/2026-06-10-biblatex-hook-loading.md` — 反思：biblatex 载入从 begin-document 前手动串联迁移到 LaTeX package hooks；记录 `bib/style`、`bib/option`、`bib/resource` 的时序边界、`biblatex=false` 语义、完整 Biber 回归测试经验和 citekey 空格问题。

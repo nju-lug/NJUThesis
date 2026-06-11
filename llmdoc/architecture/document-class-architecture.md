@@ -29,7 +29,7 @@
 3. 影响早期 hook 注册的类选项副作用在论文类型 `.def` 文件加载前归一化（参见 `cover-hook-option-timing.md`）。
 4. 选定的论文类型 `.def` 文件使用已归一化的类选项布尔值注册封面/声明 hook 代码。
 5. `\njusetup` 在导言区应用 `info`、`bib`、`image`、`abstract`、`theorem`、`math`、`header`、`footer` 等模块的配置。
-6. 延迟设置 hooks 加载参考文献选项/资源、配置 PDF 元数据、在 `cover/begin` 期间将 logo 文件名从 prop 复制到 tl 变量、准备页面样式。
+6. 延迟设置 hooks 加载参考文献选项/资源、配置 PDF 元数据、在 `cover/begin` 期间将 logo 文件名从 prop 复制到 tl 变量、准备页面样式。参考文献时序使用 `package/biblatex/before|after` 和 `env/document/before`，详见 `biblatex-hook-loading.md`。
 7. 用户命令/环境生成封面、摘要、特殊页面、定理环境、论文列表和符号页。
 
 ## 生成目标
@@ -51,5 +51,5 @@
 - 摘要页与关键词列表。
 - 页面几何、页眉页脚、front matter 与 main matter 过渡。
 - 目录/图目录/表目录格式。
-- 参考文献加载与标题行为。
+- 参考文献加载、选项传递、资源导入与标题行为（参见 `biblatex-hook-loading.md`）。
 - 拉丁、CJK、数学字体选择。

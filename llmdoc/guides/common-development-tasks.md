@@ -29,6 +29,15 @@
 3. 在选项状态初始化期间将组名添加到全局排除组 clist，而非在每次 `\njusetup` 调用时添加。
 4. 对数学选项行为，在 `\begin{document}` 之后断言可观测的 TeX 层行为，因为字体加载和数学命令重写延迟到 begin-document hook。优先检查符号命令含义和活动数学字体族，而非仅检查内部选项布尔值。将广泛的字体族覆盖放在单独的字体聚焦回归测试中。
 
+## 编辑参考文献或 biblatex 行为
+
+1. 保留 `biblatex = false` 的完整退出语义：禁用 njuthesis 的 biblatex hooks、自动载入和资源导入。
+2. biblatex 载入时序使用 LaTeX 内核 package hooks：`package/biblatex/before` 传入加载期样式设置，`package/biblatex/after` 执行载入后选项并导入资源，`env/document/before` 只作为后备自动载入点。
+3. 不要用 `file/biblatex.sty/before|after` 替代 package hooks；这里关心的是宏包语义，而不是底层文件读取。
+4. `bib/resource` 是 clist 用户接口，真实 `\addbibresource` 只接受单个文件名；导入资源时必须逐项 map。
+5. 修改参考文献输出行为时，使用 `l3build check -c test/config-biblatex biblatex-options` 验证；输出有意变化时，用 `l3build save -c test/config-biblatex biblatex-options` 更新 `.tlg`。
+6. 在 biblatex 回归测试里用完整编译和 `\printbibliography` 检查行为。不要写带空格的 cite 参数，如 `\cite { key }`。
+
 ## 编辑公开示例
 
 1. 更新 `template/njuthesis-sample.tex` 中的文档结构示例。

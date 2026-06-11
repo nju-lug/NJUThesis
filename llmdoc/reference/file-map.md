@@ -10,6 +10,7 @@
 ## 构建配置
 
 - `build.lua` — l3build 配置：解包、安装、检查、CTAN 打包。
+- `test/config-biblatex.lua` — biblatex 专用 l3build 配置；使用 `test/biblatex` 下的 `.tex` 测试文件，复制同目录 `.bib` 支持文件，并在第一轮 LaTeX 后运行 Biber。
 
 ## 模板与示例
 
@@ -27,6 +28,9 @@
 - `test/test.tex` — 共享测试正文。
 - `test/chapters/` — 测试章节内容。
 - `test/*.png`、`test/test.bib` — 测试素材和参考文献。
+- `test/biblatex/biblatex-options.tex` — biblatex 选项/样式/资源的完整编译回归测试，编译后执行 `\printbibliography`。
+- `test/biblatex/biblatex-options.bib` — `biblatex-options` 测试使用的独立参考文献数据库。
+- `test/biblatex/biblatex-options.tlg` — `l3build save -c test/config-biblatex biblatex-options` 生成的对照输出。
 
 ## 脚本
 
@@ -59,3 +63,4 @@
 - `build/` — l3build 输出。
 - `mythesis/njuthesis.cls`、`mythesis/*.def` — 从 dtx 生成。
 - `mythesis/*.aux`、`*.bbl`、`*.bcf`、`*.blg`、`*.fdb_latexmk`、`*.fls`、`*.log`、`*.out`、`*.run.xml`、`*.thm`、`*.toc`、`*.xdv`、`*.pdf` — 编译输出或示例工作区产物。
+- `test/biblatex/*.aux`、`test/biblatex/*.bcf`、`test/biblatex/*.blg`、`test/biblatex/*.fdb_latexmk`、`test/biblatex/*.fls`、`test/biblatex/*.log`、`test/biblatex/*.out`、`test/biblatex/*.run.xml`、`test/biblatex/*.thm`、`test/biblatex/*.xdv` — biblatex 回归测试的本地编译产物，不是规范输入。

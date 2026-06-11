@@ -6,6 +6,10 @@
 
 ## [未发布]
 
+### 新增
+
+- 支持在导言区自行载入 `biblatex` 以应用补丁 - [#317]
+
 ## [1.5.1] - 2026-05-30
 
 ### 修复
@@ -770,6 +774,7 @@
 [#313]: https://github.com/nju-lug/NJUThesis/issues/313
 [#314]: https://github.com/nju-lug/NJUThesis/issues/314
 [#315]: https://github.com/nju-lug/NJUThesis/issues/315
+[#317]: https://github.com/nju-lug/NJUThesis/issues/317
 
 [CTeX-org/ctex-kit#678]: https://github.com/CTeX-org/ctex-kit/pull/678
 [CTeX-org/ctex-kit#700]: https://github.com/CTeX-org/ctex-kit/pull/700

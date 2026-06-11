@@ -42,3 +42,20 @@ Curated cross-task rules distilled from archived memory.
 **Rule**: 区分 `\ctex_at_end_preamble:n`、`cover/begin` hook、`\@@_at_begin_document:n` 的执行顺序，按依赖关系选择。
 **Why**: 从 `\ctex_at_end_preamble:n` 迁移到 `cover/begin` hook 时，需确认封面元素注册的时序约束。
 **Source**: `llmdoc/memory/reflections/2026-05-12-cover-logo-refactor.md`
+
+### 宏包时序用 package hook
+**Rule**: 修改宏包载入前后行为时，优先使用 `package/<pkg>/before|after`，只有确实关心底层文件读取时才使用 file hook。
+**Why**: biblatex 集成需要覆盖用户手动 `\usepackage{biblatex}` 和模板后备自动载入两条路径，package hook 的语义正好匹配；file hook 会把问题降到不必要的底层文件时序。
+**Source**: `llmdoc/memory/reflections/2026-06-10-biblatex-hook-loading.md`
+
+## 参考文献测试
+
+### biblatex 行为用完整编译验证
+**Rule**: 参考文献样式、选项、资源和输出变更应使用 `.tex + .bib + biber + \printbibliography` 的 l3build 测试保存 `.tlg`，不要只断言内部变量。
+**Why**: biblatex 的可见行为跨越包加载、选项执行、Biber 数据处理和最终 bibliography 输出，内部状态断言容易漏掉用户实际看到的问题。
+**Source**: `llmdoc/memory/reflections/2026-06-10-biblatex-hook-loading.md`
+
+### citekey 参数不要带空格
+**Rule**: biblatex 回归测试中 cite 命令写作 `\cite{key}`，避免 `\cite { key }` 或 `\cite{key }`。
+**Why**: biblatex 会把参数中的尾随空格计入 citekey，导致 `.tlg` 出现误导性的 undefined citation 警告。
+**Source**: `llmdoc/memory/reflections/2026-06-10-biblatex-hook-loading.md`

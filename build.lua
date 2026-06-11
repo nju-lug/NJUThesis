@@ -9,6 +9,7 @@ checkengines  = {"xetex"}
 checkopts     = "-interaction=batchmode"
 testfiledir   = "test"
 checkfiles    = {"*.lvt"}
+checkconfigs  = {"build", "test/config-biblatex"}
 
 textfiles     = {"LICENSE", "README*.md", "*.ins"}
 ctanreadme    = "README-CTAN.md"

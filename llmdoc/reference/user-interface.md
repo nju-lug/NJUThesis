@@ -42,7 +42,7 @@
 ## 重要设置模块
 
 - `info` — 标题、作者、院系、专业、导师、日期、分类号、答辩委员会、学位名称、邮箱等元数据。
-- `bib` — 参考文献样式、资源文件和 biblatex 选项。
+- `bib` — 参考文献样式、资源文件和 biblatex 选项。常用键包括 `bib/style`、`bib/option` 和 `bib/resource`；`bib/resource` 接受逗号列表。
 - `image` — 图形路径和 NJU 校徽/校名选择。`nju-logo-color` 接受内置颜色 `black|purple` 并同时设置校徽和校名；`nju-emblem` 和 `nju-name` 也接受自定义文件路径。
 - `abstract` — 摘要目录条目、下划线行为和标题样式。
 - `tableofcontents`、`listoffigures`、`listoftables` — 目录条目行为。
@@ -55,6 +55,21 @@
 ## 特性开关
 
 - `unicode-math = false` 表示 njuthesis 不执行其自动数学配置。`nju / math` 设置键值仍应存在以便解析共享设置文件，但需要 njuthesis 管理的 `unicode-math` 行为的键值在此选项下被过滤和惰化。
+- `biblatex = false` 表示完全退出 njuthesis 的 biblatex 集成：模板不注册 biblatex hooks，不自动载入 `biblatex`，也不接管参考文献资源导入。
+
+## 参考文献定制入口
+
+普通用户只需要在 `\njusetup[bib]{...}` 中设置样式、选项和资源文件；模板会在导言区末尾按需载入 `biblatex`。
+
+需要对 biblatex 做补丁的用户应使用以下顺序：
+
+```tex
+\njusetup[bib]{...}
+\usepackage{biblatex}
+% 用户补丁
+```
+
+这保证 njuthesis 的参考文献设置先传入 biblatex，用户补丁再在宏包可用后执行。更细的载入时序见 `architecture/biblatex-hook-loading.md`。
 
 ## 主要文档命令和环境
 

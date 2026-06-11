@@ -1999,6 +1999,35 @@ To produce the documentation run the original source files ending with
 %   \end{talltblr}
 % \end{table}
 %
+% \subsubsection{定制补丁}
+%
+% 一般情况下，模板会在导言区末尾自动完成参考文献宏包的载入和默认设置。
+% 只有在需要修改 \pkg{biblatex} 内部命令或样式细节时，才需要特别留意载入顺序。
+%
+% 推荐先写完 \opt{bib} 相关设置，再手动载入 \pkg{biblatex}，随后加入自己的
+% 定制代码。这样模板可以先把参考文献样式、选项和数据源传给
+% \pkg{biblatex}，而您的补丁也能在宏包已经可用之后执行。
+% \begin{latexexample}[moretexcs={\njusetup,\usepackage,\renewcommand},
+%   emph={[2]bib,biblatex},emph={[3]style,option,resource}]
+%   \njusetup[bib]{
+%       style    = author-year,
+%       option   = { doi = false },
+%       resource = { ref.bib }
+%   }
+%   \usepackage{biblatex}
+%
+%   % 在这里加入自定义补丁
+%   \renewcommand*{\bibfont}{\small}
+% \end{latexexample}
+%
+% 如果您需要把补丁写在更靠前的位置，也可以使用 \LaTeX{} 的宏包钩子：
+% \begin{latexexample}[moretexcs={\AddToHook,\renewcommand},
+%   emph={[2]biblatex}]
+%   \AddToHook{package/biblatex/after}{
+%       \renewcommand*{\bibfont}{\small}
+%   }
+% \end{latexexample}
+%
 %
 % \subsubsection{文献管理}
 %
@@ -5940,8 +5969,15 @@ To produce the documentation run the original source files ending with
 %
 % \subsection{参考文献}
 %
+% \begin{variable}{\g_@@_blx_style_clist}
+% 存储传入 \pkg{biblatex} 的文献样式选项。
+%    \begin{macrocode}
+\clist_new:N \g_@@_blx_style_clist
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}{\g_@@_blx_option_clist}
-% 存储传入 \pkg{biblatex} 的选项列表。
+% 存储载入 \pkg{biblatex} 后执行的选项列表。
 %    \begin{macrocode}
 \clist_new:N \g_@@_blx_option_clist
 %    \end{macrocode}
@@ -5965,21 +6001,15 @@ To produce the documentation run the original source files ending with
 % 参考文献样式。国家标准为顺序编码制 \opt{numeric} 和著者-出版年制
 % \opt{author-year}，分别对应 \pkg{biblatex} 的 \opt{gb7714-2015}
 % 和 \opt{gb7714-2015ay} 样式。其余样式一律视作 \opt{unknown}。用户
-% 选取的样式会被加入选项列表中，以待传进 \pkg{biblatex} 宏包。
+% 选取的样式会被传进 \pkg{biblatex} 宏包。
 %    \begin{macrocode}
     style             .choice:,
     style / numeric     .code:n =
-      {
-        \clist_gput_right:Nn \g_@@_blx_option_clist
-          { style = gb7714-2015      }
-      },
+      { \clist_gput_right:Nn \g_@@_blx_style_clist { style = gb7714-2015   } },
     style / author-year .code:n =
-      {
-        \clist_gput_right:Nn \g_@@_blx_option_clist
-          { style = gb7714-2015ay    }
-      },
+      { \clist_gput_right:Nn \g_@@_blx_style_clist { style = gb7714-2015ay } },
     style / unknown     .code:n =
-      { \clist_gput_right:Nn \g_@@_blx_option_clist { style = #1 } },
+      { \clist_gput_right:Nn \g_@@_blx_style_clist { style = #1 } },
     style            .initial:n = numeric,
 %    \end{macrocode}
 % \end{macro}
@@ -5989,10 +6019,10 @@ To produce the documentation run the original source files ending with
 % 待传入 \pkg{biblatex} 的额外宏包选项，以列表形式储存。
 % 更为常见的参考文献样式设置已由 \opt{bib/style} 提供，
 % 两者中后传入的设置会覆盖已有的设定。本设置项等效于在导言区使用
-% |\PassoptionsToPackage{|\meta{key}|=|\meta{value}|}{biblatex}| 命令。
+% \cs{ExecuteBibliographyOptions} 命令。
 %    \begin{macrocode}
     option              .code:n =
-      { \clist_gput_right:NV \g_@@_blx_option_clist \l_keys_value_tl },
+      { \clist_gput_right:Nn \g_@@_blx_option_clist {#1} },
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6026,8 +6056,7 @@ To produce the documentation run the original source files ending with
 \cs_new_protected:Npn \@@_blx_pre_setup:
   {
     \cs_undefine:N \addbibresource
-    \clist_gput_right:Nn \g_@@_blx_option_clist { backend = biber }
-    \exp_args:NV \PassOptionsToPackage \g_@@_blx_option_clist { biblatex }
+    \exp_args:NV \PassOptionsToPackage \g_@@_blx_style_clist { biblatex }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6037,6 +6066,7 @@ To produce the documentation run the original source files ending with
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_blx_post_setup:
   {
+    \exp_args:NV \ExecuteBibliographyOptions \g_@@_blx_option_clist
 %    \end{macrocode}
 % \changes{v0.12}{2021/12/06}{设置输出参考文献的默认选项。}
 % \changes{v0.15}{2022/02/17}{可在每章后附上参考文献表。}
@@ -6056,17 +6086,19 @@ To produce the documentation run the original source files ending with
 %    \end{macrocode}
 % \end{macro}
 %
-% 使用 \pkg{etoolbox} 提供的 \tn{BeforeBeginEnvironment}，在 \env{document} 环境
-% 开始的钩子前载入 \pkg{biblatex} 并进行相关设置。
+% \changes{v1.6.0}{2026/06/10}{使用钩子机制处理 \pkg{biblatex} 载入逻辑。}
+% 使用 \LaTeX{} 的宏包钩子，在 \pkg{biblatex} 载入前后进行相关设置。
+% 如果用户没有在导言区自行载入 \pkg{biblatex}，则在 \env{document} 环境
+% 开始前自动载入。
 %    \begin{macrocode}
 \bool_if:NT \g_@@_opt_load_blx_bool
   {
-    \BeforeBeginEnvironment { document }
-      {
-        \@@_blx_pre_setup:
-        \RequirePackage { biblatex }
-        \@@_blx_post_setup:
-      }
+    \hook_gput_code:nnn { package / biblatex / before } { njuthesis }
+      { \@@_blx_pre_setup: }
+    \hook_gput_code:nnn { package / biblatex / after  } { njuthesis }
+      { \@@_blx_post_setup: }
+    \hook_gput_code:nnn { env     / document / before } { njuthesis }
+      { \RequirePackage { biblatex } }
   }
 %    \end{macrocode}
 %

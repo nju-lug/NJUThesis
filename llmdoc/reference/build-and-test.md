@@ -8,18 +8,22 @@
 - 安装目标为生成的 `.cls`、`.def` 和 logo PDF。
 - 手册排版使用 XeLaTeX，解包使用 XeTeX。
 - check 引擎为 `xetex` 和 `luatex`。
+- `checkconfigs = {"build", "test/config-biblatex"}`，因此默认 `l3build check` 会同时运行普通 `.lvt` 回归测试和带 Biber 的 biblatex 输出测试。
 
 ## 常用命令
 
 - `l3build unpack` — 仅解包生成 cls/def 文件。
 - `l3build install` — 解包并安装到本地 TeX 树，供本地测试。
 - `l3build check -e xetex <test-name>` — 运行指定回归测试。
+- `l3build check -c test/config-biblatex biblatex-options` — 运行 biblatex 完整编译回归测试。
+- `l3build save -c test/config-biblatex biblatex-options` — 重新生成 biblatex 测试的 `.tlg` 对照。
 - `l3build ctan` — 创建 CTAN 发布包（内部会先运行 `l3build check`）。
 
 ## 本地检查
 
 - 编辑类或接口后，先 `l3build install` 再编译测试文件。
 - 对 l3keys、选项解析等可通过日志检查的行为，以 `.lvt`/`.tlg` 对添加 `l3build` 回归测试到 `test/`。
+- 对 biblatex 选项、样式、资源导入和 bibliography 输出行为，使用 `test/config-biblatex.lua` 下的完整 `.tex + .bib + biber + \printbibliography` 测试；不要只断言内部变量。
 - 涉及版式、参考文献、类选项、字体、封面、摘要、声明页的修改，至少编译 `test/` 下对应的变体文件。
 - 发布/打包变更需检查 `.github/workflows/release.yml`，确认 CTAN 和用户 zip 内容物正确。
 
@@ -32,6 +36,14 @@
 ## 回归测试
 
 测试文件完整清单参见 `reference/file-map.md`。
+
+### biblatex 输出测试
+
+- `test/config-biblatex.lua` 将测试目录切到 `test/biblatex`，并设置 `supportdir = testfiledir` 以复制同目录 `.bib` 文件。
+- 该配置使用 `.tex` 作为测试文件扩展名：`checkfiles = {"*.tex"}`、`lvtext = ".tex"`、`test_types.log.test = ".tex"`。
+- `checkruns = 3`，并在第一轮 LaTeX 后运行 `biber <name>`，形成 LaTeX → Biber → LaTeX → LaTeX 的输出稳定流程。
+- 测试文件应完整编译到 `\printbibliography`，再通过 `l3build save -c test/config-biblatex <name>` 生成 `.tlg`。
+- cite 命令不要写成 `\cite { key }` 或 `\cite{key }`；biblatex 会把参数空格计入 citekey，导致 `.tlg` 中出现错误的 undefined citation 警告。使用 `\cite{key}`。
 
 ## CI 构建模型
 
